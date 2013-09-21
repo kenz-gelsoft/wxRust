@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------
                         PREAMBLE
 
-The wxHaskell libraries are distributed under the wxWindows library 
+The wxRust libraries are distributed under the wxWindows library
 license. The documentation is subject to the wxWidgets documentation 
 license.
 
@@ -13,7 +13,7 @@ Public Licence), with an exception stating that derived works in binary
 form may be distributed on the user's own terms. This means that it is 
 possible to create commercial software with this library without paying 
 royalties or disclosing source code. This is a solution that satisfies 
-those who wish to produce GPL'ed software using wxHaskell, and also 
+those who wish to produce GPL'ed software using wxRust, and also 
 those producing proprietary software.
 
 This library is distributed in the hope that it will be useful, but 
