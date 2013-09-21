@@ -1,0 +1,3 @@
+[submodule "wxHaskell"]
+	path = wxHaskell
+	url = https://github.com/wxHaskell/wxHaskell.git
