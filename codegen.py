@@ -237,6 +237,48 @@ class Method(object):
         return arg
 
     def __repr__(self):
+        for ignore in ['ELJClient_',
+                       'ELJCommand_',
+                       'ELJConnection_',
+                       'ELJPlotCurve_',
+                       'ELJServer_',
+                       'cb',
+                       'wxCommandProcessor_',
+                       'wxCondition_',
+                       'wxCriticalSection_',
+                       'wxDateTime_IsGregorianDate',
+                       'wxDialUpEvent_',
+                       'wxDialUpManager_',
+                       'wxDynToolInfo_',
+                       'wxDynamicSashWindow_',
+                       'wxDynamicToolBar_',
+                       'wxEditableListBox_',
+                       'wxFrameLayout_',
+                       'wxJoystick_',
+                       'wxLEDNumberCtrl_',
+                       'wxMessageParameters_',
+                       'wxMultiCellCanvas_',
+                       'wxMultiCellItemHandle_',
+                       'wxMultiCellSizer_',
+                       'wxMutexGui_',
+                       'wxMutex_',
+                       'wxNewBitmapButton_',
+                       'wxPlotEvent_',
+                       'wxPlotOnOffCurve_',
+                       'wxPlotWindow_',
+                       'wxPoint_Destroy',
+                       'wxRemotelyScrolledTreeCtrl_',
+                       'wxSize_Destroy',
+                       'wxSplitterScrolledWindow_',
+                       'wxThinSplitterWindow_',
+                       'wxToolLayoutItem_',
+                       'wxToolWindow_',
+                       'wxTreeCompanionWindow_',
+                       'wxXmlResource_Delete',
+                       ]:
+            if self.__name.startswith(ignore):
+                return '// missing: %s' % self.__name
+        
         args = ''
         for arg in self.__args:
             if len(args):
