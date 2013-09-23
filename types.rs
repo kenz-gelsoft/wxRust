@@ -1,40 +1,26 @@
-use std::libc::*;
-
-//
-pub struct Rect {
-    x:int,
-    y:int,
-    w:int,
-    h:int,
-}
-
-pub struct IntPoint {
-    x:int,
-    y:int,
-}
-
-pub struct IntSize {
-    w:int,
-    h:int,
-}
-
-pub struct LongPoint {
-    x:c_long,
-    y:c_long,
-}
-
 pub struct ColorRGB {
     r:u8,
     g:u8,
     b:u8,
 }
 
-pub struct DoubleSize {
-    x:c_double,
-    y:c_double,
+pub struct Point<T> {
+    x:T,
+    y:T,
+}
+pub struct Vector<T> {
+    x:T,
+    y:T,
 }
 
-pub struct Vector {
-    x:int,
-    y:int,
+pub struct Size<T> {
+    w:T,
+    h:T,
+}
+
+pub struct Rect<T> {
+    x:T,
+    y:T,
+    w:T,
+    h:T,
 }
