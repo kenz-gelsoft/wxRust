@@ -1,4 +1,5 @@
 use std::libc::*;
+use types::*;
 
 #[link_args="-lwxc"]
 extern {
@@ -1052,7 +1053,7 @@ extern {
     pub fn wxBrush_IsEqual(_obj: &[u8] /* void* */, brush: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxBrush_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxBrush_SetColour(_obj: &[u8] /* void* */, col: &[u8] /* void* */);
-    pub fn wxBrush_SetColourSingle(_obj: &[u8] /* void* */, r: TChar /* TChar */, g: TChar /* TChar */, b: TChar /* TChar */);
+    pub fn wxBrush_SetColourSingle(_obj: &[u8] /* void* */, r: wchar_t /* wchar_t */, g: wchar_t /* wchar_t */, b: wchar_t /* wchar_t */);
     pub fn wxBrush_SetStipple(_obj: &[u8] /* void* */, stipple: &[u8] /* void* */);
     pub fn wxBrush_SetStyle(_obj: &[u8] /* void* */, style: c_int /* int */);
     
@@ -1222,19 +1223,19 @@ extern {
     // TClassDefExtend(wxClosure,wxObject)
     
     // TClassDefExtend(wxColour,wxObject)
-    pub fn wxColour_Alpha(_obj: &[u8] /* void* */) -> TUInt8 /* TUInt8 */;
+    pub fn wxColour_Alpha(_obj: &[u8] /* void* */) -> uint8_t /* uint8_t */;
     pub fn wxColour_Assign(_obj: &[u8] /* void* */, other: &[u8] /* void* */);
-    pub fn wxColour_Blue(_obj: &[u8] /* void* */) -> TUInt8 /* TUInt8 */;
+    pub fn wxColour_Blue(_obj: &[u8] /* void* */) -> uint8_t /* uint8_t */;
     pub fn wxColour_Copy(_obj: &[u8] /* void* */, _other: &[u8] /* void* */);
     pub fn wxColour_CreateByName(_name: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxColour_CreateEmpty() -> ~[u8] /* void* */;
     pub fn wxColour_CreateFromStock(id: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxColour_CreateRGB(_red: TUInt8 /* TUInt8 */, _green: TUInt8 /* TUInt8 */, _blue: TUInt8 /* TUInt8 */, _alpha: TUInt8 /* TUInt8 */) -> ~[u8] /* void* */;
+    pub fn wxColour_CreateRGB(_red: uint8_t /* uint8_t */, _green: uint8_t /* uint8_t */, _blue: uint8_t /* uint8_t */, _alpha: uint8_t /* uint8_t */) -> ~[u8] /* void* */;
     pub fn wxColour_Delete(_obj: &[u8] /* void* */);
-    pub fn wxColour_Green(_obj: &[u8] /* void* */) -> TUInt8 /* TUInt8 */;
+    pub fn wxColour_Green(_obj: &[u8] /* void* */) -> uint8_t /* uint8_t */;
     pub fn wxColour_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
-    pub fn wxColour_Red(_obj: &[u8] /* void* */) -> TUInt8 /* TUInt8 */;
-    pub fn wxColour_Set(_obj: &[u8] /* void* */, _red: TUInt8 /* TUInt8 */, _green: TUInt8 /* TUInt8 */, _blue: TUInt8 /* TUInt8 */, _alpha: TUInt8 /* TUInt8 */);
+    pub fn wxColour_Red(_obj: &[u8] /* void* */) -> uint8_t /* uint8_t */;
+    pub fn wxColour_Set(_obj: &[u8] /* void* */, _red: uint8_t /* uint8_t */, _green: uint8_t /* uint8_t */, _blue: uint8_t /* uint8_t */, _alpha: uint8_t /* uint8_t */);
     pub fn wxColour_SetByName(_obj: &[u8] /* void* */, _name: &[u8] /* void* */);
     pub fn wxColour_ValidName(_name: &[wchar_t] /* wchar_t* */) -> bool /* bool */;
     
@@ -1760,7 +1761,7 @@ extern {
     pub fn wxEditableListBox_GetEditButton(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxEditableListBox_GetListCtrl(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxEditableListBox_GetNewButton(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxEditableListBox_GetStrings(_obj: &[u8] /* void* */, _ref: TArrayStringOutVoid /* TArrayStringOutVoid */) -> TArrayLen /* TArrayLen */;
+    pub fn wxEditableListBox_GetStrings(_obj: &[u8] /* void* */, _ref: &[wchar_t] /* wchar_t* */) -> c_int /* int */;
     pub fn wxEditableListBox_GetUpButton(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxEditableListBox_SetStrings(_obj: &[u8] /* void* */, strings: &[u8] /* void* */, _n: c_int /* int */);
     
@@ -1824,17 +1825,17 @@ extern {
     pub fn FileDataObject_AddFile(_obj: &[u8] /* void* */, _fle: &[u8] /* void* */);
     pub fn FileDataObject_Create(arg0: c_int /* int */, arg1: &[wchar_t] /* wchar_t* */) -> ~[u8] /* void* */;
     pub fn FileDataObject_Delete(_obj: &[u8] /* void* */);
-    pub fn FileDataObject_GetFilenames(_obj: &[u8] /* void* */, _lst: TArrayStringOutVoid /* TArrayStringOutVoid */) -> TArrayLen /* TArrayLen */;
+    pub fn FileDataObject_GetFilenames(_obj: &[u8] /* void* */, _lst: &[wchar_t] /* wchar_t* */) -> c_int /* int */;
     
     // TClassDefExtend(wxFileDialog,wxDialog)
     pub fn wxFileDialog_Create(_prt: &[u8] /* void* */, _msg: &[u8] /* void* */, _dir: &[u8] /* void* */, _fle: &[u8] /* void* */, _wcd: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, _stl: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxFileDialog_GetDirectory(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxFileDialog_GetFilename(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxFileDialog_GetFilenames(_obj: &[u8] /* void* */, paths: TArrayStringOutVoid /* TArrayStringOutVoid */) -> TArrayLen /* TArrayLen */;
+    pub fn wxFileDialog_GetFilenames(_obj: &[u8] /* void* */, paths: &[wchar_t] /* wchar_t* */) -> c_int /* int */;
     pub fn wxFileDialog_GetFilterIndex(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxFileDialog_GetMessage(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxFileDialog_GetPath(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxFileDialog_GetPaths(_obj: &[u8] /* void* */, paths: TArrayStringOutVoid /* TArrayStringOutVoid */) -> TArrayLen /* TArrayLen */;
+    pub fn wxFileDialog_GetPaths(_obj: &[u8] /* void* */, paths: &[wchar_t] /* wchar_t* */) -> c_int /* int */;
     pub fn wxFileDialog_GetStyle(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxFileDialog_GetWildcard(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxFileDialog_SetDirectory(_obj: &[u8] /* void* */, dir: &[u8] /* void* */);
@@ -1855,7 +1856,7 @@ extern {
     pub fn wxFileHistory_GetCount(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxFileHistory_GetHistoryFile(_obj: &[u8] /* void* */, i: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxFileHistory_GetMaxFiles(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxFileHistory_GetMenus(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */) -> TArrayLen /* TArrayLen */;
+    pub fn wxFileHistory_GetMenus(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxFileHistory_Load(_obj: &[u8] /* void* */, config: &[u8] /* void* */);
     pub fn wxFileHistory_RemoveFileFromHistory(_obj: &[u8] /* void* */, i: c_int /* int */);
     pub fn wxFileHistory_RemoveMenu(_obj: &[u8] /* void* */, menu: &[u8] /* void* */);
@@ -2240,8 +2241,8 @@ extern {
     pub fn wxGrid_GetSelectedCells(_obj: &[u8] /* void* */, _arr: &[u8] /* void* */);
     pub fn wxGrid_GetSelectionBlockTopLeft(_obj: &[u8] /* void* */, _arr: &[u8] /* void* */);
     pub fn wxGrid_GetSelectionBlockBottomRight(_obj: &[u8] /* void* */, _arr: &[u8] /* void* */);
-    pub fn wxGrid_GetSelectedRows(_obj: &[u8] /* void* */, _arr: TArrayIntOutVoid /* TArrayIntOutVoid */) -> TArrayLen /* TArrayLen */;
-    pub fn wxGrid_GetSelectedCols(_obj: &[u8] /* void* */, _arr: TArrayIntOutVoid /* TArrayIntOutVoid */) -> TArrayLen /* TArrayLen */;
+    pub fn wxGrid_GetSelectedRows(_obj: &[u8] /* void* */, _arr: &[intptr_t] /* intptr_t* */) -> c_int /* int */;
+    pub fn wxGrid_GetSelectedCols(_obj: &[u8] /* void* */, _arr: &[intptr_t] /* intptr_t* */) -> c_int /* int */;
     pub fn wxGrid_GetCellSize(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */, arg0: &[IntSize] /* IntSize* */);
     pub fn wxGrid_SetCellSize(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */, arg0: IntSize /* IntSize */);
     
@@ -2512,8 +2513,8 @@ extern {
     // TClassDefExtend(wxImage,wxObject)
     pub fn wxImage_CanRead(name: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxImage_ConvertToBitmap(_obj: &[u8] /* void* */, bitmap: &[u8] /* void* */);
-    pub fn wxImage_ConvertToByteString(_obj: &[u8] /* void* */, type_: c_int /* int */, data: TByteStringOut /* TByteStringOut */) -> TByteStringLen /* TByteStringLen */;
-    pub fn wxImage_ConvertToLazyByteString(_obj: &[u8] /* void* */, type_: c_int /* int */, data: TByteStringLazyOut /* TByteStringLazyOut */) -> TByteStringLen /* TByteStringLen */;
+    pub fn wxImage_ConvertToByteString(_obj: &[u8] /* void* */, type_: c_int /* int */, data: &[char] /* char* */) -> c_int /* int */;
+    pub fn wxImage_ConvertToLazyByteString(_obj: &[u8] /* void* */, type_: c_int /* int */, data: &[char] /* char* */) -> c_int /* int */;
     pub fn wxImage_CountColours(_obj: &[u8] /* void* */, stopafter: c_int /* int */) -> c_int /* int */;
     pub fn wxImage_CreateDefault() -> ~[u8] /* void* */;
     pub fn wxImage_CreateFromBitmap(bitmap: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -2523,14 +2524,14 @@ extern {
     pub fn wxImage_CreateFromFile(name: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxImage_CreateSized(arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
     pub fn wxImage_Destroy(_obj: &[u8] /* void* */);
-    pub fn wxImage_GetBlue(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> TChar /* TChar */;
+    pub fn wxImage_GetBlue(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> wchar_t /* wchar_t */;
     pub fn wxImage_GetData(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxImage_GetGreen(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> TChar /* TChar */;
+    pub fn wxImage_GetGreen(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> wchar_t /* wchar_t */;
     pub fn wxImage_GetHeight(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxImage_GetMaskBlue(_obj: &[u8] /* void* */) -> TChar /* TChar */;
-    pub fn wxImage_GetMaskGreen(_obj: &[u8] /* void* */) -> TChar /* TChar */;
-    pub fn wxImage_GetMaskRed(_obj: &[u8] /* void* */) -> TChar /* TChar */;
-    pub fn wxImage_GetRed(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> TChar /* TChar */;
+    pub fn wxImage_GetMaskBlue(_obj: &[u8] /* void* */) -> wchar_t /* wchar_t */;
+    pub fn wxImage_GetMaskGreen(_obj: &[u8] /* void* */) -> wchar_t /* wchar_t */;
+    pub fn wxImage_GetMaskRed(_obj: &[u8] /* void* */) -> wchar_t /* wchar_t */;
+    pub fn wxImage_GetRed(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> wchar_t /* wchar_t */;
     pub fn wxImage_GetSubImage(_obj: &[u8] /* void* */, arg0: Rect /* Rect */, image: &[u8] /* void* */);
     pub fn wxImage_GetWidth(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxImage_HasMask(_obj: &[u8] /* void* */) -> bool /* bool */;
@@ -2606,14 +2607,14 @@ extern {
     // TClassDefExtend(wxInputStream,wxStreamBase)
     pub fn wxInputStream_Delete(_obj: &[u8] /* void* */);
     pub fn wxInputStream_Eof(_obj: &[u8] /* void* */) -> bool /* bool */;
-    pub fn wxInputStream_GetC(_obj: &[u8] /* void* */) -> TChar /* TChar */;
+    pub fn wxInputStream_GetC(_obj: &[u8] /* void* */) -> wchar_t /* wchar_t */;
     pub fn wxInputStream_LastRead(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxInputStream_Peek(_obj: &[u8] /* void* */) -> TChar /* TChar */;
+    pub fn wxInputStream_Peek(_obj: &[u8] /* void* */) -> wchar_t /* wchar_t */;
     pub fn wxInputStream_Read(_obj: &[u8] /* void* */, buffer: &[u8] /* void* */, size: c_int /* int */);
     pub fn wxInputStream_SeekI(_obj: &[u8] /* void* */, pos: c_int /* int */, mode: c_int /* int */) -> c_int /* int */;
     pub fn wxInputStream_Tell(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxInputStream_UngetBuffer(_obj: &[u8] /* void* */, buffer: &[u8] /* void* */, size: c_int /* int */) -> c_int /* int */;
-    pub fn wxInputStream_Ungetch(_obj: &[u8] /* void* */, c: TChar /* TChar */) -> c_int /* int */;
+    pub fn wxInputStream_Ungetch(_obj: &[u8] /* void* */, c: wchar_t /* wchar_t */) -> c_int /* int */;
     
     // TClassDefExtend(wxJoystick,wxObject)
     pub fn wxJoystick_Create(joystick: c_int /* int */) -> ~[u8] /* void* */;
@@ -2858,7 +2859,7 @@ extern {
     pub fn wxLocale_Delete(_obj: &[u8] /* void* */);
     pub fn wxLocale_GetLocale(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxLocale_GetName(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxLocale_GetString(_obj: &[u8] /* void* */, szOrigString: &[u8] /* void* */, szDomain: &[u8] /* void* */) -> TString /* TString */;
+    pub fn wxLocale_GetString(_obj: &[u8] /* void* */, szOrigString: &[u8] /* void* */, szDomain: &[u8] /* void* */) -> ~[wchar_t] /* wchar_t* */;
     pub fn wxLocale_IsLoaded(_obj: &[u8] /* void* */, szDomain: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxLocale_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     
@@ -3220,7 +3221,7 @@ extern {
     // TClassDefExtend(wxOutputStream,wxStreamBase)
     pub fn wxOutputStream_Delete(_obj: &[u8] /* void* */);
     pub fn wxOutputStream_LastWrite(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxOutputStream_PutC(_obj: &[u8] /* void* */, c: TChar /* TChar */);
+    pub fn wxOutputStream_PutC(_obj: &[u8] /* void* */, c: wchar_t /* wchar_t */);
     pub fn wxOutputStream_Seek(_obj: &[u8] /* void* */, pos: c_int /* int */, mode: c_int /* int */) -> c_int /* int */;
     pub fn wxOutputStream_Sync(_obj: &[u8] /* void* */);
     pub fn wxOutputStream_Tell(_obj: &[u8] /* void* */) -> c_int /* int */;
@@ -3314,7 +3315,7 @@ extern {
     pub fn wxPen_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxPen_SetCap(_obj: &[u8] /* void* */, cap: c_int /* int */);
     pub fn wxPen_SetColour(_obj: &[u8] /* void* */, col: &[u8] /* void* */);
-    pub fn wxPen_SetColourSingle(_obj: &[u8] /* void* */, r: TChar /* TChar */, g: TChar /* TChar */, b: TChar /* TChar */);
+    pub fn wxPen_SetColourSingle(_obj: &[u8] /* void* */, r: wchar_t /* wchar_t */, g: wchar_t /* wchar_t */, b: wchar_t /* wchar_t */);
     pub fn wxPen_SetDashes(_obj: &[u8] /* void* */, nb_dashes: c_int /* int */, dash: &[u8] /* void* */);
     pub fn wxPen_SetJoin(_obj: &[u8] /* void* */, join: c_int /* int */);
     pub fn wxPen_SetStipple(_obj: &[u8] /* void* */, stipple: &[u8] /* void* */);
@@ -4120,8 +4121,8 @@ extern {
     
     // TClassDefExtend(wxTextValidator,wxValidator)
     pub fn wxTextValidator_Create(style: c_int /* int */, val: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxTextValidator_GetExcludes(_obj: &[u8] /* void* */, _ref: TArrayStringOutVoid /* TArrayStringOutVoid */) -> TArrayLen /* TArrayLen */;
-    pub fn wxTextValidator_GetIncludes(_obj: &[u8] /* void* */, _ref: TArrayStringOutVoid /* TArrayStringOutVoid */) -> TArrayLen /* TArrayLen */;
+    pub fn wxTextValidator_GetExcludes(_obj: &[u8] /* void* */, _ref: &[wchar_t] /* wchar_t* */) -> c_int /* int */;
+    pub fn wxTextValidator_GetIncludes(_obj: &[u8] /* void* */, _ref: &[wchar_t] /* wchar_t* */) -> c_int /* int */;
     pub fn wxTextValidator_SetExcludes(_obj: &[u8] /* void* */, list: &[wchar_t] /* wchar_t* */, count: c_int /* int */);
     pub fn wxTextValidator_SetIncludes(_obj: &[u8] /* void* */, list: &[wchar_t] /* wchar_t* */, count: c_int /* int */);
     pub fn wxTextValidator_Clone(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -4283,7 +4284,7 @@ extern {
     pub fn wxTreeCtrl_GetPrevVisible(_obj: &[u8] /* void* */, item: &[u8] /* void* */, _item: &[u8] /* void* */);
     pub fn wxTreeCtrl_GetRootItem(_obj: &[u8] /* void* */, _item: &[u8] /* void* */);
     pub fn wxTreeCtrl_GetSelection(_obj: &[u8] /* void* */, _item: &[u8] /* void* */);
-    pub fn wxTreeCtrl_GetSelections(_obj: &[u8] /* void* */, selections: TArrayIntPtrOutVoid /* TArrayIntPtrOutVoid */) -> TArrayLen /* TArrayLen */;
+    pub fn wxTreeCtrl_GetSelections(_obj: &[u8] /* void* */, selections: &[intptr_t] /* intptr_t* */) -> c_int /* int */;
     pub fn wxTreeCtrl_GetSpacing(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxTreeCtrl_GetStateImageList(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxTreeCtrl_HitTest(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, flags: &[c_int] /* int* */, _item: &[u8] /* void* */);

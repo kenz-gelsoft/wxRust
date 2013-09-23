@@ -40,12 +40,20 @@ class Preprocessor(object):
             condition = rewritten
 
     def expand_normal_macros(self, line):
+        line = re.sub(r'TArrayIntOutVoid', 'intptr_t*', line)
+        line = re.sub(r'TArrayIntPtrOutVoid', 'intptr_t*', line)
+        line = re.sub(r'TArrayLen', 'int', line)
         line = re.sub(r'TArrayObjectOutVoid\([^)]*\)', 'void**', line)
         line = re.sub(r'TArrayString\([^)]*\)', 'int, wchar_t*', line)
+        line = re.sub(r'TArrayStringOutVoid', 'wchar_t**', line)
         line = re.sub(r'TBoolInt', 'int', line)
         line = re.sub(r'TBool', 'bool', line)
         line = re.sub(r'TByteString\([^)]*\)', 'char**, int', line)
         line = re.sub(r'TByteStringLazy\([^)]*\)', 'char**, int', line)
+        line = re.sub(r'TByteStringLazyOut', 'char*', line)
+        line = re.sub(r'TByteStringLen', 'int', line)
+        line = re.sub(r'TByteStringOut', 'char*', line)
+        line = re.sub(r'TChar', 'wchar_t', line)
         line = re.sub(r'TClass\([^)]*\)', 'void*', line)
         line = re.sub(r'TClassRef\([^)]*\)', 'void*', line)
         line = re.sub(r'TColorRGB\([^)]*\)', 'ColorRGB', line)
@@ -61,6 +69,8 @@ class Preprocessor(object):
         line = re.sub(r'TSizeOutDouble\([^)]*\)', 'DoubleSize*', line)
         line = re.sub(r'TSizeOutVoid\([^)]*\)', 'IntSize*', line)
         line = re.sub(r'TStringVoid', 'wchar_t*', line)
+        line = re.sub(r'TString', 'wchar_t*', line)
+        line = re.sub(r'TUInt8', 'uint8_t', line)
         line = re.sub(r'TVector\([^)]*\)', 'Vector', line)
         return line
 
@@ -151,6 +161,7 @@ class Parser(object):
 
     def print_parsed(self):
         self.println('use std::libc::*;')
+        self.println('use types::*;')
         self.println()
         self.println('#[link_args="-lwxc"]')
         self.println('extern {')

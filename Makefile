@@ -1,5 +1,5 @@
-libwxrust.a: native.rs
-	rustc native.rs -o libwxrust.a
+libwxrust.a: native.rs types.rs wx.rc
+	rustc -L wxc wx.rc -o libwxrust.a
 
 native.rs: wxHaskell/wxc/src/include/wxc_glue.h codegen.py
 	python codegen.py $< > $@
