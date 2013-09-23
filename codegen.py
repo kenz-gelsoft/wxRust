@@ -6,8 +6,9 @@ def main():
     p = Parser()
     for file in sys.argv[1:]:
         with open(file) as f:
+            p.new_file()
             p.parse(Preprocessor().preprocess(f))
-        p.print_parsed()
+    p.print_parsed()
 
 
 class Preprocessor(object):
@@ -19,6 +20,8 @@ class Preprocessor(object):
         while True:
             rewritten = condition
             rules = (
+                     ('defined(_stdcall)', '0'),
+                     ('defined(wxc_h)', '0'),
                      ('defined(WXC_GLUE_H)', '0'),
                      ('wxCHECK_VERSION(2,9,5)', '0'),
                      ('(wxVERSION_NUMBER >= 2905)', '0'),
@@ -54,24 +57,28 @@ class Preprocessor(object):
         line = re.sub(r'TByteStringLen', 'int', line)
         line = re.sub(r'TByteStringOut', 'char*', line)
         line = re.sub(r'TChar', 'wchar_t', line)
-        line = re.sub(r'TClass\([^)]*\)', 'void*', line)
+        line = re.sub(r'TClass\s*\([^)]*\)', 'void*', line)
         line = re.sub(r'TClassRef\([^)]*\)', 'void*', line)
+        line = re.sub(r'TClosureFun', 'void*', line)
         line = re.sub(r'TColorRGB\([^)]*\)', 'ColorRGB', line)
-        line = re.sub(r'TPoint\([^)]*\)', 'Point<c_int>', line)
-        line = re.sub(r'TPointLong\([^)]*\)', 'Point<c_long>', line)
-        line = re.sub(r'TPointOut\([^)]*\)', 'Point<c_int>*', line)
-        line = re.sub(r'TPointOutVoid\([^)]*\)', 'Point<c_int>*', line)
-        line = re.sub(r'TRect\([^)]*\)', 'Rect<c_int>', line)
-        line = re.sub(r'TRectOutVoid\([^)]*\)', 'Rect<c_int>*', line)
+        line = re.sub(r'TIntPtr', 'intptr_t', line)
+        line = re.sub(r'TPoint\([^)]*\)', 'Point', line)
+        line = re.sub(r'TPointLong\([^)]*\)', 'LongPoint', line)
+        line = re.sub(r'TPointOut\([^)]*\)', 'Point*', line)
+        line = re.sub(r'TPointOutVoid\([^)]*\)', 'Point*', line)
+        line = re.sub(r'TRect\([^)]*\)', 'Rect', line)
+        line = re.sub(r'TRectOutVoid\([^)]*\)', 'Rect*', line)
         line = re.sub(r'TSelf\([^)]*\)', 'void*', line)
-        line = re.sub(r'TSize\([^)]*\)', 'Size<c_int>', line)
-        line = re.sub(r'TSizeOut\([^)]*\)', 'Size<c_int>*', line)
-        line = re.sub(r'TSizeOutDouble\([^)]*\)', 'Size<c_double>*', line)
-        line = re.sub(r'TSizeOutVoid\([^)]*\)', 'Size<c_int>*', line)
+        line = re.sub(r'TSize\([^)]*\)', 'Size', line)
+        line = re.sub(r'TSizeOut\([^)]*\)', 'Size*', line)
+        line = re.sub(r'TSizeOutDouble\([^)]*\)', 'DoubleSize*', line)
+        line = re.sub(r'TSizeOutVoid\([^)]*\)', 'Size*', line)
         line = re.sub(r'TStringVoid', 'wchar_t*', line)
+        line = re.sub(r'TStringLen', 'int', line)
         line = re.sub(r'TString', 'wchar_t*', line)
         line = re.sub(r'TUInt8', 'uint8_t', line)
-        line = re.sub(r'TVector\([^)]*\)', 'Vector<c_int>', line)
+        line = re.sub(r'TUInt', 'uint32_t', line)
+        line = re.sub(r'TVector\([^)]*\)', 'Vector', line)
         return line
 
     def preprocess(self, file):
@@ -81,7 +88,7 @@ class Preprocessor(object):
             if line.startswith('#'):
                 # directive line
                 line = line[1:].strip()
-                if line.startswith('import') or line.startswith('include') or line.startswith('define'):
+                if line.startswith('import') or line.startswith('include') or line.startswith('define') or line.startswith('undef'):
                     # ignore imports, includes and defines for now.
                     continue
                 elif line.startswith('if') or line.startswith('elif') or line.startswith('ifdef') or line.startswith('ifndef'):
@@ -138,8 +145,11 @@ class Preprocessor(object):
 class Parser(object):
     def __init__(self):
         self.__indent = 0
+        self.__classes = []
+    
+    def new_file(self):
         self.__current = Class(self)
-        self.__classes = [self.__current]
+        self.__classes.append(self.__current)
     
     def parse(self, lines):
         for line in lines:
@@ -232,6 +242,7 @@ class Method(object):
         arg = re.sub(r'\*\s\*', '*', arg)
         arg = re.sub(r'\s+\*', '*', arg)
         arg = re.sub(r'\s+', ' ', arg)
+        arg = arg.replace(' Out ', ' ')
         arg = arg.strip()
         assert len(arg.split(' ')) <= 2
         return arg
@@ -338,7 +349,7 @@ class Type(object):
                 if s == 'void':
                     s = 'u8'
                 if self.__param:
-                    s = '&[%s]' % s
+                    s = '*%s' % s
                 else:
                     s = '~[%s]' % s
             else:
