@@ -42,6 +42,8 @@ class Preprocessor(object):
     def expand_normal_macros(self, line):
         line = re.sub(r'TArrayObjectOutVoid\([^)]*\)', 'void**', line)
         line = re.sub(r'TArrayString\([^)]*\)', 'int, wchar_t*', line)
+        line = re.sub(r'TBoolInt', 'int', line)
+        line = re.sub(r'TBool', 'bool', line)
         line = re.sub(r'TByteString\([^)]*\)', 'char**, int', line)
         line = re.sub(r'TByteStringLazy\([^)]*\)', 'char**, int', line)
         line = re.sub(r'TClass\([^)]*\)', 'void*', line)
@@ -58,6 +60,7 @@ class Preprocessor(object):
         line = re.sub(r'TSizeOut\([^)]*\)', 'IntSize*', line)
         line = re.sub(r'TSizeOutDouble\([^)]*\)', 'DoubleSize*', line)
         line = re.sub(r'TSizeOutVoid\([^)]*\)', 'IntSize*', line)
+        line = re.sub(r'TStringVoid', 'wchar_t*', line)
         line = re.sub(r'TVector\([^)]*\)', 'Vector', line)
         return line
 
@@ -147,6 +150,8 @@ class Parser(object):
         self.__current.parse_line(line)
 
     def print_parsed(self):
+        self.println('use std::libc::*;')
+        self.println()
         self.println('#[link_args="-lwxc"]')
         self.println('extern {')
         self.__indent += 1
@@ -155,7 +160,7 @@ class Parser(object):
         self.__indent -= 1
         self.println('}')
             
-    def println(self, text):
+    def println(self, text=''):
         lines = text.split('\n')
         for line in lines:
             line = '%s%s' % (''+(' ' * 4 * self.__indent), line)
@@ -181,7 +186,7 @@ class Class(object):
         for method in self.__methods:
             self.println(repr(method))
 
-    def println(self, text):
+    def println(self, text=''):
         self.__parser.println(text)
 
 
@@ -267,6 +272,10 @@ class Type(object):
     
     def __repr__(self):
         s = self.name
+        if s == 'double':
+            s = 'c_double'
+        if s == 'long':
+            s = 'c_long'
         if s == 'long long':
             s = 'c_longlong'
         if s == 'int':

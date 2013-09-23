@@ -1,3 +1,5 @@
+use std::libc::*;
+
 #[link_args="-lwxc"]
 extern {
     pub fn Null_AcceleratorTable() -> ~[u8] /* void* */;
@@ -475,11 +477,11 @@ extern {
     pub fn LogFatalErrorMsg(_msg: &[u8] /* void* */);
     pub fn LogMessageMsg(_msg: &[u8] /* void* */);
     pub fn LogWarningMsg(_msg: &[u8] /* void* */);
-    pub fn Quantize(src: &[u8] /* void* */, dest: &[u8] /* void* */, desiredNoColours: c_int /* int */, eightBitData: &[u8] /* void* */, flags: c_int /* int */) -> TBool /* TBool */;
-    pub fn QuantizePalette(src: &[u8] /* void* */, dest: &[u8] /* void* */, pPalette: &[u8] /* void* */, desiredNoColours: c_int /* int */, eightBitData: &[u8] /* void* */, flags: c_int /* int */) -> TBool /* TBool */;
+    pub fn Quantize(src: &[u8] /* void* */, dest: &[u8] /* void* */, desiredNoColours: c_int /* int */, eightBitData: &[u8] /* void* */, flags: c_int /* int */) -> bool /* bool */;
+    pub fn QuantizePalette(src: &[u8] /* void* */, dest: &[u8] /* void* */, pPalette: &[u8] /* void* */, desiredNoColours: c_int /* int */, eightBitData: &[u8] /* void* */, flags: c_int /* int */) -> bool /* bool */;
     pub fn wxCFree(_ptr: &[u8] /* void* */);
     pub fn wxGetELJLocale() -> ~[u8] /* void* */;
-    pub fn wxGetELJTranslation(sz: TStringVoid /* TStringVoid */) -> ~[u8] /* void* */;
+    pub fn wxGetELJTranslation(sz: &[wchar_t] /* wchar_t* */) -> ~[u8] /* void* */;
     pub fn wxMutexGui_Enter();
     pub fn wxMutexGui_Leave();
     
@@ -488,7 +490,7 @@ extern {
     pub fn ELJApp_CreateLogTarget() -> ~[u8] /* void* */;
     pub fn ELJApp_Dispatch();
     pub fn ELJApp_DisplaySize() -> ~[u8] /* void* */;
-    pub fn ELJApp_EnableTooltips(_enable: TBool /* TBool */);
+    pub fn ELJApp_EnableTooltips(_enable: bool /* bool */);
     pub fn ELJApp_EnableTopLevelWindows(_enb: c_int /* int */);
     pub fn ELJApp_ExecuteProcess(_cmd: &[u8] /* void* */, _snc: c_int /* int */, _prc: &[u8] /* void* */) -> c_int /* int */;
     pub fn ELJApp_Exit();
@@ -509,7 +511,7 @@ extern {
     pub fn ELJApp_GetUserName() -> ~[u8] /* void* */;
     pub fn ELJApp_GetVendorName() -> ~[u8] /* void* */;
     pub fn ELJApp_InitAllImageHandlers();
-    pub fn ELJApp_Initialized() -> TBool /* TBool */;
+    pub fn ELJApp_Initialized() -> bool /* bool */;
     pub fn ELJApp_MainLoop() -> c_int /* int */;
     pub fn ELJApp_MousePosition() -> ~[u8] /* void* */;
     pub fn ELJApp_Pending() -> c_int /* int */;
@@ -525,7 +527,7 @@ extern {
     pub fn ELJApp_Sleep(_scs: c_int /* int */);
     pub fn ELJApp_MilliSleep(_mscs: c_int /* int */);
     pub fn ELJApp_Yield() -> c_int /* int */;
-    pub fn ELJApp_IsTerminating() -> TBoolInt /* TBoolInt */;
+    pub fn ELJApp_IsTerminating() -> c_int /* int */;
     
     // TClassDefExtend(ELJArtProv,wxArtProvider)
     pub fn ELJArtProv_Create(_obj: &[u8] /* void* */, _clb: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -537,7 +539,7 @@ extern {
     pub fn ELJClient_MakeConnection(_obj: &[u8] /* void* */, host: &[u8] /* void* */, server: &[u8] /* void* */, topic: &[u8] /* void* */);
     
     // TClassDefExtend(ELJCommand,wxCommand)
-    pub fn ELJCommand_CanUndo(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn ELJCommand_CanUndo(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn ELJCommand_Create(_und: c_int /* int */, _nme: &[u8] /* void* */, _obj: &[u8] /* void* */, _clb: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn ELJCommand_Delete(_obj: &[u8] /* void* */);
     pub fn ELJCommand_GetName(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -548,9 +550,9 @@ extern {
     pub fn ELJConnection_Create(_obj: &[u8] /* void* */, buffer: &[u8] /* void* */, size: c_int /* int */) -> ~[u8] /* void* */;
     pub fn ELJConnection_CreateDefault(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn ELJConnection_Delete(_obj: &[u8] /* void* */);
-    pub fn ELJConnection_Disconnect(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn ELJConnection_Execute(_obj: &[u8] /* void* */, data: &[u8] /* void* */, size: c_int /* int */, format: c_int /* int */) -> TBool /* TBool */;
-    pub fn ELJConnection_Poke(_obj: &[u8] /* void* */, item: &[u8] /* void* */, data: &[u8] /* void* */, size: c_int /* int */, format: c_int /* int */) -> TBool /* TBool */;
+    pub fn ELJConnection_Disconnect(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn ELJConnection_Execute(_obj: &[u8] /* void* */, data: &[u8] /* void* */, size: c_int /* int */, format: c_int /* int */) -> bool /* bool */;
+    pub fn ELJConnection_Poke(_obj: &[u8] /* void* */, item: &[u8] /* void* */, data: &[u8] /* void* */, size: c_int /* int */, format: c_int /* int */) -> bool /* bool */;
     pub fn ELJConnection_Request(_obj: &[u8] /* void* */, item: &[u8] /* void* */, size: &[u8] /* void* */, format: c_int /* int */) -> ~[u8] /* void* */;
     pub fn ELJConnection_SetOnAdvise(_obj: &[u8] /* void* */, _fnc: &[u8] /* void* */);
     pub fn ELJConnection_SetOnDisconnect(_obj: &[u8] /* void* */, _fnc: &[u8] /* void* */);
@@ -559,8 +561,8 @@ extern {
     pub fn ELJConnection_SetOnRequest(_obj: &[u8] /* void* */, _fnc: &[u8] /* void* */);
     pub fn ELJConnection_SetOnStartAdvise(_obj: &[u8] /* void* */, _fnc: &[u8] /* void* */);
     pub fn ELJConnection_SetOnStopAdvise(_obj: &[u8] /* void* */, _fnc: &[u8] /* void* */);
-    pub fn ELJConnection_StartAdvise(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn ELJConnection_StopAdvise(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn ELJConnection_StartAdvise(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> bool /* bool */;
+    pub fn ELJConnection_StopAdvise(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDef(ELJDragDataObject)
     pub fn ELJDragDataObject_Create(_obj: &[u8] /* void* */, _fmt: &[u8] /* void* */, _func1: &[u8] /* void* */, _func2: &[u8] /* void* */, _func3: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -593,22 +595,22 @@ extern {
     // TClassDefExtend(ELJLocale,wxLocale)
     
     // TClassDefExtend(ELJLog,wxLog)
-    pub fn ELJLog_AddTraceMask(_obj: &[u8] /* void* */, str: TStringVoid /* TStringVoid */);
+    pub fn ELJLog_AddTraceMask(_obj: &[u8] /* void* */, str: &[wchar_t] /* wchar_t* */);
     pub fn ELJLog_Create(_obj: &[u8] /* void* */, _fnc: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn ELJLog_Delete(_obj: &[u8] /* void* */);
     pub fn ELJLog_DontCreateOnDemand(_obj: &[u8] /* void* */);
-    pub fn ELJLog_EnableLogging(_obj: &[u8] /* void* */, doIt: TBool /* TBool */) -> c_int /* int */;
+    pub fn ELJLog_EnableLogging(_obj: &[u8] /* void* */, doIt: bool /* bool */) -> c_int /* int */;
     pub fn ELJLog_Flush(_obj: &[u8] /* void* */);
     pub fn ELJLog_FlushActive(_obj: &[u8] /* void* */);
     pub fn ELJLog_GetActiveTarget() -> ~[u8] /* void* */;
     pub fn ELJLog_GetTimestamp(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn ELJLog_GetTraceMask(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn ELJLog_GetVerbose(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn ELJLog_HasPendingMessages(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn ELJLog_IsAllowedTraceMask(_obj: &[u8] /* void* */, mask: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn ELJLog_IsEnabled(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn ELJLog_HasPendingMessages(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn ELJLog_IsAllowedTraceMask(_obj: &[u8] /* void* */, mask: &[u8] /* void* */) -> bool /* bool */;
+    pub fn ELJLog_IsEnabled(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn ELJLog_OnLog(_obj: &[u8] /* void* */, level: c_int /* int */, szString: &[u8] /* void* */, t: c_int /* int */);
-    pub fn ELJLog_RemoveTraceMask(_obj: &[u8] /* void* */, str: TStringVoid /* TStringVoid */);
+    pub fn ELJLog_RemoveTraceMask(_obj: &[u8] /* void* */, str: &[wchar_t] /* wchar_t* */);
     pub fn ELJLog_Resume(_obj: &[u8] /* void* */);
     pub fn ELJLog_SetActiveTarget(pLogger: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn ELJLog_SetTimestamp(_obj: &[u8] /* void* */, ts: &[u8] /* void* */);
@@ -617,20 +619,20 @@ extern {
     pub fn ELJLog_Suspend(_obj: &[u8] /* void* */);
     
     // TClassDef(ELJMessageParameters)
-    pub fn wxMessageParameters_Create(_file: TStringVoid /* TStringVoid */, _type: TStringVoid /* TStringVoid */, _object: &[u8] /* void* */, _func: &[u8] /* void* */) -> ~[u8] /* void* */;
+    pub fn wxMessageParameters_Create(_file: &[wchar_t] /* wchar_t* */, _type: &[wchar_t] /* wchar_t* */, _object: &[u8] /* void* */, _func: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxMessageParameters_Delete(_obj: &[u8] /* void* */);
     
     // TClassDefExtend(ELJPlotCurve,wxPlotCurve)
-    pub fn ELJPlotCurve_Create(_obj: &[u8] /* void* */, _str: &[u8] /* void* */, _end: &[u8] /* void* */, _y: &[u8] /* void* */, offsetY: c_int /* int */, startY: double /* double */, endY: double /* double */) -> ~[u8] /* void* */;
+    pub fn ELJPlotCurve_Create(_obj: &[u8] /* void* */, _str: &[u8] /* void* */, _end: &[u8] /* void* */, _y: &[u8] /* void* */, offsetY: c_int /* int */, startY: c_double /* double */, endY: c_double /* double */) -> ~[u8] /* void* */;
     pub fn ELJPlotCurve_Delete(_obj: &[u8] /* void* */);
-    pub fn ELJPlotCurve_GetEndY(_obj: &[u8] /* void* */) -> double /* double */;
+    pub fn ELJPlotCurve_GetEndY(_obj: &[u8] /* void* */) -> c_double /* double */;
     pub fn ELJPlotCurve_GetOffsetY(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn ELJPlotCurve_GetStartY(_obj: &[u8] /* void* */) -> double /* double */;
-    pub fn ELJPlotCurve_SetEndY(_obj: &[u8] /* void* */, endY: double /* double */);
+    pub fn ELJPlotCurve_GetStartY(_obj: &[u8] /* void* */) -> c_double /* double */;
+    pub fn ELJPlotCurve_SetEndY(_obj: &[u8] /* void* */, endY: c_double /* double */);
     pub fn ELJPlotCurve_SetOffsetY(_obj: &[u8] /* void* */, offsetY: c_int /* int */);
     pub fn ELJPlotCurve_SetPenNormal(_obj: &[u8] /* void* */, pen: &[u8] /* void* */);
     pub fn ELJPlotCurve_SetPenSelected(_obj: &[u8] /* void* */, pen: &[u8] /* void* */);
-    pub fn ELJPlotCurve_SetStartY(_obj: &[u8] /* void* */, startY: double /* double */);
+    pub fn ELJPlotCurve_SetStartY(_obj: &[u8] /* void* */, startY: c_double /* double */);
     
     // TClassDefExtend(ELJPreviewControlBar,wxPreviewControlBar)
     pub fn ELJPreviewControlBar_Create(preview: &[u8] /* void* */, buttons: c_int /* int */, parent: &[u8] /* void* */, title: &[u8] /* void* */, arg0: Rect /* Rect */, style: c_int /* int */) -> ~[u8] /* void* */;
@@ -660,7 +662,7 @@ extern {
     pub fn ELJTextDropTarget_SetOnLeave(_obj: &[u8] /* void* */, _func: &[u8] /* void* */);
     
     // TClassDefExtend(ELJTextValidator,wxTextValidator)
-    pub fn ELJTextValidator_Create(_obj: &[u8] /* void* */, _fnc: &[u8] /* void* */, _txt: TStringVoid /* TStringVoid */, _stl: c_int /* int */) -> ~[u8] /* void* */;
+    pub fn ELJTextValidator_Create(_obj: &[u8] /* void* */, _fnc: &[u8] /* void* */, _txt: &[wchar_t] /* wchar_t* */, _stl: c_int /* int */) -> ~[u8] /* void* */;
     
     // TClassDefExtend(cbAntiflickerPlugin,cbPluginBase)
     pub fn cbAntiflickerPlugin_Create(pPanel: &[u8] /* void* */, paneMask: c_int /* int */) -> ~[u8] /* void* */;
@@ -681,8 +683,8 @@ extern {
     // TClassDefExtend(cbBarInfo,wxObject)
     pub fn cbBarInfo_Create() -> ~[u8] /* void* */;
     pub fn cbBarInfo_Delete(_obj: &[u8] /* void* */);
-    pub fn cbBarInfo_IsExpanded(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn cbBarInfo_IsFixed(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn cbBarInfo_IsExpanded(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn cbBarInfo_IsFixed(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(cbBarSpy,wxEvtHandler)
     pub fn cbBarSpy_Create(pPanel: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -737,10 +739,10 @@ extern {
     
     // TClassDefExtend(cbDimInfo,wxObject)
     pub fn cbDimInfo_Assign(_obj: &[u8] /* void* */, other: &[u8] /* void* */);
-    pub fn cbDimInfo_Create(arg0: IntPoint /* IntPoint */, isFixed: TBool /* TBool */, gap: c_int /* int */, pDimHandler: &[u8] /* void* */) -> ~[u8] /* void* */;
+    pub fn cbDimInfo_Create(arg0: IntPoint /* IntPoint */, isFixed: bool /* bool */, gap: c_int /* int */, pDimHandler: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn cbDimInfo_CreateDefault() -> ~[u8] /* void* */;
-    pub fn cbDimInfo_CreateWithHandler(pDimHandler: &[u8] /* void* */, isFixed: TBool /* TBool */) -> ~[u8] /* void* */;
-    pub fn cbDimInfo_CreateWithInfo(dh_x: c_int /* int */, dh_y: c_int /* int */, dv_x: c_int /* int */, dv_y: c_int /* int */, f_x: c_int /* int */, f_y: c_int /* int */, isFixed: TBool /* TBool */, horizGap: c_int /* int */, vertGap: c_int /* int */, pDimHandler: &[u8] /* void* */) -> ~[u8] /* void* */;
+    pub fn cbDimInfo_CreateWithHandler(pDimHandler: &[u8] /* void* */, isFixed: bool /* bool */) -> ~[u8] /* void* */;
+    pub fn cbDimInfo_CreateWithInfo(dh_x: c_int /* int */, dh_y: c_int /* int */, dv_x: c_int /* int */, dv_y: c_int /* int */, f_x: c_int /* int */, f_y: c_int /* int */, isFixed: bool /* bool */, horizGap: c_int /* int */, vertGap: c_int /* int */, pDimHandler: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn cbDimInfo_Delete(_obj: &[u8] /* void* */);
     pub fn cbDimInfo_GetDimHandler(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     
@@ -766,7 +768,7 @@ extern {
     pub fn cbDockPane_InsertBarByInfo(_obj: &[u8] /* void* */, pBarInfo: &[u8] /* void* */);
     pub fn cbDockPane_InsertBarToRow(_obj: &[u8] /* void* */, pBar: &[u8] /* void* */, pIntoRow: &[u8] /* void* */);
     pub fn cbDockPane_InsertRow(_obj: &[u8] /* void* */, pRow: &[u8] /* void* */, pBeforeRow: &[u8] /* void* */);
-    pub fn cbDockPane_IsHorizontal(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn cbDockPane_IsHorizontal(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn cbDockPane_MatchesMask(_obj: &[u8] /* void* */, paneMask: c_int /* int */) -> c_int /* int */;
     pub fn cbDockPane_RemoveBar(_obj: &[u8] /* void* */, pBar: &[u8] /* void* */);
     pub fn cbDockPane_RemoveRow(_obj: &[u8] /* void* */, pRow: &[u8] /* void* */);
@@ -785,7 +787,7 @@ extern {
     
     // TClassDefExtend(cbDrawHintRectEvent,cbPluginEvent)
     pub fn cbDrawHintRectEvent_EraseRect(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn cbDrawHintRectEvent_IsInClient(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn cbDrawHintRectEvent_IsInClient(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn cbDrawHintRectEvent_LastTime(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn cbDrawHintRectEvent_Rect(_obj: &[u8] /* void* */, arg0: &[Rect] /* Rect* */);
     
@@ -853,10 +855,10 @@ extern {
     pub fn cbMiniButton_Delete(_obj: &[u8] /* void* */);
     pub fn cbMiniButton_Dim(_obj: &[u8] /* void* */, arg0: &[IntSize] /* IntSize* */);
     pub fn cbMiniButton_DragStarted(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn cbMiniButton_Enable(_obj: &[u8] /* void* */, enable: TBool /* TBool */);
+    pub fn cbMiniButton_Enable(_obj: &[u8] /* void* */, enable: bool /* bool */);
     pub fn cbMiniButton_Enabled(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn cbMiniButton_HitTest(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> c_int /* int */;
-    pub fn cbMiniButton_IsPressed(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn cbMiniButton_IsPressed(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn cbMiniButton_Layout(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn cbMiniButton_Pane(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn cbMiniButton_Plugin(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -880,7 +882,7 @@ extern {
     // TClassDefExtend(cbPluginBase,wxEvtHandler)
     pub fn cbPluginBase_Delete(_obj: &[u8] /* void* */);
     pub fn cbPluginBase_GetPaneMask(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn cbPluginBase_IsReady(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn cbPluginBase_IsReady(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn cbPluginBase_Plugin(_swt: c_int /* int */) -> ~[u8] /* void* */;
     pub fn cbPluginBase_ProcessEvent(_obj: &[u8] /* void* */, event: &[u8] /* void* */) -> c_int /* int */;
     
@@ -954,7 +956,7 @@ extern {
     
     // TClassDefExtend(wxActivateEvent,wxEvent)
     pub fn wxActivateEvent_CopyObject(_obj: &[u8] /* void* */, obj: &[u8] /* void* */);
-    pub fn wxActivateEvent_GetActive(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxActivateEvent_GetActive(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxApp,wxEvtHandler)
     
@@ -963,9 +965,9 @@ extern {
     // TClassDefExtend(wxArrayString,wxArray)
     
     // TClassDefExtend(wxArtProvider,wxObject)
-    pub fn PopProvider() -> TBool /* TBool */;
+    pub fn PopProvider() -> bool /* bool */;
     pub fn PushProvider(provider: &[u8] /* void* */);
-    pub fn RemoveProvider(provider: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn RemoveProvider(provider: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxAutoBufferedPaintDC,wxDC)
     pub fn wxAutoBufferedPaintDC_Create(window: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -993,8 +995,8 @@ extern {
     pub fn wxBitmap_InitStandardHandlers();
     pub fn wxBitmap_InsertHandler(handler: &[u8] /* void* */);
     pub fn wxBitmap_LoadFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: c_int /* int */) -> c_int /* int */;
-    pub fn wxBitmap_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxBitmap_RemoveHandler(name: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxBitmap_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxBitmap_RemoveHandler(name: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxBitmap_SaveFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: c_int /* int */, cmap: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxBitmap_SetDepth(_obj: &[u8] /* void* */, d: c_int /* int */);
     pub fn wxBitmap_SetHeight(_obj: &[u8] /* void* */, h: c_int /* int */);
@@ -1017,9 +1019,9 @@ extern {
     
     // TClassDefExtend(wxBitmapToggleButton,wxToggleButton)
     pub fn wxBitmapToggleButton_Create(parent: &[u8] /* void* */, id: c_int /* int */, _bmp: &[u8] /* void* */, arg0: Rect /* Rect */, style: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxBitmapToggleButton_Enable(_obj: &[u8] /* void* */, enable: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxBitmapToggleButton_GetValue(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxBitmapToggleButton_SetValue(_obj: &[u8] /* void* */, state: TBool /* TBool */);
+    pub fn wxBitmapToggleButton_Enable(_obj: &[u8] /* void* */, enable: bool /* bool */) -> bool /* bool */;
+    pub fn wxBitmapToggleButton_GetValue(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxBitmapToggleButton_SetValue(_obj: &[u8] /* void* */, state: bool /* bool */);
     pub fn wxBitmapToggleButton_SetBitmapLabel(_obj: &[u8] /* void* */, _bmp: &[u8] /* void* */);
     
     // TClassDefExtend(wxBitmapDataObject,wxDataObjectSimple)
@@ -1047,8 +1049,8 @@ extern {
     pub fn wxBrush_GetColour(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
     pub fn wxBrush_GetStipple(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
     pub fn wxBrush_GetStyle(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxBrush_IsEqual(_obj: &[u8] /* void* */, brush: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxBrush_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxBrush_IsEqual(_obj: &[u8] /* void* */, brush: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxBrush_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxBrush_SetColour(_obj: &[u8] /* void* */, col: &[u8] /* void* */);
     pub fn wxBrush_SetColourSingle(_obj: &[u8] /* void* */, r: TChar /* TChar */, g: TChar /* TChar */, b: TChar /* TChar */);
     pub fn wxBrush_SetStipple(_obj: &[u8] /* void* */, stipple: &[u8] /* void* */);
@@ -1096,7 +1098,7 @@ extern {
     // TClassDefExtend(wxCalendarCtrl,wxControl)
     pub fn wxCalendarCtrl_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _dat: &[u8] /* void* */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxCalendarCtrl_EnableHolidayDisplay(_obj: &[u8] /* void* */, display: c_int /* int */);
-    pub fn wxCalendarCtrl_EnableMonthChange(_obj: &[u8] /* void* */, enable: TBool /* TBool */);
+    pub fn wxCalendarCtrl_EnableMonthChange(_obj: &[u8] /* void* */, enable: bool /* bool */);
     pub fn wxCalendarCtrl_GetAttr(_obj: &[u8] /* void* */, day: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxCalendarCtrl_GetDate(_obj: &[u8] /* void* */, date: &[u8] /* void* */);
     pub fn wxCalendarCtrl_GetHeaderColourBg(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
@@ -1123,12 +1125,12 @@ extern {
     pub fn wxCalendarDateAttr_GetBorderColour(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
     pub fn wxCalendarDateAttr_GetFont(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
     pub fn wxCalendarDateAttr_GetTextColour(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
-    pub fn wxCalendarDateAttr_HasBackgroundColour(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxCalendarDateAttr_HasBorder(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxCalendarDateAttr_HasBorderColour(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxCalendarDateAttr_HasFont(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxCalendarDateAttr_HasTextColour(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxCalendarDateAttr_IsHoliday(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxCalendarDateAttr_HasBackgroundColour(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxCalendarDateAttr_HasBorder(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxCalendarDateAttr_HasBorderColour(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxCalendarDateAttr_HasFont(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxCalendarDateAttr_HasTextColour(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxCalendarDateAttr_IsHoliday(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxCalendarDateAttr_SetBackgroundColour(_obj: &[u8] /* void* */, col: &[u8] /* void* */);
     pub fn wxCalendarDateAttr_SetBorder(_obj: &[u8] /* void* */, border: c_int /* int */);
     pub fn wxCalendarDateAttr_SetBorderColour(_obj: &[u8] /* void* */, col: &[u8] /* void* */);
@@ -1147,8 +1149,8 @@ extern {
     pub fn wxCaret_GetSize(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxCaret_GetWindow(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxCaret_Hide(_obj: &[u8] /* void* */);
-    pub fn wxCaret_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxCaret_IsVisible(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxCaret_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxCaret_IsVisible(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxCaret_Move(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
     pub fn wxCaret_SetBlinkTime(milliseconds: c_int /* int */);
     pub fn wxCaret_SetSize(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */);
@@ -1157,14 +1159,14 @@ extern {
     // TClassDefExtend(wxCheckBox,wxControl)
     pub fn wxCheckBox_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _txt: &[u8] /* void* */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxCheckBox_Delete(_obj: &[u8] /* void* */);
-    pub fn wxCheckBox_GetValue(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxCheckBox_SetValue(_obj: &[u8] /* void* */, value: TBoolInt /* TBoolInt */);
+    pub fn wxCheckBox_GetValue(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxCheckBox_SetValue(_obj: &[u8] /* void* */, value: c_int /* int */);
     
     // TClassDefExtend(wxCheckListBox,wxListBox)
-    pub fn wxCheckListBox_Check(_obj: &[u8] /* void* */, item: c_int /* int */, check: TBool /* TBool */);
+    pub fn wxCheckListBox_Check(_obj: &[u8] /* void* */, item: c_int /* int */, check: bool /* bool */);
     pub fn wxCheckListBox_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */, arg1: c_int /* int */, arg2: &[wchar_t] /* wchar_t* */, _stl: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxCheckListBox_Delete(_obj: &[u8] /* void* */);
-    pub fn wxCheckListBox_IsChecked(_obj: &[u8] /* void* */, item: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxCheckListBox_IsChecked(_obj: &[u8] /* void* */, item: c_int /* int */) -> bool /* bool */;
     
     // TClassDefExtend(wxChoice,wxControl)
     pub fn wxChoice_Append(_obj: &[u8] /* void* */, item: &[u8] /* void* */);
@@ -1181,7 +1183,7 @@ extern {
     // TClassDef(wxClassInfo)
     pub fn wxClassInfo_CreateClassByName(_inf: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxClassInfo_GetClassName(_inf: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxClassInfo_IsKindOf(_obj: &[u8] /* void* */, _name: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxClassInfo_IsKindOf(_obj: &[u8] /* void* */, _name: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxClient,wxClientBase)
     
@@ -1196,26 +1198,26 @@ extern {
     // TClassDef(wxClientDataContainer)
     
     // TClassDefExtend(wxClipboard,wxObject)
-    pub fn wxClipboard_AddData(_obj: &[u8] /* void* */, data: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxClipboard_AddData(_obj: &[u8] /* void* */, data: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxClipboard_Clear(_obj: &[u8] /* void* */);
     pub fn wxClipboard_Close(_obj: &[u8] /* void* */);
     pub fn wxClipboard_Create() -> ~[u8] /* void* */;
-    pub fn wxClipboard_Flush(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxClipboard_GetData(_obj: &[u8] /* void* */, data: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxClipboard_IsOpened(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxClipboard_IsSupported(_obj: &[u8] /* void* */, format: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxClipboard_Open(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxClipboard_SetData(_obj: &[u8] /* void* */, data: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxClipboard_UsePrimarySelection(_obj: &[u8] /* void* */, primary: TBool /* TBool */);
+    pub fn wxClipboard_Flush(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxClipboard_GetData(_obj: &[u8] /* void* */, data: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxClipboard_IsOpened(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxClipboard_IsSupported(_obj: &[u8] /* void* */, format: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxClipboard_Open(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxClipboard_SetData(_obj: &[u8] /* void* */, data: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxClipboard_UsePrimarySelection(_obj: &[u8] /* void* */, primary: bool /* bool */);
     
     // TClassDefExtend(wxCloseEvent,wxEvent)
-    pub fn wxCloseEvent_CanVeto(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxCloseEvent_CanVeto(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxCloseEvent_CopyObject(_obj: &[u8] /* void* */, obj: &[u8] /* void* */);
-    pub fn wxCloseEvent_GetLoggingOff(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxCloseEvent_GetVeto(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxCloseEvent_SetCanVeto(_obj: &[u8] /* void* */, canVeto: TBool /* TBool */);
-    pub fn wxCloseEvent_SetLoggingOff(_obj: &[u8] /* void* */, logOff: TBool /* TBool */);
-    pub fn wxCloseEvent_Veto(_obj: &[u8] /* void* */, veto: TBool /* TBool */);
+    pub fn wxCloseEvent_GetLoggingOff(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxCloseEvent_GetVeto(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxCloseEvent_SetCanVeto(_obj: &[u8] /* void* */, canVeto: bool /* bool */);
+    pub fn wxCloseEvent_SetLoggingOff(_obj: &[u8] /* void* */, logOff: bool /* bool */);
+    pub fn wxCloseEvent_Veto(_obj: &[u8] /* void* */, veto: bool /* bool */);
     
     // TClassDefExtend(wxClosure,wxObject)
     
@@ -1230,19 +1232,19 @@ extern {
     pub fn wxColour_CreateRGB(_red: TUInt8 /* TUInt8 */, _green: TUInt8 /* TUInt8 */, _blue: TUInt8 /* TUInt8 */, _alpha: TUInt8 /* TUInt8 */) -> ~[u8] /* void* */;
     pub fn wxColour_Delete(_obj: &[u8] /* void* */);
     pub fn wxColour_Green(_obj: &[u8] /* void* */) -> TUInt8 /* TUInt8 */;
-    pub fn wxColour_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxColour_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxColour_Red(_obj: &[u8] /* void* */) -> TUInt8 /* TUInt8 */;
     pub fn wxColour_Set(_obj: &[u8] /* void* */, _red: TUInt8 /* TUInt8 */, _green: TUInt8 /* TUInt8 */, _blue: TUInt8 /* TUInt8 */, _alpha: TUInt8 /* TUInt8 */);
     pub fn wxColour_SetByName(_obj: &[u8] /* void* */, _name: &[u8] /* void* */);
-    pub fn wxColour_ValidName(_name: TStringVoid /* TStringVoid */) -> TBool /* TBool */;
+    pub fn wxColour_ValidName(_name: &[wchar_t] /* wchar_t* */) -> bool /* bool */;
     
     // TClassDefExtend(wxColourData,wxObject)
     pub fn wxColourData_Create() -> ~[u8] /* void* */;
     pub fn wxColourData_Delete(_obj: &[u8] /* void* */);
-    pub fn wxColourData_GetChooseFull(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxColourData_GetChooseFull(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxColourData_GetColour(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
     pub fn wxColourData_GetCustomColour(_obj: &[u8] /* void* */, i: c_int /* int */, _ref: &[u8] /* void* */);
-    pub fn wxColourData_SetChooseFull(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
+    pub fn wxColourData_SetChooseFull(_obj: &[u8] /* void* */, flag: bool /* bool */);
     pub fn wxColourData_SetColour(_obj: &[u8] /* void* */, colour: &[u8] /* void* */);
     pub fn wxColourData_SetCustomColour(_obj: &[u8] /* void* */, i: c_int /* int */, colour: &[u8] /* void* */);
     
@@ -1273,7 +1275,7 @@ extern {
     pub fn wxComboBox_Remove(_obj: &[u8] /* void* */, from: c_int /* int */, to: c_int /* int */);
     pub fn wxComboBox_Replace(_obj: &[u8] /* void* */, from: c_int /* int */, to: c_int /* int */, value: &[u8] /* void* */);
     pub fn wxComboBox_SetClientData(_obj: &[u8] /* void* */, n: c_int /* int */, clientData: &[u8] /* void* */);
-    pub fn wxComboBox_SetEditable(_obj: &[u8] /* void* */, editable: TBool /* TBool */);
+    pub fn wxComboBox_SetEditable(_obj: &[u8] /* void* */, editable: bool /* bool */);
     pub fn wxComboBox_SetInsertionPoint(_obj: &[u8] /* void* */, pos: c_int /* int */);
     pub fn wxComboBox_SetInsertionPointEnd(_obj: &[u8] /* void* */);
     pub fn wxComboBox_SetSelection(_obj: &[u8] /* void* */, n: c_int /* int */);
@@ -1287,23 +1289,23 @@ extern {
     pub fn wxCommandEvent_Delete(_obj: &[u8] /* void* */);
     pub fn wxCommandEvent_GetClientData(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxCommandEvent_GetClientObject(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxCommandEvent_GetExtraLong(_obj: &[u8] /* void* */) -> long /* long */;
-    pub fn wxCommandEvent_GetInt(_obj: &[u8] /* void* */) -> long /* long */;
+    pub fn wxCommandEvent_GetExtraLong(_obj: &[u8] /* void* */) -> c_long /* long */;
+    pub fn wxCommandEvent_GetInt(_obj: &[u8] /* void* */) -> c_long /* long */;
     pub fn wxCommandEvent_GetSelection(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxCommandEvent_GetString(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxCommandEvent_IsChecked(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxCommandEvent_IsSelection(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxCommandEvent_IsChecked(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxCommandEvent_IsSelection(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxCommandEvent_SetClientData(_obj: &[u8] /* void* */, clientData: &[u8] /* void* */);
     pub fn wxCommandEvent_SetClientObject(_obj: &[u8] /* void* */, clientObject: &[u8] /* void* */);
-    pub fn wxCommandEvent_SetExtraLong(_obj: &[u8] /* void* */, extraLong: long /* long */);
+    pub fn wxCommandEvent_SetExtraLong(_obj: &[u8] /* void* */, extraLong: c_long /* long */);
     pub fn wxCommandEvent_SetInt(_obj: &[u8] /* void* */, i: c_int /* int */);
     pub fn wxCommandEvent_SetString(_obj: &[u8] /* void* */, s: &[u8] /* void* */);
     
     // TClassDef(wxCommandLineParser)
     
     // TClassDefExtend(wxCommandProcessor,wxObject)
-    pub fn wxCommandProcessor_CanRedo(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxCommandProcessor_CanUndo(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxCommandProcessor_CanRedo(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxCommandProcessor_CanUndo(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxCommandProcessor_ClearCommands(_obj: &[u8] /* void* */);
     pub fn wxCommandProcessor_Delete(_obj: &[u8] /* void* */);
     pub fn wxCommandProcessor_GetCommands(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */) -> c_int /* int */;
@@ -1328,57 +1330,57 @@ extern {
     // TClassDef(wxConfigBase)
     pub fn wxConfigBase_Create() -> ~[u8] /* void* */;
     pub fn wxConfigBase_Delete(_obj: &[u8] /* void* */);
-    pub fn wxConfigBase_DeleteAll(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxConfigBase_DeleteEntry(_obj: &[u8] /* void* */, key: &[u8] /* void* */, bDeleteGroupIfEmpty: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxConfigBase_DeleteGroup(_obj: &[u8] /* void* */, key: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxConfigBase_Exists(_obj: &[u8] /* void* */, strName: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxConfigBase_DeleteAll(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxConfigBase_DeleteEntry(_obj: &[u8] /* void* */, key: &[u8] /* void* */, bDeleteGroupIfEmpty: bool /* bool */) -> bool /* bool */;
+    pub fn wxConfigBase_DeleteGroup(_obj: &[u8] /* void* */, key: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxConfigBase_Exists(_obj: &[u8] /* void* */, strName: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxConfigBase_ExpandEnvVars(_obj: &[u8] /* void* */, str: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxConfigBase_Flush(_obj: &[u8] /* void* */, bCurrentOnly: TBool /* TBool */) -> TBool /* TBool */;
+    pub fn wxConfigBase_Flush(_obj: &[u8] /* void* */, bCurrentOnly: bool /* bool */) -> bool /* bool */;
     pub fn wxConfigBase_GetAppName(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxConfigBase_GetEntryType(_obj: &[u8] /* void* */, name: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxConfigBase_GetFirstEntry(_obj: &[u8] /* void* */, lIndex: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxConfigBase_GetFirstGroup(_obj: &[u8] /* void* */, lIndex: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxConfigBase_GetNextEntry(_obj: &[u8] /* void* */, lIndex: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxConfigBase_GetNextGroup(_obj: &[u8] /* void* */, lIndex: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxConfigBase_GetNumberOfEntries(_obj: &[u8] /* void* */, bRecursive: TBool /* TBool */) -> c_int /* int */;
-    pub fn wxConfigBase_GetNumberOfGroups(_obj: &[u8] /* void* */, bRecursive: TBool /* TBool */) -> c_int /* int */;
+    pub fn wxConfigBase_GetNumberOfEntries(_obj: &[u8] /* void* */, bRecursive: bool /* bool */) -> c_int /* int */;
+    pub fn wxConfigBase_GetNumberOfGroups(_obj: &[u8] /* void* */, bRecursive: bool /* bool */) -> c_int /* int */;
     pub fn wxConfigBase_GetPath(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxConfigBase_GetStyle(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxConfigBase_GetVendorName(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxConfigBase_HasEntry(_obj: &[u8] /* void* */, strName: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxConfigBase_HasGroup(_obj: &[u8] /* void* */, strName: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxConfigBase_IsExpandingEnvVars(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxConfigBase_IsRecordingDefaults(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxConfigBase_ReadBool(_obj: &[u8] /* void* */, key: &[u8] /* void* */, defVal: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxConfigBase_ReadDouble(_obj: &[u8] /* void* */, key: &[u8] /* void* */, defVal: double /* double */) -> double /* double */;
+    pub fn wxConfigBase_HasEntry(_obj: &[u8] /* void* */, strName: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxConfigBase_HasGroup(_obj: &[u8] /* void* */, strName: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxConfigBase_IsExpandingEnvVars(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxConfigBase_IsRecordingDefaults(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxConfigBase_ReadBool(_obj: &[u8] /* void* */, key: &[u8] /* void* */, defVal: bool /* bool */) -> bool /* bool */;
+    pub fn wxConfigBase_ReadDouble(_obj: &[u8] /* void* */, key: &[u8] /* void* */, defVal: c_double /* double */) -> c_double /* double */;
     pub fn wxConfigBase_ReadInteger(_obj: &[u8] /* void* */, key: &[u8] /* void* */, defVal: c_int /* int */) -> c_int /* int */;
     pub fn wxConfigBase_ReadString(_obj: &[u8] /* void* */, key: &[u8] /* void* */, defVal: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxConfigBase_RenameEntry(_obj: &[u8] /* void* */, oldName: &[u8] /* void* */, newName: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxConfigBase_RenameGroup(_obj: &[u8] /* void* */, oldName: &[u8] /* void* */, newName: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxConfigBase_RenameEntry(_obj: &[u8] /* void* */, oldName: &[u8] /* void* */, newName: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxConfigBase_RenameGroup(_obj: &[u8] /* void* */, oldName: &[u8] /* void* */, newName: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxConfigBase_SetAppName(_obj: &[u8] /* void* */, appName: &[u8] /* void* */);
-    pub fn wxConfigBase_SetExpandEnvVars(_obj: &[u8] /* void* */, bDoIt: TBool /* TBool */);
+    pub fn wxConfigBase_SetExpandEnvVars(_obj: &[u8] /* void* */, bDoIt: bool /* bool */);
     pub fn wxConfigBase_SetPath(_obj: &[u8] /* void* */, strPath: &[u8] /* void* */);
-    pub fn wxConfigBase_SetRecordDefaults(_obj: &[u8] /* void* */, bDoIt: TBool /* TBool */);
+    pub fn wxConfigBase_SetRecordDefaults(_obj: &[u8] /* void* */, bDoIt: bool /* bool */);
     pub fn wxConfigBase_SetStyle(_obj: &[u8] /* void* */, style: c_int /* int */);
     pub fn wxConfigBase_SetVendorName(_obj: &[u8] /* void* */, vendorName: &[u8] /* void* */);
-    pub fn wxConfigBase_WriteBool(_obj: &[u8] /* void* */, key: &[u8] /* void* */, value: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxConfigBase_WriteDouble(_obj: &[u8] /* void* */, key: &[u8] /* void* */, value: double /* double */) -> TBool /* TBool */;
-    pub fn wxConfigBase_WriteInteger(_obj: &[u8] /* void* */, key: &[u8] /* void* */, value: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxConfigBase_WriteLong(_obj: &[u8] /* void* */, key: &[u8] /* void* */, value: long /* long */) -> TBool /* TBool */;
-    pub fn wxConfigBase_WriteString(_obj: &[u8] /* void* */, key: &[u8] /* void* */, value: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxConfigBase_WriteBool(_obj: &[u8] /* void* */, key: &[u8] /* void* */, value: bool /* bool */) -> bool /* bool */;
+    pub fn wxConfigBase_WriteDouble(_obj: &[u8] /* void* */, key: &[u8] /* void* */, value: c_double /* double */) -> bool /* bool */;
+    pub fn wxConfigBase_WriteInteger(_obj: &[u8] /* void* */, key: &[u8] /* void* */, value: c_int /* int */) -> bool /* bool */;
+    pub fn wxConfigBase_WriteLong(_obj: &[u8] /* void* */, key: &[u8] /* void* */, value: c_long /* long */) -> bool /* bool */;
+    pub fn wxConfigBase_WriteString(_obj: &[u8] /* void* */, key: &[u8] /* void* */, value: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxConnection,wxConnectionBase)
     
     // TClassDefExtend(wxConnectionBase,wxObject)
     
     // TClassDefExtend(wxContextHelp,wxObject)
-    pub fn wxContextHelp_BeginContextHelp(_obj: &[u8] /* void* */, win: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxContextHelp_Create(win: &[u8] /* void* */, beginHelp: TBool /* TBool */) -> ~[u8] /* void* */;
+    pub fn wxContextHelp_BeginContextHelp(_obj: &[u8] /* void* */, win: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxContextHelp_Create(win: &[u8] /* void* */, beginHelp: bool /* bool */) -> ~[u8] /* void* */;
     pub fn wxContextHelp_Delete(_obj: &[u8] /* void* */);
-    pub fn wxContextHelp_EndContextHelp(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxContextHelp_EndContextHelp(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxContextHelpButton,wxBitmapButton)
-    pub fn wxContextHelpButton_Create(parent: &[u8] /* void* */, id: c_int /* int */, arg0: Rect /* Rect */, style: long /* long */) -> ~[u8] /* void* */;
+    pub fn wxContextHelpButton_Create(parent: &[u8] /* void* */, id: c_int /* int */, arg0: Rect /* Rect */, style: c_long /* long */) -> ~[u8] /* void* */;
     
     // TClassDefExtend(wxControl,wxWindow)
     pub fn wxControl_Command(_obj: &[u8] /* void* */, event: &[u8] /* void* */);
@@ -1398,15 +1400,15 @@ extern {
     // TClassDefExtend(wxCursor,wxBitmap)
     pub fn Cursor_CreateFromStock(_id: c_int /* int */) -> ~[u8] /* void* */;
     pub fn Cursor_CreateFromImage(image: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn Cursor_CreateLoad(name: &[u8] /* void* */, type_: long /* long */, arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
+    pub fn Cursor_CreateLoad(name: &[u8] /* void* */, type_: c_long /* long */, arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
     
     // TClassDefExtend(wxCustomDataObject,wxDataObjectSimple)
     
     // TClassDefExtend(wxDC,wxObject)
-    pub fn wxDC_Blit(_obj: &[u8] /* void* */, arg0: Rect /* Rect */, source: &[u8] /* void* */, arg1: IntPoint /* IntPoint */, rop: c_int /* int */, useMask: TBool /* TBool */) -> TBool /* TBool */;
+    pub fn wxDC_Blit(_obj: &[u8] /* void* */, arg0: Rect /* Rect */, source: &[u8] /* void* */, arg1: IntPoint /* IntPoint */, rop: c_int /* int */, useMask: bool /* bool */) -> bool /* bool */;
     pub fn wxDC_CalcBoundingBox(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
-    pub fn wxDC_CanDrawBitmap(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDC_CanGetTextExtent(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxDC_CanDrawBitmap(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDC_CanGetTextExtent(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxDC_Clear(_obj: &[u8] /* void* */);
     pub fn wxDC_ComputeScaleAndOrigin(obj: &[u8] /* void* */);
     pub fn wxDC_CrossHair(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
@@ -1417,11 +1419,11 @@ extern {
     pub fn wxDC_DeviceToLogicalY(_obj: &[u8] /* void* */, y: c_int /* int */) -> c_int /* int */;
     pub fn wxDC_DeviceToLogicalYRel(_obj: &[u8] /* void* */, y: c_int /* int */) -> c_int /* int */;
     pub fn wxDC_DrawArc(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, arg1: IntPoint /* IntPoint */, arg2: IntPoint /* IntPoint */);
-    pub fn wxDC_DrawBitmap(_obj: &[u8] /* void* */, bmp: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, useMask: TBool /* TBool */);
+    pub fn wxDC_DrawBitmap(_obj: &[u8] /* void* */, bmp: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, useMask: bool /* bool */);
     pub fn wxDC_DrawCheckMark(_obj: &[u8] /* void* */, arg0: Rect /* Rect */);
     pub fn wxDC_DrawCircle(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, radius: c_int /* int */);
     pub fn wxDC_DrawEllipse(_obj: &[u8] /* void* */, arg0: Rect /* Rect */);
-    pub fn wxDC_DrawEllipticArc(_obj: &[u8] /* void* */, arg0: Rect /* Rect */, sa: double /* double */, ea: double /* double */);
+    pub fn wxDC_DrawEllipticArc(_obj: &[u8] /* void* */, arg0: Rect /* Rect */, sa: c_double /* double */, ea: c_double /* double */);
     pub fn wxDC_DrawIcon(_obj: &[u8] /* void* */, icon: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
     pub fn wxDC_DrawLabel(_obj: &[u8] /* void* */, str: &[u8] /* void* */, arg0: Rect /* Rect */, align: c_int /* int */, indexAccel: c_int /* int */);
     pub fn wxDC_DrawLabelBitmap(_obj: &[u8] /* void* */, str: &[u8] /* void* */, bmp: &[u8] /* void* */, arg0: Rect /* Rect */, align: c_int /* int */, indexAccel: c_int /* int */) -> ~[u8] /* void* */;
@@ -1431,8 +1433,8 @@ extern {
     pub fn wxDC_DrawPolygon(_obj: &[u8] /* void* */, n: c_int /* int */, x: &[u8] /* void* */, y: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, fillStyle: c_int /* int */);
     pub fn wxDC_DrawPolyPolygon(_obj: &[u8] /* void* */, n: c_int /* int */, count: &[u8] /* void* */, x: &[u8] /* void* */, y: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, fillStyle: c_int /* int */);
     pub fn wxDC_DrawRectangle(_obj: &[u8] /* void* */, arg0: Rect /* Rect */);
-    pub fn wxDC_DrawRotatedText(_obj: &[u8] /* void* */, text: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, angle: double /* double */);
-    pub fn wxDC_DrawRoundedRectangle(_obj: &[u8] /* void* */, arg0: Rect /* Rect */, radius: double /* double */);
+    pub fn wxDC_DrawRotatedText(_obj: &[u8] /* void* */, text: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, angle: c_double /* double */);
+    pub fn wxDC_DrawRoundedRectangle(_obj: &[u8] /* void* */, arg0: Rect /* Rect */, radius: c_double /* double */);
     pub fn wxDC_DrawText(_obj: &[u8] /* void* */, text: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
     pub fn wxDC_EndDoc(_obj: &[u8] /* void* */);
     pub fn wxDC_EndPage(_obj: &[u8] /* void* */);
@@ -1452,7 +1454,7 @@ extern {
     pub fn wxDC_GetMapMode(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxDC_GetPPI(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxDC_GetPen(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
-    pub fn wxDC_GetPixel(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, col: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxDC_GetPixel(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, col: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxDC_GetSize(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxDC_GetSizeMM(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxDC_GetTextBackground(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
@@ -1468,9 +1470,9 @@ extern {
     pub fn wxDC_MaxY(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxDC_MinX(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxDC_MinY(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxDC_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxDC_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxDC_ResetBoundingBox(_obj: &[u8] /* void* */);
-    pub fn wxDC_SetAxisOrientation(_obj: &[u8] /* void* */, xLeftRight: TBool /* TBool */, yBottomUp: TBool /* TBool */);
+    pub fn wxDC_SetAxisOrientation(_obj: &[u8] /* void* */, xLeftRight: bool /* bool */, yBottomUp: bool /* bool */);
     pub fn wxDC_SetBackground(_obj: &[u8] /* void* */, brush: &[u8] /* void* */);
     pub fn wxDC_SetBackgroundMode(_obj: &[u8] /* void* */, mode: c_int /* int */);
     pub fn wxDC_SetBrush(_obj: &[u8] /* void* */, brush: &[u8] /* void* */);
@@ -1480,14 +1482,14 @@ extern {
     pub fn wxDC_SetFont(_obj: &[u8] /* void* */, font: &[u8] /* void* */);
     pub fn wxDC_SetLogicalFunction(_obj: &[u8] /* void* */, function: c_int /* int */);
     pub fn wxDC_SetLogicalOrigin(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
-    pub fn wxDC_SetLogicalScale(_obj: &[u8] /* void* */, x: double /* double */, y: double /* double */);
+    pub fn wxDC_SetLogicalScale(_obj: &[u8] /* void* */, x: c_double /* double */, y: c_double /* double */);
     pub fn wxDC_SetMapMode(_obj: &[u8] /* void* */, mode: c_int /* int */);
     pub fn wxDC_SetPalette(_obj: &[u8] /* void* */, palette: &[u8] /* void* */);
     pub fn wxDC_SetPen(_obj: &[u8] /* void* */, pen: &[u8] /* void* */);
     pub fn wxDC_SetTextBackground(_obj: &[u8] /* void* */, colour: &[u8] /* void* */);
     pub fn wxDC_SetTextForeground(_obj: &[u8] /* void* */, colour: &[u8] /* void* */);
-    pub fn wxDC_SetUserScale(_obj: &[u8] /* void* */, x: double /* double */, y: double /* double */);
-    pub fn wxDC_StartDoc(_obj: &[u8] /* void* */, msg: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxDC_SetUserScale(_obj: &[u8] /* void* */, x: c_double /* double */, y: c_double /* double */);
+    pub fn wxDC_StartDoc(_obj: &[u8] /* void* */, msg: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxDC_StartPage(_obj: &[u8] /* void* */);
     
     // TClassDef(wxDCClipper)
@@ -1504,7 +1506,7 @@ extern {
     pub fn wxDataFormat_Delete(_obj: &[u8] /* void* */);
     pub fn wxDataFormat_GetId(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxDataFormat_GetType(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxDataFormat_IsEqual(_obj: &[u8] /* void* */, other: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxDataFormat_IsEqual(_obj: &[u8] /* void* */, other: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxDataFormat_SetId(_obj: &[u8] /* void* */, id: &[u8] /* void* */);
     pub fn wxDataFormat_SetType(_obj: &[u8] /* void* */, typ: c_int /* int */);
     
@@ -1567,21 +1569,21 @@ extern {
     pub fn wxDateTime_GetWeekOfMonth(_obj: &[u8] /* void* */, flags: c_int /* int */, tz: c_int /* int */) -> c_int /* int */;
     pub fn wxDateTime_GetWeekOfYear(_obj: &[u8] /* void* */, flags: c_int /* int */, tz: c_int /* int */) -> c_int /* int */;
     pub fn wxDateTime_GetYear(_obj: &[u8] /* void* */, tz: c_int /* int */) -> c_int /* int */;
-    pub fn wxDateTime_IsBetween(_obj: &[u8] /* void* */, t1: &[u8] /* void* */, t2: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsDST(_obj: &[u8] /* void* */, country: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsDSTApplicable(year: c_int /* int */, country: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsEarlierThan(_obj: &[u8] /* void* */, datetime: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsEqualTo(_obj: &[u8] /* void* */, datetime: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsEqualUpTo(_obj: &[u8] /* void* */, dt: &[u8] /* void* */, ts: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsGregorianDate(_obj: &[u8] /* void* */, country: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsLaterThan(_obj: &[u8] /* void* */, datetime: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsLeapYear(year: c_int /* int */, cal: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsSameDate(_obj: &[u8] /* void* */, dt: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsSameTime(_obj: &[u8] /* void* */, dt: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsStrictlyBetween(_obj: &[u8] /* void* */, t1: &[u8] /* void* */, t2: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsValid(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsWestEuropeanCountry(country: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxDateTime_IsWorkDay(_obj: &[u8] /* void* */, country: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxDateTime_IsBetween(_obj: &[u8] /* void* */, t1: &[u8] /* void* */, t2: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDateTime_IsDST(_obj: &[u8] /* void* */, country: c_int /* int */) -> bool /* bool */;
+    pub fn wxDateTime_IsDSTApplicable(year: c_int /* int */, country: c_int /* int */) -> bool /* bool */;
+    pub fn wxDateTime_IsEarlierThan(_obj: &[u8] /* void* */, datetime: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDateTime_IsEqualTo(_obj: &[u8] /* void* */, datetime: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDateTime_IsEqualUpTo(_obj: &[u8] /* void* */, dt: &[u8] /* void* */, ts: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDateTime_IsGregorianDate(_obj: &[u8] /* void* */, country: c_int /* int */) -> bool /* bool */;
+    pub fn wxDateTime_IsLaterThan(_obj: &[u8] /* void* */, datetime: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDateTime_IsLeapYear(year: c_int /* int */, cal: c_int /* int */) -> bool /* bool */;
+    pub fn wxDateTime_IsSameDate(_obj: &[u8] /* void* */, dt: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDateTime_IsSameTime(_obj: &[u8] /* void* */, dt: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDateTime_IsStrictlyBetween(_obj: &[u8] /* void* */, t1: &[u8] /* void* */, t2: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDateTime_IsValid(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDateTime_IsWestEuropeanCountry(country: c_int /* int */) -> bool /* bool */;
+    pub fn wxDateTime_IsWorkDay(_obj: &[u8] /* void* */, country: c_int /* int */) -> bool /* bool */;
     pub fn wxDateTime_MakeGMT(_obj: &[u8] /* void* */, noDST: c_int /* int */);
     pub fn wxDateTime_MakeTimezone(_obj: &[u8] /* void* */, tz: c_int /* int */, noDST: c_int /* int */);
     pub fn wxDateTime_Now(dt: &[u8] /* void* */);
@@ -1602,10 +1604,10 @@ extern {
     pub fn wxDateTime_SetTime(_obj: &[u8] /* void* */, hour: c_int /* int */, minute: c_int /* int */, second: c_int /* int */, millisec: c_int /* int */);
     pub fn wxDateTime_SetToCurrent(_obj: &[u8] /* void* */);
     pub fn wxDateTime_SetToLastMonthDay(_obj: &[u8] /* void* */, month: c_int /* int */, year: c_int /* int */);
-    pub fn wxDateTime_SetToLastWeekDay(_obj: &[u8] /* void* */, weekday: c_int /* int */, month: c_int /* int */, year: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxDateTime_SetToLastWeekDay(_obj: &[u8] /* void* */, weekday: c_int /* int */, month: c_int /* int */, year: c_int /* int */) -> bool /* bool */;
     pub fn wxDateTime_SetToNextWeekDay(_obj: &[u8] /* void* */, weekday: c_int /* int */);
     pub fn wxDateTime_SetToPrevWeekDay(_obj: &[u8] /* void* */, weekday: c_int /* int */);
-    pub fn wxDateTime_SetToWeekDay(_obj: &[u8] /* void* */, weekday: c_int /* int */, n: c_int /* int */, month: c_int /* int */, year: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxDateTime_SetToWeekDay(_obj: &[u8] /* void* */, weekday: c_int /* int */, n: c_int /* int */, month: c_int /* int */, year: c_int /* int */) -> bool /* bool */;
     pub fn wxDateTime_SetToWeekDayInSameWeek(_obj: &[u8] /* void* */, weekday: c_int /* int */);
     pub fn wxDateTime_SetYear(_obj: &[u8] /* void* */, year: c_int /* int */);
     pub fn wxDateTime_SubtractDate(_obj: &[u8] /* void* */, diff: &[u8] /* void* */, _ref: &[u8] /* void* */);
@@ -1637,31 +1639,31 @@ extern {
     // TClassDef(wxDebugContext)
     
     // TClassDefExtend(wxDialUpEvent,wxEvent)
-    pub fn wxDialUpEvent_IsConnectedEvent(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDialUpEvent_IsOwnEvent(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxDialUpEvent_IsConnectedEvent(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDialUpEvent_IsOwnEvent(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDef(wxDialUpManager)
-    pub fn wxDialUpManager_CancelDialing(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxDialUpManager_CancelDialing(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxDialUpManager_Create() -> ~[u8] /* void* */;
     pub fn wxDialUpManager_Delete(_obj: &[u8] /* void* */);
-    pub fn wxDialUpManager_Dial(_obj: &[u8] /* void* */, nameOfISP: &[u8] /* void* */, username: &[u8] /* void* */, password: &[u8] /* void* */, async: TBool /* TBool */) -> TBool /* TBool */;
+    pub fn wxDialUpManager_Dial(_obj: &[u8] /* void* */, nameOfISP: &[u8] /* void* */, username: &[u8] /* void* */, password: &[u8] /* void* */, async: bool /* bool */) -> bool /* bool */;
     pub fn wxDialUpManager_DisableAutoCheckOnlineStatus(_obj: &[u8] /* void* */);
-    pub fn wxDialUpManager_EnableAutoCheckOnlineStatus(_obj: &[u8] /* void* */, nSeconds: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxDialUpManager_EnableAutoCheckOnlineStatus(_obj: &[u8] /* void* */, nSeconds: c_int /* int */) -> bool /* bool */;
     pub fn wxDialUpManager_GetISPNames(_obj: &[u8] /* void* */, _lst: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxDialUpManager_HangUp(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDialUpManager_IsAlwaysOnline(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDialUpManager_IsDialing(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDialUpManager_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxDialUpManager_IsOnline(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxDialUpManager_HangUp(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDialUpManager_IsAlwaysOnline(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDialUpManager_IsDialing(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDialUpManager_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxDialUpManager_IsOnline(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxDialUpManager_SetConnectCommand(_obj: &[u8] /* void* */, commandDial: &[u8] /* void* */, commandHangup: &[u8] /* void* */);
-    pub fn wxDialUpManager_SetOnlineStatus(_obj: &[u8] /* void* */, isOnline: TBool /* TBool */);
+    pub fn wxDialUpManager_SetOnlineStatus(_obj: &[u8] /* void* */, isOnline: bool /* bool */);
     pub fn wxDialUpManager_SetWellKnownHost(_obj: &[u8] /* void* */, hostname: &[u8] /* void* */, portno: c_int /* int */);
     
     // TClassDefExtend(wxDialog,wxTopLevelWindow)
     pub fn wxDialog_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _txt: &[u8] /* void* */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxDialog_EndModal(_obj: &[u8] /* void* */, retCode: c_int /* int */);
     pub fn wxDialog_GetReturnCode(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxDialog_IsModal(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxDialog_IsModal(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxDialog_SetReturnCode(_obj: &[u8] /* void* */, returnCode: c_int /* int */);
     pub fn wxDialog_ShowModal(_obj: &[u8] /* void* */) -> c_int /* int */;
     
@@ -1728,8 +1730,8 @@ extern {
     pub fn wxDynamicToolBar_AddSeparator(_obj: &[u8] /* void* */, pSepartorWnd: &[u8] /* void* */);
     pub fn wxDynamicToolBar_AddTool(_obj: &[u8] /* void* */, toolIndex: c_int /* int */, pToolWindow: &[u8] /* void* */, arg0: IntSize /* IntSize */);
     pub fn wxDynamicToolBar_AddToolBitmap(_obj: &[u8] /* void* */, toolIndex: c_int /* int */, bitmap: &[u8] /* void* */, pushedBitmap: &[u8] /* void* */, toggle: c_int /* int */, arg0: IntPoint /* IntPoint */, clientData: &[u8] /* void* */, helpString1: &[u8] /* void* */, helpString2: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxDynamicToolBar_AddToolImage(_obj: &[u8] /* void* */, toolIndex: c_int /* int */, imageFileName: &[u8] /* void* */, imageFileType: c_int /* int */, labelText: &[u8] /* void* */, alignTextRight: c_int /* int */, isFlat: TBool /* TBool */);
-    pub fn wxDynamicToolBar_AddToolLabel(_obj: &[u8] /* void* */, toolIndex: c_int /* int */, labelBmp: &[u8] /* void* */, labelText: &[u8] /* void* */, alignTextRight: c_int /* int */, isFlat: TBool /* TBool */);
+    pub fn wxDynamicToolBar_AddToolImage(_obj: &[u8] /* void* */, toolIndex: c_int /* int */, imageFileName: &[u8] /* void* */, imageFileType: c_int /* int */, labelText: &[u8] /* void* */, alignTextRight: c_int /* int */, isFlat: bool /* bool */);
+    pub fn wxDynamicToolBar_AddToolLabel(_obj: &[u8] /* void* */, toolIndex: c_int /* int */, labelBmp: &[u8] /* void* */, labelText: &[u8] /* void* */, alignTextRight: c_int /* int */, isFlat: bool /* bool */);
     pub fn wxDynamicToolBar_Create(parent: &[u8] /* void* */, id: c_int /* int */, arg0: Rect /* Rect */, style: c_int /* int */, orientation: c_int /* int */, RowsOrColumns: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxDynamicToolBar_CreateDefault() -> ~[u8] /* void* */;
     pub fn wxDynamicToolBar_CreateDefaultLayout(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -1738,12 +1740,12 @@ extern {
     pub fn wxDynamicToolBar_CreateToolControl(_obj: &[u8] /* void* */, control: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxDynamicToolBar_Delete(_obj: &[u8] /* void* */);
     pub fn wxDynamicToolBar_DoDeleteTool(_obj: &[u8] /* void* */, pos: c_int /* int */, tool: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxDynamicToolBar_DoEnableTool(_obj: &[u8] /* void* */, tool: &[u8] /* void* */, enable: TBool /* TBool */);
+    pub fn wxDynamicToolBar_DoEnableTool(_obj: &[u8] /* void* */, tool: &[u8] /* void* */, enable: bool /* bool */);
     pub fn wxDynamicToolBar_DoInsertTool(_obj: &[u8] /* void* */, pos: c_int /* int */, tool: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxDynamicToolBar_DoSetToggle(_obj: &[u8] /* void* */, tool: &[u8] /* void* */, toggle: c_int /* int */);
     pub fn wxDynamicToolBar_DoToggleTool(_obj: &[u8] /* void* */, tool: &[u8] /* void* */, toggle: c_int /* int */);
     pub fn wxDynamicToolBar_DrawSeparator(_obj: &[u8] /* void* */, info: &[u8] /* void* */, dc: &[u8] /* void* */);
-    pub fn wxDynamicToolBar_EnableTool(_obj: &[u8] /* void* */, toolIndex: c_int /* int */, enable: TBool /* TBool */);
+    pub fn wxDynamicToolBar_EnableTool(_obj: &[u8] /* void* */, toolIndex: c_int /* int */, enable: bool /* bool */);
     pub fn wxDynamicToolBar_FindToolForPosition(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> ~[u8] /* void* */;
     pub fn wxDynamicToolBar_GetPreferredDim(_obj: &[u8] /* void* */, gw: c_int /* int */, gh: c_int /* int */, pw: &[u8] /* void* */, ph: &[u8] /* void* */);
     pub fn wxDynamicToolBar_GetToolInfo(_obj: &[u8] /* void* */, toolIndex: c_int /* int */) -> ~[u8] /* void* */;
@@ -1752,7 +1754,7 @@ extern {
     pub fn wxDynamicToolBar_SetLayout(_obj: &[u8] /* void* */, pLayout: &[u8] /* void* */);
     
     // TClassDefExtend(wxEditableListBox,wxPanel)
-    pub fn wxEditableListBox_Create(parent: &[u8] /* void* */, id: c_int /* int */, label: TStringVoid /* TStringVoid */, arg0: Rect /* Rect */, style: c_int /* int */) -> ~[u8] /* void* */;
+    pub fn wxEditableListBox_Create(parent: &[u8] /* void* */, id: c_int /* int */, label: &[wchar_t] /* wchar_t* */, arg0: Rect /* Rect */, style: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxEditableListBox_GetDelButton(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxEditableListBox_GetDownButton(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxEditableListBox_GetEditButton(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -1779,9 +1781,9 @@ extern {
     pub fn wxEvent_GetEventObject(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxEvent_GetEventType(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxEvent_GetId(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxEvent_GetSkipped(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxEvent_GetSkipped(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxEvent_GetTimestamp(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxEvent_IsCommandEvent(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxEvent_IsCommandEvent(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxEvent_NewEventType() -> c_int /* int */;
     pub fn wxEvent_SetEventObject(_obj: &[u8] /* void* */, obj: &[u8] /* void* */);
     pub fn wxEvent_SetEventType(_obj: &[u8] /* void* */, typ: c_int /* int */);
@@ -1795,12 +1797,12 @@ extern {
     pub fn wxEvtHandler_Create() -> ~[u8] /* void* */;
     pub fn wxEvtHandler_Delete(_obj: &[u8] /* void* */);
     pub fn wxEvtHandler_Disconnect(_obj: &[u8] /* void* */, first: c_int /* int */, last: c_int /* int */, type_: c_int /* int */, id: c_int /* int */) -> c_int /* int */;
-    pub fn wxEvtHandler_GetEvtHandlerEnabled(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxEvtHandler_GetEvtHandlerEnabled(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxEvtHandler_GetNextHandler(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxEvtHandler_GetPreviousHandler(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxEvtHandler_ProcessEvent(_obj: &[u8] /* void* */, event: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxEvtHandler_ProcessEvent(_obj: &[u8] /* void* */, event: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxEvtHandler_ProcessPendingEvents(_obj: &[u8] /* void* */);
-    pub fn wxEvtHandler_SetEvtHandlerEnabled(_obj: &[u8] /* void* */, enabled: TBool /* TBool */);
+    pub fn wxEvtHandler_SetEvtHandlerEnabled(_obj: &[u8] /* void* */, enabled: bool /* bool */);
     pub fn wxEvtHandler_SetNextHandler(_obj: &[u8] /* void* */, handler: &[u8] /* void* */);
     pub fn wxEvtHandler_SetPreviousHandler(_obj: &[u8] /* void* */, handler: &[u8] /* void* */);
     
@@ -1918,7 +1920,7 @@ extern {
     // TClassDefExtend(wxFocusEvent,wxEvent)
     
     // TClassDefExtend(wxFont,wxGDIObject)
-    pub fn wxFont_Create(pointSize: c_int /* int */, family: c_int /* int */, style: c_int /* int */, weight: c_int /* int */, underlined: TBool /* TBool */, face: &[u8] /* void* */, enc: c_int /* int */) -> ~[u8] /* void* */;
+    pub fn wxFont_Create(pointSize: c_int /* int */, family: c_int /* int */, style: c_int /* int */, weight: c_int /* int */, underlined: bool /* bool */, face: &[u8] /* void* */, enc: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxFont_CreateFromStock(id: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxFont_CreateDefault() -> ~[u8] /* void* */;
     pub fn wxFont_Delete(_obj: &[u8] /* void* */);
@@ -1933,7 +1935,7 @@ extern {
     pub fn wxFont_GetUnderlined(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxFont_GetWeight(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxFont_GetWeightString(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxFont_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxFont_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxFont_SetDefaultEncoding(_obj: &[u8] /* void* */, encoding: c_int /* int */);
     pub fn wxFont_SetEncoding(_obj: &[u8] /* void* */, encoding: c_int /* int */);
     pub fn wxFont_SetFaceName(_obj: &[u8] /* void* */, faceName: &[u8] /* void* */);
@@ -1946,21 +1948,21 @@ extern {
     // TClassDefExtend(wxFontData,wxObject)
     pub fn wxFontData_Create() -> ~[u8] /* void* */;
     pub fn wxFontData_Delete(_obj: &[u8] /* void* */);
-    pub fn wxFontData_EnableEffects(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
-    pub fn wxFontData_GetAllowSymbols(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxFontData_EnableEffects(_obj: &[u8] /* void* */, flag: bool /* bool */);
+    pub fn wxFontData_GetAllowSymbols(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxFontData_GetChosenFont(_obj: &[u8] /* void* */, ref_: &[u8] /* void* */);
     pub fn wxFontData_GetColour(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
-    pub fn wxFontData_GetEnableEffects(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxFontData_GetEnableEffects(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxFontData_GetEncoding(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxFontData_GetInitialFont(_obj: &[u8] /* void* */, ref_: &[u8] /* void* */);
     pub fn wxFontData_GetShowHelp(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxFontData_SetAllowSymbols(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
+    pub fn wxFontData_SetAllowSymbols(_obj: &[u8] /* void* */, flag: bool /* bool */);
     pub fn wxFontData_SetChosenFont(_obj: &[u8] /* void* */, font: &[u8] /* void* */);
     pub fn wxFontData_SetColour(_obj: &[u8] /* void* */, colour: &[u8] /* void* */);
     pub fn wxFontData_SetEncoding(_obj: &[u8] /* void* */, encoding: c_int /* int */);
     pub fn wxFontData_SetInitialFont(_obj: &[u8] /* void* */, font: &[u8] /* void* */);
     pub fn wxFontData_SetRange(_obj: &[u8] /* void* */, minRange: c_int /* int */, maxRange: c_int /* int */);
-    pub fn wxFontData_SetShowHelp(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
+    pub fn wxFontData_SetShowHelp(_obj: &[u8] /* void* */, flag: bool /* bool */);
     
     // TClassDefExtend(wxFontDialog,wxDialog)
     pub fn wxFontDialog_Create(_prt: &[u8] /* void* */, fnt: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -1969,20 +1971,20 @@ extern {
     // TClassDef(wxFontEnumerator)
     pub fn wxFontEnumerator_Create(_obj: &[u8] /* void* */, _fnc: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxFontEnumerator_Delete(_obj: &[u8] /* void* */);
-    pub fn wxFontEnumerator_EnumerateEncodings(_obj: &[u8] /* void* */, facename: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxFontEnumerator_EnumerateFacenames(_obj: &[u8] /* void* */, encoding: c_int /* int */, fixedWidthOnly: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxFontEnumerator_EnumerateEncodings(_obj: &[u8] /* void* */, facename: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxFontEnumerator_EnumerateFacenames(_obj: &[u8] /* void* */, encoding: c_int /* int */, fixedWidthOnly: c_int /* int */) -> bool /* bool */;
     
     // TClassDefExtend(wxFontList,wxList)
     
     // TClassDef(wxFontMapper)
     pub fn wxFontMapper_Create() -> ~[u8] /* void* */;
-    pub fn wxFontMapper_GetAltForEncoding(_obj: &[u8] /* void* */, encoding: c_int /* int */, alt_encoding: &[u8] /* void* */, _buf: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxFontMapper_IsEncodingAvailable(_obj: &[u8] /* void* */, encoding: c_int /* int */, _buf: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxFontMapper_GetAltForEncoding(_obj: &[u8] /* void* */, encoding: c_int /* int */, alt_encoding: &[u8] /* void* */, _buf: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxFontMapper_IsEncodingAvailable(_obj: &[u8] /* void* */, encoding: c_int /* int */, _buf: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxFrame,wxTopLevelWindow)
     pub fn wxFrame_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _txt: &[u8] /* void* */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxFrame_CreateStatusBar(_obj: &[u8] /* void* */, number: c_int /* int */, style: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxFrame_CreateToolBar(_obj: &[u8] /* void* */, style: long /* long */) -> ~[u8] /* void* */;
+    pub fn wxFrame_CreateToolBar(_obj: &[u8] /* void* */, style: c_long /* long */) -> ~[u8] /* void* */;
     pub fn wxFrame_GetClientAreaOrigin_left(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxFrame_GetClientAreaOrigin_top(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxFrame_GetMenuBar(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -1997,7 +1999,7 @@ extern {
     
     // TClassDefExtend(wxFrameLayout,wxEvtHandler)
     pub fn wxFrameLayout_Activate(_obj: &[u8] /* void* */);
-    pub fn wxFrameLayout_AddBar(_obj: &[u8] /* void* */, pBarWnd: &[u8] /* void* */, dimInfo: &[u8] /* void* */, alignment: c_int /* int */, rowNo: c_int /* int */, columnPos: c_int /* int */, name: TStringVoid /* TStringVoid */, spyEvents: c_int /* int */, state: c_int /* int */);
+    pub fn wxFrameLayout_AddBar(_obj: &[u8] /* void* */, pBarWnd: &[u8] /* void* */, dimInfo: &[u8] /* void* */, alignment: c_int /* int */, rowNo: c_int /* int */, columnPos: c_int /* int */, name: &[wchar_t] /* wchar_t* */, spyEvents: c_int /* int */, state: c_int /* int */);
     pub fn wxFrameLayout_AddPlugin(_obj: &[u8] /* void* */, pPlInfo: &[u8] /* void* */, paneMask: c_int /* int */);
     pub fn wxFrameLayout_AddPluginBefore(_obj: &[u8] /* void* */, pNextPlInfo: &[u8] /* void* */, pPlInfo: &[u8] /* void* */, paneMask: c_int /* int */);
     pub fn wxFrameLayout_ApplyBarProperties(_obj: &[u8] /* void* */, pBar: &[u8] /* void* */);
@@ -2007,8 +2009,8 @@ extern {
     pub fn wxFrameLayout_Deactivate(_obj: &[u8] /* void* */);
     pub fn wxFrameLayout_Delete(_obj: &[u8] /* void* */);
     pub fn wxFrameLayout_DestroyBarWindows(_obj: &[u8] /* void* */);
-    pub fn wxFrameLayout_EnableFloating(_obj: &[u8] /* void* */, enable: TBool /* TBool */);
-    pub fn wxFrameLayout_FindBarByName(_obj: &[u8] /* void* */, name: TStringVoid /* TStringVoid */) -> ~[u8] /* void* */;
+    pub fn wxFrameLayout_EnableFloating(_obj: &[u8] /* void* */, enable: bool /* bool */);
+    pub fn wxFrameLayout_FindBarByName(_obj: &[u8] /* void* */, name: &[wchar_t] /* wchar_t* */) -> ~[u8] /* void* */;
     pub fn wxFrameLayout_FindBarByWindow(_obj: &[u8] /* void* */, pWnd: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxFrameLayout_FindPlugin(_obj: &[u8] /* void* */, pPlInfo: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxFrameLayout_FirePluginEvent(_obj: &[u8] /* void* */, event: &[u8] /* void* */);
@@ -2022,7 +2024,7 @@ extern {
     pub fn wxFrameLayout_GetParentFrame(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxFrameLayout_GetTopPlugin(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxFrameLayout_GetUpdatesManager(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxFrameLayout_HasTopPlugin(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxFrameLayout_HasTopPlugin(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxFrameLayout_HideBarWindows(_obj: &[u8] /* void* */);
     pub fn wxFrameLayout_InverseVisibility(_obj: &[u8] /* void* */, pBar: &[u8] /* void* */);
     pub fn wxFrameLayout_OnLButtonDown(_obj: &[u8] /* void* */, event: &[u8] /* void* */);
@@ -2071,26 +2073,26 @@ extern {
     // TClassDefExtend(wxGenericValidator,wxValidator)
     
     // TClassDefExtend(wxGrid,wxScrolledWindow)
-    pub fn wxGrid_AppendCols(_obj: &[u8] /* void* */, numCols: c_int /* int */, updateLabels: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxGrid_AppendRows(_obj: &[u8] /* void* */, numRows: c_int /* int */, updateLabels: TBool /* TBool */) -> TBool /* TBool */;
+    pub fn wxGrid_AppendCols(_obj: &[u8] /* void* */, numCols: c_int /* int */, updateLabels: bool /* bool */) -> bool /* bool */;
+    pub fn wxGrid_AppendRows(_obj: &[u8] /* void* */, numRows: c_int /* int */, updateLabels: bool /* bool */) -> bool /* bool */;
     pub fn wxGrid_AutoSize(_obj: &[u8] /* void* */);
-    pub fn wxGrid_AutoSizeColumn(_obj: &[u8] /* void* */, col: c_int /* int */, setAsMin: TBoolInt /* TBoolInt */);
-    pub fn wxGrid_AutoSizeColumns(_obj: &[u8] /* void* */, setAsMin: TBoolInt /* TBoolInt */);
-    pub fn wxGrid_AutoSizeRow(_obj: &[u8] /* void* */, row: c_int /* int */, setAsMin: TBoolInt /* TBoolInt */);
-    pub fn wxGrid_AutoSizeRows(_obj: &[u8] /* void* */, setAsMin: TBoolInt /* TBoolInt */);
+    pub fn wxGrid_AutoSizeColumn(_obj: &[u8] /* void* */, col: c_int /* int */, setAsMin: c_int /* int */);
+    pub fn wxGrid_AutoSizeColumns(_obj: &[u8] /* void* */, setAsMin: c_int /* int */);
+    pub fn wxGrid_AutoSizeRow(_obj: &[u8] /* void* */, row: c_int /* int */, setAsMin: c_int /* int */);
+    pub fn wxGrid_AutoSizeRows(_obj: &[u8] /* void* */, setAsMin: c_int /* int */);
     pub fn wxGrid_BeginBatch(_obj: &[u8] /* void* */);
     pub fn wxGrid_BlockToDeviceRect(_obj: &[u8] /* void* */, top: c_int /* int */, left: c_int /* int */, bottom: c_int /* int */, right: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxGrid_CanDragColSize(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGrid_CanDragGridSize(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGrid_CanDragRowSize(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGrid_CanEnableCellControl(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxGrid_CanDragColSize(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGrid_CanDragGridSize(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGrid_CanDragRowSize(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGrid_CanEnableCellControl(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxGrid_CellToRect(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxGrid_ClearGrid(_obj: &[u8] /* void* */);
     pub fn wxGrid_ClearSelection(_obj: &[u8] /* void* */);
     pub fn wxGrid_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxGrid_CreateGrid(_obj: &[u8] /* void* */, rows: c_int /* int */, cols: c_int /* int */, selmode: c_int /* int */);
-    pub fn wxGrid_DeleteCols(_obj: &[u8] /* void* */, pos: c_int /* int */, numCols: c_int /* int */, updateLabels: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxGrid_DeleteRows(_obj: &[u8] /* void* */, pos: c_int /* int */, numRows: c_int /* int */, updateLabels: TBool /* TBool */) -> TBool /* TBool */;
+    pub fn wxGrid_DeleteCols(_obj: &[u8] /* void* */, pos: c_int /* int */, numCols: c_int /* int */, updateLabels: bool /* bool */) -> bool /* bool */;
+    pub fn wxGrid_DeleteRows(_obj: &[u8] /* void* */, pos: c_int /* int */, numRows: c_int /* int */, updateLabels: bool /* bool */) -> bool /* bool */;
     pub fn wxGrid_DisableCellEditControl(_obj: &[u8] /* void* */);
     pub fn wxGrid_DisableDragColSize(_obj: &[u8] /* void* */);
     pub fn wxGrid_DisableDragGridSize(_obj: &[u8] /* void* */);
@@ -2105,12 +2107,12 @@ extern {
     pub fn wxGrid_DrawRowLabel(_obj: &[u8] /* void* */, dc: &[u8] /* void* */, row: c_int /* int */);
     pub fn wxGrid_DrawRowLabels(_obj: &[u8] /* void* */, dc: &[u8] /* void* */);
     pub fn wxGrid_DrawTextRectangle(_obj: &[u8] /* void* */, dc: &[u8] /* void* */, txt: &[u8] /* void* */, arg0: Rect /* Rect */, horizontalAlignment: c_int /* int */, verticalAlignment: c_int /* int */);
-    pub fn wxGrid_EnableCellEditControl(_obj: &[u8] /* void* */, enable: TBool /* TBool */);
-    pub fn wxGrid_EnableDragColSize(_obj: &[u8] /* void* */, enable: TBool /* TBool */);
-    pub fn wxGrid_EnableDragGridSize(_obj: &[u8] /* void* */, enable: TBool /* TBool */);
-    pub fn wxGrid_EnableDragRowSize(_obj: &[u8] /* void* */, enable: TBool /* TBool */);
-    pub fn wxGrid_EnableEditing(_obj: &[u8] /* void* */, edit: TBoolInt /* TBoolInt */);
-    pub fn wxGrid_EnableGridLines(_obj: &[u8] /* void* */, enable: TBool /* TBool */);
+    pub fn wxGrid_EnableCellEditControl(_obj: &[u8] /* void* */, enable: bool /* bool */);
+    pub fn wxGrid_EnableDragColSize(_obj: &[u8] /* void* */, enable: bool /* bool */);
+    pub fn wxGrid_EnableDragGridSize(_obj: &[u8] /* void* */, enable: bool /* bool */);
+    pub fn wxGrid_EnableDragRowSize(_obj: &[u8] /* void* */, enable: bool /* bool */);
+    pub fn wxGrid_EnableEditing(_obj: &[u8] /* void* */, edit: c_int /* int */);
+    pub fn wxGrid_EnableGridLines(_obj: &[u8] /* void* */, enable: bool /* bool */);
     pub fn wxGrid_EndBatch(_obj: &[u8] /* void* */);
     pub fn wxGrid_GetBatchCount(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxGrid_GetCellAlignment(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */, arg0: &[IntSize] /* IntSize* */);
@@ -2157,34 +2159,34 @@ extern {
     pub fn wxGrid_GetTextBoxSize(_obj: &[u8] /* void* */, dc: &[u8] /* void* */, arg0: c_int /* int */, arg1: &[wchar_t] /* wchar_t* */, arg2: &[IntSize] /* IntSize* */);
     pub fn wxGrid_GridLinesEnabled(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxGrid_HideCellEditControl(_obj: &[u8] /* void* */);
-    pub fn wxGrid_InsertCols(_obj: &[u8] /* void* */, pos: c_int /* int */, numCols: c_int /* int */, updateLabels: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxGrid_InsertRows(_obj: &[u8] /* void* */, pos: c_int /* int */, numRows: c_int /* int */, updateLabels: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxGrid_IsCellEditControlEnabled(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGrid_IsCellEditControlShown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGrid_IsCurrentCellReadOnly(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGrid_IsEditable(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGrid_IsInSelection(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxGrid_IsReadOnly(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxGrid_IsSelection(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGrid_IsVisible(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */, wholeCellVisible: TBool /* TBool */) -> TBool /* TBool */;
+    pub fn wxGrid_InsertCols(_obj: &[u8] /* void* */, pos: c_int /* int */, numCols: c_int /* int */, updateLabels: bool /* bool */) -> bool /* bool */;
+    pub fn wxGrid_InsertRows(_obj: &[u8] /* void* */, pos: c_int /* int */, numRows: c_int /* int */, updateLabels: bool /* bool */) -> bool /* bool */;
+    pub fn wxGrid_IsCellEditControlEnabled(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGrid_IsCellEditControlShown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGrid_IsCurrentCellReadOnly(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGrid_IsEditable(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGrid_IsInSelection(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */) -> bool /* bool */;
+    pub fn wxGrid_IsReadOnly(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */) -> bool /* bool */;
+    pub fn wxGrid_IsSelection(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGrid_IsVisible(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */, wholeCellVisible: bool /* bool */) -> bool /* bool */;
     pub fn wxGrid_MakeCellVisible(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */);
-    pub fn wxGrid_MoveCursorDown(_obj: &[u8] /* void* */, expandSelection: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxGrid_MoveCursorDownBlock(_obj: &[u8] /* void* */, expandSelection: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxGrid_MoveCursorLeft(_obj: &[u8] /* void* */, expandSelection: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxGrid_MoveCursorLeftBlock(_obj: &[u8] /* void* */, expandSelection: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxGrid_MoveCursorRight(_obj: &[u8] /* void* */, expandSelection: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxGrid_MoveCursorRightBlock(_obj: &[u8] /* void* */, expandSelection: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxGrid_MoveCursorUp(_obj: &[u8] /* void* */, expandSelection: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxGrid_MoveCursorUpBlock(_obj: &[u8] /* void* */, expandSelection: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxGrid_MovePageDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGrid_MovePageUp(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGrid_ProcessTableMessage(_obj: &[u8] /* void* */, evt: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxGrid_MoveCursorDown(_obj: &[u8] /* void* */, expandSelection: bool /* bool */) -> bool /* bool */;
+    pub fn wxGrid_MoveCursorDownBlock(_obj: &[u8] /* void* */, expandSelection: bool /* bool */) -> bool /* bool */;
+    pub fn wxGrid_MoveCursorLeft(_obj: &[u8] /* void* */, expandSelection: bool /* bool */) -> bool /* bool */;
+    pub fn wxGrid_MoveCursorLeftBlock(_obj: &[u8] /* void* */, expandSelection: bool /* bool */) -> bool /* bool */;
+    pub fn wxGrid_MoveCursorRight(_obj: &[u8] /* void* */, expandSelection: bool /* bool */) -> bool /* bool */;
+    pub fn wxGrid_MoveCursorRightBlock(_obj: &[u8] /* void* */, expandSelection: bool /* bool */) -> bool /* bool */;
+    pub fn wxGrid_MoveCursorUp(_obj: &[u8] /* void* */, expandSelection: bool /* bool */) -> bool /* bool */;
+    pub fn wxGrid_MoveCursorUpBlock(_obj: &[u8] /* void* */, expandSelection: bool /* bool */) -> bool /* bool */;
+    pub fn wxGrid_MovePageDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGrid_MovePageUp(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGrid_ProcessTableMessage(_obj: &[u8] /* void* */, evt: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxGrid_RegisterDataType(_obj: &[u8] /* void* */, typeName: &[u8] /* void* */, renderer: &[u8] /* void* */, editor: &[u8] /* void* */);
     pub fn wxGrid_SaveEditControlValue(_obj: &[u8] /* void* */);
     pub fn wxGrid_SelectAll(_obj: &[u8] /* void* */);
-    pub fn wxGrid_SelectBlock(_obj: &[u8] /* void* */, topRow: c_int /* int */, leftCol: c_int /* int */, bottomRow: c_int /* int */, rightCol: c_int /* int */, addToSelected: TBoolInt /* TBoolInt */);
-    pub fn wxGrid_SelectCol(_obj: &[u8] /* void* */, col: c_int /* int */, addToSelected: TBoolInt /* TBoolInt */);
-    pub fn wxGrid_SelectRow(_obj: &[u8] /* void* */, row: c_int /* int */, addToSelected: TBoolInt /* TBoolInt */);
+    pub fn wxGrid_SelectBlock(_obj: &[u8] /* void* */, topRow: c_int /* int */, leftCol: c_int /* int */, bottomRow: c_int /* int */, rightCol: c_int /* int */, addToSelected: c_int /* int */);
+    pub fn wxGrid_SelectCol(_obj: &[u8] /* void* */, col: c_int /* int */, addToSelected: c_int /* int */);
+    pub fn wxGrid_SelectRow(_obj: &[u8] /* void* */, row: c_int /* int */, addToSelected: c_int /* int */);
     pub fn wxGrid_SetCellAlignment(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */, horiz: c_int /* int */, vert: c_int /* int */);
     pub fn wxGrid_SetCellBackgroundColour(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */, colour: &[u8] /* void* */);
     pub fn wxGrid_SetCellEditor(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */, editor: &[u8] /* void* */);
@@ -2207,17 +2209,17 @@ extern {
     pub fn wxGrid_SetDefaultCellBackgroundColour(_obj: &[u8] /* void* */, colour: &[u8] /* void* */);
     pub fn wxGrid_SetDefaultCellFont(_obj: &[u8] /* void* */, font: &[u8] /* void* */);
     pub fn wxGrid_SetDefaultCellTextColour(_obj: &[u8] /* void* */, colour: &[u8] /* void* */);
-    pub fn wxGrid_SetDefaultColSize(_obj: &[u8] /* void* */, width: c_int /* int */, resizeExistingCols: TBoolInt /* TBoolInt */);
+    pub fn wxGrid_SetDefaultColSize(_obj: &[u8] /* void* */, width: c_int /* int */, resizeExistingCols: c_int /* int */);
     pub fn wxGrid_SetDefaultEditor(_obj: &[u8] /* void* */, editor: &[u8] /* void* */);
     pub fn wxGrid_SetDefaultRenderer(_obj: &[u8] /* void* */, renderer: &[u8] /* void* */);
-    pub fn wxGrid_SetDefaultRowSize(_obj: &[u8] /* void* */, height: c_int /* int */, resizeExistingRows: TBoolInt /* TBoolInt */);
+    pub fn wxGrid_SetDefaultRowSize(_obj: &[u8] /* void* */, height: c_int /* int */, resizeExistingRows: c_int /* int */);
     pub fn wxGrid_SetGridCursor(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */);
     pub fn wxGrid_SetGridLineColour(_obj: &[u8] /* void* */, col: &[u8] /* void* */);
     pub fn wxGrid_SetLabelBackgroundColour(_obj: &[u8] /* void* */, colour: &[u8] /* void* */);
     pub fn wxGrid_SetLabelFont(_obj: &[u8] /* void* */, font: &[u8] /* void* */);
     pub fn wxGrid_SetLabelTextColour(_obj: &[u8] /* void* */, colour: &[u8] /* void* */);
     pub fn wxGrid_SetMargins(_obj: &[u8] /* void* */, extraWidth: c_int /* int */, extraHeight: c_int /* int */);
-    pub fn wxGrid_SetReadOnly(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */, isReadOnly: TBool /* TBool */);
+    pub fn wxGrid_SetReadOnly(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */, isReadOnly: bool /* bool */);
     pub fn wxGrid_SetRowAttr(_obj: &[u8] /* void* */, row: c_int /* int */, attr: &[u8] /* void* */);
     pub fn wxGrid_SetRowLabelAlignment(_obj: &[u8] /* void* */, horiz: c_int /* int */, vert: c_int /* int */);
     pub fn wxGrid_SetRowLabelSize(_obj: &[u8] /* void* */, width: c_int /* int */);
@@ -2227,7 +2229,7 @@ extern {
     pub fn wxGrid_SetSelectionBackground(_obj: &[u8] /* void* */, c: &[u8] /* void* */);
     pub fn wxGrid_SetSelectionForeground(_obj: &[u8] /* void* */, c: &[u8] /* void* */);
     pub fn wxGrid_SetSelectionMode(_obj: &[u8] /* void* */, selmode: c_int /* int */);
-    pub fn wxGrid_SetTable(_obj: &[u8] /* void* */, table: &[u8] /* void* */, takeOwnership: TBool /* TBool */, selmode: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxGrid_SetTable(_obj: &[u8] /* void* */, table: &[u8] /* void* */, takeOwnership: bool /* bool */, selmode: c_int /* int */) -> bool /* bool */;
     pub fn wxGrid_ShowCellEditControl(_obj: &[u8] /* void* */);
     pub fn wxGrid_StringToLines(_obj: &[u8] /* void* */, value: &[u8] /* void* */, lines: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxGrid_XToCol(_obj: &[u8] /* void* */, x: c_int /* int */) -> c_int /* int */;
@@ -2252,20 +2254,20 @@ extern {
     pub fn wxGridCellAttr_GetFont(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
     pub fn wxGridCellAttr_GetRenderer(_obj: &[u8] /* void* */, grid: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxGridCellAttr_GetTextColour(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
-    pub fn wxGridCellAttr_HasAlignment(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridCellAttr_HasBackgroundColour(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridCellAttr_HasEditor(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridCellAttr_HasFont(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridCellAttr_HasRenderer(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridCellAttr_HasTextColour(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxGridCellAttr_HasAlignment(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridCellAttr_HasBackgroundColour(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridCellAttr_HasEditor(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridCellAttr_HasFont(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridCellAttr_HasRenderer(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridCellAttr_HasTextColour(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxGridCellAttr_IncRef(_obj: &[u8] /* void* */);
-    pub fn wxGridCellAttr_IsReadOnly(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxGridCellAttr_IsReadOnly(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxGridCellAttr_SetAlignment(_obj: &[u8] /* void* */, hAlign: c_int /* int */, vAlign: c_int /* int */);
     pub fn wxGridCellAttr_SetBackgroundColour(_obj: &[u8] /* void* */, colBack: &[u8] /* void* */);
     pub fn wxGridCellAttr_SetDefAttr(_obj: &[u8] /* void* */, defAttr: &[u8] /* void* */);
     pub fn wxGridCellAttr_SetEditor(_obj: &[u8] /* void* */, editor: &[u8] /* void* */);
     pub fn wxGridCellAttr_SetFont(_obj: &[u8] /* void* */, font: &[u8] /* void* */);
-    pub fn wxGridCellAttr_SetReadOnly(_obj: &[u8] /* void* */, isReadOnly: TBool /* TBool */);
+    pub fn wxGridCellAttr_SetReadOnly(_obj: &[u8] /* void* */, isReadOnly: bool /* bool */);
     pub fn wxGridCellAttr_SetRenderer(_obj: &[u8] /* void* */, renderer: &[u8] /* void* */);
     pub fn wxGridCellAttr_SetTextColour(_obj: &[u8] /* void* */, colText: &[u8] /* void* */);
     
@@ -2275,7 +2277,7 @@ extern {
     // TClassDefExtend(wxGridCellBoolRenderer,wxGridCellRenderer)
     
     // TClassDefExtend(wxGridCellChoiceEditor,wxGridCellEditor)
-    pub fn wxGridCellChoiceEditor_Ctor(arg0: c_int /* int */, arg1: &[wchar_t] /* wchar_t* */, allowOthers: TBoolInt /* TBoolInt */) -> ~[u8] /* void* */;
+    pub fn wxGridCellChoiceEditor_Ctor(arg0: c_int /* int */, arg1: &[wchar_t] /* wchar_t* */, allowOthers: c_int /* int */) -> ~[u8] /* void* */;
     
     // TClassDef(wxGridCellCoordsArray)
     pub fn wxGridCellCoordsArray_Create() -> ~[u8] /* void* */;
@@ -2290,14 +2292,14 @@ extern {
     pub fn wxGridCellEditor_EndEdit(_obj: &[u8] /* void* */, row: c_int /* int */, col: c_int /* int */, grid: &[u8] /* void* */, oldStr: &[u8] /* void* */, newStr: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxGridCellEditor_GetControl(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxGridCellEditor_HandleReturn(_obj: &[u8] /* void* */, event: &[u8] /* void* */);
-    pub fn wxGridCellEditor_IsAcceptedKey(_obj: &[u8] /* void* */, event: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridCellEditor_IsCreated(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxGridCellEditor_IsAcceptedKey(_obj: &[u8] /* void* */, event: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridCellEditor_IsCreated(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxGridCellEditor_PaintBackground(_obj: &[u8] /* void* */, arg0: Rect /* Rect */, attr: &[u8] /* void* */);
     pub fn wxGridCellEditor_Reset(_obj: &[u8] /* void* */);
     pub fn wxGridCellEditor_SetControl(_obj: &[u8] /* void* */, control: &[u8] /* void* */);
     pub fn wxGridCellEditor_SetParameters(_obj: &[u8] /* void* */, params: &[u8] /* void* */);
     pub fn wxGridCellEditor_SetSize(_obj: &[u8] /* void* */, arg0: Rect /* Rect */);
-    pub fn wxGridCellEditor_Show(_obj: &[u8] /* void* */, show: TBoolInt /* TBoolInt */, attr: &[u8] /* void* */);
+    pub fn wxGridCellEditor_Show(_obj: &[u8] /* void* */, show: c_int /* int */, attr: &[u8] /* void* */);
     pub fn wxGridCellEditor_StartingClick(_obj: &[u8] /* void* */);
     pub fn wxGridCellEditor_StartingKey(_obj: &[u8] /* void* */, event: &[u8] /* void* */);
     
@@ -2333,14 +2335,14 @@ extern {
     pub fn wxGridEditorCreatedEvent_SetRow(_obj: &[u8] /* void* */, row: c_int /* int */);
     
     // TClassDefExtend(wxGridEvent,wxNotifyEvent)
-    pub fn wxGridEvent_AltDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridEvent_ControlDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxGridEvent_AltDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridEvent_ControlDown(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxGridEvent_GetCol(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxGridEvent_GetPosition(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxGridEvent_GetRow(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxGridEvent_MetaDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridEvent_Selecting(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridEvent_ShiftDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxGridEvent_MetaDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridEvent_Selecting(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridEvent_ShiftDown(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxGridRangeSelectEvent,wxNotifyEvent)
     pub fn wxGridRangeSelectEvent_GetTopLeftCoords(_obj: &[u8] /* void* */, arg0: &[IntPoint] /* IntPoint* */);
@@ -2349,19 +2351,19 @@ extern {
     pub fn wxGridRangeSelectEvent_GetBottomRow(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxGridRangeSelectEvent_GetLeftCol(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxGridRangeSelectEvent_GetRightCol(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxGridRangeSelectEvent_Selecting(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridRangeSelectEvent_ControlDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridRangeSelectEvent_MetaDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridRangeSelectEvent_ShiftDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridRangeSelectEvent_AltDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxGridRangeSelectEvent_Selecting(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridRangeSelectEvent_ControlDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridRangeSelectEvent_MetaDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridRangeSelectEvent_ShiftDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridRangeSelectEvent_AltDown(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxGridSizeEvent,wxNotifyEvent)
     pub fn wxGridSizeEvent_GetRowOrCol(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxGridSizeEvent_GetPosition(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxGridSizeEvent_ControlDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridSizeEvent_MetaDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridSizeEvent_ShiftDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxGridSizeEvent_AltDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxGridSizeEvent_ControlDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridSizeEvent_MetaDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridSizeEvent_ShiftDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxGridSizeEvent_AltDown(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxGridSizer,wxSizer)
     pub fn wxGridSizer_CalcMin(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -2407,7 +2409,7 @@ extern {
     pub fn wxHelpProvider_GetHelp(_obj: &[u8] /* void* */, window: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxHelpProvider_RemoveHelp(_obj: &[u8] /* void* */, window: &[u8] /* void* */);
     pub fn wxHelpProvider_Set(helpProvider: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxHelpProvider_ShowHelp(_obj: &[u8] /* void* */, window: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxHelpProvider_ShowHelp(_obj: &[u8] /* void* */, window: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxHtmlCell,wxObject)
     
@@ -2422,24 +2424,24 @@ extern {
     // TClassDefExtend(wxHtmlFilter,wxObject)
     
     // TClassDefExtend(wxHtmlHelpController,wxHelpControllerBase)
-    pub fn wxHtmlHelpController_AddBook(_obj: &[u8] /* void* */, book: &[u8] /* void* */, show_wait_msg: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxHtmlHelpController_AddBook(_obj: &[u8] /* void* */, book: &[u8] /* void* */, show_wait_msg: c_int /* int */) -> bool /* bool */;
     pub fn wxHtmlHelpController_Create(_style: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxHtmlHelpController_Delete(_obj: &[u8] /* void* */);
     pub fn wxHtmlHelpController_Display(_obj: &[u8] /* void* */, x: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxHtmlHelpController_DisplayBlock(_obj: &[u8] /* void* */, blockNo: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxHtmlHelpController_DisplayBlock(_obj: &[u8] /* void* */, blockNo: c_int /* int */) -> bool /* bool */;
     pub fn wxHtmlHelpController_DisplayContents(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxHtmlHelpController_DisplayIndex(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxHtmlHelpController_DisplayNumber(_obj: &[u8] /* void* */, id: c_int /* int */) -> c_int /* int */;
-    pub fn wxHtmlHelpController_DisplaySection(_obj: &[u8] /* void* */, section: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxHtmlHelpController_DisplaySectionNumber(_obj: &[u8] /* void* */, sectionNo: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxHtmlHelpController_DisplaySection(_obj: &[u8] /* void* */, section: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxHtmlHelpController_DisplaySectionNumber(_obj: &[u8] /* void* */, sectionNo: c_int /* int */) -> bool /* bool */;
     pub fn wxHtmlHelpController_GetFrame(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxHtmlHelpController_GetFrameParameters(_obj: &[u8] /* void* */, title: &[u8] /* void* */, width: &[c_int] /* int* */, height: &[c_int] /* int* */, pos_x: &[c_int] /* int* */, pos_y: &[c_int] /* int* */, newFrameEachTime: &[c_int] /* int* */) -> ~[u8] /* void* */;
-    pub fn wxHtmlHelpController_Initialize(_obj: &[u8] /* void* */, file: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxHtmlHelpController_KeywordSearch(_obj: &[u8] /* void* */, keyword: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxHtmlHelpController_LoadFile(_obj: &[u8] /* void* */, file: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxHtmlHelpController_Quit(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxHtmlHelpController_Initialize(_obj: &[u8] /* void* */, file: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxHtmlHelpController_KeywordSearch(_obj: &[u8] /* void* */, keyword: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxHtmlHelpController_LoadFile(_obj: &[u8] /* void* */, file: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxHtmlHelpController_Quit(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxHtmlHelpController_ReadCustomization(_obj: &[u8] /* void* */, cfg: &[u8] /* void* */, path: &[u8] /* void* */);
-    pub fn wxHtmlHelpController_SetFrameParameters(_obj: &[u8] /* void* */, title: &[u8] /* void* */, arg0: IntSize /* IntSize */, pos_x: c_int /* int */, pos_y: c_int /* int */, newFrameEachTime: TBool /* TBool */);
+    pub fn wxHtmlHelpController_SetFrameParameters(_obj: &[u8] /* void* */, title: &[u8] /* void* */, arg0: IntSize /* IntSize */, pos_x: c_int /* int */, pos_y: c_int /* int */, newFrameEachTime: bool /* bool */);
     pub fn wxHtmlHelpController_SetTempDir(_obj: &[u8] /* void* */, path: &[u8] /* void* */);
     pub fn wxHtmlHelpController_SetTitleFormat(_obj: &[u8] /* void* */, format: &[u8] /* void* */);
     pub fn wxHtmlHelpController_SetViewer(_obj: &[u8] /* void* */, viewer: &[u8] /* void* */, flags: c_int /* int */);
@@ -2476,16 +2478,16 @@ extern {
     pub fn wxIcon_Assign(_obj: &[u8] /* void* */, other: &[u8] /* void* */);
     pub fn wxIcon_CopyFromBitmap(_obj: &[u8] /* void* */, bmp: &[u8] /* void* */);
     pub fn wxIcon_CreateDefault() -> ~[u8] /* void* */;
-    pub fn wxIcon_CreateLoad(name: &[u8] /* void* */, type_: long /* long */, arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
+    pub fn wxIcon_CreateLoad(name: &[u8] /* void* */, type_: c_long /* long */, arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
     pub fn wxIcon_Delete(_obj: &[u8] /* void* */);
     pub fn wxIcon_FromRaw(data: &[u8] /* void* */, arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
     pub fn wxIcon_FromXPM(data: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxIcon_GetDepth(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxIcon_GetHeight(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxIcon_GetWidth(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxIcon_IsEqual(_obj: &[u8] /* void* */, other: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxIcon_Load(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: long /* long */, arg0: IntSize /* IntSize */) -> c_int /* int */;
-    pub fn wxIcon_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxIcon_IsEqual(_obj: &[u8] /* void* */, other: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxIcon_Load(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: c_long /* long */, arg0: IntSize /* IntSize */) -> c_int /* int */;
+    pub fn wxIcon_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxIcon_SetDepth(_obj: &[u8] /* void* */, depth: c_int /* int */);
     pub fn wxIcon_SetHeight(_obj: &[u8] /* void* */, height: c_int /* int */);
     pub fn wxIcon_SetWidth(_obj: &[u8] /* void* */, width: c_int /* int */);
@@ -2504,11 +2506,11 @@ extern {
     
     // TClassDefExtend(wxIdleEvent,wxEvent)
     pub fn wxIdleEvent_CopyObject(_obj: &[u8] /* void* */, object_dest: &[u8] /* void* */);
-    pub fn wxIdleEvent_MoreRequested(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxIdleEvent_RequestMore(_obj: &[u8] /* void* */, needMore: TBool /* TBool */);
+    pub fn wxIdleEvent_MoreRequested(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxIdleEvent_RequestMore(_obj: &[u8] /* void* */, needMore: bool /* bool */);
     
     // TClassDefExtend(wxImage,wxObject)
-    pub fn wxImage_CanRead(name: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxImage_CanRead(name: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxImage_ConvertToBitmap(_obj: &[u8] /* void* */, bitmap: &[u8] /* void* */);
     pub fn wxImage_ConvertToByteString(_obj: &[u8] /* void* */, type_: c_int /* int */, data: TByteStringOut /* TByteStringOut */) -> TByteStringLen /* TByteStringLen */;
     pub fn wxImage_ConvertToLazyByteString(_obj: &[u8] /* void* */, type_: c_int /* int */, data: TByteStringLazyOut /* TByteStringLazyOut */) -> TByteStringLen /* TByteStringLen */;
@@ -2531,21 +2533,21 @@ extern {
     pub fn wxImage_GetRed(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> TChar /* TChar */;
     pub fn wxImage_GetSubImage(_obj: &[u8] /* void* */, arg0: Rect /* Rect */, image: &[u8] /* void* */);
     pub fn wxImage_GetWidth(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxImage_HasMask(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxImage_HasMask(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxImage_GetOption(_obj: &[u8] /* void* */, name: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxImage_GetOptionInt(_obj: &[u8] /* void* */, name: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxImage_HasOption(_obj: &[u8] /* void* */, name: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxImage_GetOptionInt(_obj: &[u8] /* void* */, name: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxImage_HasOption(_obj: &[u8] /* void* */, name: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxImage_Initialize(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */);
     pub fn wxImage_InitializeFromData(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */, data: &[u8] /* void* */);
-    pub fn wxImage_LoadFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxImage_Mirror(_obj: &[u8] /* void* */, horizontally: TBoolInt /* TBoolInt */, image: &[u8] /* void* */);
-    pub fn wxImage_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxImage_LoadFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: c_int /* int */) -> bool /* bool */;
+    pub fn wxImage_Mirror(_obj: &[u8] /* void* */, horizontally: c_int /* int */, image: &[u8] /* void* */);
+    pub fn wxImage_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxImage_Paste(_obj: &[u8] /* void* */, image: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
     pub fn wxImage_Replace(_obj: &[u8] /* void* */, arg0: ColorRGB /* ColorRGB */, arg1: ColorRGB /* ColorRGB */);
     pub fn wxImage_Rescale(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */);
-    pub fn wxImage_Rotate(_obj: &[u8] /* void* */, angle: double /* double */, arg0: IntPoint /* IntPoint */, interpolating: TBoolInt /* TBoolInt */, offset_after_rotation: &[u8] /* void* */, image: &[u8] /* void* */);
-    pub fn wxImage_Rotate90(_obj: &[u8] /* void* */, clockwise: TBoolInt /* TBoolInt */, image: &[u8] /* void* */);
-    pub fn wxImage_SaveFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxImage_Rotate(_obj: &[u8] /* void* */, angle: c_double /* double */, arg0: IntPoint /* IntPoint */, interpolating: c_int /* int */, offset_after_rotation: &[u8] /* void* */, image: &[u8] /* void* */);
+    pub fn wxImage_Rotate90(_obj: &[u8] /* void* */, clockwise: c_int /* int */, image: &[u8] /* void* */);
+    pub fn wxImage_SaveFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: c_int /* int */) -> bool /* bool */;
     pub fn wxImage_Scale(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */, image: &[u8] /* void* */);
     pub fn wxImage_SetData(_obj: &[u8] /* void* */, data: &[u8] /* void* */);
     pub fn wxImage_SetDataAndSize(_obj: &[u8] /* void* */, data: &[u8] /* void* */, arg0: IntSize /* IntSize */);
@@ -2561,22 +2563,22 @@ extern {
     pub fn wxImageList_AddBitmap(_obj: &[u8] /* void* */, bitmap: &[u8] /* void* */, mask: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxImageList_AddIcon(_obj: &[u8] /* void* */, icon: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxImageList_AddMasked(_obj: &[u8] /* void* */, bitmap: &[u8] /* void* */, maskColour: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxImageList_Create(arg0: IntSize /* IntSize */, mask: TBoolInt /* TBoolInt */, initialCount: c_int /* int */) -> ~[u8] /* void* */;
+    pub fn wxImageList_Create(arg0: IntSize /* IntSize */, mask: c_int /* int */, initialCount: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxImageList_Delete(_obj: &[u8] /* void* */);
-    pub fn wxImageList_Draw(_obj: &[u8] /* void* */, index: c_int /* int */, dc: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, flags: c_int /* int */, solidBackground: TBool /* TBool */) -> TBool /* TBool */;
+    pub fn wxImageList_Draw(_obj: &[u8] /* void* */, index: c_int /* int */, dc: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, flags: c_int /* int */, solidBackground: bool /* bool */) -> bool /* bool */;
     pub fn wxImageList_GetImageCount(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxImageList_GetSize(_obj: &[u8] /* void* */, index: c_int /* int */, arg0: &[IntSize] /* IntSize* */);
-    pub fn wxImageList_Remove(_obj: &[u8] /* void* */, index: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxImageList_RemoveAll(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxImageList_Replace(_obj: &[u8] /* void* */, index: c_int /* int */, bitmap: &[u8] /* void* */, mask: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxImageList_ReplaceIcon(_obj: &[u8] /* void* */, index: c_int /* int */, icon: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxImageList_Remove(_obj: &[u8] /* void* */, index: c_int /* int */) -> bool /* bool */;
+    pub fn wxImageList_RemoveAll(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxImageList_Replace(_obj: &[u8] /* void* */, index: c_int /* int */, bitmap: &[u8] /* void* */, mask: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxImageList_ReplaceIcon(_obj: &[u8] /* void* */, index: c_int /* int */, icon: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxIndividualLayoutConstraint,wxObject)
     pub fn wxIndividualLayoutConstraint_Above(_obj: &[u8] /* void* */, sibling: &[u8] /* void* */, marg: c_int /* int */);
     pub fn wxIndividualLayoutConstraint_Absolute(_obj: &[u8] /* void* */, val: c_int /* int */);
     pub fn wxIndividualLayoutConstraint_AsIs(_obj: &[u8] /* void* */);
     pub fn wxIndividualLayoutConstraint_Below(_obj: &[u8] /* void* */, sibling: &[u8] /* void* */, marg: c_int /* int */);
-    pub fn wxIndividualLayoutConstraint_GetDone(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxIndividualLayoutConstraint_GetDone(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxIndividualLayoutConstraint_GetEdge(_obj: &[u8] /* void* */, which: c_int /* int */, thisWin: &[u8] /* void* */, other: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxIndividualLayoutConstraint_GetMargin(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxIndividualLayoutConstraint_GetMyEdge(_obj: &[u8] /* void* */) -> c_int /* int */;
@@ -2587,12 +2589,12 @@ extern {
     pub fn wxIndividualLayoutConstraint_GetValue(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxIndividualLayoutConstraint_LeftOf(_obj: &[u8] /* void* */, sibling: &[u8] /* void* */, marg: c_int /* int */);
     pub fn wxIndividualLayoutConstraint_PercentOf(_obj: &[u8] /* void* */, otherW: &[u8] /* void* */, wh: c_int /* int */, per: c_int /* int */);
-    pub fn wxIndividualLayoutConstraint_ResetIfWin(_obj: &[u8] /* void* */, otherW: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxIndividualLayoutConstraint_ResetIfWin(_obj: &[u8] /* void* */, otherW: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxIndividualLayoutConstraint_RightOf(_obj: &[u8] /* void* */, sibling: &[u8] /* void* */, marg: c_int /* int */);
     pub fn wxIndividualLayoutConstraint_SameAs(_obj: &[u8] /* void* */, otherW: &[u8] /* void* */, edge: c_int /* int */, marg: c_int /* int */);
-    pub fn wxIndividualLayoutConstraint_SatisfyConstraint(_obj: &[u8] /* void* */, constraints: &[u8] /* void* */, win: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxIndividualLayoutConstraint_SatisfyConstraint(_obj: &[u8] /* void* */, constraints: &[u8] /* void* */, win: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxIndividualLayoutConstraint_Set(_obj: &[u8] /* void* */, rel: c_int /* int */, otherW: &[u8] /* void* */, otherE: c_int /* int */, val: c_int /* int */, marg: c_int /* int */);
-    pub fn wxIndividualLayoutConstraint_SetDone(_obj: &[u8] /* void* */, d: TBool /* TBool */);
+    pub fn wxIndividualLayoutConstraint_SetDone(_obj: &[u8] /* void* */, d: bool /* bool */);
     pub fn wxIndividualLayoutConstraint_SetEdge(_obj: &[u8] /* void* */, which: c_int /* int */);
     pub fn wxIndividualLayoutConstraint_SetMargin(_obj: &[u8] /* void* */, m: c_int /* int */);
     pub fn wxIndividualLayoutConstraint_SetRelationship(_obj: &[u8] /* void* */, r: c_int /* int */);
@@ -2603,7 +2605,7 @@ extern {
     
     // TClassDefExtend(wxInputStream,wxStreamBase)
     pub fn wxInputStream_Delete(_obj: &[u8] /* void* */);
-    pub fn wxInputStream_Eof(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxInputStream_Eof(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxInputStream_GetC(_obj: &[u8] /* void* */) -> TChar /* TChar */;
     pub fn wxInputStream_LastRead(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxInputStream_Peek(_obj: &[u8] /* void* */) -> TChar /* TChar */;
@@ -2647,31 +2649,31 @@ extern {
     pub fn wxJoystick_GetZMax(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxJoystick_GetZMin(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxJoystick_GetZPosition(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxJoystick_HasPOV(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxJoystick_HasPOV4Dir(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxJoystick_HasPOVCTS(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxJoystick_HasRudder(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxJoystick_HasU(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxJoystick_HasV(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxJoystick_HasZ(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxJoystick_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxJoystick_HasPOV(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxJoystick_HasPOV4Dir(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxJoystick_HasPOVCTS(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxJoystick_HasRudder(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxJoystick_HasU(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxJoystick_HasV(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxJoystick_HasZ(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxJoystick_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxJoystick_ReleaseCapture(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxJoystick_SetCapture(_obj: &[u8] /* void* */, win: &[u8] /* void* */, pollingFreq: c_int /* int */) -> c_int /* int */;
     pub fn wxJoystick_SetMovementThreshold(_obj: &[u8] /* void* */, threshold: c_int /* int */);
     
     // TClassDefExtend(wxJoystickEvent,wxEvent)
-    pub fn wxJoystickEvent_ButtonDown(_obj: &[u8] /* void* */, but: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxJoystickEvent_ButtonIsDown(_obj: &[u8] /* void* */, but: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxJoystickEvent_ButtonUp(_obj: &[u8] /* void* */, but: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxJoystickEvent_ButtonDown(_obj: &[u8] /* void* */, but: c_int /* int */) -> bool /* bool */;
+    pub fn wxJoystickEvent_ButtonIsDown(_obj: &[u8] /* void* */, but: c_int /* int */) -> bool /* bool */;
+    pub fn wxJoystickEvent_ButtonUp(_obj: &[u8] /* void* */, but: c_int /* int */) -> bool /* bool */;
     pub fn wxJoystickEvent_CopyObject(_obj: &[u8] /* void* */, obj: &[u8] /* void* */);
     pub fn wxJoystickEvent_GetButtonChange(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxJoystickEvent_GetButtonState(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxJoystickEvent_GetJoystick(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxJoystickEvent_GetPosition(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxJoystickEvent_GetZPosition(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxJoystickEvent_IsButton(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxJoystickEvent_IsMove(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxJoystickEvent_IsZMove(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxJoystickEvent_IsButton(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxJoystickEvent_IsMove(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxJoystickEvent_IsZMove(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxJoystickEvent_SetButtonChange(_obj: &[u8] /* void* */, change: c_int /* int */);
     pub fn wxJoystickEvent_SetButtonState(_obj: &[u8] /* void* */, state: c_int /* int */);
     pub fn wxJoystickEvent_SetJoystick(_obj: &[u8] /* void* */, stick: c_int /* int */);
@@ -2679,18 +2681,18 @@ extern {
     pub fn wxJoystickEvent_SetZPosition(_obj: &[u8] /* void* */, zPos: c_int /* int */);
     
     // TClassDefExtend(wxKeyEvent,wxEvent)
-    pub fn wxKeyEvent_AltDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxKeyEvent_ControlDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxKeyEvent_AltDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxKeyEvent_ControlDown(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxKeyEvent_CopyObject(_obj: &[u8] /* void* */, obj: &[u8] /* void* */);
     pub fn wxKeyEvent_GetKeyCode(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxKeyEvent_GetPosition(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxKeyEvent_GetX(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxKeyEvent_GetY(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxKeyEvent_GetModifiers(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxKeyEvent_HasModifiers(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxKeyEvent_MetaDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxKeyEvent_HasModifiers(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxKeyEvent_MetaDown(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxKeyEvent_SetKeyCode(_obj: &[u8] /* void* */, code: c_int /* int */);
-    pub fn wxKeyEvent_ShiftDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxKeyEvent_ShiftDown(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxLEDNumberCtrl,wxControl)
     pub fn wxLEDNumberCtrl_Create(parent: &[u8] /* void* */, id: c_int /* int */, arg0: Rect /* Rect */, style: c_int /* int */) -> ~[u8] /* void* */;
@@ -2704,9 +2706,9 @@ extern {
     // TClassDefExtend(wxLayoutAlgorithm,wxObject)
     pub fn wxLayoutAlgorithm_Create() -> ~[u8] /* void* */;
     pub fn wxLayoutAlgorithm_Delete(_obj: &[u8] /* void* */);
-    pub fn wxLayoutAlgorithm_LayoutFrame(_obj: &[u8] /* void* */, frame: &[u8] /* void* */, mainWindow: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxLayoutAlgorithm_LayoutMDIFrame(_obj: &[u8] /* void* */, frame: &[u8] /* void* */, arg0: Rect /* Rect */, use_: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxLayoutAlgorithm_LayoutWindow(_obj: &[u8] /* void* */, frame: &[u8] /* void* */, mainWindow: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxLayoutAlgorithm_LayoutFrame(_obj: &[u8] /* void* */, frame: &[u8] /* void* */, mainWindow: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxLayoutAlgorithm_LayoutMDIFrame(_obj: &[u8] /* void* */, frame: &[u8] /* void* */, arg0: Rect /* Rect */, use_: c_int /* int */) -> bool /* bool */;
+    pub fn wxLayoutAlgorithm_LayoutWindow(_obj: &[u8] /* void* */, frame: &[u8] /* void* */, mainWindow: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxLayoutConstraints,wxObject)
     pub fn wxLayoutConstraints_Create() -> ~[u8] /* void* */;
@@ -2734,40 +2736,40 @@ extern {
     pub fn wxListBox_GetSelections(_obj: &[u8] /* void* */, aSelections: &[c_int] /* int* */, allocated: c_int /* int */) -> c_int /* int */;
     pub fn wxListBox_GetString(_obj: &[u8] /* void* */, n: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxListBox_InsertItems(_obj: &[u8] /* void* */, items: &[u8] /* void* */, pos: c_int /* int */, count: c_int /* int */);
-    pub fn wxListBox_IsSelected(_obj: &[u8] /* void* */, n: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxListBox_IsSelected(_obj: &[u8] /* void* */, n: c_int /* int */) -> bool /* bool */;
     pub fn wxListBox_SetClientData(_obj: &[u8] /* void* */, n: c_int /* int */, clientData: &[u8] /* void* */);
     pub fn wxListBox_SetFirstItem(_obj: &[u8] /* void* */, n: c_int /* int */);
-    pub fn wxListBox_SetSelection(_obj: &[u8] /* void* */, n: c_int /* int */, select: TBoolInt /* TBoolInt */);
+    pub fn wxListBox_SetSelection(_obj: &[u8] /* void* */, n: c_int /* int */, select: c_int /* int */);
     pub fn wxListBox_SetString(_obj: &[u8] /* void* */, n: c_int /* int */, s: &[u8] /* void* */);
-    pub fn wxListBox_SetStringSelection(_obj: &[u8] /* void* */, str: &[u8] /* void* */, sel: TBool /* TBool */);
+    pub fn wxListBox_SetStringSelection(_obj: &[u8] /* void* */, str: &[u8] /* void* */, sel: bool /* bool */);
     
     // TClassDefExtend(wxListCtrl,wxControl)
-    pub fn wxListCtrl_Arrange(_obj: &[u8] /* void* */, flag: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxListCtrl_Arrange(_obj: &[u8] /* void* */, flag: c_int /* int */) -> bool /* bool */;
     pub fn wxListCtrl_ClearAll(_obj: &[u8] /* void* */);
     pub fn wxListCtrl_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxListCtrl_DeleteAllColumns(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxListCtrl_DeleteAllItems(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxListCtrl_DeleteColumn(_obj: &[u8] /* void* */, col: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxListCtrl_DeleteItem(_obj: &[u8] /* void* */, item: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxListCtrl_DeleteAllColumns(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxListCtrl_DeleteAllItems(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxListCtrl_DeleteColumn(_obj: &[u8] /* void* */, col: c_int /* int */) -> bool /* bool */;
+    pub fn wxListCtrl_DeleteItem(_obj: &[u8] /* void* */, item: c_int /* int */) -> bool /* bool */;
     pub fn wxListCtrl_EditLabel(_obj: &[u8] /* void* */, item: c_int /* int */);
-    pub fn wxListCtrl_EndEditLabel(_obj: &[u8] /* void* */, cancel: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxListCtrl_EnsureVisible(_obj: &[u8] /* void* */, item: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxListCtrl_FindItem(_obj: &[u8] /* void* */, start: c_int /* int */, str: &[u8] /* void* */, partial: TBool /* TBool */) -> c_int /* int */;
+    pub fn wxListCtrl_EndEditLabel(_obj: &[u8] /* void* */, cancel: c_int /* int */) -> bool /* bool */;
+    pub fn wxListCtrl_EnsureVisible(_obj: &[u8] /* void* */, item: c_int /* int */) -> bool /* bool */;
+    pub fn wxListCtrl_FindItem(_obj: &[u8] /* void* */, start: c_int /* int */, str: &[u8] /* void* */, partial: bool /* bool */) -> c_int /* int */;
     pub fn wxListCtrl_FindItemByData(_obj: &[u8] /* void* */, start: c_int /* int */, data: c_int /* int */) -> c_int /* int */;
     pub fn wxListCtrl_FindItemByPosition(_obj: &[u8] /* void* */, start: c_int /* int */, arg0: IntPoint /* IntPoint */, direction: c_int /* int */) -> c_int /* int */;
-    pub fn wxListCtrl_GetColumn(_obj: &[u8] /* void* */, col: c_int /* int */, item: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxListCtrl_GetColumn(_obj: &[u8] /* void* */, col: c_int /* int */, item: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxListCtrl_GetColumnCount(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxListCtrl_GetColumnWidth(_obj: &[u8] /* void* */, col: c_int /* int */) -> c_int /* int */;
     pub fn wxListCtrl_GetCountPerPage(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxListCtrl_GetEditControl(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxListCtrl_GetImageList(_obj: &[u8] /* void* */, which: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxListCtrl_GetItem(_obj: &[u8] /* void* */, info: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxListCtrl_GetItem(_obj: &[u8] /* void* */, info: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxListCtrl_GetItemCount(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxListCtrl_GetItemData(_obj: &[u8] /* void* */, item: c_int /* int */) -> c_int /* int */;
-    pub fn wxListCtrl_GetItemFont(_obj: &[u8] /* void* */, item: long /* long */) -> ~[u8] /* void* */;
+    pub fn wxListCtrl_GetItemFont(_obj: &[u8] /* void* */, item: c_long /* long */) -> ~[u8] /* void* */;
     pub fn wxListCtrl_GetItemPosition(_obj: &[u8] /* void* */, item: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxListCtrl_GetItemRect(_obj: &[u8] /* void* */, item: c_int /* int */, code: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxListCtrl_GetItemSpacing(_obj: &[u8] /* void* */, isSmall: TBool /* TBool */) -> ~[u8] /* void* */;
+    pub fn wxListCtrl_GetItemSpacing(_obj: &[u8] /* void* */, isSmall: bool /* bool */) -> ~[u8] /* void* */;
     pub fn wxListCtrl_GetItemState(_obj: &[u8] /* void* */, item: c_int /* int */, stateMask: c_int /* int */) -> c_int /* int */;
     pub fn wxListCtrl_GetItemText(_obj: &[u8] /* void* */, item: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxListCtrl_GetNextItem(_obj: &[u8] /* void* */, item: c_int /* int */, geometry: c_int /* int */, state: c_int /* int */) -> c_int /* int */;
@@ -2781,29 +2783,29 @@ extern {
     pub fn wxListCtrl_InsertItemWithData(_obj: &[u8] /* void* */, index: c_int /* int */, label: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxListCtrl_InsertItemWithImage(_obj: &[u8] /* void* */, index: c_int /* int */, imageIndex: c_int /* int */) -> c_int /* int */;
     pub fn wxListCtrl_InsertItemWithLabel(_obj: &[u8] /* void* */, index: c_int /* int */, label: &[u8] /* void* */, imageIndex: c_int /* int */) -> c_int /* int */;
-    pub fn wxListCtrl_IsVirtual(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxListCtrl_RefreshItem(_obj: &[u8] /* void* */, item: long /* long */);
-    pub fn wxListCtrl_ScrollList(_obj: &[u8] /* void* */, arg0: Vector /* Vector */) -> TBool /* TBool */;
+    pub fn wxListCtrl_IsVirtual(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxListCtrl_RefreshItem(_obj: &[u8] /* void* */, item: c_long /* long */);
+    pub fn wxListCtrl_ScrollList(_obj: &[u8] /* void* */, arg0: Vector /* Vector */) -> bool /* bool */;
     pub fn wxListCtrl_SetBackgroundColour(_obj: &[u8] /* void* */, col: &[u8] /* void* */);
-    pub fn wxListCtrl_SetColumn(_obj: &[u8] /* void* */, col: c_int /* int */, item: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxListCtrl_SetColumnWidth(_obj: &[u8] /* void* */, col: c_int /* int */, width: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxListCtrl_SetColumn(_obj: &[u8] /* void* */, col: c_int /* int */, item: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxListCtrl_SetColumnWidth(_obj: &[u8] /* void* */, col: c_int /* int */, width: c_int /* int */) -> bool /* bool */;
     pub fn wxListCtrl_SetForegroundColour(_obj: &[u8] /* void* */, col: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxListCtrl_SetImageList(_obj: &[u8] /* void* */, imageList: &[u8] /* void* */, which: c_int /* int */);
-    pub fn wxListCtrl_SetItem(_obj: &[u8] /* void* */, index: c_int /* int */, col: c_int /* int */, label: &[u8] /* void* */, imageId: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxListCtrl_SetItemData(_obj: &[u8] /* void* */, item: c_int /* int */, data: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxListCtrl_SetItemFromInfo(_obj: &[u8] /* void* */, info: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxListCtrl_SetItemImage(_obj: &[u8] /* void* */, item: c_int /* int */, image: c_int /* int */, selImage: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxListCtrl_SetItemPosition(_obj: &[u8] /* void* */, item: c_int /* int */, arg0: IntPoint /* IntPoint */) -> TBool /* TBool */;
-    pub fn wxListCtrl_SetItemState(_obj: &[u8] /* void* */, item: c_int /* int */, state: c_int /* int */, stateMask: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxListCtrl_SetItem(_obj: &[u8] /* void* */, index: c_int /* int */, col: c_int /* int */, label: &[u8] /* void* */, imageId: c_int /* int */) -> bool /* bool */;
+    pub fn wxListCtrl_SetItemData(_obj: &[u8] /* void* */, item: c_int /* int */, data: c_int /* int */) -> bool /* bool */;
+    pub fn wxListCtrl_SetItemFromInfo(_obj: &[u8] /* void* */, info: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxListCtrl_SetItemImage(_obj: &[u8] /* void* */, item: c_int /* int */, image: c_int /* int */, selImage: c_int /* int */) -> bool /* bool */;
+    pub fn wxListCtrl_SetItemPosition(_obj: &[u8] /* void* */, item: c_int /* int */, arg0: IntPoint /* IntPoint */) -> bool /* bool */;
+    pub fn wxListCtrl_SetItemState(_obj: &[u8] /* void* */, item: c_int /* int */, state: c_int /* int */, stateMask: c_int /* int */) -> bool /* bool */;
     pub fn wxListCtrl_SetItemText(_obj: &[u8] /* void* */, item: c_int /* int */, str: &[u8] /* void* */);
-    pub fn wxListCtrl_SetSingleStyle(_obj: &[u8] /* void* */, style: c_int /* int */, add: TBool /* TBool */);
+    pub fn wxListCtrl_SetSingleStyle(_obj: &[u8] /* void* */, style: c_int /* int */, add: bool /* bool */);
     pub fn wxListCtrl_SetTextColour(_obj: &[u8] /* void* */, col: &[u8] /* void* */);
     pub fn wxListCtrl_SetWindowStyleFlag(_obj: &[u8] /* void* */, style: c_int /* int */);
-    pub fn wxListCtrl_SortItems(_obj: &[u8] /* void* */, fn_: &[u8] /* void* */, eif_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxListCtrl_SortItems(_obj: &[u8] /* void* */, fn_: &[u8] /* void* */, eif_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxListCtrl_UpdateStyle(_obj: &[u8] /* void* */);
     
     // TClassDefExtend(wxListEvent,wxNotifyEvent)
-    pub fn wxListEvent_Cancelled(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxListEvent_Cancelled(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxListEvent_GetCode(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxListEvent_GetColumn(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxListEvent_GetData(_obj: &[u8] /* void* */) -> c_int /* int */;
@@ -2833,7 +2835,7 @@ extern {
     pub fn wxListItem_GetText(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxListItem_GetTextColour(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
     pub fn wxListItem_GetWidth(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxListItem_HasAttributes(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxListItem_HasAttributes(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxListItem_SetAlign(_obj: &[u8] /* void* */, align: c_int /* int */);
     pub fn wxListItem_SetBackgroundColour(_obj: &[u8] /* void* */, colBack: &[u8] /* void* */);
     pub fn wxListItem_SetColumn(_obj: &[u8] /* void* */, col: c_int /* int */);
@@ -2857,8 +2859,8 @@ extern {
     pub fn wxLocale_GetLocale(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxLocale_GetName(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxLocale_GetString(_obj: &[u8] /* void* */, szOrigString: &[u8] /* void* */, szDomain: &[u8] /* void* */) -> TString /* TString */;
-    pub fn wxLocale_IsLoaded(_obj: &[u8] /* void* */, szDomain: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxLocale_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxLocale_IsLoaded(_obj: &[u8] /* void* */, szDomain: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxLocale_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDef(wxLog)
     
@@ -2866,8 +2868,8 @@ extern {
     pub fn wxLogChain_Create(logger: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxLogChain_Delete(_obj: &[u8] /* void* */);
     pub fn wxLogChain_GetOldLog(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxLogChain_IsPassingMessages(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxLogChain_PassMessages(_obj: &[u8] /* void* */, bDoPass: TBool /* TBool */);
+    pub fn wxLogChain_IsPassingMessages(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxLogChain_PassMessages(_obj: &[u8] /* void* */, bDoPass: bool /* bool */);
     pub fn wxLogChain_SetLog(_obj: &[u8] /* void* */, logger: &[u8] /* void* */);
     
     // TClassDefExtend(wxLogGUI,wxLog)
@@ -2933,19 +2935,19 @@ extern {
     // TClassDefExtend(wxMemoryOutputStream,wxOutputStream)
     
     // TClassDefExtend(wxMenu,wxEvtHandler)
-    pub fn wxMenu_Append(_obj: &[u8] /* void* */, id: c_int /* int */, text: &[u8] /* void* */, help: &[u8] /* void* */, isCheckable: TBool /* TBool */);
+    pub fn wxMenu_Append(_obj: &[u8] /* void* */, id: c_int /* int */, text: &[u8] /* void* */, help: &[u8] /* void* */, isCheckable: bool /* bool */);
     pub fn wxMenu_AppendItem(_obj: &[u8] /* void* */, _itm: &[u8] /* void* */);
     pub fn wxMenu_AppendSeparator(_obj: &[u8] /* void* */);
     pub fn wxMenu_AppendSub(_obj: &[u8] /* void* */, id: c_int /* int */, text: &[u8] /* void* */, submenu: &[u8] /* void* */, help: &[u8] /* void* */);
     pub fn wxMenu_Break(_obj: &[u8] /* void* */);
-    pub fn wxMenu_Check(_obj: &[u8] /* void* */, id: c_int /* int */, check: TBool /* TBool */);
-    pub fn wxMenu_Create(title: &[u8] /* void* */, style: long /* long */) -> ~[u8] /* void* */;
+    pub fn wxMenu_Check(_obj: &[u8] /* void* */, id: c_int /* int */, check: bool /* bool */);
+    pub fn wxMenu_Create(title: &[u8] /* void* */, style: c_long /* long */) -> ~[u8] /* void* */;
     pub fn wxMenu_DeleteById(_obj: &[u8] /* void* */, id: c_int /* int */);
     pub fn wxMenu_DeleteByItem(_obj: &[u8] /* void* */, _itm: &[u8] /* void* */);
     pub fn wxMenu_DeletePointer(_obj: &[u8] /* void* */);
     pub fn wxMenu_DestroyById(_obj: &[u8] /* void* */, id: c_int /* int */);
     pub fn wxMenu_DestroyByItem(_obj: &[u8] /* void* */, _itm: &[u8] /* void* */);
-    pub fn wxMenu_Enable(_obj: &[u8] /* void* */, id: c_int /* int */, enable: TBool /* TBool */);
+    pub fn wxMenu_Enable(_obj: &[u8] /* void* */, id: c_int /* int */, enable: bool /* bool */);
     pub fn wxMenu_FindItem(_obj: &[u8] /* void* */, id: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxMenu_FindItemByLabel(_obj: &[u8] /* void* */, itemString: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxMenu_GetClientData(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -2957,13 +2959,13 @@ extern {
     pub fn wxMenu_GetParent(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxMenu_GetStyle(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxMenu_GetTitle(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxMenu_Insert(_obj: &[u8] /* void* */, pos: size_t /* size_t */, id: c_int /* int */, text: &[u8] /* void* */, help: &[u8] /* void* */, isCheckable: TBool /* TBool */);
+    pub fn wxMenu_Insert(_obj: &[u8] /* void* */, pos: size_t /* size_t */, id: c_int /* int */, text: &[u8] /* void* */, help: &[u8] /* void* */, isCheckable: bool /* bool */);
     pub fn wxMenu_InsertItem(_obj: &[u8] /* void* */, pos: size_t /* size_t */, _itm: &[u8] /* void* */);
     pub fn wxMenu_InsertSub(_obj: &[u8] /* void* */, pos: size_t /* size_t */, id: c_int /* int */, text: &[u8] /* void* */, submenu: &[u8] /* void* */, help: &[u8] /* void* */);
-    pub fn wxMenu_IsAttached(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMenu_IsChecked(_obj: &[u8] /* void* */, id: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxMenu_IsEnabled(_obj: &[u8] /* void* */, id: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxMenu_Prepend(_obj: &[u8] /* void* */, id: c_int /* int */, text: &[u8] /* void* */, help: &[u8] /* void* */, isCheckable: TBool /* TBool */);
+    pub fn wxMenu_IsAttached(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMenu_IsChecked(_obj: &[u8] /* void* */, id: c_int /* int */) -> bool /* bool */;
+    pub fn wxMenu_IsEnabled(_obj: &[u8] /* void* */, id: c_int /* int */) -> bool /* bool */;
+    pub fn wxMenu_Prepend(_obj: &[u8] /* void* */, id: c_int /* int */, text: &[u8] /* void* */, help: &[u8] /* void* */, isCheckable: bool /* bool */);
     pub fn wxMenu_PrependItem(_obj: &[u8] /* void* */, _itm: &[u8] /* void* */);
     pub fn wxMenu_PrependSub(_obj: &[u8] /* void* */, id: c_int /* int */, text: &[u8] /* void* */, submenu: &[u8] /* void* */, help: &[u8] /* void* */);
     pub fn wxMenu_RemoveById(_obj: &[u8] /* void* */, id: c_int /* int */, _itm: &[u8] /* void* */);
@@ -2979,12 +2981,12 @@ extern {
     
     // TClassDefExtend(wxMenuBar,wxEvtHandler)
     pub fn wxMenuBar_Append(_obj: &[u8] /* void* */, menu: &[u8] /* void* */, title: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxMenuBar_Check(_obj: &[u8] /* void* */, id: c_int /* int */, check: TBool /* TBool */);
+    pub fn wxMenuBar_Check(_obj: &[u8] /* void* */, id: c_int /* int */, check: bool /* bool */);
     pub fn wxMenuBar_Create(_style: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxMenuBar_DeletePointer(_obj: &[u8] /* void* */);
-    pub fn wxMenuBar_Enable(_obj: &[u8] /* void* */, enable: TBool /* TBool */) -> c_int /* int */;
-    pub fn wxMenuBar_EnableItem(_obj: &[u8] /* void* */, id: c_int /* int */, enable: TBool /* TBool */);
-    pub fn wxMenuBar_EnableTop(_obj: &[u8] /* void* */, pos: c_int /* int */, enable: TBool /* TBool */);
+    pub fn wxMenuBar_Enable(_obj: &[u8] /* void* */, enable: bool /* bool */) -> c_int /* int */;
+    pub fn wxMenuBar_EnableItem(_obj: &[u8] /* void* */, id: c_int /* int */, enable: bool /* bool */);
+    pub fn wxMenuBar_EnableTop(_obj: &[u8] /* void* */, pos: c_int /* int */, enable: bool /* bool */);
     pub fn wxMenuBar_FindItem(_obj: &[u8] /* void* */, id: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxMenuBar_FindMenu(_obj: &[u8] /* void* */, title: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxMenuBar_FindMenuItem(_obj: &[u8] /* void* */, menuString: &[u8] /* void* */, itemString: &[u8] /* void* */) -> c_int /* int */;
@@ -2994,8 +2996,8 @@ extern {
     pub fn wxMenuBar_GetMenu(_obj: &[u8] /* void* */, pos: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxMenuBar_GetMenuCount(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxMenuBar_Insert(_obj: &[u8] /* void* */, pos: c_int /* int */, menu: &[u8] /* void* */, title: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxMenuBar_IsChecked(_obj: &[u8] /* void* */, id: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxMenuBar_IsEnabled(_obj: &[u8] /* void* */, id: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxMenuBar_IsChecked(_obj: &[u8] /* void* */, id: c_int /* int */) -> bool /* bool */;
+    pub fn wxMenuBar_IsEnabled(_obj: &[u8] /* void* */, id: c_int /* int */) -> bool /* bool */;
     pub fn wxMenuBar_Remove(_obj: &[u8] /* void* */, pos: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxMenuBar_Replace(_obj: &[u8] /* void* */, pos: c_int /* int */, menu: &[u8] /* void* */, title: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxMenuBar_SetHelpString(_obj: &[u8] /* void* */, id: c_int /* int */, helpString: &[u8] /* void* */);
@@ -3008,23 +3010,23 @@ extern {
     pub fn wxMenuEvent_GetMenuId(_obj: &[u8] /* void* */) -> c_int /* int */;
     
     // TClassDefExtend(wxMenuItem,wxObject)
-    pub fn wxMenuItem_Check(_obj: &[u8] /* void* */, check: TBool /* TBool */);
+    pub fn wxMenuItem_Check(_obj: &[u8] /* void* */, check: bool /* bool */);
     pub fn wxMenuItem_Create() -> ~[u8] /* void* */;
     pub fn wxMenuItem_Delete(_obj: &[u8] /* void* */);
-    pub fn wxMenuItem_Enable(_obj: &[u8] /* void* */, enable: TBool /* TBool */);
+    pub fn wxMenuItem_Enable(_obj: &[u8] /* void* */, enable: bool /* bool */);
     pub fn wxMenuItem_GetHelp(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxMenuItem_GetId(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxMenuItem_GetLabel(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxMenuItem_GetLabelFromText(text: TStringVoid /* TStringVoid */) -> ~[u8] /* void* */;
+    pub fn wxMenuItem_GetLabelFromText(text: &[wchar_t] /* wchar_t* */) -> ~[u8] /* void* */;
     pub fn wxMenuItem_GetMenu(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxMenuItem_GetSubMenu(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxMenuItem_GetText(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxMenuItem_IsCheckable(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMenuItem_IsChecked(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMenuItem_IsEnabled(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMenuItem_IsSeparator(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMenuItem_IsSubMenu(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMenuItem_SetCheckable(_obj: &[u8] /* void* */, checkable: TBool /* TBool */);
+    pub fn wxMenuItem_IsCheckable(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMenuItem_IsChecked(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMenuItem_IsEnabled(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMenuItem_IsSeparator(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMenuItem_IsSubMenu(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMenuItem_SetCheckable(_obj: &[u8] /* void* */, checkable: bool /* bool */);
     pub fn wxMenuItem_SetHelp(_obj: &[u8] /* void* */, str: &[u8] /* void* */);
     pub fn wxMenuItem_SetId(_obj: &[u8] /* void* */, id: c_int /* int */);
     pub fn wxMenuItem_SetSubMenu(_obj: &[u8] /* void* */, menu: &[u8] /* void* */);
@@ -3038,9 +3040,9 @@ extern {
     // TClassDefExtend(wxMetafile,wxObject)
     pub fn wxMetafile_Create(_file: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxMetafile_Delete(_obj: &[u8] /* void* */);
-    pub fn wxMetafile_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMetafile_Play(_obj: &[u8] /* void* */, _dc: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMetafile_SetClipboard(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */) -> TBool /* TBool */;
+    pub fn wxMetafile_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMetafile_Play(_obj: &[u8] /* void* */, _dc: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMetafile_SetClipboard(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */) -> bool /* bool */;
     
     // TClassDefExtend(wxMetafileDC,wxDC)
     pub fn wxMetafileDC_Close(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -3053,7 +3055,7 @@ extern {
     pub fn wxMimeTypesManager_EnumAllFileTypes(_obj: &[u8] /* void* */, _lst: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxMimeTypesManager_GetFileTypeFromExtension(_obj: &[u8] /* void* */, _ext: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxMimeTypesManager_GetFileTypeFromMimeType(_obj: &[u8] /* void* */, _name: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxMimeTypesManager_IsOfType(_obj: &[u8] /* void* */, _type: &[u8] /* void* */, _wildcard: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxMimeTypesManager_IsOfType(_obj: &[u8] /* void* */, _type: &[u8] /* void* */, _wildcard: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxMiniFrame,wxFrame)
     pub fn wxMiniFrame_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _txt: &[u8] /* void* */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
@@ -3067,37 +3069,37 @@ extern {
     // TClassDefExtend(wxMouseCaptureChangedEvent,wxEvent)
     
     // TClassDefExtend(wxMouseEvent,wxEvent)
-    pub fn wxMouseEvent_AltDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_Button(_obj: &[u8] /* void* */, but: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_ButtonDClick(_obj: &[u8] /* void* */, but: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_ButtonDown(_obj: &[u8] /* void* */, but: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_ButtonIsDown(_obj: &[u8] /* void* */, but: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_ButtonUp(_obj: &[u8] /* void* */, but: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_ControlDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxMouseEvent_AltDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_Button(_obj: &[u8] /* void* */, but: c_int /* int */) -> bool /* bool */;
+    pub fn wxMouseEvent_ButtonDClick(_obj: &[u8] /* void* */, but: c_int /* int */) -> bool /* bool */;
+    pub fn wxMouseEvent_ButtonDown(_obj: &[u8] /* void* */, but: c_int /* int */) -> bool /* bool */;
+    pub fn wxMouseEvent_ButtonIsDown(_obj: &[u8] /* void* */, but: c_int /* int */) -> bool /* bool */;
+    pub fn wxMouseEvent_ButtonUp(_obj: &[u8] /* void* */, but: c_int /* int */) -> bool /* bool */;
+    pub fn wxMouseEvent_ControlDown(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxMouseEvent_CopyObject(_obj: &[u8] /* void* */, object_dest: &[u8] /* void* */);
-    pub fn wxMouseEvent_Dragging(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_Entering(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxMouseEvent_Dragging(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_Entering(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxMouseEvent_GetLogicalPosition(_obj: &[u8] /* void* */, dc: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxMouseEvent_GetPosition(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxMouseEvent_GetX(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxMouseEvent_GetY(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxMouseEvent_IsButton(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_Leaving(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_LeftDClick(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_LeftDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_LeftIsDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_LeftUp(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_MetaDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_MiddleDClick(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_MiddleDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_MiddleIsDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_MiddleUp(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_Moving(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_RightDClick(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_RightDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_RightIsDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_RightUp(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxMouseEvent_ShiftDown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxMouseEvent_IsButton(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_Leaving(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_LeftDClick(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_LeftDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_LeftIsDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_LeftUp(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_MetaDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_MiddleDClick(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_MiddleDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_MiddleIsDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_MiddleUp(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_Moving(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_RightDClick(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_RightDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_RightIsDown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_RightUp(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxMouseEvent_ShiftDown(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxMoveEvent,wxEvent)
     pub fn wxMoveEvent_CopyObject(_obj: &[u8] /* void* */, obj: &[u8] /* void* */);
@@ -3138,7 +3140,7 @@ extern {
     // TClassDef(wxMutex)
     pub fn wxMutex_Create() -> ~[u8] /* void* */;
     pub fn wxMutex_Delete(_obj: &[u8] /* void* */);
-    pub fn wxMutex_IsLocked(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxMutex_IsLocked(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxMutex_Lock(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxMutex_TryLock(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxMutex_Unlock(_obj: &[u8] /* void* */) -> c_int /* int */;
@@ -3147,23 +3149,23 @@ extern {
     
     // TClassDefExtend(wxNavigationKeyEvent,wxEvent)
     pub fn wxNavigationKeyEvent_GetCurrentFocus(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxNavigationKeyEvent_GetDirection(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxNavigationKeyEvent_IsWindowChange(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxNavigationKeyEvent_GetDirection(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxNavigationKeyEvent_IsWindowChange(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxNavigationKeyEvent_SetCurrentFocus(_obj: &[u8] /* void* */, win: &[u8] /* void* */);
-    pub fn wxNavigationKeyEvent_SetDirection(_obj: &[u8] /* void* */, bForward: TBool /* TBool */);
-    pub fn wxNavigationKeyEvent_SetWindowChange(_obj: &[u8] /* void* */, bIs: TBool /* TBool */);
+    pub fn wxNavigationKeyEvent_SetDirection(_obj: &[u8] /* void* */, bForward: bool /* bool */);
+    pub fn wxNavigationKeyEvent_SetWindowChange(_obj: &[u8] /* void* */, bIs: bool /* bool */);
     pub fn wxNavigationKeyEvent_ShouldPropagate(_obj: &[u8] /* void* */) -> c_int /* int */;
     
     // TClassDefExtend(wxNewBitmapButton,wxPanel)
-    pub fn wxNewBitmapButton_Create(labelBitmap: &[u8] /* void* */, labelText: &[u8] /* void* */, alignText: c_int /* int */, isFlat: TBool /* TBool */, firedEventType: c_int /* int */, marginX: c_int /* int */, marginY: c_int /* int */, textToLabelGap: c_int /* int */, isSticky: TBool /* TBool */) -> ~[u8] /* void* */;
-    pub fn wxNewBitmapButton_CreateFromFile(bitmapFileName: &[u8] /* void* */, bitmapFileType: c_int /* int */, labelText: &[u8] /* void* */, alignText: c_int /* int */, isFlat: TBool /* TBool */, firedEventType: c_int /* int */, marginX: c_int /* int */, marginY: c_int /* int */, textToLabelGap: c_int /* int */, isSticky: TBool /* TBool */) -> ~[u8] /* void* */;
+    pub fn wxNewBitmapButton_Create(labelBitmap: &[u8] /* void* */, labelText: &[u8] /* void* */, alignText: c_int /* int */, isFlat: bool /* bool */, firedEventType: c_int /* int */, marginX: c_int /* int */, marginY: c_int /* int */, textToLabelGap: c_int /* int */, isSticky: bool /* bool */) -> ~[u8] /* void* */;
+    pub fn wxNewBitmapButton_CreateFromFile(bitmapFileName: &[u8] /* void* */, bitmapFileType: c_int /* int */, labelText: &[u8] /* void* */, alignText: c_int /* int */, isFlat: bool /* bool */, firedEventType: c_int /* int */, marginX: c_int /* int */, marginY: c_int /* int */, textToLabelGap: c_int /* int */, isSticky: bool /* bool */) -> ~[u8] /* void* */;
     pub fn wxNewBitmapButton_Delete(_obj: &[u8] /* void* */);
     pub fn wxNewBitmapButton_DrawDecorations(_obj: &[u8] /* void* */, dc: &[u8] /* void* */);
     pub fn wxNewBitmapButton_DrawLabel(_obj: &[u8] /* void* */, dc: &[u8] /* void* */);
-    pub fn wxNewBitmapButton_Enable(_obj: &[u8] /* void* */, enable: TBool /* TBool */) -> c_int /* int */;
+    pub fn wxNewBitmapButton_Enable(_obj: &[u8] /* void* */, enable: bool /* bool */) -> c_int /* int */;
     pub fn wxNewBitmapButton_Realize(_obj: &[u8] /* void* */, _prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */);
     pub fn wxNewBitmapButton_RenderAllLabelImages(_obj: &[u8] /* void* */);
-    pub fn wxNewBitmapButton_RenderLabelImage(_obj: &[u8] /* void* */, destBmp: &[u8] /* void* */, srcBmp: &[u8] /* void* */, isEnabled: TBool /* TBool */, isPressed: TBool /* TBool */);
+    pub fn wxNewBitmapButton_RenderLabelImage(_obj: &[u8] /* void* */, destBmp: &[u8] /* void* */, srcBmp: &[u8] /* void* */, isEnabled: bool /* bool */, isPressed: bool /* bool */);
     pub fn wxNewBitmapButton_RenderLabelImages(_obj: &[u8] /* void* */);
     pub fn wxNewBitmapButton_Reshape(_obj: &[u8] /* void* */);
     pub fn wxNewBitmapButton_SetAlignments(_obj: &[u8] /* void* */, alignText: c_int /* int */, marginX: c_int /* int */, marginY: c_int /* int */, textToLabelGap: c_int /* int */);
@@ -3172,11 +3174,11 @@ extern {
     // TClassDef(wxNodeBase)
     
     // TClassDefExtend(wxNotebook,wxControl)
-    pub fn wxNotebook_AddPage(_obj: &[u8] /* void* */, pPage: &[u8] /* void* */, strText: &[u8] /* void* */, bSelect: TBool /* TBool */, imageId: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxNotebook_AdvanceSelection(_obj: &[u8] /* void* */, bForward: TBool /* TBool */);
+    pub fn wxNotebook_AddPage(_obj: &[u8] /* void* */, pPage: &[u8] /* void* */, strText: &[u8] /* void* */, bSelect: bool /* bool */, imageId: c_int /* int */) -> bool /* bool */;
+    pub fn wxNotebook_AdvanceSelection(_obj: &[u8] /* void* */, bForward: bool /* bool */);
     pub fn wxNotebook_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxNotebook_DeleteAllPages(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxNotebook_DeletePage(_obj: &[u8] /* void* */, nPage: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxNotebook_DeleteAllPages(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxNotebook_DeletePage(_obj: &[u8] /* void* */, nPage: c_int /* int */) -> bool /* bool */;
     pub fn wxNotebook_GetImageList(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxNotebook_GetPage(_obj: &[u8] /* void* */, nPage: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxNotebook_GetPageCount(_obj: &[u8] /* void* */) -> c_int /* int */;
@@ -3184,14 +3186,14 @@ extern {
     pub fn wxNotebook_GetPageText(_obj: &[u8] /* void* */, nPage: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxNotebook_GetRowCount(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxNotebook_GetSelection(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxNotebook_HitTest(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, flags: &[long] /* long* */) -> c_int /* int */;
-    pub fn wxNotebook_InsertPage(_obj: &[u8] /* void* */, nPage: c_int /* int */, pPage: &[u8] /* void* */, strText: &[u8] /* void* */, bSelect: TBool /* TBool */, imageId: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxNotebook_RemovePage(_obj: &[u8] /* void* */, nPage: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxNotebook_HitTest(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, flags: &[c_long] /* long* */) -> c_int /* int */;
+    pub fn wxNotebook_InsertPage(_obj: &[u8] /* void* */, nPage: c_int /* int */, pPage: &[u8] /* void* */, strText: &[u8] /* void* */, bSelect: bool /* bool */, imageId: c_int /* int */) -> bool /* bool */;
+    pub fn wxNotebook_RemovePage(_obj: &[u8] /* void* */, nPage: c_int /* int */) -> bool /* bool */;
     pub fn wxNotebook_SetImageList(_obj: &[u8] /* void* */, imageList: &[u8] /* void* */);
     pub fn wxNotebook_SetPadding(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */);
-    pub fn wxNotebook_SetPageImage(_obj: &[u8] /* void* */, nPage: c_int /* int */, nImage: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxNotebook_SetPageImage(_obj: &[u8] /* void* */, nPage: c_int /* int */, nImage: c_int /* int */) -> bool /* bool */;
     pub fn wxNotebook_SetPageSize(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */);
-    pub fn wxNotebook_SetPageText(_obj: &[u8] /* void* */, nPage: c_int /* int */, strText: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxNotebook_SetPageText(_obj: &[u8] /* void* */, nPage: c_int /* int */, strText: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxNotebook_SetSelection(_obj: &[u8] /* void* */, nPage: c_int /* int */) -> c_int /* int */;
     pub fn expNB_TOP() -> c_int /* int */;
     pub fn expNB_BOTTOM() -> c_int /* int */;
@@ -3208,7 +3210,7 @@ extern {
     // TClassDefExtend(wxNotifyEvent,wxCommandEvent)
     pub fn wxNotifyEvent_Allow(_obj: &[u8] /* void* */);
     pub fn wxNotifyEvent_CopyObject(_obj: &[u8] /* void* */, object_dest: &[u8] /* void* */);
-    pub fn wxNotifyEvent_IsAllowed(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxNotifyEvent_IsAllowed(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxNotifyEvent_Veto(_obj: &[u8] /* void* */);
     
     // TClassDef(wxObject)
@@ -3236,18 +3238,18 @@ extern {
     pub fn wxPageSetupDialogData_Create() -> ~[u8] /* void* */;
     pub fn wxPageSetupDialogData_CreateFromData(printData: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPageSetupDialogData_Delete(_obj: &[u8] /* void* */);
-    pub fn wxPageSetupDialogData_EnableHelp(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
-    pub fn wxPageSetupDialogData_EnableMargins(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
-    pub fn wxPageSetupDialogData_EnableOrientation(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
-    pub fn wxPageSetupDialogData_EnablePaper(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
-    pub fn wxPageSetupDialogData_EnablePrinter(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
-    pub fn wxPageSetupDialogData_GetDefaultInfo(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPageSetupDialogData_GetDefaultMinMargins(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPageSetupDialogData_GetEnableHelp(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPageSetupDialogData_GetEnableMargins(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPageSetupDialogData_GetEnableOrientation(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPageSetupDialogData_GetEnablePaper(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPageSetupDialogData_GetEnablePrinter(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxPageSetupDialogData_EnableHelp(_obj: &[u8] /* void* */, flag: bool /* bool */);
+    pub fn wxPageSetupDialogData_EnableMargins(_obj: &[u8] /* void* */, flag: bool /* bool */);
+    pub fn wxPageSetupDialogData_EnableOrientation(_obj: &[u8] /* void* */, flag: bool /* bool */);
+    pub fn wxPageSetupDialogData_EnablePaper(_obj: &[u8] /* void* */, flag: bool /* bool */);
+    pub fn wxPageSetupDialogData_EnablePrinter(_obj: &[u8] /* void* */, flag: bool /* bool */);
+    pub fn wxPageSetupDialogData_GetDefaultInfo(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPageSetupDialogData_GetDefaultMinMargins(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPageSetupDialogData_GetEnableHelp(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPageSetupDialogData_GetEnableMargins(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPageSetupDialogData_GetEnableOrientation(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPageSetupDialogData_GetEnablePaper(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPageSetupDialogData_GetEnablePrinter(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxPageSetupDialogData_GetMarginBottomRight(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPageSetupDialogData_GetMarginTopLeft(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPageSetupDialogData_GetMinMarginBottomRight(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -3255,7 +3257,7 @@ extern {
     pub fn wxPageSetupDialogData_GetPaperId(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPageSetupDialogData_GetPaperSize(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPageSetupDialogData_GetPrintData(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
-    pub fn wxPageSetupDialogData_SetDefaultInfo(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
+    pub fn wxPageSetupDialogData_SetDefaultInfo(_obj: &[u8] /* void* */, flag: bool /* bool */);
     pub fn wxPageSetupDialogData_SetDefaultMinMargins(_obj: &[u8] /* void* */, flag: c_int /* int */);
     pub fn wxPageSetupDialogData_SetMarginBottomRight(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
     pub fn wxPageSetupDialogData_SetMarginTopLeft(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
@@ -3278,9 +3280,9 @@ extern {
     pub fn wxPalette_CreateRGB(n: c_int /* int */, red: &[u8] /* void* */, green: &[u8] /* void* */, blue: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPalette_Delete(_obj: &[u8] /* void* */);
     pub fn wxPalette_GetPixel(_obj: &[u8] /* void* */, arg0: ColorRGB /* ColorRGB */) -> c_int /* int */;
-    pub fn wxPalette_GetRGB(_obj: &[u8] /* void* */, pixel: c_int /* int */, red: &[u8] /* void* */, green: &[u8] /* void* */, blue: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPalette_IsEqual(_obj: &[u8] /* void* */, palette: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPalette_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxPalette_GetRGB(_obj: &[u8] /* void* */, pixel: c_int /* int */, red: &[u8] /* void* */, green: &[u8] /* void* */, blue: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPalette_IsEqual(_obj: &[u8] /* void* */, palette: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPalette_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxPaletteChangedEvent,wxEvent)
     pub fn wxPaletteChangedEvent_CopyObject(_obj: &[u8] /* void* */, obj: &[u8] /* void* */);
@@ -3308,8 +3310,8 @@ extern {
     pub fn wxPen_GetStipple(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
     pub fn wxPen_GetStyle(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPen_GetWidth(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxPen_IsEqual(_obj: &[u8] /* void* */, pen: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPen_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxPen_IsEqual(_obj: &[u8] /* void* */, pen: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPen_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxPen_SetCap(_obj: &[u8] /* void* */, cap: c_int /* int */);
     pub fn wxPen_SetColour(_obj: &[u8] /* void* */, col: &[u8] /* void* */);
     pub fn wxPen_SetColourSingle(_obj: &[u8] /* void* */, r: TChar /* TChar */, g: TChar /* TChar */, b: TChar /* TChar */);
@@ -3326,9 +3328,9 @@ extern {
     // TClassDefExtend(wxPlotEvent,wxNotifyEvent)
     pub fn wxPlotEvent_GetCurve(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPlotEvent_GetPosition(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxPlotEvent_GetZoom(_obj: &[u8] /* void* */) -> double /* double */;
+    pub fn wxPlotEvent_GetZoom(_obj: &[u8] /* void* */) -> c_double /* double */;
     pub fn wxPlotEvent_SetPosition(_obj: &[u8] /* void* */, pos: c_int /* int */);
-    pub fn wxPlotEvent_SetZoom(_obj: &[u8] /* void* */, zoom: double /* double */);
+    pub fn wxPlotEvent_SetZoom(_obj: &[u8] /* void* */, zoom: c_double /* double */);
     
     // TClassDefExtend(wxPlotOnOffCurve,wxObject)
     pub fn wxPlotOnOffCurve_Add(_obj: &[u8] /* void* */, on: c_int /* int */, off: c_int /* int */, clientData: &[u8] /* void* */);
@@ -3352,7 +3354,7 @@ extern {
     pub fn wxPlotWindow_Create(parent: &[u8] /* void* */, id: c_int /* int */, arg0: Rect /* Rect */, flags: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxPlotWindow_Delete(_obj: &[u8] /* void* */, curve: &[u8] /* void* */);
     pub fn wxPlotWindow_DeleteOnOff(_obj: &[u8] /* void* */, curve: &[u8] /* void* */);
-    pub fn wxPlotWindow_Enlarge(_obj: &[u8] /* void* */, curve: &[u8] /* void* */, factor: double /* double */);
+    pub fn wxPlotWindow_Enlarge(_obj: &[u8] /* void* */, curve: &[u8] /* void* */, factor: c_double /* double */);
     pub fn wxPlotWindow_GetAt(_obj: &[u8] /* void* */, n: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxPlotWindow_GetCount(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPlotWindow_GetCurrent(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -3360,8 +3362,8 @@ extern {
     pub fn wxPlotWindow_GetOnOffCurveAt(_obj: &[u8] /* void* */, n: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxPlotWindow_GetOnOffCurveCount(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPlotWindow_GetScrollOnThumbRelease(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxPlotWindow_GetUnitsPerValue(_obj: &[u8] /* void* */) -> double /* double */;
-    pub fn wxPlotWindow_GetZoom(_obj: &[u8] /* void* */) -> double /* double */;
+    pub fn wxPlotWindow_GetUnitsPerValue(_obj: &[u8] /* void* */) -> c_double /* double */;
+    pub fn wxPlotWindow_GetZoom(_obj: &[u8] /* void* */) -> c_double /* double */;
     pub fn wxPlotWindow_Move(_obj: &[u8] /* void* */, curve: &[u8] /* void* */, pixels_up: c_int /* int */);
     pub fn wxPlotWindow_RedrawEverything(_obj: &[u8] /* void* */);
     pub fn wxPlotWindow_RedrawXAxis(_obj: &[u8] /* void* */);
@@ -3370,8 +3372,8 @@ extern {
     pub fn wxPlotWindow_SetCurrent(_obj: &[u8] /* void* */, current: &[u8] /* void* */);
     pub fn wxPlotWindow_SetEnlargeAroundWindowCentre(_obj: &[u8] /* void* */, enlargeAroundWindowCentre: c_int /* int */);
     pub fn wxPlotWindow_SetScrollOnThumbRelease(_obj: &[u8] /* void* */, scrollOnThumbRelease: c_int /* int */);
-    pub fn wxPlotWindow_SetUnitsPerValue(_obj: &[u8] /* void* */, upv: double /* double */);
-    pub fn wxPlotWindow_SetZoom(_obj: &[u8] /* void* */, zoom: double /* double */);
+    pub fn wxPlotWindow_SetUnitsPerValue(_obj: &[u8] /* void* */, upv: c_double /* double */);
+    pub fn wxPlotWindow_SetZoom(_obj: &[u8] /* void* */, zoom: c_double /* double */);
     
     // TClassDef(wxPoint)
     pub fn wxPoint_Create(arg0: IntPoint /* IntPoint */) -> ~[u8] /* void* */;
@@ -3402,8 +3404,8 @@ extern {
     pub fn wxPrintData_Assign(_obj: &[u8] /* void* */, data: &[u8] /* void* */);
     pub fn wxPrintData_Create() -> ~[u8] /* void* */;
     pub fn wxPrintData_Delete(_obj: &[u8] /* void* */);
-    pub fn wxPrintData_GetCollate(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPrintData_GetColour(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxPrintData_GetCollate(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPrintData_GetColour(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxPrintData_GetDuplex(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPrintData_GetFilename(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPrintData_GetFontMetricPath(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -3416,13 +3418,13 @@ extern {
     pub fn wxPrintData_GetPrinterCommand(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPrintData_GetPrinterName(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPrintData_GetPrinterOptions(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxPrintData_GetPrinterScaleX(_obj: &[u8] /* void* */) -> double /* double */;
-    pub fn wxPrintData_GetPrinterScaleY(_obj: &[u8] /* void* */) -> double /* double */;
+    pub fn wxPrintData_GetPrinterScaleX(_obj: &[u8] /* void* */) -> c_double /* double */;
+    pub fn wxPrintData_GetPrinterScaleY(_obj: &[u8] /* void* */) -> c_double /* double */;
     pub fn wxPrintData_GetPrinterTranslateX(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPrintData_GetPrinterTranslateY(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPrintData_GetQuality(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxPrintData_SetCollate(_obj: &[u8] /* void* */, flag: TBoolInt /* TBoolInt */);
-    pub fn wxPrintData_SetColour(_obj: &[u8] /* void* */, colour: TBoolInt /* TBoolInt */);
+    pub fn wxPrintData_SetCollate(_obj: &[u8] /* void* */, flag: c_int /* int */);
+    pub fn wxPrintData_SetColour(_obj: &[u8] /* void* */, colour: c_int /* int */);
     pub fn wxPrintData_SetDuplex(_obj: &[u8] /* void* */, duplex: c_int /* int */);
     pub fn wxPrintData_SetFilename(_obj: &[u8] /* void* */, filename: &[u8] /* void* */);
     pub fn wxPrintData_SetFontMetricPath(_obj: &[u8] /* void* */, path: &[u8] /* void* */);
@@ -3435,9 +3437,9 @@ extern {
     pub fn wxPrintData_SetPrinterCommand(_obj: &[u8] /* void* */, command: &[u8] /* void* */);
     pub fn wxPrintData_SetPrinterName(_obj: &[u8] /* void* */, name: &[u8] /* void* */);
     pub fn wxPrintData_SetPrinterOptions(_obj: &[u8] /* void* */, options: &[u8] /* void* */);
-    pub fn wxPrintData_SetPrinterScaleX(_obj: &[u8] /* void* */, x: double /* double */);
-    pub fn wxPrintData_SetPrinterScaleY(_obj: &[u8] /* void* */, y: double /* double */);
-    pub fn wxPrintData_SetPrinterScaling(_obj: &[u8] /* void* */, x: double /* double */, y: double /* double */);
+    pub fn wxPrintData_SetPrinterScaleX(_obj: &[u8] /* void* */, x: c_double /* double */);
+    pub fn wxPrintData_SetPrinterScaleY(_obj: &[u8] /* void* */, y: c_double /* double */);
+    pub fn wxPrintData_SetPrinterScaling(_obj: &[u8] /* void* */, x: c_double /* double */, y: c_double /* double */);
     pub fn wxPrintData_SetPrinterTranslateX(_obj: &[u8] /* void* */, x: c_int /* int */);
     pub fn wxPrintData_SetPrinterTranslateY(_obj: &[u8] /* void* */, y: c_int /* int */);
     pub fn wxPrintData_SetPrinterTranslation(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
@@ -3459,33 +3461,33 @@ extern {
     pub fn wxPrintDialogData_CreateDefault() -> ~[u8] /* void* */;
     pub fn wxPrintDialogData_CreateFromData(printData: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPrintDialogData_Delete(_obj: &[u8] /* void* */);
-    pub fn wxPrintDialogData_EnableHelp(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
-    pub fn wxPrintDialogData_EnablePageNumbers(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
-    pub fn wxPrintDialogData_EnablePrintToFile(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
-    pub fn wxPrintDialogData_EnableSelection(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
+    pub fn wxPrintDialogData_EnableHelp(_obj: &[u8] /* void* */, flag: bool /* bool */);
+    pub fn wxPrintDialogData_EnablePageNumbers(_obj: &[u8] /* void* */, flag: bool /* bool */);
+    pub fn wxPrintDialogData_EnablePrintToFile(_obj: &[u8] /* void* */, flag: bool /* bool */);
+    pub fn wxPrintDialogData_EnableSelection(_obj: &[u8] /* void* */, flag: bool /* bool */);
     pub fn wxPrintDialogData_GetAllPages(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxPrintDialogData_GetCollate(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPrintDialogData_GetEnableHelp(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPrintDialogData_GetEnablePageNumbers(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPrintDialogData_GetEnablePrintToFile(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPrintDialogData_GetEnableSelection(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxPrintDialogData_GetCollate(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPrintDialogData_GetEnableHelp(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPrintDialogData_GetEnablePageNumbers(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPrintDialogData_GetEnablePrintToFile(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPrintDialogData_GetEnableSelection(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxPrintDialogData_GetFromPage(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPrintDialogData_GetMaxPage(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPrintDialogData_GetMinPage(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPrintDialogData_GetNoCopies(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPrintDialogData_GetPrintData(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
-    pub fn wxPrintDialogData_GetPrintToFile(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPrintDialogData_GetSelection(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxPrintDialogData_GetPrintToFile(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPrintDialogData_GetSelection(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxPrintDialogData_GetToPage(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxPrintDialogData_SetAllPages(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
-    pub fn wxPrintDialogData_SetCollate(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
+    pub fn wxPrintDialogData_SetAllPages(_obj: &[u8] /* void* */, flag: bool /* bool */);
+    pub fn wxPrintDialogData_SetCollate(_obj: &[u8] /* void* */, flag: bool /* bool */);
     pub fn wxPrintDialogData_SetFromPage(_obj: &[u8] /* void* */, v: c_int /* int */);
     pub fn wxPrintDialogData_SetMaxPage(_obj: &[u8] /* void* */, v: c_int /* int */);
     pub fn wxPrintDialogData_SetMinPage(_obj: &[u8] /* void* */, v: c_int /* int */);
     pub fn wxPrintDialogData_SetNoCopies(_obj: &[u8] /* void* */, v: c_int /* int */);
     pub fn wxPrintDialogData_SetPrintData(_obj: &[u8] /* void* */, printData: &[u8] /* void* */);
-    pub fn wxPrintDialogData_SetPrintToFile(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
-    pub fn wxPrintDialogData_SetSelection(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
+    pub fn wxPrintDialogData_SetPrintToFile(_obj: &[u8] /* void* */, flag: bool /* bool */);
+    pub fn wxPrintDialogData_SetSelection(_obj: &[u8] /* void* */, flag: bool /* bool */);
     pub fn wxPrintDialogData_SetToPage(_obj: &[u8] /* void* */, v: c_int /* int */);
     
     // TClassDefExtend(wxPrintPreview,wxObject)
@@ -3493,7 +3495,7 @@ extern {
     pub fn wxPrintPreview_CreateFromDialogData(printout: &[u8] /* void* */, printoutForPrinting: &[u8] /* void* */, data: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPrintPreview_Delete(_obj: &[u8] /* void* */);
     pub fn wxPrintPreview_DetermineScaling(_obj: &[u8] /* void* */);
-    pub fn wxPrintPreview_DrawBlankPage(_obj: &[u8] /* void* */, canvas: &[u8] /* void* */, dc: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxPrintPreview_DrawBlankPage(_obj: &[u8] /* void* */, canvas: &[u8] /* void* */, dc: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxPrintPreview_GetCanvas(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPrintPreview_GetCurrentPage(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPrintPreview_GetFrame(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -3503,14 +3505,14 @@ extern {
     pub fn wxPrintPreview_GetPrintout(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPrintPreview_GetPrintoutForPrinting(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPrintPreview_GetZoom(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxPrintPreview_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPrintPreview_PaintPage(_obj: &[u8] /* void* */, canvas: &[u8] /* void* */, dc: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxPrintPreview_Print(_obj: &[u8] /* void* */, interactive: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxPrintPreview_RenderPage(_obj: &[u8] /* void* */, pageNum: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxPrintPreview_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPrintPreview_PaintPage(_obj: &[u8] /* void* */, canvas: &[u8] /* void* */, dc: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxPrintPreview_Print(_obj: &[u8] /* void* */, interactive: bool /* bool */) -> bool /* bool */;
+    pub fn wxPrintPreview_RenderPage(_obj: &[u8] /* void* */, pageNum: c_int /* int */) -> bool /* bool */;
     pub fn wxPrintPreview_SetCanvas(_obj: &[u8] /* void* */, canvas: &[u8] /* void* */);
-    pub fn wxPrintPreview_SetCurrentPage(_obj: &[u8] /* void* */, pageNum: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxPrintPreview_SetCurrentPage(_obj: &[u8] /* void* */, pageNum: c_int /* int */) -> bool /* bool */;
     pub fn wxPrintPreview_SetFrame(_obj: &[u8] /* void* */, frame: &[u8] /* void* */);
-    pub fn wxPrintPreview_SetOk(_obj: &[u8] /* void* */, ok: TBool /* TBool */);
+    pub fn wxPrintPreview_SetOk(_obj: &[u8] /* void* */, ok: bool /* bool */);
     pub fn wxPrintPreview_SetPrintout(_obj: &[u8] /* void* */, printout: &[u8] /* void* */);
     pub fn wxPrintPreview_SetZoom(_obj: &[u8] /* void* */, percent: c_int /* int */);
     
@@ -3518,13 +3520,13 @@ extern {
     pub fn wxPrinter_Create(data: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPrinter_CreateAbortWindow(_obj: &[u8] /* void* */, parent: &[u8] /* void* */, printout: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPrinter_Delete(_obj: &[u8] /* void* */);
-    pub fn wxPrinter_GetAbort(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxPrinter_GetAbort(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxPrinter_GetLastError(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxPrinter_GetPrintDialogData(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
-    pub fn wxPrinter_Print(_obj: &[u8] /* void* */, parent: &[u8] /* void* */, printout: &[u8] /* void* */, prompt: TBool /* TBool */) -> TBool /* TBool */;
+    pub fn wxPrinter_Print(_obj: &[u8] /* void* */, parent: &[u8] /* void* */, printout: &[u8] /* void* */, prompt: bool /* bool */) -> bool /* bool */;
     pub fn wxPrinter_PrintDialog(_obj: &[u8] /* void* */, parent: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPrinter_ReportError(_obj: &[u8] /* void* */, parent: &[u8] /* void* */, printout: &[u8] /* void* */, message: &[u8] /* void* */);
-    pub fn wxPrinter_Setup(_obj: &[u8] /* void* */, parent: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxPrinter_Setup(_obj: &[u8] /* void* */, parent: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxPrinterDC,wxDC)
     pub fn wxPrinterDC_Create(data: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -3538,13 +3540,13 @@ extern {
     // TClassDefExtend(wxProcess,wxEvtHandler)
     pub fn wxProcess_CloseOutput(_obj: &[u8] /* void* */);
     pub fn wxProcess_CreateDefault(_prt: &[u8] /* void* */, _id: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxProcess_CreateRedirect(_prt: &[u8] /* void* */, _rdr: TBool /* TBool */) -> ~[u8] /* void* */;
+    pub fn wxProcess_CreateRedirect(_prt: &[u8] /* void* */, _rdr: bool /* bool */) -> ~[u8] /* void* */;
     pub fn wxProcess_Delete(_obj: &[u8] /* void* */);
     pub fn wxProcess_Detach(_obj: &[u8] /* void* */);
     pub fn wxProcess_GetErrorStream(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxProcess_GetInputStream(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxProcess_GetOutputStream(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxProcess_IsRedirected(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxProcess_IsRedirected(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxProcess_Redirect(_obj: &[u8] /* void* */);
     
     // TClassDefExtend(wxProcessEvent,wxEvent)
@@ -3576,12 +3578,12 @@ extern {
     
     // TClassDefExtend(wxQueryNewPaletteEvent,wxEvent)
     pub fn wxQueryNewPaletteEvent_CopyObject(_obj: &[u8] /* void* */, obj: &[u8] /* void* */);
-    pub fn wxQueryNewPaletteEvent_GetPaletteRealized(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxQueryNewPaletteEvent_SetPaletteRealized(_obj: &[u8] /* void* */, realized: TBool /* TBool */);
+    pub fn wxQueryNewPaletteEvent_GetPaletteRealized(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxQueryNewPaletteEvent_SetPaletteRealized(_obj: &[u8] /* void* */, realized: bool /* bool */);
     
     // TClassDefExtend(wxRadioBox,wxControl)
     pub fn wxRadioBox_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _txt: &[u8] /* void* */, arg0: Rect /* Rect */, arg1: c_int /* int */, arg2: &[wchar_t] /* wchar_t* */, _dim: c_int /* int */, _stl: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxRadioBox_EnableItem(_obj: &[u8] /* void* */, item: c_int /* int */, enable: TBool /* TBool */);
+    pub fn wxRadioBox_EnableItem(_obj: &[u8] /* void* */, item: c_int /* int */, enable: bool /* bool */);
     pub fn wxRadioBox_FindString(_obj: &[u8] /* void* */, s: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxRadioBox_GetItemLabel(_obj: &[u8] /* void* */, item: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxRadioBox_GetNumberOfRowsOrCols(_obj: &[u8] /* void* */) -> c_int /* int */;
@@ -3593,12 +3595,12 @@ extern {
     pub fn wxRadioBox_SetNumberOfRowsOrCols(_obj: &[u8] /* void* */, n: c_int /* int */);
     pub fn wxRadioBox_SetSelection(_obj: &[u8] /* void* */, _n: c_int /* int */);
     pub fn wxRadioBox_SetStringSelection(_obj: &[u8] /* void* */, s: &[u8] /* void* */);
-    pub fn wxRadioBox_ShowItem(_obj: &[u8] /* void* */, item: c_int /* int */, show: TBool /* TBool */);
+    pub fn wxRadioBox_ShowItem(_obj: &[u8] /* void* */, item: c_int /* int */, show: bool /* bool */);
     
     // TClassDefExtend(wxRadioButton,wxControl)
     pub fn wxRadioButton_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _txt: &[u8] /* void* */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxRadioButton_GetValue(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxRadioButton_SetValue(_obj: &[u8] /* void* */, value: TBool /* TBool */);
+    pub fn wxRadioButton_GetValue(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxRadioButton_SetValue(_obj: &[u8] /* void* */, value: bool /* bool */);
     
     // TClassDef(wxRealPoint)
     
@@ -3611,21 +3613,21 @@ extern {
     // TClassDefExtend(wxRegion,wxGDIObject)
     pub fn wxRegion_Assign(_obj: &[u8] /* void* */, region: &[u8] /* void* */);
     pub fn wxRegion_Clear(_obj: &[u8] /* void* */);
-    pub fn wxRegion_ContainsPoint(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> TBool /* TBool */;
-    pub fn wxRegion_ContainsRect(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> TBool /* TBool */;
+    pub fn wxRegion_ContainsPoint(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> bool /* bool */;
+    pub fn wxRegion_ContainsRect(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> bool /* bool */;
     pub fn wxRegion_CreateDefault() -> ~[u8] /* void* */;
     pub fn wxRegion_CreateFromRect(arg0: Rect /* Rect */) -> ~[u8] /* void* */;
     pub fn wxRegion_Delete(_obj: &[u8] /* void* */);
-    pub fn wxRegion_IsEmpty(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxRegion_IsEmpty(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxRegion_GetBox(_obj: &[u8] /* void* */, arg0: &[Rect] /* Rect* */);
-    pub fn wxRegion_IntersectRect(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> TBool /* TBool */;
-    pub fn wxRegion_IntersectRegion(_obj: &[u8] /* void* */, region: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxRegion_SubtractRect(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> TBool /* TBool */;
-    pub fn wxRegion_SubtractRegion(_obj: &[u8] /* void* */, region: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxRegion_UnionRect(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> TBool /* TBool */;
-    pub fn wxRegion_UnionRegion(_obj: &[u8] /* void* */, region: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxRegion_XorRect(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> TBool /* TBool */;
-    pub fn wxRegion_XorRegion(_obj: &[u8] /* void* */, region: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxRegion_IntersectRect(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> bool /* bool */;
+    pub fn wxRegion_IntersectRegion(_obj: &[u8] /* void* */, region: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxRegion_SubtractRect(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> bool /* bool */;
+    pub fn wxRegion_SubtractRegion(_obj: &[u8] /* void* */, region: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxRegion_UnionRect(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> bool /* bool */;
+    pub fn wxRegion_UnionRegion(_obj: &[u8] /* void* */, region: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxRegion_XorRect(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> bool /* bool */;
+    pub fn wxRegion_XorRegion(_obj: &[u8] /* void* */, region: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxRegionIterator,wxObject)
     pub fn wxRegionIterator_Create() -> ~[u8] /* void* */;
@@ -3635,7 +3637,7 @@ extern {
     pub fn wxRegionIterator_GetWidth(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxRegionIterator_GetX(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxRegionIterator_GetY(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxRegionIterator_HaveRects(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxRegionIterator_HaveRects(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxRegionIterator_Next(_obj: &[u8] /* void* */);
     pub fn wxRegionIterator_Reset(_obj: &[u8] /* void* */);
     pub fn wxRegionIterator_ResetToRegion(_obj: &[u8] /* void* */, region: &[u8] /* void* */);
@@ -3688,16 +3690,16 @@ extern {
     pub fn wxSashWindow_GetMaximumSizeY(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxSashWindow_GetMinimumSizeX(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxSashWindow_GetMinimumSizeY(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxSashWindow_GetSashVisible(_obj: &[u8] /* void* */, edge: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxSashWindow_HasBorder(_obj: &[u8] /* void* */, edge: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxSashWindow_GetSashVisible(_obj: &[u8] /* void* */, edge: c_int /* int */) -> bool /* bool */;
+    pub fn wxSashWindow_HasBorder(_obj: &[u8] /* void* */, edge: c_int /* int */) -> bool /* bool */;
     pub fn wxSashWindow_SetDefaultBorderSize(_obj: &[u8] /* void* */, width: c_int /* int */);
     pub fn wxSashWindow_SetExtraBorderSize(_obj: &[u8] /* void* */, width: c_int /* int */);
     pub fn wxSashWindow_SetMaximumSizeX(_obj: &[u8] /* void* */, max: c_int /* int */);
     pub fn wxSashWindow_SetMaximumSizeY(_obj: &[u8] /* void* */, max: c_int /* int */);
     pub fn wxSashWindow_SetMinimumSizeX(_obj: &[u8] /* void* */, min: c_int /* int */);
     pub fn wxSashWindow_SetMinimumSizeY(_obj: &[u8] /* void* */, min: c_int /* int */);
-    pub fn wxSashWindow_SetSashBorder(_obj: &[u8] /* void* */, edge: c_int /* int */, border: TBool /* TBool */);
-    pub fn wxSashWindow_SetSashVisible(_obj: &[u8] /* void* */, edge: c_int /* int */, sash: TBool /* TBool */);
+    pub fn wxSashWindow_SetSashBorder(_obj: &[u8] /* void* */, edge: c_int /* int */, border: bool /* bool */);
+    pub fn wxSashWindow_SetSashVisible(_obj: &[u8] /* void* */, edge: c_int /* int */, sash: bool /* bool */);
     
     // TClassDef(wxScopedArray)
     
@@ -3706,9 +3708,9 @@ extern {
     // TClassDefExtend(wxScreenDC,wxDC)
     pub fn wxScreenDC_Create() -> ~[u8] /* void* */;
     pub fn wxScreenDC_Delete(_obj: &[u8] /* void* */);
-    pub fn wxScreenDC_EndDrawingOnTop(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxScreenDC_StartDrawingOnTop(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> TBool /* TBool */;
-    pub fn wxScreenDC_StartDrawingOnTopOfWin(_obj: &[u8] /* void* */, win: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxScreenDC_EndDrawingOnTop(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxScreenDC_StartDrawingOnTop(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> bool /* bool */;
+    pub fn wxScreenDC_StartDrawingOnTopOfWin(_obj: &[u8] /* void* */, win: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxScrollBar,wxControl)
     pub fn wxScrollBar_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
@@ -3716,7 +3718,7 @@ extern {
     pub fn wxScrollBar_GetRange(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxScrollBar_GetThumbPosition(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxScrollBar_GetThumbSize(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxScrollBar_SetScrollbar(_obj: &[u8] /* void* */, position: c_int /* int */, thumbSize: c_int /* int */, range: c_int /* int */, pageSize: c_int /* int */, refresh: TBool /* TBool */);
+    pub fn wxScrollBar_SetScrollbar(_obj: &[u8] /* void* */, position: c_int /* int */, thumbSize: c_int /* int */, range: c_int /* int */, pageSize: c_int /* int */, refresh: bool /* bool */);
     pub fn wxScrollBar_SetThumbPosition(_obj: &[u8] /* void* */, viewStart: c_int /* int */);
     
     // TClassDefExtend(wxScrollEvent,wxEvent)
@@ -3734,9 +3736,9 @@ extern {
     pub fn wxScrolledWindow_CalcScrolledPosition(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, arg1: &[IntPoint] /* IntPoint* */);
     pub fn wxScrolledWindow_CalcUnscrolledPosition(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, arg1: &[IntPoint] /* IntPoint* */);
     pub fn wxScrolledWindow_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxScrolledWindow_EnableScrolling(_obj: &[u8] /* void* */, x_scrolling: TBool /* TBool */, y_scrolling: TBool /* TBool */);
-    pub fn wxScrolledWindow_GetScaleX(_obj: &[u8] /* void* */) -> double /* double */;
-    pub fn wxScrolledWindow_GetScaleY(_obj: &[u8] /* void* */) -> double /* double */;
+    pub fn wxScrolledWindow_EnableScrolling(_obj: &[u8] /* void* */, x_scrolling: bool /* bool */, y_scrolling: bool /* bool */);
+    pub fn wxScrolledWindow_GetScaleX(_obj: &[u8] /* void* */) -> c_double /* double */;
+    pub fn wxScrolledWindow_GetScaleY(_obj: &[u8] /* void* */) -> c_double /* double */;
     pub fn wxScrolledWindow_GetScrollPageSize(_obj: &[u8] /* void* */, orient: c_int /* int */) -> c_int /* int */;
     pub fn wxScrolledWindow_GetScrollPixelsPerUnit(_obj: &[u8] /* void* */, arg0: &[IntPoint] /* IntPoint* */);
     pub fn wxScrolledWindow_GetTargetWindow(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -3745,9 +3747,9 @@ extern {
     pub fn wxScrolledWindow_OnDraw(_obj: &[u8] /* void* */, dc: &[u8] /* void* */);
     pub fn wxScrolledWindow_PrepareDC(_obj: &[u8] /* void* */, dc: &[u8] /* void* */);
     pub fn wxScrolledWindow_Scroll(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
-    pub fn wxScrolledWindow_SetScale(_obj: &[u8] /* void* */, xs: double /* double */, ys: double /* double */);
+    pub fn wxScrolledWindow_SetScale(_obj: &[u8] /* void* */, xs: c_double /* double */, ys: c_double /* double */);
     pub fn wxScrolledWindow_SetScrollPageSize(_obj: &[u8] /* void* */, orient: c_int /* int */, pageSize: c_int /* int */);
-    pub fn wxScrolledWindow_SetScrollbars(_obj: &[u8] /* void* */, pixelsPerUnitX: c_int /* int */, pixelsPerUnitY: c_int /* int */, noUnitsX: c_int /* int */, noUnitsY: c_int /* int */, xPos: c_int /* int */, yPos: c_int /* int */, noRefresh: TBool /* TBool */);
+    pub fn wxScrolledWindow_SetScrollbars(_obj: &[u8] /* void* */, pixelsPerUnitX: c_int /* int */, pixelsPerUnitY: c_int /* int */, noUnitsX: c_int /* int */, noUnitsY: c_int /* int */, xPos: c_int /* int */, yPos: c_int /* int */, noRefresh: bool /* bool */);
     pub fn wxScrolledWindow_ShowScrollbars(_obj: &[u8] /* void* */, showh: c_int /* int */, showv: c_int /* int */);
     pub fn wxScrolledWindow_SetTargetWindow(_obj: &[u8] /* void* */, target: &[u8] /* void* */);
     pub fn wxScrolledWindow_ViewStart(_obj: &[u8] /* void* */, arg0: &[IntPoint] /* IntPoint* */);
@@ -3762,13 +3764,13 @@ extern {
     pub fn wxSetCursorEvent_GetCursor(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxSetCursorEvent_GetX(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxSetCursorEvent_GetY(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxSetCursorEvent_HasCursor(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxSetCursorEvent_HasCursor(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxSetCursorEvent_SetCursor(_obj: &[u8] /* void* */, cursor: &[u8] /* void* */);
     
     // TClassDefExtend(wxShowEvent,wxEvent)
     pub fn wxShowEvent_CopyObject(_obj: &[u8] /* void* */, obj: &[u8] /* void* */);
-    pub fn wxShowEvent_IsShown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxShowEvent_SetShow(_obj: &[u8] /* void* */, show: TBool /* TBool */);
+    pub fn wxShowEvent_IsShown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxShowEvent_SetShow(_obj: &[u8] /* void* */, show: bool /* bool */);
     
     // TClassDefExtend(wxSimpleHelpProvider,wxHelpProvider)
     pub fn wxSimpleHelpProvider_Create() -> ~[u8] /* void* */;
@@ -3776,10 +3778,10 @@ extern {
     // TClassDefExtend(wxSingleChoiceDialog,wxDialog)
     
     // TClassDef(wxSingleInstanceChecker)
-    pub fn wxSingleInstanceChecker_Create(_obj: &[u8] /* void* */, name: &[u8] /* void* */, path: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxSingleInstanceChecker_Create(_obj: &[u8] /* void* */, name: &[u8] /* void* */, path: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxSingleInstanceChecker_CreateDefault() -> ~[u8] /* void* */;
     pub fn wxSingleInstanceChecker_Delete(_obj: &[u8] /* void* */);
-    pub fn wxSingleInstanceChecker_IsAnotherRunning(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxSingleInstanceChecker_IsAnotherRunning(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDef(wxSize)
     pub fn wxSize_Create(arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
@@ -3819,32 +3821,32 @@ extern {
     pub fn wxSizer_SetSizeHints(_obj: &[u8] /* void* */, window: &[u8] /* void* */);
     pub fn wxSizer_AddSpacer(_obj: &[u8] /* void* */, size: c_int /* int */);
     pub fn wxSizer_AddStretchSpacer(_obj: &[u8] /* void* */, size: c_int /* int */);
-    pub fn wxSizer_Clear(_obj: &[u8] /* void* */, delete_windows: TBool /* TBool */);
-    pub fn wxSizer_DetachWindow(_obj: &[u8] /* void* */, window: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxSizer_DetachSizer(_obj: &[u8] /* void* */, sizer: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxSizer_Detach(_obj: &[u8] /* void* */, index: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxSizer_Clear(_obj: &[u8] /* void* */, delete_windows: bool /* bool */);
+    pub fn wxSizer_DetachWindow(_obj: &[u8] /* void* */, window: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxSizer_DetachSizer(_obj: &[u8] /* void* */, sizer: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxSizer_Detach(_obj: &[u8] /* void* */, index: c_int /* int */) -> bool /* bool */;
     pub fn wxSizer_FitInside(_obj: &[u8] /* void* */, window: &[u8] /* void* */);
     pub fn wxSizer_GetContainingWindow(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxSizer_GetItemWindow(_obj: &[u8] /* void* */, window: &[u8] /* void* */, recursive: TBool /* TBool */) -> ~[u8] /* void* */;
-    pub fn wxSizer_GetItemSizer(_obj: &[u8] /* void* */, window: &[u8] /* void* */, recursive: TBool /* TBool */) -> ~[u8] /* void* */;
+    pub fn wxSizer_GetItemWindow(_obj: &[u8] /* void* */, window: &[u8] /* void* */, recursive: bool /* bool */) -> ~[u8] /* void* */;
+    pub fn wxSizer_GetItemSizer(_obj: &[u8] /* void* */, window: &[u8] /* void* */, recursive: bool /* bool */) -> ~[u8] /* void* */;
     pub fn wxSizer_GetItem(_obj: &[u8] /* void* */, index: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxSizer_HideWindow(_obj: &[u8] /* void* */, window: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxSizer_HideSizer(_obj: &[u8] /* void* */, sizer: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxSizer_Hide(_obj: &[u8] /* void* */, index: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxSizer_HideWindow(_obj: &[u8] /* void* */, window: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxSizer_HideSizer(_obj: &[u8] /* void* */, sizer: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxSizer_Hide(_obj: &[u8] /* void* */, index: c_int /* int */) -> bool /* bool */;
     pub fn wxSizer_InsertSpacer(_obj: &[u8] /* void* */, index: c_int /* int */, size: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxSizer_InsertStretchSpacer(_obj: &[u8] /* void* */, index: c_int /* int */, prop: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxSizer_IsShownWindow(_obj: &[u8] /* void* */, window: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxSizer_IsShownSizer(_obj: &[u8] /* void* */, sizer: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxSizer_IsShown(_obj: &[u8] /* void* */, index: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxSizer_IsShownWindow(_obj: &[u8] /* void* */, window: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxSizer_IsShownSizer(_obj: &[u8] /* void* */, sizer: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxSizer_IsShown(_obj: &[u8] /* void* */, index: c_int /* int */) -> bool /* bool */;
     pub fn wxSizer_PrependSpacer(_obj: &[u8] /* void* */, size: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxSizer_PrependStretchSpacer(_obj: &[u8] /* void* */, prop: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxSizer_ReplaceWindow(_obj: &[u8] /* void* */, oldwin: &[u8] /* void* */, newwin: &[u8] /* void* */, recursive: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxSizer_ReplaceSizer(_obj: &[u8] /* void* */, oldsz: &[u8] /* void* */, newsz: &[u8] /* void* */, recursive: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxSizer_Replace(_obj: &[u8] /* void* */, oldindex: c_int /* int */, newitem: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxSizer_ReplaceWindow(_obj: &[u8] /* void* */, oldwin: &[u8] /* void* */, newwin: &[u8] /* void* */, recursive: bool /* bool */) -> bool /* bool */;
+    pub fn wxSizer_ReplaceSizer(_obj: &[u8] /* void* */, oldsz: &[u8] /* void* */, newsz: &[u8] /* void* */, recursive: bool /* bool */) -> bool /* bool */;
+    pub fn wxSizer_Replace(_obj: &[u8] /* void* */, oldindex: c_int /* int */, newitem: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxSizer_SetVirtualSizeHints(_obj: &[u8] /* void* */, window: &[u8] /* void* */);
-    pub fn wxSizer_ShowWindow(_obj: &[u8] /* void* */, window: &[u8] /* void* */, show: TBool /* TBool */, recursive: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxSizer_ShowSizer(_obj: &[u8] /* void* */, sizer: &[u8] /* void* */, show: TBool /* TBool */, recursive: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxSizer_Show(_obj: &[u8] /* void* */, sizer: &[u8] /* void* */, index: c_int /* int */, show: TBool /* TBool */) -> TBool /* TBool */;
+    pub fn wxSizer_ShowWindow(_obj: &[u8] /* void* */, window: &[u8] /* void* */, show: bool /* bool */, recursive: bool /* bool */) -> bool /* bool */;
+    pub fn wxSizer_ShowSizer(_obj: &[u8] /* void* */, sizer: &[u8] /* void* */, show: bool /* bool */, recursive: bool /* bool */) -> bool /* bool */;
+    pub fn wxSizer_Show(_obj: &[u8] /* void* */, sizer: &[u8] /* void* */, index: c_int /* int */, show: bool /* bool */) -> bool /* bool */;
     
     // TClassDefExtend(wxSizerItem,wxObject)
     pub fn wxSizerItem_CalcMin(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -3860,9 +3862,9 @@ extern {
     pub fn wxSizerItem_GetSizer(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxSizerItem_GetUserData(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxSizerItem_GetWindow(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxSizerItem_IsSizer(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxSizerItem_IsSpacer(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxSizerItem_IsWindow(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxSizerItem_IsSizer(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxSizerItem_IsSpacer(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxSizerItem_IsWindow(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxSizerItem_SetBorder(_obj: &[u8] /* void* */, border: c_int /* int */);
     pub fn wxSizerItem_SetDimension(_obj: &[u8] /* void* */, arg0: Rect /* Rect */);
     pub fn wxSizerItem_SetFlag(_obj: &[u8] /* void* */, flag: c_int /* int */);
@@ -3885,7 +3887,7 @@ extern {
     // TClassDefExtend(wxSlider,wxControl)
     pub fn wxSlider_ClearSel(_obj: &[u8] /* void* */);
     pub fn wxSlider_ClearTicks(_obj: &[u8] /* void* */);
-    pub fn wxSlider_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _init: c_int /* int */, _min: c_int /* int */, _max: c_int /* int */, arg0: Rect /* Rect */, _stl: long /* long */) -> ~[u8] /* void* */;
+    pub fn wxSlider_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _init: c_int /* int */, _min: c_int /* int */, _max: c_int /* int */, arg0: Rect /* Rect */, _stl: c_long /* long */) -> ~[u8] /* void* */;
     pub fn wxSlider_GetLineSize(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxSlider_GetMax(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxSlider_GetMin(_obj: &[u8] /* void* */) -> c_int /* int */;
@@ -3919,7 +3921,7 @@ extern {
     // TClassDefExtend(wxSocketServer,wxSocketBase)
     
     // TClassDefExtend(wxSpinButton,wxControl)
-    pub fn wxSpinButton_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */, _stl: long /* long */) -> ~[u8] /* void* */;
+    pub fn wxSpinButton_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */, _stl: c_long /* long */) -> ~[u8] /* void* */;
     pub fn wxSpinButton_GetMax(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxSpinButton_GetMin(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxSpinButton_GetValue(_obj: &[u8] /* void* */) -> c_int /* int */;
@@ -3927,7 +3929,7 @@ extern {
     pub fn wxSpinButton_SetValue(_obj: &[u8] /* void* */, val: c_int /* int */);
     
     // TClassDefExtend(wxSpinCtrl,wxControl)
-    pub fn wxSpinCtrl_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _txt: &[u8] /* void* */, arg0: Rect /* Rect */, _stl: long /* long */, _min: c_int /* int */, _max: c_int /* int */, _init: c_int /* int */) -> ~[u8] /* void* */;
+    pub fn wxSpinCtrl_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _txt: &[u8] /* void* */, arg0: Rect /* Rect */, _stl: c_long /* long */, _min: c_int /* int */, _max: c_int /* int */, _init: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxSpinCtrl_GetMax(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxSpinCtrl_GetMin(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxSpinCtrl_GetValue(_obj: &[u8] /* void* */) -> c_int /* int */;
@@ -3955,18 +3957,18 @@ extern {
     pub fn wxSplitterWindow_GetWindow1(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxSplitterWindow_GetWindow2(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxSplitterWindow_Initialize(_obj: &[u8] /* void* */, window: &[u8] /* void* */);
-    pub fn wxSplitterWindow_IsSplit(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxSplitterWindow_ReplaceWindow(_obj: &[u8] /* void* */, winOld: &[u8] /* void* */, winNew: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxSplitterWindow_IsSplit(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxSplitterWindow_ReplaceWindow(_obj: &[u8] /* void* */, winOld: &[u8] /* void* */, winNew: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxSplitterWindow_SetBorderSize(_obj: &[u8] /* void* */, width: c_int /* int */);
     pub fn wxSplitterWindow_SetMinimumPaneSize(_obj: &[u8] /* void* */, min: c_int /* int */);
-    pub fn wxSplitterWindow_SetSashPosition(_obj: &[u8] /* void* */, position: c_int /* int */, redraw: TBool /* TBool */);
+    pub fn wxSplitterWindow_SetSashPosition(_obj: &[u8] /* void* */, position: c_int /* int */, redraw: bool /* bool */);
     pub fn wxSplitterWindow_SetSashSize(_obj: &[u8] /* void* */, width: c_int /* int */);
     pub fn wxSplitterWindow_SetSplitMode(_obj: &[u8] /* void* */, mode: c_int /* int */);
-    pub fn wxSplitterWindow_SplitHorizontally(_obj: &[u8] /* void* */, window1: &[u8] /* void* */, window2: &[u8] /* void* */, sashPosition: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxSplitterWindow_SplitVertically(_obj: &[u8] /* void* */, window1: &[u8] /* void* */, window2: &[u8] /* void* */, sashPosition: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxSplitterWindow_Unsplit(_obj: &[u8] /* void* */, toRemove: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxSplitterWindow_GetSashGravity(_obj: &[u8] /* void* */) -> double /* double */;
-    pub fn wxSplitterWindow_SetSashGravity(_obj: &[u8] /* void* */, gravity: double /* double */);
+    pub fn wxSplitterWindow_SplitHorizontally(_obj: &[u8] /* void* */, window1: &[u8] /* void* */, window2: &[u8] /* void* */, sashPosition: c_int /* int */) -> bool /* bool */;
+    pub fn wxSplitterWindow_SplitVertically(_obj: &[u8] /* void* */, window1: &[u8] /* void* */, window2: &[u8] /* void* */, sashPosition: c_int /* int */) -> bool /* bool */;
+    pub fn wxSplitterWindow_Unsplit(_obj: &[u8] /* void* */, toRemove: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxSplitterWindow_GetSashGravity(_obj: &[u8] /* void* */) -> c_double /* double */;
+    pub fn wxSplitterWindow_SetSashGravity(_obj: &[u8] /* void* */, gravity: c_double /* double */);
     
     // TClassDefExtend(wxStaticBitmap,wxControl)
     pub fn wxStaticBitmap_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, bitmap: &[u8] /* void* */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
@@ -3988,7 +3990,7 @@ extern {
     // TClassDefExtend(wxStaticLine,wxControl)
     pub fn wxStaticLine_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxStaticLine_GetDefaultSize(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxStaticLine_IsVertical(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxStaticLine_IsVertical(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxStaticText,wxControl)
     pub fn wxStaticText_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _txt: &[u8] /* void* */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
@@ -4015,7 +4017,7 @@ extern {
     // TClassDef(wxStreamBase)
     pub fn wxStreamBase_GetLastError(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxStreamBase_GetSize(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxStreamBase_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxStreamBase_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDef(wxStreamBuffer)
     
@@ -4050,11 +4052,11 @@ extern {
     // TClassDefExtend(wxTaskBarIcon,wxEvtHandler)
     pub fn wxTaskBarIcon_Create() -> ~[u8] /* void* */;
     pub fn wxTaskBarIcon_Delete(_obj: &[u8] /* void* */);
-    pub fn wxTaskBarIcon_IsIconInstalled(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTaskBarIcon_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTaskBarIcon_PopupMenu(_obj: &[u8] /* void* */, menu: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTaskBarIcon_RemoveIcon(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTaskBarIcon_SetIcon(_obj: &[u8] /* void* */, icon: &[u8] /* void* */, text: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxTaskBarIcon_IsIconInstalled(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTaskBarIcon_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTaskBarIcon_PopupMenu(_obj: &[u8] /* void* */, menu: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTaskBarIcon_RemoveIcon(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTaskBarIcon_SetIcon(_obj: &[u8] /* void* */, icon: &[u8] /* void* */, text: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDef(wxTempFile)
     
@@ -4062,42 +4064,42 @@ extern {
     
     // TClassDefExtend(wxTextCtrl,wxControl)
     pub fn wxTextCtrl_AppendText(_obj: &[u8] /* void* */, text: &[u8] /* void* */);
-    pub fn wxTextCtrl_CanCopy(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTextCtrl_CanCut(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTextCtrl_CanPaste(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTextCtrl_CanRedo(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTextCtrl_CanUndo(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxTextCtrl_CanCopy(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTextCtrl_CanCut(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTextCtrl_CanPaste(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTextCtrl_CanRedo(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTextCtrl_CanUndo(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxTextCtrl_ChangeValue(_obj: &[u8] /* void* */, text: &[u8] /* void* */);
     pub fn wxTextCtrl_Clear(_obj: &[u8] /* void* */);
     pub fn wxTextCtrl_Copy(_obj: &[u8] /* void* */);
-    pub fn wxTextCtrl_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _txt: &[u8] /* void* */, arg0: Rect /* Rect */, _stl: long /* long */) -> ~[u8] /* void* */;
+    pub fn wxTextCtrl_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, _txt: &[u8] /* void* */, arg0: Rect /* Rect */, _stl: c_long /* long */) -> ~[u8] /* void* */;
     pub fn wxTextCtrl_Cut(_obj: &[u8] /* void* */);
     pub fn wxTextCtrl_DiscardEdits(_obj: &[u8] /* void* */);
-    pub fn wxTextCtrl_GetInsertionPoint(_obj: &[u8] /* void* */) -> long /* long */;
-    pub fn wxTextCtrl_GetLastPosition(_obj: &[u8] /* void* */) -> long /* long */;
-    pub fn wxTextCtrl_GetLineLength(_obj: &[u8] /* void* */, lineNo: long /* long */) -> c_int /* int */;
-    pub fn wxTextCtrl_GetLineText(_obj: &[u8] /* void* */, lineNo: long /* long */) -> ~[u8] /* void* */;
+    pub fn wxTextCtrl_GetInsertionPoint(_obj: &[u8] /* void* */) -> c_long /* long */;
+    pub fn wxTextCtrl_GetLastPosition(_obj: &[u8] /* void* */) -> c_long /* long */;
+    pub fn wxTextCtrl_GetLineLength(_obj: &[u8] /* void* */, lineNo: c_long /* long */) -> c_int /* int */;
+    pub fn wxTextCtrl_GetLineText(_obj: &[u8] /* void* */, lineNo: c_long /* long */) -> ~[u8] /* void* */;
     pub fn wxTextCtrl_GetNumberOfLines(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxTextCtrl_GetSelection(_obj: &[u8] /* void* */, from: &[u8] /* void* */, to: &[u8] /* void* */);
     pub fn wxTextCtrl_GetValue(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxTextCtrl_IsEditable(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTextCtrl_IsModified(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTextCtrl_LoadFile(_obj: &[u8] /* void* */, file: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxTextCtrl_IsEditable(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTextCtrl_IsModified(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTextCtrl_LoadFile(_obj: &[u8] /* void* */, file: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxTextCtrl_Paste(_obj: &[u8] /* void* */);
-    pub fn wxTextCtrl_PositionToXY(_obj: &[u8] /* void* */, pos: long /* long */, x: &[long] /* long* */, y: &[long] /* long* */) -> c_int /* int */;
+    pub fn wxTextCtrl_PositionToXY(_obj: &[u8] /* void* */, pos: c_long /* long */, x: &[c_long] /* long* */, y: &[c_long] /* long* */) -> c_int /* int */;
     pub fn wxTextCtrl_Redo(_obj: &[u8] /* void* */);
-    pub fn wxTextCtrl_Remove(_obj: &[u8] /* void* */, from: long /* long */, to: long /* long */);
-    pub fn wxTextCtrl_Replace(_obj: &[u8] /* void* */, from: long /* long */, to: long /* long */, value: &[u8] /* void* */);
-    pub fn wxTextCtrl_SaveFile(_obj: &[u8] /* void* */, file: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTextCtrl_SetEditable(_obj: &[u8] /* void* */, editable: TBool /* TBool */);
-    pub fn wxTextCtrl_SetInsertionPoint(_obj: &[u8] /* void* */, pos: long /* long */);
+    pub fn wxTextCtrl_Remove(_obj: &[u8] /* void* */, from: c_long /* long */, to: c_long /* long */);
+    pub fn wxTextCtrl_Replace(_obj: &[u8] /* void* */, from: c_long /* long */, to: c_long /* long */, value: &[u8] /* void* */);
+    pub fn wxTextCtrl_SaveFile(_obj: &[u8] /* void* */, file: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTextCtrl_SetEditable(_obj: &[u8] /* void* */, editable: bool /* bool */);
+    pub fn wxTextCtrl_SetInsertionPoint(_obj: &[u8] /* void* */, pos: c_long /* long */);
     pub fn wxTextCtrl_SetInsertionPointEnd(_obj: &[u8] /* void* */);
-    pub fn wxTextCtrl_SetSelection(_obj: &[u8] /* void* */, from: long /* long */, to: long /* long */);
+    pub fn wxTextCtrl_SetSelection(_obj: &[u8] /* void* */, from: c_long /* long */, to: c_long /* long */);
     pub fn wxTextCtrl_SetValue(_obj: &[u8] /* void* */, value: &[u8] /* void* */);
-    pub fn wxTextCtrl_ShowPosition(_obj: &[u8] /* void* */, pos: long /* long */);
+    pub fn wxTextCtrl_ShowPosition(_obj: &[u8] /* void* */, pos: c_long /* long */);
     pub fn wxTextCtrl_Undo(_obj: &[u8] /* void* */);
     pub fn wxTextCtrl_WriteText(_obj: &[u8] /* void* */, text: &[u8] /* void* */);
-    pub fn wxTextCtrl_XYToPosition(_obj: &[u8] /* void* */, arg0: LongPoint /* LongPoint */) -> long /* long */;
+    pub fn wxTextCtrl_XYToPosition(_obj: &[u8] /* void* */, arg0: LongPoint /* LongPoint */) -> c_long /* long */;
     
     // TClassDefExtend(wxTextDataObject,wxDataObjectSimple)
     pub fn TextDataObject_Create(_txt: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -4120,11 +4122,11 @@ extern {
     pub fn wxTextValidator_Create(style: c_int /* int */, val: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxTextValidator_GetExcludes(_obj: &[u8] /* void* */, _ref: TArrayStringOutVoid /* TArrayStringOutVoid */) -> TArrayLen /* TArrayLen */;
     pub fn wxTextValidator_GetIncludes(_obj: &[u8] /* void* */, _ref: TArrayStringOutVoid /* TArrayStringOutVoid */) -> TArrayLen /* TArrayLen */;
-    pub fn wxTextValidator_SetExcludes(_obj: &[u8] /* void* */, list: TStringVoid /* TStringVoid */, count: c_int /* int */);
-    pub fn wxTextValidator_SetIncludes(_obj: &[u8] /* void* */, list: TStringVoid /* TStringVoid */, count: c_int /* int */);
+    pub fn wxTextValidator_SetExcludes(_obj: &[u8] /* void* */, list: &[wchar_t] /* wchar_t* */, count: c_int /* int */);
+    pub fn wxTextValidator_SetIncludes(_obj: &[u8] /* void* */, list: &[wchar_t] /* wchar_t* */, count: c_int /* int */);
     pub fn wxTextValidator_Clone(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxTextValidator_TransferToWindow(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTextValidator_TransferFromWindow(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxTextValidator_TransferToWindow(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTextValidator_TransferFromWindow(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxTextValidator_GetStyle(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxTextValidator_OnChar(_obj: &[u8] /* void* */, event: &[u8] /* void* */);
     pub fn wxTextValidator_SetStyle(_obj: &[u8] /* void* */, style: c_int /* int */);
@@ -4145,9 +4147,9 @@ extern {
     pub fn wxTimer_Create(_prt: &[u8] /* void* */, _id: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxTimer_Delete(_obj: &[u8] /* void* */);
     pub fn wxTimer_GetInterval(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxTimer_IsOneShot(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTimer_IsRuning(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTimer_Start(_obj: &[u8] /* void* */, _int: c_int /* int */, _one: TBool /* TBool */) -> TBool /* TBool */;
+    pub fn wxTimer_IsOneShot(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTimer_IsRuning(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTimer_Start(_obj: &[u8] /* void* */, _int: c_int /* int */, _one: bool /* bool */) -> bool /* bool */;
     pub fn wxTimer_Stop(_obj: &[u8] /* void* */);
     
     // TClassDefExtend(wxTimerBase,wxObject)
@@ -4169,34 +4171,34 @@ extern {
     
     // TClassDefExtend(wxToggleButton,wxControl)
     pub fn wxToggleButton_Create(parent: &[u8] /* void* */, id: c_int /* int */, label: &[u8] /* void* */, arg0: Rect /* Rect */, style: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxToggleButton_Enable(_obj: &[u8] /* void* */, enable: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxToggleButton_GetValue(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxToggleButton_Enable(_obj: &[u8] /* void* */, enable: bool /* bool */) -> bool /* bool */;
+    pub fn wxToggleButton_GetValue(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxToggleButton_SetLabel(_obj: &[u8] /* void* */, label: &[u8] /* void* */);
-    pub fn wxToggleButton_SetValue(_obj: &[u8] /* void* */, state: TBool /* TBool */);
+    pub fn wxToggleButton_SetValue(_obj: &[u8] /* void* */, state: bool /* bool */);
     
     // TClassDefExtend(wxToolBar,wxToolBarBase)
-    pub fn wxToolBar_AddControl(_obj: &[u8] /* void* */, ctrl: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxToolBar_AddControl(_obj: &[u8] /* void* */, ctrl: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxToolBar_AddSeparator(_obj: &[u8] /* void* */);
     pub fn wxToolBar_AddTool(_obj: &[u8] /* void* */, id: c_int /* int */, bmp: &[u8] /* void* */, shelp: &[u8] /* void* */, lhelp: &[u8] /* void* */);
-    pub fn wxToolBar_AddToolEx(_obj: &[u8] /* void* */, id: c_int /* int */, bmp1: &[u8] /* void* */, bmp2: &[u8] /* void* */, isToggle: TBool /* TBool */, arg0: IntPoint /* IntPoint */, data: &[u8] /* void* */, shelp: &[u8] /* void* */, lhelp: &[u8] /* void* */);
+    pub fn wxToolBar_AddToolEx(_obj: &[u8] /* void* */, id: c_int /* int */, bmp1: &[u8] /* void* */, bmp2: &[u8] /* void* */, isToggle: bool /* bool */, arg0: IntPoint /* IntPoint */, data: &[u8] /* void* */, shelp: &[u8] /* void* */, lhelp: &[u8] /* void* */);
     pub fn wxToolBar_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxToolBar_Delete(_obj: &[u8] /* void* */);
-    pub fn wxToolBar_DeleteTool(_obj: &[u8] /* void* */, id: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxToolBar_DeleteToolByPos(_obj: &[u8] /* void* */, pos: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxToolBar_EnableTool(_obj: &[u8] /* void* */, id: c_int /* int */, enable: TBool /* TBool */);
+    pub fn wxToolBar_DeleteTool(_obj: &[u8] /* void* */, id: c_int /* int */) -> bool /* bool */;
+    pub fn wxToolBar_DeleteToolByPos(_obj: &[u8] /* void* */, pos: c_int /* int */) -> bool /* bool */;
+    pub fn wxToolBar_EnableTool(_obj: &[u8] /* void* */, id: c_int /* int */, enable: bool /* bool */);
     pub fn wxToolBar_GetMargins(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxToolBar_GetToolBitmapSize(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxToolBar_GetToolClientData(_obj: &[u8] /* void* */, id: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxToolBar_GetToolEnabled(_obj: &[u8] /* void* */, id: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxToolBar_GetToolEnabled(_obj: &[u8] /* void* */, id: c_int /* int */) -> bool /* bool */;
     pub fn wxToolBar_GetToolLongHelp(_obj: &[u8] /* void* */, id: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxToolBar_GetToolPacking(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxToolBar_GetToolShortHelp(_obj: &[u8] /* void* */, id: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxToolBar_GetToolSize(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxToolBar_GetToolState(_obj: &[u8] /* void* */, id: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxToolBar_GetToolState(_obj: &[u8] /* void* */, id: c_int /* int */) -> bool /* bool */;
     pub fn wxToolBar_InsertControl(_obj: &[u8] /* void* */, pos: c_int /* int */, ctrl: &[u8] /* void* */);
     pub fn wxToolBar_InsertSeparator(_obj: &[u8] /* void* */, pos: c_int /* int */);
-    pub fn wxToolBar_InsertTool(_obj: &[u8] /* void* */, pos: c_int /* int */, id: c_int /* int */, bmp1: &[u8] /* void* */, bmp2: &[u8] /* void* */, isToggle: TBool /* TBool */, data: &[u8] /* void* */, shelp: &[u8] /* void* */, lhelp: &[u8] /* void* */);
-    pub fn wxToolBar_Realize(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxToolBar_InsertTool(_obj: &[u8] /* void* */, pos: c_int /* int */, id: c_int /* int */, bmp1: &[u8] /* void* */, bmp2: &[u8] /* void* */, isToggle: bool /* bool */, data: &[u8] /* void* */, shelp: &[u8] /* void* */, lhelp: &[u8] /* void* */);
+    pub fn wxToolBar_Realize(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxToolBar_RemoveTool(_obj: &[u8] /* void* */, id: c_int /* int */);
     pub fn wxToolBar_SetMargins(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
     pub fn wxToolBar_SetToolBitmapSize(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */);
@@ -4205,12 +4207,12 @@ extern {
     pub fn wxToolBar_SetToolPacking(_obj: &[u8] /* void* */, packing: c_int /* int */);
     pub fn wxToolBar_SetToolSeparation(_obj: &[u8] /* void* */, separation: c_int /* int */);
     pub fn wxToolBar_SetToolShortHelp(_obj: &[u8] /* void* */, id: c_int /* int */, str: &[u8] /* void* */);
-    pub fn wxToolBar_ToggleTool(_obj: &[u8] /* void* */, id: c_int /* int */, toggle: TBool /* TBool */);
+    pub fn wxToolBar_ToggleTool(_obj: &[u8] /* void* */, id: c_int /* int */, toggle: bool /* bool */);
     
     // TClassDefExtend(wxToolBarBase,wxControl)
     
     // TClassDefExtend(wxToolLayoutItem,wxObject)
-    pub fn wxToolLayoutItem_IsSeparator(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxToolLayoutItem_IsSeparator(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxToolLayoutItem_Rect(_obj: &[u8] /* void* */, arg0: &[Rect] /* Rect* */);
     
     // TClassDefExtend(wxToolTip,wxObject)
@@ -4223,16 +4225,16 @@ extern {
     pub fn wxToolWindow_SetTitleFont(_obj: &[u8] /* void* */, _fnt: &[u8] /* void* */);
     
     // TClassDefExtend(wxTopLevelWindow,wxWindow)
-    pub fn wxTopLevelWindow_EnableCloseButton(_obj: &[u8] /* void* */, enable: TBool /* TBool */) -> TBool /* TBool */;
+    pub fn wxTopLevelWindow_EnableCloseButton(_obj: &[u8] /* void* */, enable: bool /* bool */) -> bool /* bool */;
     pub fn wxTopLevelWindow_GetDefaultButton(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxTopLevelWindow_GetDefaultItem(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxTopLevelWindow_GetIcon(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxTopLevelWindow_GetTitle(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxTopLevelWindow_Iconize(_obj: &[u8] /* void* */, iconize: TBool /* TBool */) -> TBool /* TBool */;
-    pub fn wxTopLevelWindow_IsActive(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTopLevelWindow_IsIconized(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTopLevelWindow_IsMaximized(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTopLevelWindow_Maximize(_obj: &[u8] /* void* */, maximize: TBool /* TBool */);
+    pub fn wxTopLevelWindow_Iconize(_obj: &[u8] /* void* */, iconize: bool /* bool */) -> bool /* bool */;
+    pub fn wxTopLevelWindow_IsActive(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTopLevelWindow_IsIconized(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTopLevelWindow_IsMaximized(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTopLevelWindow_Maximize(_obj: &[u8] /* void* */, maximize: bool /* bool */);
     pub fn wxTopLevelWindow_RequestUserAttention(_obj: &[u8] /* void* */, flags: c_int /* int */);
     pub fn wxTopLevelWindow_SetDefaultButton(_obj: &[u8] /* void* */, pBut: &[u8] /* void* */);
     pub fn wxTopLevelWindow_SetDefaultItem(_obj: &[u8] /* void* */, pBut: &[u8] /* void* */);
@@ -4258,11 +4260,11 @@ extern {
     pub fn wxTreeCtrl_DeleteAllItems(_obj: &[u8] /* void* */);
     pub fn wxTreeCtrl_DeleteChildren(_obj: &[u8] /* void* */, item: &[u8] /* void* */);
     pub fn wxTreeCtrl_EditLabel(_obj: &[u8] /* void* */, item: &[u8] /* void* */);
-    pub fn wxTreeCtrl_EndEditLabel(_obj: &[u8] /* void* */, item: &[u8] /* void* */, discardChanges: TBool /* TBool */);
+    pub fn wxTreeCtrl_EndEditLabel(_obj: &[u8] /* void* */, item: &[u8] /* void* */, discardChanges: bool /* bool */);
     pub fn wxTreeCtrl_EnsureVisible(_obj: &[u8] /* void* */, item: &[u8] /* void* */);
     pub fn wxTreeCtrl_Expand(_obj: &[u8] /* void* */, item: &[u8] /* void* */);
-    pub fn wxTreeCtrl_GetBoundingRect(_obj: &[u8] /* void* */, item: &[u8] /* void* */, textOnly: TBool /* TBool */) -> ~[u8] /* void* */;
-    pub fn wxTreeCtrl_GetChildrenCount(_obj: &[u8] /* void* */, item: &[u8] /* void* */, recursively: TBool /* TBool */) -> c_int /* int */;
+    pub fn wxTreeCtrl_GetBoundingRect(_obj: &[u8] /* void* */, item: &[u8] /* void* */, textOnly: bool /* bool */) -> ~[u8] /* void* */;
+    pub fn wxTreeCtrl_GetChildrenCount(_obj: &[u8] /* void* */, item: &[u8] /* void* */, recursively: bool /* bool */) -> c_int /* int */;
     pub fn wxTreeCtrl_GetCount(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxTreeCtrl_GetEditControl(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxTreeCtrl_GetFirstChild(_obj: &[u8] /* void* */, item: &[u8] /* void* */, cookie: &[c_int] /* int* */, _item: &[u8] /* void* */);
@@ -4287,10 +4289,10 @@ extern {
     pub fn wxTreeCtrl_HitTest(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */, flags: &[c_int] /* int* */, _item: &[u8] /* void* */);
     pub fn wxTreeCtrl_InsertItem(_obj: &[u8] /* void* */, parent: &[u8] /* void* */, idPrevious: &[u8] /* void* */, text: &[u8] /* void* */, image: c_int /* int */, selectedImage: c_int /* int */, data: &[u8] /* void* */, _item: &[u8] /* void* */);
     pub fn wxTreeCtrl_InsertItemByIndex(_obj: &[u8] /* void* */, parent: &[u8] /* void* */, index: c_int /* int */, text: &[u8] /* void* */, image: c_int /* int */, selectedImage: c_int /* int */, data: &[u8] /* void* */, _item: &[u8] /* void* */);
-    pub fn wxTreeCtrl_IsBold(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTreeCtrl_IsExpanded(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTreeCtrl_IsSelected(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxTreeCtrl_IsVisible(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxTreeCtrl_IsBold(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTreeCtrl_IsExpanded(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTreeCtrl_IsSelected(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxTreeCtrl_IsVisible(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxTreeCtrl_ItemHasChildren(_obj: &[u8] /* void* */, item: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxTreeCtrl_OnCompareItems(_obj: &[u8] /* void* */, item1: &[u8] /* void* */, item2: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxTreeCtrl_PrependItem(_obj: &[u8] /* void* */, parent: &[u8] /* void* */, text: &[u8] /* void* */, image: c_int /* int */, selectedImage: c_int /* int */, data: &[u8] /* void* */, _item: &[u8] /* void* */);
@@ -4299,11 +4301,11 @@ extern {
     pub fn wxTreeCtrl_SetImageList(_obj: &[u8] /* void* */, imageList: &[u8] /* void* */);
     pub fn wxTreeCtrl_SetIndent(_obj: &[u8] /* void* */, indent: c_int /* int */);
     pub fn wxTreeCtrl_SetItemBackgroundColour(_obj: &[u8] /* void* */, item: &[u8] /* void* */, col: &[u8] /* void* */);
-    pub fn wxTreeCtrl_SetItemBold(_obj: &[u8] /* void* */, item: &[u8] /* void* */, bold: TBool /* TBool */);
+    pub fn wxTreeCtrl_SetItemBold(_obj: &[u8] /* void* */, item: &[u8] /* void* */, bold: bool /* bool */);
     pub fn wxTreeCtrl_SetItemData(_obj: &[u8] /* void* */, item: &[u8] /* void* */, data: &[u8] /* void* */);
-    pub fn wxTreeCtrl_SetItemDropHighlight(_obj: &[u8] /* void* */, item: &[u8] /* void* */, highlight: TBool /* TBool */);
+    pub fn wxTreeCtrl_SetItemDropHighlight(_obj: &[u8] /* void* */, item: &[u8] /* void* */, highlight: bool /* bool */);
     pub fn wxTreeCtrl_SetItemFont(_obj: &[u8] /* void* */, item: &[u8] /* void* */, font: &[u8] /* void* */);
-    pub fn wxTreeCtrl_SetItemHasChildren(_obj: &[u8] /* void* */, item: &[u8] /* void* */, hasChildren: TBool /* TBool */);
+    pub fn wxTreeCtrl_SetItemHasChildren(_obj: &[u8] /* void* */, item: &[u8] /* void* */, hasChildren: bool /* bool */);
     pub fn wxTreeCtrl_SetItemImage(_obj: &[u8] /* void* */, item: &[u8] /* void* */, image: c_int /* int */, which: c_int /* int */);
     pub fn wxTreeCtrl_SetItemText(_obj: &[u8] /* void* */, item: &[u8] /* void* */, text: &[u8] /* void* */);
     pub fn wxTreeCtrl_SetItemTextColour(_obj: &[u8] /* void* */, item: &[u8] /* void* */, col: &[u8] /* void* */);
@@ -4326,7 +4328,7 @@ extern {
     // TClassDef(wxTreeItemId)
     pub fn wxTreeItemId_Create() -> ~[u8] /* void* */;
     pub fn wxTreeItemId_Delete(_obj: &[u8] /* void* */);
-    pub fn wxTreeItemId_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxTreeItemId_IsOk(_obj: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxTreeLayout,wxObject)
     
@@ -4335,14 +4337,14 @@ extern {
     // TClassDefExtend(wxURL,wxObject)
     
     // TClassDefExtend(wxUpdateUIEvent,wxEvent)
-    pub fn wxUpdateUIEvent_Check(_obj: &[u8] /* void* */, check: TBool /* TBool */);
+    pub fn wxUpdateUIEvent_Check(_obj: &[u8] /* void* */, check: bool /* bool */);
     pub fn wxUpdateUIEvent_CopyObject(_obj: &[u8] /* void* */, obj: &[u8] /* void* */);
-    pub fn wxUpdateUIEvent_Enable(_obj: &[u8] /* void* */, enable: TBool /* TBool */);
-    pub fn wxUpdateUIEvent_GetChecked(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxUpdateUIEvent_GetEnabled(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxUpdateUIEvent_GetSetChecked(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxUpdateUIEvent_GetSetEnabled(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxUpdateUIEvent_GetSetText(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxUpdateUIEvent_Enable(_obj: &[u8] /* void* */, enable: bool /* bool */);
+    pub fn wxUpdateUIEvent_GetChecked(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxUpdateUIEvent_GetEnabled(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxUpdateUIEvent_GetSetChecked(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxUpdateUIEvent_GetSetEnabled(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxUpdateUIEvent_GetSetText(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxUpdateUIEvent_GetText(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxUpdateUIEvent_SetText(_obj: &[u8] /* void* */, text: &[u8] /* void* */);
     
@@ -4350,11 +4352,11 @@ extern {
     pub fn wxValidator_Create() -> ~[u8] /* void* */;
     pub fn wxValidator_Delete(_obj: &[u8] /* void* */);
     pub fn wxValidator_GetWindow(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxValidator_SetBellOnError(doIt: TBool /* TBool */);
+    pub fn wxValidator_SetBellOnError(doIt: bool /* bool */);
     pub fn wxValidator_SetWindow(_obj: &[u8] /* void* */, win: &[u8] /* void* */);
-    pub fn wxValidator_TransferFromWindow(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxValidator_TransferToWindow(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxValidator_Validate(_obj: &[u8] /* void* */, parent: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxValidator_TransferFromWindow(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxValidator_TransferToWindow(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxValidator_Validate(_obj: &[u8] /* void* */, parent: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxVariant,wxObject)
     
@@ -4372,16 +4374,16 @@ extern {
     pub fn wxWindow_CenterOnParent(_obj: &[u8] /* void* */, dir: c_int /* int */);
     pub fn wxWindow_ClearBackground(_obj: &[u8] /* void* */);
     pub fn wxWindow_ClientToScreen(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> ~[u8] /* void* */;
-    pub fn wxWindow_Close(_obj: &[u8] /* void* */, _force: TBool /* TBool */) -> TBool /* TBool */;
+    pub fn wxWindow_Close(_obj: &[u8] /* void* */, _force: bool /* bool */) -> bool /* bool */;
     pub fn wxWindow_ConvertDialogToPixels(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxWindow_ConvertPixelsToDialog(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxWindow_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxWindow_DeleteRelatedConstraints(_obj: &[u8] /* void* */);
-    pub fn wxWindow_Destroy(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxWindow_DestroyChildren(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxWindow_Disable(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxWindow_Destroy(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxWindow_DestroyChildren(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxWindow_Disable(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxWindow_DoPhase(_obj: &[u8] /* void* */, phase: c_int /* int */) -> c_int /* int */;
-    pub fn wxWindow_Enable(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxWindow_Enable(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxWindow_FindFocus(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxWindow_FindWindow(_obj: &[u8] /* void* */, name: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxWindow_Fit(_obj: &[u8] /* void* */);
@@ -4430,28 +4432,28 @@ extern {
     pub fn wxWindow_GetValidator(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxWindow_GetVirtualSize(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxWindow_GetWindowStyleFlag(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxWindow_HasFlag(_obj: &[u8] /* void* */, flag: c_int /* int */) -> TBool /* TBool */;
-    pub fn wxWindow_Hide(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxWindow_HasFlag(_obj: &[u8] /* void* */, flag: c_int /* int */) -> bool /* bool */;
+    pub fn wxWindow_Hide(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxWindow_InitDialog(_obj: &[u8] /* void* */);
-    pub fn wxWindow_IsBeingDeleted(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxWindow_IsEnabled(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxWindow_IsExposed(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> TBool /* TBool */;
-    pub fn wxWindow_IsShown(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxWindow_IsTopLevel(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxWindow_IsBeingDeleted(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxWindow_IsEnabled(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxWindow_IsExposed(_obj: &[u8] /* void* */, arg0: Rect /* Rect */) -> bool /* bool */;
+    pub fn wxWindow_IsShown(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxWindow_IsTopLevel(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxWindow_Layout(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxWindow_LayoutPhase1(_obj: &[u8] /* void* */, noChanges: &[c_int] /* int* */) -> c_int /* int */;
     pub fn wxWindow_LayoutPhase2(_obj: &[u8] /* void* */, noChanges: &[c_int] /* int* */) -> c_int /* int */;
     pub fn wxWindow_Lower(_obj: &[u8] /* void* */);
-    pub fn wxWindow_MakeModal(_obj: &[u8] /* void* */, modal: TBool /* TBool */);
+    pub fn wxWindow_MakeModal(_obj: &[u8] /* void* */, modal: bool /* bool */);
     pub fn wxWindow_Move(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
     pub fn wxWindow_MoveConstraint(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
-    pub fn wxWindow_PopEventHandler(_obj: &[u8] /* void* */, deleteHandler: TBool /* TBool */) -> ~[u8] /* void* */;
+    pub fn wxWindow_PopEventHandler(_obj: &[u8] /* void* */, deleteHandler: bool /* bool */) -> ~[u8] /* void* */;
     pub fn wxWindow_PopupMenu(_obj: &[u8] /* void* */, menu: &[u8] /* void* */, arg0: IntPoint /* IntPoint */) -> c_int /* int */;
     pub fn wxWindow_PrepareDC(_obj: &[u8] /* void* */, dc: &[u8] /* void* */);
     pub fn wxWindow_PushEventHandler(_obj: &[u8] /* void* */, handler: &[u8] /* void* */);
     pub fn wxWindow_Raise(_obj: &[u8] /* void* */);
-    pub fn wxWindow_Refresh(_obj: &[u8] /* void* */, eraseBackground: TBool /* TBool */);
-    pub fn wxWindow_RefreshRect(_obj: &[u8] /* void* */, eraseBackground: TBool /* TBool */, arg0: Rect /* Rect */);
+    pub fn wxWindow_Refresh(_obj: &[u8] /* void* */, eraseBackground: bool /* bool */);
+    pub fn wxWindow_RefreshRect(_obj: &[u8] /* void* */, eraseBackground: bool /* bool */, arg0: Rect /* Rect */);
     pub fn wxWindow_ReleaseMouse(_obj: &[u8] /* void* */);
     pub fn wxWindow_RemoveChild(_obj: &[u8] /* void* */, child: &[u8] /* void* */);
     pub fn wxWindow_RemoveConstraintReference(_obj: &[u8] /* void* */, otherWin: &[u8] /* void* */);
@@ -4461,7 +4463,7 @@ extern {
     pub fn wxWindow_ScrollWindow(_obj: &[u8] /* void* */, arg0: Vector /* Vector */);
     pub fn wxWindow_ScrollWindowRect(_obj: &[u8] /* void* */, arg0: Vector /* Vector */, arg1: Rect /* Rect */);
     pub fn wxWindow_SetAcceleratorTable(_obj: &[u8] /* void* */, accel: &[u8] /* void* */);
-    pub fn wxWindow_SetAutoLayout(_obj: &[u8] /* void* */, autoLayout: TBool /* TBool */);
+    pub fn wxWindow_SetAutoLayout(_obj: &[u8] /* void* */, autoLayout: bool /* bool */);
     pub fn wxWindow_SetBackgroundColour(_obj: &[u8] /* void* */, colour: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxWindow_SetCaret(_obj: &[u8] /* void* */, caret: &[u8] /* void* */);
     pub fn wxWindow_SetClientData(_obj: &[u8] /* void* */, data: &[u8] /* void* */);
@@ -4471,29 +4473,29 @@ extern {
     pub fn wxWindow_SetConstraints(_obj: &[u8] /* void* */, constraints: &[u8] /* void* */);
     pub fn wxWindow_SetCursor(_obj: &[u8] /* void* */, cursor: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxWindow_SetDropTarget(_obj: &[u8] /* void* */, dropTarget: &[u8] /* void* */);
-    pub fn wxWindow_SetExtraStyle(_obj: &[u8] /* void* */, exStyle: long /* long */);
+    pub fn wxWindow_SetExtraStyle(_obj: &[u8] /* void* */, exStyle: c_long /* long */);
     pub fn wxWindow_SetFocus(_obj: &[u8] /* void* */);
     pub fn wxWindow_SetFont(_obj: &[u8] /* void* */, font: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxWindow_SetForegroundColour(_obj: &[u8] /* void* */, colour: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxWindow_SetId(_obj: &[u8] /* void* */, _id: c_int /* int */);
     pub fn wxWindow_SetLabel(_obj: &[u8] /* void* */, _title: &[u8] /* void* */);
     pub fn wxWindow_SetName(_obj: &[u8] /* void* */, _name: &[u8] /* void* */);
-    pub fn wxWindow_SetScrollPos(_obj: &[u8] /* void* */, orient: c_int /* int */, pos: c_int /* int */, refresh: TBool /* TBool */);
-    pub fn wxWindow_SetScrollbar(_obj: &[u8] /* void* */, orient: c_int /* int */, pos: c_int /* int */, thumbVisible: c_int /* int */, range: c_int /* int */, refresh: TBool /* TBool */);
+    pub fn wxWindow_SetScrollPos(_obj: &[u8] /* void* */, orient: c_int /* int */, pos: c_int /* int */, refresh: bool /* bool */);
+    pub fn wxWindow_SetScrollbar(_obj: &[u8] /* void* */, orient: c_int /* int */, pos: c_int /* int */, thumbVisible: c_int /* int */, range: c_int /* int */, refresh: bool /* bool */);
     pub fn wxWindow_SetSize(_obj: &[u8] /* void* */, arg0: Rect /* Rect */, sizeFlags: c_int /* int */);
     pub fn wxWindow_SetSizeConstraint(_obj: &[u8] /* void* */, arg0: Rect /* Rect */);
     pub fn wxWindow_SetSizeHints(_obj: &[u8] /* void* */, minW: c_int /* int */, minH: c_int /* int */, maxW: c_int /* int */, maxH: c_int /* int */, incW: c_int /* int */, incH: c_int /* int */);
     pub fn wxWindow_SetSizer(_obj: &[u8] /* void* */, sizer: &[u8] /* void* */);
     pub fn wxWindow_SetToolTip(_obj: &[u8] /* void* */, tip: &[u8] /* void* */);
     pub fn wxWindow_SetValidator(_obj: &[u8] /* void* */, validator: &[u8] /* void* */);
-    pub fn wxWindow_SetWindowStyleFlag(_obj: &[u8] /* void* */, style: long /* long */);
-    pub fn wxWindow_Show(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxWindow_SetWindowStyleFlag(_obj: &[u8] /* void* */, style: c_long /* long */);
+    pub fn wxWindow_Show(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxWindow_Thaw(_obj: &[u8] /* void* */);
-    pub fn wxWindow_TransferDataFromWindow(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxWindow_TransferDataToWindow(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxWindow_TransferDataFromWindow(_obj: &[u8] /* void* */) -> bool /* bool */;
+    pub fn wxWindow_TransferDataToWindow(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxWindow_UnsetConstraints(_obj: &[u8] /* void* */, c: &[u8] /* void* */);
     pub fn wxWindow_UpdateWindowUI(_obj: &[u8] /* void* */);
-    pub fn wxWindow_Validate(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxWindow_Validate(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxWindow_SetVirtualSize(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */);
     pub fn wxWindow_WarpPointer(_obj: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
     
@@ -4542,11 +4544,11 @@ extern {
     pub fn wxXmlResource_Get() -> ~[u8] /* void* */;
     pub fn wxXmlResource_GetDomain(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxXmlResource_GetFlags(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxXmlResource_GetVersion(_obj: &[u8] /* void* */) -> long /* long */;
+    pub fn wxXmlResource_GetVersion(_obj: &[u8] /* void* */) -> c_long /* long */;
     pub fn wxXmlResource_GetXRCID(_obj: &[u8] /* void* */, str_id: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxXmlResource_InitAllHandlers(_obj: &[u8] /* void* */);
     pub fn wxXmlResource_InsertHandler(_obj: &[u8] /* void* */, handler: &[u8] /* void* */);
-    pub fn wxXmlResource_Load(_obj: &[u8] /* void* */, filemask: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxXmlResource_Load(_obj: &[u8] /* void* */, filemask: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxXmlResource_LoadBitmap(_obj: &[u8] /* void* */, name: &[u8] /* void* */, _ref: &[u8] /* void* */);
     pub fn wxXmlResource_LoadDialog(_obj: &[u8] /* void* */, parent: &[u8] /* void* */, name: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxXmlResource_LoadFrame(_obj: &[u8] /* void* */, parent: &[u8] /* void* */, name: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -4593,7 +4595,7 @@ extern {
     pub fn wxXmlResource_GetStaticText(_obj: &[u8] /* void* */, str_id: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxXmlResource_GetTextCtrl(_obj: &[u8] /* void* */, str_id: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxXmlResource_GetTreeCtrl(_obj: &[u8] /* void* */, str_id: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxXmlResource_Unload(_obj: &[u8] /* void* */, filemask: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxXmlResource_Unload(_obj: &[u8] /* void* */, filemask: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxXmlResource_Set(_obj: &[u8] /* void* */, res: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxXmlResource_SetDomain(_obj: &[u8] /* void* */, domain: &[u8] /* void* */);
     pub fn wxXmlResource_SetFlags(_obj: &[u8] /* void* */, flags: c_int /* int */);
@@ -4609,10 +4611,10 @@ extern {
     // TClassDefExtend(wxPropertyGrid,wxControl)
     pub fn wxPropertyGrid_Append(_obj: &[u8] /* void* */, prop: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxPropertyGrid_Create(_prt: &[u8] /* void* */, _id: c_int /* int */, arg0: Rect /* Rect */, _stl: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxPropertyGrid_DisableProperty(_obj: &[u8] /* void* */, propName: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxPropertyGrid_DisableProperty(_obj: &[u8] /* void* */, propName: &[u8] /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxPropertyGridEvent,wxNotifyEvent)
-    pub fn wxPropertyGridEvent_HasProperty(_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxPropertyGridEvent_HasProperty(_obj: &[u8] /* void* */) -> bool /* bool */;
     pub fn wxPropertyGridEvent_GetProperty(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     
     // TClassDefExtend(wxPGProperty,wxObject)
@@ -4629,7 +4631,7 @@ extern {
     pub fn wxIntProperty_Create(label: &[u8] /* void* */, name: &[u8] /* void* */, value: c_int /* int */) -> ~[u8] /* void* */;
     
     // TClassDefExtend(wxBoolProperty,wxPGProperty)
-    pub fn wxBoolProperty_Create(label: &[u8] /* void* */, name: &[u8] /* void* */, value: TBool /* TBool */) -> ~[u8] /* void* */;
+    pub fn wxBoolProperty_Create(label: &[u8] /* void* */, name: &[u8] /* void* */, value: bool /* bool */) -> ~[u8] /* void* */;
     
     // TClassDefExtend(wxFloatProperty,wxPGProperty)
     pub fn wxFloatProperty_Create(label: &[u8] /* void* */, name: &[u8] /* void* */, value: float /* float */) -> ~[u8] /* void* */;
