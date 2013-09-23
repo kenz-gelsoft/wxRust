@@ -204,6 +204,9 @@ class Method(object):
                 if len(pair) < 2:
                     pair.append('arg%s' % count)
                     count += 1
+                for keyword in ['fn', 'ref', 'self', 'type', 'use']:
+                    if pair[1] == keyword:
+                        pair[1] += '_'
                 self.__args.append([Type(param=True).parse(pair[0]), pair[1]])
         return self
 

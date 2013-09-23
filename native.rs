@@ -969,7 +969,7 @@ extern {
     
     // TClassDefExtend(wxAutoBufferedPaintDC,wxDC)
     pub fn wxAutoBufferedPaintDC_Create(window: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxAutoBufferedPaintDC_Delete(self: &[u8] /* void* */);
+    pub fn wxAutoBufferedPaintDC_Delete(self_: &[u8] /* void* */);
     
     // TClassDefExtend(wxAutomationObject,wxObject)
     
@@ -980,11 +980,11 @@ extern {
     pub fn wxBitmap_CreateDefault() -> ~[u8] /* void* */;
     pub fn wxBitmap_CreateEmpty(arg0: IntSize /* IntSize */, _depth: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxBitmap_CreateFromXPM(data: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxBitmap_CreateLoad(name: &[u8] /* void* */, type: c_int /* int */) -> ~[u8] /* void* */;
+    pub fn wxBitmap_CreateLoad(name: &[u8] /* void* */, type_: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxBitmap_Delete(_obj: &[u8] /* void* */);
-    pub fn wxBitmap_FindHandlerByExtension(extension: &[u8] /* void* */, type: c_int /* int */) -> ~[u8] /* void* */;
+    pub fn wxBitmap_FindHandlerByExtension(extension: &[u8] /* void* */, type_: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxBitmap_FindHandlerByName(name: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxBitmap_FindHandlerByType(type: c_int /* int */) -> ~[u8] /* void* */;
+    pub fn wxBitmap_FindHandlerByType(type_: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxBitmap_GetDepth(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxBitmap_GetHeight(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxBitmap_GetMask(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -992,10 +992,10 @@ extern {
     pub fn wxBitmap_GetWidth(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxBitmap_InitStandardHandlers();
     pub fn wxBitmap_InsertHandler(handler: &[u8] /* void* */);
-    pub fn wxBitmap_LoadFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type: c_int /* int */) -> c_int /* int */;
+    pub fn wxBitmap_LoadFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: c_int /* int */) -> c_int /* int */;
     pub fn wxBitmap_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
     pub fn wxBitmap_RemoveHandler(name: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxBitmap_SaveFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type: c_int /* int */, cmap: &[u8] /* void* */) -> c_int /* int */;
+    pub fn wxBitmap_SaveFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: c_int /* int */, cmap: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxBitmap_SetDepth(_obj: &[u8] /* void* */, d: c_int /* int */);
     pub fn wxBitmap_SetHeight(_obj: &[u8] /* void* */, h: c_int /* int */);
     pub fn wxBitmap_SetMask(_obj: &[u8] /* void* */, mask: &[u8] /* void* */);
@@ -1059,12 +1059,12 @@ extern {
     // TClassDefExtend(wxBufferedDC,wxDC)
     pub fn wxBufferedDC_CreateByDCAndSize(dc: &[u8] /* void* */, arg0: IntSize /* IntSize */, style: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxBufferedDC_CreateByDCAndBitmap(dc: &[u8] /* void* */, bitmap: &[u8] /* void* */, style: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxBufferedDC_Delete(self: &[u8] /* void* */);
+    pub fn wxBufferedDC_Delete(self_: &[u8] /* void* */);
     
     // TClassDefExtend(wxBufferedPaintDC,wxDC)
     pub fn wxBufferedPaintDC_Create(window: &[u8] /* void* */, style: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxBufferedPaintDC_CreateWithBitmap(window: &[u8] /* void* */, bitmap: &[u8] /* void* */, style: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxBufferedPaintDC_Delete(self: &[u8] /* void* */);
+    pub fn wxBufferedPaintDC_Delete(self_: &[u8] /* void* */);
     
     // TClassDefExtend(wxBufferedInputStream,wxFilterInputStream)
     
@@ -1398,7 +1398,7 @@ extern {
     // TClassDefExtend(wxCursor,wxBitmap)
     pub fn Cursor_CreateFromStock(_id: c_int /* int */) -> ~[u8] /* void* */;
     pub fn Cursor_CreateFromImage(image: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn Cursor_CreateLoad(name: &[u8] /* void* */, type: long /* long */, arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
+    pub fn Cursor_CreateLoad(name: &[u8] /* void* */, type_: long /* long */, arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
     
     // TClassDefExtend(wxCustomDataObject,wxDataObjectSimple)
     
@@ -1456,8 +1456,8 @@ extern {
     pub fn wxDC_GetSize(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxDC_GetSizeMM(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxDC_GetTextBackground(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
-    pub fn wxDC_GetTextExtent(self: &[u8] /* void* */, string: &[u8] /* void* */, w: &[u8] /* void* */, h: &[u8] /* void* */, descent: &[u8] /* void* */, externalLeading: &[u8] /* void* */, theFont: &[u8] /* void* */);
-    pub fn wxDC_GetMultiLineTextExtent(self: &[u8] /* void* */, string: &[u8] /* void* */, w: &[u8] /* void* */, h: &[u8] /* void* */, heightLine: &[u8] /* void* */, theFont: &[u8] /* void* */);
+    pub fn wxDC_GetTextExtent(self_: &[u8] /* void* */, string: &[u8] /* void* */, w: &[u8] /* void* */, h: &[u8] /* void* */, descent: &[u8] /* void* */, externalLeading: &[u8] /* void* */, theFont: &[u8] /* void* */);
+    pub fn wxDC_GetMultiLineTextExtent(self_: &[u8] /* void* */, string: &[u8] /* void* */, w: &[u8] /* void* */, h: &[u8] /* void* */, heightLine: &[u8] /* void* */, theFont: &[u8] /* void* */);
     pub fn wxDC_GetTextForeground(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
     pub fn wxDC_GetUserScale(_obj: &[u8] /* void* */, arg0: &[DoubleSize] /* DoubleSize* */);
     pub fn wxDC_LogicalToDeviceX(_obj: &[u8] /* void* */, x: c_int /* int */) -> c_int /* int */;
@@ -1791,10 +1791,10 @@ extern {
     
     // TClassDefExtend(wxEvtHandler,wxObject)
     pub fn wxEvtHandler_AddPendingEvent(_obj: &[u8] /* void* */, event: &[u8] /* void* */);
-    pub fn wxEvtHandler_Connect(_obj: &[u8] /* void* */, first: c_int /* int */, last: c_int /* int */, type: c_int /* int */, data: &[u8] /* void* */) -> c_int /* int */;
+    pub fn wxEvtHandler_Connect(_obj: &[u8] /* void* */, first: c_int /* int */, last: c_int /* int */, type_: c_int /* int */, data: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxEvtHandler_Create() -> ~[u8] /* void* */;
     pub fn wxEvtHandler_Delete(_obj: &[u8] /* void* */);
-    pub fn wxEvtHandler_Disconnect(_obj: &[u8] /* void* */, first: c_int /* int */, last: c_int /* int */, type: c_int /* int */, id: c_int /* int */) -> c_int /* int */;
+    pub fn wxEvtHandler_Disconnect(_obj: &[u8] /* void* */, first: c_int /* int */, last: c_int /* int */, type_: c_int /* int */, id: c_int /* int */) -> c_int /* int */;
     pub fn wxEvtHandler_GetEvtHandlerEnabled(_obj: &[u8] /* void* */) -> TBool /* TBool */;
     pub fn wxEvtHandler_GetNextHandler(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxEvtHandler_GetPreviousHandler(_obj: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -1948,11 +1948,11 @@ extern {
     pub fn wxFontData_Delete(_obj: &[u8] /* void* */);
     pub fn wxFontData_EnableEffects(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
     pub fn wxFontData_GetAllowSymbols(_obj: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxFontData_GetChosenFont(_obj: &[u8] /* void* */, ref: &[u8] /* void* */);
+    pub fn wxFontData_GetChosenFont(_obj: &[u8] /* void* */, ref_: &[u8] /* void* */);
     pub fn wxFontData_GetColour(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
     pub fn wxFontData_GetEnableEffects(_obj: &[u8] /* void* */) -> TBool /* TBool */;
     pub fn wxFontData_GetEncoding(_obj: &[u8] /* void* */) -> c_int /* int */;
-    pub fn wxFontData_GetInitialFont(_obj: &[u8] /* void* */, ref: &[u8] /* void* */);
+    pub fn wxFontData_GetInitialFont(_obj: &[u8] /* void* */, ref_: &[u8] /* void* */);
     pub fn wxFontData_GetShowHelp(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxFontData_SetAllowSymbols(_obj: &[u8] /* void* */, flag: TBool /* TBool */);
     pub fn wxFontData_SetChosenFont(_obj: &[u8] /* void* */, font: &[u8] /* void* */);
@@ -2476,7 +2476,7 @@ extern {
     pub fn wxIcon_Assign(_obj: &[u8] /* void* */, other: &[u8] /* void* */);
     pub fn wxIcon_CopyFromBitmap(_obj: &[u8] /* void* */, bmp: &[u8] /* void* */);
     pub fn wxIcon_CreateDefault() -> ~[u8] /* void* */;
-    pub fn wxIcon_CreateLoad(name: &[u8] /* void* */, type: long /* long */, arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
+    pub fn wxIcon_CreateLoad(name: &[u8] /* void* */, type_: long /* long */, arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
     pub fn wxIcon_Delete(_obj: &[u8] /* void* */);
     pub fn wxIcon_FromRaw(data: &[u8] /* void* */, arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
     pub fn wxIcon_FromXPM(data: &[u8] /* void* */) -> ~[u8] /* void* */;
@@ -2484,7 +2484,7 @@ extern {
     pub fn wxIcon_GetHeight(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxIcon_GetWidth(_obj: &[u8] /* void* */) -> c_int /* int */;
     pub fn wxIcon_IsEqual(_obj: &[u8] /* void* */, other: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxIcon_Load(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type: long /* long */, arg0: IntSize /* IntSize */) -> c_int /* int */;
+    pub fn wxIcon_Load(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: long /* long */, arg0: IntSize /* IntSize */) -> c_int /* int */;
     pub fn wxIcon_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
     pub fn wxIcon_SetDepth(_obj: &[u8] /* void* */, depth: c_int /* int */);
     pub fn wxIcon_SetHeight(_obj: &[u8] /* void* */, height: c_int /* int */);
@@ -2492,10 +2492,10 @@ extern {
     
     // TClassDef(wxIconBundle)
     pub fn wxIconBundle_AddIcon(_obj: &[u8] /* void* */, icon: &[u8] /* void* */);
-    pub fn wxIconBundle_AddIconFromFile(_obj: &[u8] /* void* */, file: &[u8] /* void* */, type: c_int /* int */);
+    pub fn wxIconBundle_AddIconFromFile(_obj: &[u8] /* void* */, file: &[u8] /* void* */, type_: c_int /* int */);
     pub fn wxIconBundle_Assign(_obj: &[u8] /* void* */, _ref: &[u8] /* void* */);
     pub fn wxIconBundle_CreateDefault() -> ~[u8] /* void* */;
-    pub fn wxIconBundle_CreateFromFile(file: &[u8] /* void* */, type: c_int /* int */) -> ~[u8] /* void* */;
+    pub fn wxIconBundle_CreateFromFile(file: &[u8] /* void* */, type_: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxIconBundle_CreateFromIcon(icon: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxIconBundle_Delete(_obj: &[u8] /* void* */);
     pub fn wxIconBundle_GetIcon(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */, _ref: &[u8] /* void* */);
@@ -2510,13 +2510,13 @@ extern {
     // TClassDefExtend(wxImage,wxObject)
     pub fn wxImage_CanRead(name: &[u8] /* void* */) -> TBool /* TBool */;
     pub fn wxImage_ConvertToBitmap(_obj: &[u8] /* void* */, bitmap: &[u8] /* void* */);
-    pub fn wxImage_ConvertToByteString(_obj: &[u8] /* void* */, type: c_int /* int */, data: TByteStringOut /* TByteStringOut */) -> TByteStringLen /* TByteStringLen */;
-    pub fn wxImage_ConvertToLazyByteString(_obj: &[u8] /* void* */, type: c_int /* int */, data: TByteStringLazyOut /* TByteStringLazyOut */) -> TByteStringLen /* TByteStringLen */;
+    pub fn wxImage_ConvertToByteString(_obj: &[u8] /* void* */, type_: c_int /* int */, data: TByteStringOut /* TByteStringOut */) -> TByteStringLen /* TByteStringLen */;
+    pub fn wxImage_ConvertToLazyByteString(_obj: &[u8] /* void* */, type_: c_int /* int */, data: TByteStringLazyOut /* TByteStringLazyOut */) -> TByteStringLen /* TByteStringLen */;
     pub fn wxImage_CountColours(_obj: &[u8] /* void* */, stopafter: c_int /* int */) -> c_int /* int */;
     pub fn wxImage_CreateDefault() -> ~[u8] /* void* */;
     pub fn wxImage_CreateFromBitmap(bitmap: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxImage_CreateFromByteString(arg0: &[char] /* char* */, arg1: c_int /* int */, type: c_int /* int */) -> ~[u8] /* void* */;
-    pub fn wxImage_CreateFromLazyByteString(arg0: &[char] /* char* */, arg1: c_int /* int */, type: c_int /* int */) -> ~[u8] /* void* */;
+    pub fn wxImage_CreateFromByteString(arg0: &[char] /* char* */, arg1: c_int /* int */, type_: c_int /* int */) -> ~[u8] /* void* */;
+    pub fn wxImage_CreateFromLazyByteString(arg0: &[char] /* char* */, arg1: c_int /* int */, type_: c_int /* int */) -> ~[u8] /* void* */;
     pub fn wxImage_CreateFromData(arg0: IntSize /* IntSize */, data: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxImage_CreateFromFile(name: &[u8] /* void* */) -> ~[u8] /* void* */;
     pub fn wxImage_CreateSized(arg0: IntSize /* IntSize */) -> ~[u8] /* void* */;
@@ -2537,7 +2537,7 @@ extern {
     pub fn wxImage_HasOption(_obj: &[u8] /* void* */, name: &[u8] /* void* */) -> TBool /* TBool */;
     pub fn wxImage_Initialize(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */);
     pub fn wxImage_InitializeFromData(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */, data: &[u8] /* void* */);
-    pub fn wxImage_LoadFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxImage_LoadFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: c_int /* int */) -> TBool /* TBool */;
     pub fn wxImage_Mirror(_obj: &[u8] /* void* */, horizontally: TBoolInt /* TBoolInt */, image: &[u8] /* void* */);
     pub fn wxImage_IsOk(_obj: &[u8] /* void* */) -> TBool /* TBool */;
     pub fn wxImage_Paste(_obj: &[u8] /* void* */, image: &[u8] /* void* */, arg0: IntPoint /* IntPoint */);
@@ -2545,7 +2545,7 @@ extern {
     pub fn wxImage_Rescale(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */);
     pub fn wxImage_Rotate(_obj: &[u8] /* void* */, angle: double /* double */, arg0: IntPoint /* IntPoint */, interpolating: TBoolInt /* TBoolInt */, offset_after_rotation: &[u8] /* void* */, image: &[u8] /* void* */);
     pub fn wxImage_Rotate90(_obj: &[u8] /* void* */, clockwise: TBoolInt /* TBoolInt */, image: &[u8] /* void* */);
-    pub fn wxImage_SaveFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxImage_SaveFile(_obj: &[u8] /* void* */, name: &[u8] /* void* */, type_: c_int /* int */) -> TBool /* TBool */;
     pub fn wxImage_Scale(_obj: &[u8] /* void* */, arg0: IntSize /* IntSize */, image: &[u8] /* void* */);
     pub fn wxImage_SetData(_obj: &[u8] /* void* */, data: &[u8] /* void* */);
     pub fn wxImage_SetDataAndSize(_obj: &[u8] /* void* */, data: &[u8] /* void* */, arg0: IntSize /* IntSize */);
@@ -2705,7 +2705,7 @@ extern {
     pub fn wxLayoutAlgorithm_Create() -> ~[u8] /* void* */;
     pub fn wxLayoutAlgorithm_Delete(_obj: &[u8] /* void* */);
     pub fn wxLayoutAlgorithm_LayoutFrame(_obj: &[u8] /* void* */, frame: &[u8] /* void* */, mainWindow: &[u8] /* void* */) -> TBool /* TBool */;
-    pub fn wxLayoutAlgorithm_LayoutMDIFrame(_obj: &[u8] /* void* */, frame: &[u8] /* void* */, arg0: Rect /* Rect */, use: c_int /* int */) -> TBool /* TBool */;
+    pub fn wxLayoutAlgorithm_LayoutMDIFrame(_obj: &[u8] /* void* */, frame: &[u8] /* void* */, arg0: Rect /* Rect */, use_: c_int /* int */) -> TBool /* TBool */;
     pub fn wxLayoutAlgorithm_LayoutWindow(_obj: &[u8] /* void* */, frame: &[u8] /* void* */, mainWindow: &[u8] /* void* */) -> TBool /* TBool */;
     
     // TClassDefExtend(wxLayoutConstraints,wxObject)
@@ -2799,7 +2799,7 @@ extern {
     pub fn wxListCtrl_SetSingleStyle(_obj: &[u8] /* void* */, style: c_int /* int */, add: TBool /* TBool */);
     pub fn wxListCtrl_SetTextColour(_obj: &[u8] /* void* */, col: &[u8] /* void* */);
     pub fn wxListCtrl_SetWindowStyleFlag(_obj: &[u8] /* void* */, style: c_int /* int */);
-    pub fn wxListCtrl_SortItems(_obj: &[u8] /* void* */, fn: &[u8] /* void* */, eif_obj: &[u8] /* void* */) -> TBool /* TBool */;
+    pub fn wxListCtrl_SortItems(_obj: &[u8] /* void* */, fn_: &[u8] /* void* */, eif_obj: &[u8] /* void* */) -> TBool /* TBool */;
     pub fn wxListCtrl_UpdateStyle(_obj: &[u8] /* void* */);
     
     // TClassDefExtend(wxListEvent,wxNotifyEvent)
@@ -3387,9 +3387,9 @@ extern {
     
     // TClassDefExtend(wxPostScriptDC,wxDC)
     pub fn wxPostScriptDC_Create(data: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxPostScriptDC_Delete(self: &[u8] /* void* */);
-    pub fn wxPostScriptDC_SetResolution(self: &[u8] /* void* */, ppi: c_int /* int */);
-    pub fn wxPostScriptDC_GetResolution(self: &[u8] /* void* */) -> c_int /* int */;
+    pub fn wxPostScriptDC_Delete(self_: &[u8] /* void* */);
+    pub fn wxPostScriptDC_SetResolution(self_: &[u8] /* void* */, ppi: c_int /* int */);
+    pub fn wxPostScriptDC_GetResolution(self_: &[u8] /* void* */) -> c_int /* int */;
     
     // TClassDefExtend(wxPreviewCanvas,wxScrolledWindow)
     pub fn wxPreviewCanvas_Create(preview: &[u8] /* void* */, parent: &[u8] /* void* */, arg0: Rect /* Rect */, style: c_int /* int */) -> ~[u8] /* void* */;
@@ -3528,8 +3528,8 @@ extern {
     
     // TClassDefExtend(wxPrinterDC,wxDC)
     pub fn wxPrinterDC_Create(data: &[u8] /* void* */) -> ~[u8] /* void* */;
-    pub fn wxPrinterDC_Delete(self: &[u8] /* void* */);
-    pub fn wxPrinterDC_GetPaperRect(self: &[u8] /* void* */) -> ~[u8] /* void* */;
+    pub fn wxPrinterDC_Delete(self_: &[u8] /* void* */);
+    pub fn wxPrinterDC_GetPaperRect(self_: &[u8] /* void* */) -> ~[u8] /* void* */;
     
     // TClassDefExtend(wxPrintout,wxObject)
     
