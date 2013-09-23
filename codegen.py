@@ -177,7 +177,7 @@ class Class(object):
 
     def print_class(self):
         if self.__header_line:
-            self.println('\n# %s' % self.__header_line)
+            self.println('\n// %s' % self.__header_line)
         for method in self.__methods:
             self.println(repr(method))
 
