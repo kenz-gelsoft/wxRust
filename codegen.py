@@ -60,25 +60,25 @@ class Preprocessor(object):
         line = re.sub(r'TClass\s*\([^)]*\)', 'void*', line)
         line = re.sub(r'TClassRef\([^)]*\)', 'void*', line)
         line = re.sub(r'TClosureFun', 'void*', line)
-        line = re.sub(r'TColorRGB\([^)]*\)', 'ColorRGB', line)
+        line = re.sub(r'TColorRGB\([^)]*\)', 'u8, u8, u8', line)
         line = re.sub(r'TIntPtr', 'intptr_t', line)
-        line = re.sub(r'TPoint\([^)]*\)', 'Point', line)
-        line = re.sub(r'TPointLong\([^)]*\)', 'LongPoint', line)
-        line = re.sub(r'TPointOut\([^)]*\)', 'Point*', line)
-        line = re.sub(r'TPointOutVoid\([^)]*\)', 'Point*', line)
-        line = re.sub(r'TRect\([^)]*\)', 'Rect', line)
-        line = re.sub(r'TRectOutVoid\([^)]*\)', 'Rect*', line)
+        line = re.sub(r'TPoint\([^)]*\)', 'int, int', line)
+        line = re.sub(r'TPointLong\([^)]*\)', 'long, long', line)
+        line = re.sub(r'TPointOut\([^)]*\)', 'int*, int*', line)
+        line = re.sub(r'TPointOutVoid\([^)]*\)', 'int*, int*', line)
+        line = re.sub(r'TRect\([^)]*\)', 'int, int, int, int', line)
+        line = re.sub(r'TRectOutVoid\([^)]*\)', 'int*, int*, int*, int*', line)
         line = re.sub(r'TSelf\([^)]*\)', 'void*', line)
-        line = re.sub(r'TSize\([^)]*\)', 'Size', line)
-        line = re.sub(r'TSizeOut\([^)]*\)', 'Size*', line)
-        line = re.sub(r'TSizeOutDouble\([^)]*\)', 'DoubleSize*', line)
-        line = re.sub(r'TSizeOutVoid\([^)]*\)', 'Size*', line)
+        line = re.sub(r'TSize\([^)]*\)', 'int, int', line)
+        line = re.sub(r'TSizeOut\([^)]*\)', 'int*, int*', line)
+        line = re.sub(r'TSizeOutDouble\([^)]*\)', 'double*, double*', line)
+        line = re.sub(r'TSizeOutVoid\([^)]*\)', 'int*, int*', line)
         line = re.sub(r'TStringVoid', 'wchar_t*', line)
         line = re.sub(r'TStringLen', 'int', line)
         line = re.sub(r'TString', 'wchar_t*', line)
         line = re.sub(r'TUInt8', 'uint8_t', line)
         line = re.sub(r'TUInt', 'uint32_t', line)
-        line = re.sub(r'TVector\([^)]*\)', 'Vector', line)
+        line = re.sub(r'TVector\([^)]*\)', 'int, int', line)
         return line
 
     def preprocess(self, file):
@@ -348,10 +348,7 @@ class Type(object):
             if self.is_primitive():
                 if s == 'void':
                     s = 'u8'
-                if self.__param:
-                    s = '*%s' % s
-                else:
-                    s = '~[%s]' % s
+                s = '*%s' % s
             else:
                 s = '@mut %s' % s
         return '%s /* %s */' % (s, self.original)

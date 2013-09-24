@@ -4,7 +4,7 @@ GENSRCS = \
 	$(GENSRCDIR)wxc.h \
 
 
-libwx.dummy: native.rs types.rs wx.rc
+libwx.dummy: native.rs wx.rc
 	rustc -L wxc wx.rc
 	touch libwx.dummy
 

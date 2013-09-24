@@ -1,21 +1,42 @@
 extern mod wx;
 
 use std::rt::start_on_main_thread;
+use std::vec;
 
+use wx::*;
 use wx::native::*;
-use wx::types::*;
+
+
+static nullptr: *u8 = 0 as *u8;
 
 #[start]
 fn start(argc: int, argv: **u8, crate_map: *u8) -> int {
-    do start_on_main_thread(argc, argv, crate_map) {
-        unsafe {
-            ELJApp_InitAllImageHandlers();
-            let idAny = -1;
-            let frameRect = Rect {x:0, y:0, w:200, h:300};
-            let defaultFrameStyle = 536878656;
-            do "hello world".to_c_str().with_ref |s| {
-                let frame = wxFrame_Create(0 as *u8, idAny, s, frameRect, defaultFrameStyle);
-            }
+    start_on_main_thread(argc, argv, crate_map, on_main)
+}
+
+#[fixed_stack_segment]
+fn on_main() {
+    unsafe {
+        let closure = wxClosure_Create(wx_main, nullptr);
+        let args: ~[*i32] = ~[];
+        ELJApp_InitializeC(closure, args.len() as i32, vec::raw::to_ptr(args) as *i32);
+    }
+}
+
+extern "C"
+fn wx_main() {
+    unsafe {
+        // not mandatory
+        // ELJApp_InitAllImageHandlers();
+        let idAny = -1;
+        let defaultFrameStyle = 536878656 | 4194304;
+        do "Hello, wxRust!".to_c_str().with_ref |s| {
+            let title = wxString_CreateUTF8(s as *u8);
+            let frame = wxFrame_Create(nullptr, idAny, title, -1, -1, -1, -1, defaultFrameStyle);
+            println("OK");
+            wxWindow_Show(frame);
+//            wxWindow_Raise(frame);
         }
     }
 }
+
