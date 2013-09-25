@@ -8,17 +8,32 @@ I'll build up a thin Rust wrapper of the wxc C-wrapped binding maintained at wxH
 
 ## Build
 
-There is no artifact of this library. But there is only a build instruction of dependency of this library.
-
 Currently, we target only Mac OS X for the platform to build with.
 
 ### Build Prerequisite
 
-Install the wxWidgets 2.9.4 as below:
+We're using the Rust compiler version bundled with Servo master.
+
+Install the wxWidgets 2.9.4 and CMake as below:
 
     brew install wxmac --devel`
+    brew install cmake
 
-### libwxc.dylib
+### Build the library
 
-    cd wxc
+At the project root directory:
+
+    mkdir build
+    cd build
+    cmake ..
     make
+
+### Compile the Test Program
+
+At the CMake binary directory:
+
+    make test && ./test
+
+For now, test program make and show new wxFrame on screen, but doesn't bring up.
+(We need to package the built executable as as Mac application package (.app).)
+

@@ -171,7 +171,6 @@ class Parser(object):
 
     def print_parsed(self):
         self.println('use std::libc::*;')
-        self.println('use types::*;')
         self.println()
         self.println('#[link_args="-lwxc"]')
         self.println('extern {')

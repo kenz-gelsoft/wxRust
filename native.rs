@@ -1,5 +1,4 @@
 use std::libc::*;
-use types::*;
 
 #[link_args="-lwxc"]
 extern {
