@@ -17,7 +17,7 @@ fn start(argc: int, argv: **u8, crate_map: *u8) -> int {
 #[fixed_stack_segment]
 fn on_main() {
     unsafe {
-        let closure = wxClosure_Create(wx_main, nullptr);
+        let closure = wxClosure_Create(wx_main as *u8, nullptr);
         let args: ~[*i32] = ~[];
         ELJApp_InitializeC(closure, args.len() as i32, vec::raw::to_ptr(args) as *i32);
     }
