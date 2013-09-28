@@ -8,7 +8,7 @@ def main():
         with open(file) as f:
             p.new_file()
             p.parse(Preprocessor().preprocess(f))
-    p.print_parsed()
+    p.print_extern_fn()
 
 
 class Preprocessor(object):
@@ -169,14 +169,14 @@ class Parser(object):
             assert False
         self.__current.parse_line(line)
 
-    def print_parsed(self):
+    def print_extern_fn(self):
         self.println('use std::libc::*;')
         self.println()
         self.println('#[link_args="-lwxc"]')
         self.println('extern {')
         self.__indent += 1
         for clazz in self.__classes:
-            clazz.print_class()
+            clazz.print_extern_fn()
         self.__indent -= 1
         self.println('}')
             
@@ -200,7 +200,7 @@ class Class(object):
     def parse_line(self, line):
         self.__methods.append(Method(None).parse(line))
 
-    def print_class(self):
+    def print_extern_fn(self):
         if self.__header_line:
             self.println('\n// %s' % self.__header_line)
         for method in self.__methods:
