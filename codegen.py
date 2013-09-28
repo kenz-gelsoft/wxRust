@@ -204,7 +204,7 @@ class Class(object):
         if self.__header_line:
             self.println('\n// %s' % self.__header_line)
         for method in self.__methods:
-            self.println(repr(method))
+            self.println(method.extern_fn)
 
     def println(self, text=''):
         self.__parser.println(text)
@@ -246,7 +246,23 @@ class Method(object):
         assert len(arg.split(' ')) <= 2
         return arg
 
-    def __repr__(self):
+    @property
+    def extern_fn(self):
+        if self.should_be_ignored:
+            return '// missing: %s' % self.__name
+
+        args = ''
+        for arg in self.__args:
+            if len(args):
+                args += ', '
+            args += '%s: %s' % (arg[1], arg[0])
+        ret = ''
+        if not self.__rtype.is_void:
+            ret = ' -> %s' % self.__rtype
+        return 'pub fn %s(%s)%s;' % (self.__name, args, ret)
+
+    @property
+    def should_be_ignored(self):
         for ignore in ['ELJClient_',
                        'ELJCommand_',
                        'ELJConnection_',
@@ -287,17 +303,8 @@ class Method(object):
                        'wxXmlResource_Delete',
                        ]:
             if self.__name.startswith(ignore):
-                return '// missing: %s' % self.__name
-        
-        args = ''
-        for arg in self.__args:
-            if len(args):
-                args += ', '
-            args += '%s: %s' % (arg[1], arg[0])
-        ret = ''
-        if not self.__rtype.is_void:
-            ret = ' -> %s' % self.__rtype
-        return 'pub fn %s(%s)%s;' % (self.__name, args, ret)
+                return True
+        return False
 
 
 class Type(object):
