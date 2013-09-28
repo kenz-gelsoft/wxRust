@@ -14,7 +14,7 @@ set(GENSRCS
 add_custom_command(
     OUTPUT  ${CMAKE_SOURCE_DIR}/native.rs
     COMMAND python codegen.py ${GENSRCS} > native.rs
-    DEPENDS ${GENSRCS}
+    DEPENDS codegen.py ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
