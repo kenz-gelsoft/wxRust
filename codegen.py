@@ -1,14 +1,44 @@
+from optparse import OptionParser
 import re
 import sys
 
 
 def main():
-    p = Parser()
-    for file in sys.argv[1:]:
-        with open(file) as f:
-            p.new_file()
-            p.parse(Preprocessor().preprocess(f))
-    p.print_extern_fn()
+    op = OptionParser()
+    op.add_option('-e', '--extern_fn', action='store_true', dest='extern_fn',
+                  help='output extern_fn rust source code.')
+    op.add_option('-w', '--wrapper', action='store_true', dest='wrapper',
+                  help='output wrapper rust source code.')
+    (options, args) = op.parse_args()
+
+    parser = Parser()
+    
+    codegen = None
+    if options.extern_fn:
+        codegen = ExternFnGenerator(parser)
+    elif options.wrapper:
+        codegen = WrapperGenerator(parser)
+    else:
+        sys.exit('no command specified')
+
+    parser.parse_files(args)
+    codegen.generate()
+
+
+class ExternFnGenerator(object):
+    def __init__(self, parser):
+        self.__parser = parser
+
+    def generate(self):
+        self.__parser.print_extern_fn()
+
+
+class WrapperGenerator(object):
+    def __init__(self, parser):
+        self.__parser = parser
+
+    def generate(self):
+        pass
 
 
 class Preprocessor(object):
@@ -147,11 +177,17 @@ class Parser(object):
         self.__indent = 0
         self.__classes = []
     
-    def new_file(self):
+    def parse_files(self, files):
+        for file in files:
+            with open(file) as f:
+                self._new_file()
+                self._parse(Preprocessor().preprocess(f))
+    
+    def _new_file(self):
         self.__current = Class(self)
         self.__classes.append(self.__current)
     
-    def parse(self, lines):
+    def _parse(self, lines):
         for line in lines:
             self._parse_line(line.strip())
     

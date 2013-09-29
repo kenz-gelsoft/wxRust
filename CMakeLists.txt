@@ -11,16 +11,22 @@ set(GENSRCS
     ${GENSRC}/wxc.h
 )
 
-add_custom_command(
-    OUTPUT  ${CMAKE_SOURCE_DIR}/native.rs
-    COMMAND python codegen.py ${GENSRCS} > native.rs
-    DEPENDS codegen.py ${GENSRCS}
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
+macro(codegen option output)
+    add_custom_command(
+        OUTPUT  ${CMAKE_SOURCE_DIR}/${output}
+        COMMAND python codegen.py ${option} ${GENSRCS} > ${output}
+        DEPENDS codegen.py ${GENSRCS}
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    )
+endmacro()
+
+codegen(--extern_fn native.rs)
+codegen(--wrapper   wrapper.rs)
 
 add_rust_crate(wxrust
     wx.rc
     native.rs
+    wrapper.rs
     wxc
 )
 
