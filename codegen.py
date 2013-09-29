@@ -28,9 +28,30 @@ def main():
 class ExternFnGenerator(object):
     def __init__(self, parser):
         self.__parser = parser
+        self.__indent = 0
 
     def generate(self):
-        self.__parser.print_extern_fn()
+        self.println('use std::libc::*;')
+        self.println()
+        self.println('#[link_args="-lwxc"]')
+        self.println('extern {')
+        self.__indent += 1
+        for clazz in self.__parser.classes:
+            self.print_class(clazz)
+        self.__indent -= 1
+        self.println('}')
+    
+    def print_class(self, clazz):
+        if clazz.header_line:
+            self.println('\n// %s' % clazz.header_line)
+        for method in clazz.methods:
+            self.println(method.extern_fn)
+    
+    def println(self, text=''):
+        lines = text.split('\n')
+        for line in lines:
+            line = '%s%s' % (''+(' ' * 4 * self.__indent), line)
+            print line
 
 
 class WrapperGenerator(object):
@@ -174,7 +195,6 @@ class Preprocessor(object):
 
 class Parser(object):
     def __init__(self):
-        self.__indent = 0
         self.__classes = []
     
     def parse_files(self, files):
@@ -182,7 +202,11 @@ class Parser(object):
             with open(file) as f:
                 self._new_file()
                 self._parse(Preprocessor().preprocess(f))
-    
+
+    @property
+    def classes(self):
+        return self.__classes
+
     def _new_file(self):
         self.__current = Class(self)
         self.__classes.append(self.__current)
@@ -205,23 +229,6 @@ class Parser(object):
             assert False
         self.__current.parse_line(line)
 
-    def print_extern_fn(self):
-        self.println('use std::libc::*;')
-        self.println()
-        self.println('#[link_args="-lwxc"]')
-        self.println('extern {')
-        self.__indent += 1
-        for clazz in self.__classes:
-            clazz.print_extern_fn()
-        self.__indent -= 1
-        self.println('}')
-            
-    def println(self, text=''):
-        lines = text.split('\n')
-        for line in lines:
-            line = '%s%s' % (''+(' ' * 4 * self.__indent), line)
-            print line
-
 
 class Class(object):
     def __init__(self, parser):
@@ -236,14 +243,13 @@ class Class(object):
     def parse_line(self, line):
         self.__methods.append(Method(None).parse(line))
 
-    def print_extern_fn(self):
-        if self.__header_line:
-            self.println('\n// %s' % self.__header_line)
-        for method in self.__methods:
-            self.println(method.extern_fn)
+    @property
+    def header_line(self):
+        return self.__header_line
 
-    def println(self, text=''):
-        self.__parser.println(text)
+    @property
+    def methods(self):
+        return self.__methods
 
 
 class Method(object):
