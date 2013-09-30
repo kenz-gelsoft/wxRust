@@ -64,12 +64,16 @@ class WrapperGenerator(object):
             self.print_class(clazz)
 
     def print_class(self, clazz):
-        self.println('trait %s {' % clazz.name)
-        self.__indent += 1
+        if clazz.name:
+            self.println('trait %s {' % clazz.name)
+            self.__indent += 1
         for method in clazz.methods:
             self.println(method.trait_fn)
-        self.__indent += -1
-        self.println('}')
+        if clazz.name:
+            self.__indent += -1
+            self.println('}')
+        else:
+            self.println()
 
     def println(self, text=''):
         lines = text.split('\n')
