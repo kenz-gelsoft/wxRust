@@ -53,6 +53,12 @@ class ExternFnGenerator(object):
             line = '%s%s' % (''+(' ' * 4 * self.__indent), line)
             print line
 
+    def indent(self):
+        self.__indent += 1
+
+    def unindent(self):
+        self.__indent -= 1
+
 
 class WrapperGenerator(object):
     def __init__(self, parser):
@@ -64,22 +70,29 @@ class WrapperGenerator(object):
             self.print_class(clazz)
 
     def print_class(self, clazz):
-        if clazz.name:
-            self.println('trait %s {' % clazz.name)
-            self.__indent += 1
-        for method in clazz.methods:
-            self.println(method.trait_fn)
-        if clazz.name:
-            self.__indent += -1
-            self.println('}')
-        else:
+        if not clazz.name:
+            self.println('// skipping globals...')
             self.println()
+            return
+            
+        self.println('trait %s {' % clazz.name)
+        self.__indent += 1
+        for method in clazz.methods:
+            method.trait_fn(self)
+        self.__indent += -1
+        self.println('}')
 
     def println(self, text=''):
         lines = text.split('\n')
         for line in lines:
             line = '%s%s' % (''+(' ' * 4 * self.__indent), line)
             print line
+
+    def indent(self):
+        self.__indent += 1
+
+    def unindent(self):
+        self.__indent -= 1
 
 
 class Preprocessor(object):
@@ -329,17 +342,22 @@ class Method(object):
                 args += ', '
             args += '%s: %s' % (arg[1], arg[0])
         return args
-            
+
+    @property
+    def calling_args(self):
+        args = ''
+        for arg in self.__args:
+            if len(args):
+                args += ', '
+            args += arg[1]
+        return args
+
     @property
     def fn_return(self):
         ret = ''
         if not self.__rtype.is_void:
             ret = ' -> %s' % self.__rtype
         return ret
-
-    @property
-    def signature(self):
-        return 'fn %s(%s)%s' % (self.__name, self.args, self.fn_return)
 
     @property
     def trait_method_name(self):
@@ -353,14 +371,18 @@ class Method(object):
         if self.should_be_ignored:
             return '// missing: %s' % self.__name
         
-        return 'pub %s;' % self.signature
+        return 'pub fn %s(%s)%s;' % (self.__name, self.args, self.fn_return)
 
-    @property
-    def trait_fn(self):
+    def trait_fn(self, gen):
         if self.should_be_ignored:
-            return '// missing: %s' % self.__name
+            gen.println('// missing: %s' % self.__name)
+            return
         
-        return 'fn %s(%s)%s;' % (self.trait_method_name, self.args, self.fn_return)
+        gen.println('fn %s(%s)%s {' % (self.trait_method_name, self.args, self.fn_return))
+        gen.indent();
+        gen.println('%s(%s)' % (self.__name, self.calling_args))
+        gen.unindent();
+        gen.println('}')
 
     @property
     def should_be_ignored(self):
