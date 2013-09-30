@@ -57,9 +57,25 @@ class ExternFnGenerator(object):
 class WrapperGenerator(object):
     def __init__(self, parser):
         self.__parser = parser
+        self.__indent = 0
 
     def generate(self):
-        pass
+        for clazz in self.__parser.classes:
+            self.print_class(clazz)
+
+    def print_class(self, clazz):
+        self.println('trait %s {' % clazz.name)
+        self.__indent += 1
+        for method in clazz.methods:
+            self.println(method.trait_fn)
+        self.__indent += -1
+        self.println('}')
+
+    def println(self, text=''):
+        lines = text.split('\n')
+        for line in lines:
+            line = '%s%s' % (''+(' ' * 4 * self.__indent), line)
+            print line
 
 
 class Preprocessor(object):
@@ -235,17 +251,31 @@ class Class(object):
         self.__parser = parser
         self.__header_line = None
         self.__methods = []
-        pass
+        self.__name = None
 
     def parse_header_line(self, line):
         self.__header_line = line
+        matched = re.search(r'TClassDef(?:Extend)?\(([^)]*)\)', line)
+        assert matched
+        classes = matched.group(1).split(',')
+        if len(classes) > 1:
+            self.__base = classes[1]
+        self.__name = classes[0]
 
     def parse_line(self, line):
-        self.__methods.append(Method(None).parse(line))
+        self.__methods.append(Method(self.name).parse(line))
 
     @property
     def header_line(self):
         return self.__header_line
+
+    @property
+    def name(self):
+        return self.__name
+    
+    @property
+    def base(self):
+        return self.__base or None
 
     @property
     def methods(self):
@@ -277,7 +307,6 @@ class Method(object):
                 self.__args.append([Type(param=True).parse(pair[0]), pair[1]])
         return self
 
-            
     def normalize_ptr(self, arg):
         arg = re.sub(r'\*\s*', '* ', arg)
         arg = re.sub(r'\*\s\*', '*', arg)
@@ -289,19 +318,45 @@ class Method(object):
         return arg
 
     @property
-    def extern_fn(self):
-        if self.should_be_ignored:
-            return '// missing: %s' % self.__name
-
+    def args(self):
         args = ''
         for arg in self.__args:
             if len(args):
                 args += ', '
             args += '%s: %s' % (arg[1], arg[0])
+        return args
+            
+    @property
+    def fn_return(self):
         ret = ''
         if not self.__rtype.is_void:
             ret = ' -> %s' % self.__rtype
-        return 'pub fn %s(%s)%s;' % (self.__name, args, ret)
+        return ret
+
+    @property
+    def signature(self):
+        return 'fn %s(%s)%s' % (self.__name, self.args, self.fn_return)
+
+    @property
+    def trait_method_name(self):
+        prefix = '%s_' % self.__classname
+        if self.__name.startswith(prefix):
+            return self.__name[len(prefix):]
+        return self.__name
+
+    @property
+    def extern_fn(self):
+        if self.should_be_ignored:
+            return '// missing: %s' % self.__name
+        
+        return 'pub %s;' % self.signature
+
+    @property
+    def trait_fn(self):
+        if self.should_be_ignored:
+            return '// missing: %s' % self.__name
+        
+        return 'fn %s(%s)%s;' % (self.trait_method_name, self.args, self.fn_return)
 
     @property
     def should_be_ignored(self):
