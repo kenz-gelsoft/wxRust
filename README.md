@@ -10,6 +10,8 @@ I'll build up a thin Rust wrapper of the wxc C-wrapped binding maintained at the
 
 We use CMake for cross platform build, but Windows and Linux platforms are not yet tested.
 
+For Linux build instructions, see INSTALL.linux.md
+
 ### Build Prerequisite
 
 We're using the Rust compiler version bundled with the Servo master.
