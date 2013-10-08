@@ -5,6 +5,7 @@ use std::vec;
 
 use wx::*;
 use wx::native::*;
+use wx::wrapper::*;
 
 
 static nullptr: *u8 = 0 as *u8;

@@ -35,17 +35,18 @@ class ExternFnGenerator(object):
         self.println()
         self.println('#[link_args="-lwxc"]')
         self.println('extern {')
-        self.__indent += 1
-        for clazz in self.__parser.classes:
-            self.print_class(clazz)
-        self.__indent -= 1
+        self.indent()
+        for name, parts in self.__parser.classes.iteritems():
+            self.print_class(name, parts)
+        self.unindent()
         self.println('}')
     
-    def print_class(self, clazz):
-        if clazz.header_line:
-            self.println('\n// %s' % clazz.header_line)
-        for method in clazz.methods:
-            self.println(method.extern_fn)
+    def print_class(self, name, parts):
+        for part in parts:
+            if part.header_line:
+                self.println('\n// %s' % part.header_line)
+            for method in part.methods:
+                self.println(method.extern_fn)
     
     def println(self, text=''):
         lines = text.split('\n')
@@ -66,20 +67,27 @@ class WrapperGenerator(object):
         self.__indent = 0
 
     def generate(self):
-        for clazz in self.__parser.classes:
-            self.print_class(clazz)
+        self.println('use std::libc::*;')
+        self.println('use native::*;')
+        self.println()
+        for name, parts in self.__parser.classes.iteritems():
+            self.print_class(name, parts)
 
-    def print_class(self, clazz):
-        if not clazz.name:
+    def print_class(self, name, parts):
+        if not name:
             self.println('// skipping globals...')
             self.println()
             return
+                
+        self.println('trait %s {' % name)
+        self.indent()
+        for part in parts:
+            if len(part.methods) == 0:
+                continue
             
-        self.println('trait %s {' % clazz.name)
-        self.__indent += 1
-        for method in clazz.methods:
-            method.trait_fn(self)
-        self.__indent += -1
+            for method in part.methods:
+                method.trait_fn(self)
+        self.unindent()
         self.println('}')
 
     def println(self, text=''):
@@ -228,21 +236,26 @@ class Preprocessor(object):
 
 class Parser(object):
     def __init__(self):
-        self.__classes = []
+        self.__current = Class(self)
+        self.__classes = {}
     
     def parse_files(self, files):
         for file in files:
             with open(file) as f:
-                self._new_file()
+                self._new_class()
                 self._parse(Preprocessor().preprocess(f))
+        self._new_class()
 
     @property
     def classes(self):
         return self.__classes
 
-    def _new_file(self):
+    def _new_class(self):
+        if self.__current:
+            if self.__current.name not in self.__classes:
+                self.__classes[self.__current.name] = []
+            self.__classes[self.__current.name].append(self.__current)
         self.__current = Class(self)
-        self.__classes.append(self.__current)
     
     def _parse(self, lines):
         for line in lines:
@@ -253,8 +266,7 @@ class Parser(object):
             return
         if 'TClassDef' in line:
             # special line
-            self.__current = Class(self)
-            self.__classes.append(self.__current)
+            self._new_class()
             self.__current.parse_header_line(line)
             return
         if not('(' in line and ')' in line):
@@ -288,6 +300,8 @@ class Class(object):
 
     @property
     def name(self):
+        if not self.__name:
+            return ''
         return self.__name
     
     @property
@@ -379,9 +393,13 @@ class Method(object):
             return
         
         gen.println('fn %s(%s)%s {' % (self.trait_method_name, self.args, self.fn_return))
-        gen.indent();
+        gen.indent()
+        gen.println('unsafe {')
+        gen.indent()
         gen.println('%s(%s)' % (self.__name, self.calling_args))
-        gen.unindent();
+        gen.unindent()
+        gen.println('}')
+        gen.unindent()
         gen.println('}')
 
     @property
