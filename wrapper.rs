@@ -1021,6 +1021,8 @@ trait wxScreenDC {
         }
     }
 }
+trait wxGraphicsPath {
+}
 trait wxHelpControllerBase {
 }
 trait wxTextDropTarget {
@@ -1091,6 +1093,8 @@ trait wxIconBundle {
     }
 }
 trait wxGridCellFloatRenderer {
+}
+trait wxcPrintout {
 }
 trait wxTextValidator {
     fn Create(style: c_int /* int */, val: *u8 /* void* */) -> *u8 /* void* */ {
@@ -1194,6 +1198,21 @@ trait wxStaticLine {
 trait wxWindowDisabler {
 }
 trait wxTextInputStream {
+    fn Create(inputStream: *u8 /* void* */, sep: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxTextInputStream_Create(inputStream, sep)
+        }
+    }
+    fn Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxTextInputStream_Delete(self_)
+        }
+    }
+    fn ReadLine(self_: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxTextInputStream_ReadLine(self_)
+        }
+    }
 }
 trait wxListCtrl {
     fn Arrange(_obj: *u8 /* void* */, flag: c_int /* int */) -> bool /* bool */ {
@@ -1598,6 +1617,98 @@ trait wxDocMDIParentFrame {
 }
 trait wxIPV4address {
 }
+trait wxMediaCtrl {
+    fn Create(parent: *u8 /* void* */, windowID: c_int /* int */, fileName: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */, w: c_int /* int */, h: c_int /* int */, style: c_long /* long */, szBackend: *u8 /* void* */, name: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxMediaCtrl_Create(parent, windowID, fileName, x, y, w, h, style, szBackend, name)
+        }
+    }
+    fn Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxMediaCtrl_Delete(self_)
+        }
+    }
+    fn GetBestSize(self_: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxMediaCtrl_GetBestSize(self_)
+        }
+    }
+    fn GetPlaybackRate(self_: *u8 /* void* */) -> c_double /* double */ {
+        unsafe {
+            wxMediaCtrl_GetPlaybackRate(self_)
+        }
+    }
+    fn GetVolume(self_: *u8 /* void* */) -> c_double /* double */ {
+        unsafe {
+            wxMediaCtrl_GetVolume(self_)
+        }
+    }
+    fn GetState(self_: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMediaCtrl_GetState(self_)
+        }
+    }
+    fn Length(self_: *u8 /* void* */) -> i64 /* i64 */ {
+        unsafe {
+            wxMediaCtrl_Length(self_)
+        }
+    }
+    fn Load(self_: *u8 /* void* */, fileName: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxMediaCtrl_Load(self_, fileName)
+        }
+    }
+    fn LoadURI(self_: *u8 /* void* */, uri: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxMediaCtrl_LoadURI(self_, uri)
+        }
+    }
+    fn LoadURIWithProxy(self_: *u8 /* void* */, uri: *u8 /* void* */, proxy: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxMediaCtrl_LoadURIWithProxy(self_, uri, proxy)
+        }
+    }
+    fn Pause(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxMediaCtrl_Pause(self_)
+        }
+    }
+    fn Play(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxMediaCtrl_Play(self_)
+        }
+    }
+    fn Seek(self_: *u8 /* void* */, offsetWhere: i64 /* i64 */, mode: c_int /* int */) -> i64 /* i64 */ {
+        unsafe {
+            wxMediaCtrl_Seek(self_, offsetWhere, mode)
+        }
+    }
+    fn SetPlaybackRate(self_: *u8 /* void* */, dRate: c_double /* double */) -> bool /* bool */ {
+        unsafe {
+            wxMediaCtrl_SetPlaybackRate(self_, dRate)
+        }
+    }
+    fn SetVolume(self_: *u8 /* void* */, dVolume: c_double /* double */) -> bool /* bool */ {
+        unsafe {
+            wxMediaCtrl_SetVolume(self_, dVolume)
+        }
+    }
+    fn ShowPlayerControls(self_: *u8 /* void* */, flags: c_int /* int */) -> bool /* bool */ {
+        unsafe {
+            wxMediaCtrl_ShowPlayerControls(self_, flags)
+        }
+    }
+    fn Stop(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxMediaCtrl_Stop(self_)
+        }
+    }
+    fn Tell(self_: *u8 /* void* */) -> i64 /* i64 */ {
+        unsafe {
+            wxMediaCtrl_Tell(self_)
+        }
+    }
+}
 trait wxPaintEvent {
 }
 trait wxSocketServer {
@@ -1749,6 +1860,96 @@ trait wxDynToolInfo {
 trait wxDocTemplate {
 }
 trait wxPreviewControlBar {
+    fn expEVT_PRINT_BEGIN() -> c_int /* int */ {
+        unsafe {
+            expEVT_PRINT_BEGIN()
+        }
+    }
+    fn expEVT_PRINT_BEGIN_DOC() -> c_int /* int */ {
+        unsafe {
+            expEVT_PRINT_BEGIN_DOC()
+        }
+    }
+    fn expEVT_PRINT_END() -> c_int /* int */ {
+        unsafe {
+            expEVT_PRINT_END()
+        }
+    }
+    fn expEVT_PRINT_END_DOC() -> c_int /* int */ {
+        unsafe {
+            expEVT_PRINT_END_DOC()
+        }
+    }
+    fn expEVT_PRINT_PREPARE() -> c_int /* int */ {
+        unsafe {
+            expEVT_PRINT_PREPARE()
+        }
+    }
+    fn expEVT_PRINT_PAGE() -> c_int /* int */ {
+        unsafe {
+            expEVT_PRINT_PAGE()
+        }
+    }
+    fn wxPrintout_GetDC(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxPrintout_GetDC(_obj)
+        }
+    }
+    fn wxPrintout_GetPPIPrinter(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            wxPrintout_GetPPIPrinter(_obj, arg0, arg1)
+        }
+    }
+    fn wxPrintout_GetPPIScreen(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            wxPrintout_GetPPIScreen(_obj, arg0, arg1)
+        }
+    }
+    fn wxPrintout_GetPageSizeMM(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            wxPrintout_GetPageSizeMM(_obj, arg0, arg1)
+        }
+    }
+    fn wxPrintout_GetPageSizePixels(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            wxPrintout_GetPageSizePixels(_obj, arg0, arg1)
+        }
+    }
+    fn wxPrintout_GetTitle(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxPrintout_GetTitle(_obj)
+        }
+    }
+    fn wxPrintout_IsPreview(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxPrintout_IsPreview(_obj)
+        }
+    }
+    fn wxPrintout_SetDC(_obj: *u8 /* void* */, dc: *u8 /* void* */) {
+        unsafe {
+            wxPrintout_SetDC(_obj, dc)
+        }
+    }
+    fn wxPrintout_SetPPIPrinter(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) {
+        unsafe {
+            wxPrintout_SetPPIPrinter(_obj, arg0, arg1)
+        }
+    }
+    fn wxPrintout_SetPPIScreen(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) {
+        unsafe {
+            wxPrintout_SetPPIScreen(_obj, arg0, arg1)
+        }
+    }
+    fn wxPrintout_SetPageSizeMM(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) {
+        unsafe {
+            wxPrintout_SetPageSizeMM(_obj, arg0, arg1)
+        }
+    }
+    fn wxPrintout_SetPageSizePixels(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) {
+        unsafe {
+            wxPrintout_SetPageSizePixels(_obj, arg0, arg1)
+        }
+    }
 }
 trait ELJPreviewFrame {
     fn Create(_obj: *u8 /* void* */, _init: *u8 /* void* */, _create_canvas: *u8 /* void* */, _create_toolbar: *u8 /* void* */, preview: *u8 /* void* */, parent: *u8 /* void* */, title: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */) -> *u8 /* void* */ {
@@ -1793,6 +1994,8 @@ trait ELJPreviewFrame {
     }
 }
 trait wxBitmapHandler {
+}
+trait wxGraphicsContext {
 }
 trait wxGaugeMSW {
 }
@@ -2592,6 +2795,465 @@ trait wxHelpProvider {
     }
 }
 trait wxHashMap {
+}
+trait wxGLContext {
+    fn wxGLCanvas_Create(parent: *u8 /* void* */, windowID: c_int /* int */, attributes: *c_int /* int* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */, title: *u8 /* void* */, palette: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGLCanvas_Create(parent, windowID, attributes, arg0, arg1, arg2, arg3, style, title, palette)
+        }
+    }
+    fn wxGLCanvas_SetColour(self_: *u8 /* void* */, colour: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxGLCanvas_SetColour(self_, colour)
+        }
+    }
+    fn wxGLCanvas_SetCurrent(self_: *u8 /* void* */, ctxt: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxGLCanvas_SetCurrent(self_, ctxt)
+        }
+    }
+    fn wxGLCanvas_SwapBuffers(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxGLCanvas_SwapBuffers(self_)
+        }
+    }
+    fn wxGLCanvas_IsDisplaySupported(attributes: *c_int /* int* */) -> bool /* bool */ {
+        unsafe {
+            wxGLCanvas_IsDisplaySupported(attributes)
+        }
+    }
+    fn wxGLCanvas_IsExtensionSupported(extension: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxGLCanvas_IsExtensionSupported(extension)
+        }
+    }
+    fn Create(win: *u8 /* void* */, other: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGLContext_Create(win, other)
+        }
+    }
+    fn CreateFromNull(win: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGLContext_CreateFromNull(win)
+        }
+    }
+    fn SetCurrent(self_: *u8 /* void* */, win: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxGLContext_SetCurrent(self_, win)
+        }
+    }
+}
+trait wxGraphicsRenderer {
+    fn wxGraphicsBrush_Create() -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsBrush_Create()
+        }
+    }
+    fn wxGraphicsBrush_Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsBrush_Delete(self_)
+        }
+    }
+    fn wxGraphicsContext_Create(dc: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsContext_Create(dc)
+        }
+    }
+    fn wxGraphicsContext_CreateFromWindow(window: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsContext_CreateFromWindow(window)
+        }
+    }
+    fn wxGraphicsContext_Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsContext_Delete(self_)
+        }
+    }
+    fn wxGraphicsContext_CreateFromNative(context: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsContext_CreateFromNative(context)
+        }
+    }
+    fn wxGraphicsContext_CreateFromNativeWindow(window: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsContext_CreateFromNativeWindow(window)
+        }
+    }
+    fn wxGraphicsContext_Clip(self_: *u8 /* void* */, region: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsContext_Clip(self_, region)
+        }
+    }
+    fn wxGraphicsContext_ClipByRectangle(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */) {
+        unsafe {
+            wxGraphicsContext_ClipByRectangle(self_, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn wxGraphicsContext_ResetClip(self_: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsContext_ResetClip(self_)
+        }
+    }
+    fn wxGraphicsContext_DrawBitmap(self_: *u8 /* void* */, bmp: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */) {
+        unsafe {
+            wxGraphicsContext_DrawBitmap(self_, bmp, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn wxGraphicsContext_DrawEllipse(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */) {
+        unsafe {
+            wxGraphicsContext_DrawEllipse(self_, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn wxGraphicsContext_DrawIcon(self_: *u8 /* void* */, icon: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */) {
+        unsafe {
+            wxGraphicsContext_DrawIcon(self_, icon, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn wxGraphicsContext_DrawLines(self_: *u8 /* void* */, n: size_t /* size_t */, x: *u8 /* void* */, y: *u8 /* void* */, style: c_int /* int */) {
+        unsafe {
+            wxGraphicsContext_DrawLines(self_, n, x, y, style)
+        }
+    }
+    fn wxGraphicsContext_DrawPath(self_: *u8 /* void* */, path: *u8 /* void* */, style: c_int /* int */) {
+        unsafe {
+            wxGraphicsContext_DrawPath(self_, path, style)
+        }
+    }
+    fn wxGraphicsContext_DrawRectangle(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */) {
+        unsafe {
+            wxGraphicsContext_DrawRectangle(self_, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn wxGraphicsContext_DrawRoundedRectangle(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */, radius: c_double /* double */) {
+        unsafe {
+            wxGraphicsContext_DrawRoundedRectangle(self_, arg0, arg1, arg2, arg3, radius)
+        }
+    }
+    fn wxGraphicsContext_DrawText(self_: *u8 /* void* */, text: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */) {
+        unsafe {
+            wxGraphicsContext_DrawText(self_, text, arg0, arg1)
+        }
+    }
+    fn wxGraphicsContext_DrawTextWithAngle(self_: *u8 /* void* */, text: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, radius: c_double /* double */) {
+        unsafe {
+            wxGraphicsContext_DrawTextWithAngle(self_, text, arg0, arg1, radius)
+        }
+    }
+    fn wxGraphicsContext_FillPath(self_: *u8 /* void* */, path: *u8 /* void* */, style: c_int /* int */) {
+        unsafe {
+            wxGraphicsContext_FillPath(self_, path, style)
+        }
+    }
+    fn wxGraphicsContext_StrokePath(self_: *u8 /* void* */, path: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsContext_StrokePath(self_, path)
+        }
+    }
+    fn wxGraphicsContext_GetNativeContext(self_: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsContext_GetNativeContext(self_)
+        }
+    }
+    fn wxGraphicsContext_GetTextExtent(self_: *u8 /* void* */, text: *u8 /* void* */, width: *c_double /* double* */, height: *c_double /* double* */, descent: *c_double /* double* */, externalLeading: *c_double /* double* */) {
+        unsafe {
+            wxGraphicsContext_GetTextExtent(self_, text, width, height, descent, externalLeading)
+        }
+    }
+    fn wxGraphicsContext_Rotate(self_: *u8 /* void* */, angle: c_double /* double */) {
+        unsafe {
+            wxGraphicsContext_Rotate(self_, angle)
+        }
+    }
+    fn wxGraphicsContext_Scale(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */) {
+        unsafe {
+            wxGraphicsContext_Scale(self_, arg0, arg1)
+        }
+    }
+    fn wxGraphicsContext_Translate(self_: *u8 /* void* */, dx: c_double /* double */, dy: c_double /* double */) {
+        unsafe {
+            wxGraphicsContext_Translate(self_, dx, dy)
+        }
+    }
+    fn wxGraphicsContext_SetTransform(self_: *u8 /* void* */, path: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsContext_SetTransform(self_, path)
+        }
+    }
+    fn wxGraphicsContext_ConcatTransform(self_: *u8 /* void* */, path: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsContext_ConcatTransform(self_, path)
+        }
+    }
+    fn wxGraphicsContext_SetBrush(self_: *u8 /* void* */, brush: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsContext_SetBrush(self_, brush)
+        }
+    }
+    fn wxGraphicsContext_SetGraphicsBrush(self_: *u8 /* void* */, brush: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsContext_SetGraphicsBrush(self_, brush)
+        }
+    }
+    fn wxGraphicsContext_SetFont(self_: *u8 /* void* */, font: *u8 /* void* */, colour: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsContext_SetFont(self_, font, colour)
+        }
+    }
+    fn wxGraphicsContext_SetGraphicsFont(self_: *u8 /* void* */, font: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsContext_SetGraphicsFont(self_, font)
+        }
+    }
+    fn wxGraphicsContext_SetPen(self_: *u8 /* void* */, pen: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsContext_SetPen(self_, pen)
+        }
+    }
+    fn wxGraphicsContext_SetGraphicsPen(self_: *u8 /* void* */, pen: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsContext_SetGraphicsPen(self_, pen)
+        }
+    }
+    fn wxGraphicsContext_StrokeLine(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */) {
+        unsafe {
+            wxGraphicsContext_StrokeLine(self_, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn wxGraphicsContext_StrokeLines(self_: *u8 /* void* */, n: size_t /* size_t */, x: *u8 /* void* */, y: *u8 /* void* */, style: c_int /* int */) {
+        unsafe {
+            wxGraphicsContext_StrokeLines(self_, n, x, y, style)
+        }
+    }
+    fn wxGraphicsFont_Create() -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsFont_Create()
+        }
+    }
+    fn wxGraphicsFont_Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsFont_Delete(self_)
+        }
+    }
+    fn wxGraphicsMatrix_Create() -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsMatrix_Create()
+        }
+    }
+    fn wxGraphicsMatrix_Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsMatrix_Delete(self_)
+        }
+    }
+    fn wxGraphicsMatrix_Concat(self_: *u8 /* void* */, t: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsMatrix_Concat(self_, t)
+        }
+    }
+    fn wxGraphicsMatrix_Get(self_: *u8 /* void* */, a: *c_double /* double* */, b: *c_double /* double* */, c: *c_double /* double* */, d: *c_double /* double* */, tx: *c_double /* double* */, ty: *c_double /* double* */) {
+        unsafe {
+            wxGraphicsMatrix_Get(self_, a, b, c, d, tx, ty)
+        }
+    }
+    fn wxGraphicsMatrix_GetNativeMatrix(self_: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsMatrix_GetNativeMatrix(self_)
+        }
+    }
+    fn wxGraphicsMatrix_Invert(self_: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsMatrix_Invert(self_)
+        }
+    }
+    fn wxGraphicsMatrix_IsEqual(self_: *u8 /* void* */, t: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxGraphicsMatrix_IsEqual(self_, t)
+        }
+    }
+    fn wxGraphicsMatrix_IsIdentity(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxGraphicsMatrix_IsIdentity(self_)
+        }
+    }
+    fn wxGraphicsMatrix_Rotate(self_: *u8 /* void* */, angle: c_double /* double */) {
+        unsafe {
+            wxGraphicsMatrix_Rotate(self_, angle)
+        }
+    }
+    fn wxGraphicsMatrix_Scale(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */) {
+        unsafe {
+            wxGraphicsMatrix_Scale(self_, arg0, arg1)
+        }
+    }
+    fn wxGraphicsMatrix_Set(self_: *u8 /* void* */, a: c_double /* double */, b: c_double /* double */, c: c_double /* double */, d: c_double /* double */, tx: c_double /* double */, ty: c_double /* double */) {
+        unsafe {
+            wxGraphicsMatrix_Set(self_, a, b, c, d, tx, ty)
+        }
+    }
+    fn wxGraphicsMatrix_Translate(self_: *u8 /* void* */, dx: c_double /* double */, dy: c_double /* double */) {
+        unsafe {
+            wxGraphicsMatrix_Translate(self_, dx, dy)
+        }
+    }
+    fn wxGraphicsMatrix_TransformPoint(self_: *u8 /* void* */, arg0: *c_double /* double* */, arg1: *c_double /* double* */) {
+        unsafe {
+            wxGraphicsMatrix_TransformPoint(self_, arg0, arg1)
+        }
+    }
+    fn wxGraphicsMatrix_TransformDistance(self_: *u8 /* void* */, dx: *c_double /* double* */, dy: *c_double /* double* */) {
+        unsafe {
+            wxGraphicsMatrix_TransformDistance(self_, dx, dy)
+        }
+    }
+    fn wxGraphicsObject_GetRenderer() -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsObject_GetRenderer()
+        }
+    }
+    fn wxGraphicsObject_IsNull(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxGraphicsObject_IsNull(self_)
+        }
+    }
+    fn wxGraphicsPath_Create() -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsPath_Create()
+        }
+    }
+    fn wxGraphicsPath_Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsPath_Delete(self_)
+        }
+    }
+    fn wxGraphicsPath_MoveToPoint(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */) {
+        unsafe {
+            wxGraphicsPath_MoveToPoint(self_, arg0, arg1)
+        }
+    }
+    fn wxGraphicsPath_AddArc(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, r: c_double /* double */, startAngle: c_double /* double */, endAngle: c_double /* double */, clockwise: bool /* bool */) {
+        unsafe {
+            wxGraphicsPath_AddArc(self_, arg0, arg1, r, startAngle, endAngle, clockwise)
+        }
+    }
+    fn wxGraphicsPath_AddArcToPoint(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */, r: c_double /* double */) {
+        unsafe {
+            wxGraphicsPath_AddArcToPoint(self_, arg0, arg1, arg2, arg3, r)
+        }
+    }
+    fn wxGraphicsPath_AddCircle(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, r: c_double /* double */) {
+        unsafe {
+            wxGraphicsPath_AddCircle(self_, arg0, arg1, r)
+        }
+    }
+    fn wxGraphicsPath_AddCurveToPoint(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */, arg4: c_double /* double */, arg5: c_double /* double */) {
+        unsafe {
+            wxGraphicsPath_AddCurveToPoint(self_, arg0, arg1, arg2, arg3, arg4, arg5)
+        }
+    }
+    fn wxGraphicsPath_AddEllipse(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */) {
+        unsafe {
+            wxGraphicsPath_AddEllipse(self_, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn wxGraphicsPath_AddLineToPoint(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */) {
+        unsafe {
+            wxGraphicsPath_AddLineToPoint(self_, arg0, arg1)
+        }
+    }
+    fn wxGraphicsPath_AddPath(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, path: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsPath_AddPath(self_, arg0, arg1, path)
+        }
+    }
+    fn wxGraphicsPath_AddQuadCurveToPoint(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */) {
+        unsafe {
+            wxGraphicsPath_AddQuadCurveToPoint(self_, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn wxGraphicsPath_AddRectangle(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */) {
+        unsafe {
+            wxGraphicsPath_AddRectangle(self_, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn wxGraphicsPath_AddRoundedRectangle(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */, radius: c_double /* double */) {
+        unsafe {
+            wxGraphicsPath_AddRoundedRectangle(self_, arg0, arg1, arg2, arg3, radius)
+        }
+    }
+    fn wxGraphicsPath_CloseSubpath(self_: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsPath_CloseSubpath(self_)
+        }
+    }
+    fn wxGraphicsPath_Contains(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, style: c_int /* int */) {
+        unsafe {
+            wxGraphicsPath_Contains(self_, arg0, arg1, style)
+        }
+    }
+    fn wxGraphicsPath_GetBox(self_: *u8 /* void* */, arg0: *c_double /* double* */, arg1: *c_double /* double* */, arg2: *c_double /* double* */, arg3: *c_double /* double* */) {
+        unsafe {
+            wxGraphicsPath_GetBox(self_, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn wxGraphicsPath_GetCurrentPoint(self_: *u8 /* void* */, arg0: *c_double /* double* */, arg1: *c_double /* double* */) {
+        unsafe {
+            wxGraphicsPath_GetCurrentPoint(self_, arg0, arg1)
+        }
+    }
+    fn wxGraphicsPath_Transform(self_: *u8 /* void* */, matrix: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsPath_Transform(self_, matrix)
+        }
+    }
+    fn wxGraphicsPath_GetNativePath(self_: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsPath_GetNativePath(self_)
+        }
+    }
+    fn wxGraphicsPath_UnGetNativePath(p: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsPath_UnGetNativePath(p)
+        }
+    }
+    fn wxGraphicsPen_Create() -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsPen_Create()
+        }
+    }
+    fn wxGraphicsPen_Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsPen_Delete(self_)
+        }
+    }
+    fn Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxGraphicsRenderer_Delete(self_)
+        }
+    }
+    fn GetDefaultRenderer(self_: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsRenderer_GetDefaultRenderer(self_)
+        }
+    }
+    fn CreateContext(dc: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsRenderer_CreateContext(dc)
+        }
+    }
+    fn CreateContextFromWindow(window: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsRenderer_CreateContextFromWindow(window)
+        }
+    }
+    fn CreateContextFromNativeContext(context: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsRenderer_CreateContextFromNativeContext(context)
+        }
+    }
+    fn CreateContextFromNativeWindow(window: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGraphicsRenderer_CreateContextFromNativeWindow(window)
+        }
+    }
 }
 trait wxCondition {
     // missing: wxCondition_Broadcast
@@ -4068,6 +4730,8 @@ trait wxWizardEvent {
         }
     }
 }
+trait wxMediaEvent {
+}
 trait wxSplitterScrolledWindow {
     // missing: wxSplitterScrolledWindow_Create
 }
@@ -4915,6 +5579,358 @@ trait ELJClient {
     // missing: ELJClient_MakeConnection
 }
 trait wxGenericValidator {
+}
+trait wxStyledTextEvent {
+    fn GetPosition(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetPosition(_obj)
+        }
+    }
+    fn GetKey(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetKey(_obj)
+        }
+    }
+    fn GetModifiers(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetModifiers(_obj)
+        }
+    }
+    fn GetModificationType(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetModificationType(_obj)
+        }
+    }
+    fn GetLength(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetLength(_obj)
+        }
+    }
+    fn GetLinesAdded(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetLinesAdded(_obj)
+        }
+    }
+    fn GetLine(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetLine(_obj)
+        }
+    }
+    fn GetFoldLevelNow(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetFoldLevelNow(_obj)
+        }
+    }
+    fn GetFoldLevelPrev(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetFoldLevelPrev(_obj)
+        }
+    }
+    fn GetMargin(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetMargin(_obj)
+        }
+    }
+    fn GetMessage(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetMessage(_obj)
+        }
+    }
+    fn GetWParam(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetWParam(_obj)
+        }
+    }
+    fn GetLParam(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetLParam(_obj)
+        }
+    }
+    fn GetListType(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetListType(_obj)
+        }
+    }
+    fn GetX(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetX(_obj)
+        }
+    }
+    fn GetY(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetY(_obj)
+        }
+    }
+    fn GetDragText(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextEvent_GetDragText(_obj)
+        }
+    }
+    fn GetDragAllowMove(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextEvent_GetDragAllowMove(_obj)
+        }
+    }
+    fn GetDragResult(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextEvent_GetDragResult(_obj)
+        }
+    }
+    fn GetShift(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextEvent_GetShift(_obj)
+        }
+    }
+    fn GetControl(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextEvent_GetControl(_obj)
+        }
+    }
+    fn GetAlt(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextEvent_GetAlt(_obj)
+        }
+    }
+    fn GetText(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextEvent_GetText(_obj)
+        }
+    }
+    fn Clone(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextEvent_Clone(_obj)
+        }
+    }
+    fn SetPosition(_obj: *u8 /* void* */, pos: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetPosition(_obj, pos)
+        }
+    }
+    fn SetKey(_obj: *u8 /* void* */, k: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetKey(_obj, k)
+        }
+    }
+    fn SetModifiers(_obj: *u8 /* void* */, m: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetModifiers(_obj, m)
+        }
+    }
+    fn SetModificationType(_obj: *u8 /* void* */, t: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetModificationType(_obj, t)
+        }
+    }
+    fn SetText(_obj: *u8 /* void* */, t: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextEvent_SetText(_obj, t)
+        }
+    }
+    fn SetLength(_obj: *u8 /* void* */, len: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetLength(_obj, len)
+        }
+    }
+    fn SetLinesAdded(_obj: *u8 /* void* */, num: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetLinesAdded(_obj, num)
+        }
+    }
+    fn SetLine(_obj: *u8 /* void* */, val: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetLine(_obj, val)
+        }
+    }
+    fn SetFoldLevelNow(_obj: *u8 /* void* */, val: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetFoldLevelNow(_obj, val)
+        }
+    }
+    fn SetFoldLevelPrev(_obj: *u8 /* void* */, val: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetFoldLevelPrev(_obj, val)
+        }
+    }
+    fn SetMargin(_obj: *u8 /* void* */, val: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetMargin(_obj, val)
+        }
+    }
+    fn SetMessage(_obj: *u8 /* void* */, val: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetMessage(_obj, val)
+        }
+    }
+    fn SetWParam(_obj: *u8 /* void* */, val: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetWParam(_obj, val)
+        }
+    }
+    fn SetLParam(_obj: *u8 /* void* */, val: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetLParam(_obj, val)
+        }
+    }
+    fn SetListType(_obj: *u8 /* void* */, val: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetListType(_obj, val)
+        }
+    }
+    fn SetX(_obj: *u8 /* void* */, val: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetX(_obj, val)
+        }
+    }
+    fn SetY(_obj: *u8 /* void* */, val: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetY(_obj, val)
+        }
+    }
+    fn SetDragText(_obj: *u8 /* void* */, val: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextEvent_SetDragText(_obj, val)
+        }
+    }
+    fn SetDragAllowMove(_obj: *u8 /* void* */, val: bool /* bool */) {
+        unsafe {
+            wxStyledTextEvent_SetDragAllowMove(_obj, val)
+        }
+    }
+    fn SetDragResult(_obj: *u8 /* void* */, val: c_int /* int */) {
+        unsafe {
+            wxStyledTextEvent_SetDragResult(_obj, val)
+        }
+    }
+    fn expEVT_STC_CHANGE() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_CHANGE()
+        }
+    }
+    fn expEVT_STC_STYLENEEDED() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_STYLENEEDED()
+        }
+    }
+    fn expEVT_STC_CHARADDED() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_CHARADDED()
+        }
+    }
+    fn expEVT_STC_SAVEPOINTREACHED() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_SAVEPOINTREACHED()
+        }
+    }
+    fn expEVT_STC_SAVEPOINTLEFT() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_SAVEPOINTLEFT()
+        }
+    }
+    fn expEVT_STC_ROMODIFYATTEMPT() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_ROMODIFYATTEMPT()
+        }
+    }
+    fn expEVT_STC_KEY() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_KEY()
+        }
+    }
+    fn expEVT_STC_DOUBLECLICK() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_DOUBLECLICK()
+        }
+    }
+    fn expEVT_STC_UPDATEUI() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_UPDATEUI()
+        }
+    }
+    fn expEVT_STC_MODIFIED() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_MODIFIED()
+        }
+    }
+    fn expEVT_STC_MACRORECORD() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_MACRORECORD()
+        }
+    }
+    fn expEVT_STC_MARGINCLICK() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_MARGINCLICK()
+        }
+    }
+    fn expEVT_STC_NEEDSHOWN() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_NEEDSHOWN()
+        }
+    }
+    fn expEVT_STC_PAINTED() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_PAINTED()
+        }
+    }
+    fn expEVT_STC_USERLISTSELECTION() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_USERLISTSELECTION()
+        }
+    }
+    fn expEVT_STC_URIDROPPED() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_URIDROPPED()
+        }
+    }
+    fn expEVT_STC_DWELLSTART() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_DWELLSTART()
+        }
+    }
+    fn expEVT_STC_DWELLEND() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_DWELLEND()
+        }
+    }
+    fn expEVT_STC_START_DRAG() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_START_DRAG()
+        }
+    }
+    fn expEVT_STC_DRAG_OVER() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_DRAG_OVER()
+        }
+    }
+    fn expEVT_STC_DO_DROP() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_DO_DROP()
+        }
+    }
+    fn expEVT_STC_ZOOM() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_ZOOM()
+        }
+    }
+    fn expEVT_STC_HOTSPOT_CLICK() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_HOTSPOT_CLICK()
+        }
+    }
+    fn expEVT_STC_HOTSPOT_DCLICK() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_HOTSPOT_DCLICK()
+        }
+    }
+    fn expEVT_STC_CALLTIP_CLICK() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_CALLTIP_CLICK()
+        }
+    }
+    fn expEVT_STC_AUTOCOMP_SELECTION() -> c_int /* int */ {
+        unsafe {
+            expEVT_STC_AUTOCOMP_SELECTION()
+        }
+    }
 }
 trait wxLogChain {
     fn Create(logger: *u8 /* void* */) -> *u8 /* void* */ {
@@ -6078,6 +7094,21 @@ trait cbFinishDrawInAreaEvent {
     // missing: cbFinishDrawInAreaEvent_Area
 }
 trait wxPreviewFrame {
+    fn Create(preview: *u8 /* void* */, parent: *u8 /* void* */, title: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */, name: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxPreviewFrame_Create(preview, parent, title, arg0, arg1, arg2, arg3, style, name)
+        }
+    }
+    fn Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxPreviewFrame_Delete(self_)
+        }
+    }
+    fn Initialize(self_: *u8 /* void* */) {
+        unsafe {
+            wxPreviewFrame_Initialize(self_)
+        }
+    }
 }
 trait wxFocusEvent {
 }
@@ -6274,6 +7305,1621 @@ trait wxGDIObject {
 trait wxClientData {
 }
 trait wxTextOutputStream {
+    fn Create(outputStream: *u8 /* void* */, mode: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxTextOutputStream_Create(outputStream, mode)
+        }
+    }
+    fn Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxTextOutputStream_Delete(self_)
+        }
+    }
+    fn WriteString(self_: *u8 /* void* */, txt: *u8 /* void* */) {
+        unsafe {
+            wxTextOutputStream_WriteString(self_, txt)
+        }
+    }
+    fn wxStyledTextCtrl_AddText(_obj: *u8 /* void* */, text: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_AddText(_obj, text)
+        }
+    }
+    fn wxStyledTextCtrl_AddStyledText(_obj: *u8 /* void* */, data: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_AddStyledText(_obj, data)
+        }
+    }
+    fn wxStyledTextCtrl_InsertText(_obj: *u8 /* void* */, pos: c_int /* int */, text: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_InsertText(_obj, pos, text)
+        }
+    }
+    fn wxStyledTextCtrl_ClearAll(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_ClearAll(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_ClearDocumentStyle(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_ClearDocumentStyle(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetLength(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetLength(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetCharAt(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetCharAt(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_GetCurrentPos(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetCurrentPos(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetAnchor(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetAnchor(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetStyleAt(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetStyleAt(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_Redo(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_Redo(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetUndoCollection(_obj: *u8 /* void* */, collectUndo: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetUndoCollection(_obj, collectUndo)
+        }
+    }
+    fn wxStyledTextCtrl_SelectAll(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_SelectAll(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetSavePoint(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_SetSavePoint(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_CanRedo(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_CanRedo(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_MarkerLineFromHandle(_obj: *u8 /* void* */, handle: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_MarkerLineFromHandle(_obj, handle)
+        }
+    }
+    fn wxStyledTextCtrl_MarkerDeleteHandle(_obj: *u8 /* void* */, handle: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_MarkerDeleteHandle(_obj, handle)
+        }
+    }
+    fn wxStyledTextCtrl_GetUndoCollection(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetUndoCollection(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetViewWhiteSpace(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetViewWhiteSpace(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetViewWhiteSpace(_obj: *u8 /* void* */, viewWS: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetViewWhiteSpace(_obj, viewWS)
+        }
+    }
+    fn wxStyledTextCtrl_PositionFromPoint(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_PositionFromPoint(_obj, arg0, arg1)
+        }
+    }
+    fn wxStyledTextCtrl_PositionFromPointClose(_obj: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_PositionFromPointClose(_obj, x, y)
+        }
+    }
+    fn wxStyledTextCtrl_GotoLine(_obj: *u8 /* void* */, line: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_GotoLine(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_GotoPos(_obj: *u8 /* void* */, pos: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_GotoPos(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_SetAnchor(_obj: *u8 /* void* */, posAnchor: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetAnchor(_obj, posAnchor)
+        }
+    }
+    fn wxStyledTextCtrl_GetEndStyled(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetEndStyled(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_ConvertEOLs(_obj: *u8 /* void* */, eolMode: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_ConvertEOLs(_obj, eolMode)
+        }
+    }
+    fn wxStyledTextCtrl_GetEOLMode(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetEOLMode(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetEOLMode(_obj: *u8 /* void* */, eolMode: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetEOLMode(_obj, eolMode)
+        }
+    }
+    fn wxStyledTextCtrl_StartStyling(_obj: *u8 /* void* */, pos: c_int /* int */, mask: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_StartStyling(_obj, pos, mask)
+        }
+    }
+    fn wxStyledTextCtrl_SetStyling(_obj: *u8 /* void* */, length: c_int /* int */, style: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetStyling(_obj, length, style)
+        }
+    }
+    fn wxStyledTextCtrl_GetBufferedDraw(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetBufferedDraw(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetBufferedDraw(_obj: *u8 /* void* */, buffered: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetBufferedDraw(_obj, buffered)
+        }
+    }
+    fn wxStyledTextCtrl_SetTabWidth(_obj: *u8 /* void* */, tabWidth: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetTabWidth(_obj, tabWidth)
+        }
+    }
+    fn wxStyledTextCtrl_GetTabWidth(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetTabWidth(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetCodePage(_obj: *u8 /* void* */, codePage: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetCodePage(_obj, codePage)
+        }
+    }
+    fn wxStyledTextCtrl_MarkerDefine(_obj: *u8 /* void* */, markerNumber: c_int /* int */, markerSymbol: c_int /* int */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */, arg3: u8 /* u8 */, arg4: u8 /* u8 */, arg5: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_MarkerDefine(_obj, markerNumber, markerSymbol, arg0, arg1, arg2, arg3, arg4, arg5)
+        }
+    }
+    fn wxStyledTextCtrl_MarkerSetForeground(_obj: *u8 /* void* */, markerNumber: c_int /* int */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_MarkerSetForeground(_obj, markerNumber, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_MarkerSetBackground(_obj: *u8 /* void* */, markerNumber: c_int /* int */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_MarkerSetBackground(_obj, markerNumber, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_MarkerAdd(_obj: *u8 /* void* */, line: c_int /* int */, markerNumber: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_MarkerAdd(_obj, line, markerNumber)
+        }
+    }
+    fn wxStyledTextCtrl_MarkerDelete(_obj: *u8 /* void* */, line: c_int /* int */, markerNumber: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_MarkerDelete(_obj, line, markerNumber)
+        }
+    }
+    fn wxStyledTextCtrl_MarkerDeleteAll(_obj: *u8 /* void* */, markerNumber: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_MarkerDeleteAll(_obj, markerNumber)
+        }
+    }
+    fn wxStyledTextCtrl_MarkerGet(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_MarkerGet(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_MarkerNext(_obj: *u8 /* void* */, lineStart: c_int /* int */, markerMask: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_MarkerNext(_obj, lineStart, markerMask)
+        }
+    }
+    fn wxStyledTextCtrl_MarkerPrevious(_obj: *u8 /* void* */, lineStart: c_int /* int */, markerMask: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_MarkerPrevious(_obj, lineStart, markerMask)
+        }
+    }
+    fn wxStyledTextCtrl_MarkerDefineBitmap(_obj: *u8 /* void* */, markerNumber: c_int /* int */, bmp: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_MarkerDefineBitmap(_obj, markerNumber, bmp)
+        }
+    }
+    fn wxStyledTextCtrl_SetMarginType(_obj: *u8 /* void* */, margin: c_int /* int */, marginType: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetMarginType(_obj, margin, marginType)
+        }
+    }
+    fn wxStyledTextCtrl_GetMarginType(_obj: *u8 /* void* */, margin: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetMarginType(_obj, margin)
+        }
+    }
+    fn wxStyledTextCtrl_SetMarginWidth(_obj: *u8 /* void* */, margin: c_int /* int */, pixelWidth: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetMarginWidth(_obj, margin, pixelWidth)
+        }
+    }
+    fn wxStyledTextCtrl_GetMarginWidth(_obj: *u8 /* void* */, margin: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetMarginWidth(_obj, margin)
+        }
+    }
+    fn wxStyledTextCtrl_SetMarginMask(_obj: *u8 /* void* */, margin: c_int /* int */, mask: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetMarginMask(_obj, margin, mask)
+        }
+    }
+    fn wxStyledTextCtrl_GetMarginMask(_obj: *u8 /* void* */, margin: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetMarginMask(_obj, margin)
+        }
+    }
+    fn wxStyledTextCtrl_SetMarginSensitive(_obj: *u8 /* void* */, margin: c_int /* int */, sensitive: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetMarginSensitive(_obj, margin, sensitive)
+        }
+    }
+    fn wxStyledTextCtrl_GetMarginSensitive(_obj: *u8 /* void* */, margin: c_int /* int */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetMarginSensitive(_obj, margin)
+        }
+    }
+    fn wxStyledTextCtrl_StyleClearAll(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_StyleClearAll(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetForeground(_obj: *u8 /* void* */, style: c_int /* int */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetForeground(_obj, style, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetBackground(_obj: *u8 /* void* */, style: c_int /* int */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetBackground(_obj, style, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetBold(_obj: *u8 /* void* */, style: c_int /* int */, bold: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetBold(_obj, style, bold)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetItalic(_obj: *u8 /* void* */, style: c_int /* int */, italic: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetItalic(_obj, style, italic)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetSize(_obj: *u8 /* void* */, style: c_int /* int */, sizePoints: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetSize(_obj, style, sizePoints)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetFaceName(_obj: *u8 /* void* */, style: c_int /* int */, fontName: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetFaceName(_obj, style, fontName)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetEOLFilled(_obj: *u8 /* void* */, style: c_int /* int */, filled: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetEOLFilled(_obj, style, filled)
+        }
+    }
+    fn wxStyledTextCtrl_StyleResetDefault(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_StyleResetDefault(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetUnderline(_obj: *u8 /* void* */, style: c_int /* int */, underline: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetUnderline(_obj, style, underline)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetCase(_obj: *u8 /* void* */, style: c_int /* int */, caseForce: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetCase(_obj, style, caseForce)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetCharacterSet(_obj: *u8 /* void* */, style: c_int /* int */, characterSet: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetCharacterSet(_obj, style, characterSet)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetHotSpot(_obj: *u8 /* void* */, style: c_int /* int */, hotspot: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetHotSpot(_obj, style, hotspot)
+        }
+    }
+    fn wxStyledTextCtrl_SetSelForeground(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_SetSelForeground(_obj, useSetting, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_SetSelBackground(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_SetSelBackground(_obj, useSetting, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_SetCaretForeground(_obj: *u8 /* void* */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_SetCaretForeground(_obj, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_CmdKeyAssign(_obj: *u8 /* void* */, key: c_int /* int */, modifiers: c_int /* int */, cmd: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_CmdKeyAssign(_obj, key, modifiers, cmd)
+        }
+    }
+    fn wxStyledTextCtrl_CmdKeyClear(_obj: *u8 /* void* */, key: c_int /* int */, modifiers: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_CmdKeyClear(_obj, key, modifiers)
+        }
+    }
+    fn wxStyledTextCtrl_CmdKeyClearAll(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_CmdKeyClearAll(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetStyleBytes(_obj: *u8 /* void* */, length: c_int /* int */, styleBytes: *char /* char* */) {
+        unsafe {
+            wxStyledTextCtrl_SetStyleBytes(_obj, length, styleBytes)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetVisible(_obj: *u8 /* void* */, style: c_int /* int */, visible: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetVisible(_obj, style, visible)
+        }
+    }
+    fn wxStyledTextCtrl_GetCaretPeriod(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetCaretPeriod(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetCaretPeriod(_obj: *u8 /* void* */, periodMilliseconds: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetCaretPeriod(_obj, periodMilliseconds)
+        }
+    }
+    fn wxStyledTextCtrl_SetWordChars(_obj: *u8 /* void* */, characters: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_SetWordChars(_obj, characters)
+        }
+    }
+    fn wxStyledTextCtrl_BeginUndoAction(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_BeginUndoAction(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_EndUndoAction(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_EndUndoAction(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_IndicatorSetStyle(_obj: *u8 /* void* */, indic: c_int /* int */, style: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_IndicatorSetStyle(_obj, indic, style)
+        }
+    }
+    fn wxStyledTextCtrl_IndicatorGetStyle(_obj: *u8 /* void* */, indic: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_IndicatorGetStyle(_obj, indic)
+        }
+    }
+    fn wxStyledTextCtrl_IndicatorSetForeground(_obj: *u8 /* void* */, indic: c_int /* int */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_IndicatorSetForeground(_obj, indic, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_SetWhitespaceForeground(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_SetWhitespaceForeground(_obj, useSetting, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_SetWhitespaceBackground(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_SetWhitespaceBackground(_obj, useSetting, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_SetStyleBits(_obj: *u8 /* void* */, bits: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetStyleBits(_obj, bits)
+        }
+    }
+    fn wxStyledTextCtrl_GetStyleBits(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetStyleBits(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetLineState(_obj: *u8 /* void* */, line: c_int /* int */, state: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetLineState(_obj, line, state)
+        }
+    }
+    fn wxStyledTextCtrl_GetLineState(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetLineState(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_GetMaxLineState(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetMaxLineState(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetCaretLineVisible(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetCaretLineVisible(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetCaretLineVisible(_obj: *u8 /* void* */, show: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetCaretLineVisible(_obj, show)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetChangeable(_obj: *u8 /* void* */, style: c_int /* int */, changeable: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetChangeable(_obj, style, changeable)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompShow(_obj: *u8 /* void* */, lenEntered: c_int /* int */, itemList: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompShow(_obj, lenEntered, itemList)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompCancel(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompCancel(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompActive(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_AutoCompActive(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompPosStart(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_AutoCompPosStart(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompComplete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompComplete(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompStops(_obj: *u8 /* void* */, characterSet: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompStops(_obj, characterSet)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompSetSeparator(_obj: *u8 /* void* */, separatorCharacter: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompSetSeparator(_obj, separatorCharacter)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompGetSeparator(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_AutoCompGetSeparator(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompSelect(_obj: *u8 /* void* */, text: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompSelect(_obj, text)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompSetCancelAtStart(_obj: *u8 /* void* */, cancel: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompSetCancelAtStart(_obj, cancel)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompGetCancelAtStart(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_AutoCompGetCancelAtStart(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompSetFillUps(_obj: *u8 /* void* */, characterSet: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompSetFillUps(_obj, characterSet)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompSetChooseSingle(_obj: *u8 /* void* */, chooseSingle: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompSetChooseSingle(_obj, chooseSingle)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompGetChooseSingle(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_AutoCompGetChooseSingle(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompSetIgnoreCase(_obj: *u8 /* void* */, ignoreCase: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompSetIgnoreCase(_obj, ignoreCase)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompGetIgnoreCase(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_AutoCompGetIgnoreCase(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_UserListShow(_obj: *u8 /* void* */, listType: c_int /* int */, itemList: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_UserListShow(_obj, listType, itemList)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompSetAutoHide(_obj: *u8 /* void* */, autoHide: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompSetAutoHide(_obj, autoHide)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompGetAutoHide(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_AutoCompGetAutoHide(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompSetDropRestOfWord(_obj: *u8 /* void* */, dropRestOfWord: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompSetDropRestOfWord(_obj, dropRestOfWord)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompGetDropRestOfWord(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_AutoCompGetDropRestOfWord(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_RegisterImage(_obj: *u8 /* void* */, type_: c_int /* int */, bmp: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_RegisterImage(_obj, type_, bmp)
+        }
+    }
+    fn wxStyledTextCtrl_ClearRegisteredImages(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_ClearRegisteredImages(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompGetTypeSeparator(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_AutoCompGetTypeSeparator(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_AutoCompSetTypeSeparator(_obj: *u8 /* void* */, separatorCharacter: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_AutoCompSetTypeSeparator(_obj, separatorCharacter)
+        }
+    }
+    fn wxStyledTextCtrl_SetIndent(_obj: *u8 /* void* */, indentSize: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetIndent(_obj, indentSize)
+        }
+    }
+    fn wxStyledTextCtrl_GetIndent(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetIndent(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetUseTabs(_obj: *u8 /* void* */, useTabs: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetUseTabs(_obj, useTabs)
+        }
+    }
+    fn wxStyledTextCtrl_GetUseTabs(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetUseTabs(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetLineIndentation(_obj: *u8 /* void* */, line: c_int /* int */, indentSize: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetLineIndentation(_obj, line, indentSize)
+        }
+    }
+    fn wxStyledTextCtrl_GetLineIndentation(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetLineIndentation(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_GetLineIndentPosition(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetLineIndentPosition(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_GetColumn(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetColumn(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_SetUseHorizontalScrollBar(_obj: *u8 /* void* */, show: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetUseHorizontalScrollBar(_obj, show)
+        }
+    }
+    fn wxStyledTextCtrl_GetUseHorizontalScrollBar(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetUseHorizontalScrollBar(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetIndentationGuides(_obj: *u8 /* void* */, show: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetIndentationGuides(_obj, show)
+        }
+    }
+    fn wxStyledTextCtrl_GetIndentationGuides(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetIndentationGuides(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetHighlightGuide(_obj: *u8 /* void* */, column: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetHighlightGuide(_obj, column)
+        }
+    }
+    fn wxStyledTextCtrl_GetHighlightGuide(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetHighlightGuide(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetLineEndPosition(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetLineEndPosition(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_GetCodePage(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetCodePage(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetReadOnly(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetReadOnly(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetCurrentPos(_obj: *u8 /* void* */, pos: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetCurrentPos(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_SetSelectionStart(_obj: *u8 /* void* */, pos: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetSelectionStart(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_GetSelectionStart(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetSelectionStart(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetSelectionEnd(_obj: *u8 /* void* */, pos: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetSelectionEnd(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_GetSelectionEnd(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetSelectionEnd(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetPrintMagnification(_obj: *u8 /* void* */, magnification: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetPrintMagnification(_obj, magnification)
+        }
+    }
+    fn wxStyledTextCtrl_GetPrintMagnification(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetPrintMagnification(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetPrintColourMode(_obj: *u8 /* void* */, mode: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetPrintColourMode(_obj, mode)
+        }
+    }
+    fn wxStyledTextCtrl_GetPrintColourMode(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetPrintColourMode(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_FindText(_obj: *u8 /* void* */, minPos: c_int /* int */, maxPos: c_int /* int */, text: *u8 /* void* */, flags: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_FindText(_obj, minPos, maxPos, text, flags)
+        }
+    }
+    fn wxStyledTextCtrl_FormatRange(_obj: *u8 /* void* */, doDraw: bool /* bool */, startPos: c_int /* int */, endPos: c_int /* int */, draw: *u8 /* void* */, target: *u8 /* void* */, renderRect: *u8 /* void* */, pageRect: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_FormatRange(_obj, doDraw, startPos, endPos, draw, target, renderRect, pageRect)
+        }
+    }
+    fn wxStyledTextCtrl_GetFirstVisibleLine(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetFirstVisibleLine(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetLineCount(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetLineCount(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetMarginLeft(_obj: *u8 /* void* */, pixelWidth: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetMarginLeft(_obj, pixelWidth)
+        }
+    }
+    fn wxStyledTextCtrl_GetMarginLeft(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetMarginLeft(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetMarginRight(_obj: *u8 /* void* */, pixelWidth: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetMarginRight(_obj, pixelWidth)
+        }
+    }
+    fn wxStyledTextCtrl_GetMarginRight(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetMarginRight(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetModify(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetModify(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetSelection(_obj: *u8 /* void* */, start: c_int /* int */, end: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetSelection(_obj, start, end)
+        }
+    }
+    fn wxStyledTextCtrl_HideSelection(_obj: *u8 /* void* */, normal: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_HideSelection(_obj, normal)
+        }
+    }
+    fn wxStyledTextCtrl_LineFromPosition(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_LineFromPosition(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_PositionFromLine(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_PositionFromLine(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_LineScroll(_obj: *u8 /* void* */, columns: c_int /* int */, lines: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_LineScroll(_obj, columns, lines)
+        }
+    }
+    fn wxStyledTextCtrl_EnsureCaretVisible(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_EnsureCaretVisible(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_ReplaceSelection(_obj: *u8 /* void* */, text: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_ReplaceSelection(_obj, text)
+        }
+    }
+    fn wxStyledTextCtrl_SetReadOnly(_obj: *u8 /* void* */, readOnly: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetReadOnly(_obj, readOnly)
+        }
+    }
+    fn wxStyledTextCtrl_CanPaste(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_CanPaste(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_CanUndo(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_CanUndo(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_EmptyUndoBuffer(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_EmptyUndoBuffer(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_Undo(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_Undo(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_Cut(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_Cut(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_Copy(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_Copy(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_Paste(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_Paste(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_Clear(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_Clear(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetText(_obj: *u8 /* void* */, text: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_SetText(_obj, text)
+        }
+    }
+    fn wxStyledTextCtrl_GetTextLength(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetTextLength(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetOvertype(_obj: *u8 /* void* */, overtype: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetOvertype(_obj, overtype)
+        }
+    }
+    fn wxStyledTextCtrl_GetOvertype(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetOvertype(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetCaretWidth(_obj: *u8 /* void* */, pixelWidth: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetCaretWidth(_obj, pixelWidth)
+        }
+    }
+    fn wxStyledTextCtrl_GetCaretWidth(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetCaretWidth(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetTargetStart(_obj: *u8 /* void* */, pos: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetTargetStart(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_GetTargetStart(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetTargetStart(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetTargetEnd(_obj: *u8 /* void* */, pos: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetTargetEnd(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_GetTargetEnd(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetTargetEnd(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_ReplaceTarget(_obj: *u8 /* void* */, text: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_ReplaceTarget(_obj, text)
+        }
+    }
+    fn wxStyledTextCtrl_ReplaceTargetRE(_obj: *u8 /* void* */, text: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_ReplaceTargetRE(_obj, text)
+        }
+    }
+    fn wxStyledTextCtrl_SearchInTarget(_obj: *u8 /* void* */, text: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_SearchInTarget(_obj, text)
+        }
+    }
+    fn wxStyledTextCtrl_SetSearchFlags(_obj: *u8 /* void* */, flags: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetSearchFlags(_obj, flags)
+        }
+    }
+    fn wxStyledTextCtrl_GetSearchFlags(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetSearchFlags(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_CallTipShow(_obj: *u8 /* void* */, pos: c_int /* int */, definition: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_CallTipShow(_obj, pos, definition)
+        }
+    }
+    fn wxStyledTextCtrl_CallTipCancel(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_CallTipCancel(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_CallTipActive(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_CallTipActive(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_CallTipPosAtStart(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_CallTipPosAtStart(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_CallTipSetHighlight(_obj: *u8 /* void* */, start: c_int /* int */, end: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_CallTipSetHighlight(_obj, start, end)
+        }
+    }
+    fn wxStyledTextCtrl_CallTipSetBackground(_obj: *u8 /* void* */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_CallTipSetBackground(_obj, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_CallTipSetForeground(_obj: *u8 /* void* */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_CallTipSetForeground(_obj, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_CallTipSetForegroundHighlight(_obj: *u8 /* void* */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_CallTipSetForegroundHighlight(_obj, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_VisibleFromDocLine(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_VisibleFromDocLine(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_DocLineFromVisible(_obj: *u8 /* void* */, lineDisplay: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_DocLineFromVisible(_obj, lineDisplay)
+        }
+    }
+    fn wxStyledTextCtrl_SetFoldLevel(_obj: *u8 /* void* */, line: c_int /* int */, level: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetFoldLevel(_obj, line, level)
+        }
+    }
+    fn wxStyledTextCtrl_GetFoldLevel(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetFoldLevel(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_GetLastChild(_obj: *u8 /* void* */, line: c_int /* int */, level: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetLastChild(_obj, line, level)
+        }
+    }
+    fn wxStyledTextCtrl_GetFoldParent(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetFoldParent(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_ShowLines(_obj: *u8 /* void* */, lineStart: c_int /* int */, lineEnd: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_ShowLines(_obj, lineStart, lineEnd)
+        }
+    }
+    fn wxStyledTextCtrl_HideLines(_obj: *u8 /* void* */, lineStart: c_int /* int */, lineEnd: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_HideLines(_obj, lineStart, lineEnd)
+        }
+    }
+    fn wxStyledTextCtrl_GetLineVisible(_obj: *u8 /* void* */, line: c_int /* int */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetLineVisible(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_SetFoldExpanded(_obj: *u8 /* void* */, line: c_int /* int */, expanded: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetFoldExpanded(_obj, line, expanded)
+        }
+    }
+    fn wxStyledTextCtrl_GetFoldExpanded(_obj: *u8 /* void* */, line: c_int /* int */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetFoldExpanded(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_ToggleFold(_obj: *u8 /* void* */, line: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_ToggleFold(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_EnsureVisible(_obj: *u8 /* void* */, line: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_EnsureVisible(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_SetFoldFlags(_obj: *u8 /* void* */, flags: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetFoldFlags(_obj, flags)
+        }
+    }
+    fn wxStyledTextCtrl_EnsureVisibleEnforcePolicy(_obj: *u8 /* void* */, line: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_EnsureVisibleEnforcePolicy(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_SetTabIndents(_obj: *u8 /* void* */, tabIndents: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetTabIndents(_obj, tabIndents)
+        }
+    }
+    fn wxStyledTextCtrl_GetTabIndents(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetTabIndents(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetBackSpaceUnIndents(_obj: *u8 /* void* */, bsUnIndents: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetBackSpaceUnIndents(_obj, bsUnIndents)
+        }
+    }
+    fn wxStyledTextCtrl_GetBackSpaceUnIndents(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetBackSpaceUnIndents(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetMouseDwellTime(_obj: *u8 /* void* */, periodMilliseconds: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetMouseDwellTime(_obj, periodMilliseconds)
+        }
+    }
+    fn wxStyledTextCtrl_GetMouseDwellTime(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetMouseDwellTime(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_WordStartPosition(_obj: *u8 /* void* */, pos: c_int /* int */, onlyWordCharacters: bool /* bool */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_WordStartPosition(_obj, pos, onlyWordCharacters)
+        }
+    }
+    fn wxStyledTextCtrl_WordEndPosition(_obj: *u8 /* void* */, pos: c_int /* int */, onlyWordCharacters: bool /* bool */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_WordEndPosition(_obj, pos, onlyWordCharacters)
+        }
+    }
+    fn wxStyledTextCtrl_SetWrapMode(_obj: *u8 /* void* */, mode: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetWrapMode(_obj, mode)
+        }
+    }
+    fn wxStyledTextCtrl_GetWrapMode(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetWrapMode(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetLayoutCache(_obj: *u8 /* void* */, mode: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetLayoutCache(_obj, mode)
+        }
+    }
+    fn wxStyledTextCtrl_GetLayoutCache(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetLayoutCache(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetScrollWidth(_obj: *u8 /* void* */, pixelWidth: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetScrollWidth(_obj, pixelWidth)
+        }
+    }
+    fn wxStyledTextCtrl_GetScrollWidth(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetScrollWidth(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_TextWidth(_obj: *u8 /* void* */, style: c_int /* int */, text: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_TextWidth(_obj, style, text)
+        }
+    }
+    fn wxStyledTextCtrl_SetEndAtLastLine(_obj: *u8 /* void* */, endAtLastLine: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetEndAtLastLine(_obj, endAtLastLine)
+        }
+    }
+    fn wxStyledTextCtrl_GetEndAtLastLine(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetEndAtLastLine(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_TextHeight(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_TextHeight(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_SetUseVerticalScrollBar(_obj: *u8 /* void* */, show: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetUseVerticalScrollBar(_obj, show)
+        }
+    }
+    fn wxStyledTextCtrl_GetUseVerticalScrollBar(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetUseVerticalScrollBar(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_AppendText(_obj: *u8 /* void* */, text: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_AppendText(_obj, text)
+        }
+    }
+    fn wxStyledTextCtrl_GetTwoPhaseDraw(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetTwoPhaseDraw(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetTwoPhaseDraw(_obj: *u8 /* void* */, twoPhase: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetTwoPhaseDraw(_obj, twoPhase)
+        }
+    }
+    fn wxStyledTextCtrl_TargetFromSelection(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_TargetFromSelection(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_LinesJoin(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_LinesJoin(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_LinesSplit(_obj: *u8 /* void* */, pixelWidth: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_LinesSplit(_obj, pixelWidth)
+        }
+    }
+    fn wxStyledTextCtrl_SetFoldMarginColour(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_SetFoldMarginColour(_obj, useSetting, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_SetFoldMarginHiColour(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_SetFoldMarginHiColour(_obj, useSetting, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_LineDuplicate(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_LineDuplicate(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_HomeDisplay(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_HomeDisplay(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_HomeDisplayExtend(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_HomeDisplayExtend(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_LineEndDisplay(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_LineEndDisplay(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_LineEndDisplayExtend(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_LineEndDisplayExtend(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_LineCopy(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_LineCopy(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_MoveCaretInsideView(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_MoveCaretInsideView(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_LineLength(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_LineLength(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_BraceHighlight(_obj: *u8 /* void* */, pos1: c_int /* int */, pos2: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_BraceHighlight(_obj, pos1, pos2)
+        }
+    }
+    fn wxStyledTextCtrl_BraceBadLight(_obj: *u8 /* void* */, pos: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_BraceBadLight(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_BraceMatch(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_BraceMatch(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_GetViewEOL(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetViewEOL(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetViewEOL(_obj: *u8 /* void* */, visible: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetViewEOL(_obj, visible)
+        }
+    }
+    fn wxStyledTextCtrl_SetDocPointer(_obj: *u8 /* void* */, docPointer: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_SetDocPointer(_obj, docPointer)
+        }
+    }
+    fn wxStyledTextCtrl_SetModEventMask(_obj: *u8 /* void* */, mask: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetModEventMask(_obj, mask)
+        }
+    }
+    fn wxStyledTextCtrl_GetEdgeColumn(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetEdgeColumn(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetEdgeColumn(_obj: *u8 /* void* */, column: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetEdgeColumn(_obj, column)
+        }
+    }
+    fn wxStyledTextCtrl_GetEdgeMode(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetEdgeMode(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetEdgeMode(_obj: *u8 /* void* */, mode: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetEdgeMode(_obj, mode)
+        }
+    }
+    fn wxStyledTextCtrl_SetEdgeColour(_obj: *u8 /* void* */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_SetEdgeColour(_obj, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_SearchAnchor(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_SearchAnchor(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SearchNext(_obj: *u8 /* void* */, flags: c_int /* int */, text: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_SearchNext(_obj, flags, text)
+        }
+    }
+    fn wxStyledTextCtrl_SearchPrev(_obj: *u8 /* void* */, flags: c_int /* int */, text: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_SearchPrev(_obj, flags, text)
+        }
+    }
+    fn wxStyledTextCtrl_LinesOnScreen(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_LinesOnScreen(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_UsePopUp(_obj: *u8 /* void* */, allowPopUp: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_UsePopUp(_obj, allowPopUp)
+        }
+    }
+    fn wxStyledTextCtrl_SelectionIsRectangle(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_SelectionIsRectangle(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetZoom(_obj: *u8 /* void* */, zoom: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetZoom(_obj, zoom)
+        }
+    }
+    fn wxStyledTextCtrl_GetZoom(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetZoom(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_AddRefDocument(_obj: *u8 /* void* */, docPointer: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_AddRefDocument(_obj, docPointer)
+        }
+    }
+    fn wxStyledTextCtrl_ReleaseDocument(_obj: *u8 /* void* */, docPointer: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_ReleaseDocument(_obj, docPointer)
+        }
+    }
+    fn wxStyledTextCtrl_GetModEventMask(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetModEventMask(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetSTCFocus(_obj: *u8 /* void* */, focus: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetSTCFocus(_obj, focus)
+        }
+    }
+    fn wxStyledTextCtrl_GetSTCFocus(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetSTCFocus(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetStatus(_obj: *u8 /* void* */, statusCode: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetStatus(_obj, statusCode)
+        }
+    }
+    fn wxStyledTextCtrl_GetStatus(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetStatus(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetMouseDownCaptures(_obj: *u8 /* void* */, captures: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetMouseDownCaptures(_obj, captures)
+        }
+    }
+    fn wxStyledTextCtrl_GetMouseDownCaptures(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetMouseDownCaptures(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetSTCCursor(_obj: *u8 /* void* */, cursorType: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetSTCCursor(_obj, cursorType)
+        }
+    }
+    fn wxStyledTextCtrl_GetSTCCursor(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetSTCCursor(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetControlCharSymbol(_obj: *u8 /* void* */, symbol: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetControlCharSymbol(_obj, symbol)
+        }
+    }
+    fn wxStyledTextCtrl_GetControlCharSymbol(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetControlCharSymbol(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_WordPartLeft(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_WordPartLeft(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_WordPartLeftExtend(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_WordPartLeftExtend(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_WordPartRight(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_WordPartRight(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_WordPartRightExtend(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_WordPartRightExtend(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetVisiblePolicy(_obj: *u8 /* void* */, visiblePolicy: c_int /* int */, visibleSlop: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetVisiblePolicy(_obj, visiblePolicy, visibleSlop)
+        }
+    }
+    fn wxStyledTextCtrl_DelLineLeft(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_DelLineLeft(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_DelLineRight(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_DelLineRight(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetXOffset(_obj: *u8 /* void* */, newOffset: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetXOffset(_obj, newOffset)
+        }
+    }
+    fn wxStyledTextCtrl_GetXOffset(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetXOffset(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_ChooseCaretX(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_ChooseCaretX(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetXCaretPolicy(_obj: *u8 /* void* */, caretPolicy: c_int /* int */, caretSlop: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetXCaretPolicy(_obj, caretPolicy, caretSlop)
+        }
+    }
+    fn wxStyledTextCtrl_SetYCaretPolicy(_obj: *u8 /* void* */, caretPolicy: c_int /* int */, caretSlop: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetYCaretPolicy(_obj, caretPolicy, caretSlop)
+        }
+    }
+    fn wxStyledTextCtrl_SetPrintWrapMode(_obj: *u8 /* void* */, mode: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetPrintWrapMode(_obj, mode)
+        }
+    }
+    fn wxStyledTextCtrl_GetPrintWrapMode(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetPrintWrapMode(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetHotspotActiveForeground(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_SetHotspotActiveForeground(_obj, useSetting, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_SetHotspotActiveBackground(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_SetHotspotActiveBackground(_obj, useSetting, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_SetHotspotActiveUnderline(_obj: *u8 /* void* */, underline: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetHotspotActiveUnderline(_obj, underline)
+        }
+    }
+    fn wxStyledTextCtrl_PositionBefore(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_PositionBefore(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_PositionAfter(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_PositionAfter(_obj, pos)
+        }
+    }
+    fn wxStyledTextCtrl_CopyRange(_obj: *u8 /* void* */, start: c_int /* int */, end: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_CopyRange(_obj, start, end)
+        }
+    }
+    fn wxStyledTextCtrl_CopyText(_obj: *u8 /* void* */, length: c_int /* int */, text: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_CopyText(_obj, length, text)
+        }
+    }
+    fn wxStyledTextCtrl_StartRecord(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_StartRecord(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_StopRecord(_obj: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_StopRecord(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetLexer(_obj: *u8 /* void* */, lexer: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetLexer(_obj, lexer)
+        }
+    }
+    fn wxStyledTextCtrl_GetLexer(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetLexer(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_Colourise(_obj: *u8 /* void* */, start: c_int /* int */, end: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_Colourise(_obj, start, end)
+        }
+    }
+    fn wxStyledTextCtrl_SetProperty(_obj: *u8 /* void* */, key: *u8 /* void* */, value: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_SetProperty(_obj, key, value)
+        }
+    }
+    fn wxStyledTextCtrl_SetKeyWords(_obj: *u8 /* void* */, keywordSet: c_int /* int */, keyWords: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_SetKeyWords(_obj, keywordSet, keyWords)
+        }
+    }
+    fn wxStyledTextCtrl_SetLexerLanguage(_obj: *u8 /* void* */, language: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_SetLexerLanguage(_obj, language)
+        }
+    }
+    fn wxStyledTextCtrl_GetCurrentLine(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxStyledTextCtrl_GetCurrentLine(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetSpec(_obj: *u8 /* void* */, styleNum: c_int /* int */, spec: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetSpec(_obj, styleNum, spec)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetFont(_obj: *u8 /* void* */, styleNum: c_int /* int */, font: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetFont(_obj, styleNum, font)
+        }
+    }
+    fn wxStyledTextCtrl_StyleSetFontAttr(_obj: *u8 /* void* */, styleNum: c_int /* int */, size: c_int /* int */, faceName: *u8 /* void* */, bold: bool /* bool */, italic: bool /* bool */, underline: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_StyleSetFontAttr(_obj, styleNum, size, faceName, bold, italic, underline)
+        }
+    }
+    fn wxStyledTextCtrl_CmdKeyExecute(_obj: *u8 /* void* */, cmd: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_CmdKeyExecute(_obj, cmd)
+        }
+    }
+    fn wxStyledTextCtrl_SetMargins(_obj: *u8 /* void* */, left: c_int /* int */, right: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_SetMargins(_obj, left, right)
+        }
+    }
+    fn wxStyledTextCtrl_GetSelection(_obj: *u8 /* void* */, startPos: *c_int /* int* */, endPos: *c_int /* int* */) {
+        unsafe {
+            wxStyledTextCtrl_GetSelection(_obj, startPos, endPos)
+        }
+    }
+    fn wxStyledTextCtrl_ScrollToLine(_obj: *u8 /* void* */, line: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_ScrollToLine(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_ScrollToColumn(_obj: *u8 /* void* */, column: c_int /* int */) {
+        unsafe {
+            wxStyledTextCtrl_ScrollToColumn(_obj, column)
+        }
+    }
+    fn wxStyledTextCtrl_SetVScrollBar(_obj: *u8 /* void* */, bar: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_SetVScrollBar(_obj, bar)
+        }
+    }
+    fn wxStyledTextCtrl_SetHScrollBar(_obj: *u8 /* void* */, bar: *u8 /* void* */) {
+        unsafe {
+            wxStyledTextCtrl_SetHScrollBar(_obj, bar)
+        }
+    }
+    fn wxStyledTextCtrl_GetLastKeydownProcessed(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_GetLastKeydownProcessed(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetLastKeydownProcessed(_obj: *u8 /* void* */, val: bool /* bool */) {
+        unsafe {
+            wxStyledTextCtrl_SetLastKeydownProcessed(_obj, val)
+        }
+    }
+    fn wxStyledTextCtrl_SaveFile(_obj: *u8 /* void* */, filename: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_SaveFile(_obj, filename)
+        }
+    }
+    fn wxStyledTextCtrl_LoadFile(_obj: *u8 /* void* */, filename: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxStyledTextCtrl_LoadFile(_obj, filename)
+        }
+    }
 }
 trait wxDynamicSashWindow {
     // missing: wxDynamicSashWindow_Create
@@ -6348,6 +8994,8 @@ trait wxPostScriptDC {
             wxPostScriptDC_GetResolution(self_)
         }
     }
+}
+trait wxcPrintEvent {
 }
 trait wxColourDialog {
     fn Create(_prt: *u8 /* void* */, col: *u8 /* void* */) -> *u8 /* void* */ {
@@ -8703,6 +11351,108 @@ trait wxSpinCtrl {
         }
     }
 }
+trait wxGenericDragImage {
+    fn wxDragImage_Create(image: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxDragImage_Create(image, x, y)
+        }
+    }
+    fn wxDragIcon(icon: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxDragIcon(icon, x, y)
+        }
+    }
+    fn wxDragString(test: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxDragString(test, x, y)
+        }
+    }
+    fn wxDragTreeItem(treeCtrl: *u8 /* void* */, id: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxDragTreeItem(treeCtrl, id)
+        }
+    }
+    fn wxDragListItem(treeCtrl: *u8 /* void* */, id: c_long /* long */) -> *u8 /* void* */ {
+        unsafe {
+            wxDragListItem(treeCtrl, id)
+        }
+    }
+    fn Create(cursor: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGenericDragImage_Create(cursor)
+        }
+    }
+    fn wxGenericDragIcon(icon: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGenericDragIcon(icon)
+        }
+    }
+    fn wxGenericDragString(test: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGenericDragString(test)
+        }
+    }
+    fn wxGenericDragTreeItem(treeCtrl: *u8 /* void* */, id: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxGenericDragTreeItem(treeCtrl, id)
+        }
+    }
+    fn wxGenericDragListItem(treeCtrl: *u8 /* void* */, id: c_long /* long */) -> *u8 /* void* */ {
+        unsafe {
+            wxGenericDragListItem(treeCtrl, id)
+        }
+    }
+    fn wxDragImage_Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxDragImage_Delete(self_)
+        }
+    }
+    fn wxDragImage_BeginDragFullScreen(self_: *u8 /* void* */, x_pos: c_int /* int */, y_pos: c_int /* int */, window: *u8 /* void* */, fullScreen: bool /* bool */, rect: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxDragImage_BeginDragFullScreen(self_, x_pos, y_pos, window, fullScreen, rect)
+        }
+    }
+    fn wxDragImage_BeginDrag(self_: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */, window: *u8 /* void* */, boundingWindow: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxDragImage_BeginDrag(self_, x, y, window, boundingWindow)
+        }
+    }
+    fn DoDrawImage(self_: *u8 /* void* */, dc: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */) -> bool /* bool */ {
+        unsafe {
+            wxGenericDragImage_DoDrawImage(self_, dc, x, y)
+        }
+    }
+    fn wxDragImage_EndDrag(self_: *u8 /* void* */) {
+        unsafe {
+            wxDragImage_EndDrag(self_)
+        }
+    }
+    fn GetImageRect(self_: *u8 /* void* */, x_pos: c_int /* int */, y_pos: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxGenericDragImage_GetImageRect(self_, x_pos, y_pos)
+        }
+    }
+    fn wxDragImage_Hide(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxDragImage_Hide(self_)
+        }
+    }
+    fn wxDragImage_Move(self_: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */) -> bool /* bool */ {
+        unsafe {
+            wxDragImage_Move(self_, x, y)
+        }
+    }
+    fn wxDragImage_Show(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxDragImage_Show(self_)
+        }
+    }
+    fn UpdateBackingFromWindow(self_: *u8 /* void* */, windowDC: *u8 /* void* */, destDC: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */, w: c_int /* int */, h: c_int /* int */, xdest: c_int /* int */, ydest: c_int /* int */, width: c_int /* int */, height: c_int /* int */) -> bool /* bool */ {
+        unsafe {
+            wxGenericDragImage_UpdateBackingFromWindow(self_, windowDC, destDC, x, y, w, h, xdest, ydest, width, height)
+        }
+    }
+}
 trait wxScrollEvent {
     fn GetOrientation(_obj: *u8 /* void* */) -> c_int /* int */ {
         unsafe {
@@ -9346,6 +12096,8 @@ trait ELJPlotCurve {
     // missing: ELJPlotCurve_SetPenNormal
     // missing: ELJPlotCurve_SetPenSelected
     // missing: ELJPlotCurve_SetStartY
+}
+trait wxGraphicsBrush {
 }
 trait wxToolTip {
 }
@@ -10023,6 +12775,8 @@ trait wxFlexGridSizer {
 }
 trait wxMouseCaptureChangedEvent {
 }
+trait wxGraphicsObject {
+}
 trait wxInputSinkEvent {
     fn LastError(obj: *u8 /* void* */) -> c_int /* int */ {
         unsafe {
@@ -10367,6 +13121,11 @@ trait wxXmlResource {
     fn SetFlags(_obj: *u8 /* void* */, flags: c_int /* int */) {
         unsafe {
             wxXmlResource_SetFlags(_obj, flags)
+        }
+    }
+    fn GetStyledTextCtrl(_obj: *u8 /* void* */, str_id: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxXmlResource_GetStyledTextCtrl(_obj, str_id)
         }
     }
 }
@@ -10831,6 +13590,31 @@ trait wxMenuItem {
 trait wxDynamicLibrary {
 }
 trait wxSound {
+    fn Create(fileName: *u8 /* void* */, isResource: bool /* bool */) -> *u8 /* void* */ {
+        unsafe {
+            wxSound_Create(fileName, isResource)
+        }
+    }
+    fn Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxSound_Delete(self_)
+        }
+    }
+    fn IsOk(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxSound_IsOk(self_)
+        }
+    }
+    fn Play(self_: *u8 /* void* */, flag: c_int /* int */) -> bool /* bool */ {
+        unsafe {
+            wxSound_Play(self_, flag)
+        }
+    }
+    fn Stop(self_: *u8 /* void* */) {
+        unsafe {
+            wxSound_Stop(self_)
+        }
+    }
 }
 trait wxMoveEvent {
     fn CopyObject(_obj: *u8 /* void* */, obj: *u8 /* void* */) {
@@ -12211,6 +14995,8 @@ trait wxGridCellNumberRenderer {
         }
     }
 }
+trait wxSTCDoc {
+}
 trait wxMessageDialog {
     fn Create(_prt: *u8 /* void* */, _msg: *u8 /* void* */, _cap: *u8 /* void* */, _stl: c_int /* int */) -> *u8 /* void* */ {
         unsafe {
@@ -12405,6 +15191,63 @@ trait wxEditableListBox {
 trait cbDrawPaneBkGroundEvent {
     // missing: cbDrawPaneBkGroundEvent_Dc
 }
+trait wxcPrintoutHandler {
+    fn wxcPrintout_Create(title: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxcPrintout_Create(title)
+        }
+    }
+    fn wxcPrintout_Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxcPrintout_Delete(self_)
+        }
+    }
+    fn wxcPrintout_SetPageLimits(self_: *u8 /* void* */, startPage: c_int /* int */, endPage: c_int /* int */, fromPage: c_int /* int */, toPage: c_int /* int */) {
+        unsafe {
+            wxcPrintout_SetPageLimits(self_, startPage, endPage, fromPage, toPage)
+        }
+    }
+    fn wxcPrintout_GetEvtHandler(self_: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxcPrintout_GetEvtHandler(self_)
+        }
+    }
+    fn wxcPrintEvent_GetPrintout(self_: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxcPrintEvent_GetPrintout(self_)
+        }
+    }
+    fn wxcPrintEvent_GetPage(self_: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxcPrintEvent_GetPage(self_)
+        }
+    }
+    fn wxcPrintEvent_GetEndPage(self_: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxcPrintEvent_GetEndPage(self_)
+        }
+    }
+    fn wxcPrintEvent_GetContinue(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxcPrintEvent_GetContinue(self_)
+        }
+    }
+    fn wxcPrintEvent_SetContinue(self_: *u8 /* void* */, cont: bool /* bool */) {
+        unsafe {
+            wxcPrintEvent_SetContinue(self_, cont)
+        }
+    }
+    fn wxcPrintEvent_SetPageLimits(self_: *u8 /* void* */, startPage: c_int /* int */, endPage: c_int /* int */, fromPage: c_int /* int */, toPage: c_int /* int */) {
+        unsafe {
+            wxcPrintEvent_SetPageLimits(self_, startPage, endPage, fromPage, toPage)
+        }
+    }
+    fn wxInputStream_CanRead(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxInputStream_CanRead(self_)
+        }
+    }
+}
 trait wxSize {
     fn Create(arg0: c_int /* int */, arg1: c_int /* int */) -> *u8 /* void* */ {
         unsafe {
@@ -12464,6 +15307,8 @@ trait wxFileDataObject {
             FileDataObject_GetFilenames(_obj, _lst)
         }
     }
+}
+trait wxGraphicsFont {
 }
 trait wxDocParentFrame {
 }
@@ -12630,6 +15475,13 @@ trait wxSliderMSW {
     }
 }
 trait wxURL {
+}
+trait wxStyledTextCtrl {
+    fn Create(_prt: *u8 /* void* */, _id: c_int /* int */, _txt: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextCtrl_Create(_prt, _id, _txt, arg0, arg1, arg2, arg3, style)
+        }
+    }
 }
 trait wxHtmlContainerCell {
 }
@@ -13238,6 +16090,8 @@ trait wxMutexLocker {
 }
 trait wxLog {
 }
+trait wxGraphicsPen {
+}
 trait wxTipWindow {
     fn Close(_obj: *u8 /* void* */) {
         unsafe {
@@ -13303,6 +16157,68 @@ trait ELJFileDropTarget {
     }
 }
 trait wxTreeLayout {
+}
+trait wxMemoryBuffer {
+    fn wxStyledTextCtrl_IndicatorGetForeground(_obj: *u8 /* void* */, indic: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextCtrl_IndicatorGetForeground(_obj, indic)
+        }
+    }
+    fn wxStyledTextCtrl_GetCaretLineBackground(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextCtrl_GetCaretLineBackground(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_SetCaretLineBackground(_obj: *u8 /* void* */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */) {
+        unsafe {
+            wxStyledTextCtrl_SetCaretLineBackground(_obj, arg0, arg1, arg2)
+        }
+    }
+    fn wxStyledTextCtrl_GetCaretForeground(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextCtrl_GetCaretForeground(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetLine(_obj: *u8 /* void* */, line: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextCtrl_GetLine(_obj, line)
+        }
+    }
+    fn wxStyledTextCtrl_GetText(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextCtrl_GetText(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetTextRange(_obj: *u8 /* void* */, startPos: c_int /* int */, endPos: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextCtrl_GetTextRange(_obj, startPos, endPos)
+        }
+    }
+    fn wxStyledTextCtrl_GetSelectedText(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextCtrl_GetSelectedText(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_CreateDocument(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextCtrl_CreateDocument(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetEdgeColour(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextCtrl_GetEdgeColour(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_GetDocPointer(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextCtrl_GetDocPointer(_obj)
+        }
+    }
+    fn wxStyledTextCtrl_PointFromPosition(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxStyledTextCtrl_PointFromPosition(_obj)
+        }
+    }
 }
 trait cbSimpleCustomizationPlugin {
     // missing: cbSimpleCustomizationPlugin_Create
@@ -14001,6 +16917,8 @@ trait wxFileHistory {
             wxFileHistory_UseMenu(_obj, menu)
         }
     }
+}
+trait wxGraphicsMatrix {
 }
 trait wxLogNull {
 }
@@ -15571,6 +18489,158 @@ trait wxFileSystemHandler {
 trait wxStreamBuffer {
 }
 trait wxDragImage {
+}
+trait wxManagedPtr {
+    fn GetPtr(self_: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxManagedPtr_GetPtr(self_)
+        }
+    }
+    fn NoFinalize(self_: *u8 /* void* */) {
+        unsafe {
+            wxManagedPtr_NoFinalize(self_)
+        }
+    }
+    fn Finalize(self_: *u8 /* void* */) {
+        unsafe {
+            wxManagedPtr_Finalize(self_)
+        }
+    }
+    fn Delete(self_: *u8 /* void* */) {
+        unsafe {
+            wxManagedPtr_Delete(self_)
+        }
+    }
+    fn GetDeleteFunction() -> *u8 /* void* */ {
+        unsafe {
+            wxManagedPtr_GetDeleteFunction()
+        }
+    }
+    fn CreateFromObject(obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxManagedPtr_CreateFromObject(obj)
+        }
+    }
+    fn CreateFromDateTime(obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxManagedPtr_CreateFromDateTime(obj)
+        }
+    }
+    fn CreateFromGridCellCoordsArray(obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxManagedPtr_CreateFromGridCellCoordsArray(obj)
+        }
+    }
+    fn CreateFromBitmap(obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxManagedPtr_CreateFromBitmap(obj)
+        }
+    }
+    fn CreateFromIcon(obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxManagedPtr_CreateFromIcon(obj)
+        }
+    }
+    fn CreateFromBrush(obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxManagedPtr_CreateFromBrush(obj)
+        }
+    }
+    fn CreateFromColour(obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxManagedPtr_CreateFromColour(obj)
+        }
+    }
+    fn CreateFromCursor(obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxManagedPtr_CreateFromCursor(obj)
+        }
+    }
+    fn CreateFromFont(obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxManagedPtr_CreateFromFont(obj)
+        }
+    }
+    fn CreateFromPen(obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxManagedPtr_CreateFromPen(obj)
+        }
+    }
+    fn wxObject_SafeDelete(self_: *u8 /* void* */) {
+        unsafe {
+            wxObject_SafeDelete(self_)
+        }
+    }
+    fn wxBitmap_SafeDelete(self_: *u8 /* void* */) {
+        unsafe {
+            wxBitmap_SafeDelete(self_)
+        }
+    }
+    fn wxIcon_SafeDelete(self_: *u8 /* void* */) {
+        unsafe {
+            wxIcon_SafeDelete(self_)
+        }
+    }
+    fn wxBrush_SafeDelete(self_: *u8 /* void* */) {
+        unsafe {
+            wxBrush_SafeDelete(self_)
+        }
+    }
+    fn wxColour_SafeDelete(self_: *u8 /* void* */) {
+        unsafe {
+            wxColour_SafeDelete(self_)
+        }
+    }
+    fn wxCursor_SafeDelete(self_: *u8 /* void* */) {
+        unsafe {
+            wxCursor_SafeDelete(self_)
+        }
+    }
+    fn wxFont_SafeDelete(self_: *u8 /* void* */) {
+        unsafe {
+            wxFont_SafeDelete(self_)
+        }
+    }
+    fn wxPen_SafeDelete(self_: *u8 /* void* */) {
+        unsafe {
+            wxPen_SafeDelete(self_)
+        }
+    }
+    fn wxBitmap_IsStatic(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxBitmap_IsStatic(self_)
+        }
+    }
+    fn wxIcon_IsStatic(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxIcon_IsStatic(self_)
+        }
+    }
+    fn wxBrush_IsStatic(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxBrush_IsStatic(self_)
+        }
+    }
+    fn wxColour_IsStatic(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxColour_IsStatic(self_)
+        }
+    }
+    fn wxCursor_IsStatic(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxCursor_IsStatic(self_)
+        }
+    }
+    fn wxFont_IsStatic(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxFont_IsStatic(self_)
+        }
+    }
+    fn wxPen_IsStatic(self_: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxPen_IsStatic(self_)
+        }
+    }
 }
 trait wxCheckBox {
     fn Create(_prt: *u8 /* void* */, _id: c_int /* int */, _txt: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, _stl: c_int /* int */) -> *u8 /* void* */ {

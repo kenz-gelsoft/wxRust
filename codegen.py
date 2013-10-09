@@ -1,4 +1,6 @@
-from optparse import OptionParser
+from optparse   import OptionParser
+from subprocess import PIPE, Popen
+
 import re
 import sys
 
@@ -105,34 +107,7 @@ class WrapperGenerator(object):
 
 class Preprocessor(object):
     def __init__(self):
-        self.__cond_stack = [True]
         pass
-
-    def expand_cond_macros(self, condition):
-        while True:
-            rewritten = condition
-            rules = (
-                     ('defined(_stdcall)', '0'),
-                     ('defined(wxc_h)', '0'),
-                     ('defined(WXC_GLUE_H)', '0'),
-                     ('wxCHECK_VERSION(2,9,5)', '0'),
-                     ('(wxVERSION_NUMBER >= 2905)', '0'),
-                     ('0 || 0', '0'),
-                     ('1 || 0', '1'),
-                     ('!0', '1'),
-                     ('!1', '0'),
-                     ('0 && 0', '0'),
-                     ('0 && 1', '0'),
-                     ('1 && 0', '0'),
-                     ('1 && 1', '1'),
-                     ('(0)', '0'),
-                     ('(1)', '1'),
-                     )
-            for macro, value in rules:
-                rewritten = rewritten.replace(macro, value)
-            if rewritten == condition:
-                return rewritten
-            condition = rewritten
 
     def expand_normal_macros(self, line):
         line = re.sub(r'TArrayIntOutVoid', 'intptr_t*', line)
@@ -153,15 +128,21 @@ class Preprocessor(object):
         line = re.sub(r'TClassRef\([^)]*\)', 'void*', line)
         line = re.sub(r'TClosureFun', 'void*', line)
         line = re.sub(r'TColorRGB\([^)]*\)', 'u8, u8, u8', line)
+        line = re.sub(r'TInt64', 'i64', line)
         line = re.sub(r'TIntPtr', 'intptr_t', line)
         line = re.sub(r'TPoint\([^)]*\)', 'int, int', line)
+        line = re.sub(r'TPointDouble\([^)]*\)', 'double, double', line)
         line = re.sub(r'TPointLong\([^)]*\)', 'long, long', line)
         line = re.sub(r'TPointOut\([^)]*\)', 'int*, int*', line)
+        line = re.sub(r'TPointOutDouble\([^)]*\)', 'double*, double*', line)
         line = re.sub(r'TPointOutVoid\([^)]*\)', 'int*, int*', line)
         line = re.sub(r'TRect\([^)]*\)', 'int, int, int, int', line)
+        line = re.sub(r'TRectDouble\([^)]*\)', 'double, double, double, double', line)
+        line = re.sub(r'TRectOutDouble\([^)]*\)', 'double*, double*, double*, double*', line)
         line = re.sub(r'TRectOutVoid\([^)]*\)', 'int*, int*, int*, int*', line)
         line = re.sub(r'TSelf\([^)]*\)', 'void*', line)
         line = re.sub(r'TSize\([^)]*\)', 'int, int', line)
+        line = re.sub(r'TSizeDouble\([^)]*\)', 'double, double', line)
         line = re.sub(r'TSizeOut\([^)]*\)', 'int*, int*', line)
         line = re.sub(r'TSizeOutDouble\([^)]*\)', 'double*, double*', line)
         line = re.sub(r'TSizeOutVoid\([^)]*\)', 'int*, int*', line)
@@ -174,60 +155,16 @@ class Preprocessor(object):
         return line
 
     def preprocess(self, file):
-        output = []
-        for line in  Preprocessor._normalize(file.read()).splitlines():
-            line = line.strip()
-            if line.startswith('#'):
-                # directive line
-                line = line[1:].strip()
-                if line.startswith('import') or line.startswith('include') or line.startswith('define') or line.startswith('undef'):
-                    # ignore imports, includes and defines for now.
-                    continue
-                elif line.startswith('if') or line.startswith('elif') or line.startswith('ifdef') or line.startswith('ifndef'):
-                    # ifdef/ifndef directive
-                    if line.startswith('ifdef') or line.startswith('ifndef'):
-                        if line.startswith('ifdef'):
-                            macro = line[len('ifdef'):].strip()
-                            line = 'if defined(%s)' % macro
-                        else:
-                            macro = line[len('ifndef'):].strip()
-                            line = 'if !defined(%s)' % macro
-                    # if/elif directive
-                    if line.startswith('if'):
-                        condition = line[len('if'):].strip()
-                    else:
-                        self.__cond_stack.pop()
-                        condition = line[len('elif'):].strip()
-                    condition = self.expand_cond_macros(condition)
-                    # condition
-                    if condition == '1':
-                        self.__cond_stack.append(True)
-                        continue
-                    elif condition == '0':
-                        self.__cond_stack.append(False)
-                        continue
-                    else:
-                        raise RuntimeError('invalid condition |%s|' % condition)
-                elif line.startswith('else'):
-                    self.__cond_stack.append(not self.__cond_stack.pop())
-                    continue
-                elif line.startswith('endif'):
-                    self.__cond_stack.pop()
-                    continue
-                else:
-                    raise RuntimeError('not supported directive |%s|' % line)
-            if self.__cond_stack[-1]:
-                output.append(self.expand_normal_macros(line))
-        return output
-
-    @staticmethod
-    def _strip_comments(text):
-        text = re.sub(r'(\/\*.*?\*\/|\/\/[^\n]*)', '', text, flags=re.DOTALL)
-        return text
+        cppflags = Popen(['wx-config', '--cppflags'], stdout=PIPE).communicate()[0].split()
+        cppflags.remove('-D__WXMAC__')
+        cmdline = ['cpp', '-DWXC_TYPES_H'] + cppflags + ['-I/Users/kenz/src/wxRust/wxHaskell/wxc/src/include', file]
+        content = Popen(cmdline, stdout=PIPE).communicate()[0]
+        content = Preprocessor._normalize(content)
+        return [self.expand_normal_macros(line) for line in content.splitlines() if len(line.strip()) and not line.strip().startswith('#')]
     
     @staticmethod
     def _normalize(text):
-        text = Preprocessor._strip_comments(text)
+        text = re.sub(r'[ \t]+', ' ', text)
         text = re.sub(r'^\s*\n', '', text)
         text = re.sub(r'\n+', '\n', text)
         text = re.sub(r'\\\n\s+', '', text)
@@ -241,9 +178,8 @@ class Parser(object):
     
     def parse_files(self, files):
         for file in files:
-            with open(file) as f:
-                self._new_class()
-                self._parse(Preprocessor().preprocess(f))
+            self._new_class()
+            self._parse(Preprocessor().preprocess(file))
         self._new_class()
 
     @property
@@ -271,7 +207,8 @@ class Parser(object):
             return
         if not('(' in line and ')' in line):
             # all delarations are functions.
-            assert False
+            #assert False
+            return
         self.__current.parse_line(line)
 
 
@@ -288,8 +225,8 @@ class Class(object):
         assert matched
         classes = matched.group(1).split(',')
         if len(classes) > 1:
-            self.__base = classes[1]
-        self.__name = classes[0]
+            self.__base = classes[1].strip()
+        self.__name = classes[0].strip()
 
     def parse_line(self, line):
         self.__methods.append(Method(self.name).parse(line))

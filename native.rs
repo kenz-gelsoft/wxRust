@@ -727,6 +727,8 @@ extern {
     pub fn wxScreenDC_StartDrawingOnTop(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */) -> bool /* bool */;
     pub fn wxScreenDC_StartDrawingOnTopOfWin(_obj: *u8 /* void* */, win: *u8 /* void* */) -> bool /* bool */;
     
+    // TClassDefExtend(wxGraphicsPath,wxGraphicsObject);
+    
     // TClassDefExtend(wxHelpControllerBase,wxObject)
     
     // TClassDefExtend(wxTextDropTarget,wxDropTarget)
@@ -757,6 +759,8 @@ extern {
     pub fn wxIconBundle_GetIcon(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, _ref: *u8 /* void* */);
     
     // TClassDefExtend(wxGridCellFloatRenderer,wxGridCellStringRenderer)
+    
+    // TClassDefExtend( wxcPrintout, wxPrintout );
     
     // TClassDefExtend(wxTextValidator,wxValidator)
     pub fn wxTextValidator_Create(style: c_int /* int */, val: *u8 /* void* */) -> *u8 /* void* */;
@@ -796,6 +800,11 @@ extern {
     // TClassDef(wxWindowDisabler)
     
     // TClassDef(wxTextInputStream)
+    
+    // TClassDef( wxTextInputStream );
+    pub fn wxTextInputStream_Create(inputStream: *u8 /* void* */, sep: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxTextInputStream_Delete(self_: *u8 /* void* */);
+    pub fn wxTextInputStream_ReadLine(self_: *u8 /* void* */) -> *u8 /* void* */;
     
     // TClassDefExtend(wxListCtrl,wxControl)
     pub fn wxListCtrl_Arrange(_obj: *u8 /* void* */, flag: c_int /* int */) -> bool /* bool */;
@@ -912,6 +921,26 @@ extern {
     
     // TClassDefExtend(wxIPV4address,wxSockAddress)
     
+    // TClassDefExtend(wxMediaCtrl,wxWindow);
+    pub fn wxMediaCtrl_Create(parent: *u8 /* void* */, windowID: c_int /* int */, fileName: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */, w: c_int /* int */, h: c_int /* int */, style: c_long /* long */, szBackend: *u8 /* void* */, name: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxMediaCtrl_Delete(self_: *u8 /* void* */);
+    pub fn wxMediaCtrl_GetBestSize(self_: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxMediaCtrl_GetPlaybackRate(self_: *u8 /* void* */) -> c_double /* double */;
+    pub fn wxMediaCtrl_GetVolume(self_: *u8 /* void* */) -> c_double /* double */;
+    pub fn wxMediaCtrl_GetState(self_: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxMediaCtrl_Length(self_: *u8 /* void* */) -> i64 /* i64 */;
+    pub fn wxMediaCtrl_Load(self_: *u8 /* void* */, fileName: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxMediaCtrl_LoadURI(self_: *u8 /* void* */, uri: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxMediaCtrl_LoadURIWithProxy(self_: *u8 /* void* */, uri: *u8 /* void* */, proxy: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxMediaCtrl_Pause(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxMediaCtrl_Play(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxMediaCtrl_Seek(self_: *u8 /* void* */, offsetWhere: i64 /* i64 */, mode: c_int /* int */) -> i64 /* i64 */;
+    pub fn wxMediaCtrl_SetPlaybackRate(self_: *u8 /* void* */, dRate: c_double /* double */) -> bool /* bool */;
+    pub fn wxMediaCtrl_SetVolume(self_: *u8 /* void* */, dVolume: c_double /* double */) -> bool /* bool */;
+    pub fn wxMediaCtrl_ShowPlayerControls(self_: *u8 /* void* */, flags: c_int /* int */) -> bool /* bool */;
+    pub fn wxMediaCtrl_Stop(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxMediaCtrl_Tell(self_: *u8 /* void* */) -> i64 /* i64 */;
+    
     // TClassDefExtend(wxPaintEvent,wxEvent)
     
     // TClassDefExtend(wxSocketServer,wxSocketBase)
@@ -984,6 +1013,26 @@ extern {
     
     // TClassDefExtend(wxPreviewControlBar,wxPanel)
     
+    // TClassDefExtend(wxPreviewControlBar,wxPanel);
+    pub fn expEVT_PRINT_BEGIN() -> c_int /* int */;
+    pub fn expEVT_PRINT_BEGIN_DOC() -> c_int /* int */;
+    pub fn expEVT_PRINT_END() -> c_int /* int */;
+    pub fn expEVT_PRINT_END_DOC() -> c_int /* int */;
+    pub fn expEVT_PRINT_PREPARE() -> c_int /* int */;
+    pub fn expEVT_PRINT_PAGE() -> c_int /* int */;
+    pub fn wxPrintout_GetDC(_obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxPrintout_GetPPIPrinter(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */);
+    pub fn wxPrintout_GetPPIScreen(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */);
+    pub fn wxPrintout_GetPageSizeMM(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */);
+    pub fn wxPrintout_GetPageSizePixels(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */);
+    pub fn wxPrintout_GetTitle(_obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxPrintout_IsPreview(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxPrintout_SetDC(_obj: *u8 /* void* */, dc: *u8 /* void* */);
+    pub fn wxPrintout_SetPPIPrinter(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */);
+    pub fn wxPrintout_SetPPIScreen(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */);
+    pub fn wxPrintout_SetPageSizeMM(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */);
+    pub fn wxPrintout_SetPageSizePixels(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */);
+    
     // TClassDefExtend(ELJPreviewFrame,wxPreviewFrame)
     pub fn ELJPreviewFrame_Create(_obj: *u8 /* void* */, _init: *u8 /* void* */, _create_canvas: *u8 /* void* */, _create_toolbar: *u8 /* void* */, preview: *u8 /* void* */, parent: *u8 /* void* */, title: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */) -> *u8 /* void* */;
     pub fn ELJPreviewFrame_GetControlBar(_obj: *u8 /* void* */) -> *u8 /* void* */;
@@ -995,6 +1044,8 @@ extern {
     pub fn ELJPreviewFrame_SetPrintPreview(_obj: *u8 /* void* */, obj: *u8 /* void* */);
     
     // TClassDefExtend(wxBitmapHandler,wxObject)
+    
+    // TClassDefExtend(wxGraphicsContext,wxGraphicsObject);
     
     // TClassDefExtend(wxGaugeMSW,wxGauge)
     
@@ -1204,6 +1255,101 @@ extern {
     pub fn wxHelpProvider_ShowHelp(_obj: *u8 /* void* */, window: *u8 /* void* */) -> bool /* bool */;
     
     // TClassDef(wxHashMap)
+    
+    // TClassDefExtend(wxGLContext,wxObject);
+    pub fn wxGLCanvas_Create(parent: *u8 /* void* */, windowID: c_int /* int */, attributes: *c_int /* int* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */, title: *u8 /* void* */, palette: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGLCanvas_SetColour(self_: *u8 /* void* */, colour: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxGLCanvas_SetCurrent(self_: *u8 /* void* */, ctxt: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxGLCanvas_SwapBuffers(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxGLCanvas_IsDisplaySupported(attributes: *c_int /* int* */) -> bool /* bool */;
+    pub fn wxGLCanvas_IsExtensionSupported(extension: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxGLContext_Create(win: *u8 /* void* */, other: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGLContext_CreateFromNull(win: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGLContext_SetCurrent(self_: *u8 /* void* */, win: *u8 /* void* */) -> bool /* bool */;
+    
+    // TClassDefExtend(wxGraphicsRenderer,wxGraphicsObject);
+    pub fn wxGraphicsBrush_Create() -> *u8 /* void* */;
+    pub fn wxGraphicsBrush_Delete(self_: *u8 /* void* */);
+    pub fn wxGraphicsContext_Create(dc: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGraphicsContext_CreateFromWindow(window: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGraphicsContext_Delete(self_: *u8 /* void* */);
+    pub fn wxGraphicsContext_CreateFromNative(context: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGraphicsContext_CreateFromNativeWindow(window: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGraphicsContext_Clip(self_: *u8 /* void* */, region: *u8 /* void* */);
+    pub fn wxGraphicsContext_ClipByRectangle(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */);
+    pub fn wxGraphicsContext_ResetClip(self_: *u8 /* void* */);
+    pub fn wxGraphicsContext_DrawBitmap(self_: *u8 /* void* */, bmp: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */);
+    pub fn wxGraphicsContext_DrawEllipse(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */);
+    pub fn wxGraphicsContext_DrawIcon(self_: *u8 /* void* */, icon: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */);
+    pub fn wxGraphicsContext_DrawLines(self_: *u8 /* void* */, n: size_t /* size_t */, x: *u8 /* void* */, y: *u8 /* void* */, style: c_int /* int */);
+    pub fn wxGraphicsContext_DrawPath(self_: *u8 /* void* */, path: *u8 /* void* */, style: c_int /* int */);
+    pub fn wxGraphicsContext_DrawRectangle(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */);
+    pub fn wxGraphicsContext_DrawRoundedRectangle(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */, radius: c_double /* double */);
+    pub fn wxGraphicsContext_DrawText(self_: *u8 /* void* */, text: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */);
+    pub fn wxGraphicsContext_DrawTextWithAngle(self_: *u8 /* void* */, text: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, radius: c_double /* double */);
+    pub fn wxGraphicsContext_FillPath(self_: *u8 /* void* */, path: *u8 /* void* */, style: c_int /* int */);
+    pub fn wxGraphicsContext_StrokePath(self_: *u8 /* void* */, path: *u8 /* void* */);
+    pub fn wxGraphicsContext_GetNativeContext(self_: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGraphicsContext_GetTextExtent(self_: *u8 /* void* */, text: *u8 /* void* */, width: *c_double /* double* */, height: *c_double /* double* */, descent: *c_double /* double* */, externalLeading: *c_double /* double* */);
+    pub fn wxGraphicsContext_Rotate(self_: *u8 /* void* */, angle: c_double /* double */);
+    pub fn wxGraphicsContext_Scale(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */);
+    pub fn wxGraphicsContext_Translate(self_: *u8 /* void* */, dx: c_double /* double */, dy: c_double /* double */);
+    pub fn wxGraphicsContext_SetTransform(self_: *u8 /* void* */, path: *u8 /* void* */);
+    pub fn wxGraphicsContext_ConcatTransform(self_: *u8 /* void* */, path: *u8 /* void* */);
+    pub fn wxGraphicsContext_SetBrush(self_: *u8 /* void* */, brush: *u8 /* void* */);
+    pub fn wxGraphicsContext_SetGraphicsBrush(self_: *u8 /* void* */, brush: *u8 /* void* */);
+    pub fn wxGraphicsContext_SetFont(self_: *u8 /* void* */, font: *u8 /* void* */, colour: *u8 /* void* */);
+    pub fn wxGraphicsContext_SetGraphicsFont(self_: *u8 /* void* */, font: *u8 /* void* */);
+    pub fn wxGraphicsContext_SetPen(self_: *u8 /* void* */, pen: *u8 /* void* */);
+    pub fn wxGraphicsContext_SetGraphicsPen(self_: *u8 /* void* */, pen: *u8 /* void* */);
+    pub fn wxGraphicsContext_StrokeLine(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */);
+    pub fn wxGraphicsContext_StrokeLines(self_: *u8 /* void* */, n: size_t /* size_t */, x: *u8 /* void* */, y: *u8 /* void* */, style: c_int /* int */);
+    pub fn wxGraphicsFont_Create() -> *u8 /* void* */;
+    pub fn wxGraphicsFont_Delete(self_: *u8 /* void* */);
+    pub fn wxGraphicsMatrix_Create() -> *u8 /* void* */;
+    pub fn wxGraphicsMatrix_Delete(self_: *u8 /* void* */);
+    pub fn wxGraphicsMatrix_Concat(self_: *u8 /* void* */, t: *u8 /* void* */);
+    pub fn wxGraphicsMatrix_Get(self_: *u8 /* void* */, a: *c_double /* double* */, b: *c_double /* double* */, c: *c_double /* double* */, d: *c_double /* double* */, tx: *c_double /* double* */, ty: *c_double /* double* */);
+    pub fn wxGraphicsMatrix_GetNativeMatrix(self_: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGraphicsMatrix_Invert(self_: *u8 /* void* */);
+    pub fn wxGraphicsMatrix_IsEqual(self_: *u8 /* void* */, t: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxGraphicsMatrix_IsIdentity(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxGraphicsMatrix_Rotate(self_: *u8 /* void* */, angle: c_double /* double */);
+    pub fn wxGraphicsMatrix_Scale(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */);
+    pub fn wxGraphicsMatrix_Set(self_: *u8 /* void* */, a: c_double /* double */, b: c_double /* double */, c: c_double /* double */, d: c_double /* double */, tx: c_double /* double */, ty: c_double /* double */);
+    pub fn wxGraphicsMatrix_Translate(self_: *u8 /* void* */, dx: c_double /* double */, dy: c_double /* double */);
+    pub fn wxGraphicsMatrix_TransformPoint(self_: *u8 /* void* */, arg0: *c_double /* double* */, arg1: *c_double /* double* */);
+    pub fn wxGraphicsMatrix_TransformDistance(self_: *u8 /* void* */, dx: *c_double /* double* */, dy: *c_double /* double* */);
+    pub fn wxGraphicsObject_GetRenderer() -> *u8 /* void* */;
+    pub fn wxGraphicsObject_IsNull(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxGraphicsPath_Create() -> *u8 /* void* */;
+    pub fn wxGraphicsPath_Delete(self_: *u8 /* void* */);
+    pub fn wxGraphicsPath_MoveToPoint(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */);
+    pub fn wxGraphicsPath_AddArc(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, r: c_double /* double */, startAngle: c_double /* double */, endAngle: c_double /* double */, clockwise: bool /* bool */);
+    pub fn wxGraphicsPath_AddArcToPoint(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */, r: c_double /* double */);
+    pub fn wxGraphicsPath_AddCircle(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, r: c_double /* double */);
+    pub fn wxGraphicsPath_AddCurveToPoint(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */, arg4: c_double /* double */, arg5: c_double /* double */);
+    pub fn wxGraphicsPath_AddEllipse(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */);
+    pub fn wxGraphicsPath_AddLineToPoint(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */);
+    pub fn wxGraphicsPath_AddPath(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, path: *u8 /* void* */);
+    pub fn wxGraphicsPath_AddQuadCurveToPoint(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */);
+    pub fn wxGraphicsPath_AddRectangle(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */);
+    pub fn wxGraphicsPath_AddRoundedRectangle(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, arg2: c_double /* double */, arg3: c_double /* double */, radius: c_double /* double */);
+    pub fn wxGraphicsPath_CloseSubpath(self_: *u8 /* void* */);
+    pub fn wxGraphicsPath_Contains(self_: *u8 /* void* */, arg0: c_double /* double */, arg1: c_double /* double */, style: c_int /* int */);
+    pub fn wxGraphicsPath_GetBox(self_: *u8 /* void* */, arg0: *c_double /* double* */, arg1: *c_double /* double* */, arg2: *c_double /* double* */, arg3: *c_double /* double* */);
+    pub fn wxGraphicsPath_GetCurrentPoint(self_: *u8 /* void* */, arg0: *c_double /* double* */, arg1: *c_double /* double* */);
+    pub fn wxGraphicsPath_Transform(self_: *u8 /* void* */, matrix: *u8 /* void* */);
+    pub fn wxGraphicsPath_GetNativePath(self_: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGraphicsPath_UnGetNativePath(p: *u8 /* void* */);
+    pub fn wxGraphicsPen_Create() -> *u8 /* void* */;
+    pub fn wxGraphicsPen_Delete(self_: *u8 /* void* */);
+    pub fn wxGraphicsRenderer_Delete(self_: *u8 /* void* */);
+    pub fn wxGraphicsRenderer_GetDefaultRenderer(self_: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGraphicsRenderer_CreateContext(dc: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGraphicsRenderer_CreateContextFromWindow(window: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGraphicsRenderer_CreateContextFromNativeContext(context: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGraphicsRenderer_CreateContextFromNativeWindow(window: *u8 /* void* */) -> *u8 /* void* */;
     
     // TClassDef(wxCondition)
     // missing: wxCondition_Broadcast
@@ -1566,6 +1712,8 @@ extern {
     // TClassDefExtend(wxWizardEvent,wxNotifyEvent)
     pub fn wxWizardEvent_GetDirection(_obj: *u8 /* void* */) -> c_int /* int */;
     
+    // TClassDefExtend(wxMediaEvent,wxNotifyEvent);
+    
     // TClassDefExtend(wxSplitterScrolledWindow,wxScrolledWindow)
     // missing: wxSplitterScrolledWindow_Create
     
@@ -1862,6 +2010,78 @@ extern {
     
     // TClassDefExtend(wxGenericValidator,wxValidator)
     
+    // TClassDefExtend(wxStyledTextEvent, wxCommandEvent);
+    pub fn wxStyledTextEvent_GetPosition(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetKey(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetModifiers(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetModificationType(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetLength(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetLinesAdded(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetLine(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetFoldLevelNow(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetFoldLevelPrev(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetMargin(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetMessage(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetWParam(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetLParam(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetListType(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetX(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetY(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetDragText(_obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxStyledTextEvent_GetDragAllowMove(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextEvent_GetDragResult(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextEvent_GetShift(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextEvent_GetControl(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextEvent_GetAlt(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextEvent_GetText(_obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxStyledTextEvent_Clone(_obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxStyledTextEvent_SetPosition(_obj: *u8 /* void* */, pos: c_int /* int */);
+    pub fn wxStyledTextEvent_SetKey(_obj: *u8 /* void* */, k: c_int /* int */);
+    pub fn wxStyledTextEvent_SetModifiers(_obj: *u8 /* void* */, m: c_int /* int */);
+    pub fn wxStyledTextEvent_SetModificationType(_obj: *u8 /* void* */, t: c_int /* int */);
+    pub fn wxStyledTextEvent_SetText(_obj: *u8 /* void* */, t: *u8 /* void* */);
+    pub fn wxStyledTextEvent_SetLength(_obj: *u8 /* void* */, len: c_int /* int */);
+    pub fn wxStyledTextEvent_SetLinesAdded(_obj: *u8 /* void* */, num: c_int /* int */);
+    pub fn wxStyledTextEvent_SetLine(_obj: *u8 /* void* */, val: c_int /* int */);
+    pub fn wxStyledTextEvent_SetFoldLevelNow(_obj: *u8 /* void* */, val: c_int /* int */);
+    pub fn wxStyledTextEvent_SetFoldLevelPrev(_obj: *u8 /* void* */, val: c_int /* int */);
+    pub fn wxStyledTextEvent_SetMargin(_obj: *u8 /* void* */, val: c_int /* int */);
+    pub fn wxStyledTextEvent_SetMessage(_obj: *u8 /* void* */, val: c_int /* int */);
+    pub fn wxStyledTextEvent_SetWParam(_obj: *u8 /* void* */, val: c_int /* int */);
+    pub fn wxStyledTextEvent_SetLParam(_obj: *u8 /* void* */, val: c_int /* int */);
+    pub fn wxStyledTextEvent_SetListType(_obj: *u8 /* void* */, val: c_int /* int */);
+    pub fn wxStyledTextEvent_SetX(_obj: *u8 /* void* */, val: c_int /* int */);
+    pub fn wxStyledTextEvent_SetY(_obj: *u8 /* void* */, val: c_int /* int */);
+    pub fn wxStyledTextEvent_SetDragText(_obj: *u8 /* void* */, val: *u8 /* void* */);
+    pub fn wxStyledTextEvent_SetDragAllowMove(_obj: *u8 /* void* */, val: bool /* bool */);
+    pub fn wxStyledTextEvent_SetDragResult(_obj: *u8 /* void* */, val: c_int /* int */);
+    pub fn expEVT_STC_CHANGE() -> c_int /* int */;
+    pub fn expEVT_STC_STYLENEEDED() -> c_int /* int */;
+    pub fn expEVT_STC_CHARADDED() -> c_int /* int */;
+    pub fn expEVT_STC_SAVEPOINTREACHED() -> c_int /* int */;
+    pub fn expEVT_STC_SAVEPOINTLEFT() -> c_int /* int */;
+    pub fn expEVT_STC_ROMODIFYATTEMPT() -> c_int /* int */;
+    pub fn expEVT_STC_KEY() -> c_int /* int */;
+    pub fn expEVT_STC_DOUBLECLICK() -> c_int /* int */;
+    pub fn expEVT_STC_UPDATEUI() -> c_int /* int */;
+    pub fn expEVT_STC_MODIFIED() -> c_int /* int */;
+    pub fn expEVT_STC_MACRORECORD() -> c_int /* int */;
+    pub fn expEVT_STC_MARGINCLICK() -> c_int /* int */;
+    pub fn expEVT_STC_NEEDSHOWN() -> c_int /* int */;
+    pub fn expEVT_STC_PAINTED() -> c_int /* int */;
+    pub fn expEVT_STC_USERLISTSELECTION() -> c_int /* int */;
+    pub fn expEVT_STC_URIDROPPED() -> c_int /* int */;
+    pub fn expEVT_STC_DWELLSTART() -> c_int /* int */;
+    pub fn expEVT_STC_DWELLEND() -> c_int /* int */;
+    pub fn expEVT_STC_START_DRAG() -> c_int /* int */;
+    pub fn expEVT_STC_DRAG_OVER() -> c_int /* int */;
+    pub fn expEVT_STC_DO_DROP() -> c_int /* int */;
+    pub fn expEVT_STC_ZOOM() -> c_int /* int */;
+    pub fn expEVT_STC_HOTSPOT_CLICK() -> c_int /* int */;
+    pub fn expEVT_STC_HOTSPOT_DCLICK() -> c_int /* int */;
+    pub fn expEVT_STC_CALLTIP_CLICK() -> c_int /* int */;
+    pub fn expEVT_STC_AUTOCOMP_SELECTION() -> c_int /* int */;
+    
     // TClassDefExtend(wxLogChain,wxLog)
     pub fn wxLogChain_Create(logger: *u8 /* void* */) -> *u8 /* void* */;
     pub fn wxLogChain_Delete(_obj: *u8 /* void* */);
@@ -1915,6 +2135,8 @@ extern {
     pub fn wxPropertyCategory_Create(label: *u8 /* void* */) -> *u8 /* void* */;
     
     // TClassDefExtend(wxGLCanvas,wxScrolledWindow)
+    
+    // TClassDefExtend(wxGLCanvas,wxWindow);
     
     // TClassDefExtend(wxSystemOptions,wxObject)
     
@@ -2221,6 +2443,11 @@ extern {
     
     // TClassDefExtend(wxPreviewFrame,wxFrame)
     
+    // TClassDefExtend(wxPreviewFrame,wxFrame);
+    pub fn wxPreviewFrame_Create(preview: *u8 /* void* */, parent: *u8 /* void* */, title: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */, name: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxPreviewFrame_Delete(self_: *u8 /* void* */);
+    pub fn wxPreviewFrame_Initialize(self_: *u8 /* void* */);
+    
     // TClassDefExtend(wxFocusEvent,wxEvent)
     
     // TClassDefExtend(cbCollapseBox,cbMiniButton)
@@ -2277,6 +2504,331 @@ extern {
     
     // TClassDef(wxTextOutputStream)
     
+    // TClassDef( wxTextOutputStream );
+    pub fn wxTextOutputStream_Create(outputStream: *u8 /* void* */, mode: c_int /* int */) -> *u8 /* void* */;
+    pub fn wxTextOutputStream_Delete(self_: *u8 /* void* */);
+    pub fn wxTextOutputStream_WriteString(self_: *u8 /* void* */, txt: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_AddText(_obj: *u8 /* void* */, text: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_AddStyledText(_obj: *u8 /* void* */, data: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_InsertText(_obj: *u8 /* void* */, pos: c_int /* int */, text: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_ClearAll(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_ClearDocumentStyle(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_GetLength(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetCharAt(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetCurrentPos(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetAnchor(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetStyleAt(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_Redo(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetUndoCollection(_obj: *u8 /* void* */, collectUndo: bool /* bool */);
+    pub fn wxStyledTextCtrl_SelectAll(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetSavePoint(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_CanRedo(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_MarkerLineFromHandle(_obj: *u8 /* void* */, handle: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_MarkerDeleteHandle(_obj: *u8 /* void* */, handle: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetUndoCollection(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_GetViewWhiteSpace(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetViewWhiteSpace(_obj: *u8 /* void* */, viewWS: c_int /* int */);
+    pub fn wxStyledTextCtrl_PositionFromPoint(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_PositionFromPointClose(_obj: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GotoLine(_obj: *u8 /* void* */, line: c_int /* int */);
+    pub fn wxStyledTextCtrl_GotoPos(_obj: *u8 /* void* */, pos: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetAnchor(_obj: *u8 /* void* */, posAnchor: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetEndStyled(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_ConvertEOLs(_obj: *u8 /* void* */, eolMode: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetEOLMode(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetEOLMode(_obj: *u8 /* void* */, eolMode: c_int /* int */);
+    pub fn wxStyledTextCtrl_StartStyling(_obj: *u8 /* void* */, pos: c_int /* int */, mask: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetStyling(_obj: *u8 /* void* */, length: c_int /* int */, style: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetBufferedDraw(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetBufferedDraw(_obj: *u8 /* void* */, buffered: bool /* bool */);
+    pub fn wxStyledTextCtrl_SetTabWidth(_obj: *u8 /* void* */, tabWidth: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetTabWidth(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetCodePage(_obj: *u8 /* void* */, codePage: c_int /* int */);
+    pub fn wxStyledTextCtrl_MarkerDefine(_obj: *u8 /* void* */, markerNumber: c_int /* int */, markerSymbol: c_int /* int */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */, arg3: u8 /* u8 */, arg4: u8 /* u8 */, arg5: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_MarkerSetForeground(_obj: *u8 /* void* */, markerNumber: c_int /* int */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_MarkerSetBackground(_obj: *u8 /* void* */, markerNumber: c_int /* int */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_MarkerAdd(_obj: *u8 /* void* */, line: c_int /* int */, markerNumber: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_MarkerDelete(_obj: *u8 /* void* */, line: c_int /* int */, markerNumber: c_int /* int */);
+    pub fn wxStyledTextCtrl_MarkerDeleteAll(_obj: *u8 /* void* */, markerNumber: c_int /* int */);
+    pub fn wxStyledTextCtrl_MarkerGet(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_MarkerNext(_obj: *u8 /* void* */, lineStart: c_int /* int */, markerMask: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_MarkerPrevious(_obj: *u8 /* void* */, lineStart: c_int /* int */, markerMask: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_MarkerDefineBitmap(_obj: *u8 /* void* */, markerNumber: c_int /* int */, bmp: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetMarginType(_obj: *u8 /* void* */, margin: c_int /* int */, marginType: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetMarginType(_obj: *u8 /* void* */, margin: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetMarginWidth(_obj: *u8 /* void* */, margin: c_int /* int */, pixelWidth: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetMarginWidth(_obj: *u8 /* void* */, margin: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetMarginMask(_obj: *u8 /* void* */, margin: c_int /* int */, mask: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetMarginMask(_obj: *u8 /* void* */, margin: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetMarginSensitive(_obj: *u8 /* void* */, margin: c_int /* int */, sensitive: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetMarginSensitive(_obj: *u8 /* void* */, margin: c_int /* int */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_StyleClearAll(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_StyleSetForeground(_obj: *u8 /* void* */, style: c_int /* int */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_StyleSetBackground(_obj: *u8 /* void* */, style: c_int /* int */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_StyleSetBold(_obj: *u8 /* void* */, style: c_int /* int */, bold: bool /* bool */);
+    pub fn wxStyledTextCtrl_StyleSetItalic(_obj: *u8 /* void* */, style: c_int /* int */, italic: bool /* bool */);
+    pub fn wxStyledTextCtrl_StyleSetSize(_obj: *u8 /* void* */, style: c_int /* int */, sizePoints: c_int /* int */);
+    pub fn wxStyledTextCtrl_StyleSetFaceName(_obj: *u8 /* void* */, style: c_int /* int */, fontName: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_StyleSetEOLFilled(_obj: *u8 /* void* */, style: c_int /* int */, filled: bool /* bool */);
+    pub fn wxStyledTextCtrl_StyleResetDefault(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_StyleSetUnderline(_obj: *u8 /* void* */, style: c_int /* int */, underline: bool /* bool */);
+    pub fn wxStyledTextCtrl_StyleSetCase(_obj: *u8 /* void* */, style: c_int /* int */, caseForce: c_int /* int */);
+    pub fn wxStyledTextCtrl_StyleSetCharacterSet(_obj: *u8 /* void* */, style: c_int /* int */, characterSet: c_int /* int */);
+    pub fn wxStyledTextCtrl_StyleSetHotSpot(_obj: *u8 /* void* */, style: c_int /* int */, hotspot: bool /* bool */);
+    pub fn wxStyledTextCtrl_SetSelForeground(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_SetSelBackground(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_SetCaretForeground(_obj: *u8 /* void* */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_CmdKeyAssign(_obj: *u8 /* void* */, key: c_int /* int */, modifiers: c_int /* int */, cmd: c_int /* int */);
+    pub fn wxStyledTextCtrl_CmdKeyClear(_obj: *u8 /* void* */, key: c_int /* int */, modifiers: c_int /* int */);
+    pub fn wxStyledTextCtrl_CmdKeyClearAll(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetStyleBytes(_obj: *u8 /* void* */, length: c_int /* int */, styleBytes: *char /* char* */);
+    pub fn wxStyledTextCtrl_StyleSetVisible(_obj: *u8 /* void* */, style: c_int /* int */, visible: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetCaretPeriod(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetCaretPeriod(_obj: *u8 /* void* */, periodMilliseconds: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetWordChars(_obj: *u8 /* void* */, characters: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_BeginUndoAction(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_EndUndoAction(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_IndicatorSetStyle(_obj: *u8 /* void* */, indic: c_int /* int */, style: c_int /* int */);
+    pub fn wxStyledTextCtrl_IndicatorGetStyle(_obj: *u8 /* void* */, indic: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_IndicatorSetForeground(_obj: *u8 /* void* */, indic: c_int /* int */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_SetWhitespaceForeground(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_SetWhitespaceBackground(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_SetStyleBits(_obj: *u8 /* void* */, bits: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetStyleBits(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetLineState(_obj: *u8 /* void* */, line: c_int /* int */, state: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetLineState(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetMaxLineState(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetCaretLineVisible(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetCaretLineVisible(_obj: *u8 /* void* */, show: bool /* bool */);
+    pub fn wxStyledTextCtrl_StyleSetChangeable(_obj: *u8 /* void* */, style: c_int /* int */, changeable: bool /* bool */);
+    pub fn wxStyledTextCtrl_AutoCompShow(_obj: *u8 /* void* */, lenEntered: c_int /* int */, itemList: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_AutoCompCancel(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_AutoCompActive(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_AutoCompPosStart(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_AutoCompComplete(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_AutoCompStops(_obj: *u8 /* void* */, characterSet: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_AutoCompSetSeparator(_obj: *u8 /* void* */, separatorCharacter: c_int /* int */);
+    pub fn wxStyledTextCtrl_AutoCompGetSeparator(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_AutoCompSelect(_obj: *u8 /* void* */, text: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_AutoCompSetCancelAtStart(_obj: *u8 /* void* */, cancel: bool /* bool */);
+    pub fn wxStyledTextCtrl_AutoCompGetCancelAtStart(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_AutoCompSetFillUps(_obj: *u8 /* void* */, characterSet: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_AutoCompSetChooseSingle(_obj: *u8 /* void* */, chooseSingle: bool /* bool */);
+    pub fn wxStyledTextCtrl_AutoCompGetChooseSingle(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_AutoCompSetIgnoreCase(_obj: *u8 /* void* */, ignoreCase: bool /* bool */);
+    pub fn wxStyledTextCtrl_AutoCompGetIgnoreCase(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_UserListShow(_obj: *u8 /* void* */, listType: c_int /* int */, itemList: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_AutoCompSetAutoHide(_obj: *u8 /* void* */, autoHide: bool /* bool */);
+    pub fn wxStyledTextCtrl_AutoCompGetAutoHide(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_AutoCompSetDropRestOfWord(_obj: *u8 /* void* */, dropRestOfWord: bool /* bool */);
+    pub fn wxStyledTextCtrl_AutoCompGetDropRestOfWord(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_RegisterImage(_obj: *u8 /* void* */, type_: c_int /* int */, bmp: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_ClearRegisteredImages(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_AutoCompGetTypeSeparator(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_AutoCompSetTypeSeparator(_obj: *u8 /* void* */, separatorCharacter: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetIndent(_obj: *u8 /* void* */, indentSize: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetIndent(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetUseTabs(_obj: *u8 /* void* */, useTabs: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetUseTabs(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetLineIndentation(_obj: *u8 /* void* */, line: c_int /* int */, indentSize: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetLineIndentation(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetLineIndentPosition(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetColumn(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetUseHorizontalScrollBar(_obj: *u8 /* void* */, show: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetUseHorizontalScrollBar(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetIndentationGuides(_obj: *u8 /* void* */, show: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetIndentationGuides(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetHighlightGuide(_obj: *u8 /* void* */, column: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetHighlightGuide(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetLineEndPosition(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetCodePage(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetReadOnly(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetCurrentPos(_obj: *u8 /* void* */, pos: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetSelectionStart(_obj: *u8 /* void* */, pos: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetSelectionStart(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetSelectionEnd(_obj: *u8 /* void* */, pos: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetSelectionEnd(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetPrintMagnification(_obj: *u8 /* void* */, magnification: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetPrintMagnification(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetPrintColourMode(_obj: *u8 /* void* */, mode: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetPrintColourMode(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_FindText(_obj: *u8 /* void* */, minPos: c_int /* int */, maxPos: c_int /* int */, text: *u8 /* void* */, flags: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_FormatRange(_obj: *u8 /* void* */, doDraw: bool /* bool */, startPos: c_int /* int */, endPos: c_int /* int */, draw: *u8 /* void* */, target: *u8 /* void* */, renderRect: *u8 /* void* */, pageRect: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetFirstVisibleLine(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetLineCount(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetMarginLeft(_obj: *u8 /* void* */, pixelWidth: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetMarginLeft(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetMarginRight(_obj: *u8 /* void* */, pixelWidth: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetMarginRight(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetModify(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetSelection(_obj: *u8 /* void* */, start: c_int /* int */, end: c_int /* int */);
+    pub fn wxStyledTextCtrl_HideSelection(_obj: *u8 /* void* */, normal: bool /* bool */);
+    pub fn wxStyledTextCtrl_LineFromPosition(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_PositionFromLine(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_LineScroll(_obj: *u8 /* void* */, columns: c_int /* int */, lines: c_int /* int */);
+    pub fn wxStyledTextCtrl_EnsureCaretVisible(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_ReplaceSelection(_obj: *u8 /* void* */, text: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetReadOnly(_obj: *u8 /* void* */, readOnly: bool /* bool */);
+    pub fn wxStyledTextCtrl_CanPaste(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_CanUndo(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_EmptyUndoBuffer(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_Undo(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_Cut(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_Copy(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_Paste(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_Clear(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetText(_obj: *u8 /* void* */, text: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_GetTextLength(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetOvertype(_obj: *u8 /* void* */, overtype: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetOvertype(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetCaretWidth(_obj: *u8 /* void* */, pixelWidth: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetCaretWidth(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetTargetStart(_obj: *u8 /* void* */, pos: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetTargetStart(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetTargetEnd(_obj: *u8 /* void* */, pos: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetTargetEnd(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_ReplaceTarget(_obj: *u8 /* void* */, text: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_ReplaceTargetRE(_obj: *u8 /* void* */, text: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SearchInTarget(_obj: *u8 /* void* */, text: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetSearchFlags(_obj: *u8 /* void* */, flags: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetSearchFlags(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_CallTipShow(_obj: *u8 /* void* */, pos: c_int /* int */, definition: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_CallTipCancel(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_CallTipActive(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_CallTipPosAtStart(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_CallTipSetHighlight(_obj: *u8 /* void* */, start: c_int /* int */, end: c_int /* int */);
+    pub fn wxStyledTextCtrl_CallTipSetBackground(_obj: *u8 /* void* */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_CallTipSetForeground(_obj: *u8 /* void* */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_CallTipSetForegroundHighlight(_obj: *u8 /* void* */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_VisibleFromDocLine(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_DocLineFromVisible(_obj: *u8 /* void* */, lineDisplay: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetFoldLevel(_obj: *u8 /* void* */, line: c_int /* int */, level: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetFoldLevel(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetLastChild(_obj: *u8 /* void* */, line: c_int /* int */, level: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetFoldParent(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_ShowLines(_obj: *u8 /* void* */, lineStart: c_int /* int */, lineEnd: c_int /* int */);
+    pub fn wxStyledTextCtrl_HideLines(_obj: *u8 /* void* */, lineStart: c_int /* int */, lineEnd: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetLineVisible(_obj: *u8 /* void* */, line: c_int /* int */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetFoldExpanded(_obj: *u8 /* void* */, line: c_int /* int */, expanded: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetFoldExpanded(_obj: *u8 /* void* */, line: c_int /* int */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_ToggleFold(_obj: *u8 /* void* */, line: c_int /* int */);
+    pub fn wxStyledTextCtrl_EnsureVisible(_obj: *u8 /* void* */, line: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetFoldFlags(_obj: *u8 /* void* */, flags: c_int /* int */);
+    pub fn wxStyledTextCtrl_EnsureVisibleEnforcePolicy(_obj: *u8 /* void* */, line: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetTabIndents(_obj: *u8 /* void* */, tabIndents: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetTabIndents(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetBackSpaceUnIndents(_obj: *u8 /* void* */, bsUnIndents: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetBackSpaceUnIndents(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetMouseDwellTime(_obj: *u8 /* void* */, periodMilliseconds: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetMouseDwellTime(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_WordStartPosition(_obj: *u8 /* void* */, pos: c_int /* int */, onlyWordCharacters: bool /* bool */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_WordEndPosition(_obj: *u8 /* void* */, pos: c_int /* int */, onlyWordCharacters: bool /* bool */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetWrapMode(_obj: *u8 /* void* */, mode: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetWrapMode(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetLayoutCache(_obj: *u8 /* void* */, mode: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetLayoutCache(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetScrollWidth(_obj: *u8 /* void* */, pixelWidth: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetScrollWidth(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_TextWidth(_obj: *u8 /* void* */, style: c_int /* int */, text: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetEndAtLastLine(_obj: *u8 /* void* */, endAtLastLine: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetEndAtLastLine(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_TextHeight(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetUseVerticalScrollBar(_obj: *u8 /* void* */, show: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetUseVerticalScrollBar(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_AppendText(_obj: *u8 /* void* */, text: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_GetTwoPhaseDraw(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetTwoPhaseDraw(_obj: *u8 /* void* */, twoPhase: bool /* bool */);
+    pub fn wxStyledTextCtrl_TargetFromSelection(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_LinesJoin(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_LinesSplit(_obj: *u8 /* void* */, pixelWidth: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetFoldMarginColour(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_SetFoldMarginHiColour(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_LineDuplicate(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_HomeDisplay(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_HomeDisplayExtend(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_LineEndDisplay(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_LineEndDisplayExtend(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_LineCopy(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_MoveCaretInsideView(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_LineLength(_obj: *u8 /* void* */, line: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_BraceHighlight(_obj: *u8 /* void* */, pos1: c_int /* int */, pos2: c_int /* int */);
+    pub fn wxStyledTextCtrl_BraceBadLight(_obj: *u8 /* void* */, pos: c_int /* int */);
+    pub fn wxStyledTextCtrl_BraceMatch(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_GetViewEOL(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetViewEOL(_obj: *u8 /* void* */, visible: bool /* bool */);
+    pub fn wxStyledTextCtrl_SetDocPointer(_obj: *u8 /* void* */, docPointer: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetModEventMask(_obj: *u8 /* void* */, mask: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetEdgeColumn(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetEdgeColumn(_obj: *u8 /* void* */, column: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetEdgeMode(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetEdgeMode(_obj: *u8 /* void* */, mode: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetEdgeColour(_obj: *u8 /* void* */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_SearchAnchor(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SearchNext(_obj: *u8 /* void* */, flags: c_int /* int */, text: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SearchPrev(_obj: *u8 /* void* */, flags: c_int /* int */, text: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_LinesOnScreen(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_UsePopUp(_obj: *u8 /* void* */, allowPopUp: bool /* bool */);
+    pub fn wxStyledTextCtrl_SelectionIsRectangle(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetZoom(_obj: *u8 /* void* */, zoom: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetZoom(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_AddRefDocument(_obj: *u8 /* void* */, docPointer: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_ReleaseDocument(_obj: *u8 /* void* */, docPointer: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_GetModEventMask(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetSTCFocus(_obj: *u8 /* void* */, focus: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetSTCFocus(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetStatus(_obj: *u8 /* void* */, statusCode: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetStatus(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetMouseDownCaptures(_obj: *u8 /* void* */, captures: bool /* bool */);
+    pub fn wxStyledTextCtrl_GetMouseDownCaptures(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetSTCCursor(_obj: *u8 /* void* */, cursorType: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetSTCCursor(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetControlCharSymbol(_obj: *u8 /* void* */, symbol: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetControlCharSymbol(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_WordPartLeft(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_WordPartLeftExtend(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_WordPartRight(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_WordPartRightExtend(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetVisiblePolicy(_obj: *u8 /* void* */, visiblePolicy: c_int /* int */, visibleSlop: c_int /* int */);
+    pub fn wxStyledTextCtrl_DelLineLeft(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_DelLineRight(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetXOffset(_obj: *u8 /* void* */, newOffset: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetXOffset(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_ChooseCaretX(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetXCaretPolicy(_obj: *u8 /* void* */, caretPolicy: c_int /* int */, caretSlop: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetYCaretPolicy(_obj: *u8 /* void* */, caretPolicy: c_int /* int */, caretSlop: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetPrintWrapMode(_obj: *u8 /* void* */, mode: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetPrintWrapMode(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_SetHotspotActiveForeground(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_SetHotspotActiveBackground(_obj: *u8 /* void* */, useSetting: bool /* bool */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_SetHotspotActiveUnderline(_obj: *u8 /* void* */, underline: bool /* bool */);
+    pub fn wxStyledTextCtrl_PositionBefore(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_PositionAfter(_obj: *u8 /* void* */, pos: c_int /* int */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_CopyRange(_obj: *u8 /* void* */, start: c_int /* int */, end: c_int /* int */);
+    pub fn wxStyledTextCtrl_CopyText(_obj: *u8 /* void* */, length: c_int /* int */, text: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_StartRecord(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_StopRecord(_obj: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetLexer(_obj: *u8 /* void* */, lexer: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetLexer(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_Colourise(_obj: *u8 /* void* */, start: c_int /* int */, end: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetProperty(_obj: *u8 /* void* */, key: *u8 /* void* */, value: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetKeyWords(_obj: *u8 /* void* */, keywordSet: c_int /* int */, keyWords: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetLexerLanguage(_obj: *u8 /* void* */, language: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_GetCurrentLine(_obj: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxStyledTextCtrl_StyleSetSpec(_obj: *u8 /* void* */, styleNum: c_int /* int */, spec: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_StyleSetFont(_obj: *u8 /* void* */, styleNum: c_int /* int */, font: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_StyleSetFontAttr(_obj: *u8 /* void* */, styleNum: c_int /* int */, size: c_int /* int */, faceName: *u8 /* void* */, bold: bool /* bool */, italic: bool /* bool */, underline: bool /* bool */);
+    pub fn wxStyledTextCtrl_CmdKeyExecute(_obj: *u8 /* void* */, cmd: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetMargins(_obj: *u8 /* void* */, left: c_int /* int */, right: c_int /* int */);
+    pub fn wxStyledTextCtrl_GetSelection(_obj: *u8 /* void* */, startPos: *c_int /* int* */, endPos: *c_int /* int* */);
+    pub fn wxStyledTextCtrl_ScrollToLine(_obj: *u8 /* void* */, line: c_int /* int */);
+    pub fn wxStyledTextCtrl_ScrollToColumn(_obj: *u8 /* void* */, column: c_int /* int */);
+    pub fn wxStyledTextCtrl_SetVScrollBar(_obj: *u8 /* void* */, bar: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_SetHScrollBar(_obj: *u8 /* void* */, bar: *u8 /* void* */);
+    pub fn wxStyledTextCtrl_GetLastKeydownProcessed(_obj: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_SetLastKeydownProcessed(_obj: *u8 /* void* */, val: bool /* bool */);
+    pub fn wxStyledTextCtrl_SaveFile(_obj: *u8 /* void* */, filename: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxStyledTextCtrl_LoadFile(_obj: *u8 /* void* */, filename: *u8 /* void* */) -> bool /* bool */;
+    
     // TClassDefExtend(wxDynamicSashWindow,wxWindow)
     // missing: wxDynamicSashWindow_Create
     // missing: wxDynamicSashWindow_Delete
@@ -2302,6 +2854,8 @@ extern {
     pub fn wxPostScriptDC_Delete(self_: *u8 /* void* */);
     pub fn wxPostScriptDC_SetResolution(self_: *u8 /* void* */, ppi: c_int /* int */);
     pub fn wxPostScriptDC_GetResolution(self_: *u8 /* void* */) -> c_int /* int */;
+    
+    // TClassDefExtend( wxcPrintEvent, wxEvent );
     
     // TClassDefExtend(wxColourDialog,wxDialog)
     pub fn wxColourDialog_Create(_prt: *u8 /* void* */, col: *u8 /* void* */) -> *u8 /* void* */;
@@ -2941,6 +3495,28 @@ extern {
     pub fn wxSpinCtrl_SetRange(_obj: *u8 /* void* */, min_val: c_int /* int */, max_val: c_int /* int */);
     pub fn wxSpinCtrl_SetValue(_obj: *u8 /* void* */, val: c_int /* int */);
     
+    // TClassDefExtend(wxGenericDragImage,wxDragImage);
+    pub fn wxDragImage_Create(image: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */) -> *u8 /* void* */;
+    pub fn wxDragIcon(icon: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */) -> *u8 /* void* */;
+    pub fn wxDragString(test: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */) -> *u8 /* void* */;
+    pub fn wxDragTreeItem(treeCtrl: *u8 /* void* */, id: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxDragListItem(treeCtrl: *u8 /* void* */, id: c_long /* long */) -> *u8 /* void* */;
+    pub fn wxGenericDragImage_Create(cursor: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGenericDragIcon(icon: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGenericDragString(test: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGenericDragTreeItem(treeCtrl: *u8 /* void* */, id: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxGenericDragListItem(treeCtrl: *u8 /* void* */, id: c_long /* long */) -> *u8 /* void* */;
+    pub fn wxDragImage_Delete(self_: *u8 /* void* */);
+    pub fn wxDragImage_BeginDragFullScreen(self_: *u8 /* void* */, x_pos: c_int /* int */, y_pos: c_int /* int */, window: *u8 /* void* */, fullScreen: bool /* bool */, rect: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxDragImage_BeginDrag(self_: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */, window: *u8 /* void* */, boundingWindow: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxGenericDragImage_DoDrawImage(self_: *u8 /* void* */, dc: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */) -> bool /* bool */;
+    pub fn wxDragImage_EndDrag(self_: *u8 /* void* */);
+    pub fn wxGenericDragImage_GetImageRect(self_: *u8 /* void* */, x_pos: c_int /* int */, y_pos: c_int /* int */) -> *u8 /* void* */;
+    pub fn wxDragImage_Hide(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxDragImage_Move(self_: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */) -> bool /* bool */;
+    pub fn wxDragImage_Show(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxGenericDragImage_UpdateBackingFromWindow(self_: *u8 /* void* */, windowDC: *u8 /* void* */, destDC: *u8 /* void* */, x: c_int /* int */, y: c_int /* int */, w: c_int /* int */, h: c_int /* int */, xdest: c_int /* int */, ydest: c_int /* int */, width: c_int /* int */, height: c_int /* int */) -> bool /* bool */;
+    
     // TClassDefExtend(wxScrollEvent,wxEvent)
     pub fn wxScrollEvent_GetOrientation(_obj: *u8 /* void* */) -> c_int /* int */;
     pub fn wxScrollEvent_GetPosition(_obj: *u8 /* void* */) -> c_int /* int */;
@@ -3128,6 +3704,8 @@ extern {
     // missing: ELJPlotCurve_SetPenNormal
     // missing: ELJPlotCurve_SetPenSelected
     // missing: ELJPlotCurve_SetStartY
+    
+    // TClassDefExtend(wxGraphicsBrush,wxGraphicsObject);
     
     // TClassDefExtend(wxToolTip,wxObject)
     
@@ -3337,6 +3915,8 @@ extern {
     
     // TClassDefExtend(wxMouseCaptureChangedEvent,wxEvent)
     
+    // TClassDefExtend(wxGraphicsObject,wxObject);
+    
     // TClassDefExtend(wxInputSinkEvent,wxEvent)
     pub fn wxInputSinkEvent_LastError(obj: *u8 /* void* */) -> c_int /* int */;
     pub fn wxInputSinkEvent_LastRead(obj: *u8 /* void* */) -> c_int /* int */;
@@ -3411,6 +3991,9 @@ extern {
     pub fn wxXmlResource_Set(_obj: *u8 /* void* */, res: *u8 /* void* */) -> *u8 /* void* */;
     pub fn wxXmlResource_SetDomain(_obj: *u8 /* void* */, domain: *u8 /* void* */);
     pub fn wxXmlResource_SetFlags(_obj: *u8 /* void* */, flags: c_int /* int */);
+    
+    // TClassDefExtend(wxXmlResource,wxObject)
+    pub fn wxXmlResource_GetStyledTextCtrl(_obj: *u8 /* void* */, str_id: *u8 /* void* */) -> *u8 /* void* */;
     
     // TClassDefExtend(wxClientBase,wxObject)
     
@@ -3529,6 +4112,13 @@ extern {
     // TClassDef(wxDynamicLibrary)
     
     // TClassDefExtend(wxSound,wxEvtHandler)
+    
+    // TClassDefExtend(wxSound,wxObject);
+    pub fn wxSound_Create(fileName: *u8 /* void* */, isResource: bool /* bool */) -> *u8 /* void* */;
+    pub fn wxSound_Delete(self_: *u8 /* void* */);
+    pub fn wxSound_IsOk(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxSound_Play(self_: *u8 /* void* */, flag: c_int /* int */) -> bool /* bool */;
+    pub fn wxSound_Stop(self_: *u8 /* void* */);
     
     // TClassDefExtend(wxMoveEvent,wxEvent)
     pub fn wxMoveEvent_CopyObject(_obj: *u8 /* void* */, obj: *u8 /* void* */);
@@ -3895,6 +4485,8 @@ extern {
     // TClassDefExtend(wxGridCellNumberRenderer,wxGridCellStringRenderer)
     pub fn wxGridCellNumberRenderer_Ctor() -> *u8 /* void* */;
     
+    // TClassDef(wxSTCDoc)
+    
     // TClassDefExtend(wxMessageDialog,wxDialog)
     pub fn wxMessageDialog_Create(_prt: *u8 /* void* */, _msg: *u8 /* void* */, _cap: *u8 /* void* */, _stl: c_int /* int */) -> *u8 /* void* */;
     pub fn wxMessageDialog_Delete(_obj: *u8 /* void* */);
@@ -3969,6 +4561,19 @@ extern {
     // TClassDefExtend(cbDrawPaneBkGroundEvent,cbPluginEvent)
     // missing: cbDrawPaneBkGroundEvent_Dc
     
+    // TClassDefExtend( wxcPrintoutHandler, wxEvtHandler );
+    pub fn wxcPrintout_Create(title: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxcPrintout_Delete(self_: *u8 /* void* */);
+    pub fn wxcPrintout_SetPageLimits(self_: *u8 /* void* */, startPage: c_int /* int */, endPage: c_int /* int */, fromPage: c_int /* int */, toPage: c_int /* int */);
+    pub fn wxcPrintout_GetEvtHandler(self_: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxcPrintEvent_GetPrintout(self_: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxcPrintEvent_GetPage(self_: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxcPrintEvent_GetEndPage(self_: *u8 /* void* */) -> c_int /* int */;
+    pub fn wxcPrintEvent_GetContinue(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxcPrintEvent_SetContinue(self_: *u8 /* void* */, cont: bool /* bool */);
+    pub fn wxcPrintEvent_SetPageLimits(self_: *u8 /* void* */, startPage: c_int /* int */, endPage: c_int /* int */, fromPage: c_int /* int */, toPage: c_int /* int */);
+    pub fn wxInputStream_CanRead(self_: *u8 /* void* */) -> bool /* bool */;
+    
     // TClassDef(wxSize)
     pub fn wxSize_Create(arg0: c_int /* int */, arg1: c_int /* int */) -> *u8 /* void* */;
     // missing: wxSize_Destroy
@@ -3992,6 +4597,8 @@ extern {
     pub fn FileDataObject_Create(arg0: c_int /* int */, arg1: *wchar_t /* wchar_t* */) -> *u8 /* void* */;
     pub fn FileDataObject_Delete(_obj: *u8 /* void* */);
     pub fn FileDataObject_GetFilenames(_obj: *u8 /* void* */, _lst: *wchar_t /* wchar_t* */) -> c_int /* int */;
+    
+    // TClassDefExtend(wxGraphicsFont,wxGraphicsObject);
     
     // TClassDefExtend(wxDocParentFrame,wxFrame)
     
@@ -4030,6 +4637,9 @@ extern {
     pub fn wxListCtrl_SortItems2(_obj: *u8 /* void* */, closure: *u8 /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxURL,wxObject)
+    
+    // TClassDefExtend(wxStyledTextCtrl,wxControl)
+    pub fn wxStyledTextCtrl_Create(_prt: *u8 /* void* */, _id: c_int /* int */, _txt: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */) -> *u8 /* void* */;
     
     // TClassDefExtend(wxHtmlContainerCell,wxHtmlCell)
     
@@ -4242,6 +4852,8 @@ extern {
     
     // TClassDef(wxLog)
     
+    // TClassDefExtend(wxGraphicsPen,wxGraphicsObject);
+    
     // TClassDefExtend(wxTipWindow,wxPopupTransientWindow)
     pub fn wxTipWindow_Close(_obj: *u8 /* void* */);
     pub fn wxTipWindow_Create(parent: *u8 /* void* */, text: *u8 /* void* */, maxLength: c_int /* int */) -> *u8 /* void* */;
@@ -4263,6 +4875,20 @@ extern {
     pub fn ELJFileDropTarget_SetOnLeave(_obj: *u8 /* void* */, _func: *u8 /* void* */);
     
     // TClassDefExtend(wxTreeLayout,wxObject)
+    
+    // TClassDef(wxMemoryBuffer)
+    pub fn wxStyledTextCtrl_IndicatorGetForeground(_obj: *u8 /* void* */, indic: c_int /* int */) -> *u8 /* void* */;
+    pub fn wxStyledTextCtrl_GetCaretLineBackground(_obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxStyledTextCtrl_SetCaretLineBackground(_obj: *u8 /* void* */, arg0: u8 /* u8 */, arg1: u8 /* u8 */, arg2: u8 /* u8 */);
+    pub fn wxStyledTextCtrl_GetCaretForeground(_obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxStyledTextCtrl_GetLine(_obj: *u8 /* void* */, line: c_int /* int */) -> *u8 /* void* */;
+    pub fn wxStyledTextCtrl_GetText(_obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxStyledTextCtrl_GetTextRange(_obj: *u8 /* void* */, startPos: c_int /* int */, endPos: c_int /* int */) -> *u8 /* void* */;
+    pub fn wxStyledTextCtrl_GetSelectedText(_obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxStyledTextCtrl_CreateDocument(_obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxStyledTextCtrl_GetEdgeColour(_obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxStyledTextCtrl_GetDocPointer(_obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxStyledTextCtrl_PointFromPosition(_obj: *u8 /* void* */) -> *u8 /* void* */;
     
     // TClassDefExtend(cbSimpleCustomizationPlugin,cbPluginBase)
     // missing: cbSimpleCustomizationPlugin_Create
@@ -4465,6 +5091,8 @@ extern {
     pub fn wxFileHistory_RemoveMenu(_obj: *u8 /* void* */, menu: *u8 /* void* */);
     pub fn wxFileHistory_Save(_obj: *u8 /* void* */, config: *u8 /* void* */);
     pub fn wxFileHistory_UseMenu(_obj: *u8 /* void* */, menu: *u8 /* void* */);
+    
+    // TClassDefExtend(wxGraphicsMatrix,wxGraphicsObject);
     
     // TClassDefExtend(wxLogNull,wxLog)
     
@@ -4857,6 +5485,38 @@ extern {
     // TClassDef(wxStreamBuffer)
     
     // TClassDefExtend(wxDragImage,wxObject)
+    
+    // TClassDef(wxManagedPtr)
+    pub fn wxManagedPtr_GetPtr(self_: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxManagedPtr_NoFinalize(self_: *u8 /* void* */);
+    pub fn wxManagedPtr_Finalize(self_: *u8 /* void* */);
+    pub fn wxManagedPtr_Delete(self_: *u8 /* void* */);
+    pub fn wxManagedPtr_GetDeleteFunction() -> *u8 /* void* */;
+    pub fn wxManagedPtr_CreateFromObject(obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxManagedPtr_CreateFromDateTime(obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxManagedPtr_CreateFromGridCellCoordsArray(obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxManagedPtr_CreateFromBitmap(obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxManagedPtr_CreateFromIcon(obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxManagedPtr_CreateFromBrush(obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxManagedPtr_CreateFromColour(obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxManagedPtr_CreateFromCursor(obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxManagedPtr_CreateFromFont(obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxManagedPtr_CreateFromPen(obj: *u8 /* void* */) -> *u8 /* void* */;
+    pub fn wxObject_SafeDelete(self_: *u8 /* void* */);
+    pub fn wxBitmap_SafeDelete(self_: *u8 /* void* */);
+    pub fn wxIcon_SafeDelete(self_: *u8 /* void* */);
+    pub fn wxBrush_SafeDelete(self_: *u8 /* void* */);
+    pub fn wxColour_SafeDelete(self_: *u8 /* void* */);
+    pub fn wxCursor_SafeDelete(self_: *u8 /* void* */);
+    pub fn wxFont_SafeDelete(self_: *u8 /* void* */);
+    pub fn wxPen_SafeDelete(self_: *u8 /* void* */);
+    pub fn wxBitmap_IsStatic(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxIcon_IsStatic(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxBrush_IsStatic(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxColour_IsStatic(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxCursor_IsStatic(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxFont_IsStatic(self_: *u8 /* void* */) -> bool /* bool */;
+    pub fn wxPen_IsStatic(self_: *u8 /* void* */) -> bool /* bool */;
     
     // TClassDefExtend(wxCheckBox,wxControl)
     pub fn wxCheckBox_Create(_prt: *u8 /* void* */, _id: c_int /* int */, _txt: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, _stl: c_int /* int */) -> *u8 /* void* */;

@@ -7,7 +7,6 @@ add_subdirectory(wxc)
 set(RUSTCFLAGS ${RUSTCFLAGS} -L wxc)
 set(GENSRC wxHaskell/wxc/src/include)
 set(GENSRCS
-    ${GENSRC}/wxc_glue.h
     ${GENSRC}/wxc.h
 )
 
