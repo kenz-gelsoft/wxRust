@@ -20,7 +20,7 @@ fn on_main() {
     unsafe {
         let closure = wxClosure_Create(wx_main as *u8, nullptr);
         let args: ~[*i32] = ~[];
-        ELJApp_InitializeC(closure, args.len() as i32, vec::raw::to_ptr(args) as *char);
+        ELJApp_InitializeC(closure, args.len() as i32, vec::raw::to_ptr(args) as *i32);
     }
 }
 

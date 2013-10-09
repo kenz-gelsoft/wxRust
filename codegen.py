@@ -319,16 +319,9 @@ class Method(object):
 
     @property
     def extern_fn(self):
-        if self.should_be_ignored:
-            return '// missing: %s' % self.__name
-        
         return 'pub fn %s(%s)%s;' % (self.__name, self.args, self.fn_return)
 
     def trait_fn(self, gen):
-        if self.should_be_ignored:
-            gen.println('// missing: %s' % self.__name)
-            return
-        
         gen.println('fn %s(%s)%s {' % (self.trait_method_name, self.args, self.fn_return))
         gen.indent()
         gen.println('unsafe {')
@@ -338,51 +331,6 @@ class Method(object):
         gen.println('}')
         gen.unindent()
         gen.println('}')
-
-    @property
-    def should_be_ignored(self):
-        for ignore in ['ELJClient_',
-                       'ELJCommand_',
-                       'ELJConnection_',
-                       'ELJPlotCurve_',
-                       'ELJServer_',
-                       'cb',
-                       'wxCommandProcessor_',
-                       'wxCondition_',
-                       'wxCriticalSection_',
-                       'wxDateTime_IsGregorianDate',
-                       'wxDialUpEvent_',
-                       'wxDialUpManager_',
-                       'wxDynToolInfo_',
-                       'wxDynamicSashWindow_',
-                       'wxDynamicToolBar_',
-                       'wxEditableListBox_',
-                       'wxFrameLayout_',
-                       'wxJoystick_',
-                       'wxLEDNumberCtrl_',
-                       'wxMessageParameters_',
-                       'wxMultiCellCanvas_',
-                       'wxMultiCellItemHandle_',
-                       'wxMultiCellSizer_',
-                       'wxMutexGui_',
-                       'wxMutex_',
-                       'wxNewBitmapButton_',
-                       'wxPlotEvent_',
-                       'wxPlotOnOffCurve_',
-                       'wxPlotWindow_',
-                       'wxPoint_Destroy',
-                       'wxRemotelyScrolledTreeCtrl_',
-                       'wxSize_Destroy',
-                       'wxSplitterScrolledWindow_',
-                       'wxThinSplitterWindow_',
-                       'wxToolLayoutItem_',
-                       'wxToolWindow_',
-                       'wxTreeCompanionWindow_',
-                       'wxXmlResource_Delete',
-                       ]:
-            if self.__name.startswith(ignore):
-                return True
-        return False
 
 
 class Type(object):

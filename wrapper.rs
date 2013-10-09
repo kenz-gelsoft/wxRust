@@ -4,17 +4,61 @@ use native::*;
 // skipping globals...
 
 trait wxMultiCellItemHandle {
-    // missing: wxMultiCellItemHandle_Create
-    // missing: wxMultiCellItemHandle_CreateWithSize
-    // missing: wxMultiCellItemHandle_CreateWithStyle
-    // missing: wxMultiCellItemHandle_GetAlignment
-    // missing: wxMultiCellItemHandle_GetColumn
-    // missing: wxMultiCellItemHandle_GetHeight
-    // missing: wxMultiCellItemHandle_GetLocalSize
-    // missing: wxMultiCellItemHandle_GetRow
-    // missing: wxMultiCellItemHandle_GetStyle
-    // missing: wxMultiCellItemHandle_GetWeight
-    // missing: wxMultiCellItemHandle_GetWidth
+    fn Create(row: c_int /* int */, column: c_int /* int */, height: c_int /* int */, width: c_int /* int */, sx: c_int /* int */, sy: c_int /* int */, style: c_int /* int */, wx: c_int /* int */, wy: c_int /* int */, align: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxMultiCellItemHandle_Create(row, column, height, width, sx, sy, style, wx, wy, align)
+        }
+    }
+    fn CreateWithSize(_obj: *u8 /* void* */, row: c_int /* int */, column: c_int /* int */, sx: c_int /* int */, sy: c_int /* int */, style: c_int /* int */, wx: c_int /* int */, wy: c_int /* int */, align: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxMultiCellItemHandle_CreateWithSize(_obj, row, column, sx, sy, style, wx, wy, align)
+        }
+    }
+    fn CreateWithStyle(_obj: *u8 /* void* */, row: c_int /* int */, column: c_int /* int */, style: c_int /* int */, wx: c_int /* int */, wy: c_int /* int */, align: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxMultiCellItemHandle_CreateWithStyle(_obj, row, column, style, wx, wy, align)
+        }
+    }
+    fn GetAlignment(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellItemHandle_GetAlignment(_obj)
+        }
+    }
+    fn GetColumn(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellItemHandle_GetColumn(_obj)
+        }
+    }
+    fn GetHeight(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellItemHandle_GetHeight(_obj)
+        }
+    }
+    fn GetLocalSize(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            wxMultiCellItemHandle_GetLocalSize(_obj, arg0, arg1)
+        }
+    }
+    fn GetRow(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellItemHandle_GetRow(_obj)
+        }
+    }
+    fn GetStyle(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellItemHandle_GetStyle(_obj)
+        }
+    }
+    fn GetWeight(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            wxMultiCellItemHandle_GetWeight(_obj, arg0, arg1)
+        }
+    }
+    fn GetWidth(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellItemHandle_GetWidth(_obj)
+        }
+    }
 }
 trait wxKeyEvent {
     fn AltDown(_obj: *u8 /* void* */) -> bool /* bool */ {
@@ -854,11 +898,31 @@ trait wxSystemSettings {
     }
 }
 trait cbBarSpy {
-    // missing: cbBarSpy_Create
-    // missing: cbBarSpy_CreateDefault
-    // missing: cbBarSpy_Delete
-    // missing: cbBarSpy_ProcessEvent
-    // missing: cbBarSpy_SetBarWindow
+    fn Create(pPanel: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbBarSpy_Create(pPanel)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbBarSpy_CreateDefault()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbBarSpy_Delete(_obj)
+        }
+    }
+    fn ProcessEvent(_obj: *u8 /* void* */, event: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbBarSpy_ProcessEvent(_obj, event)
+        }
+    }
+    fn SetBarWindow(_obj: *u8 /* void* */, pWnd: *u8 /* void* */) {
+        unsafe {
+            cbBarSpy_SetBarWindow(_obj, pWnd)
+        }
+    }
 }
 trait wxNotebookEvent {
 }
@@ -1044,9 +1108,21 @@ trait wxDrawControl {
     }
 }
 trait cbRowDragPlugin {
-    // missing: cbRowDragPlugin_Create
-    // missing: cbRowDragPlugin_CreateDefault
-    // missing: cbRowDragPlugin_Delete
+    fn Create(pPanel: *u8 /* void* */, paneMask: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            cbRowDragPlugin_Create(pPanel, paneMask)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbRowDragPlugin_CreateDefault()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbRowDragPlugin_Delete(_obj)
+        }
+    }
 }
 trait wxBufferedInputStream {
 }
@@ -1158,13 +1234,33 @@ trait wxDDEConnection {
 trait wxCSConv {
 }
 trait cbStartDrawInAreaEvent {
-    // missing: cbStartDrawInAreaEvent_Area
+    fn Area(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */, arg2: *c_int /* int* */, arg3: *c_int /* int* */) {
+        unsafe {
+            cbStartDrawInAreaEvent_Area(_obj, arg0, arg1, arg2, arg3)
+        }
+    }
 }
 trait ELJCommand {
-    // missing: ELJCommand_CanUndo
-    // missing: ELJCommand_Create
-    // missing: ELJCommand_Delete
-    // missing: ELJCommand_GetName
+    fn CanUndo(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            ELJCommand_CanUndo(_obj)
+        }
+    }
+    fn Create(_und: c_int /* int */, _nme: *u8 /* void* */, _obj: *u8 /* void* */, _clb: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            ELJCommand_Create(_und, _nme, _obj, _clb)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            ELJCommand_Delete(_obj)
+        }
+    }
+    fn GetName(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            ELJCommand_GetName(_obj)
+        }
+    }
 }
 trait ELJDragDataObject {
     fn Create(_obj: *u8 /* void* */, _fmt: *u8 /* void* */, _func1: *u8 /* void* */, _func2: *u8 /* void* */, _func3: *u8 /* void* */) -> *u8 /* void* */ {
@@ -1512,10 +1608,26 @@ trait wxListCtrl {
     }
 }
 trait wxThinSplitterWindow {
-    // missing: wxThinSplitterWindow_Create
-    // missing: wxThinSplitterWindow_DrawSash
-    // missing: wxThinSplitterWindow_SashHitTest
-    // missing: wxThinSplitterWindow_SizeWindows
+    fn Create(parent: *u8 /* void* */, id: c_int /* int */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxThinSplitterWindow_Create(parent, id, arg0, arg1, arg2, arg3, style)
+        }
+    }
+    fn DrawSash(_obj: *u8 /* void* */, dc: *u8 /* void* */) {
+        unsafe {
+            wxThinSplitterWindow_DrawSash(_obj, dc)
+        }
+    }
+    fn SashHitTest(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, tolerance: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxThinSplitterWindow_SashHitTest(_obj, arg0, arg1, tolerance)
+        }
+    }
+    fn SizeWindows(_obj: *u8 /* void* */) {
+        unsafe {
+            wxThinSplitterWindow_SizeWindows(_obj)
+        }
+    }
 }
 trait wxGridCellWorker {
 }
@@ -1573,15 +1685,51 @@ trait wxPageSetupDialog {
     }
 }
 trait wxMultiCellSizer {
-    // missing: wxMultiCellSizer_CalcMin
-    // missing: wxMultiCellSizer_Create
-    // missing: wxMultiCellSizer_Delete
-    // missing: wxMultiCellSizer_EnableGridLines
-    // missing: wxMultiCellSizer_RecalcSizes
-    // missing: wxMultiCellSizer_SetColumnWidth
-    // missing: wxMultiCellSizer_SetDefaultCellSize
-    // missing: wxMultiCellSizer_SetGridPen
-    // missing: wxMultiCellSizer_SetRowHeight
+    fn CalcMin(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            wxMultiCellSizer_CalcMin(_obj, arg0, arg1)
+        }
+    }
+    fn Create(rows: c_int /* int */, cols: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxMultiCellSizer_Create(rows, cols)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxMultiCellSizer_Delete(_obj)
+        }
+    }
+    fn EnableGridLines(_obj: *u8 /* void* */, win: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellSizer_EnableGridLines(_obj, win)
+        }
+    }
+    fn RecalcSizes(_obj: *u8 /* void* */) {
+        unsafe {
+            wxMultiCellSizer_RecalcSizes(_obj)
+        }
+    }
+    fn SetColumnWidth(_obj: *u8 /* void* */, column: c_int /* int */, colSize: c_int /* int */, expandable: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellSizer_SetColumnWidth(_obj, column, colSize, expandable)
+        }
+    }
+    fn SetDefaultCellSize(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellSizer_SetDefaultCellSize(_obj, arg0, arg1)
+        }
+    }
+    fn SetGridPen(_obj: *u8 /* void* */, pen: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellSizer_SetGridPen(_obj, pen)
+        }
+    }
+    fn SetRowHeight(_obj: *u8 /* void* */, row: c_int /* int */, rowSize: c_int /* int */, expandable: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellSizer_SetRowHeight(_obj, row, rowSize, expandable)
+        }
+    }
 }
 trait wxPaintDC {
     fn Create(win: *u8 /* void* */) -> *u8 /* void* */ {
@@ -1836,26 +1984,98 @@ trait wxAcceleratorEntry {
     }
 }
 trait wxDialUpManager {
-    // missing: wxDialUpManager_CancelDialing
-    // missing: wxDialUpManager_Create
-    // missing: wxDialUpManager_Delete
-    // missing: wxDialUpManager_Dial
-    // missing: wxDialUpManager_DisableAutoCheckOnlineStatus
-    // missing: wxDialUpManager_EnableAutoCheckOnlineStatus
-    // missing: wxDialUpManager_GetISPNames
-    // missing: wxDialUpManager_HangUp
-    // missing: wxDialUpManager_IsAlwaysOnline
-    // missing: wxDialUpManager_IsDialing
-    // missing: wxDialUpManager_IsOk
-    // missing: wxDialUpManager_IsOnline
-    // missing: wxDialUpManager_SetConnectCommand
-    // missing: wxDialUpManager_SetOnlineStatus
-    // missing: wxDialUpManager_SetWellKnownHost
+    fn CancelDialing(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxDialUpManager_CancelDialing(_obj)
+        }
+    }
+    fn Create() -> *u8 /* void* */ {
+        unsafe {
+            wxDialUpManager_Create()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxDialUpManager_Delete(_obj)
+        }
+    }
+    fn Dial(_obj: *u8 /* void* */, nameOfISP: *u8 /* void* */, username: *u8 /* void* */, password: *u8 /* void* */, async: bool /* bool */) -> bool /* bool */ {
+        unsafe {
+            wxDialUpManager_Dial(_obj, nameOfISP, username, password, async)
+        }
+    }
+    fn DisableAutoCheckOnlineStatus(_obj: *u8 /* void* */) {
+        unsafe {
+            wxDialUpManager_DisableAutoCheckOnlineStatus(_obj)
+        }
+    }
+    fn EnableAutoCheckOnlineStatus(_obj: *u8 /* void* */, nSeconds: c_int /* int */) -> bool /* bool */ {
+        unsafe {
+            wxDialUpManager_EnableAutoCheckOnlineStatus(_obj, nSeconds)
+        }
+    }
+    fn GetISPNames(_obj: *u8 /* void* */, _lst: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxDialUpManager_GetISPNames(_obj, _lst)
+        }
+    }
+    fn HangUp(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxDialUpManager_HangUp(_obj)
+        }
+    }
+    fn IsAlwaysOnline(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxDialUpManager_IsAlwaysOnline(_obj)
+        }
+    }
+    fn IsDialing(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxDialUpManager_IsDialing(_obj)
+        }
+    }
+    fn IsOk(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxDialUpManager_IsOk(_obj)
+        }
+    }
+    fn IsOnline(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxDialUpManager_IsOnline(_obj)
+        }
+    }
+    fn SetConnectCommand(_obj: *u8 /* void* */, commandDial: *u8 /* void* */, commandHangup: *u8 /* void* */) {
+        unsafe {
+            wxDialUpManager_SetConnectCommand(_obj, commandDial, commandHangup)
+        }
+    }
+    fn SetOnlineStatus(_obj: *u8 /* void* */, isOnline: bool /* bool */) {
+        unsafe {
+            wxDialUpManager_SetOnlineStatus(_obj, isOnline)
+        }
+    }
+    fn SetWellKnownHost(_obj: *u8 /* void* */, hostname: *u8 /* void* */, portno: c_int /* int */) {
+        unsafe {
+            wxDialUpManager_SetWellKnownHost(_obj, hostname, portno)
+        }
+    }
 }
 trait wxDynToolInfo {
-    // missing: wxDynToolInfo_Index
-    // missing: wxDynToolInfo_RealSize
-    // missing: wxDynToolInfo_pToolWnd
+    fn Index(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxDynToolInfo_Index(_obj)
+        }
+    }
+    fn RealSize(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            wxDynToolInfo_RealSize(_obj, arg0, arg1)
+        }
+    }
+    fn pToolWnd(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxDynToolInfo_pToolWnd(_obj)
+        }
+    }
 }
 trait wxDocTemplate {
 }
@@ -2000,13 +2220,41 @@ trait wxGraphicsContext {
 trait wxGaugeMSW {
 }
 trait cbDimInfo {
-    // missing: cbDimInfo_Assign
-    // missing: cbDimInfo_Create
-    // missing: cbDimInfo_CreateDefault
-    // missing: cbDimInfo_CreateWithHandler
-    // missing: cbDimInfo_CreateWithInfo
-    // missing: cbDimInfo_Delete
-    // missing: cbDimInfo_GetDimHandler
+    fn Assign(_obj: *u8 /* void* */, other: *u8 /* void* */) {
+        unsafe {
+            cbDimInfo_Assign(_obj, other)
+        }
+    }
+    fn Create(arg0: c_int /* int */, arg1: c_int /* int */, isFixed: bool /* bool */, gap: c_int /* int */, pDimHandler: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDimInfo_Create(arg0, arg1, isFixed, gap, pDimHandler)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbDimInfo_CreateDefault()
+        }
+    }
+    fn CreateWithHandler(pDimHandler: *u8 /* void* */, isFixed: bool /* bool */) -> *u8 /* void* */ {
+        unsafe {
+            cbDimInfo_CreateWithHandler(pDimHandler, isFixed)
+        }
+    }
+    fn CreateWithInfo(dh_x: c_int /* int */, dh_y: c_int /* int */, dv_x: c_int /* int */, dv_y: c_int /* int */, f_x: c_int /* int */, f_y: c_int /* int */, isFixed: bool /* bool */, horizGap: c_int /* int */, vertGap: c_int /* int */, pDimHandler: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDimInfo_CreateWithInfo(dh_x, dh_y, dv_x, dv_y, f_x, f_y, isFixed, horizGap, vertGap, pDimHandler)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbDimInfo_Delete(_obj)
+        }
+    }
+    fn GetDimHandler(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDimInfo_GetDimHandler(_obj)
+        }
+    }
 }
 trait wxMDIClientWindow {
 }
@@ -2218,14 +2466,38 @@ trait wxIndividualLayoutConstraint {
 trait wxTempFile {
 }
 trait cbFloatedBarWindow {
-    // missing: cbFloatedBarWindow_Create
-    // missing: cbFloatedBarWindow_GetBar
-    // missing: cbFloatedBarWindow_PositionFloatedWnd
-    // missing: cbFloatedBarWindow_SetBar
-    // missing: cbFloatedBarWindow_SetLayout
+    fn Create(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbFloatedBarWindow_Create(_obj)
+        }
+    }
+    fn GetBar(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbFloatedBarWindow_GetBar(_obj)
+        }
+    }
+    fn PositionFloatedWnd(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */) {
+        unsafe {
+            cbFloatedBarWindow_PositionFloatedWnd(_obj, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn SetBar(_obj: *u8 /* void* */, _bar: *u8 /* void* */) {
+        unsafe {
+            cbFloatedBarWindow_SetBar(_obj, _bar)
+        }
+    }
+    fn SetLayout(_obj: *u8 /* void* */, _layout: *u8 /* void* */) {
+        unsafe {
+            cbFloatedBarWindow_SetLayout(_obj, _layout)
+        }
+    }
 }
 trait cbLeftUpEvent {
-    // missing: cbLeftUpEvent_Pos
+    fn Pos(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            cbLeftUpEvent_Pos(_obj, arg0, arg1)
+        }
+    }
 }
 trait wxHtmlTagsModule {
 }
@@ -3256,12 +3528,36 @@ trait wxGraphicsRenderer {
     }
 }
 trait wxCondition {
-    // missing: wxCondition_Broadcast
-    // missing: wxCondition_Create
-    // missing: wxCondition_Delete
-    // missing: wxCondition_Signal
-    // missing: wxCondition_Wait
-    // missing: wxCondition_WaitFor
+    fn Broadcast(_obj: *u8 /* void* */) {
+        unsafe {
+            wxCondition_Broadcast(_obj)
+        }
+    }
+    fn Create(_mut: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxCondition_Create(_mut)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxCondition_Delete(_obj)
+        }
+    }
+    fn Signal(_obj: *u8 /* void* */) {
+        unsafe {
+            wxCondition_Signal(_obj)
+        }
+    }
+    fn Wait(_obj: *u8 /* void* */) {
+        unsafe {
+            wxCondition_Wait(_obj)
+        }
+    }
+    fn WaitFor(_obj: *u8 /* void* */, sec: c_int /* int */, nsec: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxCondition_WaitFor(_obj, sec, nsec)
+        }
+    }
 }
 trait wxGridTableBase {
 }
@@ -3933,7 +4229,11 @@ trait wxDateTime {
             wxDateTime_IsEqualUpTo(_obj, dt, ts)
         }
     }
-    // missing: wxDateTime_IsGregorianDate
+    fn IsGregorianDate(_obj: *u8 /* void* */, country: c_int /* int */) -> bool /* bool */ {
+        unsafe {
+            wxDateTime_IsGregorianDate(_obj, country)
+        }
+    }
     fn IsLaterThan(_obj: *u8 /* void* */, datetime: *u8 /* void* */) -> bool /* bool */ {
         unsafe {
             wxDateTime_IsLaterThan(_obj, datetime)
@@ -4248,8 +4548,16 @@ trait wxRecordSet {
 trait wxStringBuffer {
 }
 trait cbDrawRowBkGroundEvent {
-    // missing: cbDrawRowBkGroundEvent_Dc
-    // missing: cbDrawRowBkGroundEvent_Row
+    fn Dc(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDrawRowBkGroundEvent_Dc(_obj)
+        }
+    }
+    fn Row(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDrawRowBkGroundEvent_Row(_obj)
+        }
+    }
 }
 trait wxHtmlTagHandler {
 }
@@ -4548,7 +4856,11 @@ trait wxMenuBar {
     }
 }
 trait cbCloseBox {
-    // missing: cbCloseBox_Create
+    fn Create() -> *u8 /* void* */ {
+        unsafe {
+            cbCloseBox_Create()
+        }
+    }
 }
 trait wxMetafileDC {
     fn Close(_obj: *u8 /* void* */) -> *u8 /* void* */ {
@@ -4733,7 +5045,11 @@ trait wxWizardEvent {
 trait wxMediaEvent {
 }
 trait wxSplitterScrolledWindow {
-    // missing: wxSplitterScrolledWindow_Create
+    fn Create(parent: *u8 /* void* */, id: c_int /* int */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxSplitterScrolledWindow_Create(parent, id, arg0, arg1, arg2, arg3, style)
+        }
+    }
 }
 trait wxDocManager {
 }
@@ -4769,31 +5085,131 @@ trait wxPGProperty {
 trait wxList {
 }
 trait wxDynamicToolBar {
-    // missing: wxDynamicToolBar_AddSeparator
-    // missing: wxDynamicToolBar_AddTool
-    // missing: wxDynamicToolBar_AddToolBitmap
-    // missing: wxDynamicToolBar_AddToolImage
-    // missing: wxDynamicToolBar_AddToolLabel
-    // missing: wxDynamicToolBar_Create
-    // missing: wxDynamicToolBar_CreateDefault
-    // missing: wxDynamicToolBar_CreateDefaultLayout
-    // missing: wxDynamicToolBar_CreateParams
-    // missing: wxDynamicToolBar_CreateTool
-    // missing: wxDynamicToolBar_CreateToolControl
-    // missing: wxDynamicToolBar_Delete
-    // missing: wxDynamicToolBar_DoDeleteTool
-    // missing: wxDynamicToolBar_DoEnableTool
-    // missing: wxDynamicToolBar_DoInsertTool
-    // missing: wxDynamicToolBar_DoSetToggle
-    // missing: wxDynamicToolBar_DoToggleTool
-    // missing: wxDynamicToolBar_DrawSeparator
-    // missing: wxDynamicToolBar_EnableTool
-    // missing: wxDynamicToolBar_FindToolForPosition
-    // missing: wxDynamicToolBar_GetPreferredDim
-    // missing: wxDynamicToolBar_GetToolInfo
-    // missing: wxDynamicToolBar_Layout
-    // missing: wxDynamicToolBar_RemoveTool
-    // missing: wxDynamicToolBar_SetLayout
+    fn AddSeparator(_obj: *u8 /* void* */, pSepartorWnd: *u8 /* void* */) {
+        unsafe {
+            wxDynamicToolBar_AddSeparator(_obj, pSepartorWnd)
+        }
+    }
+    fn AddTool(_obj: *u8 /* void* */, toolIndex: c_int /* int */, pToolWindow: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) {
+        unsafe {
+            wxDynamicToolBar_AddTool(_obj, toolIndex, pToolWindow, arg0, arg1)
+        }
+    }
+    fn AddToolBitmap(_obj: *u8 /* void* */, toolIndex: c_int /* int */, bitmap: *u8 /* void* */, pushedBitmap: *u8 /* void* */, toggle: c_int /* int */, arg0: c_int /* int */, arg1: c_int /* int */, clientData: *u8 /* void* */, helpString1: *u8 /* void* */, helpString2: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxDynamicToolBar_AddToolBitmap(_obj, toolIndex, bitmap, pushedBitmap, toggle, arg0, arg1, clientData, helpString1, helpString2)
+        }
+    }
+    fn AddToolImage(_obj: *u8 /* void* */, toolIndex: c_int /* int */, imageFileName: *u8 /* void* */, imageFileType: c_int /* int */, labelText: *u8 /* void* */, alignTextRight: c_int /* int */, isFlat: bool /* bool */) {
+        unsafe {
+            wxDynamicToolBar_AddToolImage(_obj, toolIndex, imageFileName, imageFileType, labelText, alignTextRight, isFlat)
+        }
+    }
+    fn AddToolLabel(_obj: *u8 /* void* */, toolIndex: c_int /* int */, labelBmp: *u8 /* void* */, labelText: *u8 /* void* */, alignTextRight: c_int /* int */, isFlat: bool /* bool */) {
+        unsafe {
+            wxDynamicToolBar_AddToolLabel(_obj, toolIndex, labelBmp, labelText, alignTextRight, isFlat)
+        }
+    }
+    fn Create(parent: *u8 /* void* */, id: c_int /* int */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */, orientation: c_int /* int */, RowsOrColumns: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxDynamicToolBar_Create(parent, id, arg0, arg1, arg2, arg3, style, orientation, RowsOrColumns)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            wxDynamicToolBar_CreateDefault()
+        }
+    }
+    fn CreateDefaultLayout(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxDynamicToolBar_CreateDefaultLayout(_obj)
+        }
+    }
+    fn CreateParams(_obj: *u8 /* void* */, parent: *u8 /* void* */, id: c_int /* int */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */, orientation: c_int /* int */, RowsOrColumns: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxDynamicToolBar_CreateParams(_obj, parent, id, arg0, arg1, arg2, arg3, style, orientation, RowsOrColumns)
+        }
+    }
+    fn CreateTool(_obj: *u8 /* void* */, id: c_int /* int */, label: *u8 /* void* */, bmpNormal: *u8 /* void* */, bmpDisabled: *u8 /* void* */, kind: c_int /* int */, clientData: *u8 /* void* */, shortHelp: *u8 /* void* */, longHelp: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxDynamicToolBar_CreateTool(_obj, id, label, bmpNormal, bmpDisabled, kind, clientData, shortHelp, longHelp)
+        }
+    }
+    fn CreateToolControl(_obj: *u8 /* void* */, control: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxDynamicToolBar_CreateToolControl(_obj, control)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxDynamicToolBar_Delete(_obj)
+        }
+    }
+    fn DoDeleteTool(_obj: *u8 /* void* */, pos: c_int /* int */, tool: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxDynamicToolBar_DoDeleteTool(_obj, pos, tool)
+        }
+    }
+    fn DoEnableTool(_obj: *u8 /* void* */, tool: *u8 /* void* */, enable: bool /* bool */) {
+        unsafe {
+            wxDynamicToolBar_DoEnableTool(_obj, tool, enable)
+        }
+    }
+    fn DoInsertTool(_obj: *u8 /* void* */, pos: c_int /* int */, tool: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxDynamicToolBar_DoInsertTool(_obj, pos, tool)
+        }
+    }
+    fn DoSetToggle(_obj: *u8 /* void* */, tool: *u8 /* void* */, toggle: c_int /* int */) {
+        unsafe {
+            wxDynamicToolBar_DoSetToggle(_obj, tool, toggle)
+        }
+    }
+    fn DoToggleTool(_obj: *u8 /* void* */, tool: *u8 /* void* */, toggle: c_int /* int */) {
+        unsafe {
+            wxDynamicToolBar_DoToggleTool(_obj, tool, toggle)
+        }
+    }
+    fn DrawSeparator(_obj: *u8 /* void* */, info: *u8 /* void* */, dc: *u8 /* void* */) {
+        unsafe {
+            wxDynamicToolBar_DrawSeparator(_obj, info, dc)
+        }
+    }
+    fn EnableTool(_obj: *u8 /* void* */, toolIndex: c_int /* int */, enable: bool /* bool */) {
+        unsafe {
+            wxDynamicToolBar_EnableTool(_obj, toolIndex, enable)
+        }
+    }
+    fn FindToolForPosition(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxDynamicToolBar_FindToolForPosition(_obj, arg0, arg1)
+        }
+    }
+    fn GetPreferredDim(_obj: *u8 /* void* */, gw: c_int /* int */, gh: c_int /* int */, pw: *u8 /* void* */, ph: *u8 /* void* */) {
+        unsafe {
+            wxDynamicToolBar_GetPreferredDim(_obj, gw, gh, pw, ph)
+        }
+    }
+    fn GetToolInfo(_obj: *u8 /* void* */, toolIndex: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxDynamicToolBar_GetToolInfo(_obj, toolIndex)
+        }
+    }
+    fn Layout(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxDynamicToolBar_Layout(_obj)
+        }
+    }
+    fn RemoveTool(_obj: *u8 /* void* */, toolIndex: c_int /* int */) {
+        unsafe {
+            wxDynamicToolBar_RemoveTool(_obj, toolIndex)
+        }
+    }
+    fn SetLayout(_obj: *u8 /* void* */, pLayout: *u8 /* void* */) {
+        unsafe {
+            wxDynamicToolBar_SetLayout(_obj, pLayout)
+        }
+    }
 }
 trait wxDirDialog {
     fn Create(_prt: *u8 /* void* */, _msg: *u8 /* void* */, _dir: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, _stl: c_int /* int */) -> *u8 /* void* */ {
@@ -4833,43 +5249,167 @@ trait wxDirDialog {
     }
 }
 trait cbCustomizeBarEvent {
-    // missing: cbCustomizeBarEvent_Bar
-    // missing: cbCustomizeBarEvent_ClickPos
+    fn Bar(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbCustomizeBarEvent_Bar(_obj)
+        }
+    }
+    fn ClickPos(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            cbCustomizeBarEvent_ClickPos(_obj, arg0, arg1)
+        }
+    }
 }
 trait wxArray {
 }
 trait wxDialUpEvent {
-    // missing: wxDialUpEvent_IsConnectedEvent
-    // missing: wxDialUpEvent_IsOwnEvent
+    fn IsConnectedEvent(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxDialUpEvent_IsConnectedEvent(_obj)
+        }
+    }
+    fn IsOwnEvent(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxDialUpEvent_IsOwnEvent(_obj)
+        }
+    }
 }
 trait cbCommonPaneProperties {
-    // missing: cbCommonPaneProperties_Assign
-    // missing: cbCommonPaneProperties_BarCollapseIconsOn
-    // missing: cbCommonPaneProperties_BarDragHintsOn
-    // missing: cbCommonPaneProperties_BarFloatingOn
-    // missing: cbCommonPaneProperties_ColProportionsOn
-    // missing: cbCommonPaneProperties_CreateDefault
-    // missing: cbCommonPaneProperties_Delete
-    // missing: cbCommonPaneProperties_ExactDockPredictionOn
-    // missing: cbCommonPaneProperties_MinCBarDim
-    // missing: cbCommonPaneProperties_NonDestructFrictionOn
-    // missing: cbCommonPaneProperties_OutOfPaneDragOn
-    // missing: cbCommonPaneProperties_RealTimeUpdatesOn
-    // missing: cbCommonPaneProperties_ResizeHandleSize
-    // missing: cbCommonPaneProperties_RowProportionsOn
-    // missing: cbCommonPaneProperties_SetBarCollapseIconsOn
-    // missing: cbCommonPaneProperties_SetBarDragHintsOn
-    // missing: cbCommonPaneProperties_SetBarFloatingOn
-    // missing: cbCommonPaneProperties_SetColProportionsOn
-    // missing: cbCommonPaneProperties_SetExactDockPredictionOn
-    // missing: cbCommonPaneProperties_SetMinCBarDim
-    // missing: cbCommonPaneProperties_SetNonDestructFrictionOn
-    // missing: cbCommonPaneProperties_SetOutOfPaneDragOn
-    // missing: cbCommonPaneProperties_SetRealTimeUpdatesOn
-    // missing: cbCommonPaneProperties_SetResizeHandleSize
-    // missing: cbCommonPaneProperties_SetRowProportionsOn
-    // missing: cbCommonPaneProperties_SetShow3DPaneBorderOn
-    // missing: cbCommonPaneProperties_Show3DPaneBorderOn
+    fn Assign(_obj: *u8 /* void* */, _other: *u8 /* void* */) {
+        unsafe {
+            cbCommonPaneProperties_Assign(_obj, _other)
+        }
+    }
+    fn BarCollapseIconsOn(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbCommonPaneProperties_BarCollapseIconsOn(_obj)
+        }
+    }
+    fn BarDragHintsOn(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbCommonPaneProperties_BarDragHintsOn(_obj)
+        }
+    }
+    fn BarFloatingOn(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbCommonPaneProperties_BarFloatingOn(_obj)
+        }
+    }
+    fn ColProportionsOn(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbCommonPaneProperties_ColProportionsOn(_obj)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbCommonPaneProperties_CreateDefault()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbCommonPaneProperties_Delete(_obj)
+        }
+    }
+    fn ExactDockPredictionOn(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbCommonPaneProperties_ExactDockPredictionOn(_obj)
+        }
+    }
+    fn MinCBarDim(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            cbCommonPaneProperties_MinCBarDim(_obj, arg0, arg1)
+        }
+    }
+    fn NonDestructFrictionOn(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbCommonPaneProperties_NonDestructFrictionOn(_obj)
+        }
+    }
+    fn OutOfPaneDragOn(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbCommonPaneProperties_OutOfPaneDragOn(_obj)
+        }
+    }
+    fn RealTimeUpdatesOn(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbCommonPaneProperties_RealTimeUpdatesOn(_obj)
+        }
+    }
+    fn ResizeHandleSize(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbCommonPaneProperties_ResizeHandleSize(_obj)
+        }
+    }
+    fn RowProportionsOn(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbCommonPaneProperties_RowProportionsOn(_obj)
+        }
+    }
+    fn SetBarCollapseIconsOn(_obj: *u8 /* void* */, _val: c_int /* int */) {
+        unsafe {
+            cbCommonPaneProperties_SetBarCollapseIconsOn(_obj, _val)
+        }
+    }
+    fn SetBarDragHintsOn(_obj: *u8 /* void* */, _val: c_int /* int */) {
+        unsafe {
+            cbCommonPaneProperties_SetBarDragHintsOn(_obj, _val)
+        }
+    }
+    fn SetBarFloatingOn(_obj: *u8 /* void* */, _val: c_int /* int */) {
+        unsafe {
+            cbCommonPaneProperties_SetBarFloatingOn(_obj, _val)
+        }
+    }
+    fn SetColProportionsOn(_obj: *u8 /* void* */, _val: c_int /* int */) {
+        unsafe {
+            cbCommonPaneProperties_SetColProportionsOn(_obj, _val)
+        }
+    }
+    fn SetExactDockPredictionOn(_obj: *u8 /* void* */, _val: c_int /* int */) {
+        unsafe {
+            cbCommonPaneProperties_SetExactDockPredictionOn(_obj, _val)
+        }
+    }
+    fn SetMinCBarDim(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) {
+        unsafe {
+            cbCommonPaneProperties_SetMinCBarDim(_obj, arg0, arg1)
+        }
+    }
+    fn SetNonDestructFrictionOn(_obj: *u8 /* void* */, _val: c_int /* int */) {
+        unsafe {
+            cbCommonPaneProperties_SetNonDestructFrictionOn(_obj, _val)
+        }
+    }
+    fn SetOutOfPaneDragOn(_obj: *u8 /* void* */, _val: c_int /* int */) {
+        unsafe {
+            cbCommonPaneProperties_SetOutOfPaneDragOn(_obj, _val)
+        }
+    }
+    fn SetRealTimeUpdatesOn(_obj: *u8 /* void* */, _val: c_int /* int */) {
+        unsafe {
+            cbCommonPaneProperties_SetRealTimeUpdatesOn(_obj, _val)
+        }
+    }
+    fn SetResizeHandleSize(_obj: *u8 /* void* */, _val: c_int /* int */) {
+        unsafe {
+            cbCommonPaneProperties_SetResizeHandleSize(_obj, _val)
+        }
+    }
+    fn SetRowProportionsOn(_obj: *u8 /* void* */, _val: c_int /* int */) {
+        unsafe {
+            cbCommonPaneProperties_SetRowProportionsOn(_obj, _val)
+        }
+    }
+    fn SetShow3DPaneBorderOn(_obj: *u8 /* void* */, _val: c_int /* int */) {
+        unsafe {
+            cbCommonPaneProperties_SetShow3DPaneBorderOn(_obj, _val)
+        }
+    }
+    fn Show3DPaneBorderOn(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbCommonPaneProperties_Show3DPaneBorderOn(_obj)
+        }
+    }
 }
 trait wxDirTraverser {
 }
@@ -5348,7 +5888,11 @@ trait ELJApp {
 trait wxTabEvent {
 }
 trait cbLeftDClickEvent {
-    // missing: cbLeftDClickEvent_Pos
+    fn Pos(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            cbLeftDClickEvent_Pos(_obj, arg0, arg1)
+        }
+    }
 }
 trait wxMBConvFile {
 }
@@ -5432,40 +5976,160 @@ trait wxHelpControllerHelpProvider {
     }
 }
 trait wxPlotWindow {
-    // missing: wxPlotWindow_Add
-    // missing: wxPlotWindow_AddOnOff
-    // missing: wxPlotWindow_Create
-    // missing: wxPlotWindow_Delete
-    // missing: wxPlotWindow_DeleteOnOff
-    // missing: wxPlotWindow_Enlarge
-    // missing: wxPlotWindow_GetAt
-    // missing: wxPlotWindow_GetCount
-    // missing: wxPlotWindow_GetCurrent
-    // missing: wxPlotWindow_GetEnlargeAroundWindowCentre
-    // missing: wxPlotWindow_GetOnOffCurveAt
-    // missing: wxPlotWindow_GetOnOffCurveCount
-    // missing: wxPlotWindow_GetScrollOnThumbRelease
-    // missing: wxPlotWindow_GetUnitsPerValue
-    // missing: wxPlotWindow_GetZoom
-    // missing: wxPlotWindow_Move
-    // missing: wxPlotWindow_RedrawEverything
-    // missing: wxPlotWindow_RedrawXAxis
-    // missing: wxPlotWindow_RedrawYAxis
-    // missing: wxPlotWindow_ResetScrollbar
-    // missing: wxPlotWindow_SetCurrent
-    // missing: wxPlotWindow_SetEnlargeAroundWindowCentre
-    // missing: wxPlotWindow_SetScrollOnThumbRelease
-    // missing: wxPlotWindow_SetUnitsPerValue
-    // missing: wxPlotWindow_SetZoom
+    fn Add(_obj: *u8 /* void* */, curve: *u8 /* void* */) {
+        unsafe {
+            wxPlotWindow_Add(_obj, curve)
+        }
+    }
+    fn AddOnOff(_obj: *u8 /* void* */, curve: *u8 /* void* */) {
+        unsafe {
+            wxPlotWindow_AddOnOff(_obj, curve)
+        }
+    }
+    fn Create(parent: *u8 /* void* */, id: c_int /* int */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, flags: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxPlotWindow_Create(parent, id, arg0, arg1, arg2, arg3, flags)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */, curve: *u8 /* void* */) {
+        unsafe {
+            wxPlotWindow_Delete(_obj, curve)
+        }
+    }
+    fn DeleteOnOff(_obj: *u8 /* void* */, curve: *u8 /* void* */) {
+        unsafe {
+            wxPlotWindow_DeleteOnOff(_obj, curve)
+        }
+    }
+    fn Enlarge(_obj: *u8 /* void* */, curve: *u8 /* void* */, factor: c_double /* double */) {
+        unsafe {
+            wxPlotWindow_Enlarge(_obj, curve, factor)
+        }
+    }
+    fn GetAt(_obj: *u8 /* void* */, n: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxPlotWindow_GetAt(_obj, n)
+        }
+    }
+    fn GetCount(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxPlotWindow_GetCount(_obj)
+        }
+    }
+    fn GetCurrent(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxPlotWindow_GetCurrent(_obj)
+        }
+    }
+    fn GetEnlargeAroundWindowCentre(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxPlotWindow_GetEnlargeAroundWindowCentre(_obj)
+        }
+    }
+    fn GetOnOffCurveAt(_obj: *u8 /* void* */, n: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxPlotWindow_GetOnOffCurveAt(_obj, n)
+        }
+    }
+    fn GetOnOffCurveCount(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxPlotWindow_GetOnOffCurveCount(_obj)
+        }
+    }
+    fn GetScrollOnThumbRelease(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxPlotWindow_GetScrollOnThumbRelease(_obj)
+        }
+    }
+    fn GetUnitsPerValue(_obj: *u8 /* void* */) -> c_double /* double */ {
+        unsafe {
+            wxPlotWindow_GetUnitsPerValue(_obj)
+        }
+    }
+    fn GetZoom(_obj: *u8 /* void* */) -> c_double /* double */ {
+        unsafe {
+            wxPlotWindow_GetZoom(_obj)
+        }
+    }
+    fn Move(_obj: *u8 /* void* */, curve: *u8 /* void* */, pixels_up: c_int /* int */) {
+        unsafe {
+            wxPlotWindow_Move(_obj, curve, pixels_up)
+        }
+    }
+    fn RedrawEverything(_obj: *u8 /* void* */) {
+        unsafe {
+            wxPlotWindow_RedrawEverything(_obj)
+        }
+    }
+    fn RedrawXAxis(_obj: *u8 /* void* */) {
+        unsafe {
+            wxPlotWindow_RedrawXAxis(_obj)
+        }
+    }
+    fn RedrawYAxis(_obj: *u8 /* void* */) {
+        unsafe {
+            wxPlotWindow_RedrawYAxis(_obj)
+        }
+    }
+    fn ResetScrollbar(_obj: *u8 /* void* */) {
+        unsafe {
+            wxPlotWindow_ResetScrollbar(_obj)
+        }
+    }
+    fn SetCurrent(_obj: *u8 /* void* */, current: *u8 /* void* */) {
+        unsafe {
+            wxPlotWindow_SetCurrent(_obj, current)
+        }
+    }
+    fn SetEnlargeAroundWindowCentre(_obj: *u8 /* void* */, enlargeAroundWindowCentre: c_int /* int */) {
+        unsafe {
+            wxPlotWindow_SetEnlargeAroundWindowCentre(_obj, enlargeAroundWindowCentre)
+        }
+    }
+    fn SetScrollOnThumbRelease(_obj: *u8 /* void* */, scrollOnThumbRelease: c_int /* int */) {
+        unsafe {
+            wxPlotWindow_SetScrollOnThumbRelease(_obj, scrollOnThumbRelease)
+        }
+    }
+    fn SetUnitsPerValue(_obj: *u8 /* void* */, upv: c_double /* double */) {
+        unsafe {
+            wxPlotWindow_SetUnitsPerValue(_obj, upv)
+        }
+    }
+    fn SetZoom(_obj: *u8 /* void* */, zoom: c_double /* double */) {
+        unsafe {
+            wxPlotWindow_SetZoom(_obj, zoom)
+        }
+    }
 }
 trait wxSocketClient {
 }
 trait wxPlotEvent {
-    // missing: wxPlotEvent_GetCurve
-    // missing: wxPlotEvent_GetPosition
-    // missing: wxPlotEvent_GetZoom
-    // missing: wxPlotEvent_SetPosition
-    // missing: wxPlotEvent_SetZoom
+    fn GetCurve(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxPlotEvent_GetCurve(_obj)
+        }
+    }
+    fn GetPosition(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxPlotEvent_GetPosition(_obj)
+        }
+    }
+    fn GetZoom(_obj: *u8 /* void* */) -> c_double /* double */ {
+        unsafe {
+            wxPlotEvent_GetZoom(_obj)
+        }
+    }
+    fn SetPosition(_obj: *u8 /* void* */, pos: c_int /* int */) {
+        unsafe {
+            wxPlotEvent_SetPosition(_obj, pos)
+        }
+    }
+    fn SetZoom(_obj: *u8 /* void* */, zoom: c_double /* double */) {
+        unsafe {
+            wxPlotEvent_SetZoom(_obj, zoom)
+        }
+    }
 }
 trait wxCommandEvent {
     fn CopyObject(_obj: *u8 /* void* */, object_dest: *u8 /* void* */) {
@@ -5550,7 +6214,11 @@ trait wxCommandEvent {
     }
 }
 trait cbRemoveBarEvent {
-    // missing: cbRemoveBarEvent_Bar
+    fn Bar(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbRemoveBarEvent_Bar(_obj)
+        }
+    }
 }
 trait wxZlibOutputStream {
 }
@@ -5574,9 +6242,21 @@ trait wxPaletteChangedEvent {
     }
 }
 trait ELJClient {
-    // missing: ELJClient_Create
-    // missing: ELJClient_Delete
-    // missing: ELJClient_MakeConnection
+    fn Create(_eobj: *u8 /* void* */, _cnct: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            ELJClient_Create(_eobj, _cnct)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            ELJClient_Delete(_obj)
+        }
+    }
+    fn MakeConnection(_obj: *u8 /* void* */, host: *u8 /* void* */, server: *u8 /* void* */, topic: *u8 /* void* */) {
+        unsafe {
+            ELJClient_MakeConnection(_obj, host, server, topic)
+        }
+    }
 }
 trait wxGenericValidator {
 }
@@ -5984,21 +6664,57 @@ trait wxActivateEvent {
     }
 }
 trait cbDrawHintRectEvent {
-    // missing: cbDrawHintRectEvent_EraseRect
-    // missing: cbDrawHintRectEvent_IsInClient
-    // missing: cbDrawHintRectEvent_LastTime
-    // missing: cbDrawHintRectEvent_Rect
+    fn EraseRect(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbDrawHintRectEvent_EraseRect(_obj)
+        }
+    }
+    fn IsInClient(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            cbDrawHintRectEvent_IsInClient(_obj)
+        }
+    }
+    fn LastTime(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbDrawHintRectEvent_LastTime(_obj)
+        }
+    }
+    fn Rect(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */, arg2: *c_int /* int* */, arg3: *c_int /* int* */) {
+        unsafe {
+            cbDrawHintRectEvent_Rect(_obj, arg0, arg1, arg2, arg3)
+        }
+    }
 }
 trait cbInsertBarEvent {
-    // missing: cbInsertBarEvent_Bar
-    // missing: cbInsertBarEvent_Row
+    fn Bar(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbInsertBarEvent_Bar(_obj)
+        }
+    }
+    fn Row(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbInsertBarEvent_Row(_obj)
+        }
+    }
 }
 trait wxHtmlColourCell {
 }
 trait cbDrawBarDecorEvent {
-    // missing: cbDrawBarDecorEvent_Bar
-    // missing: cbDrawBarDecorEvent_BoundsInParent
-    // missing: cbDrawBarDecorEvent_Dc
+    fn Bar(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDrawBarDecorEvent_Bar(_obj)
+        }
+    }
+    fn BoundsInParent(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */, arg2: *c_int /* int* */, arg3: *c_int /* int* */) {
+        unsafe {
+            cbDrawBarDecorEvent_BoundsInParent(_obj, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn Dc(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDrawBarDecorEvent_Dc(_obj)
+        }
+    }
 }
 trait wxGridCellTextEditor {
     fn Ctor() -> *u8 /* void* */ {
@@ -6012,14 +6728,38 @@ trait wxHTTP {
 trait wxDocument {
 }
 trait cbBarHintsPlugin {
-    // missing: cbBarHintsPlugin_Create
-    // missing: cbBarHintsPlugin_CreateDefault
-    // missing: cbBarHintsPlugin_Delete
-    // missing: cbBarHintsPlugin_SetGrooveCount
+    fn Create(pPanel: *u8 /* void* */, paneMask: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            cbBarHintsPlugin_Create(pPanel, paneMask)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbBarHintsPlugin_CreateDefault()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbBarHintsPlugin_Delete(_obj)
+        }
+    }
+    fn SetGrooveCount(_obj: *u8 /* void* */, nGrooves: c_int /* int */) {
+        unsafe {
+            cbBarHintsPlugin_SetGrooveCount(_obj, nGrooves)
+        }
+    }
 }
 trait cbSizeBarWndEvent {
-    // missing: cbSizeBarWndEvent_Bar
-    // missing: cbSizeBarWndEvent_BoundsInParent
+    fn Bar(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbSizeBarWndEvent_Bar(_obj)
+        }
+    }
+    fn BoundsInParent(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */, arg2: *c_int /* int* */, arg3: *c_int /* int* */) {
+        unsafe {
+            cbSizeBarWndEvent_BoundsInParent(_obj, arg0, arg1, arg2, arg3)
+        }
+    }
 }
 trait wxPropertyCategory {
     fn Create(label: *u8 /* void* */) -> *u8 /* void* */ {
@@ -6079,9 +6819,21 @@ trait wxWizardPageSimple {
 trait wxFilterInputStream {
 }
 trait cbBarDragPlugin {
-    // missing: cbBarDragPlugin_Create
-    // missing: cbBarDragPlugin_CreateDefault
-    // missing: cbBarDragPlugin_Delete
+    fn Create(pPanel: *u8 /* void* */, paneMask: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            cbBarDragPlugin_Create(pPanel, paneMask)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbBarDragPlugin_CreateDefault()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbBarDragPlugin_Delete(_obj)
+        }
+    }
 }
 trait wxBusyInfo {
     fn Create(_txt: *u8 /* void* */) -> *u8 /* void* */ {
@@ -6256,10 +7008,26 @@ trait wxColour {
 trait wxGridCellStringRenderer {
 }
 trait wxTreeCompanionWindow {
-    // missing: wxTreeCompanionWindow_Create
-    // missing: wxTreeCompanionWindow_DrawItem
-    // missing: wxTreeCompanionWindow_GetTreeCtrl
-    // missing: wxTreeCompanionWindow_SetTreeCtrl
+    fn Create(parent: *u8 /* void* */, id: c_int /* int */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxTreeCompanionWindow_Create(parent, id, arg0, arg1, arg2, arg3, style)
+        }
+    }
+    fn DrawItem(_obj: *u8 /* void* */, dc: *u8 /* void* */, id: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */) {
+        unsafe {
+            wxTreeCompanionWindow_DrawItem(_obj, dc, id, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn GetTreeCtrl(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxTreeCompanionWindow_GetTreeCtrl(_obj)
+        }
+    }
+    fn SetTreeCtrl(_obj: *u8 /* void* */, treeCtrl: *u8 /* void* */) {
+        unsafe {
+            wxTreeCompanionWindow_SetTreeCtrl(_obj, treeCtrl)
+        }
+    }
 }
 trait wxRegionIterator {
     fn Create() -> *u8 /* void* */ {
@@ -6329,13 +7097,41 @@ trait wxHtmlHelpFrame {
 trait wxQueryCol {
 }
 trait wxLEDNumberCtrl {
-    // missing: wxLEDNumberCtrl_Create
-    // missing: wxLEDNumberCtrl_GetAlignment
-    // missing: wxLEDNumberCtrl_GetDrawFaded
-    // missing: wxLEDNumberCtrl_GetValue
-    // missing: wxLEDNumberCtrl_SetAlignment
-    // missing: wxLEDNumberCtrl_SetDrawFaded
-    // missing: wxLEDNumberCtrl_SetValue
+    fn Create(parent: *u8 /* void* */, id: c_int /* int */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxLEDNumberCtrl_Create(parent, id, arg0, arg1, arg2, arg3, style)
+        }
+    }
+    fn GetAlignment(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxLEDNumberCtrl_GetAlignment(_obj)
+        }
+    }
+    fn GetDrawFaded(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxLEDNumberCtrl_GetDrawFaded(_obj)
+        }
+    }
+    fn GetValue(_obj: *u8 /* void* */, _ref: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxLEDNumberCtrl_GetValue(_obj, _ref)
+        }
+    }
+    fn SetAlignment(_obj: *u8 /* void* */, Alignment: c_int /* int */, Redraw: c_int /* int */) {
+        unsafe {
+            wxLEDNumberCtrl_SetAlignment(_obj, Alignment, Redraw)
+        }
+    }
+    fn SetDrawFaded(_obj: *u8 /* void* */, DrawFaded: c_int /* int */, Redraw: c_int /* int */) {
+        unsafe {
+            wxLEDNumberCtrl_SetDrawFaded(_obj, DrawFaded, Redraw)
+        }
+    }
+    fn SetValue(_obj: *u8 /* void* */, Value: *u8 /* void* */, Redraw: c_int /* int */) {
+        unsafe {
+            wxLEDNumberCtrl_SetValue(_obj, Value, Redraw)
+        }
+    }
 }
 trait wxMimeTypesManager {
     fn AddFallbacks(_obj: *u8 /* void* */, _types: *u8 /* void* */) {
@@ -6604,7 +7400,11 @@ trait wxBitmapDataObject {
     }
 }
 trait cbCustomizeLayoutEvent {
-    // missing: cbCustomizeLayoutEvent_ClickPos
+    fn ClickPos(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            cbCustomizeLayoutEvent_ClickPos(_obj, arg0, arg1)
+        }
+    }
 }
 trait wxPostScriptPrintNativeData {
     fn Create() -> *u8 /* void* */ {
@@ -6908,7 +7708,11 @@ trait wxDataFormat {
     }
 }
 trait cbDockBox {
-    // missing: cbDockBox_Create
+    fn Create() -> *u8 /* void* */ {
+        unsafe {
+            cbDockBox_Create()
+        }
+    }
 }
 trait wxBitmap {
     fn AddHandler(handler: *u8 /* void* */) {
@@ -7045,12 +7849,28 @@ trait wxBitmap {
 trait wxBufferedOutputStream {
 }
 trait cbMotionEvent {
-    // missing: cbMotionEvent_Pos
+    fn Pos(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            cbMotionEvent_Pos(_obj, arg0, arg1)
+        }
+    }
 }
 trait cbRowInfo {
-    // missing: cbRowInfo_Create
-    // missing: cbRowInfo_Delete
-    // missing: cbRowInfo_GetFirstBar
+    fn Create() -> *u8 /* void* */ {
+        unsafe {
+            cbRowInfo_Create()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbRowInfo_Delete(_obj)
+        }
+    }
+    fn GetFirstBar(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbRowInfo_GetFirstBar(_obj)
+        }
+    }
 }
 trait wxGridCellChoiceEditor {
     fn Ctor(arg0: c_int /* int */, arg1: *wchar_t /* wchar_t* */, allowOthers: c_int /* int */) -> *u8 /* void* */ {
@@ -7091,7 +7911,11 @@ trait wxPanel {
     }
 }
 trait cbFinishDrawInAreaEvent {
-    // missing: cbFinishDrawInAreaEvent_Area
+    fn Area(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */, arg2: *c_int /* int* */, arg3: *c_int /* int* */) {
+        unsafe {
+            cbFinishDrawInAreaEvent_Area(_obj, arg0, arg1, arg2, arg3)
+        }
+    }
 }
 trait wxPreviewFrame {
     fn Create(preview: *u8 /* void* */, parent: *u8 /* void* */, title: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */, name: *u8 /* void* */) -> *u8 /* void* */ {
@@ -7113,7 +7937,11 @@ trait wxPreviewFrame {
 trait wxFocusEvent {
 }
 trait cbCollapseBox {
-    // missing: cbCollapseBox_Create
+    fn Create() -> *u8 /* void* */ {
+        unsafe {
+            cbCollapseBox_Create()
+        }
+    }
 }
 trait wxLogStream {
 }
@@ -8922,10 +9750,26 @@ trait wxTextOutputStream {
     }
 }
 trait wxDynamicSashWindow {
-    // missing: wxDynamicSashWindow_Create
-    // missing: wxDynamicSashWindow_Delete
-    // missing: wxDynamicSashWindow_GetHScrollBar
-    // missing: wxDynamicSashWindow_GetVScrollBar
+    fn Create(parent: *u8 /* void* */, id: c_int /* int */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxDynamicSashWindow_Create(parent, id, arg0, arg1, arg2, arg3, style)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxDynamicSashWindow_Delete(_obj)
+        }
+    }
+    fn GetHScrollBar(_obj: *u8 /* void* */, child: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxDynamicSashWindow_GetHScrollBar(_obj, child)
+        }
+    }
+    fn GetVScrollBar(_obj: *u8 /* void* */, child: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxDynamicSashWindow_GetVScrollBar(_obj, child)
+        }
+    }
 }
 trait wxTimerRunner {
 }
@@ -9817,24 +10661,96 @@ trait wxTopLevelWindow {
     }
 }
 trait ELJConnection {
-    // missing: ELJConnection_Advise
-    // missing: ELJConnection_Compress
-    // missing: ELJConnection_Create
-    // missing: ELJConnection_CreateDefault
-    // missing: ELJConnection_Delete
-    // missing: ELJConnection_Disconnect
-    // missing: ELJConnection_Execute
-    // missing: ELJConnection_Poke
-    // missing: ELJConnection_Request
-    // missing: ELJConnection_SetOnAdvise
-    // missing: ELJConnection_SetOnDisconnect
-    // missing: ELJConnection_SetOnExecute
-    // missing: ELJConnection_SetOnPoke
-    // missing: ELJConnection_SetOnRequest
-    // missing: ELJConnection_SetOnStartAdvise
-    // missing: ELJConnection_SetOnStopAdvise
-    // missing: ELJConnection_StartAdvise
-    // missing: ELJConnection_StopAdvise
+    fn Advise(_obj: *u8 /* void* */, item: *u8 /* void* */, data: *u8 /* void* */, size: c_int /* int */, format: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            ELJConnection_Advise(_obj, item, data, size, format)
+        }
+    }
+    fn Compress(_obj: *u8 /* void* */, on: c_int /* int */) {
+        unsafe {
+            ELJConnection_Compress(_obj, on)
+        }
+    }
+    fn Create(_obj: *u8 /* void* */, buffer: *u8 /* void* */, size: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            ELJConnection_Create(_obj, buffer, size)
+        }
+    }
+    fn CreateDefault(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            ELJConnection_CreateDefault(_obj)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            ELJConnection_Delete(_obj)
+        }
+    }
+    fn Disconnect(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            ELJConnection_Disconnect(_obj)
+        }
+    }
+    fn Execute(_obj: *u8 /* void* */, data: *u8 /* void* */, size: c_int /* int */, format: c_int /* int */) -> bool /* bool */ {
+        unsafe {
+            ELJConnection_Execute(_obj, data, size, format)
+        }
+    }
+    fn Poke(_obj: *u8 /* void* */, item: *u8 /* void* */, data: *u8 /* void* */, size: c_int /* int */, format: c_int /* int */) -> bool /* bool */ {
+        unsafe {
+            ELJConnection_Poke(_obj, item, data, size, format)
+        }
+    }
+    fn Request(_obj: *u8 /* void* */, item: *u8 /* void* */, size: *u8 /* void* */, format: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            ELJConnection_Request(_obj, item, size, format)
+        }
+    }
+    fn SetOnAdvise(_obj: *u8 /* void* */, _fnc: *u8 /* void* */) {
+        unsafe {
+            ELJConnection_SetOnAdvise(_obj, _fnc)
+        }
+    }
+    fn SetOnDisconnect(_obj: *u8 /* void* */, _fnc: *u8 /* void* */) {
+        unsafe {
+            ELJConnection_SetOnDisconnect(_obj, _fnc)
+        }
+    }
+    fn SetOnExecute(_obj: *u8 /* void* */, _fnc: *u8 /* void* */) {
+        unsafe {
+            ELJConnection_SetOnExecute(_obj, _fnc)
+        }
+    }
+    fn SetOnPoke(_obj: *u8 /* void* */, _fnc: *u8 /* void* */) {
+        unsafe {
+            ELJConnection_SetOnPoke(_obj, _fnc)
+        }
+    }
+    fn SetOnRequest(_obj: *u8 /* void* */, _fnc: *u8 /* void* */) {
+        unsafe {
+            ELJConnection_SetOnRequest(_obj, _fnc)
+        }
+    }
+    fn SetOnStartAdvise(_obj: *u8 /* void* */, _fnc: *u8 /* void* */) {
+        unsafe {
+            ELJConnection_SetOnStartAdvise(_obj, _fnc)
+        }
+    }
+    fn SetOnStopAdvise(_obj: *u8 /* void* */, _fnc: *u8 /* void* */) {
+        unsafe {
+            ELJConnection_SetOnStopAdvise(_obj, _fnc)
+        }
+    }
+    fn StartAdvise(_obj: *u8 /* void* */, item: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            ELJConnection_StartAdvise(_obj, item)
+        }
+    }
+    fn StopAdvise(_obj: *u8 /* void* */, item: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            ELJConnection_StopAdvise(_obj, item)
+        }
+    }
 }
 trait wxProcess {
     fn CloseOutput(_obj: *u8 /* void* */) {
@@ -9901,14 +10817,38 @@ trait wxDbTable {
 trait wxDbInf {
 }
 trait cbRowLayoutPlugin {
-    // missing: cbRowLayoutPlugin_Create
-    // missing: cbRowLayoutPlugin_CreateDefault
-    // missing: cbRowLayoutPlugin_Delete
+    fn Create(pPanel: *u8 /* void* */, paneMask: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            cbRowLayoutPlugin_Create(pPanel, paneMask)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbRowLayoutPlugin_CreateDefault()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbRowLayoutPlugin_Delete(_obj)
+        }
+    }
 }
 trait cbResizeRowEvent {
-    // missing: cbResizeRowEvent_ForUpperHandle
-    // missing: cbResizeRowEvent_HandleOfs
-    // missing: cbResizeRowEvent_Row
+    fn ForUpperHandle(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbResizeRowEvent_ForUpperHandle(_obj)
+        }
+    }
+    fn HandleOfs(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbResizeRowEvent_HandleOfs(_obj)
+        }
+    }
+    fn Row(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbResizeRowEvent_Row(_obj)
+        }
+    }
 }
 trait wxInputStream {
     fn Delete(_obj: *u8 /* void* */) {
@@ -10093,20 +11033,76 @@ trait wxCalendarEvent {
     }
 }
 trait wxPlotOnOffCurve {
-    // missing: wxPlotOnOffCurve_Add
-    // missing: wxPlotOnOffCurve_Create
-    // missing: wxPlotOnOffCurve_Delete
-    // missing: wxPlotOnOffCurve_DrawOffLine
-    // missing: wxPlotOnOffCurve_DrawOnLine
-    // missing: wxPlotOnOffCurve_GetAt
-    // missing: wxPlotOnOffCurve_GetClientData
-    // missing: wxPlotOnOffCurve_GetCount
-    // missing: wxPlotOnOffCurve_GetEndX
-    // missing: wxPlotOnOffCurve_GetOff
-    // missing: wxPlotOnOffCurve_GetOffsetY
-    // missing: wxPlotOnOffCurve_GetOn
-    // missing: wxPlotOnOffCurve_GetStartX
-    // missing: wxPlotOnOffCurve_SetOffsetY
+    fn Add(_obj: *u8 /* void* */, on: c_int /* int */, off: c_int /* int */, clientData: *u8 /* void* */) {
+        unsafe {
+            wxPlotOnOffCurve_Add(_obj, on, off, clientData)
+        }
+    }
+    fn Create(offsetY: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxPlotOnOffCurve_Create(offsetY)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxPlotOnOffCurve_Delete(_obj)
+        }
+    }
+    fn DrawOffLine(_obj: *u8 /* void* */, dc: *u8 /* void* */, y: c_int /* int */, start: c_int /* int */, end: c_int /* int */) {
+        unsafe {
+            wxPlotOnOffCurve_DrawOffLine(_obj, dc, y, start, end)
+        }
+    }
+    fn DrawOnLine(_obj: *u8 /* void* */, dc: *u8 /* void* */, y: c_int /* int */, start: c_int /* int */, end: c_int /* int */, clientData: *u8 /* void* */) {
+        unsafe {
+            wxPlotOnOffCurve_DrawOnLine(_obj, dc, y, start, end, clientData)
+        }
+    }
+    fn GetAt(_obj: *u8 /* void* */, index: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxPlotOnOffCurve_GetAt(_obj, index)
+        }
+    }
+    fn GetClientData(_obj: *u8 /* void* */, index: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxPlotOnOffCurve_GetClientData(_obj, index)
+        }
+    }
+    fn GetCount(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxPlotOnOffCurve_GetCount(_obj)
+        }
+    }
+    fn GetEndX(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxPlotOnOffCurve_GetEndX(_obj)
+        }
+    }
+    fn GetOff(_obj: *u8 /* void* */, index: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxPlotOnOffCurve_GetOff(_obj, index)
+        }
+    }
+    fn GetOffsetY(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxPlotOnOffCurve_GetOffsetY(_obj)
+        }
+    }
+    fn GetOn(_obj: *u8 /* void* */, index: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxPlotOnOffCurve_GetOn(_obj, index)
+        }
+    }
+    fn GetStartX(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxPlotOnOffCurve_GetStartX(_obj)
+        }
+    }
+    fn SetOffsetY(_obj: *u8 /* void* */, offsetY: c_int /* int */) {
+        unsafe {
+            wxPlotOnOffCurve_SetOffsetY(_obj, offsetY)
+        }
+    }
 }
 trait wxStaticText {
     fn Create(_prt: *u8 /* void* */, _id: c_int /* int */, _txt: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, _stl: c_int /* int */) -> *u8 /* void* */ {
@@ -10239,20 +11235,76 @@ trait wxHtmlHelpController {
 trait wxSocketBase {
 }
 trait wxRemotelyScrolledTreeCtrl {
-    // missing: wxRemotelyScrolledTreeCtrl_AdjustRemoteScrollbars
-    // missing: wxRemotelyScrolledTreeCtrl_CalcTreeSize
-    // missing: wxRemotelyScrolledTreeCtrl_CalcTreeSizeItem
-    // missing: wxRemotelyScrolledTreeCtrl_Create
-    // missing: wxRemotelyScrolledTreeCtrl_Delete
-    // missing: wxRemotelyScrolledTreeCtrl_GetCompanionWindow
-    // missing: wxRemotelyScrolledTreeCtrl_GetScrollPos
-    // missing: wxRemotelyScrolledTreeCtrl_GetScrolledWindow
-    // missing: wxRemotelyScrolledTreeCtrl_GetViewStart
-    // missing: wxRemotelyScrolledTreeCtrl_HideVScrollbar
-    // missing: wxRemotelyScrolledTreeCtrl_PrepareDC
-    // missing: wxRemotelyScrolledTreeCtrl_ScrollToLine
-    // missing: wxRemotelyScrolledTreeCtrl_SetCompanionWindow
-    // missing: wxRemotelyScrolledTreeCtrl_SetScrollbars
+    fn AdjustRemoteScrollbars(_obj: *u8 /* void* */) {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_AdjustRemoteScrollbars(_obj)
+        }
+    }
+    fn CalcTreeSize(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */, arg2: *c_int /* int* */, arg3: *c_int /* int* */) {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_CalcTreeSize(_obj, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn CalcTreeSizeItem(_obj: *u8 /* void* */, id: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */, arg2: *c_int /* int* */, arg3: *c_int /* int* */) {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_CalcTreeSizeItem(_obj, id, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn Create(_obj: *u8 /* void* */, _cmp: *u8 /* void* */, parent: *u8 /* void* */, id: c_int /* int */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_Create(_obj, _cmp, parent, id, arg0, arg1, arg2, arg3, style)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_Delete(_obj)
+        }
+    }
+    fn GetCompanionWindow(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_GetCompanionWindow(_obj)
+        }
+    }
+    fn GetScrollPos(_obj: *u8 /* void* */, orient: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_GetScrollPos(_obj, orient)
+        }
+    }
+    fn GetScrolledWindow(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_GetScrolledWindow(_obj)
+        }
+    }
+    fn GetViewStart(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_GetViewStart(_obj, arg0, arg1)
+        }
+    }
+    fn HideVScrollbar(_obj: *u8 /* void* */) {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_HideVScrollbar(_obj)
+        }
+    }
+    fn PrepareDC(_obj: *u8 /* void* */, dc: *u8 /* void* */) {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_PrepareDC(_obj, dc)
+        }
+    }
+    fn ScrollToLine(_obj: *u8 /* void* */, posHoriz: c_int /* int */, posVert: c_int /* int */) {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_ScrollToLine(_obj, posHoriz, posVert)
+        }
+    }
+    fn SetCompanionWindow(_obj: *u8 /* void* */, companion: *u8 /* void* */) {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_SetCompanionWindow(_obj, companion)
+        }
+    }
+    fn SetScrollbars(_obj: *u8 /* void* */, pixelsPerUnitX: c_int /* int */, pixelsPerUnitY: c_int /* int */, noUnitsX: c_int /* int */, noUnitsY: c_int /* int */, xPos: c_int /* int */, yPos: c_int /* int */, noRefresh: c_int /* int */) {
+        unsafe {
+            wxRemotelyScrolledTreeCtrl_SetScrollbars(_obj, pixelsPerUnitX, pixelsPerUnitY, noUnitsX, noUnitsY, xPos, yPos, noRefresh)
+        }
+    }
 }
 trait ELJTextDropTarget {
     fn Create(_obj: *u8 /* void* */, _func: *u8 /* void* */) -> *u8 /* void* */ {
@@ -10878,25 +11930,101 @@ trait wxNotifyEvent {
 trait wxQuantize {
 }
 trait cbMiniButton {
-    // missing: cbMiniButton_Create
-    // missing: cbMiniButton_Delete
-    // missing: cbMiniButton_Dim
-    // missing: cbMiniButton_DragStarted
-    // missing: cbMiniButton_Enable
-    // missing: cbMiniButton_Enabled
-    // missing: cbMiniButton_HitTest
-    // missing: cbMiniButton_IsPressed
-    // missing: cbMiniButton_Layout
-    // missing: cbMiniButton_Pane
-    // missing: cbMiniButton_Plugin
-    // missing: cbMiniButton_Pos
-    // missing: cbMiniButton_Pressed
-    // missing: cbMiniButton_Refresh
-    // missing: cbMiniButton_Reset
-    // missing: cbMiniButton_SetPos
-    // missing: cbMiniButton_Visible
-    // missing: cbMiniButton_WasClicked
-    // missing: cbMiniButton_Wnd
+    fn Create() -> *u8 /* void* */ {
+        unsafe {
+            cbMiniButton_Create()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbMiniButton_Delete(_obj)
+        }
+    }
+    fn Dim(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            cbMiniButton_Dim(_obj, arg0, arg1)
+        }
+    }
+    fn DragStarted(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbMiniButton_DragStarted(_obj)
+        }
+    }
+    fn Enable(_obj: *u8 /* void* */, enable: bool /* bool */) {
+        unsafe {
+            cbMiniButton_Enable(_obj, enable)
+        }
+    }
+    fn Enabled(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbMiniButton_Enabled(_obj)
+        }
+    }
+    fn HitTest(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            cbMiniButton_HitTest(_obj, arg0, arg1)
+        }
+    }
+    fn IsPressed(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            cbMiniButton_IsPressed(_obj)
+        }
+    }
+    fn Layout(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbMiniButton_Layout(_obj)
+        }
+    }
+    fn Pane(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbMiniButton_Pane(_obj)
+        }
+    }
+    fn Plugin(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbMiniButton_Plugin(_obj)
+        }
+    }
+    fn Pos(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            cbMiniButton_Pos(_obj, arg0, arg1)
+        }
+    }
+    fn Pressed(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbMiniButton_Pressed(_obj)
+        }
+    }
+    fn Refresh(_obj: *u8 /* void* */) {
+        unsafe {
+            cbMiniButton_Refresh(_obj)
+        }
+    }
+    fn Reset(_obj: *u8 /* void* */) {
+        unsafe {
+            cbMiniButton_Reset(_obj)
+        }
+    }
+    fn SetPos(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) {
+        unsafe {
+            cbMiniButton_SetPos(_obj, arg0, arg1)
+        }
+    }
+    fn Visible(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbMiniButton_Visible(_obj)
+        }
+    }
+    fn WasClicked(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbMiniButton_WasClicked(_obj)
+        }
+    }
+    fn Wnd(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbMiniButton_Wnd(_obj)
+        }
+    }
 }
 trait wxPopupWindow {
 }
@@ -11074,7 +12202,11 @@ trait wxHelpEvent {
     }
 }
 trait cbRightUpEvent {
-    // missing: cbRightUpEvent_Pos
+    fn Pos(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            cbRightUpEvent_Pos(_obj, arg0, arg1)
+        }
+    }
 }
 trait wxToolBar {
     fn AddControl(_obj: *u8 /* void* */, ctrl: *u8 /* void* */) -> bool /* bool */ {
@@ -11291,7 +12423,11 @@ trait wxPoint {
             wxPoint_Create(arg0, arg1)
         }
     }
-    // missing: wxPoint_Destroy
+    fn Destroy(_obj: *u8 /* void* */) {
+        unsafe {
+            wxPoint_Destroy(_obj)
+        }
+    }
     fn GetX(_obj: *u8 /* void* */) -> c_int /* int */ {
         unsafe {
             wxPoint_GetX(_obj)
@@ -11884,20 +13020,76 @@ trait wxScopedArray {
 trait wxDataObject {
 }
 trait wxCommandProcessor {
-    // missing: wxCommandProcessor_CanRedo
-    // missing: wxCommandProcessor_CanUndo
-    // missing: wxCommandProcessor_ClearCommands
-    // missing: wxCommandProcessor_Delete
-    // missing: wxCommandProcessor_GetCommands
-    // missing: wxCommandProcessor_GetEditMenu
-    // missing: wxCommandProcessor_GetMaxCommands
-    // missing: wxCommandProcessor_Initialize
-    // missing: wxCommandProcessor_Redo
-    // missing: wxCommandProcessor_SetEditMenu
-    // missing: wxCommandProcessor_SetMenuStrings
-    // missing: wxCommandProcessor_Submit
-    // missing: wxCommandProcessor_Undo
-    // missing: wxCommandProcessor_wxCommandProcessor
+    fn CanRedo(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxCommandProcessor_CanRedo(_obj)
+        }
+    }
+    fn CanUndo(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxCommandProcessor_CanUndo(_obj)
+        }
+    }
+    fn ClearCommands(_obj: *u8 /* void* */) {
+        unsafe {
+            wxCommandProcessor_ClearCommands(_obj)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxCommandProcessor_Delete(_obj)
+        }
+    }
+    fn GetCommands(_obj: *u8 /* void* */, _ref: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxCommandProcessor_GetCommands(_obj, _ref)
+        }
+    }
+    fn GetEditMenu(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxCommandProcessor_GetEditMenu(_obj)
+        }
+    }
+    fn GetMaxCommands(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxCommandProcessor_GetMaxCommands(_obj)
+        }
+    }
+    fn Initialize(_obj: *u8 /* void* */) {
+        unsafe {
+            wxCommandProcessor_Initialize(_obj)
+        }
+    }
+    fn Redo(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxCommandProcessor_Redo(_obj)
+        }
+    }
+    fn SetEditMenu(_obj: *u8 /* void* */, menu: *u8 /* void* */) {
+        unsafe {
+            wxCommandProcessor_SetEditMenu(_obj, menu)
+        }
+    }
+    fn SetMenuStrings(_obj: *u8 /* void* */) {
+        unsafe {
+            wxCommandProcessor_SetMenuStrings(_obj)
+        }
+    }
+    fn Submit(_obj: *u8 /* void* */, command: *u8 /* void* */, storeIt: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxCommandProcessor_Submit(_obj, command, storeIt)
+        }
+    }
+    fn Undo(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxCommandProcessor_Undo(_obj)
+        }
+    }
+    fn wxCommandProcessor(maxCommands: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxCommandProcessor_wxCommandProcessor(maxCommands)
+        }
+    }
 }
 trait wxInitDialogEvent {
 }
@@ -11951,9 +13143,21 @@ trait wxSashLayoutWindow {
     }
 }
 trait cbHintAnimationPlugin {
-    // missing: cbHintAnimationPlugin_Create
-    // missing: cbHintAnimationPlugin_CreateDefault
-    // missing: cbHintAnimationPlugin_Delete
+    fn Create(pPanel: *u8 /* void* */, paneMask: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            cbHintAnimationPlugin_Create(pPanel, paneMask)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbHintAnimationPlugin_CreateDefault()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbHintAnimationPlugin_Delete(_obj)
+        }
+    }
 }
 trait wxPrinterDC {
     fn Create(data: *u8 /* void* */) -> *u8 /* void* */ {
@@ -12062,11 +13266,31 @@ trait wxIcon {
     }
 }
 trait cbPluginBase {
-    // missing: cbPluginBase_Delete
-    // missing: cbPluginBase_GetPaneMask
-    // missing: cbPluginBase_IsReady
-    // missing: cbPluginBase_Plugin
-    // missing: cbPluginBase_ProcessEvent
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbPluginBase_Delete(_obj)
+        }
+    }
+    fn GetPaneMask(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbPluginBase_GetPaneMask(_obj)
+        }
+    }
+    fn IsReady(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            cbPluginBase_IsReady(_obj)
+        }
+    }
+    fn Plugin(_swt: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            cbPluginBase_Plugin(_swt)
+        }
+    }
+    fn ProcessEvent(_obj: *u8 /* void* */, event: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbPluginBase_ProcessEvent(_obj, event)
+        }
+    }
 }
 trait wxBufferedPaintDC {
     fn Create(window: *u8 /* void* */, style: c_int /* int */) -> *u8 /* void* */ {
@@ -12086,16 +13310,56 @@ trait wxBufferedPaintDC {
     }
 }
 trait ELJPlotCurve {
-    // missing: ELJPlotCurve_Create
-    // missing: ELJPlotCurve_Delete
-    // missing: ELJPlotCurve_GetEndY
-    // missing: ELJPlotCurve_GetOffsetY
-    // missing: ELJPlotCurve_GetStartY
-    // missing: ELJPlotCurve_SetEndY
-    // missing: ELJPlotCurve_SetOffsetY
-    // missing: ELJPlotCurve_SetPenNormal
-    // missing: ELJPlotCurve_SetPenSelected
-    // missing: ELJPlotCurve_SetStartY
+    fn Create(_obj: *u8 /* void* */, _str: *u8 /* void* */, _end: *u8 /* void* */, _y: *u8 /* void* */, offsetY: c_int /* int */, startY: c_double /* double */, endY: c_double /* double */) -> *u8 /* void* */ {
+        unsafe {
+            ELJPlotCurve_Create(_obj, _str, _end, _y, offsetY, startY, endY)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            ELJPlotCurve_Delete(_obj)
+        }
+    }
+    fn GetEndY(_obj: *u8 /* void* */) -> c_double /* double */ {
+        unsafe {
+            ELJPlotCurve_GetEndY(_obj)
+        }
+    }
+    fn GetOffsetY(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            ELJPlotCurve_GetOffsetY(_obj)
+        }
+    }
+    fn GetStartY(_obj: *u8 /* void* */) -> c_double /* double */ {
+        unsafe {
+            ELJPlotCurve_GetStartY(_obj)
+        }
+    }
+    fn SetEndY(_obj: *u8 /* void* */, endY: c_double /* double */) {
+        unsafe {
+            ELJPlotCurve_SetEndY(_obj, endY)
+        }
+    }
+    fn SetOffsetY(_obj: *u8 /* void* */, offsetY: c_int /* int */) {
+        unsafe {
+            ELJPlotCurve_SetOffsetY(_obj, offsetY)
+        }
+    }
+    fn SetPenNormal(_obj: *u8 /* void* */, pen: *u8 /* void* */) {
+        unsafe {
+            ELJPlotCurve_SetPenNormal(_obj, pen)
+        }
+    }
+    fn SetPenSelected(_obj: *u8 /* void* */, pen: *u8 /* void* */) {
+        unsafe {
+            ELJPlotCurve_SetPenSelected(_obj, pen)
+        }
+    }
+    fn SetStartY(_obj: *u8 /* void* */, startY: c_double /* double */) {
+        unsafe {
+            ELJPlotCurve_SetStartY(_obj, startY)
+        }
+    }
 }
 trait wxGraphicsBrush {
 }
@@ -12267,31 +13531,131 @@ trait wxDropTarget {
     }
 }
 trait cbDockPane {
-    // missing: cbDockPane_BarPresent
-    // missing: cbDockPane_Create
-    // missing: cbDockPane_CreateDefault
-    // missing: cbDockPane_Delete
-    // missing: cbDockPane_GetAlignment
-    // missing: cbDockPane_GetBarInfoByWindow
-    // missing: cbDockPane_GetBarResizeRange
-    // missing: cbDockPane_GetDockingState
-    // missing: cbDockPane_GetFirstRow
-    // missing: cbDockPane_GetPaneHeight
-    // missing: cbDockPane_GetRealRect
-    // missing: cbDockPane_GetRowList
-    // missing: cbDockPane_GetRowResizeRange
-    // missing: cbDockPane_HitTestPaneItems
-    // missing: cbDockPane_InsertBarByCoord
-    // missing: cbDockPane_InsertBarByInfo
-    // missing: cbDockPane_InsertBarToRow
-    // missing: cbDockPane_InsertRow
-    // missing: cbDockPane_IsHorizontal
-    // missing: cbDockPane_MatchesMask
-    // missing: cbDockPane_RemoveBar
-    // missing: cbDockPane_RemoveRow
-    // missing: cbDockPane_SetBoundsInParent
-    // missing: cbDockPane_SetMargins
-    // missing: cbDockPane_SetPaneWidth
+    fn BarPresent(_obj: *u8 /* void* */, pBar: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbDockPane_BarPresent(_obj, pBar)
+        }
+    }
+    fn Create(alignment: c_int /* int */, pPanel: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDockPane_Create(alignment, pPanel)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbDockPane_CreateDefault()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbDockPane_Delete(_obj)
+        }
+    }
+    fn GetAlignment(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbDockPane_GetAlignment(_obj)
+        }
+    }
+    fn GetBarInfoByWindow(_obj: *u8 /* void* */, pBarWnd: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDockPane_GetBarInfoByWindow(_obj, pBarWnd)
+        }
+    }
+    fn GetBarResizeRange(_obj: *u8 /* void* */, pBar: *u8 /* void* */, from: *u8 /* void* */, till: *u8 /* void* */, forLeftHandle: c_int /* int */) {
+        unsafe {
+            cbDockPane_GetBarResizeRange(_obj, pBar, from, till, forLeftHandle)
+        }
+    }
+    fn GetDockingState(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbDockPane_GetDockingState(_obj)
+        }
+    }
+    fn GetFirstRow(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDockPane_GetFirstRow(_obj)
+        }
+    }
+    fn GetPaneHeight(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbDockPane_GetPaneHeight(_obj)
+        }
+    }
+    fn GetRealRect(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */, arg2: *c_int /* int* */, arg3: *c_int /* int* */) {
+        unsafe {
+            cbDockPane_GetRealRect(_obj, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn GetRowList(_obj: *u8 /* void* */, _ref: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbDockPane_GetRowList(_obj, _ref)
+        }
+    }
+    fn GetRowResizeRange(_obj: *u8 /* void* */, pRow: *u8 /* void* */, from: *u8 /* void* */, till: *u8 /* void* */, forUpperHandle: c_int /* int */) {
+        unsafe {
+            cbDockPane_GetRowResizeRange(_obj, pRow, from, till, forUpperHandle)
+        }
+    }
+    fn HitTestPaneItems(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, ppRow: *u8 /* void* */, ppBar: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            cbDockPane_HitTestPaneItems(_obj, arg0, arg1, ppRow, ppBar)
+        }
+    }
+    fn InsertBarByCoord(_obj: *u8 /* void* */, pBar: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */) {
+        unsafe {
+            cbDockPane_InsertBarByCoord(_obj, pBar, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn InsertBarByInfo(_obj: *u8 /* void* */, pBarInfo: *u8 /* void* */) {
+        unsafe {
+            cbDockPane_InsertBarByInfo(_obj, pBarInfo)
+        }
+    }
+    fn InsertBarToRow(_obj: *u8 /* void* */, pBar: *u8 /* void* */, pIntoRow: *u8 /* void* */) {
+        unsafe {
+            cbDockPane_InsertBarToRow(_obj, pBar, pIntoRow)
+        }
+    }
+    fn InsertRow(_obj: *u8 /* void* */, pRow: *u8 /* void* */, pBeforeRow: *u8 /* void* */) {
+        unsafe {
+            cbDockPane_InsertRow(_obj, pRow, pBeforeRow)
+        }
+    }
+    fn IsHorizontal(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            cbDockPane_IsHorizontal(_obj)
+        }
+    }
+    fn MatchesMask(_obj: *u8 /* void* */, paneMask: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            cbDockPane_MatchesMask(_obj, paneMask)
+        }
+    }
+    fn RemoveBar(_obj: *u8 /* void* */, pBar: *u8 /* void* */) {
+        unsafe {
+            cbDockPane_RemoveBar(_obj, pBar)
+        }
+    }
+    fn RemoveRow(_obj: *u8 /* void* */, pRow: *u8 /* void* */) {
+        unsafe {
+            cbDockPane_RemoveRow(_obj, pRow)
+        }
+    }
+    fn SetBoundsInParent(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */) {
+        unsafe {
+            cbDockPane_SetBoundsInParent(_obj, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn SetMargins(_obj: *u8 /* void* */, top: c_int /* int */, bottom: c_int /* int */, left: c_int /* int */, right: c_int /* int */) {
+        unsafe {
+            cbDockPane_SetMargins(_obj, top, bottom, left, right)
+        }
+    }
+    fn SetPaneWidth(_obj: *u8 /* void* */, width: c_int /* int */) {
+        unsafe {
+            cbDockPane_SetPaneWidth(_obj, width)
+        }
+    }
 }
 trait wxToggleButton {
     fn Create(parent: *u8 /* void* */, id: c_int /* int */, label: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */) -> *u8 /* void* */ {
@@ -12602,9 +13966,21 @@ trait wxFont {
     }
 }
 trait cbAntiflickerPlugin {
-    // missing: cbAntiflickerPlugin_Create
-    // missing: cbAntiflickerPlugin_CreateDefault
-    // missing: cbAntiflickerPlugin_Delete
+    fn Create(pPanel: *u8 /* void* */, paneMask: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            cbAntiflickerPlugin_Create(pPanel, paneMask)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbAntiflickerPlugin_CreateDefault()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbAntiflickerPlugin_Delete(_obj)
+        }
+    }
 }
 trait wxMemoryOutputStream {
 }
@@ -12655,9 +14031,21 @@ trait wxDateProperty {
 trait wxZlibInputStream {
 }
 trait cbPaneDrawPlugin {
-    // missing: cbPaneDrawPlugin_Create
-    // missing: cbPaneDrawPlugin_CreateDefault
-    // missing: cbPaneDrawPlugin_Delete
+    fn Create(pPanel: *u8 /* void* */, paneMask: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            cbPaneDrawPlugin_Create(pPanel, paneMask)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbPaneDrawPlugin_CreateDefault()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbPaneDrawPlugin_Delete(_obj)
+        }
+    }
 }
 trait wxProcessEvent {
     fn GetExitCode(_obj: *u8 /* void* */) -> c_int /* int */ {
@@ -12832,7 +14220,11 @@ trait wxXmlResource {
             wxXmlResource_CreateFromFile(filemask, flags)
         }
     }
-    // missing: wxXmlResource_Delete
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxXmlResource_Delete(_obj)
+        }
+    }
     fn Get() -> *u8 /* void* */ {
         unsafe {
             wxXmlResource_Get()
@@ -13629,11 +15021,31 @@ trait wxMoveEvent {
     }
 }
 trait wxToolWindow {
-    // missing: wxToolWindow_AddMiniButton
-    // missing: wxToolWindow_Create
-    // missing: wxToolWindow_GetClient
-    // missing: wxToolWindow_SetClient
-    // missing: wxToolWindow_SetTitleFont
+    fn AddMiniButton(_obj: *u8 /* void* */, _btn: *u8 /* void* */) {
+        unsafe {
+            wxToolWindow_AddMiniButton(_obj, _btn)
+        }
+    }
+    fn Create(_obj: *u8 /* void* */, _btn: *u8 /* void* */, _ttl: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxToolWindow_Create(_obj, _btn, _ttl)
+        }
+    }
+    fn GetClient(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxToolWindow_GetClient(_obj)
+        }
+    }
+    fn SetClient(_obj: *u8 /* void* */, _wnd: *u8 /* void* */) {
+        unsafe {
+            wxToolWindow_SetClient(_obj, _wnd)
+        }
+    }
+    fn SetTitleFont(_obj: *u8 /* void* */, _fnt: *u8 /* void* */) {
+        unsafe {
+            wxToolWindow_SetTitleFont(_obj, _fnt)
+        }
+    }
 }
 trait wxFontEnumerator {
     fn Create(_obj: *u8 /* void* */, _fnc: *u8 /* void* */) -> *u8 /* void* */ {
@@ -13658,16 +15070,48 @@ trait wxFontEnumerator {
     }
 }
 trait wxMultiCellCanvas {
-    // missing: wxMultiCellCanvas_Add
-    // missing: wxMultiCellCanvas_CalculateConstraints
-    // missing: wxMultiCellCanvas_Create
-    // missing: wxMultiCellCanvas_MaxCols
-    // missing: wxMultiCellCanvas_MaxRows
-    // missing: wxMultiCellCanvas_SetMinCellSize
+    fn Add(_obj: *u8 /* void* */, win: *u8 /* void* */, row: c_int /* int */, col: c_int /* int */) {
+        unsafe {
+            wxMultiCellCanvas_Add(_obj, win, row, col)
+        }
+    }
+    fn CalculateConstraints(_obj: *u8 /* void* */) {
+        unsafe {
+            wxMultiCellCanvas_CalculateConstraints(_obj)
+        }
+    }
+    fn Create(parent: *u8 /* void* */, numRows: c_int /* int */, numCols: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxMultiCellCanvas_Create(parent, numRows, numCols)
+        }
+    }
+    fn MaxCols(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellCanvas_MaxCols(_obj)
+        }
+    }
+    fn MaxRows(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMultiCellCanvas_MaxRows(_obj)
+        }
+    }
+    fn SetMinCellSize(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) {
+        unsafe {
+            wxMultiCellCanvas_SetMinCellSize(_obj, arg0, arg1)
+        }
+    }
 }
 trait cbStartBarDraggingEvent {
-    // missing: cbStartBarDraggingEvent_Bar
-    // missing: cbStartBarDraggingEvent_Pos
+    fn Bar(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbStartBarDraggingEvent_Bar(_obj)
+        }
+    }
+    fn Pos(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            cbStartBarDraggingEvent_Pos(_obj, arg0, arg1)
+        }
+    }
 }
 trait wxGridSizeEvent {
     fn GetRowOrCol(_obj: *u8 /* void* */) -> c_int /* int */ {
@@ -14009,7 +15453,11 @@ trait wxSashEvent {
     }
 }
 trait cbPluginEvent {
-    // missing: cbPluginEvent_Pane
+    fn Pane(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbPluginEvent_Pane(_obj)
+        }
+    }
 }
 trait wxPropertyGridEvent {
     fn HasProperty(_obj: *u8 /* void* */) -> bool /* bool */ {
@@ -14109,11 +15557,23 @@ trait wxFindReplaceData {
     }
 }
 trait wxToolLayoutItem {
-    // missing: wxToolLayoutItem_IsSeparator
-    // missing: wxToolLayoutItem_Rect
+    fn IsSeparator(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxToolLayoutItem_IsSeparator(_obj)
+        }
+    }
+    fn Rect(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */, arg2: *c_int /* int* */, arg3: *c_int /* int* */) {
+        unsafe {
+            wxToolLayoutItem_Rect(_obj, arg0, arg1, arg2, arg3)
+        }
+    }
 }
 trait cbLeftDownEvent {
-    // missing: cbLeftDownEvent_Pos
+    fn Pos(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            cbLeftDownEvent_Pos(_obj, arg0, arg1)
+        }
+    }
 }
 trait wxPlotCurve {
 }
@@ -14738,8 +16198,16 @@ trait wxRadioButton {
 trait wxFontList {
 }
 trait cbDrawRowHandlesEvent {
-    // missing: cbDrawRowHandlesEvent_Dc
-    // missing: cbDrawRowHandlesEvent_Row
+    fn Dc(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDrawRowHandlesEvent_Dc(_obj)
+        }
+    }
+    fn Row(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDrawRowHandlesEvent_Row(_obj)
+        }
+    }
 }
 trait wxCheckListBox {
     fn Check(_obj: *u8 /* void* */, item: c_int /* int */, check: bool /* bool */) {
@@ -15049,10 +16517,26 @@ trait wxEncodingConverter {
     }
 }
 trait wxCriticalSection {
-    // missing: wxCriticalSection_Create
-    // missing: wxCriticalSection_Delete
-    // missing: wxCriticalSection_Enter
-    // missing: wxCriticalSection_Leave
+    fn Create() -> *u8 /* void* */ {
+        unsafe {
+            wxCriticalSection_Create()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxCriticalSection_Delete(_obj)
+        }
+    }
+    fn Enter(_obj: *u8 /* void* */) {
+        unsafe {
+            wxCriticalSection_Enter(_obj)
+        }
+    }
+    fn Leave(_obj: *u8 /* void* */) {
+        unsafe {
+            wxCriticalSection_Leave(_obj)
+        }
+    }
 }
 trait wxTextFile {
 }
@@ -15170,26 +16654,74 @@ trait wxGridSizer {
 trait wxThread {
 }
 trait ELJMessageParameters {
-    // missing: wxMessageParameters_Create
-    // missing: wxMessageParameters_Delete
+    fn wxMessageParameters_Create(_file: *wchar_t /* wchar_t* */, _type: *wchar_t /* wchar_t* */, _object: *u8 /* void* */, _func: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxMessageParameters_Create(_file, _type, _object, _func)
+        }
+    }
+    fn wxMessageParameters_Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxMessageParameters_Delete(_obj)
+        }
+    }
 }
 trait wxPopupTransientWindow {
 }
 trait ELJLocale {
 }
 trait wxEditableListBox {
-    // missing: wxEditableListBox_Create
-    // missing: wxEditableListBox_GetDelButton
-    // missing: wxEditableListBox_GetDownButton
-    // missing: wxEditableListBox_GetEditButton
-    // missing: wxEditableListBox_GetListCtrl
-    // missing: wxEditableListBox_GetNewButton
-    // missing: wxEditableListBox_GetStrings
-    // missing: wxEditableListBox_GetUpButton
-    // missing: wxEditableListBox_SetStrings
+    fn Create(parent: *u8 /* void* */, id: c_int /* int */, label: *wchar_t /* wchar_t* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, style: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxEditableListBox_Create(parent, id, label, arg0, arg1, arg2, arg3, style)
+        }
+    }
+    fn GetDelButton(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxEditableListBox_GetDelButton(_obj)
+        }
+    }
+    fn GetDownButton(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxEditableListBox_GetDownButton(_obj)
+        }
+    }
+    fn GetEditButton(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxEditableListBox_GetEditButton(_obj)
+        }
+    }
+    fn GetListCtrl(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxEditableListBox_GetListCtrl(_obj)
+        }
+    }
+    fn GetNewButton(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxEditableListBox_GetNewButton(_obj)
+        }
+    }
+    fn GetStrings(_obj: *u8 /* void* */, _ref: *wchar_t /* wchar_t* */) -> c_int /* int */ {
+        unsafe {
+            wxEditableListBox_GetStrings(_obj, _ref)
+        }
+    }
+    fn GetUpButton(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxEditableListBox_GetUpButton(_obj)
+        }
+    }
+    fn SetStrings(_obj: *u8 /* void* */, strings: *u8 /* void* */, _n: c_int /* int */) {
+        unsafe {
+            wxEditableListBox_SetStrings(_obj, strings, _n)
+        }
+    }
 }
 trait cbDrawPaneBkGroundEvent {
-    // missing: cbDrawPaneBkGroundEvent_Dc
+    fn Dc(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDrawPaneBkGroundEvent_Dc(_obj)
+        }
+    }
 }
 trait wxcPrintoutHandler {
     fn wxcPrintout_Create(title: *u8 /* void* */) -> *u8 /* void* */ {
@@ -15254,7 +16786,11 @@ trait wxSize {
             wxSize_Create(arg0, arg1)
         }
     }
-    // missing: wxSize_Destroy
+    fn Destroy(_obj: *u8 /* void* */) {
+        unsafe {
+            wxSize_Destroy(_obj)
+        }
+    }
     fn GetHeight(_obj: *u8 /* void* */) -> c_int /* int */ {
         unsafe {
             wxSize_GetHeight(_obj)
@@ -15277,14 +16813,38 @@ trait wxSize {
     }
 }
 trait cbDynToolBarDimHandler {
-    // missing: cbDynToolBarDimHandler_Create
-    // missing: cbDynToolBarDimHandler_Delete
+    fn Create() -> *u8 /* void* */ {
+        unsafe {
+            cbDynToolBarDimHandler_Create()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbDynToolBarDimHandler_Delete(_obj)
+        }
+    }
 }
 trait cbGCUpdatesMgr {
-    // missing: cbGCUpdatesMgr_Create
-    // missing: cbGCUpdatesMgr_CreateDefault
-    // missing: cbGCUpdatesMgr_Delete
-    // missing: cbGCUpdatesMgr_UpdateNow
+    fn Create(pPanel: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbGCUpdatesMgr_Create(pPanel)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbGCUpdatesMgr_CreateDefault()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbGCUpdatesMgr_Delete(_obj)
+        }
+    }
+    fn UpdateNow(_obj: *u8 /* void* */) {
+        unsafe {
+            cbGCUpdatesMgr_UpdateNow(_obj)
+        }
+    }
 }
 trait wxFileDataObject {
     fn FileDataObject_AddFile(_obj: *u8 /* void* */, _fle: *u8 /* void* */) {
@@ -15486,66 +17046,290 @@ trait wxStyledTextCtrl {
 trait wxHtmlContainerCell {
 }
 trait wxFrameLayout {
-    // missing: wxFrameLayout_Activate
-    // missing: wxFrameLayout_AddBar
-    // missing: wxFrameLayout_AddPlugin
-    // missing: wxFrameLayout_AddPluginBefore
-    // missing: wxFrameLayout_ApplyBarProperties
-    // missing: wxFrameLayout_CaptureEventsForPane
-    // missing: wxFrameLayout_CaptureEventsForPlugin
-    // missing: wxFrameLayout_Create
-    // missing: wxFrameLayout_Deactivate
-    // missing: wxFrameLayout_Delete
-    // missing: wxFrameLayout_DestroyBarWindows
-    // missing: wxFrameLayout_EnableFloating
-    // missing: wxFrameLayout_FindBarByName
-    // missing: wxFrameLayout_FindBarByWindow
-    // missing: wxFrameLayout_FindPlugin
-    // missing: wxFrameLayout_FirePluginEvent
-    // missing: wxFrameLayout_GetBars
-    // missing: wxFrameLayout_GetClientHeight
-    // missing: wxFrameLayout_GetClientRect
-    // missing: wxFrameLayout_GetClientWidth
-    // missing: wxFrameLayout_GetFrameClient
-    // missing: wxFrameLayout_GetPane
-    // missing: wxFrameLayout_GetPaneProperties
-    // missing: wxFrameLayout_GetParentFrame
-    // missing: wxFrameLayout_GetTopPlugin
-    // missing: wxFrameLayout_GetUpdatesManager
-    // missing: wxFrameLayout_HasTopPlugin
-    // missing: wxFrameLayout_HideBarWindows
-    // missing: wxFrameLayout_InverseVisibility
-    // missing: wxFrameLayout_OnLButtonDown
-    // missing: wxFrameLayout_OnLButtonUp
-    // missing: wxFrameLayout_OnLDblClick
-    // missing: wxFrameLayout_OnMouseMove
-    // missing: wxFrameLayout_OnRButtonDown
-    // missing: wxFrameLayout_OnRButtonUp
-    // missing: wxFrameLayout_OnSize
-    // missing: wxFrameLayout_PopAllPlugins
-    // missing: wxFrameLayout_PopPlugin
-    // missing: wxFrameLayout_PushDefaultPlugins
-    // missing: wxFrameLayout_PushPlugin
-    // missing: wxFrameLayout_RecalcLayout
-    // missing: wxFrameLayout_RedockBar
-    // missing: wxFrameLayout_RefreshNow
-    // missing: wxFrameLayout_ReleaseEventsFromPane
-    // missing: wxFrameLayout_ReleaseEventsFromPlugin
-    // missing: wxFrameLayout_RemoveBar
-    // missing: wxFrameLayout_RemovePlugin
-    // missing: wxFrameLayout_SetBarState
-    // missing: wxFrameLayout_SetFrameClient
-    // missing: wxFrameLayout_SetMargins
-    // missing: wxFrameLayout_SetPaneBackground
-    // missing: wxFrameLayout_SetPaneProperties
-    // missing: wxFrameLayout_SetTopPlugin
-    // missing: wxFrameLayout_SetUpdatesManager
+    fn Activate(_obj: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_Activate(_obj)
+        }
+    }
+    fn AddBar(_obj: *u8 /* void* */, pBarWnd: *u8 /* void* */, dimInfo: *u8 /* void* */, alignment: c_int /* int */, rowNo: c_int /* int */, columnPos: c_int /* int */, name: *wchar_t /* wchar_t* */, spyEvents: c_int /* int */, state: c_int /* int */) {
+        unsafe {
+            wxFrameLayout_AddBar(_obj, pBarWnd, dimInfo, alignment, rowNo, columnPos, name, spyEvents, state)
+        }
+    }
+    fn AddPlugin(_obj: *u8 /* void* */, pPlInfo: *u8 /* void* */, paneMask: c_int /* int */) {
+        unsafe {
+            wxFrameLayout_AddPlugin(_obj, pPlInfo, paneMask)
+        }
+    }
+    fn AddPluginBefore(_obj: *u8 /* void* */, pNextPlInfo: *u8 /* void* */, pPlInfo: *u8 /* void* */, paneMask: c_int /* int */) {
+        unsafe {
+            wxFrameLayout_AddPluginBefore(_obj, pNextPlInfo, pPlInfo, paneMask)
+        }
+    }
+    fn ApplyBarProperties(_obj: *u8 /* void* */, pBar: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_ApplyBarProperties(_obj, pBar)
+        }
+    }
+    fn CaptureEventsForPane(_obj: *u8 /* void* */, toPane: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_CaptureEventsForPane(_obj, toPane)
+        }
+    }
+    fn CaptureEventsForPlugin(_obj: *u8 /* void* */, pPlugin: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_CaptureEventsForPlugin(_obj, pPlugin)
+        }
+    }
+    fn Create(pParentFrame: *u8 /* void* */, pFrameClient: *u8 /* void* */, activateNow: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxFrameLayout_Create(pParentFrame, pFrameClient, activateNow)
+        }
+    }
+    fn Deactivate(_obj: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_Deactivate(_obj)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_Delete(_obj)
+        }
+    }
+    fn DestroyBarWindows(_obj: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_DestroyBarWindows(_obj)
+        }
+    }
+    fn EnableFloating(_obj: *u8 /* void* */, enable: bool /* bool */) {
+        unsafe {
+            wxFrameLayout_EnableFloating(_obj, enable)
+        }
+    }
+    fn FindBarByName(_obj: *u8 /* void* */, name: *wchar_t /* wchar_t* */) -> *u8 /* void* */ {
+        unsafe {
+            wxFrameLayout_FindBarByName(_obj, name)
+        }
+    }
+    fn FindBarByWindow(_obj: *u8 /* void* */, pWnd: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxFrameLayout_FindBarByWindow(_obj, pWnd)
+        }
+    }
+    fn FindPlugin(_obj: *u8 /* void* */, pPlInfo: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxFrameLayout_FindPlugin(_obj, pPlInfo)
+        }
+    }
+    fn FirePluginEvent(_obj: *u8 /* void* */, event: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_FirePluginEvent(_obj, event)
+        }
+    }
+    fn GetBars(_obj: *u8 /* void* */, _ref: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxFrameLayout_GetBars(_obj, _ref)
+        }
+    }
+    fn GetClientHeight(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxFrameLayout_GetClientHeight(_obj)
+        }
+    }
+    fn GetClientRect(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */, arg2: *c_int /* int* */, arg3: *c_int /* int* */) {
+        unsafe {
+            wxFrameLayout_GetClientRect(_obj, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn GetClientWidth(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxFrameLayout_GetClientWidth(_obj)
+        }
+    }
+    fn GetFrameClient(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxFrameLayout_GetFrameClient(_obj)
+        }
+    }
+    fn GetPane(_obj: *u8 /* void* */, alignment: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxFrameLayout_GetPane(_obj, alignment)
+        }
+    }
+    fn GetPaneProperties(_obj: *u8 /* void* */, props: *u8 /* void* */, alignment: c_int /* int */) {
+        unsafe {
+            wxFrameLayout_GetPaneProperties(_obj, props, alignment)
+        }
+    }
+    fn GetParentFrame(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxFrameLayout_GetParentFrame(_obj)
+        }
+    }
+    fn GetTopPlugin(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxFrameLayout_GetTopPlugin(_obj)
+        }
+    }
+    fn GetUpdatesManager(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxFrameLayout_GetUpdatesManager(_obj)
+        }
+    }
+    fn HasTopPlugin(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxFrameLayout_HasTopPlugin(_obj)
+        }
+    }
+    fn HideBarWindows(_obj: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_HideBarWindows(_obj)
+        }
+    }
+    fn InverseVisibility(_obj: *u8 /* void* */, pBar: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_InverseVisibility(_obj, pBar)
+        }
+    }
+    fn OnLButtonDown(_obj: *u8 /* void* */, event: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_OnLButtonDown(_obj, event)
+        }
+    }
+    fn OnLButtonUp(_obj: *u8 /* void* */, event: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_OnLButtonUp(_obj, event)
+        }
+    }
+    fn OnLDblClick(_obj: *u8 /* void* */, event: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_OnLDblClick(_obj, event)
+        }
+    }
+    fn OnMouseMove(_obj: *u8 /* void* */, event: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_OnMouseMove(_obj, event)
+        }
+    }
+    fn OnRButtonDown(_obj: *u8 /* void* */, event: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_OnRButtonDown(_obj, event)
+        }
+    }
+    fn OnRButtonUp(_obj: *u8 /* void* */, event: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_OnRButtonUp(_obj, event)
+        }
+    }
+    fn OnSize(_obj: *u8 /* void* */, event: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_OnSize(_obj, event)
+        }
+    }
+    fn PopAllPlugins(_obj: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_PopAllPlugins(_obj)
+        }
+    }
+    fn PopPlugin(_obj: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_PopPlugin(_obj)
+        }
+    }
+    fn PushDefaultPlugins(_obj: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_PushDefaultPlugins(_obj)
+        }
+    }
+    fn PushPlugin(_obj: *u8 /* void* */, pPugin: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_PushPlugin(_obj, pPugin)
+        }
+    }
+    fn RecalcLayout(_obj: *u8 /* void* */, repositionBarsNow: c_int /* int */) {
+        unsafe {
+            wxFrameLayout_RecalcLayout(_obj, repositionBarsNow)
+        }
+    }
+    fn RedockBar(_obj: *u8 /* void* */, pBar: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */, pToPane: *u8 /* void* */, updateNow: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxFrameLayout_RedockBar(_obj, pBar, arg0, arg1, arg2, arg3, pToPane, updateNow)
+        }
+    }
+    fn RefreshNow(_obj: *u8 /* void* */, recalcLayout: c_int /* int */) {
+        unsafe {
+            wxFrameLayout_RefreshNow(_obj, recalcLayout)
+        }
+    }
+    fn ReleaseEventsFromPane(_obj: *u8 /* void* */, fromPane: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_ReleaseEventsFromPane(_obj, fromPane)
+        }
+    }
+    fn ReleaseEventsFromPlugin(_obj: *u8 /* void* */, pPlugin: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_ReleaseEventsFromPlugin(_obj, pPlugin)
+        }
+    }
+    fn RemoveBar(_obj: *u8 /* void* */, pBar: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_RemoveBar(_obj, pBar)
+        }
+    }
+    fn RemovePlugin(_obj: *u8 /* void* */, pPlInfo: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_RemovePlugin(_obj, pPlInfo)
+        }
+    }
+    fn SetBarState(_obj: *u8 /* void* */, pBar: *u8 /* void* */, newStatem: c_int /* int */, updateNow: c_int /* int */) {
+        unsafe {
+            wxFrameLayout_SetBarState(_obj, pBar, newStatem, updateNow)
+        }
+    }
+    fn SetFrameClient(_obj: *u8 /* void* */, pFrameClient: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_SetFrameClient(_obj, pFrameClient)
+        }
+    }
+    fn SetMargins(_obj: *u8 /* void* */, top: c_int /* int */, bottom: c_int /* int */, left: c_int /* int */, right: c_int /* int */, paneMask: c_int /* int */) {
+        unsafe {
+            wxFrameLayout_SetMargins(_obj, top, bottom, left, right, paneMask)
+        }
+    }
+    fn SetPaneBackground(_obj: *u8 /* void* */, colour: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_SetPaneBackground(_obj, colour)
+        }
+    }
+    fn SetPaneProperties(_obj: *u8 /* void* */, props: *u8 /* void* */, paneMask: c_int /* int */) {
+        unsafe {
+            wxFrameLayout_SetPaneProperties(_obj, props, paneMask)
+        }
+    }
+    fn SetTopPlugin(_obj: *u8 /* void* */, pPlugin: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_SetTopPlugin(_obj, pPlugin)
+        }
+    }
+    fn SetUpdatesManager(_obj: *u8 /* void* */, pUMgr: *u8 /* void* */) {
+        unsafe {
+            wxFrameLayout_SetUpdatesManager(_obj, pUMgr)
+        }
+    }
 }
 trait wxDDEServer {
 }
 trait cbDrawRowDecorEvent {
-    // missing: cbDrawRowDecorEvent_Dc
-    // missing: cbDrawRowDecorEvent_Row
+    fn Dc(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDrawRowDecorEvent_Dc(_obj)
+        }
+    }
+    fn Row(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDrawRowDecorEvent_Row(_obj)
+        }
+    }
 }
 trait wxcTreeItemData {
     fn Create(closure: *u8 /* void* */) -> *u8 /* void* */ {
@@ -15814,8 +17598,16 @@ trait wxShowEvent {
     }
 }
 trait cbResizeBarEvent {
-    // missing: cbResizeBarEvent_Bar
-    // missing: cbResizeBarEvent_Row
+    fn Bar(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbResizeBarEvent_Bar(_obj)
+        }
+    }
+    fn Row(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbResizeBarEvent_Row(_obj)
+        }
+    }
 }
 trait wxHtmlTag {
 }
@@ -16115,7 +17907,11 @@ trait wxTipWindow {
     }
 }
 trait cbRightDownEvent {
-    // missing: cbRightDownEvent_Pos
+    fn Pos(_obj: *u8 /* void* */, arg0: *c_int /* int* */, arg1: *c_int /* int* */) {
+        unsafe {
+            cbRightDownEvent_Pos(_obj, arg0, arg1)
+        }
+    }
 }
 trait wxSplitterEvent {
 }
@@ -16221,20 +18017,52 @@ trait wxMemoryBuffer {
     }
 }
 trait cbSimpleCustomizationPlugin {
-    // missing: cbSimpleCustomizationPlugin_Create
-    // missing: cbSimpleCustomizationPlugin_CreateDefault
-    // missing: cbSimpleCustomizationPlugin_Delete
+    fn Create(pPanel: *u8 /* void* */, paneMask: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            cbSimpleCustomizationPlugin_Create(pPanel, paneMask)
+        }
+    }
+    fn CreateDefault() -> *u8 /* void* */ {
+        unsafe {
+            cbSimpleCustomizationPlugin_CreateDefault()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbSimpleCustomizationPlugin_Delete(_obj)
+        }
+    }
 }
 trait ELJServer {
-    // missing: ELJServer_Create
-    // missing: ELJServer_Delete
-    // missing: ELJServer_Initialize
+    fn Create(_eobj: *u8 /* void* */, _cnct: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            ELJServer_Create(_eobj, _cnct)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            ELJServer_Delete(_obj)
+        }
+    }
+    fn Initialize(_obj: *u8 /* void* */, name: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            ELJServer_Initialize(_obj, name)
+        }
+    }
 }
 trait wxMemoryFSHandler {
 }
 trait cbDrawBarHandlesEvent {
-    // missing: cbDrawBarHandlesEvent_Bar
-    // missing: cbDrawBarHandlesEvent_Dc
+    fn Bar(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDrawBarHandlesEvent_Bar(_obj)
+        }
+    }
+    fn Dc(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDrawBarHandlesEvent_Dc(_obj)
+        }
+    }
 }
 trait wxGridCellAttr {
     fn Ctor() -> *u8 /* void* */ {
@@ -16403,50 +18231,226 @@ trait wxBusyCursor {
     }
 }
 trait wxJoystick {
-    // missing: wxJoystick_Create
-    // missing: wxJoystick_Delete
-    // missing: wxJoystick_GetButtonState
-    // missing: wxJoystick_GetManufacturerId
-    // missing: wxJoystick_GetMaxAxes
-    // missing: wxJoystick_GetMaxButtons
-    // missing: wxJoystick_GetMovementThreshold
-    // missing: wxJoystick_GetNumberAxes
-    // missing: wxJoystick_GetNumberButtons
-    // missing: wxJoystick_GetNumberJoysticks
-    // missing: wxJoystick_GetPOVCTSPosition
-    // missing: wxJoystick_GetPOVPosition
-    // missing: wxJoystick_GetPollingMax
-    // missing: wxJoystick_GetPollingMin
-    // missing: wxJoystick_GetPosition
-    // missing: wxJoystick_GetProductId
-    // missing: wxJoystick_GetProductName
-    // missing: wxJoystick_GetRudderMax
-    // missing: wxJoystick_GetRudderMin
-    // missing: wxJoystick_GetRudderPosition
-    // missing: wxJoystick_GetUMax
-    // missing: wxJoystick_GetUMin
-    // missing: wxJoystick_GetUPosition
-    // missing: wxJoystick_GetVMax
-    // missing: wxJoystick_GetVMin
-    // missing: wxJoystick_GetVPosition
-    // missing: wxJoystick_GetXMax
-    // missing: wxJoystick_GetXMin
-    // missing: wxJoystick_GetYMax
-    // missing: wxJoystick_GetYMin
-    // missing: wxJoystick_GetZMax
-    // missing: wxJoystick_GetZMin
-    // missing: wxJoystick_GetZPosition
-    // missing: wxJoystick_HasPOV
-    // missing: wxJoystick_HasPOV4Dir
-    // missing: wxJoystick_HasPOVCTS
-    // missing: wxJoystick_HasRudder
-    // missing: wxJoystick_HasU
-    // missing: wxJoystick_HasV
-    // missing: wxJoystick_HasZ
-    // missing: wxJoystick_IsOk
-    // missing: wxJoystick_ReleaseCapture
-    // missing: wxJoystick_SetCapture
-    // missing: wxJoystick_SetMovementThreshold
+    fn Create(joystick: c_int /* int */) -> *u8 /* void* */ {
+        unsafe {
+            wxJoystick_Create(joystick)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxJoystick_Delete(_obj)
+        }
+    }
+    fn GetButtonState(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetButtonState(_obj)
+        }
+    }
+    fn GetManufacturerId(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetManufacturerId(_obj)
+        }
+    }
+    fn GetMaxAxes(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetMaxAxes(_obj)
+        }
+    }
+    fn GetMaxButtons(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetMaxButtons(_obj)
+        }
+    }
+    fn GetMovementThreshold(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetMovementThreshold(_obj)
+        }
+    }
+    fn GetNumberAxes(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetNumberAxes(_obj)
+        }
+    }
+    fn GetNumberButtons(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetNumberButtons(_obj)
+        }
+    }
+    fn GetNumberJoysticks(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetNumberJoysticks(_obj)
+        }
+    }
+    fn GetPOVCTSPosition(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetPOVCTSPosition(_obj)
+        }
+    }
+    fn GetPOVPosition(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetPOVPosition(_obj)
+        }
+    }
+    fn GetPollingMax(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetPollingMax(_obj)
+        }
+    }
+    fn GetPollingMin(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetPollingMin(_obj)
+        }
+    }
+    fn GetPosition(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxJoystick_GetPosition(_obj)
+        }
+    }
+    fn GetProductId(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetProductId(_obj)
+        }
+    }
+    fn GetProductName(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            wxJoystick_GetProductName(_obj)
+        }
+    }
+    fn GetRudderMax(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetRudderMax(_obj)
+        }
+    }
+    fn GetRudderMin(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetRudderMin(_obj)
+        }
+    }
+    fn GetRudderPosition(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetRudderPosition(_obj)
+        }
+    }
+    fn GetUMax(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetUMax(_obj)
+        }
+    }
+    fn GetUMin(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetUMin(_obj)
+        }
+    }
+    fn GetUPosition(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetUPosition(_obj)
+        }
+    }
+    fn GetVMax(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetVMax(_obj)
+        }
+    }
+    fn GetVMin(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetVMin(_obj)
+        }
+    }
+    fn GetVPosition(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetVPosition(_obj)
+        }
+    }
+    fn GetXMax(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetXMax(_obj)
+        }
+    }
+    fn GetXMin(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetXMin(_obj)
+        }
+    }
+    fn GetYMax(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetYMax(_obj)
+        }
+    }
+    fn GetYMin(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetYMin(_obj)
+        }
+    }
+    fn GetZMax(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetZMax(_obj)
+        }
+    }
+    fn GetZMin(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetZMin(_obj)
+        }
+    }
+    fn GetZPosition(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_GetZPosition(_obj)
+        }
+    }
+    fn HasPOV(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxJoystick_HasPOV(_obj)
+        }
+    }
+    fn HasPOV4Dir(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxJoystick_HasPOV4Dir(_obj)
+        }
+    }
+    fn HasPOVCTS(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxJoystick_HasPOVCTS(_obj)
+        }
+    }
+    fn HasRudder(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxJoystick_HasRudder(_obj)
+        }
+    }
+    fn HasU(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxJoystick_HasU(_obj)
+        }
+    }
+    fn HasV(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxJoystick_HasV(_obj)
+        }
+    }
+    fn HasZ(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxJoystick_HasZ(_obj)
+        }
+    }
+    fn IsOk(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxJoystick_IsOk(_obj)
+        }
+    }
+    fn ReleaseCapture(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_ReleaseCapture(_obj)
+        }
+    }
+    fn SetCapture(_obj: *u8 /* void* */, win: *u8 /* void* */, pollingFreq: c_int /* int */) -> c_int /* int */ {
+        unsafe {
+            wxJoystick_SetCapture(_obj, win, pollingFreq)
+        }
+    }
+    fn SetMovementThreshold(_obj: *u8 /* void* */, threshold: c_int /* int */) {
+        unsafe {
+            wxJoystick_SetMovementThreshold(_obj, threshold)
+        }
+    }
 }
 trait wxPrintDialogData {
     fn Assign(_obj: *u8 /* void* */, data: *u8 /* void* */) {
@@ -16923,19 +18927,71 @@ trait wxGraphicsMatrix {
 trait wxLogNull {
 }
 trait wxNewBitmapButton {
-    // missing: wxNewBitmapButton_Create
-    // missing: wxNewBitmapButton_CreateFromFile
-    // missing: wxNewBitmapButton_Delete
-    // missing: wxNewBitmapButton_DrawDecorations
-    // missing: wxNewBitmapButton_DrawLabel
-    // missing: wxNewBitmapButton_Enable
-    // missing: wxNewBitmapButton_Realize
-    // missing: wxNewBitmapButton_RenderAllLabelImages
-    // missing: wxNewBitmapButton_RenderLabelImage
-    // missing: wxNewBitmapButton_RenderLabelImages
-    // missing: wxNewBitmapButton_Reshape
-    // missing: wxNewBitmapButton_SetAlignments
-    // missing: wxNewBitmapButton_SetLabel
+    fn Create(labelBitmap: *u8 /* void* */, labelText: *u8 /* void* */, alignText: c_int /* int */, isFlat: bool /* bool */, firedEventType: c_int /* int */, marginX: c_int /* int */, marginY: c_int /* int */, textToLabelGap: c_int /* int */, isSticky: bool /* bool */) -> *u8 /* void* */ {
+        unsafe {
+            wxNewBitmapButton_Create(labelBitmap, labelText, alignText, isFlat, firedEventType, marginX, marginY, textToLabelGap, isSticky)
+        }
+    }
+    fn CreateFromFile(bitmapFileName: *u8 /* void* */, bitmapFileType: c_int /* int */, labelText: *u8 /* void* */, alignText: c_int /* int */, isFlat: bool /* bool */, firedEventType: c_int /* int */, marginX: c_int /* int */, marginY: c_int /* int */, textToLabelGap: c_int /* int */, isSticky: bool /* bool */) -> *u8 /* void* */ {
+        unsafe {
+            wxNewBitmapButton_CreateFromFile(bitmapFileName, bitmapFileType, labelText, alignText, isFlat, firedEventType, marginX, marginY, textToLabelGap, isSticky)
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxNewBitmapButton_Delete(_obj)
+        }
+    }
+    fn DrawDecorations(_obj: *u8 /* void* */, dc: *u8 /* void* */) {
+        unsafe {
+            wxNewBitmapButton_DrawDecorations(_obj, dc)
+        }
+    }
+    fn DrawLabel(_obj: *u8 /* void* */, dc: *u8 /* void* */) {
+        unsafe {
+            wxNewBitmapButton_DrawLabel(_obj, dc)
+        }
+    }
+    fn Enable(_obj: *u8 /* void* */, enable: bool /* bool */) -> c_int /* int */ {
+        unsafe {
+            wxNewBitmapButton_Enable(_obj, enable)
+        }
+    }
+    fn Realize(_obj: *u8 /* void* */, _prt: *u8 /* void* */, _id: c_int /* int */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */) {
+        unsafe {
+            wxNewBitmapButton_Realize(_obj, _prt, _id, arg0, arg1, arg2, arg3)
+        }
+    }
+    fn RenderAllLabelImages(_obj: *u8 /* void* */) {
+        unsafe {
+            wxNewBitmapButton_RenderAllLabelImages(_obj)
+        }
+    }
+    fn RenderLabelImage(_obj: *u8 /* void* */, destBmp: *u8 /* void* */, srcBmp: *u8 /* void* */, isEnabled: bool /* bool */, isPressed: bool /* bool */) {
+        unsafe {
+            wxNewBitmapButton_RenderLabelImage(_obj, destBmp, srcBmp, isEnabled, isPressed)
+        }
+    }
+    fn RenderLabelImages(_obj: *u8 /* void* */) {
+        unsafe {
+            wxNewBitmapButton_RenderLabelImages(_obj)
+        }
+    }
+    fn Reshape(_obj: *u8 /* void* */) {
+        unsafe {
+            wxNewBitmapButton_Reshape(_obj)
+        }
+    }
+    fn SetAlignments(_obj: *u8 /* void* */, alignText: c_int /* int */, marginX: c_int /* int */, marginY: c_int /* int */, textToLabelGap: c_int /* int */) {
+        unsafe {
+            wxNewBitmapButton_SetAlignments(_obj, alignText, marginX, marginY, textToLabelGap)
+        }
+    }
+    fn SetLabel(_obj: *u8 /* void* */, labelBitmap: *u8 /* void* */, labelText: *u8 /* void* */) {
+        unsafe {
+            wxNewBitmapButton_SetLabel(_obj, labelBitmap, labelText)
+        }
+    }
 }
 trait wxEvent {
     fn CopyObject(_obj: *u8 /* void* */, object_dest: *u8 /* void* */) {
@@ -17119,12 +19175,36 @@ trait wxStaticBox {
     }
 }
 trait wxMutex {
-    // missing: wxMutex_Create
-    // missing: wxMutex_Delete
-    // missing: wxMutex_IsLocked
-    // missing: wxMutex_Lock
-    // missing: wxMutex_TryLock
-    // missing: wxMutex_Unlock
+    fn Create() -> *u8 /* void* */ {
+        unsafe {
+            wxMutex_Create()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            wxMutex_Delete(_obj)
+        }
+    }
+    fn IsLocked(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            wxMutex_IsLocked(_obj)
+        }
+    }
+    fn Lock(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMutex_Lock(_obj)
+        }
+    }
+    fn TryLock(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMutex_TryLock(_obj)
+        }
+    }
+    fn Unlock(_obj: *u8 /* void* */) -> c_int /* int */ {
+        unsafe {
+            wxMutex_Unlock(_obj)
+        }
+    }
 }
 trait wxStreamToTextRedirector {
 }
@@ -18255,10 +20335,26 @@ trait wxHtmlFilter {
 trait cbDimHandlerBase {
 }
 trait cbBarInfo {
-    // missing: cbBarInfo_Create
-    // missing: cbBarInfo_Delete
-    // missing: cbBarInfo_IsExpanded
-    // missing: cbBarInfo_IsFixed
+    fn Create() -> *u8 /* void* */ {
+        unsafe {
+            cbBarInfo_Create()
+        }
+    }
+    fn Delete(_obj: *u8 /* void* */) {
+        unsafe {
+            cbBarInfo_Delete(_obj)
+        }
+    }
+    fn IsExpanded(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            cbBarInfo_IsExpanded(_obj)
+        }
+    }
+    fn IsFixed(_obj: *u8 /* void* */) -> bool /* bool */ {
+        unsafe {
+            cbBarInfo_IsFixed(_obj)
+        }
+    }
 }
 trait wxPropertyGrid {
     fn Append(_obj: *u8 /* void* */, prop: *u8 /* void* */) -> *u8 /* void* */ {
@@ -18665,7 +20761,11 @@ trait wxCheckBox {
     }
 }
 trait cbLayoutRowEvent {
-    // missing: cbLayoutRowEvent_Row
+    fn Row(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbLayoutRowEvent_Row(_obj)
+        }
+    }
 }
 trait wxTextEntryDialog {
 }
@@ -18719,7 +20819,11 @@ trait wxSetCursorEvent {
     }
 }
 trait cbDrawPaneDecorEvent {
-    // missing: cbDrawPaneDecorEvent_Dc
+    fn Dc(_obj: *u8 /* void* */) -> *u8 /* void* */ {
+        unsafe {
+            cbDrawPaneDecorEvent_Dc(_obj)
+        }
+    }
 }
 trait wxFileName {
 }
