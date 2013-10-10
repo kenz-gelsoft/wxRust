@@ -1,4 +1,3 @@
-from optparse   import OptionParser
 from subprocess import PIPE, Popen
 
 import re
@@ -6,61 +5,9 @@ import sys
 
 
 def main():
-    op = OptionParser()
-    op.add_option('-e', '--extern_fn', action='store_true', dest='extern_fn',
-                  help='output extern_fn rust source code.')
-    op.add_option('-w', '--wrapper', action='store_true', dest='wrapper',
-                  help='output wrapper rust source code.')
-    (options, args) = op.parse_args()
-
     parser = Parser()
-    
-    codegen = None
-    if options.extern_fn:
-        codegen = ExternFnGenerator(parser)
-    elif options.wrapper:
-        codegen = WrapperGenerator(parser)
-    else:
-        sys.exit('no command specified')
-
-    parser.parse_files(args)
-    codegen.generate()
-
-
-class ExternFnGenerator(object):
-    def __init__(self, parser):
-        self.__parser = parser
-        self.__indent = 0
-
-    def generate(self):
-        self.println('use std::libc::*;')
-        self.println()
-        self.println('#[link_args="-lwxc"]')
-        self.println('extern {')
-        self.indent()
-        for name, parts in self.__parser.classes.iteritems():
-            self.print_class(name, parts)
-        self.unindent()
-        self.println('}')
-    
-    def print_class(self, name, parts):
-        for part in parts:
-            if part.header_line:
-                self.println('\n// %s' % part.header_line)
-            for method in part.methods:
-                self.println(method.extern_fn)
-    
-    def println(self, text=''):
-        lines = text.split('\n')
-        for line in lines:
-            line = '%s%s' % (''+(' ' * 4 * self.__indent), line)
-            print line
-
-    def indent(self):
-        self.__indent += 1
-
-    def unindent(self):
-        self.__indent -= 1
+    parser.parse_files(sys.argv[1:])
+    WrapperGenerator(parser).generate()
 
 
 class WrapperGenerator(object):
@@ -72,23 +19,14 @@ class WrapperGenerator(object):
         self.println('use std::libc::*;')
         self.println('use native::*;')
         self.println()
-        for name, parts in self.__parser.classes.iteritems():
-            self.print_class(name, parts)
+        for clazz in self.__parser.classes:
+            self.print_class(clazz)
 
-    def print_class(self, name, parts):
-        if not name:
-            self.println('// skipping globals...')
-            self.println()
-            return
-                
-        self.println('trait %s {' % name)
+    def print_class(self, clazz):
+        self.println('trait %s {' % clazz.name)
         self.indent()
-        for part in parts:
-            if len(part.methods) == 0:
-                continue
-            
-            for method in part.methods:
-                method.trait_fn(self)
+        for method in clazz.methods:
+            method.trait_fn(self)
         self.unindent()
         self.println('}')
 
@@ -110,6 +48,7 @@ class Preprocessor(object):
         pass
 
     def expand_normal_macros(self, line):
+        return line
         line = re.sub(r'TArrayIntOutVoid', 'intptr_t*', line)
         line = re.sub(r'TArrayIntPtrOutVoid', 'intptr_t*', line)
         line = re.sub(r'TArrayLen', 'int', line)
@@ -173,165 +112,136 @@ class Preprocessor(object):
 
 class Parser(object):
     def __init__(self):
-        self.__current = Class(self)
-        self.__classes = {}
+        self.__classes = []
+        self.__functions = []
     
     def parse_files(self, files):
         for file in files:
-            self._new_class()
-            self._parse(Preprocessor().preprocess(file))
-        self._new_class()
+            for line in Preprocessor().preprocess(file):
+                self._parse_line(line.strip())
+        for clazz in self.__classes:
+            for f in self.__functions:
+                clazz.add_if_member(f)
 
     @property
     def classes(self):
         return self.__classes
 
-    def _new_class(self):
-        if self.__current:
-            if self.__current.name not in self.__classes:
-                self.__classes[self.__current.name] = []
-            self.__classes[self.__current.name].append(self.__current)
-        self.__current = Class(self)
-    
-    def _parse(self, lines):
-        for line in lines:
-            self._parse_line(line.strip())
-    
     def _parse_line(self, line):
         if not len(line):
             return
+
+        # Trivial parser
+        #print line
+        stack = []
+        node = []
+        lexer = (t.group(0) for t in re.finditer(re.compile(r'\s+|\*|\(|,|\)|;|[^\s*(,);]+'), line))
+        for token in lexer:
+            if not token.strip() or token == ';':
+                # ignore separators
+                continue
+            if token == '(':
+                stack.append(node)
+                node = [node.pop()] # function name start-arg-list
+                stack.append(node)
+                node = [] # start-arg
+                continue
+            if token == ',':
+                stack[-1].append(node)
+                node = [] # new-arg
+                continue
+            if token == ')':
+                stack[-1].append(node)
+                node = stack.pop() # end-arg
+                stack[-1].append(node)
+                node = stack.pop() # end-arg-list
+                continue
+            if token == '*':
+                node.append(['*', node.pop()])
+                continue
+            node.append(token)
+            continue
+        #print node # parsed tree
+        
         if 'TClassDef' in line:
-            # special line
-            self._new_class()
-            self.__current.parse_header_line(line)
-            return
-        if not('(' in line and ')' in line):
-            # all delarations are functions.
-            #assert False
-            return
-        self.__current.parse_line(line)
+            # class def
+            self.__classes.append(Class(node))
+        else:
+            # func def
+            self.__functions.append(Function(node))
 
 
 class Class(object):
-    def __init__(self, parser):
-        self.__parser = parser
-        self.__header_line = None
+    def __init__(self, node):
+        assert len(node) == 1
+        assert len(node[0]) > 1
+        self.__node = node
         self.__methods = []
-        self.__name = None
-
-    def parse_header_line(self, line):
-        self.__header_line = line
-        matched = re.search(r'TClassDef(?:Extend)?\(([^)]*)\)', line)
-        assert matched
-        classes = matched.group(1).split(',')
-        if len(classes) > 1:
-            self.__base = classes[1].strip()
-        self.__name = classes[0].strip()
-
-    def parse_line(self, line):
-        self.__methods.append(Method(self.name).parse(line))
-
-    @property
-    def header_line(self):
-        return self.__header_line
 
     @property
     def name(self):
-        if not self.__name:
-            return ''
-        return self.__name
+        return self.__node[0][1]
     
-    @property
-    def base(self):
-        return self.__base or None
-
     @property
     def methods(self):
         return self.__methods
 
+    def add_if_member(self, f):
+        if f.name.startswith('%s_' % self.name):
+            self.__methods.append(f)
 
-class Method(object):
-    def __init__(self, classname):
-        self.__classname = classname
 
-    def parse(self, line):
-        line = re.sub(r'\s+', ' ', line);
-        line = re.sub(r' \(', '(', line);
-        front = line[:line.find('(')]
-        self.__rtype = Type().parse(front[:front.rfind(' ')].strip())
-        self.__name = front[front.rfind(' ')+1:]
-        args = line[line.find('(')+1:line.rfind(')')].strip()
-        self.__args = []
-        if len(args.strip()):
-            count = 0
-            for arg in args.split(','):
-                pair = self.normalize_ptr(arg).split(' ')
-                if len(pair) < 2:
-                    pair.append('arg%s' % count)
-                    count += 1
-                for keyword in ['fn', 'ref', 'self', 'type', 'use']:
-                    if pair[1] == keyword:
-                        pair[1] += '_'
-                self.__args.append([Type(param=True).parse(pair[0]), pair[1]])
-        return self
+class Function(object):
+    def __init__(self, node):
+        assert len(node) > 1
+        assert len(node[1]) > 1
+        self.__node = node
 
-    def normalize_ptr(self, arg):
-        arg = re.sub(r'\*\s*', '* ', arg)
-        arg = re.sub(r'\*\s\*', '*', arg)
-        arg = re.sub(r'\s+\*', '*', arg)
-        arg = re.sub(r'\s+', ' ', arg)
-        arg = arg.replace(' Out ', ' ')
-        arg = arg.strip()
-        assert len(arg.split(' ')) <= 2
-        return arg
+    @property
+    def name(self):
+        return self.__node[1][0]
 
     @property
     def args(self):
-        args = ''
-        for arg in self.__args:
-            if len(args):
-                args += ', '
-            args += '%s: %s' % (arg[1], arg[0])
-        return args
-
+        s = ''
+        _args = (self.__node[1])[1:]
+        for i, arg in enumerate(_args):
+            if i:
+                s += ', '
+            s += str(Arg(arg, i))
+        return s
+    
     @property
-    def calling_args(self):
-        args = ''
-        for arg in self.__args:
-            if len(args):
-                args += ', '
-            args += arg[1]
-        return args
-
-    @property
-    def fn_return(self):
-        ret = ''
-        if not self.__rtype.is_void:
-            ret = ' -> %s' % self.__rtype
-        return ret
-
-    @property
-    def trait_method_name(self):
-        prefix = '%s_' % self.__classname
-        if self.__name.startswith(prefix):
-            return self.__name[len(prefix):]
-        return self.__name
-
-    @property
-    def extern_fn(self):
-        return 'pub fn %s(%s)%s;' % (self.__name, self.args, self.fn_return)
+    def returns(self):
+        pass
 
     def trait_fn(self, gen):
-        gen.println('#[fixed_stack_segment]')
-        gen.println('fn %s(%s)%s {' % (self.trait_method_name, self.args, self.fn_return))
-        gen.indent()
-        gen.println('unsafe {')
-        gen.indent()
-        gen.println('%s(%s)' % (self.__name, self.calling_args))
-        gen.unindent()
-        gen.println('}')
-        gen.unindent()
-        gen.println('}')
+        gen.println('fn %s(%s)%s' % self.name, self.args, self.returns)
+
+
+class Arg(object):
+    def __init__(self, node):
+        assert len(node) > 0
+        self.__node = node
+
+    def name(self):
+        return self.__node[1]
+
+    def type(self):
+        return Type2(self.__node[0])
+
+    def __str__(self):
+        return '%s: %s' % (self.name, self.type)
+
+
+class Type2(object):
+    def __init__(self, node):
+        assert len(node) > 0
+        self.__node = node
+
+    def __str__(self):
+        # TODO
+        return self.__node
 
 
 class Type(object):
