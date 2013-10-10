@@ -1604,7 +1604,7 @@ extern {
     pub fn wxSizerItem_GetFlag(_obj: *u8 /* void* */) -> c_int /* int */;
     pub fn wxSizerItem_GetMinSize(_obj: *u8 /* void* */) -> *u8 /* void* */;
     pub fn wxSizerItem_GetPosition(_obj: *u8 /* void* */) -> *u8 /* void* */;
-    pub fn wxSizerItem_GetRatio(_obj: *u8 /* void* */) -> float /* float */;
+    pub fn wxSizerItem_GetRatio(_obj: *u8 /* void* */) -> c_float /* float */;
     pub fn wxSizerItem_GetSize(_obj: *u8 /* void* */) -> *u8 /* void* */;
     pub fn wxSizerItem_GetSizer(_obj: *u8 /* void* */) -> *u8 /* void* */;
     pub fn wxSizerItem_GetUserData(_obj: *u8 /* void* */) -> *u8 /* void* */;
@@ -1615,7 +1615,7 @@ extern {
     pub fn wxSizerItem_SetBorder(_obj: *u8 /* void* */, border: c_int /* int */);
     pub fn wxSizerItem_SetDimension(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, arg2: c_int /* int */, arg3: c_int /* int */);
     pub fn wxSizerItem_SetFlag(_obj: *u8 /* void* */, flag: c_int /* int */);
-    pub fn wxSizerItem_SetFloatRatio(_obj: *u8 /* void* */, ratio: float /* float */);
+    pub fn wxSizerItem_SetFloatRatio(_obj: *u8 /* void* */, ratio: c_float /* float */);
     pub fn wxSizerItem_SetInitSize(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */);
     pub fn wxSizerItem_SetRatio(_obj: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */);
     pub fn wxSizerItem_SetSizer(_obj: *u8 /* void* */, sizer: *u8 /* void* */);
@@ -3465,7 +3465,7 @@ extern {
     // TClassDefExtend(wxHtmlEasyPrinting,wxObject)
     
     // TClassDefExtend(wxFloatProperty,wxPGProperty)
-    pub fn wxFloatProperty_Create(label: *u8 /* void* */, name: *u8 /* void* */, value: float /* float */) -> *u8 /* void* */;
+    pub fn wxFloatProperty_Create(label: *u8 /* void* */, name: *u8 /* void* */, value: c_float /* float */) -> *u8 /* void* */;
     
     // TClassDefExtend(wxContextHelp,wxObject)
     pub fn wxContextHelp_BeginContextHelp(_obj: *u8 /* void* */, win: *u8 /* void* */) -> bool /* bool */;
@@ -4018,7 +4018,7 @@ extern {
     // TClassDefExtend(wxSVGFileDC,wxDC)
     pub fn wxSVGFileDC_Create(fileName: *u8 /* void* */) -> *u8 /* void* */;
     pub fn wxSVGFileDC_CreateWithSize(fileName: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */) -> *u8 /* void* */;
-    pub fn wxSVGFileDC_CreateWithSizeAndResolution(fileName: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, a_dpi: float /* float */) -> *u8 /* void* */;
+    pub fn wxSVGFileDC_CreateWithSizeAndResolution(fileName: *u8 /* void* */, arg0: c_int /* int */, arg1: c_int /* int */, a_dpi: c_float /* float */) -> *u8 /* void* */;
     pub fn wxSVGFileDC_Delete(obj: *u8 /* void* */);
     
     // TClassDefExtend(wxStringClientData,wxClientData)

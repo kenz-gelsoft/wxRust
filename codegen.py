@@ -322,6 +322,7 @@ class Method(object):
         return 'pub fn %s(%s)%s;' % (self.__name, self.args, self.fn_return)
 
     def trait_fn(self, gen):
+        gen.println('#[fixed_stack_segment]')
         gen.println('fn %s(%s)%s {' % (self.trait_method_name, self.args, self.fn_return))
         gen.indent()
         gen.println('unsafe {')
@@ -370,12 +371,14 @@ class Type(object):
         s = self.name
         if s == 'double':
             s = 'c_double'
+        if s == 'float':
+            s = 'c_float'
+        if s == 'int':
+            s = 'c_int'
         if s == 'long':
             s = 'c_long'
         if s == 'long long':
             s = 'c_longlong'
-        if s == 'int':
-            s = 'c_int'
         if self.is_ptr:
             if self.is_primitive():
                 if s == 'void':
