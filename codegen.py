@@ -23,10 +23,10 @@ class WrapperGenerator(object):
             self.print_class(clazz)
 
     def print_class(self, clazz):
-        self.println('trait %s {' % clazz.name)
+        self.println('trait %s {' % clazz.wrapper_name)
         self.indent()
         for method in clazz.methods:
-            method.trait_fn(self)
+            method.trait_fn(self, clazz.name)
         self.unindent()
         self.println('}')
 
@@ -47,63 +47,21 @@ class Preprocessor(object):
     def __init__(self):
         pass
 
-    def expand_normal_macros(self, line):
-        return line
-        line = re.sub(r'TArrayIntOutVoid', 'intptr_t*', line)
-        line = re.sub(r'TArrayIntPtrOutVoid', 'intptr_t*', line)
-        line = re.sub(r'TArrayLen', 'int', line)
-        line = re.sub(r'TArrayObjectOutVoid\([^)]*\)', 'void**', line)
-        line = re.sub(r'TArrayString\([^)]*\)', 'int, wchar_t*', line)
-        line = re.sub(r'TArrayStringOutVoid', 'wchar_t**', line)
-        line = re.sub(r'TBoolInt', 'int', line)
-        line = re.sub(r'TBool', 'bool', line)
-        line = re.sub(r'TByteString\([^)]*\)', 'char**, int', line)
-        line = re.sub(r'TByteStringLazy\([^)]*\)', 'char**, int', line)
-        line = re.sub(r'TByteStringLazyOut', 'char*', line)
-        line = re.sub(r'TByteStringLen', 'int', line)
-        line = re.sub(r'TByteStringOut', 'char*', line)
-        line = re.sub(r'TChar', 'wchar_t', line)
-        line = re.sub(r'TClass\s*\([^)]*\)', 'void*', line)
-        line = re.sub(r'TClassRef\([^)]*\)', 'void*', line)
-        line = re.sub(r'TClosureFun', 'void*', line)
-        line = re.sub(r'TColorRGB\([^)]*\)', 'u8, u8, u8', line)
-        line = re.sub(r'TInt64', 'i64', line)
-        line = re.sub(r'TIntPtr', 'intptr_t', line)
-        line = re.sub(r'TPoint\([^)]*\)', 'int, int', line)
-        line = re.sub(r'TPointDouble\([^)]*\)', 'double, double', line)
-        line = re.sub(r'TPointLong\([^)]*\)', 'long, long', line)
-        line = re.sub(r'TPointOut\([^)]*\)', 'int*, int*', line)
-        line = re.sub(r'TPointOutDouble\([^)]*\)', 'double*, double*', line)
-        line = re.sub(r'TPointOutVoid\([^)]*\)', 'int*, int*', line)
-        line = re.sub(r'TRect\([^)]*\)', 'int, int, int, int', line)
-        line = re.sub(r'TRectDouble\([^)]*\)', 'double, double, double, double', line)
-        line = re.sub(r'TRectOutDouble\([^)]*\)', 'double*, double*, double*, double*', line)
-        line = re.sub(r'TRectOutVoid\([^)]*\)', 'int*, int*, int*, int*', line)
-        line = re.sub(r'TSelf\([^)]*\)', 'void*', line)
-        line = re.sub(r'TSize\([^)]*\)', 'int, int', line)
-        line = re.sub(r'TSizeDouble\([^)]*\)', 'double, double', line)
-        line = re.sub(r'TSizeOut\([^)]*\)', 'int*, int*', line)
-        line = re.sub(r'TSizeOutDouble\([^)]*\)', 'double*, double*', line)
-        line = re.sub(r'TSizeOutVoid\([^)]*\)', 'int*, int*', line)
-        line = re.sub(r'TStringVoid', 'wchar_t*', line)
-        line = re.sub(r'TStringLen', 'int', line)
-        line = re.sub(r'TString', 'wchar_t*', line)
-        line = re.sub(r'TUInt8', 'uint8_t', line)
-        line = re.sub(r'TUInt', 'uint32_t', line)
-        line = re.sub(r'TVector\([^)]*\)', 'int, int', line)
-        return line
-
-    def preprocess(self, file):
+    def call_cpp(self, file):
         cppflags = Popen(['wx-config', '--cppflags'], stdout=PIPE).communicate()[0].split()
         cppflags.remove('-D__WXMAC__')
         cmdline = ['cpp', '-DWXC_TYPES_H'] + cppflags + ['-I/Users/kenz/src/wxRust/wxHaskell/wxc/src/include', file]
-        content = Popen(cmdline, stdout=PIPE).communicate()[0]
-        content = Preprocessor._normalize(content)
-        return [self.expand_normal_macros(line) for line in content.splitlines() if len(line.strip()) and not line.strip().startswith('#')]
+        return Popen(cmdline, stdout=PIPE).communicate()[0]
+    
+    def preprocess(self, file):
+        for line in Preprocessor._normalize(self.call_cpp(file)).splitlines():
+            line = line.strip()
+            if not len(line) or line.startswith('#'):
+                continue
+            yield line
     
     @staticmethod
     def _normalize(text):
-        text = re.sub(r'[ \t]+', ' ', text)
         text = re.sub(r'^\s*\n', '', text)
         text = re.sub(r'\n+', '\n', text)
         text = re.sub(r'\\\n\s+', '', text)
@@ -112,7 +70,7 @@ class Preprocessor(object):
 
 class Parser(object):
     def __init__(self):
-        self.__classes = []
+        self.__classes   = []
         self.__functions = []
     
     def parse_files(self, files):
@@ -132,7 +90,6 @@ class Parser(object):
             return
 
         # Trivial parser
-        #print line
         stack = []
         node = []
         lexer = (t.group(0) for t in re.finditer(re.compile(r'\s+|\*|\(|,|\)|;|[^\s*(,);]+'), line))
@@ -141,10 +98,10 @@ class Parser(object):
                 # ignore separators
                 continue
             if token == '(':
+                tagname = node.pop()
                 stack.append(node)
-                node = [node.pop()] # function name start-arg-list
-                stack.append(node)
-                node = [] # start-arg
+                stack.append([tagname])
+                node = []
                 continue
             if token == ',':
                 stack[-1].append(node)
@@ -161,11 +118,15 @@ class Parser(object):
                 continue
             node.append(token)
             continue
-        #print node # parsed tree
         
         if 'TClassDef' in line:
             # class def
-            self.__classes.append(Class(node))
+            clazz = Class(node)
+            # linear search isn't fast.
+            for clazz2 in self.classes:
+                if clazz.name == clazz2.name:
+                    return
+            self.__classes.append(clazz)
         else:
             # func def
             self.__functions.append(Function(node))
@@ -180,7 +141,14 @@ class Class(object):
 
     @property
     def name(self):
-        return self.__node[0][1]
+        return self.__node[0][1][0]
+
+    @property
+    def wrapper_name(self):
+        return self.name
+#        if self.name.startswith('wx'):
+#            return self.name[2:]
+#        return self.name
     
     @property
     def methods(self):
@@ -193,16 +161,29 @@ class Class(object):
 
 class Function(object):
     def __init__(self, node):
+        #print node
         assert len(node) > 1
-        assert len(node[1]) > 1
+        assert node[1][0]
         self.__node = node
 
     @property
     def name(self):
         return self.__node[1][0]
 
+    def method_name(self, classname):
+        _name = self.name[len(classname)+1:]
+        _name = _name[0].lower() + _name[1:]
+        if _name in ['break', 'yield']:
+            _name += '_'
+        if _name.startswith('create'):
+            return 'new' + _name[len('create'):]
+        return _name
+    
     @property
     def args(self):
+        if len(self.__node[1][1]) == 0:
+            # no args
+            return ''
         s = ''
         _args = (self.__node[1])[1:]
         for i, arg in enumerate(_args):
@@ -213,90 +194,164 @@ class Function(object):
     
     @property
     def returns(self):
-        pass
+        r = Type(self.__node[0])
+        if r.is_void:
+            return ''
+        return ' -> %s' % r
 
-    def trait_fn(self, gen):
-        gen.println('fn %s(%s)%s' % self.name, self.args, self.returns)
+    def trait_fn(self, gen, classname):
+        #gen.println('// %s' % self.__node)
+        gen.println('fn %s(%s)%s;' % (self.method_name(classname), self.args, self.returns))
+
+
+# Function stye type macros
+def TArrayObjectOutVoid(args):
+    return '~[@%s]' % args # it would be **c_void ?
+def TArrayString(args):
+    return '%s: c_int, %s: *wchar_t' % args
+def TByteString(args):
+    return '%s: **char, %s: c_int' % args
+TByteStringLazy = TByteString
+def TClassRef(args):
+    return '@%s' % args
+def TColorRGB(args):
+    return '%s: u8, %s: u8, %s: u8' % args
+def TPoint(args, T='c_int'):
+    return '%s: %s, %s: %s' % (args[0], T, args[1], T)
+def TPointDouble(args):
+    return TPoint(args, T='c_double')
+def TPointLong(args):
+    return TPoint(args, T='c_long')
+def TPointOut(args):
+    return TPoint(args, T='*c_int')
+def TPointOutDouble(args):
+    return TPoint(args, T='*c_double')
+def TPointOutVoid(args):
+    return TPoint(args, T='*c_int')
+def TRect(args, T='c_int'):
+    return '%s: %s, %s: %s, %s: %s, %s: %s' % (args[0], T, args[1], T, args[2], T, args[3], T)
+def TRectDouble(args):
+    return TRect(args, T='c_double')
+def TRectOutDouble(args):
+    return TRect(args, T='*c_double')
+def TRectOutVoid(args):
+    return TRect(args, T='*c_int')
+TSize = TPoint
+def TSizeDouble(args):
+    return TSize(args, T='c_double')
+def TSizeOut(args):
+    return TSize(args, T='*c_int')
+def TSizeOutDouble(args):
+    return TSize(args, T='*c_double')
+def TSizeOutVoid(args):
+    return TSize(args, T='*c_int')
+TVector = TPoint
 
 
 class Arg(object):
-    def __init__(self, node):
+    def __init__(self, node, index):
         assert len(node) > 0
         self.__node = node
+        self.__index = index
 
+    @property
+    def is_self(self):
+        # work around second TSelf(T) arguments...
+        return self.__node[0][0] == 'TSelf' and self.__index == 0
+    
+    @property
     def name(self):
-        return self.__node[1]
-
-    def type(self):
-        return Type2(self.__node[0])
-
+        if len(self.__node) == 1:
+            return '_arg%s' % self.__index
+        else:
+            _name = self.__node[1]
+            if _name in ['fn', 'self', 'type', 'use']:
+                _name += '_'
+            return _name
+    
     def __str__(self):
-        return '%s: %s' % (self.name, self.type)
+        tag = self.__node[0][0]
+        if tag in ['TArrayObjectOutVoid', 'TArrayString',
+                   'TByteString', 'TByteStringLazy',
+                   'TClassRef',
+                   'TColorRGB',
+                   'TPoint', 'TPointDouble', 'TPointLong', 'TPointOut', 'TPointOutDouble', 'TPointOutVoid',
+                   'TRect',  'TRectDouble',                             'TRectOutDouble',  'TRectOutVoid',
+                   'TSize',  'TSizeDouble',                'TSizeOut',  'TSizeOutDouble',  'TSizeOutVoid',
+                   'TVector']:
+            args = tuple([x[0] for x in self.__node[0][1:]])
+            return globals()[tag](args)
+        if self.is_self:
+            return '&self'
+        return '%s: %s' % (self.name, Type(self.__node[0]))
 
-
-class Type2(object):
-    def __init__(self, node):
-        assert len(node) > 0
-        self.__node = node
-
-    def __str__(self):
-        # TODO
-        return self.__node
-
+# Other type mappings
+type_mapping = {
+    # header type          # rust type
+    'TArrayIntOutVoid':    '*intptr_t',
+    'TArrayIntPtrOutVoid': '*intptr_t',
+    'TArrayLen':           'c_int',
+    'TArrayStringOutVoid': '**wchar_t',
+    'TBool':               'bool',
+    'TBoolInt':            'c_int',
+    'TByteStringLazyOut':  '*c_char',
+    'TByteStringLen':      'c_int',
+    'TByteStringOut':      '*c_char',
+    'TChar':               'wchar_t',
+    'TClosureFun':         '*c_void',
+    'TInt64':              'i64',
+    'TIntPtr':             'intptr_t',
+    'TString':             '*wchar_t',
+    'TStringLen':          'c_int',
+    'TStringOut':          '**wchar_t',
+    'TStringVoid':         '*wchar_t',
+    'TUInt':               'uint32_t',
+    'TUInt8':              'uint8_t',
+    'double':              'c_double',
+    'float':               'c_float',
+    'long':                'c_long',
+    'void':                'c_void',
+}
 
 class Type(object):
-    def __init__(self, param=False):
-        self.__param = param
-        self.is_ptr = False
-        self.is_const_ptr = False
-        self.is_pp = False
-        self.is_const = False
-        self.is_void = False
-        self.name = ''
+    def __init__(self, node):
+        self.__node = node
+
+    @property
+    def is_complex(self):
+        return not isinstance(self.__node, basestring)
     
-    def parse(self, type):
-        self.original = type
-        type = type.strip()
-        if type == 'void':
-            self.is_void = True
-        if type.endswith('*'):
-            self.is_ptr = True
-            self.is_const_ptr = self.is_const
-            self.is_const = False
-            type = type[:-1].strip()
-            if type.endswith('*'):
-                self.pp = True
-                type = type[:-1].strip()
-        if '(*' in type:
-            raise RuntimeError("function pointer isn't supported yet.")
-        if '[' in type:
-            raise RuntimeError("array isn't supported yet.")
-        self.name = type
-        return self
+    @property
+    def is_self(self):
+        return self.is_complex and self.__node[0] == 'TSelf'
     
-    def is_primitive(self):
-        return not self.name.startswith('NS')
+    @property
+    def inner(self):
+        if self.is_complex:
+            return self.__node[1]
+        return self.__node
     
-    def __repr__(self):
-        s = self.name
-        if s == 'double':
-            s = 'c_double'
-        if s == 'float':
-            s = 'c_float'
-        if s == 'int':
-            s = 'c_int'
-        if s == 'long':
-            s = 'c_long'
-        if s == 'long long':
-            s = 'c_longlong'
+    @property
+    def is_void(self):
+        return self.inner == 'void'
+    
+    @property
+    def is_class(self):
+        return self.is_complex and self.__node[0] == 'TClass'
+    
+    @property
+    def is_ptr(self):
+        return self.is_complex and self.__node[0] == '*'
+    
+    def __str__(self):
+        if self.is_self or self.is_class:
+            return '@%s' % self.__node[1][0]
         if self.is_ptr:
-            if self.is_primitive():
-                if s == 'void':
-                    s = 'u8'
-                s = '*%s' % s
-            else:
-                s = '@mut %s' % s
-        return '%s /* %s */' % (s, self.original)
+            return '*%s' % Type(self.inner)
+        s = str(self.__node)
+        if s in type_mapping:
+            return type_mapping[s]
+        return s
 
 
 if __name__ == '__main__':
