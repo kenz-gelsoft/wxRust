@@ -28,7 +28,7 @@ class WrapperGenerator(object):
         for trait in clazz.inheritance:
             body = ''
             if trait in self.__parser.root_classes:
-                body = ' pub fn handle(&self) -> *u8 { **self } '
+                body = ' fn handle(&self) -> *u8 { **self } '
             self.println('impl %s for %s {%s}' % (trait, implName, body))
         base = clazz.has_base and ' : %s' % clazz.base or ''
         self.println()
