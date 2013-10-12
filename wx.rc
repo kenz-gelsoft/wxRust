@@ -1,6 +1,7 @@
 #[ crate_type = "lib" ];
 
-mod native;
+pub mod native;
+pub mod wrapper;
 
 #[link_args="-lwxc"]
 extern {

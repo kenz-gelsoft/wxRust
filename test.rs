@@ -4,7 +4,7 @@ use std::rt::start_on_main_thread;
 use std::vec;
 
 use wx::*;
-use wx::native::*;
+use wx::wrapper::*;
 
 
 static nullptr: *u8 = 0 as *u8;
@@ -16,26 +16,24 @@ fn start(argc: int, argv: **u8, crate_map: *u8) -> int {
 
 #[fixed_stack_segment]
 fn on_main() {
-    unsafe {
-        let closure = wxClosure_Create(wx_main as *u8, nullptr);
-        let args: ~[*i32] = ~[];
-        ELJApp_InitializeC(closure, args.len() as i32, vec::raw::to_ptr(args) as *i32);
-    }
+    let closure = wxClosureImpl::new(wx_main as *u8, nullptr);
+    let args: ~[*i32] = ~[];
+    ELJAppImpl::initializeC(closure, args.len() as i32, vec::raw::to_ptr(args) as *i32);
 }
 
 extern "C"
 fn wx_main() {
     unsafe {
         // not mandatory
-        // ELJApp_InitAllImageHandlers();
+        // ELJApp::initAllImageHandlers();
         let idAny = -1;
         let defaultFrameStyle = 536878656 | 4194304;
         do "Hello, wxRust!".to_c_str().with_ref |s| {
-            let title = wxString_CreateUTF8(s as *u8);
-            let frame = wxFrame_Create(nullptr, idAny, title, -1, -1, -1, -1, defaultFrameStyle);
+            let title = @wxStringImpl(wxString_CreateUTF8(s as *u8)) as @wxString;
+            let frame = wxFrameImpl::new(@wxWindowImpl(nullptr) as @wxWindow, idAny, title, -1, -1, -1, -1, defaultFrameStyle);
             println("OK");
-            wxWindow_Show(frame);
-//            wxWindow_Raise(frame);
+            frame.show();
+            frame.raise();
         }
     }
 }

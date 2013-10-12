@@ -1,356 +1,963 @@
+from subprocess import PIPE, Popen
+
 import re
 import sys
 
 
 def main():
-    p = Parser()
-    for file in sys.argv[1:]:
-        with open(file) as f:
-            p.new_file()
-            p.parse(Preprocessor().preprocess(f))
-    p.print_parsed()
+    parser = Parser()
+    parser.parse_files(sys.argv[1:])
+    WrapperGenerator(parser).generate()
 
 
-class Preprocessor(object):
-    def __init__(self):
-        self.__cond_stack = [True]
-        pass
-
-    def expand_cond_macros(self, condition):
-        while True:
-            rewritten = condition
-            rules = (
-                     ('defined(_stdcall)', '0'),
-                     ('defined(wxc_h)', '0'),
-                     ('defined(WXC_GLUE_H)', '0'),
-                     ('wxCHECK_VERSION(2,9,5)', '0'),
-                     ('(wxVERSION_NUMBER >= 2905)', '0'),
-                     ('0 || 0', '0'),
-                     ('1 || 0', '1'),
-                     ('!0', '1'),
-                     ('!1', '0'),
-                     ('0 && 0', '0'),
-                     ('0 && 1', '0'),
-                     ('1 && 0', '0'),
-                     ('1 && 1', '1'),
-                     ('(0)', '0'),
-                     ('(1)', '1'),
-                     )
-            for macro, value in rules:
-                rewritten = rewritten.replace(macro, value)
-            if rewritten == condition:
-                return rewritten
-            condition = rewritten
-
-    def expand_normal_macros(self, line):
-        line = re.sub(r'TArrayIntOutVoid', 'intptr_t*', line)
-        line = re.sub(r'TArrayIntPtrOutVoid', 'intptr_t*', line)
-        line = re.sub(r'TArrayLen', 'int', line)
-        line = re.sub(r'TArrayObjectOutVoid\([^)]*\)', 'void**', line)
-        line = re.sub(r'TArrayString\([^)]*\)', 'int, wchar_t*', line)
-        line = re.sub(r'TArrayStringOutVoid', 'wchar_t**', line)
-        line = re.sub(r'TBoolInt', 'int', line)
-        line = re.sub(r'TBool', 'bool', line)
-        line = re.sub(r'TByteString\([^)]*\)', 'char**, int', line)
-        line = re.sub(r'TByteStringLazy\([^)]*\)', 'char**, int', line)
-        line = re.sub(r'TByteStringLazyOut', 'char*', line)
-        line = re.sub(r'TByteStringLen', 'int', line)
-        line = re.sub(r'TByteStringOut', 'char*', line)
-        line = re.sub(r'TChar', 'wchar_t', line)
-        line = re.sub(r'TClass\s*\([^)]*\)', 'void*', line)
-        line = re.sub(r'TClassRef\([^)]*\)', 'void*', line)
-        line = re.sub(r'TClosureFun', 'void*', line)
-        line = re.sub(r'TColorRGB\([^)]*\)', 'u8, u8, u8', line)
-        line = re.sub(r'TIntPtr', 'intptr_t', line)
-        line = re.sub(r'TPoint\([^)]*\)', 'int, int', line)
-        line = re.sub(r'TPointLong\([^)]*\)', 'long, long', line)
-        line = re.sub(r'TPointOut\([^)]*\)', 'int*, int*', line)
-        line = re.sub(r'TPointOutVoid\([^)]*\)', 'int*, int*', line)
-        line = re.sub(r'TRect\([^)]*\)', 'int, int, int, int', line)
-        line = re.sub(r'TRectOutVoid\([^)]*\)', 'int*, int*, int*, int*', line)
-        line = re.sub(r'TSelf\([^)]*\)', 'void*', line)
-        line = re.sub(r'TSize\([^)]*\)', 'int, int', line)
-        line = re.sub(r'TSizeOut\([^)]*\)', 'int*, int*', line)
-        line = re.sub(r'TSizeOutDouble\([^)]*\)', 'double*, double*', line)
-        line = re.sub(r'TSizeOutVoid\([^)]*\)', 'int*, int*', line)
-        line = re.sub(r'TStringVoid', 'wchar_t*', line)
-        line = re.sub(r'TStringLen', 'int', line)
-        line = re.sub(r'TString', 'wchar_t*', line)
-        line = re.sub(r'TUInt8', 'uint8_t', line)
-        line = re.sub(r'TUInt', 'uint32_t', line)
-        line = re.sub(r'TVector\([^)]*\)', 'int, int', line)
-        return line
-
-    def preprocess(self, file):
-        output = []
-        for line in  Preprocessor._normalize(file.read()).splitlines():
-            line = line.strip()
-            if line.startswith('#'):
-                # directive line
-                line = line[1:].strip()
-                if line.startswith('import') or line.startswith('include') or line.startswith('define') or line.startswith('undef'):
-                    # ignore imports, includes and defines for now.
-                    continue
-                elif line.startswith('if') or line.startswith('elif') or line.startswith('ifdef') or line.startswith('ifndef'):
-                    # ifdef/ifndef directive
-                    if line.startswith('ifdef') or line.startswith('ifndef'):
-                        if line.startswith('ifdef'):
-                            macro = line[len('ifdef'):].strip()
-                            line = 'if defined(%s)' % macro
-                        else:
-                            macro = line[len('ifndef'):].strip()
-                            line = 'if !defined(%s)' % macro
-                    # if/elif directive
-                    if line.startswith('if'):
-                        condition = line[len('if'):].strip()
-                    else:
-                        self.__cond_stack.pop()
-                        condition = line[len('elif'):].strip()
-                    condition = self.expand_cond_macros(condition)
-                    # condition
-                    if condition == '1':
-                        self.__cond_stack.append(True)
-                        continue
-                    elif condition == '0':
-                        self.__cond_stack.append(False)
-                        continue
-                    else:
-                        raise RuntimeError('invalid condition |%s|' % condition)
-                elif line.startswith('else'):
-                    self.__cond_stack.append(not self.__cond_stack.pop())
-                    continue
-                elif line.startswith('endif'):
-                    self.__cond_stack.pop()
-                    continue
-                else:
-                    raise RuntimeError('not supported directive |%s|' % line)
-            if self.__cond_stack[-1]:
-                output.append(self.expand_normal_macros(line))
-        return output
-
-    @staticmethod
-    def _strip_comments(text):
-        text = re.sub(r'(\/\*.*?\*\/|\/\/[^\n]*)', '', text, flags=re.DOTALL)
-        return text
-    
-    @staticmethod
-    def _normalize(text):
-        text = Preprocessor._strip_comments(text)
-        text = re.sub(r'^\s*\n', '', text)
-        text = re.sub(r'\n+', '\n', text)
-        text = re.sub(r'\\\n\s+', '', text)
-        return text
-
-
-class Parser(object):
-    def __init__(self):
+class WrapperGenerator(object):
+    def __init__(self, parser):
+        self.__parser = parser
         self.__indent = 0
-        self.__classes = []
-    
-    def new_file(self):
-        self.__current = Class(self)
-        self.__classes.append(self.__current)
-    
-    def parse(self, lines):
-        for line in lines:
-            self._parse_line(line.strip())
-    
-    def _parse_line(self, line):
-        if not len(line):
-            return
-        if 'TClassDef' in line:
-            # special line
-            self.__current = Class(self)
-            self.__classes.append(self.__current)
-            self.__current.parse_header_line(line)
-            return
-        if not('(' in line and ')' in line):
-            # all delarations are functions.
-            assert False
-        self.__current.parse_line(line)
 
-    def print_parsed(self):
+    def generate(self):
         self.println('use std::libc::*;')
+        self.println('use native::*;')
         self.println()
-        self.println('#[link_args="-lwxc"]')
-        self.println('extern {')
-        self.__indent += 1
-        for clazz in self.__classes:
-            clazz.print_class()
-        self.__indent -= 1
+        for clazz in self.__parser.classes:
+            self.print_class(clazz)
+
+    def print_class(self, clazz):
+        implName = '%sImpl' % clazz.name
+        self.println('struct %s(*u8);' % implName)
+        for trait in clazz.inheritance:
+            body = ''
+            if trait in self.__parser.root_classes:
+                body = ' fn handle(&self) -> *u8 { **self } '
+            self.println('impl %s for %s {%s}' % (trait, implName, body))
+    
+        # static methods go to struct impl
+        self.println()
+        self.println('impl %s {' % implName)
+        self.indent()
+        for method in clazz.static_methods:
+            method.trait_fn(self, clazz.name)
+        self.unindent()
         self.println('}')
-            
+        
+        # instance methods go to trait's default impl
+        base = clazz.has_base and ' : %s' % clazz.base or ''
+        self.println()
+        self.println('trait %s%s {' % (clazz.wrapper_name, base))
+        self.indent()
+        if clazz.name in self.__parser.root_classes:
+            self.println('fn handle(&self) -> *u8;')
+            self.println()
+        for method in clazz.methods:
+            method.trait_fn(self, clazz.name)
+        self.unindent()
+        self.println('}')
+        self.println()
+
     def println(self, text=''):
         lines = text.split('\n')
         for line in lines:
             line = '%s%s' % (''+(' ' * 4 * self.__indent), line)
             print line
 
+    def indent(self):
+        self.__indent += 1
 
-class Class(object):
-    def __init__(self, parser):
-        self.__parser = parser
-        self.__header_line = None
-        self.__methods = []
+    def unindent(self):
+        self.__indent -= 1
+
+
+class Preprocessor(object):
+    def __init__(self):
         pass
 
-    def parse_header_line(self, line):
-        self.__header_line = line
+    def call_cpp(self, file):
+        cppflags = Popen(['wx-config', '--cppflags'], stdout=PIPE).communicate()[0].split()
+        cppflags.remove('-D__WXMAC__')
+        cmdline = ['cpp', '-DWXC_TYPES_H'] + cppflags + ['-I/Users/kenz/src/wxRust/wxHaskell/wxc/src/include', file]
+        return Popen(cmdline, stdout=PIPE).communicate()[0]
+    
+    def preprocess(self, file):
+        for line in Preprocessor._normalize(self.call_cpp(file)).splitlines():
+            line = line.strip()
+            if not len(line) or line.startswith('#'):
+                continue
+            yield line
+    
+    @staticmethod
+    def _normalize(text):
+        text = re.sub(r'^\s*\n', '', text)
+        text = re.sub(r'\n+', '\n', text)
+        text = re.sub(r'\\\n\s+', '', text)
+        return text
 
-    def parse_line(self, line):
-        self.__methods.append(Method(None).parse(line))
 
-    def print_class(self):
-        if self.__header_line:
-            self.println('\n// %s' % self.__header_line)
-        for method in self.__methods:
-            self.println(repr(method))
+# Function style arg macros
+def TArrayString(args):
+    return [['int', args[0]],
+            [['*', 'wchar_t'], args[1]]]
+def TByteString(args):
+    return [[['*', 'char'], args[0]],
+            ['int', args[1]]]
+TByteStringLazy = TByteString
+def TColorRGB(args):
+    return [['uint8_t', args[0]],
+            ['uint8_t', args[1]],
+            ['uint8_t', args[2]]];
+def TPoint(args, T='int'):
+    return [[T, args[0]],
+            [T, args[1]]];
+def TPointDouble(args):
+    return TPoint(args, T='double')
+def TPointLong(args):
+    return TPoint(args, T='long')
+def TPointOut(args):
+    return TPoint(args, T=['*', 'int'])
+def TPointOutDouble(args):
+    return TPoint(args, T=['*', 'double'])
+def TPointOutVoid(args):
+    return TPoint(args, T=['*', 'int'])
+def TRect(args, T='int'):
+    return [[T, args[0]],
+            [T, args[1]],
+            [T, args[2]],
+            [T, args[3]]]
+def TRectDouble(args):
+    return TRect(args, T='double')
+def TRectOutDouble(args):
+    return TRect(args, T=['*', 'double'])
+def TRectOutVoid(args):
+    return TRect(args, T=['*', 'int'])
+TSize = TPoint
+def TSizeDouble(args):
+    return TSize(args, T='double')
+def TSizeOut(args):
+    return TSize(args, T=['*', 'int'])
+def TSizeOutDouble(args):
+    return TSize(args, T=['*', 'double'])
+def TSizeOutVoid(args):
+    return TSize(args, T=['*', 'int'])
+TVector = TPoint
 
-    def println(self, text=''):
-        self.__parser.println(text)
 
+class Parser(object):
+    def __init__(self):
+        self.__classes   = []
+        self.__functions = []
+        self.__root_classes = set()
+    
+    def parse_files(self, files):
+        for file in files:
+            for line in Preprocessor().preprocess(file):
+                self._parse_line(line.strip())
+        for clazz in self.__classes:
+            self.__root_classes.add(clazz.inheritance[-1])
+            for f in self.__functions:
+                if f.name in missing_functions:
+                    continue
+                clazz.add_if_member(f)
 
-class Method(object):
-    def __init__(self, classname):
-        self.__classname = classname
+    @property
+    def root_classes(self):
+        return self.__root_classes
 
-    def parse(self, line):
-        line = re.sub(r'\s+', ' ', line);
-        line = re.sub(r' \(', '(', line);
-        front = line[:line.find('(')]
-        self.__rtype = Type().parse(front[:front.rfind(' ')].strip())
-        self.__name = front[front.rfind(' ')+1:]
-        args = line[line.find('(')+1:line.rfind(')')].strip()
-        self.__args = []
-        if len(args.strip()):
-            count = 0
-            for arg in args.split(','):
-                pair = self.normalize_ptr(arg).split(' ')
-                if len(pair) < 2:
-                    pair.append('arg%s' % count)
-                    count += 1
-                for keyword in ['fn', 'ref', 'self', 'type', 'use']:
-                    if pair[1] == keyword:
-                        pair[1] += '_'
-                self.__args.append([Type(param=True).parse(pair[0]), pair[1]])
-        return self
+    @property
+    def classes(self):
+        return self.__classes
+    
+    def classForName(self, name):
+        for clazz in self.__classes:
+            if clazz.name == name:
+                return clazz
+        return None
 
-            
-    def normalize_ptr(self, arg):
-        arg = re.sub(r'\*\s*', '* ', arg)
-        arg = re.sub(r'\*\s\*', '*', arg)
-        arg = re.sub(r'\s+\*', '*', arg)
-        arg = re.sub(r'\s+', ' ', arg)
-        arg = arg.replace(' Out ', ' ')
-        arg = arg.strip()
-        assert len(arg.split(' ')) <= 2
-        return arg
+    def _parse_line(self, line):
+        if not len(line):
+            return
 
-    def __repr__(self):
-        for ignore in ['ELJClient_',
-                       'ELJCommand_',
-                       'ELJConnection_',
-                       'ELJPlotCurve_',
-                       'ELJServer_',
-                       'cb',
-                       'wxCommandProcessor_',
-                       'wxCondition_',
-                       'wxCriticalSection_',
-                       'wxDateTime_IsGregorianDate',
-                       'wxDialUpEvent_',
-                       'wxDialUpManager_',
-                       'wxDynToolInfo_',
-                       'wxDynamicSashWindow_',
-                       'wxDynamicToolBar_',
-                       'wxEditableListBox_',
-                       'wxFrameLayout_',
-                       'wxJoystick_',
-                       'wxLEDNumberCtrl_',
-                       'wxMessageParameters_',
-                       'wxMultiCellCanvas_',
-                       'wxMultiCellItemHandle_',
-                       'wxMultiCellSizer_',
-                       'wxMutexGui_',
-                       'wxMutex_',
-                       'wxNewBitmapButton_',
-                       'wxPlotEvent_',
-                       'wxPlotOnOffCurve_',
-                       'wxPlotWindow_',
-                       'wxPoint_Destroy',
-                       'wxRemotelyScrolledTreeCtrl_',
-                       'wxSize_Destroy',
-                       'wxSplitterScrolledWindow_',
-                       'wxThinSplitterWindow_',
-                       'wxToolLayoutItem_',
-                       'wxToolWindow_',
-                       'wxTreeCompanionWindow_',
-                       'wxXmlResource_Delete',
-                       ]:
-            if self.__name.startswith(ignore):
-                return '// missing: %s' % self.__name
+        # Trivial parser
+        # TODO: extract LineParser class
+        stack = []
+        node = []
+        lexer = (t.group(0) for t in re.finditer(re.compile(r'\s+|\*|\(|,|\)|;|[^\s*(,);]+'), line))
+        for token in lexer:
+            if not token.strip() or token == ';':
+                # ignore separators
+                continue
+            if token == '(':
+                tagname = node.pop()
+                stack.append(node)
+                stack.append([tagname])
+                node = []
+                continue
+            if token == ',':
+                stack[-1].append(node)
+                node = [] # new-arg
+                continue
+            if token == ')':
+                stack[-1].append(node)
+                node = stack.pop() # end-arg
+                stack[-1].append(node)
+                node = stack.pop() # end-arg-list
+                
+                # Handles function style argument macros here
+                tag = node[-1][0]
+                if tag in ['TArrayString',
+                           'TByteString', 'TByteStringLazy',
+                           'TColorRGB',
+                           'TPoint', 'TPointDouble', 'TPointLong', 'TPointOut', 'TPointOutDouble', 'TPointOutVoid',
+                           'TRect',  'TRectDouble',                             'TRectOutDouble',  'TRectOutVoid',
+                           'TSize',  'TSizeDouble',                'TSizeOut',  'TSizeOutDouble',  'TSizeOutVoid',
+                           'TVector']:
+#                    # ---- before
+#                    for pair in enumerate(stack):
+#                        print '%s: %s' % pair
+#                    print node
+                    macro = globals()[tag]
+                    macro_args = [arg[0] for arg in node.pop()[1:]]
+                    macro_result = macro(macro_args)
+                    for result_node in macro_result[:-1]:
+                        stack[-1].append(result_node)
+                    # We assume the last node read until here
+                    for item in macro_result[-1]:
+                        node.append(item)
+#                    # ---- after
+#                    for pair in enumerate(stack):
+#                        print '%s: %s' % pair
+#                    print node
+#                    sys.exit()
+                continue
+            if token == '*':
+                node.append(['*', node.pop()])
+                continue
+            node.append(token)
+            continue
         
-        args = ''
-        for arg in self.__args:
-            if len(args):
-                args += ', '
-            args += '%s: %s' % (arg[1], arg[0])
-        ret = ''
-        if not self.__rtype.is_void:
-            ret = ' -> %s' % self.__rtype
-        return 'pub fn %s(%s)%s;' % (self.__name, args, ret)
+        #print node
+        if 'TClassDef' in line:
+            # class def
+            clazz = Class(self, node)
+            # linear search isn't fast.
+            for clazz2 in self.classes:
+                if clazz.name == clazz2.name:
+                    return
+            self.__classes.append(clazz)
+        else:
+            # func def
+            self.__functions.append(Function(node))
 
+
+class Class(object):
+    def __init__(self, parser, node):
+        assert len(node) == 1
+        assert len(node[0]) > 1
+        self.__parser = parser
+        self.__node = node
+        self.__methods = []
+
+    @property
+    def name(self):
+        return self.__node[0][1][0]
+
+    @property
+    def has_base(self):
+        return self.__node[0][0] == 'TClassDefExtend'
+
+    @property
+    def base(self):
+        assert self.has_base
+        return self.__node[0][2][0]
+    
+    @property
+    def inheritance(self):
+        list = [self.name]
+        if self.has_base:
+            list += self.__parser.classForName(self.base).inheritance
+        return list
+
+    @property
+    def wrapper_name(self):
+        return self.name
+#        if self.name.startswith('wx'):
+#            return self.name[2:]
+#        return self.name
+
+    @property
+    def static_methods(self):
+        return (m for m in self.__methods if m.is_static)
+
+    @property
+    def methods(self):
+        return (m for m in self.__methods if not m.is_static)
+
+    def add_if_member(self, f):
+        if f.name.startswith('%s_' % self.name):
+            self.__methods.append(f)
+
+
+class Function(object):
+    def __init__(self, node):
+        #print node
+        assert len(node) > 1
+        assert node[1][0]
+        self.__node = node
+        self.__return_type = Type(self.__node[0])
+
+    @property
+    def name(self):
+        return self.__node[1][0]
+
+    @property
+    def is_static(self):
+        args = list(self.args)
+        if len(args) < 1:
+            return True
+        return not args[0].type.is_self
+
+    def method_name(self, classname):
+        _name = self.name[len(classname)+1:]
+        _name = _name[0].lower() + _name[1:]
+        if _name in ['break', 'yield']:
+            _name += '_'
+        if _name.startswith('create'):
+            return 'new' + _name[len('create'):]
+        return _name
+    
+    @property
+    def args(self):
+        if len(self.__node[1][1]) == 0:
+            # no args
+            return ()
+        _args = (self.__node[1])[1:]
+        return (Arg(arg, i) for i, arg in enumerate(_args))
+    
+    @property
+    def decl_args(self):
+        return ', '.join((str(a) for a in self.args))
+    
+    @property
+    def calling_args(self):
+        return ', '.join((a.calling_arg for a in self.args))
+    
+    @property
+    def returns(self):
+        if self.__return_type.is_void:
+            return ''
+        return ' -> %s' % self.__return_type
+
+    def trait_fn(self, gen, classname):
+        #gen.println('// %s' % self.__node)
+        modifier = self.is_static and 'pub ' or ''
+        gen.println('#[fixed_stack_segment]')
+        gen.println('%sfn %s(%s)%s {' % (modifier,
+                                         self.method_name(classname),
+                                         self.decl_args,
+                                         self.returns))
+        gen.indent()
+        body = '%s(%s)' % (self.name, self.calling_args)
+        if self.__return_type.is_self or \
+            self.__return_type.is_class:
+            body = '%sImpl(%s) as %s' % (self.__return_type, body, self.__return_type)
+        gen.println('unsafe { %s }' % body)
+        gen.unindent()
+        gen.println('}')
+
+
+# Function style type macros
+def TArrayObjectOutVoid(args):
+    return '*u8'#'~[@%s]' % args # it would be **c_void ?
+
+
+class Arg(object):
+    def __init__(self, node, index):
+        assert len(node) > 0
+        self.__node = node
+        self.__index = index
+        self.__type = Type(self.__node[0])
+
+    @property
+    def is_self(self):
+        # work around second TSelf(T) arguments...
+        return self.__node[0][0] == 'TSelf' and self.__index == 0
+    
+    @property
+    def name(self):
+        if len(self.__node) == 1:
+            return '_arg%s' % self.__index
+        else:
+            if self.is_self:
+                return 'self'
+            _name = self.__node[1]
+            if _name in ['fn', 'ref', 'self', 'type', 'use']:
+                _name += '_'
+            return _name
+
+    @property
+    def type(self):
+        return self.__type
+
+    @property
+    def calling_arg(self):
+        if self.is_self:
+            return 'self.handle()'
+        elif self.type.is_class:
+            return '%s.handle()' % self.name
+        else:
+            return self.name
+
+    def __str__(self):
+        tag = self.__node[0][0]
+        if tag in ['TArrayObjectOutVoid']:
+            macro = globals()[tag]
+            macro_args = tuple([x[0] for x in self.__node[0][1:]])
+            return '%s: %s' % (self.name, macro(macro_args))
+        if self.is_self:
+            return '&self'
+        return '%s: %s' % (self.name, self.type)
+
+# Other type mappings
+type_mapping = {
+    # header type          # rust type
+    'TArrayIntOutVoid':    '*intptr_t',
+    'TArrayIntPtrOutVoid': '*intptr_t',
+    'TArrayLen':           'c_int',
+    'TArrayStringOutVoid': '*wchar_t',#'**wchar_t',
+    'TBool':               'bool',
+    'TBoolInt':            'c_int',
+    'TByteStringLazyOut':  '*char',#'*c_char',
+    'TByteStringLen':      'c_int',
+    'TByteStringOut':      '*char',#'*c_char',
+    'TChar':               'wchar_t',
+    'TClosureFun':         '*u8',#'*c_void',
+    'TInt64':              'i64',
+    'TIntPtr':             'intptr_t',
+    'TString':             '*wchar_t',
+    'TStringLen':          'c_int',
+    'TStringOut':          '*wchar_t',#'**wchar_t',
+    'TStringVoid':         '*wchar_t',
+    'TUInt':               'uint32_t',
+    'TUInt8':              'uint8_t',
+#    'char':                'c_char',
+    'double':              'c_double',
+    'float':               'c_float',
+    'int':                 'c_int',
+    'long':                'c_long',
+    'void':                'u8',#'c_void',
+}
 
 class Type(object):
-    def __init__(self, param=False):
-        self.__param = param
-        self.is_ptr = False
-        self.is_const_ptr = False
-        self.is_pp = False
-        self.is_const = False
-        self.is_void = False
-        self.name = ''
+    def __init__(self, node):
+        self.__node = node
+
+    @property
+    def head(self):
+        if self.is_complex:
+            return self.__node[0]
+        return self.__node
+
+    @property
+    def is_complex(self):
+        return not isinstance(self.__node, basestring)
     
-    def parse(self, type):
-        self.original = type
-        type = type.strip()
-        if type == 'void':
-            self.is_void = True
-        if type.endswith('*'):
-            self.is_ptr = True
-            self.is_const_ptr = self.is_const
-            self.is_const = False
-            type = type[:-1].strip()
-            if type.endswith('*'):
-                self.pp = True
-                type = type[:-1].strip()
-        if '(*' in type:
-            raise RuntimeError("function pointer isn't supported yet.")
-        if '[' in type:
-            raise RuntimeError("array isn't supported yet.")
-        self.name = type
-        return self
+    @property
+    def is_self(self):
+        return self.is_complex and self.head == 'TSelf'
     
-    def is_primitive(self):
-        return not self.name.startswith('NS')
+    @property
+    def inner(self):
+        if self.is_complex:
+            return self.__node[1]
+        return self.__node
     
-    def __repr__(self):
-        s = self.name
-        if s == 'double':
-            s = 'c_double'
-        if s == 'long':
-            s = 'c_long'
-        if s == 'long long':
-            s = 'c_longlong'
-        if s == 'int':
-            s = 'c_int'
+    @property
+    def is_void(self):
+#        print self.head
+#        sys.exit()
+        return self.head == 'void'
+    
+    @property
+    def is_class(self):
+        return self.is_complex and self.head in ['TClass', 'TClassRef', 'TSelf']
+    
+    @property
+    def is_ptr(self):
+        return self.is_complex and self.head == '*'
+    
+    def __str__(self):
+        if self.is_self or self.is_class:
+            return '@%s' % self.__node[1][0]
         if self.is_ptr:
-            if self.is_primitive():
-                if s == 'void':
-                    s = 'u8'
-                s = '*%s' % s
-            else:
-                s = '@mut %s' % s
-        return '%s /* %s */' % (s, self.original)
+            t = Type(self.inner)
+            if t.is_class:
+                return '*u8'
+            # work around native.rs bug
+            if t.is_ptr and t.inner == 'TChar':
+                return '*wchar_t'
+            return '*%s' % t
+        s = str(self.__node)
+        if s in type_mapping:
+            return type_mapping[s]
+        return s
+
+
+# These are in wxc.h but not linked yet. skip them.
+missing_functions = ['ELJClient_Create',
+                     'ELJClient_Delete',
+                     'ELJClient_MakeConnection',
+                     'ELJCommand_CanUndo',
+                     'ELJCommand_Create',
+                     'ELJCommand_Delete',
+                     'ELJCommand_GetName',
+                     'ELJConnection_Advise',
+                     'ELJConnection_Compress',
+                     'ELJConnection_Create',
+                     'ELJConnection_CreateDefault',
+                     'ELJConnection_Delete',
+                     'ELJConnection_Disconnect',
+                     'ELJConnection_Execute',
+                     'ELJConnection_Poke',
+                     'ELJConnection_Request',
+                     'ELJConnection_SetOnAdvise',
+                     'ELJConnection_SetOnDisconnect',
+                     'ELJConnection_SetOnExecute',
+                     'ELJConnection_SetOnPoke',
+                     'ELJConnection_SetOnRequest',
+                     'ELJConnection_SetOnStartAdvise',
+                     'ELJConnection_SetOnStopAdvise',
+                     'ELJConnection_StartAdvise',
+                     'ELJConnection_StopAdvise',
+                     'ELJPlotCurve_Create',
+                     'ELJPlotCurve_Delete',
+                     'ELJPlotCurve_GetEndY',
+                     'ELJPlotCurve_GetOffsetY',
+                     'ELJPlotCurve_GetStartY',
+                     'ELJPlotCurve_SetEndY',
+                     'ELJPlotCurve_SetOffsetY',
+                     'ELJPlotCurve_SetPenNormal',
+                     'ELJPlotCurve_SetPenSelected',
+                     'ELJPlotCurve_SetStartY',
+                     'ELJServer_Create',
+                     'ELJServer_Delete',
+                     'ELJServer_Initialize',
+                     'cbAntiflickerPlugin_Create',
+                     'cbAntiflickerPlugin_CreateDefault',
+                     'cbAntiflickerPlugin_Delete',
+                     'cbBarDragPlugin_Create',
+                     'cbBarDragPlugin_CreateDefault',
+                     'cbBarDragPlugin_Delete',
+                     'cbBarHintsPlugin_Create',
+                     'cbBarHintsPlugin_CreateDefault',
+                     'cbBarHintsPlugin_Delete',
+                     'cbBarHintsPlugin_SetGrooveCount',
+                     'cbBarInfo_Create',
+                     'cbBarInfo_Delete',
+                     'cbBarInfo_IsExpanded',
+                     'cbBarInfo_IsFixed',
+                     'cbBarSpy_Create',
+                     'cbBarSpy_CreateDefault',
+                     'cbBarSpy_Delete',
+                     'cbBarSpy_ProcessEvent',
+                     'cbBarSpy_SetBarWindow',
+                     'cbCloseBox_Create',
+                     'cbCollapseBox_Create',
+                     'cbCommonPaneProperties_Assign',
+                     'cbCommonPaneProperties_BarCollapseIconsOn',
+                     'cbCommonPaneProperties_BarDragHintsOn',
+                     'cbCommonPaneProperties_BarFloatingOn',
+                     'cbCommonPaneProperties_ColProportionsOn',
+                     'cbCommonPaneProperties_CreateDefault',
+                     'cbCommonPaneProperties_Delete',
+                     'cbCommonPaneProperties_ExactDockPredictionOn',
+                     'cbCommonPaneProperties_MinCBarDim',
+                     'cbCommonPaneProperties_NonDestructFrictionOn',
+                     'cbCommonPaneProperties_OutOfPaneDragOn',
+                     'cbCommonPaneProperties_RealTimeUpdatesOn',
+                     'cbCommonPaneProperties_ResizeHandleSize',
+                     'cbCommonPaneProperties_RowProportionsOn',
+                     'cbCommonPaneProperties_SetBarCollapseIconsOn',
+                     'cbCommonPaneProperties_SetBarDragHintsOn',
+                     'cbCommonPaneProperties_SetBarFloatingOn',
+                     'cbCommonPaneProperties_SetColProportionsOn',
+                     'cbCommonPaneProperties_SetExactDockPredictionOn',
+                     'cbCommonPaneProperties_SetMinCBarDim',
+                     'cbCommonPaneProperties_SetNonDestructFrictionOn',
+                     'cbCommonPaneProperties_SetOutOfPaneDragOn',
+                     'cbCommonPaneProperties_SetRealTimeUpdatesOn',
+                     'cbCommonPaneProperties_SetResizeHandleSize',
+                     'cbCommonPaneProperties_SetRowProportionsOn',
+                     'cbCommonPaneProperties_SetShow3DPaneBorderOn',
+                     'cbCommonPaneProperties_Show3DPaneBorderOn',
+                     'cbDimInfo_Assign',
+                     'cbDimInfo_Create',
+                     'cbDimInfo_CreateDefault',
+                     'cbDimInfo_CreateWithHandler',
+                     'cbDimInfo_CreateWithInfo',
+                     'cbDimInfo_Delete',
+                     'cbDimInfo_GetDimHandler',
+                     'cbDockBox_Create',
+                     'cbDockPane_BarPresent',
+                     'cbDockPane_Create',
+                     'cbDockPane_CreateDefault',
+                     'cbDockPane_Delete',
+                     'cbDockPane_GetAlignment',
+                     'cbDockPane_GetBarInfoByWindow',
+                     'cbDockPane_GetBarResizeRange',
+                     'cbDockPane_GetDockingState',
+                     'cbDockPane_GetFirstRow',
+                     'cbDockPane_GetPaneHeight',
+                     'cbDockPane_GetRealRect',
+                     'cbDockPane_GetRowList',
+                     'cbDockPane_GetRowResizeRange',
+                     'cbDockPane_HitTestPaneItems',
+                     'cbDockPane_InsertBarByCoord',
+                     'cbDockPane_InsertBarByInfo',
+                     'cbDockPane_InsertBarToRow',
+                     'cbDockPane_InsertRow',
+                     'cbDockPane_IsHorizontal',
+                     'cbDockPane_MatchesMask',
+                     'cbDockPane_RemoveBar',
+                     'cbDockPane_RemoveRow',
+                     'cbDockPane_SetBoundsInParent',
+                     'cbDockPane_SetMargins',
+                     'cbDockPane_SetPaneWidth',
+                     'cbDynToolBarDimHandler_Create',
+                     'cbDynToolBarDimHandler_Delete',
+                     'cbFloatedBarWindow_Create',
+                     'cbFloatedBarWindow_GetBar',
+                     'cbFloatedBarWindow_PositionFloatedWnd',
+                     'cbFloatedBarWindow_SetBar',
+                     'cbFloatedBarWindow_SetLayout',
+                     'cbGCUpdatesMgr_Create',
+                     'cbGCUpdatesMgr_CreateDefault',
+                     'cbGCUpdatesMgr_Delete',
+                     'cbGCUpdatesMgr_UpdateNow',
+                     'cbHintAnimationPlugin_Create',
+                     'cbHintAnimationPlugin_CreateDefault',
+                     'cbHintAnimationPlugin_Delete',
+                     'cbMiniButton_Create',
+                     'cbMiniButton_Delete',
+                     'cbMiniButton_Dim',
+                     'cbMiniButton_DragStarted',
+                     'cbMiniButton_Enable',
+                     'cbMiniButton_Enabled',
+                     'cbMiniButton_HitTest',
+                     'cbMiniButton_IsPressed',
+                     'cbMiniButton_Layout',
+                     'cbMiniButton_Pane',
+                     'cbMiniButton_Plugin',
+                     'cbMiniButton_Pos',
+                     'cbMiniButton_Pressed',
+                     'cbMiniButton_Refresh',
+                     'cbMiniButton_Reset',
+                     'cbMiniButton_SetPos',
+                     'cbMiniButton_Visible',
+                     'cbMiniButton_WasClicked',
+                     'cbMiniButton_Wnd',
+                     'cbPaneDrawPlugin_Create',
+                     'cbPaneDrawPlugin_CreateDefault',
+                     'cbPaneDrawPlugin_Delete',
+                     'cbPluginBase_Delete',
+                     'cbPluginBase_GetPaneMask',
+                     'cbPluginBase_IsReady',
+                     'cbPluginBase_Plugin',
+                     'cbPluginBase_ProcessEvent',
+                     'cbRowDragPlugin_Create',
+                     'cbRowDragPlugin_CreateDefault',
+                     'cbRowDragPlugin_Delete',
+                     'cbRowInfo_Create',
+                     'cbRowInfo_Delete',
+                     'cbRowInfo_GetFirstBar',
+                     'cbRowLayoutPlugin_Create',
+                     'cbRowLayoutPlugin_CreateDefault',
+                     'cbRowLayoutPlugin_Delete',
+                     'cbSimpleCustomizationPlugin_Create',
+                     'cbSimpleCustomizationPlugin_CreateDefault',
+                     'cbSimpleCustomizationPlugin_Delete',
+                     'wxCommandProcessor_wxCommandProcessor',
+                     'wxCondition_Broadcast',
+                     'wxCondition_Create',
+                     'wxCondition_Delete',
+                     'wxCondition_Signal',
+                     'wxCondition_Wait',
+                     'wxCondition_WaitFor',
+                     'wxCriticalSection_Create',
+                     'wxCriticalSection_Delete',
+                     'wxCriticalSection_Enter',
+                     'wxCriticalSection_Leave',
+                     'wxDateTime_IsGregorianDate',
+                     'wxDialUpManager_CancelDialing',
+                     'wxDialUpManager_Create',
+                     'wxDialUpManager_Delete',
+                     'wxDialUpManager_Dial',
+                     'wxDialUpManager_DisableAutoCheckOnlineStatus',
+                     'wxDialUpManager_EnableAutoCheckOnlineStatus',
+                     'wxDialUpManager_GetISPNames',
+                     'wxDialUpManager_HangUp',
+                     'wxDialUpManager_IsAlwaysOnline',
+                     'wxDialUpManager_IsDialing',
+                     'wxDialUpManager_IsOk',
+                     'wxDialUpManager_IsOnline',
+                     'wxDialUpManager_SetConnectCommand',
+                     'wxDialUpManager_SetOnlineStatus',
+                     'wxDialUpManager_SetWellKnownHost',
+                     'wxDynamicSashWindow_Create',
+                     'wxDynamicSashWindow_Delete',
+                     'wxDynamicSashWindow_GetHScrollBar',
+                     'wxDynamicSashWindow_GetVScrollBar',
+                     'wxDynamicToolBar_AddSeparator',
+                     'wxDynamicToolBar_AddTool',
+                     'wxDynamicToolBar_AddToolBitmap',
+                     'wxDynamicToolBar_AddToolImage',
+                     'wxDynamicToolBar_AddToolLabel',
+                     'wxDynamicToolBar_Create',
+                     'wxDynamicToolBar_CreateDefault',
+                     'wxDynamicToolBar_CreateDefaultLayout',
+                     'wxDynamicToolBar_CreateParams',
+                     'wxDynamicToolBar_CreateTool',
+                     'wxDynamicToolBar_CreateToolControl',
+                     'wxDynamicToolBar_Delete',
+                     'wxDynamicToolBar_DoDeleteTool',
+                     'wxDynamicToolBar_DoEnableTool',
+                     'wxDynamicToolBar_DoInsertTool',
+                     'wxDynamicToolBar_DoSetToggle',
+                     'wxDynamicToolBar_DoToggleTool',
+                     'wxDynamicToolBar_DrawSeparator',
+                     'wxDynamicToolBar_EnableTool',
+                     'wxDynamicToolBar_FindToolForPosition',
+                     'wxDynamicToolBar_GetPreferredDim',
+                     'wxDynamicToolBar_GetToolInfo',
+                     'wxDynamicToolBar_Layout',
+                     'wxDynamicToolBar_RemoveTool',
+                     'wxDynamicToolBar_SetLayout',
+                     'wxEditableListBox_Create',
+                     'wxEditableListBox_GetDelButton',
+                     'wxEditableListBox_GetDownButton',
+                     'wxEditableListBox_GetEditButton',
+                     'wxEditableListBox_GetListCtrl',
+                     'wxEditableListBox_GetNewButton',
+                     'wxEditableListBox_GetStrings',
+                     'wxEditableListBox_GetUpButton',
+                     'wxEditableListBox_SetStrings',
+                     'wxFrameLayout_Activate',
+                     'wxFrameLayout_AddBar',
+                     'wxFrameLayout_AddPlugin',
+                     'wxFrameLayout_AddPluginBefore',
+                     'wxFrameLayout_ApplyBarProperties',
+                     'wxFrameLayout_CaptureEventsForPane',
+                     'wxFrameLayout_CaptureEventsForPlugin',
+                     'wxFrameLayout_Create',
+                     'wxFrameLayout_Deactivate',
+                     'wxFrameLayout_Delete',
+                     'wxFrameLayout_DestroyBarWindows',
+                     'wxFrameLayout_EnableFloating',
+                     'wxFrameLayout_FindBarByName',
+                     'wxFrameLayout_FindBarByWindow',
+                     'wxFrameLayout_FindPlugin',
+                     'wxFrameLayout_FirePluginEvent',
+                     'wxFrameLayout_GetBars',
+                     'wxFrameLayout_GetClientHeight',
+                     'wxFrameLayout_GetClientRect',
+                     'wxFrameLayout_GetClientWidth',
+                     'wxFrameLayout_GetFrameClient',
+                     'wxFrameLayout_GetPane',
+                     'wxFrameLayout_GetPaneProperties',
+                     'wxFrameLayout_GetParentFrame',
+                     'wxFrameLayout_GetTopPlugin',
+                     'wxFrameLayout_GetUpdatesManager',
+                     'wxFrameLayout_HasTopPlugin',
+                     'wxFrameLayout_HideBarWindows',
+                     'wxFrameLayout_InverseVisibility',
+                     'wxFrameLayout_OnLButtonDown',
+                     'wxFrameLayout_OnLButtonUp',
+                     'wxFrameLayout_OnLDblClick',
+                     'wxFrameLayout_OnMouseMove',
+                     'wxFrameLayout_OnRButtonDown',
+                     'wxFrameLayout_OnRButtonUp',
+                     'wxFrameLayout_OnSize',
+                     'wxFrameLayout_PopAllPlugins',
+                     'wxFrameLayout_PopPlugin',
+                     'wxFrameLayout_PushDefaultPlugins',
+                     'wxFrameLayout_PushPlugin',
+                     'wxFrameLayout_RecalcLayout',
+                     'wxFrameLayout_RedockBar',
+                     'wxFrameLayout_RefreshNow',
+                     'wxFrameLayout_ReleaseEventsFromPane',
+                     'wxFrameLayout_ReleaseEventsFromPlugin',
+                     'wxFrameLayout_RemoveBar',
+                     'wxFrameLayout_RemovePlugin',
+                     'wxFrameLayout_SetBarState',
+                     'wxFrameLayout_SetFrameClient',
+                     'wxFrameLayout_SetMargins',
+                     'wxFrameLayout_SetPaneBackground',
+                     'wxFrameLayout_SetPaneProperties',
+                     'wxFrameLayout_SetTopPlugin',
+                     'wxFrameLayout_SetUpdatesManager',
+                     'wxJoystick_Create',
+                     'wxJoystick_Delete',
+                     'wxJoystick_GetButtonState',
+                     'wxJoystick_GetManufacturerId',
+                     'wxJoystick_GetMaxAxes',
+                     'wxJoystick_GetMaxButtons',
+                     'wxJoystick_GetMovementThreshold',
+                     'wxJoystick_GetNumberAxes',
+                     'wxJoystick_GetNumberButtons',
+                     'wxJoystick_GetNumberJoysticks',
+                     'wxJoystick_GetPOVCTSPosition',
+                     'wxJoystick_GetPOVPosition',
+                     'wxJoystick_GetPollingMax',
+                     'wxJoystick_GetPollingMin',
+                     'wxJoystick_GetPosition',
+                     'wxJoystick_GetProductId',
+                     'wxJoystick_GetProductName',
+                     'wxJoystick_GetRudderMax',
+                     'wxJoystick_GetRudderMin',
+                     'wxJoystick_GetRudderPosition',
+                     'wxJoystick_GetUMax',
+                     'wxJoystick_GetUMin',
+                     'wxJoystick_GetUPosition',
+                     'wxJoystick_GetVMax',
+                     'wxJoystick_GetVMin',
+                     'wxJoystick_GetVPosition',
+                     'wxJoystick_GetXMax',
+                     'wxJoystick_GetXMin',
+                     'wxJoystick_GetYMax',
+                     'wxJoystick_GetYMin',
+                     'wxJoystick_GetZMax',
+                     'wxJoystick_GetZMin',
+                     'wxJoystick_GetZPosition',
+                     'wxJoystick_HasPOV',
+                     'wxJoystick_HasPOV4Dir',
+                     'wxJoystick_HasPOVCTS',
+                     'wxJoystick_HasRudder',
+                     'wxJoystick_HasU',
+                     'wxJoystick_HasV',
+                     'wxJoystick_HasZ',
+                     'wxJoystick_IsOk',
+                     'wxJoystick_ReleaseCapture',
+                     'wxJoystick_SetCapture',
+                     'wxJoystick_SetMovementThreshold',
+                     'wxLEDNumberCtrl_Create',
+                     'wxLEDNumberCtrl_GetAlignment',
+                     'wxLEDNumberCtrl_GetDrawFaded',
+                     'wxLEDNumberCtrl_GetValue',
+                     'wxLEDNumberCtrl_SetAlignment',
+                     'wxLEDNumberCtrl_SetDrawFaded',
+                     'wxLEDNumberCtrl_SetValue',
+                     'wxMultiCellCanvas_Add',
+                     'wxMultiCellCanvas_CalculateConstraints',
+                     'wxMultiCellCanvas_Create',
+                     'wxMultiCellCanvas_MaxCols',
+                     'wxMultiCellCanvas_MaxRows',
+                     'wxMultiCellCanvas_SetMinCellSize',
+                     'wxMultiCellItemHandle_Create',
+                     'wxMultiCellItemHandle_CreateWithSize',
+                     'wxMultiCellItemHandle_CreateWithStyle',
+                     'wxMultiCellItemHandle_GetAlignment',
+                     'wxMultiCellItemHandle_GetColumn',
+                     'wxMultiCellItemHandle_GetHeight',
+                     'wxMultiCellItemHandle_GetLocalSize',
+                     'wxMultiCellItemHandle_GetRow',
+                     'wxMultiCellItemHandle_GetStyle',
+                     'wxMultiCellItemHandle_GetWeight',
+                     'wxMultiCellItemHandle_GetWidth',
+                     'wxMultiCellSizer_CalcMin',
+                     'wxMultiCellSizer_Create',
+                     'wxMultiCellSizer_Delete',
+                     'wxMultiCellSizer_EnableGridLines',
+                     'wxMultiCellSizer_RecalcSizes',
+                     'wxMultiCellSizer_SetColumnWidth',
+                     'wxMultiCellSizer_SetDefaultCellSize',
+                     'wxMultiCellSizer_SetGridPen',
+                     'wxMultiCellSizer_SetRowHeight',
+                     'wxMutex_Create',
+                     'wxMutex_Delete',
+                     'wxMutex_IsLocked',
+                     'wxMutex_Lock',
+                     'wxMutex_TryLock',
+                     'wxMutex_Unlock',
+                     'wxNewBitmapButton_Create',
+                     'wxNewBitmapButton_CreateFromFile',
+                     'wxNewBitmapButton_Delete',
+                     'wxNewBitmapButton_DrawDecorations',
+                     'wxNewBitmapButton_DrawLabel',
+                     'wxNewBitmapButton_Enable',
+                     'wxNewBitmapButton_Realize',
+                     'wxNewBitmapButton_RenderAllLabelImages',
+                     'wxNewBitmapButton_RenderLabelImage',
+                     'wxNewBitmapButton_RenderLabelImages',
+                     'wxNewBitmapButton_Reshape',
+                     'wxNewBitmapButton_SetAlignments',
+                     'wxNewBitmapButton_SetLabel',
+                     'wxPlotOnOffCurve_Add',
+                     'wxPlotOnOffCurve_Create',
+                     'wxPlotOnOffCurve_Delete',
+                     'wxPlotOnOffCurve_DrawOffLine',
+                     'wxPlotOnOffCurve_DrawOnLine',
+                     'wxPlotOnOffCurve_GetAt',
+                     'wxPlotOnOffCurve_GetClientData',
+                     'wxPlotOnOffCurve_GetCount',
+                     'wxPlotOnOffCurve_GetEndX',
+                     'wxPlotOnOffCurve_GetOff',
+                     'wxPlotOnOffCurve_GetOffsetY',
+                     'wxPlotOnOffCurve_GetOn',
+                     'wxPlotOnOffCurve_GetStartX',
+                     'wxPlotOnOffCurve_SetOffsetY',
+                     'wxPlotWindow_Add',
+                     'wxPlotWindow_AddOnOff',
+                     'wxPlotWindow_Create',
+                     'wxPlotWindow_Delete',
+                     'wxPlotWindow_DeleteOnOff',
+                     'wxPlotWindow_Enlarge',
+                     'wxPlotWindow_GetAt',
+                     'wxPlotWindow_GetCount',
+                     'wxPlotWindow_GetCurrent',
+                     'wxPlotWindow_GetEnlargeAroundWindowCentre',
+                     'wxPlotWindow_GetOnOffCurveAt',
+                     'wxPlotWindow_GetOnOffCurveCount',
+                     'wxPlotWindow_GetScrollOnThumbRelease',
+                     'wxPlotWindow_GetUnitsPerValue',
+                     'wxPlotWindow_GetZoom',
+                     'wxPlotWindow_Move',
+                     'wxPlotWindow_RedrawEverything',
+                     'wxPlotWindow_RedrawXAxis',
+                     'wxPlotWindow_RedrawYAxis',
+                     'wxPlotWindow_ResetScrollbar',
+                     'wxPlotWindow_SetCurrent',
+                     'wxPlotWindow_SetEnlargeAroundWindowCentre',
+                     'wxPlotWindow_SetScrollOnThumbRelease',
+                     'wxPlotWindow_SetUnitsPerValue',
+                     'wxPlotWindow_SetZoom',
+                     'wxPoint_Destroy',
+                     'wxRemotelyScrolledTreeCtrl_AdjustRemoteScrollbars',
+                     'wxRemotelyScrolledTreeCtrl_CalcTreeSize',
+                     'wxRemotelyScrolledTreeCtrl_CalcTreeSizeItem',
+                     'wxRemotelyScrolledTreeCtrl_Create',
+                     'wxRemotelyScrolledTreeCtrl_Delete',
+                     'wxRemotelyScrolledTreeCtrl_GetCompanionWindow',
+                     'wxRemotelyScrolledTreeCtrl_GetScrollPos',
+                     'wxRemotelyScrolledTreeCtrl_GetScrolledWindow',
+                     'wxRemotelyScrolledTreeCtrl_GetViewStart',
+                     'wxRemotelyScrolledTreeCtrl_HideVScrollbar',
+                     'wxRemotelyScrolledTreeCtrl_PrepareDC',
+                     'wxRemotelyScrolledTreeCtrl_ScrollToLine',
+                     'wxRemotelyScrolledTreeCtrl_SetCompanionWindow',
+                     'wxRemotelyScrolledTreeCtrl_SetScrollbars',
+                     'wxSize_Destroy',
+                     'wxSplitterScrolledWindow_Create',
+                     'wxThinSplitterWindow_Create',
+                     'wxThinSplitterWindow_DrawSash',
+                     'wxThinSplitterWindow_SashHitTest',
+                     'wxThinSplitterWindow_SizeWindows',
+                     'wxToolWindow_AddMiniButton',
+                     'wxToolWindow_Create',
+                     'wxToolWindow_GetClient',
+                     'wxToolWindow_SetClient',
+                     'wxToolWindow_SetTitleFont',
+                     'wxTreeCompanionWindow_Create',
+                     'wxTreeCompanionWindow_DrawItem',
+                     'wxTreeCompanionWindow_GetTreeCtrl',
+                     'wxTreeCompanionWindow_SetTreeCtrl',
+                     'wxXmlResource_Delete']
 
 
 if __name__ == '__main__':
