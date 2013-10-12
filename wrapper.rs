@@ -45,7 +45,7 @@ trait ELJApp : wxApp {
         unsafe { ELJApp_ExitMainLoop() }
     }
     #[fixed_stack_segment]
-    fn findWindowById(_id: c_int, _prt: @wxWindow) {
+    fn findWindowById(_id: c_int, _prt: @wxWindow) -> *c_void {
         unsafe { ELJApp_FindWindowById(_id, _prt.handle()) }
     }
     #[fixed_stack_segment]
@@ -291,7 +291,7 @@ trait ELJConnection : wxConnection {
         unsafe { ELJConnection_Poke(self.handle(), item.handle(), data, size, format) }
     }
     #[fixed_stack_segment]
-    fn request(&self, item: @wxString, size: @wxSize, format: c_int) {
+    fn request(&self, item: @wxString, size: @wxSize, format: c_int) -> *c_void {
         unsafe { ELJConnection_Request(self.handle(), item.handle(), size.handle(), format) }
     }
     #[fixed_stack_segment]
@@ -438,7 +438,7 @@ trait ELJGridTable : wxGridTableBase {
         unsafe { @wxViewImpl(ELJGridTable_GetView(self.handle())) as @wxView }
     }
     #[fixed_stack_segment]
-    fn sendTableMessage(&self, id: c_int, val1: c_int, val2: c_int) {
+    fn sendTableMessage(&self, id: c_int, val1: c_int, val2: c_int) -> *c_void {
         unsafe { ELJGridTable_SendTableMessage(self.handle(), id, val1, val2) }
     }
 }
@@ -484,11 +484,11 @@ trait ELJLog : wxLog {
         unsafe { ELJLog_FlushActive(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getActiveTarget() {
+    fn getActiveTarget() -> *c_void {
         unsafe { ELJLog_GetActiveTarget() }
     }
     #[fixed_stack_segment]
-    fn getTimestamp(&self) {
+    fn getTimestamp(&self) -> *c_void {
         unsafe { ELJLog_GetTimestamp(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -524,7 +524,7 @@ trait ELJLog : wxLog {
         unsafe { ELJLog_Resume(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn setActiveTarget(&self) {
+    fn setActiveTarget(&self) -> *c_void {
         unsafe { ELJLog_SetActiveTarget(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -631,7 +631,7 @@ trait ELJPreviewFrame : wxPreviewFrame {
         unsafe { @ELJPreviewFrameImpl(ELJPreviewFrame_Create(_obj, _init, _create_canvas, _create_toolbar, preview, parent.handle(), title, x, y, w, h, style)) as @ELJPreviewFrame }
     }
     #[fixed_stack_segment]
-    fn getControlBar(&self) {
+    fn getControlBar(&self) -> *c_void {
         unsafe { ELJPreviewFrame_GetControlBar(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -996,7 +996,7 @@ impl wxObject for cbCustomizeBarEventImpl { pub fn handle(&self) -> *u8 { **self
 
 trait cbCustomizeBarEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn bar(&self) {
+    fn bar(&self) -> *c_void {
         unsafe { cbCustomizeBarEvent_Bar(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -1043,11 +1043,11 @@ trait cbDimInfo : wxObject {
         unsafe { @cbDimInfoImpl(cbDimInfo_CreateDefault()) as @cbDimInfo }
     }
     #[fixed_stack_segment]
-    fn newWithHandler(&self, isFixed: bool) {
+    fn newWithHandler(&self, isFixed: bool) -> *c_void {
         unsafe { cbDimInfo_CreateWithHandler(self.handle(), isFixed) }
     }
     #[fixed_stack_segment]
-    fn newWithInfo(dh_x: c_int, dh_y: c_int, dv_x: c_int, dv_y: c_int, f_x: c_int, f_y: c_int, isFixed: bool, horizGap: c_int, vertGap: c_int, pDimHandler: *c_void) {
+    fn newWithInfo(dh_x: c_int, dh_y: c_int, dv_x: c_int, dv_y: c_int, f_x: c_int, f_y: c_int, isFixed: bool, horizGap: c_int, vertGap: c_int, pDimHandler: *c_void) -> *c_void {
         unsafe { cbDimInfo_CreateWithInfo(dh_x, dh_y, dv_x, dv_y, f_x, f_y, isFixed, horizGap, vertGap, pDimHandler) }
     }
     #[fixed_stack_segment]
@@ -1055,7 +1055,7 @@ trait cbDimInfo : wxObject {
         unsafe { cbDimInfo_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getDimHandler(&self) {
+    fn getDimHandler(&self) -> *c_void {
         unsafe { cbDimInfo_GetDimHandler(self.handle()) }
     }
 }
@@ -1098,7 +1098,7 @@ trait cbDockPane : wxObject {
         unsafe { cbDockPane_GetAlignment(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getBarInfoByWindow(&self, pBarWnd: *c_void) {
+    fn getBarInfoByWindow(&self, pBarWnd: *c_void) -> *c_void {
         unsafe { cbDockPane_GetBarInfoByWindow(self.handle(), pBarWnd) }
     }
     #[fixed_stack_segment]
@@ -1110,7 +1110,7 @@ trait cbDockPane : wxObject {
         unsafe { cbDockPane_GetDockingState(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getFirstRow(&self) {
+    fn getFirstRow(&self) -> *c_void {
         unsafe { cbDockPane_GetFirstRow(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -1187,7 +1187,7 @@ impl wxObject for cbDrawBarDecorEventImpl { pub fn handle(&self) -> *u8 { **self
 
 trait cbDrawBarDecorEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn bar(&self) {
+    fn bar(&self) -> *c_void {
         unsafe { cbDrawBarDecorEvent_Bar(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -1195,7 +1195,7 @@ trait cbDrawBarDecorEvent : cbPluginEvent {
         unsafe { cbDrawBarDecorEvent_BoundsInParent(self.handle(), _x, _y, _w, _h) }
     }
     #[fixed_stack_segment]
-    fn dc(&self) {
+    fn dc(&self) -> *c_void {
         unsafe { cbDrawBarDecorEvent_Dc(self.handle()) }
     }
 }
@@ -1208,11 +1208,11 @@ impl wxObject for cbDrawBarHandlesEventImpl { pub fn handle(&self) -> *u8 { **se
 
 trait cbDrawBarHandlesEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn bar(&self) {
+    fn bar(&self) -> *c_void {
         unsafe { cbDrawBarHandlesEvent_Bar(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn dc(&self) {
+    fn dc(&self) -> *c_void {
         unsafe { cbDrawBarHandlesEvent_Dc(self.handle()) }
     }
 }
@@ -1250,7 +1250,7 @@ impl wxObject for cbDrawPaneBkGroundEventImpl { pub fn handle(&self) -> *u8 { **
 
 trait cbDrawPaneBkGroundEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn dc(&self) {
+    fn dc(&self) -> *c_void {
         unsafe { cbDrawPaneBkGroundEvent_Dc(self.handle()) }
     }
 }
@@ -1263,7 +1263,7 @@ impl wxObject for cbDrawPaneDecorEventImpl { pub fn handle(&self) -> *u8 { **sel
 
 trait cbDrawPaneDecorEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn dc(&self) {
+    fn dc(&self) -> *c_void {
         unsafe { cbDrawPaneDecorEvent_Dc(self.handle()) }
     }
 }
@@ -1276,11 +1276,11 @@ impl wxObject for cbDrawRowBkGroundEventImpl { pub fn handle(&self) -> *u8 { **s
 
 trait cbDrawRowBkGroundEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn dc(&self) {
+    fn dc(&self) -> *c_void {
         unsafe { cbDrawRowBkGroundEvent_Dc(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn row(&self) {
+    fn row(&self) -> *c_void {
         unsafe { cbDrawRowBkGroundEvent_Row(self.handle()) }
     }
 }
@@ -1293,11 +1293,11 @@ impl wxObject for cbDrawRowDecorEventImpl { pub fn handle(&self) -> *u8 { **self
 
 trait cbDrawRowDecorEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn dc(&self) {
+    fn dc(&self) -> *c_void {
         unsafe { cbDrawRowDecorEvent_Dc(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn row(&self) {
+    fn row(&self) -> *c_void {
         unsafe { cbDrawRowDecorEvent_Row(self.handle()) }
     }
 }
@@ -1310,11 +1310,11 @@ impl wxObject for cbDrawRowHandlesEventImpl { pub fn handle(&self) -> *u8 { **se
 
 trait cbDrawRowHandlesEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn dc(&self) {
+    fn dc(&self) -> *c_void {
         unsafe { cbDrawRowHandlesEvent_Dc(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn row(&self) {
+    fn row(&self) -> *c_void {
         unsafe { cbDrawRowHandlesEvent_Row(self.handle()) }
     }
 }
@@ -1363,7 +1363,7 @@ trait cbFloatedBarWindow : wxToolWindow {
         unsafe { @cbFloatedBarWindowImpl(cbFloatedBarWindow_Create(_obj)) as @cbFloatedBarWindow }
     }
     #[fixed_stack_segment]
-    fn getBar(&self) {
+    fn getBar(&self) -> *c_void {
         unsafe { cbFloatedBarWindow_GetBar(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -1434,11 +1434,11 @@ impl wxObject for cbInsertBarEventImpl { pub fn handle(&self) -> *u8 { **self } 
 
 trait cbInsertBarEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn bar(&self) {
+    fn bar(&self) -> *c_void {
         unsafe { cbInsertBarEvent_Bar(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn row(&self) {
+    fn row(&self) -> *c_void {
         unsafe { cbInsertBarEvent_Row(self.handle()) }
     }
 }
@@ -1451,7 +1451,7 @@ impl wxObject for cbLayoutRowEventImpl { pub fn handle(&self) -> *u8 { **self } 
 
 trait cbLayoutRowEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn row(&self) {
+    fn row(&self) -> *c_void {
         unsafe { cbLayoutRowEvent_Row(self.handle()) }
     }
 }
@@ -1533,15 +1533,15 @@ trait cbMiniButton : wxObject {
         unsafe { cbMiniButton_IsPressed(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn layout(&self) {
+    fn layout(&self) -> *c_void {
         unsafe { cbMiniButton_Layout(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn pane(&self) {
+    fn pane(&self) -> *c_void {
         unsafe { cbMiniButton_Pane(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn plugin(&self) {
+    fn plugin(&self) -> *c_void {
         unsafe { cbMiniButton_Plugin(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -1573,7 +1573,7 @@ trait cbMiniButton : wxObject {
         unsafe { cbMiniButton_WasClicked(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn wnd(&self) {
+    fn wnd(&self) -> *c_void {
         unsafe { cbMiniButton_Wnd(self.handle()) }
     }
 }
@@ -1631,7 +1631,7 @@ trait cbPluginBase : wxEvtHandler {
         unsafe { cbPluginBase_IsReady(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn plugin(_swt: c_int) {
+    fn plugin(_swt: c_int) -> *c_void {
         unsafe { cbPluginBase_Plugin(_swt) }
     }
     #[fixed_stack_segment]
@@ -1647,7 +1647,7 @@ impl wxObject for cbPluginEventImpl { pub fn handle(&self) -> *u8 { **self } }
 
 trait cbPluginEvent : wxEvent {
     #[fixed_stack_segment]
-    fn pane(&self) {
+    fn pane(&self) -> *c_void {
         unsafe { cbPluginEvent_Pane(self.handle()) }
     }
 }
@@ -1660,7 +1660,7 @@ impl wxObject for cbRemoveBarEventImpl { pub fn handle(&self) -> *u8 { **self } 
 
 trait cbRemoveBarEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn bar(&self) {
+    fn bar(&self) -> *c_void {
         unsafe { cbRemoveBarEvent_Bar(self.handle()) }
     }
 }
@@ -1673,11 +1673,11 @@ impl wxObject for cbResizeBarEventImpl { pub fn handle(&self) -> *u8 { **self } 
 
 trait cbResizeBarEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn bar(&self) {
+    fn bar(&self) -> *c_void {
         unsafe { cbResizeBarEvent_Bar(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn row(&self) {
+    fn row(&self) -> *c_void {
         unsafe { cbResizeBarEvent_Row(self.handle()) }
     }
 }
@@ -1698,7 +1698,7 @@ trait cbResizeRowEvent : cbPluginEvent {
         unsafe { cbResizeRowEvent_HandleOfs(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn row(&self) {
+    fn row(&self) -> *c_void {
         unsafe { cbResizeRowEvent_Row(self.handle()) }
     }
 }
@@ -1764,7 +1764,7 @@ trait cbRowInfo : wxObject {
         unsafe { cbRowInfo_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getFirstBar(&self) {
+    fn getFirstBar(&self) -> *c_void {
         unsafe { cbRowInfo_GetFirstBar(self.handle()) }
     }
 }
@@ -1827,7 +1827,7 @@ impl wxObject for cbSizeBarWndEventImpl { pub fn handle(&self) -> *u8 { **self }
 
 trait cbSizeBarWndEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn bar(&self) {
+    fn bar(&self) -> *c_void {
         unsafe { cbSizeBarWndEvent_Bar(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -1844,7 +1844,7 @@ impl wxObject for cbStartBarDraggingEventImpl { pub fn handle(&self) -> *u8 { **
 
 trait cbStartBarDraggingEvent : cbPluginEvent {
     #[fixed_stack_segment]
-    fn bar(&self) {
+    fn bar(&self) -> *c_void {
         unsafe { cbStartBarDraggingEvent_Bar(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -2029,15 +2029,15 @@ trait wxBitmap : wxGDIObject {
         unsafe { wxBitmap_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn findHandlerByExtension(&self, type_: c_int) {
+    fn findHandlerByExtension(&self, type_: c_int) -> *c_void {
         unsafe { wxBitmap_FindHandlerByExtension(self.handle(), type_) }
     }
     #[fixed_stack_segment]
-    fn findHandlerByName(name: @wxString) {
+    fn findHandlerByName(name: @wxString) -> *c_void {
         unsafe { wxBitmap_FindHandlerByName(name.handle()) }
     }
     #[fixed_stack_segment]
-    fn findHandlerByType(type_: c_int) {
+    fn findHandlerByType(type_: c_int) -> *c_void {
         unsafe { wxBitmap_FindHandlerByType(type_) }
     }
     #[fixed_stack_segment]
@@ -2396,7 +2396,7 @@ trait wxBusyCursor {
         unsafe { @wxBusyCursorImpl(wxBusyCursor_Create()) as @wxBusyCursor }
     }
     #[fixed_stack_segment]
-    fn newWithCursor(&self) {
+    fn newWithCursor(&self) -> *c_void {
         unsafe { wxBusyCursor_CreateWithCursor(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -2499,7 +2499,7 @@ trait wxCalendarCtrl : wxControl {
         unsafe { wxCalendarCtrl_EnableMonthChange(self.handle(), enable) }
     }
     #[fixed_stack_segment]
-    fn getAttr(&self, day: c_int) {
+    fn getAttr(&self, day: c_int) -> *c_void {
         unsafe { wxCalendarCtrl_GetAttr(self.handle(), day) }
     }
     #[fixed_stack_segment]
@@ -2835,11 +2835,11 @@ trait wxClassInfo {
     fn handle(&self) -> *u8;
     
     #[fixed_stack_segment]
-    fn newClassByName(&self) {
+    fn newClassByName(&self) -> *c_void {
         unsafe { wxClassInfo_CreateClassByName(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getClassName(&self) {
+    fn getClassName(&self) -> *c_void {
         unsafe { wxClassInfo_GetClassName(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -3017,7 +3017,7 @@ trait wxClosure : wxObject {
         unsafe { @wxClosureImpl(wxClosure_Create(_fun_CEvent, _data)) as @wxClosure }
     }
     #[fixed_stack_segment]
-    fn getData(&self) {
+    fn getData(&self) -> *c_void {
         unsafe { wxClosure_GetData(self.handle()) }
     }
 }
@@ -3403,7 +3403,7 @@ trait wxCommandProcessor : wxObject {
         unsafe { wxCommandProcessor_GetCommands(self.handle(), _ref) }
     }
     #[fixed_stack_segment]
-    fn getEditMenu(&self) {
+    fn getEditMenu(&self) -> *c_void {
         unsafe { wxCommandProcessor_GetEditMenu(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -3435,7 +3435,7 @@ trait wxCommandProcessor : wxObject {
         unsafe { wxCommandProcessor_Undo(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn wxCommandProcessor(maxCommands: c_int) {
+    fn wxCommandProcessor(maxCommands: c_int) -> *c_void {
         unsafe { wxCommandProcessor_wxCommandProcessor(maxCommands) }
     }
 }
@@ -4535,23 +4535,23 @@ trait wxDateTime {
         unsafe { wxDateTime_Now(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn parseDate(&self, date: *c_void) {
+    fn parseDate(&self, date: *c_void) -> *c_void {
         unsafe { wxDateTime_ParseDate(self.handle(), date) }
     }
     #[fixed_stack_segment]
-    fn parseDateTime(&self, datetime: *c_void) {
+    fn parseDateTime(&self, datetime: *c_void) -> *c_void {
         unsafe { wxDateTime_ParseDateTime(self.handle(), datetime) }
     }
     #[fixed_stack_segment]
-    fn parseFormat(&self, date: *c_void, format: *c_void, dateDef: *c_void) {
+    fn parseFormat(&self, date: *c_void, format: *c_void, dateDef: *c_void) -> *c_void {
         unsafe { wxDateTime_ParseFormat(self.handle(), date, format, dateDef) }
     }
     #[fixed_stack_segment]
-    fn parseRfc822Date(&self, date: *c_void) {
+    fn parseRfc822Date(&self, date: *c_void) -> *c_void {
         unsafe { wxDateTime_ParseRfc822Date(self.handle(), date) }
     }
     #[fixed_stack_segment]
-    fn parseTime(&self, time: @wxTime) {
+    fn parseTime(&self, time: @wxTime) -> *c_void {
         unsafe { wxDateTime_ParseTime(self.handle(), time.handle()) }
     }
     #[fixed_stack_segment]
@@ -4651,7 +4651,7 @@ trait wxDateTime {
         unsafe { wxDateTime_UNow(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn wxDateTime(hi_long: c_int, lo_long: c_int) {
+    fn wxDateTime(hi_long: c_int, lo_long: c_int) -> *c_void {
         unsafe { wxDateTime_wxDateTime(hi_long, lo_long) }
     }
     #[fixed_stack_segment]
@@ -5095,7 +5095,7 @@ trait wxDynToolInfo : wxToolLayoutItem {
         unsafe { wxDynToolInfo_RealSize(self.handle(), _w, _h) }
     }
     #[fixed_stack_segment]
-    fn pToolWnd(&self) {
+    fn pToolWnd(&self) -> *c_void {
         unsafe { wxDynToolInfo_pToolWnd(self.handle()) }
     }
 }
@@ -5124,11 +5124,11 @@ trait wxDynamicSashWindow : wxWindow {
         unsafe { wxDynamicSashWindow_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getHScrollBar(&self, child: @wxWindow) {
+    fn getHScrollBar(&self, child: @wxWindow) -> *c_void {
         unsafe { wxDynamicSashWindow_GetHScrollBar(self.handle(), child.handle()) }
     }
     #[fixed_stack_segment]
-    fn getVScrollBar(&self, child: @wxWindow) {
+    fn getVScrollBar(&self, child: @wxWindow) -> *c_void {
         unsafe { wxDynamicSashWindow_GetVScrollBar(self.handle(), child.handle()) }
     }
 }
@@ -5151,7 +5151,7 @@ trait wxDynamicToolBar : wxToolBarBase {
         unsafe { wxDynamicToolBar_AddTool(self.handle(), toolIndex, pToolWindow, w, h) }
     }
     #[fixed_stack_segment]
-    fn addToolBitmap(&self, toolIndex: c_int, bitmap: @wxBitmap, pushedBitmap: *c_void, toggle: c_int, x: c_int, y: c_int, clientData: @wxClientData, helpString1: *c_void, helpString2: *c_void) {
+    fn addToolBitmap(&self, toolIndex: c_int, bitmap: @wxBitmap, pushedBitmap: *c_void, toggle: c_int, x: c_int, y: c_int, clientData: @wxClientData, helpString1: *c_void, helpString2: *c_void) -> *c_void {
         unsafe { wxDynamicToolBar_AddToolBitmap(self.handle(), toolIndex, bitmap.handle(), pushedBitmap, toggle, x, y, clientData.handle(), helpString1, helpString2) }
     }
     #[fixed_stack_segment]
@@ -5171,7 +5171,7 @@ trait wxDynamicToolBar : wxToolBarBase {
         unsafe { @wxDynamicToolBarImpl(wxDynamicToolBar_CreateDefault()) as @wxDynamicToolBar }
     }
     #[fixed_stack_segment]
-    fn newDefaultLayout(&self) {
+    fn newDefaultLayout(&self) -> *c_void {
         unsafe { wxDynamicToolBar_CreateDefaultLayout(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -5179,11 +5179,11 @@ trait wxDynamicToolBar : wxToolBarBase {
         unsafe { wxDynamicToolBar_CreateParams(self.handle(), parent.handle(), id, x, y, w, h, style, orientation, RowsOrColumns) }
     }
     #[fixed_stack_segment]
-    fn newTool(&self, id: c_int, label: *c_void, bmpNormal: *c_void, bmpDisabled: *c_void, kind: c_int, clientData: @wxClientData, shortHelp: *c_void, longHelp: *c_void) {
+    fn newTool(&self, id: c_int, label: *c_void, bmpNormal: *c_void, bmpDisabled: *c_void, kind: c_int, clientData: @wxClientData, shortHelp: *c_void, longHelp: *c_void) -> *c_void {
         unsafe { wxDynamicToolBar_CreateTool(self.handle(), id, label, bmpNormal, bmpDisabled, kind, clientData.handle(), shortHelp, longHelp) }
     }
     #[fixed_stack_segment]
-    fn newToolControl(&self, control: @wxControl) {
+    fn newToolControl(&self, control: @wxControl) -> *c_void {
         unsafe { wxDynamicToolBar_CreateToolControl(self.handle(), control.handle()) }
     }
     #[fixed_stack_segment]
@@ -5219,7 +5219,7 @@ trait wxDynamicToolBar : wxToolBarBase {
         unsafe { wxDynamicToolBar_EnableTool(self.handle(), toolIndex, enable) }
     }
     #[fixed_stack_segment]
-    fn findToolForPosition(&self, x: c_int, y: c_int) {
+    fn findToolForPosition(&self, x: c_int, y: c_int) -> *c_void {
         unsafe { wxDynamicToolBar_FindToolForPosition(self.handle(), x, y) }
     }
     #[fixed_stack_segment]
@@ -5227,7 +5227,7 @@ trait wxDynamicToolBar : wxToolBarBase {
         unsafe { wxDynamicToolBar_GetPreferredDim(self.handle(), gw, gh, pw, ph) }
     }
     #[fixed_stack_segment]
-    fn getToolInfo(&self, toolIndex: c_int) {
+    fn getToolInfo(&self, toolIndex: c_int) -> *c_void {
         unsafe { wxDynamicToolBar_GetToolInfo(self.handle(), toolIndex) }
     }
     #[fixed_stack_segment]
@@ -5257,15 +5257,15 @@ trait wxEditableListBox : wxPanel {
         unsafe { @wxEditableListBoxImpl(wxEditableListBox_Create(parent.handle(), id, label, x, y, w, h, style)) as @wxEditableListBox }
     }
     #[fixed_stack_segment]
-    fn getDelButton(&self) {
+    fn getDelButton(&self) -> *c_void {
         unsafe { wxEditableListBox_GetDelButton(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getDownButton(&self) {
+    fn getDownButton(&self) -> *c_void {
         unsafe { wxEditableListBox_GetDownButton(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getEditButton(&self) {
+    fn getEditButton(&self) -> *c_void {
         unsafe { wxEditableListBox_GetEditButton(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -5273,7 +5273,7 @@ trait wxEditableListBox : wxPanel {
         unsafe { @wxListCtrlImpl(wxEditableListBox_GetListCtrl(self.handle())) as @wxListCtrl }
     }
     #[fixed_stack_segment]
-    fn getNewButton(&self) {
+    fn getNewButton(&self) -> *c_void {
         unsafe { wxEditableListBox_GetNewButton(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -5281,7 +5281,7 @@ trait wxEditableListBox : wxPanel {
         unsafe { wxEditableListBox_GetStrings(self.handle(), _ref) }
     }
     #[fixed_stack_segment]
-    fn getUpButton(&self) {
+    fn getUpButton(&self) -> *c_void {
         unsafe { wxEditableListBox_GetUpButton(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -6310,15 +6310,15 @@ trait wxFrameLayout : wxEvtHandler {
         unsafe { wxFrameLayout_EnableFloating(self.handle(), enable) }
     }
     #[fixed_stack_segment]
-    fn findBarByName(&self, name: *wchar_t) {
+    fn findBarByName(&self, name: *wchar_t) -> *c_void {
         unsafe { wxFrameLayout_FindBarByName(self.handle(), name) }
     }
     #[fixed_stack_segment]
-    fn findBarByWindow(&self, pWnd: *c_void) {
+    fn findBarByWindow(&self, pWnd: *c_void) -> *c_void {
         unsafe { wxFrameLayout_FindBarByWindow(self.handle(), pWnd) }
     }
     #[fixed_stack_segment]
-    fn findPlugin(&self, pPlInfo: *c_void) {
+    fn findPlugin(&self, pPlInfo: *c_void) -> *c_void {
         unsafe { wxFrameLayout_FindPlugin(self.handle(), pPlInfo) }
     }
     #[fixed_stack_segment]
@@ -6342,11 +6342,11 @@ trait wxFrameLayout : wxEvtHandler {
         unsafe { wxFrameLayout_GetClientWidth(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getFrameClient(&self) {
+    fn getFrameClient(&self) -> *c_void {
         unsafe { wxFrameLayout_GetFrameClient(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getPane(&self, alignment: c_int) {
+    fn getPane(&self, alignment: c_int) -> *c_void {
         unsafe { wxFrameLayout_GetPane(self.handle(), alignment) }
     }
     #[fixed_stack_segment]
@@ -6354,15 +6354,15 @@ trait wxFrameLayout : wxEvtHandler {
         unsafe { wxFrameLayout_GetPaneProperties(self.handle(), props, alignment) }
     }
     #[fixed_stack_segment]
-    fn getParentFrame(&self) {
+    fn getParentFrame(&self) -> *c_void {
         unsafe { wxFrameLayout_GetParentFrame(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getTopPlugin(&self) {
+    fn getTopPlugin(&self) -> *c_void {
         unsafe { wxFrameLayout_GetTopPlugin(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getUpdatesManager(&self) {
+    fn getUpdatesManager(&self) -> *c_void {
         unsafe { wxFrameLayout_GetUpdatesManager(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -8051,7 +8051,7 @@ trait wxHtmlHelpController : wxHelpControllerBase {
         unsafe { @wxFrameImpl(wxHtmlHelpController_GetFrame(self.handle())) as @wxFrame }
     }
     #[fixed_stack_segment]
-    fn getFrameParameters(&self, title: *c_void, width: *c_int, height: *c_int, pos_x: *c_int, pos_y: *c_int, newFrameEachTime: *c_int) {
+    fn getFrameParameters(&self, title: *c_void, width: *c_int, height: *c_int, pos_x: *c_int, pos_y: *c_int, newFrameEachTime: *c_int) -> *c_void {
         unsafe { wxHtmlHelpController_GetFrameParameters(self.handle(), title, width, height, pos_x, pos_y, newFrameEachTime) }
     }
     #[fixed_stack_segment]
@@ -8468,11 +8468,11 @@ trait wxImage : wxObject {
         unsafe { @wxImageImpl(wxImage_CreateFromBitmap(bitmap.handle())) as @wxImage }
     }
     #[fixed_stack_segment]
-    fn newFromByteString(data: **c_char, length: c_int, type_: c_int) -> @wxImage {
+    fn newFromByteString(data: **char, length: c_int, type_: c_int) -> @wxImage {
         unsafe { @wxImageImpl(wxImage_CreateFromByteString(data, length, type_)) as @wxImage }
     }
     #[fixed_stack_segment]
-    fn newFromLazyByteString(data: **c_char, length: c_int, type_: c_int) -> @wxImage {
+    fn newFromLazyByteString(data: **char, length: c_int, type_: c_int) -> @wxImage {
         unsafe { @wxImageImpl(wxImage_CreateFromLazyByteString(data, length, type_)) as @wxImage }
     }
     #[fixed_stack_segment]
@@ -8496,7 +8496,7 @@ trait wxImage : wxObject {
         unsafe { wxImage_GetBlue(self.handle(), x, y) }
     }
     #[fixed_stack_segment]
-    fn getData(&self) {
+    fn getData(&self) -> *c_void {
         unsafe { wxImage_GetData(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -8737,7 +8737,7 @@ trait wxIndividualLayoutConstraint : wxObject {
         unsafe { wxIndividualLayoutConstraint_GetOtherEdge(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getOtherWindow(&self) {
+    fn getOtherWindow(&self) -> *c_void {
         unsafe { wxIndividualLayoutConstraint_GetOtherWindow(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -9255,35 +9255,35 @@ trait wxLayoutConstraints : wxObject {
         unsafe { @wxLayoutConstraintsImpl(wxLayoutConstraints_Create()) as @wxLayoutConstraints }
     }
     #[fixed_stack_segment]
-    fn bottom(&self) {
+    fn bottom(&self) -> *c_void {
         unsafe { wxLayoutConstraints_bottom(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn centreX(&self) {
+    fn centreX(&self) -> *c_void {
         unsafe { wxLayoutConstraints_centreX(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn centreY(&self) {
+    fn centreY(&self) -> *c_void {
         unsafe { wxLayoutConstraints_centreY(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn height(&self) {
+    fn height(&self) -> *c_void {
         unsafe { wxLayoutConstraints_height(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn left(&self) {
+    fn left(&self) -> *c_void {
         unsafe { wxLayoutConstraints_left(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn right(&self) {
+    fn right(&self) -> *c_void {
         unsafe { wxLayoutConstraints_right(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn top(&self) {
+    fn top(&self) -> *c_void {
         unsafe { wxLayoutConstraints_top(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn width(&self) {
+    fn width(&self) -> *c_void {
         unsafe { wxLayoutConstraints_width(self.handle()) }
     }
 }
@@ -9731,7 +9731,7 @@ trait wxListItem : wxObject {
         unsafe { wxListItem_GetAlign(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getAttributes(&self) {
+    fn getAttributes(&self) -> *c_void {
         unsafe { wxListItem_GetAttributes(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -9915,7 +9915,7 @@ trait wxLog {
         unsafe { @wxLogImpl(wxLog_GetActiveTarget()) as @wxLog }
     }
     #[fixed_stack_segment]
-    fn getTimestamp(&self) -> *c_char {
+    fn getTimestamp(&self) -> *char {
         unsafe { wxLog_GetTimestamp(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -10205,7 +10205,7 @@ trait wxMask : wxObject {
         unsafe { @wxMaskImpl(wxMask_Create(bitmap.handle())) as @wxMask }
     }
     #[fixed_stack_segment]
-    fn newColoured(bitmap: @wxBitmap, colour: @wxColour) {
+    fn newColoured(bitmap: @wxBitmap, colour: @wxColour) -> *c_void {
         unsafe { wxMask_CreateColoured(bitmap.handle(), colour.handle()) }
     }
 }
@@ -10738,7 +10738,7 @@ impl wxObject for wxMetafileDCImpl { pub fn handle(&self) -> *u8 { **self } }
 
 trait wxMetafileDC : wxDC {
     #[fixed_stack_segment]
-    fn close(&self) {
+    fn close(&self) -> *c_void {
         unsafe { wxMetafileDC_Close(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -11033,11 +11033,11 @@ trait wxMultiCellItemHandle : wxObject {
         unsafe { @wxMultiCellItemHandleImpl(wxMultiCellItemHandle_Create(row, column, height, width, sx, sy, style, wx, wy, align)) as @wxMultiCellItemHandle }
     }
     #[fixed_stack_segment]
-    fn newWithSize(&self, row: c_int, column: c_int, sx: c_int, sy: c_int, style: c_int, wx: c_int, wy: c_int, align: c_int) {
+    fn newWithSize(&self, row: c_int, column: c_int, sx: c_int, sy: c_int, style: c_int, wx: c_int, wy: c_int, align: c_int) -> *c_void {
         unsafe { wxMultiCellItemHandle_CreateWithSize(self.handle(), row, column, sx, sy, style, wx, wy, align) }
     }
     #[fixed_stack_segment]
-    fn newWithStyle(&self, row: c_int, column: c_int, style: c_int, wx: c_int, wy: c_int, align: c_int) {
+    fn newWithStyle(&self, row: c_int, column: c_int, style: c_int, wx: c_int, wy: c_int, align: c_int) -> *c_void {
         unsafe { wxMultiCellItemHandle_CreateWithStyle(self.handle(), row, column, style, wx, wy, align) }
     }
     #[fixed_stack_segment]
@@ -11165,7 +11165,7 @@ impl wxObject for wxNavigationKeyEventImpl { pub fn handle(&self) -> *u8 { **sel
 
 trait wxNavigationKeyEvent : wxEvent {
     #[fixed_stack_segment]
-    fn getCurrentFocus(&self) {
+    fn getCurrentFocus(&self) -> *c_void {
         unsafe { wxNavigationKeyEvent_GetCurrentFocus(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -11722,7 +11722,7 @@ trait wxPaletteChangedEvent : wxEvent {
         unsafe { wxPaletteChangedEvent_CopyObject(self.handle(), obj) }
     }
     #[fixed_stack_segment]
-    fn getChangedWindow(&self) {
+    fn getChangedWindow(&self) -> *c_void {
         unsafe { wxPaletteChangedEvent_GetChangedWindow(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -11892,7 +11892,7 @@ impl wxObject for wxPlotEventImpl { pub fn handle(&self) -> *u8 { **self } }
 
 trait wxPlotEvent : wxNotifyEvent {
     #[fixed_stack_segment]
-    fn getCurve(&self) {
+    fn getCurve(&self) -> *c_void {
         unsafe { wxPlotEvent_GetCurve(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -11939,7 +11939,7 @@ trait wxPlotOnOffCurve : wxObject {
         unsafe { wxPlotOnOffCurve_DrawOnLine(self.handle(), dc.handle(), y, start, end, clientData.handle()) }
     }
     #[fixed_stack_segment]
-    fn getAt(&self, index: c_int) {
+    fn getAt(&self, index: c_int) -> *c_void {
         unsafe { wxPlotOnOffCurve_GetAt(self.handle(), index) }
     }
     #[fixed_stack_segment]
@@ -13287,7 +13287,7 @@ trait wxRemotelyScrolledTreeCtrl : wxTreeCtrl {
         unsafe { wxRemotelyScrolledTreeCtrl_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getCompanionWindow(&self) {
+    fn getCompanionWindow(&self) -> *c_void {
         unsafe { wxRemotelyScrolledTreeCtrl_GetCompanionWindow(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -14109,11 +14109,11 @@ trait wxSizerItem : wxObject {
         unsafe { @wxSizerItemImpl(wxSizerItem_Create(width, height, option, flag, border, userData)) as @wxSizerItem }
     }
     #[fixed_stack_segment]
-    fn newInSizer(sizer: @wxSizer, option: c_int, flag: c_int, border: c_int, userData: *c_void) {
+    fn newInSizer(sizer: @wxSizer, option: c_int, flag: c_int, border: c_int, userData: *c_void) -> *c_void {
         unsafe { wxSizerItem_CreateInSizer(sizer.handle(), option, flag, border, userData) }
     }
     #[fixed_stack_segment]
-    fn newInWindow(window: @wxWindow, option: c_int, flag: c_int, border: c_int, userData: *c_void) {
+    fn newInWindow(window: @wxWindow, option: c_int, flag: c_int, border: c_int, userData: *c_void) -> *c_void {
         unsafe { wxSizerItem_CreateInWindow(window.handle(), option, flag, border, userData) }
     }
     #[fixed_stack_segment]
@@ -14145,7 +14145,7 @@ trait wxSizerItem : wxObject {
         unsafe { @wxSizerImpl(wxSizerItem_GetSizer(self.handle())) as @wxSizer }
     }
     #[fixed_stack_segment]
-    fn getUserData(&self) {
+    fn getUserData(&self) -> *c_void {
         unsafe { wxSizerItem_GetUserData(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -15963,7 +15963,7 @@ trait wxTreeCtrl : wxControl {
         unsafe { wxTreeCtrl_GetIndent(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getItemData(&self, item: @wxTreeItemId) {
+    fn getItemData(&self, item: @wxTreeItemId) -> *c_void {
         unsafe { wxTreeCtrl_GetItemData(self.handle(), item.handle()) }
     }
     #[fixed_stack_segment]
@@ -16552,7 +16552,7 @@ trait wxWindow : wxEvtHandler {
         unsafe { @wxLayoutConstraintsImpl(wxWindow_GetConstraints(self.handle())) as @wxLayoutConstraints }
     }
     #[fixed_stack_segment]
-    fn getConstraintsInvolvedIn(&self) {
+    fn getConstraintsInvolvedIn(&self) -> *c_void {
         unsafe { wxWindow_GetConstraintsInvolvedIn(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -16576,7 +16576,7 @@ trait wxWindow : wxEvtHandler {
         unsafe { wxWindow_GetForegroundColour(self.handle(), _ref) }
     }
     #[fixed_stack_segment]
-    fn getHandle(&self) {
+    fn getHandle(&self) -> *c_void {
         unsafe { wxWindow_GetHandle(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -16736,7 +16736,7 @@ trait wxWindow : wxEvtHandler {
         unsafe { wxWindow_MoveConstraint(self.handle(), x, y) }
     }
     #[fixed_stack_segment]
-    fn popEventHandler(&self, deleteHandler: bool) {
+    fn popEventHandler(&self, deleteHandler: bool) -> *c_void {
         unsafe { wxWindow_PopEventHandler(self.handle(), deleteHandler) }
     }
     #[fixed_stack_segment]
@@ -17694,7 +17694,7 @@ trait wxGraphicsContext : wxGraphicsObject {
         unsafe { wxGraphicsContext_StrokePath(self.handle(), path.handle()) }
     }
     #[fixed_stack_segment]
-    fn getNativeContext(&self) {
+    fn getNativeContext(&self) -> *c_void {
         unsafe { wxGraphicsContext_GetNativeContext(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -17794,7 +17794,7 @@ trait wxGraphicsMatrix : wxGraphicsObject {
         unsafe { wxGraphicsMatrix_Get(self.handle(), a, b, c, d, tx, ty) }
     }
     #[fixed_stack_segment]
-    fn getNativeMatrix(&self) {
+    fn getNativeMatrix(&self) -> *c_void {
         unsafe { wxGraphicsMatrix_GetNativeMatrix(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -17914,7 +17914,7 @@ trait wxGraphicsPath : wxGraphicsObject {
         unsafe { wxGraphicsPath_Transform(self.handle(), matrix.handle()) }
     }
     #[fixed_stack_segment]
-    fn getNativePath(&self) {
+    fn getNativePath(&self) -> *c_void {
         unsafe { wxGraphicsPath_GetNativePath(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -17997,7 +17997,7 @@ trait wxManagedPtr {
     fn handle(&self) -> *u8;
     
     #[fixed_stack_segment]
-    fn getPtr(&self) {
+    fn getPtr(&self) -> *c_void {
         unsafe { wxManagedPtr_GetPtr(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -18013,7 +18013,7 @@ trait wxManagedPtr {
         unsafe { wxManagedPtr_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getDeleteFunction() {
+    fn getDeleteFunction() -> *c_void {
         unsafe { wxManagedPtr_GetDeleteFunction() }
     }
     #[fixed_stack_segment]
@@ -18514,7 +18514,7 @@ trait wxStyledTextCtrl : wxControl {
         unsafe { wxStyledTextCtrl_CmdKeyClearAll(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn setStyleBytes(&self, length: c_int, styleBytes: *c_char) {
+    fn setStyleBytes(&self, length: c_int, styleBytes: *char) {
         unsafe { wxStyledTextCtrl_SetStyleBytes(self.handle(), length, styleBytes) }
     }
     #[fixed_stack_segment]
@@ -19854,7 +19854,7 @@ trait wxInputSinkEvent : wxEvent {
         unsafe { wxInputSinkEvent_LastRead(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn lastInput(&self) -> *c_char {
+    fn lastInput(&self) -> *char {
         unsafe { wxInputSinkEvent_LastInput(self.handle()) }
     }
 }

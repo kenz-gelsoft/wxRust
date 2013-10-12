@@ -411,7 +411,7 @@ type_mapping = {
     'TStringVoid':         '*wchar_t',
     'TUInt':               'uint32_t',
     'TUInt8':              'uint8_t',
-    'char':                'c_char',
+#    'char':                'c_char',
     'double':              'c_double',
     'float':               'c_float',
     'int':                 'c_int',
@@ -424,12 +424,18 @@ class Type(object):
         self.__node = node
 
     @property
+    def head(self):
+        if self.is_complex:
+            return self.__node[0]
+        return self.__node
+
+    @property
     def is_complex(self):
         return not isinstance(self.__node, basestring)
     
     @property
     def is_self(self):
-        return self.is_complex and self.__node[0] == 'TSelf'
+        return self.is_complex and self.head == 'TSelf'
     
     @property
     def inner(self):
@@ -439,15 +445,17 @@ class Type(object):
     
     @property
     def is_void(self):
-        return self.inner == 'void'
+#        print self.head
+#        sys.exit()
+        return self.head == 'void'
     
     @property
     def is_class(self):
-        return self.is_complex and self.__node[0] == 'TClass'
+        return self.is_complex and self.head == 'TClass'
     
     @property
     def is_ptr(self):
-        return self.is_complex and self.__node[0] == '*'
+        return self.is_complex and self.head == '*'
     
     def __str__(self):
         if self.is_self or self.is_class:
