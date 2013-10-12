@@ -24,13 +24,19 @@ class WrapperGenerator(object):
 
     def print_class(self, clazz):
         implName = '%sImpl' % clazz.name
-        self.println('struct %s { handle: *u8 }' % implName)
-        for trait in clazz.traits:
-            self.println('impl %s for %s {}' % (trait, implName))
+        self.println('struct %s(*u8);' % implName)
+        for trait in clazz.inheritance:
+            body = ''
+            if trait in self.__parser.root_classes:
+                body = ' pub fn handle(&self) -> *u8 { **self } '
+            self.println('impl %s for %s {%s}' % (trait, implName, body))
         base = clazz.has_base and ' : %s' % clazz.base or ''
         self.println()
         self.println('trait %s%s {' % (clazz.wrapper_name, base))
         self.indent()
+        if clazz.name in self.__parser.root_classes:
+            self.println('fn handle(&self) -> *u8;')
+            self.println()
         for method in clazz.methods:
             method.trait_fn(self, clazz.name)
         self.unindent()
@@ -127,14 +133,20 @@ class Parser(object):
     def __init__(self):
         self.__classes   = []
         self.__functions = []
+        self.__root_classes = set()
     
     def parse_files(self, files):
         for file in files:
             for line in Preprocessor().preprocess(file):
                 self._parse_line(line.strip())
         for clazz in self.__classes:
+            self.__root_classes.add(clazz.inheritance[-1])
             for f in self.__functions:
                 clazz.add_if_member(f)
+
+    @property
+    def root_classes(self):
+        return self.__root_classes
 
     @property
     def classes(self):
@@ -244,10 +256,10 @@ class Class(object):
         return self.__node[0][2][0]
     
     @property
-    def traits(self):
+    def inheritance(self):
         list = [self.name]
         if self.has_base:
-            list += self.__parser.classForName(self.base).traits
+            list += self.__parser.classForName(self.base).inheritance
         return list
 
     @property
@@ -290,27 +302,17 @@ class Function(object):
     def args(self):
         if len(self.__node[1][1]) == 0:
             # no args
-            return ''
-        s = ''
+            return ()
         _args = (self.__node[1])[1:]
-        for i, arg in enumerate(_args):
-            if i:
-                s += ', '
-            s += str(Arg(arg, i))
-        return s
+        return (Arg(arg, i) for i, arg in enumerate(_args))
+    
+    @property
+    def decl_args(self):
+        return ', '.join((str(a) for a in self.args))
     
     @property
     def calling_args(self):
-        if len(self.__node[1][1]) == 0:
-            # no args
-            return ''
-        s = ''
-        _args = (self.__node[1])[1:]
-        for i, arg in enumerate(_args):
-            if i:
-                s += ', '
-            s += Arg(arg, i).name
-        return s
+        return ', '.join((a.calling_arg for a in self.args))
     
     @property
     def returns(self):
@@ -322,7 +324,7 @@ class Function(object):
     def trait_fn(self, gen, classname):
         #gen.println('// %s' % self.__node)
         gen.println('#[fixed_stack_segment]')
-        gen.println('fn %s(%s)%s {' % (self.method_name(classname), self.args, self.returns))
+        gen.println('fn %s(%s)%s {' % (self.method_name(classname), self.decl_args, self.returns))
         gen.indent()
         gen.println('unsafe { %s(%s) }' % (self.name, self.calling_args))
         gen.unindent()
@@ -341,6 +343,7 @@ class Arg(object):
         assert len(node) > 0
         self.__node = node
         self.__index = index
+        self.__type = Type(self.__node[0])
 
     @property
     def is_self(self):
@@ -358,7 +361,20 @@ class Arg(object):
             if _name in ['fn', 'ref', 'self', 'type', 'use']:
                 _name += '_'
             return _name
-    
+
+    @property
+    def type(self):
+        return self.__type
+
+    @property
+    def calling_arg(self):
+        if self.is_self:
+            return 'self.handle()'
+        elif self.type.is_class:
+            return '%s.handle()' % self.name
+        else:
+            return self.name
+
     def __str__(self):
         tag = self.__node[0][0]
         if tag in ['TArrayObjectOutVoid', 'TClassRef']:
@@ -367,7 +383,7 @@ class Arg(object):
             return '%s: %s' % (self.name, macro(macro_args))
         if self.is_self:
             return '&self'
-        return '%s: %s' % (self.name, Type(self.__node[0]))
+        return '%s: %s' % (self.name, self.type)
 
 # Other type mappings
 type_mapping = {
