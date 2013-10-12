@@ -23,13 +23,19 @@ class WrapperGenerator(object):
             self.print_class(clazz)
 
     def print_class(self, clazz):
+        implName = '%sImpl' % clazz.name
+        self.println('struct %s { handle: *u8 }' % implName)
+        for trait in clazz.traits:
+            self.println('impl %s for %s {}' % (trait, implName))
         base = clazz.has_base and ' : %s' % clazz.base or ''
+        self.println()
         self.println('trait %s%s {' % (clazz.wrapper_name, base))
         self.indent()
         for method in clazz.methods:
             method.trait_fn(self, clazz.name)
         self.unindent()
         self.println('}')
+        self.println()
 
     def println(self, text=''):
         lines = text.split('\n')
@@ -133,6 +139,12 @@ class Parser(object):
     @property
     def classes(self):
         return self.__classes
+    
+    def classForName(self, name):
+        for clazz in self.__classes:
+            if clazz.name == name:
+                return clazz
+        return None
 
     def _parse_line(self, line):
         if not len(line):
@@ -199,7 +211,7 @@ class Parser(object):
         #print node
         if 'TClassDef' in line:
             # class def
-            clazz = Class(node)
+            clazz = Class(self, node)
             # linear search isn't fast.
             for clazz2 in self.classes:
                 if clazz.name == clazz2.name:
@@ -211,9 +223,10 @@ class Parser(object):
 
 
 class Class(object):
-    def __init__(self, node):
+    def __init__(self, parser, node):
         assert len(node) == 1
         assert len(node[0]) > 1
+        self.__parser = parser
         self.__node = node
         self.__methods = []
 
@@ -229,6 +242,13 @@ class Class(object):
     def base(self):
         assert self.has_base
         return self.__node[0][2][0]
+    
+    @property
+    def traits(self):
+        list = [self.name]
+        if self.has_base:
+            list += self.__parser.classForName(self.base).traits
+        return list
 
     @property
     def wrapper_name(self):
