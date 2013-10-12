@@ -2054,7 +2054,7 @@ trait wxBitmap : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn getSubBitmap(&self, x: c_int, y: c_int, w: c_int, h: c_int, _ref: @wxBitmap) {
-        unsafe { wxBitmap_GetSubBitmap(self.handle(), x, y, w, h, _ref) }
+        unsafe { wxBitmap_GetSubBitmap(self.handle(), x, y, w, h, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getWidth(&self) -> c_int {
@@ -2129,19 +2129,19 @@ trait wxBitmapButton : wxButton {
     }
     #[fixed_stack_segment]
     fn getBitmapDisabled(&self, _ref: @wxBitmap) {
-        unsafe { wxBitmapButton_GetBitmapDisabled(self.handle(), _ref) }
+        unsafe { wxBitmapButton_GetBitmapDisabled(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getBitmapFocus(&self, _ref: @wxBitmap) {
-        unsafe { wxBitmapButton_GetBitmapFocus(self.handle(), _ref) }
+        unsafe { wxBitmapButton_GetBitmapFocus(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getBitmapLabel(&self, _ref: @wxBitmap) {
-        unsafe { wxBitmapButton_GetBitmapLabel(self.handle(), _ref) }
+        unsafe { wxBitmapButton_GetBitmapLabel(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getBitmapSelected(&self, _ref: @wxBitmap) {
-        unsafe { wxBitmapButton_GetBitmapSelected(self.handle(), _ref) }
+        unsafe { wxBitmapButton_GetBitmapSelected(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getMarginX(&self) -> c_int {
@@ -2275,11 +2275,11 @@ trait wxBrush : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn getColour(&self, _ref: @wxColour) {
-        unsafe { wxBrush_GetColour(self.handle(), _ref) }
+        unsafe { wxBrush_GetColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getStipple(&self, _ref: @wxBitmap) {
-        unsafe { wxBrush_GetStipple(self.handle(), _ref) }
+        unsafe { wxBrush_GetStipple(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getStyle(&self) -> c_int {
@@ -2508,27 +2508,27 @@ trait wxCalendarCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getHeaderColourBg(&self, _ref: @wxColour) {
-        unsafe { wxCalendarCtrl_GetHeaderColourBg(self.handle(), _ref) }
+        unsafe { wxCalendarCtrl_GetHeaderColourBg(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getHeaderColourFg(&self, _ref: @wxColour) {
-        unsafe { wxCalendarCtrl_GetHeaderColourFg(self.handle(), _ref) }
+        unsafe { wxCalendarCtrl_GetHeaderColourFg(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getHighlightColourBg(&self, _ref: @wxColour) {
-        unsafe { wxCalendarCtrl_GetHighlightColourBg(self.handle(), _ref) }
+        unsafe { wxCalendarCtrl_GetHighlightColourBg(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getHighlightColourFg(&self, _ref: @wxColour) {
-        unsafe { wxCalendarCtrl_GetHighlightColourFg(self.handle(), _ref) }
+        unsafe { wxCalendarCtrl_GetHighlightColourFg(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getHolidayColourBg(&self, _ref: @wxColour) {
-        unsafe { wxCalendarCtrl_GetHolidayColourBg(self.handle(), _ref) }
+        unsafe { wxCalendarCtrl_GetHolidayColourBg(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getHolidayColourFg(&self, _ref: @wxColour) {
-        unsafe { wxCalendarCtrl_GetHolidayColourFg(self.handle(), _ref) }
+        unsafe { wxCalendarCtrl_GetHolidayColourFg(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn hitTest(&self, x: c_int, y: c_int, date: *u8, wd: *u8) -> c_int {
@@ -2584,7 +2584,7 @@ trait wxCalendarDateAttr {
     }
     #[fixed_stack_segment]
     fn getBackgroundColour(&self, _ref: @wxColour) {
-        unsafe { wxCalendarDateAttr_GetBackgroundColour(self.handle(), _ref) }
+        unsafe { wxCalendarDateAttr_GetBackgroundColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getBorder(&self) -> c_int {
@@ -2592,15 +2592,15 @@ trait wxCalendarDateAttr {
     }
     #[fixed_stack_segment]
     fn getBorderColour(&self, _ref: @wxColour) {
-        unsafe { wxCalendarDateAttr_GetBorderColour(self.handle(), _ref) }
+        unsafe { wxCalendarDateAttr_GetBorderColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getFont(&self, _ref: @wxFont) {
-        unsafe { wxCalendarDateAttr_GetFont(self.handle(), _ref) }
+        unsafe { wxCalendarDateAttr_GetFont(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getTextColour(&self, _ref: @wxColour) {
-        unsafe { wxCalendarDateAttr_GetTextColour(self.handle(), _ref) }
+        unsafe { wxCalendarDateAttr_GetTextColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn hasBackgroundColour(&self) -> bool {
@@ -3132,11 +3132,11 @@ trait wxColourData : wxObject {
     }
     #[fixed_stack_segment]
     fn getColour(&self, _ref: @wxColour) {
-        unsafe { wxColourData_GetColour(self.handle(), _ref) }
+        unsafe { wxColourData_GetColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getCustomColour(&self, i: c_int, _ref: @wxColour) {
-        unsafe { wxColourData_GetCustomColour(self.handle(), i, _ref) }
+        unsafe { wxColourData_GetCustomColour(self.handle(), i, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn setChooseFull(&self, flag: bool) {
@@ -3175,7 +3175,7 @@ trait wxColourDialog : wxDialog {
     }
     #[fixed_stack_segment]
     fn getColourData(&self, _ref: @wxColourData) {
-        unsafe { wxColourDialog_GetColourData(self.handle(), _ref) }
+        unsafe { wxColourDialog_GetColourData(self.handle(), _ref.handle()) }
     }
 }
 
@@ -3935,7 +3935,7 @@ trait wxDC : wxObject {
     }
     #[fixed_stack_segment]
     fn getBackground(&self, _ref: @wxBrush) {
-        unsafe { wxDC_GetBackground(self.handle(), _ref) }
+        unsafe { wxDC_GetBackground(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getBackgroundMode(&self) -> c_int {
@@ -3943,7 +3943,7 @@ trait wxDC : wxObject {
     }
     #[fixed_stack_segment]
     fn getBrush(&self, _ref: @wxBrush) {
-        unsafe { wxDC_GetBrush(self.handle(), _ref) }
+        unsafe { wxDC_GetBrush(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getCharHeight(&self) -> c_int {
@@ -3967,7 +3967,7 @@ trait wxDC : wxObject {
     }
     #[fixed_stack_segment]
     fn getFont(&self, _ref: @wxFont) {
-        unsafe { wxDC_GetFont(self.handle(), _ref) }
+        unsafe { wxDC_GetFont(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getLogicalFunction(&self) -> c_int {
@@ -3991,7 +3991,7 @@ trait wxDC : wxObject {
     }
     #[fixed_stack_segment]
     fn getPen(&self, _ref: @wxPen) {
-        unsafe { wxDC_GetPen(self.handle(), _ref) }
+        unsafe { wxDC_GetPen(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getPixel(&self, x: c_int, y: c_int, col: @wxColour) -> bool {
@@ -4007,7 +4007,7 @@ trait wxDC : wxObject {
     }
     #[fixed_stack_segment]
     fn getTextBackground(&self, _ref: @wxColour) {
-        unsafe { wxDC_GetTextBackground(self.handle(), _ref) }
+        unsafe { wxDC_GetTextBackground(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getTextExtent(&self, string: @wxString, w: *u8, h: *u8, descent: *u8, externalLeading: *u8, theFont: @wxFont) {
@@ -4019,7 +4019,7 @@ trait wxDC : wxObject {
     }
     #[fixed_stack_segment]
     fn getTextForeground(&self, _ref: @wxColour) {
-        unsafe { wxDC_GetTextForeground(self.handle(), _ref) }
+        unsafe { wxDC_GetTextForeground(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getUserScale(&self, x: *c_double, y: *c_double) {
@@ -4151,7 +4151,7 @@ trait wxDC : wxObject {
     }
     #[fixed_stack_segment]
     fn getPixel2(&self, x: c_int, y: c_int, col: @wxColour) {
-        unsafe { wxDC_GetPixel2(self.handle(), x, y, col) }
+        unsafe { wxDC_GetPixel2(self.handle(), x, y, col.handle()) }
     }
 }
 
@@ -4292,7 +4292,7 @@ trait wxDateTime {
     
     #[fixed_stack_segment]
     fn addDate(&self, diff: *u8, _ref: @wxDateTime) {
-        unsafe { wxDateTime_AddDate(self.handle(), diff, _ref) }
+        unsafe { wxDateTime_AddDate(self.handle(), diff, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn addDateValues(&self, _yrs: c_int, _mnt: c_int, _wek: c_int, _day: c_int) {
@@ -4300,7 +4300,7 @@ trait wxDateTime {
     }
     #[fixed_stack_segment]
     fn addTime(&self, diff: *u8, _ref: @wxDateTime) {
-        unsafe { wxDateTime_AddTime(self.handle(), diff, _ref) }
+        unsafe { wxDateTime_AddTime(self.handle(), diff, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn addTimeValues(&self, _hrs: c_int, _min: c_int, _sec: c_int, _mls: c_int) {
@@ -4376,11 +4376,11 @@ trait wxDateTime {
     }
     #[fixed_stack_segment]
     fn getLastMonthDay(&self, month: c_int, year: c_int, _ref: @wxDateTime) {
-        unsafe { wxDateTime_GetLastMonthDay(self.handle(), month, year, _ref) }
+        unsafe { wxDateTime_GetLastMonthDay(self.handle(), month, year, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getLastWeekDay(&self, weekday: c_int, month: c_int, year: c_int, _ref: @wxDateTime) {
-        unsafe { wxDateTime_GetLastWeekDay(self.handle(), weekday, month, year, _ref) }
+        unsafe { wxDateTime_GetLastWeekDay(self.handle(), weekday, month, year, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getMillisecond(&self, tz: c_int) -> c_int {
@@ -4400,7 +4400,7 @@ trait wxDateTime {
     }
     #[fixed_stack_segment]
     fn getNextWeekDay(&self, weekday: c_int, _ref: @wxDateTime) {
-        unsafe { wxDateTime_GetNextWeekDay(self.handle(), weekday, _ref) }
+        unsafe { wxDateTime_GetNextWeekDay(self.handle(), weekday, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getNumberOfDays(year: c_int, cal: c_int) -> c_int {
@@ -4416,7 +4416,7 @@ trait wxDateTime {
     }
     #[fixed_stack_segment]
     fn getPrevWeekDay(&self, weekday: c_int, _ref: @wxDateTime) {
-        unsafe { wxDateTime_GetPrevWeekDay(self.handle(), weekday, _ref) }
+        unsafe { wxDateTime_GetPrevWeekDay(self.handle(), weekday, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getSecond(&self, tz: c_int) -> c_int {
@@ -4436,11 +4436,11 @@ trait wxDateTime {
     }
     #[fixed_stack_segment]
     fn getWeekDay(&self, weekday: c_int, n: c_int, month: c_int, year: c_int, _ref: @wxDateTime) {
-        unsafe { wxDateTime_GetWeekDay(self.handle(), weekday, n, month, year, _ref) }
+        unsafe { wxDateTime_GetWeekDay(self.handle(), weekday, n, month, year, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getWeekDayInSameWeek(&self, weekday: c_int, _ref: @wxDateTime) {
-        unsafe { wxDateTime_GetWeekDayInSameWeek(self.handle(), weekday, _ref) }
+        unsafe { wxDateTime_GetWeekDayInSameWeek(self.handle(), weekday, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getWeekDayName(weekday: c_int, flags: c_int) -> @wxString {
@@ -4628,11 +4628,11 @@ trait wxDateTime {
     }
     #[fixed_stack_segment]
     fn subtractDate(&self, diff: *u8, _ref: @wxDateTime) {
-        unsafe { wxDateTime_SubtractDate(self.handle(), diff, _ref) }
+        unsafe { wxDateTime_SubtractDate(self.handle(), diff, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn subtractTime(&self, diff: *u8, _ref: @wxDateTime) {
-        unsafe { wxDateTime_SubtractTime(self.handle(), diff, _ref) }
+        unsafe { wxDateTime_SubtractTime(self.handle(), diff, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn toGMT(&self, noDST: c_int) {
@@ -6042,11 +6042,11 @@ trait wxFontData : wxObject {
     }
     #[fixed_stack_segment]
     fn getChosenFont(&self, ref_: @wxFont) {
-        unsafe { wxFontData_GetChosenFont(self.handle(), ref_) }
+        unsafe { wxFontData_GetChosenFont(self.handle(), ref_.handle()) }
     }
     #[fixed_stack_segment]
     fn getColour(&self, _ref: @wxColour) {
-        unsafe { wxFontData_GetColour(self.handle(), _ref) }
+        unsafe { wxFontData_GetColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getEnableEffects(&self) -> bool {
@@ -6058,7 +6058,7 @@ trait wxFontData : wxObject {
     }
     #[fixed_stack_segment]
     fn getInitialFont(&self, ref_: @wxFont) {
-        unsafe { wxFontData_GetInitialFont(self.handle(), ref_) }
+        unsafe { wxFontData_GetInitialFont(self.handle(), ref_.handle()) }
     }
     #[fixed_stack_segment]
     fn getShowHelp(&self) -> c_int {
@@ -6109,7 +6109,7 @@ trait wxFontDialog : wxDialog {
     }
     #[fixed_stack_segment]
     fn getFontData(&self, _ref: @wxFontData) {
-        unsafe { wxFontDialog_GetFontData(self.handle(), _ref) }
+        unsafe { wxFontDialog_GetFontData(self.handle(), _ref.handle()) }
     }
 }
 
@@ -6781,7 +6781,7 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getCellHighlightColour(&self, _ref: @wxColour) {
-        unsafe { wxGrid_GetCellHighlightColour(self.handle(), _ref) }
+        unsafe { wxGrid_GetCellHighlightColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getCellRenderer(&self, row: c_int, col: c_int) -> @wxGridCellRenderer {
@@ -6817,15 +6817,15 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getDefaultCellBackgroundColour(&self, _ref: @wxColour) {
-        unsafe { wxGrid_GetDefaultCellBackgroundColour(self.handle(), _ref) }
+        unsafe { wxGrid_GetDefaultCellBackgroundColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getDefaultCellFont(&self, _ref: @wxFont) {
-        unsafe { wxGrid_GetDefaultCellFont(self.handle(), _ref) }
+        unsafe { wxGrid_GetDefaultCellFont(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getDefaultCellTextColour(&self, _ref: @wxColour) {
-        unsafe { wxGrid_GetDefaultCellTextColour(self.handle(), _ref) }
+        unsafe { wxGrid_GetDefaultCellTextColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getDefaultColLabelSize(&self) -> c_int {
@@ -6877,19 +6877,19 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getGridLineColour(&self, _ref: @wxColour) {
-        unsafe { wxGrid_GetGridLineColour(self.handle(), _ref) }
+        unsafe { wxGrid_GetGridLineColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getLabelBackgroundColour(&self, _ref: @wxColour) {
-        unsafe { wxGrid_GetLabelBackgroundColour(self.handle(), _ref) }
+        unsafe { wxGrid_GetLabelBackgroundColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getLabelFont(&self, _ref: @wxFont) {
-        unsafe { wxGrid_GetLabelFont(self.handle(), _ref) }
+        unsafe { wxGrid_GetLabelFont(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getLabelTextColour(&self, _ref: @wxColour) {
-        unsafe { wxGrid_GetLabelTextColour(self.handle(), _ref) }
+        unsafe { wxGrid_GetLabelTextColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getNumberCols(&self) -> c_int {
@@ -6917,11 +6917,11 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getSelectionBackground(&self, _ref: @wxColour) {
-        unsafe { wxGrid_GetSelectionBackground(self.handle(), _ref) }
+        unsafe { wxGrid_GetSelectionBackground(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getSelectionForeground(&self, _ref: @wxColour) {
-        unsafe { wxGrid_GetSelectionForeground(self.handle(), _ref) }
+        unsafe { wxGrid_GetSelectionForeground(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getTable(&self) -> @wxGridTableBase {
@@ -7253,15 +7253,15 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getSelectedCells(&self, _arr: @wxGridCellCoordsArray) {
-        unsafe { wxGrid_GetSelectedCells(self.handle(), _arr) }
+        unsafe { wxGrid_GetSelectedCells(self.handle(), _arr.handle()) }
     }
     #[fixed_stack_segment]
     fn getSelectionBlockTopLeft(&self, _arr: @wxGridCellCoordsArray) {
-        unsafe { wxGrid_GetSelectionBlockTopLeft(self.handle(), _arr) }
+        unsafe { wxGrid_GetSelectionBlockTopLeft(self.handle(), _arr.handle()) }
     }
     #[fixed_stack_segment]
     fn getSelectionBlockBottomRight(&self, _arr: @wxGridCellCoordsArray) {
-        unsafe { wxGrid_GetSelectionBlockBottomRight(self.handle(), _arr) }
+        unsafe { wxGrid_GetSelectionBlockBottomRight(self.handle(), _arr.handle()) }
     }
     #[fixed_stack_segment]
     fn getSelectedRows(&self, _arr: *intptr_t) -> c_int {
@@ -7301,7 +7301,7 @@ trait wxGridCellAttr {
     }
     #[fixed_stack_segment]
     fn getBackgroundColour(&self, _ref: @wxColour) {
-        unsafe { wxGridCellAttr_GetBackgroundColour(self.handle(), _ref) }
+        unsafe { wxGridCellAttr_GetBackgroundColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getEditor(&self, grid: @wxGrid, row: c_int, col: c_int) -> @wxGridCellEditor {
@@ -7309,7 +7309,7 @@ trait wxGridCellAttr {
     }
     #[fixed_stack_segment]
     fn getFont(&self, _ref: @wxFont) {
-        unsafe { wxGridCellAttr_GetFont(self.handle(), _ref) }
+        unsafe { wxGridCellAttr_GetFont(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getRenderer(&self, grid: @wxGrid, row: c_int, col: c_int) -> @wxGridCellRenderer {
@@ -7317,7 +7317,7 @@ trait wxGridCellAttr {
     }
     #[fixed_stack_segment]
     fn getTextColour(&self, _ref: @wxColour) {
-        unsafe { wxGridCellAttr_GetTextColour(self.handle(), _ref) }
+        unsafe { wxGridCellAttr_GetTextColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn hasAlignment(&self) -> bool {
@@ -8334,7 +8334,7 @@ trait wxIcon : wxBitmap {
     }
     #[fixed_stack_segment]
     fn isEqual(&self, other: @wxIcon) -> bool {
-        unsafe { wxIcon_IsEqual(self.handle(), other) }
+        unsafe { wxIcon_IsEqual(self.handle(), other.handle()) }
     }
     #[fixed_stack_segment]
     fn load(&self, name: @wxString, type_: c_long, width: c_int, height: c_int) -> c_int {
@@ -8382,7 +8382,7 @@ trait wxIconBundle {
     }
     #[fixed_stack_segment]
     fn assign(&self, _ref: @wxIconBundle) {
-        unsafe { wxIconBundle_Assign(self.handle(), _ref) }
+        unsafe { wxIconBundle_Assign(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxIconBundle {
@@ -8402,7 +8402,7 @@ trait wxIconBundle {
     }
     #[fixed_stack_segment]
     fn getIcon(&self, w: c_int, h: c_int, _ref: @wxIcon) {
-        unsafe { wxIconBundle_GetIcon(self.handle(), w, h, _ref) }
+        unsafe { wxIconBundle_GetIcon(self.handle(), w, h, _ref.handle()) }
     }
 }
 
@@ -8445,7 +8445,7 @@ trait wxImage : wxObject {
     }
     #[fixed_stack_segment]
     fn convertToBitmap(&self, bitmap: @wxBitmap) {
-        unsafe { wxImage_ConvertToBitmap(self.handle(), bitmap) }
+        unsafe { wxImage_ConvertToBitmap(self.handle(), bitmap.handle()) }
     }
     #[fixed_stack_segment]
     fn convertToByteString(&self, type_: c_int, data: *c_char) -> c_int {
@@ -8525,7 +8525,7 @@ trait wxImage : wxObject {
     }
     #[fixed_stack_segment]
     fn getSubImage(&self, x: c_int, y: c_int, w: c_int, h: c_int, image: @wxImage) {
-        unsafe { wxImage_GetSubImage(self.handle(), x, y, w, h, image) }
+        unsafe { wxImage_GetSubImage(self.handle(), x, y, w, h, image.handle()) }
     }
     #[fixed_stack_segment]
     fn getWidth(&self) -> c_int {
@@ -8561,7 +8561,7 @@ trait wxImage : wxObject {
     }
     #[fixed_stack_segment]
     fn mirror(&self, horizontally: c_int, image: @wxImage) {
-        unsafe { wxImage_Mirror(self.handle(), horizontally, image) }
+        unsafe { wxImage_Mirror(self.handle(), horizontally, image.handle()) }
     }
     #[fixed_stack_segment]
     fn isOk(&self) -> bool {
@@ -8581,11 +8581,11 @@ trait wxImage : wxObject {
     }
     #[fixed_stack_segment]
     fn rotate(&self, angle: c_double, c_x: c_int, c_y: c_int, interpolating: c_int, offset_after_rotation: *u8, image: @wxImage) {
-        unsafe { wxImage_Rotate(self.handle(), angle, c_x, c_y, interpolating, offset_after_rotation, image) }
+        unsafe { wxImage_Rotate(self.handle(), angle, c_x, c_y, interpolating, offset_after_rotation, image.handle()) }
     }
     #[fixed_stack_segment]
     fn rotate90(&self, clockwise: c_int, image: @wxImage) {
-        unsafe { wxImage_Rotate90(self.handle(), clockwise, image) }
+        unsafe { wxImage_Rotate90(self.handle(), clockwise, image.handle()) }
     }
     #[fixed_stack_segment]
     fn saveFile(&self, name: @wxString, type_: c_int) -> bool {
@@ -8593,7 +8593,7 @@ trait wxImage : wxObject {
     }
     #[fixed_stack_segment]
     fn scale(&self, width: c_int, height: c_int, image: @wxImage) {
-        unsafe { wxImage_Scale(self.handle(), width, height, image) }
+        unsafe { wxImage_Scale(self.handle(), width, height, image.handle()) }
     }
     #[fixed_stack_segment]
     fn setData(&self, data: *u8) {
@@ -9507,7 +9507,7 @@ trait wxListCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getTextColour(&self, _ref: @wxColour) {
-        unsafe { wxListCtrl_GetTextColour(self.handle(), _ref) }
+        unsafe { wxListCtrl_GetTextColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getTopItem(&self) -> c_int {
@@ -9627,11 +9627,11 @@ trait wxListCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getColumn2(&self, col: c_int, item: @wxListItem) {
-        unsafe { wxListCtrl_GetColumn2(self.handle(), col, item) }
+        unsafe { wxListCtrl_GetColumn2(self.handle(), col, item.handle()) }
     }
     #[fixed_stack_segment]
     fn getItem2(&self, info: @wxListItem) {
-        unsafe { wxListCtrl_GetItem2(self.handle(), info) }
+        unsafe { wxListCtrl_GetItem2(self.handle(), info.handle()) }
     }
     #[fixed_stack_segment]
     fn getItemPosition2(&self, item: c_int) -> @wxPoint {
@@ -9677,7 +9677,7 @@ trait wxListEvent : wxNotifyEvent {
     }
     #[fixed_stack_segment]
     fn getItem(&self, _ref: @wxListItem) {
-        unsafe { wxListEvent_GetItem(self.handle(), _ref) }
+        unsafe { wxListEvent_GetItem(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getLabel(&self) -> @wxString {
@@ -9736,7 +9736,7 @@ trait wxListItem : wxObject {
     }
     #[fixed_stack_segment]
     fn getBackgroundColour(&self, _ref: @wxColour) {
-        unsafe { wxListItem_GetBackgroundColour(self.handle(), _ref) }
+        unsafe { wxListItem_GetBackgroundColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getColumn(&self) -> c_int {
@@ -9748,7 +9748,7 @@ trait wxListItem : wxObject {
     }
     #[fixed_stack_segment]
     fn getFont(&self, _ref: @wxFont) {
-        unsafe { wxListItem_GetFont(self.handle(), _ref) }
+        unsafe { wxListItem_GetFont(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getId(&self) -> c_int {
@@ -9772,7 +9772,7 @@ trait wxListItem : wxObject {
     }
     #[fixed_stack_segment]
     fn getTextColour(&self, _ref: @wxColour) {
-        unsafe { wxListItem_GetTextColour(self.handle(), _ref) }
+        unsafe { wxListItem_GetTextColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getWidth(&self) -> c_int {
@@ -11491,7 +11491,7 @@ trait wxPageSetupDialog : wxDialog {
     }
     #[fixed_stack_segment]
     fn getPageSetupData(&self, _ref: @wxPageSetupDialogData) {
-        unsafe { wxPageSetupDialog_GetPageSetupData(self.handle(), _ref) }
+        unsafe { wxPageSetupDialog_GetPageSetupData(self.handle(), _ref.handle()) }
     }
 }
 
@@ -11502,7 +11502,7 @@ impl wxObject for wxPageSetupDialogDataImpl { pub fn handle(&self) -> *u8 { **se
 trait wxPageSetupDialogData : wxObject {
     #[fixed_stack_segment]
     fn assign(&self, data: @wxPageSetupDialogData) {
-        unsafe { wxPageSetupDialogData_Assign(self.handle(), data) }
+        unsafe { wxPageSetupDialogData_Assign(self.handle(), data.handle()) }
     }
     #[fixed_stack_segment]
     fn assignData(&self, printData: @wxPrintData) {
@@ -11602,7 +11602,7 @@ trait wxPageSetupDialogData : wxObject {
     }
     #[fixed_stack_segment]
     fn getPrintData(&self, _ref: @wxPrintData) {
-        unsafe { wxPageSetupDialogData_GetPrintData(self.handle(), _ref) }
+        unsafe { wxPageSetupDialogData_GetPrintData(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn setDefaultInfo(&self, flag: bool) {
@@ -11796,7 +11796,7 @@ trait wxPen : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn getColour(&self, _ref: @wxColour) {
-        unsafe { wxPen_GetColour(self.handle(), _ref) }
+        unsafe { wxPen_GetColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getDashes(&self, ptr: *u8) -> c_int {
@@ -11808,7 +11808,7 @@ trait wxPen : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn getStipple(&self, _ref: @wxBitmap) {
-        unsafe { wxPen_GetStipple(self.handle(), _ref) }
+        unsafe { wxPen_GetStipple(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getStyle(&self) -> c_int {
@@ -12423,7 +12423,7 @@ trait wxPrintDialog : wxDialog {
     }
     #[fixed_stack_segment]
     fn getPrintData(&self, _ref: @wxPrintData) {
-        unsafe { wxPrintDialog_GetPrintData(self.handle(), _ref) }
+        unsafe { wxPrintDialog_GetPrintData(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getPrintDialogData(&self) -> @wxPrintDialogData {
@@ -12514,7 +12514,7 @@ trait wxPrintDialogData : wxObject {
     }
     #[fixed_stack_segment]
     fn getPrintData(&self, _ref: @wxPrintData) {
-        unsafe { wxPrintDialogData_GetPrintData(self.handle(), _ref) }
+        unsafe { wxPrintDialogData_GetPrintData(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getPrintToFile(&self) -> bool {
@@ -12617,7 +12617,7 @@ trait wxPrintPreview : wxObject {
     }
     #[fixed_stack_segment]
     fn getPrintDialogData(&self, _ref: @wxPrintDialogData) {
-        unsafe { wxPrintPreview_GetPrintDialogData(self.handle(), _ref) }
+        unsafe { wxPrintPreview_GetPrintDialogData(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getPrintout(&self) -> @wxPrintout {
@@ -12700,7 +12700,7 @@ trait wxPrinter : wxObject {
     }
     #[fixed_stack_segment]
     fn getPrintDialogData(&self, _ref: @wxPrintDialogData) {
-        unsafe { wxPrinter_GetPrintDialogData(self.handle(), _ref) }
+        unsafe { wxPrinter_GetPrintDialogData(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn print(&self, parent: @wxWindow, printout: @wxPrintout, prompt: bool) -> bool {
@@ -14615,11 +14615,11 @@ trait wxStaticBitmap : wxControl {
     }
     #[fixed_stack_segment]
     fn getBitmap(&self, _ref: @wxBitmap) {
-        unsafe { wxStaticBitmap_GetBitmap(self.handle(), _ref) }
+        unsafe { wxStaticBitmap_GetBitmap(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getIcon(&self, _ref: @wxIcon) {
-        unsafe { wxStaticBitmap_GetIcon(self.handle(), _ref) }
+        unsafe { wxStaticBitmap_GetIcon(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn setBitmap(&self, bitmap: @wxBitmap) {
@@ -14903,11 +14903,11 @@ impl wxObject for wxSystemSettingsImpl { pub fn handle(&self) -> *u8 { **self } 
 trait wxSystemSettings : wxObject {
     #[fixed_stack_segment]
     fn getColour(index: c_int, _ref: @wxColour) {
-        unsafe { wxSystemSettings_GetColour(index, _ref) }
+        unsafe { wxSystemSettings_GetColour(index, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getFont(index: c_int, _ref: @wxFont) {
-        unsafe { wxSystemSettings_GetFont(index, _ref) }
+        unsafe { wxSystemSettings_GetFont(index, _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getMetric(index: c_int) -> c_int {
@@ -15009,15 +15009,15 @@ trait wxTextAttr {
     }
     #[fixed_stack_segment]
     fn getBackgroundColour(&self, colour: @wxColour) {
-        unsafe { wxTextAttr_GetBackgroundColour(self.handle(), colour) }
+        unsafe { wxTextAttr_GetBackgroundColour(self.handle(), colour.handle()) }
     }
     #[fixed_stack_segment]
     fn getFont(&self, font: @wxFont) {
-        unsafe { wxTextAttr_GetFont(self.handle(), font) }
+        unsafe { wxTextAttr_GetFont(self.handle(), font.handle()) }
     }
     #[fixed_stack_segment]
     fn getTextColour(&self, colour: @wxColour) {
-        unsafe { wxTextAttr_GetTextColour(self.handle(), colour) }
+        unsafe { wxTextAttr_GetTextColour(self.handle(), colour.handle()) }
     }
     #[fixed_stack_segment]
     fn hasBackgroundColour(&self) -> bool {
@@ -15884,11 +15884,11 @@ impl wxObject for wxTreeCtrlImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxTreeCtrl : wxControl {
     #[fixed_stack_segment]
     fn addRoot(&self, text: @wxString, image: c_int, selectedImage: c_int, data: @wxTreeItemData, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_AddRoot(self.handle(), text.handle(), image, selectedImage, data.handle(), _item) }
+        unsafe { wxTreeCtrl_AddRoot(self.handle(), text.handle(), image, selectedImage, data.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn appendItem(&self, parent: @wxTreeItemId, text: @wxString, image: c_int, selectedImage: c_int, data: @wxTreeItemData, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_AppendItem(self.handle(), parent.handle(), text.handle(), image, selectedImage, data.handle(), _item) }
+        unsafe { wxTreeCtrl_AppendItem(self.handle(), parent.handle(), text.handle(), image, selectedImage, data.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn collapse(&self, item: @wxTreeItemId) {
@@ -15948,11 +15948,11 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getFirstChild(&self, item: @wxTreeItemId, cookie: *c_int, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_GetFirstChild(self.handle(), item.handle(), cookie, _item) }
+        unsafe { wxTreeCtrl_GetFirstChild(self.handle(), item.handle(), cookie, _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getFirstVisibleItem(&self, item: @wxTreeItemId, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_GetFirstVisibleItem(self.handle(), item.handle(), _item) }
+        unsafe { wxTreeCtrl_GetFirstVisibleItem(self.handle(), item.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getImageList(&self) -> @wxImageList {
@@ -15976,39 +15976,39 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getLastChild(&self, item: @wxTreeItemId, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_GetLastChild(self.handle(), item.handle(), _item) }
+        unsafe { wxTreeCtrl_GetLastChild(self.handle(), item.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getNextChild(&self, item: @wxTreeItemId, cookie: *c_int, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_GetNextChild(self.handle(), item.handle(), cookie, _item) }
+        unsafe { wxTreeCtrl_GetNextChild(self.handle(), item.handle(), cookie, _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getNextSibling(&self, item: @wxTreeItemId, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_GetNextSibling(self.handle(), item.handle(), _item) }
+        unsafe { wxTreeCtrl_GetNextSibling(self.handle(), item.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getNextVisible(&self, item: @wxTreeItemId, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_GetNextVisible(self.handle(), item.handle(), _item) }
+        unsafe { wxTreeCtrl_GetNextVisible(self.handle(), item.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getParent(&self, item: @wxTreeItemId, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_GetParent(self.handle(), item.handle(), _item) }
+        unsafe { wxTreeCtrl_GetParent(self.handle(), item.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getPrevSibling(&self, item: @wxTreeItemId, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_GetPrevSibling(self.handle(), item.handle(), _item) }
+        unsafe { wxTreeCtrl_GetPrevSibling(self.handle(), item.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getPrevVisible(&self, item: @wxTreeItemId, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_GetPrevVisible(self.handle(), item.handle(), _item) }
+        unsafe { wxTreeCtrl_GetPrevVisible(self.handle(), item.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getRootItem(&self, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_GetRootItem(self.handle(), _item) }
+        unsafe { wxTreeCtrl_GetRootItem(self.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getSelection(&self, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_GetSelection(self.handle(), _item) }
+        unsafe { wxTreeCtrl_GetSelection(self.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getSelections(&self, selections: *intptr_t) -> c_int {
@@ -16024,15 +16024,15 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn hitTest(&self, _x: c_int, _y: c_int, flags: *c_int, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_HitTest(self.handle(), _x, _y, flags, _item) }
+        unsafe { wxTreeCtrl_HitTest(self.handle(), _x, _y, flags, _item.handle()) }
     }
     #[fixed_stack_segment]
     fn insertItem(&self, parent: @wxTreeItemId, idPrevious: @wxTreeItemId, text: @wxString, image: c_int, selectedImage: c_int, data: *u8, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_InsertItem(self.handle(), parent.handle(), idPrevious.handle(), text.handle(), image, selectedImage, data, _item) }
+        unsafe { wxTreeCtrl_InsertItem(self.handle(), parent.handle(), idPrevious.handle(), text.handle(), image, selectedImage, data, _item.handle()) }
     }
     #[fixed_stack_segment]
     fn insertItemByIndex(&self, parent: @wxTreeItemId, index: c_int, text: @wxString, image: c_int, selectedImage: c_int, data: *u8, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_InsertItemByIndex(self.handle(), parent.handle(), index, text.handle(), image, selectedImage, data, _item) }
+        unsafe { wxTreeCtrl_InsertItemByIndex(self.handle(), parent.handle(), index, text.handle(), image, selectedImage, data, _item.handle()) }
     }
     #[fixed_stack_segment]
     fn isBold(&self, item: @wxTreeItemId) -> bool {
@@ -16060,7 +16060,7 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn prependItem(&self, parent: @wxTreeItemId, text: @wxString, image: c_int, selectedImage: c_int, data: *u8, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_PrependItem(self.handle(), parent.handle(), text.handle(), image, selectedImage, data, _item) }
+        unsafe { wxTreeCtrl_PrependItem(self.handle(), parent.handle(), text.handle(), image, selectedImage, data, _item.handle()) }
     }
     #[fixed_stack_segment]
     fn scrollTo(&self, item: @wxTreeItemId) {
@@ -16144,11 +16144,11 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn insertItem2(&self, parent: @wxWindow, idPrevious: @wxTreeItemId, text: @wxString, image: c_int, selectedImage: c_int, closure: @wxClosure, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_InsertItem2(self.handle(), parent.handle(), idPrevious.handle(), text.handle(), image, selectedImage, closure.handle(), _item) }
+        unsafe { wxTreeCtrl_InsertItem2(self.handle(), parent.handle(), idPrevious.handle(), text.handle(), image, selectedImage, closure.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn insertItemByIndex2(&self, parent: @wxWindow, index: c_int, text: @wxString, image: c_int, selectedImage: c_int, closure: @wxClosure, _item: @wxTreeItemId) {
-        unsafe { wxTreeCtrl_InsertItemByIndex2(self.handle(), parent.handle(), index, text.handle(), image, selectedImage, closure.handle(), _item) }
+        unsafe { wxTreeCtrl_InsertItemByIndex2(self.handle(), parent.handle(), index, text.handle(), image, selectedImage, closure.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getItemClientClosure(&self, item: @wxTreeItemId) -> @wxClosure {
@@ -16182,7 +16182,7 @@ trait wxTreeEvent : wxNotifyEvent {
     }
     #[fixed_stack_segment]
     fn getItem(&self, _ref: @wxTreeItemId) {
-        unsafe { wxTreeEvent_GetItem(self.handle(), _ref) }
+        unsafe { wxTreeEvent_GetItem(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getLabel(&self) -> @wxString {
@@ -16190,7 +16190,7 @@ trait wxTreeEvent : wxNotifyEvent {
     }
     #[fixed_stack_segment]
     fn getOldItem(&self, _ref: @wxTreeItemId) {
-        unsafe { wxTreeEvent_GetOldItem(self.handle(), _ref) }
+        unsafe { wxTreeEvent_GetOldItem(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getPoint(&self) -> @wxPoint {
@@ -16513,7 +16513,7 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getBackgroundColour(&self, _ref: @wxColour) {
-        unsafe { wxWindow_GetBackgroundColour(self.handle(), _ref) }
+        unsafe { wxWindow_GetBackgroundColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getBestSize(&self) -> @wxSize {
@@ -16569,11 +16569,11 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getFont(&self, _ref: @wxFont) {
-        unsafe { wxWindow_GetFont(self.handle(), _ref) }
+        unsafe { wxWindow_GetFont(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getForegroundColour(&self, _ref: @wxColour) {
-        unsafe { wxWindow_GetForegroundColour(self.handle(), _ref) }
+        unsafe { wxWindow_GetForegroundColour(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getHandle(&self) -> *u8 {
@@ -17077,7 +17077,7 @@ trait wxWizardPageSimple : wxWizardPage {
     }
     #[fixed_stack_segment]
     fn getBitmap(&self, _ref: @wxBitmap) {
-        unsafe { wxWizardPageSimple_GetBitmap(self.handle(), _ref) }
+        unsafe { wxWizardPageSimple_GetBitmap(self.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn getNext(&self) -> @wxWizardPageSimple {
@@ -17168,7 +17168,7 @@ trait wxXmlResource : wxObject {
     }
     #[fixed_stack_segment]
     fn loadBitmap(&self, name: @wxString, _ref: @wxBitmap) {
-        unsafe { wxXmlResource_LoadBitmap(self.handle(), name.handle(), _ref) }
+        unsafe { wxXmlResource_LoadBitmap(self.handle(), name.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn loadDialog(&self, parent: @wxWindow, name: @wxString) -> @wxDialog {
@@ -17180,7 +17180,7 @@ trait wxXmlResource : wxObject {
     }
     #[fixed_stack_segment]
     fn loadIcon(&self, name: @wxString, _ref: @wxIcon) {
-        unsafe { wxXmlResource_LoadIcon(self.handle(), name.handle(), _ref) }
+        unsafe { wxXmlResource_LoadIcon(self.handle(), name.handle(), _ref.handle()) }
     }
     #[fixed_stack_segment]
     fn loadMenu(&self, name: @wxString) -> @wxMenu {
@@ -17356,7 +17356,7 @@ trait wxXmlResource : wxObject {
     }
     #[fixed_stack_segment]
     fn set(&self, res: @wxXmlResource) -> @wxXmlResource {
-        unsafe { @wxXmlResourceImpl(wxXmlResource_Set(self.handle(), res)) as @wxXmlResource }
+        unsafe { @wxXmlResourceImpl(wxXmlResource_Set(self.handle(), res.handle())) as @wxXmlResource }
     }
     #[fixed_stack_segment]
     fn setDomain(&self, domain: @wxString) {

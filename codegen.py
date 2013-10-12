@@ -338,8 +338,6 @@ class Function(object):
 # Function style type macros
 def TArrayObjectOutVoid(args):
     return '~[@%s]' % args # it would be **c_void ?
-def TClassRef(args):
-    return '@%s' % args
 
 
 class Arg(object):
@@ -381,7 +379,7 @@ class Arg(object):
 
     def __str__(self):
         tag = self.__node[0][0]
-        if tag in ['TArrayObjectOutVoid', 'TClassRef']:
+        if tag in ['TArrayObjectOutVoid']:
             macro = globals()[tag]
             macro_args = tuple([x[0] for x in self.__node[0][1:]])
             return '%s: %s' % (self.name, macro(macro_args))
@@ -451,7 +449,7 @@ class Type(object):
     
     @property
     def is_class(self):
-        return self.is_complex and self.head == 'TClass'
+        return self.is_complex and self.head in ['TClass', 'TClassRef', 'TSelf']
     
     @property
     def is_ptr(self):
