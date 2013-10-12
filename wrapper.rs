@@ -14,7 +14,7 @@ trait ELJApp : wxApp {
     }
     #[fixed_stack_segment]
     fn newLogTarget() -> @ELJLog {
-        unsafe { ELJApp_CreateLogTarget() }
+        unsafe { @ELJLogImpl(ELJApp_CreateLogTarget()) as @ELJLog }
     }
     #[fixed_stack_segment]
     fn dispatch() {
@@ -22,7 +22,7 @@ trait ELJApp : wxApp {
     }
     #[fixed_stack_segment]
     fn displaySize() -> @wxSize {
-        unsafe { ELJApp_DisplaySize() }
+        unsafe { @wxSizeImpl(ELJApp_DisplaySize()) as @wxSize }
     }
     #[fixed_stack_segment]
     fn enableTooltips(_enable: bool) {
@@ -50,23 +50,23 @@ trait ELJApp : wxApp {
     }
     #[fixed_stack_segment]
     fn findWindowByLabel(_lbl: @wxString, _prt: @wxWindow) -> @wxWindow {
-        unsafe { ELJApp_FindWindowByLabel(_lbl.handle(), _prt.handle()) }
+        unsafe { @wxWindowImpl(ELJApp_FindWindowByLabel(_lbl.handle(), _prt.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn findWindowByName(_lbl: @wxString, _prt: @wxWindow) -> @wxWindow {
-        unsafe { ELJApp_FindWindowByName(_lbl.handle(), _prt.handle()) }
+        unsafe { @wxWindowImpl(ELJApp_FindWindowByName(_lbl.handle(), _prt.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn getApp() -> @wxApp {
-        unsafe { ELJApp_GetApp() }
+        unsafe { @wxAppImpl(ELJApp_GetApp()) as @wxApp }
     }
     #[fixed_stack_segment]
     fn getAppName() -> @wxString {
-        unsafe { ELJApp_GetAppName() }
+        unsafe { @wxStringImpl(ELJApp_GetAppName()) as @wxString }
     }
     #[fixed_stack_segment]
     fn getClassName() -> @wxString {
-        unsafe { ELJApp_GetClassName() }
+        unsafe { @wxStringImpl(ELJApp_GetClassName()) as @wxString }
     }
     #[fixed_stack_segment]
     fn getExitOnFrameDelete() -> c_int {
@@ -74,7 +74,7 @@ trait ELJApp : wxApp {
     }
     #[fixed_stack_segment]
     fn getOsDescription() -> @wxString {
-        unsafe { ELJApp_GetOsDescription() }
+        unsafe { @wxStringImpl(ELJApp_GetOsDescription()) as @wxString }
     }
     #[fixed_stack_segment]
     fn getOsVersion(_maj: *c_void, _min: *c_void) -> c_int {
@@ -82,7 +82,7 @@ trait ELJApp : wxApp {
     }
     #[fixed_stack_segment]
     fn getTopWindow() -> @wxWindow {
-        unsafe { ELJApp_GetTopWindow() }
+        unsafe { @wxWindowImpl(ELJApp_GetTopWindow()) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn getUseBestVisual() -> c_int {
@@ -90,19 +90,19 @@ trait ELJApp : wxApp {
     }
     #[fixed_stack_segment]
     fn getUserHome(_usr: *c_void) -> @wxString {
-        unsafe { ELJApp_GetUserHome(_usr) }
+        unsafe { @wxStringImpl(ELJApp_GetUserHome(_usr)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getUserId() -> @wxString {
-        unsafe { ELJApp_GetUserId() }
+        unsafe { @wxStringImpl(ELJApp_GetUserId()) as @wxString }
     }
     #[fixed_stack_segment]
     fn getUserName() -> @wxString {
-        unsafe { ELJApp_GetUserName() }
+        unsafe { @wxStringImpl(ELJApp_GetUserName()) as @wxString }
     }
     #[fixed_stack_segment]
     fn getVendorName() -> @wxString {
-        unsafe { ELJApp_GetVendorName() }
+        unsafe { @wxStringImpl(ELJApp_GetVendorName()) as @wxString }
     }
     #[fixed_stack_segment]
     fn initAllImageHandlers() {
@@ -118,7 +118,7 @@ trait ELJApp : wxApp {
     }
     #[fixed_stack_segment]
     fn mousePosition() -> @wxPoint {
-        unsafe { ELJApp_MousePosition() }
+        unsafe { @wxPointImpl(ELJApp_MousePosition()) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn pending() -> c_int {
@@ -198,7 +198,7 @@ impl wxObject for ELJArtProvImpl { pub fn handle(&self) -> *u8 { **self } }
 trait ELJArtProv : wxArtProvider {
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _clb: *c_void) -> @ELJArtProv {
-        unsafe { ELJArtProv_Create(_obj, _clb) }
+        unsafe { @ELJArtProvImpl(ELJArtProv_Create(_obj, _clb)) as @ELJArtProv }
     }
     #[fixed_stack_segment]
     fn release(&self) {
@@ -215,7 +215,7 @@ impl wxObject for ELJClientImpl { pub fn handle(&self) -> *u8 { **self } }
 trait ELJClient : wxClient {
     #[fixed_stack_segment]
     fn new(_eobj: *c_void, _cnct: *c_void) -> @ELJClient {
-        unsafe { ELJClient_Create(_eobj, _cnct) }
+        unsafe { @ELJClientImpl(ELJClient_Create(_eobj, _cnct)) as @ELJClient }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -239,7 +239,7 @@ trait ELJCommand : wxCommand {
     }
     #[fixed_stack_segment]
     fn new(_und: c_int, _nme: @wxString, _obj: *c_void, _clb: *c_void) -> @ELJCommand {
-        unsafe { ELJCommand_Create(_und, _nme.handle(), _obj, _clb) }
+        unsafe { @ELJCommandImpl(ELJCommand_Create(_und, _nme.handle(), _obj, _clb)) as @ELJCommand }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -247,7 +247,7 @@ trait ELJCommand : wxCommand {
     }
     #[fixed_stack_segment]
     fn getName(&self) -> @wxString {
-        unsafe { ELJCommand_GetName(self.handle()) }
+        unsafe { @wxStringImpl(ELJCommand_GetName(self.handle())) as @wxString }
     }
 }
 
@@ -268,11 +268,11 @@ trait ELJConnection : wxConnection {
     }
     #[fixed_stack_segment]
     fn new(_obj: *c_void, buffer: *c_void, size: c_int) -> @ELJConnection {
-        unsafe { ELJConnection_Create(_obj, buffer, size) }
+        unsafe { @ELJConnectionImpl(ELJConnection_Create(_obj, buffer, size)) as @ELJConnection }
     }
     #[fixed_stack_segment]
     fn newDefault(&self) -> @ELJConnection {
-        unsafe { ELJConnection_CreateDefault(self.handle()) }
+        unsafe { @ELJConnectionImpl(ELJConnection_CreateDefault(self.handle())) as @ELJConnection }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -340,7 +340,7 @@ trait ELJDragDataObject {
     
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _fmt: @wxString, _func1: *c_void, _func2: *c_void, _func3: *c_void) -> @ELJDragDataObject {
-        unsafe { ELJDragDataObject_Create(_obj, _fmt.handle(), _func1, _func2, _func3) }
+        unsafe { @ELJDragDataObjectImpl(ELJDragDataObject_Create(_obj, _fmt.handle(), _func1, _func2, _func3)) as @ELJDragDataObject }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -355,7 +355,7 @@ impl wxDropTarget for ELJDropTargetImpl { pub fn handle(&self) -> *u8 { **self }
 trait ELJDropTarget : wxDropTarget {
     #[fixed_stack_segment]
     fn new(_obj: *c_void) -> @ELJDropTarget {
-        unsafe { ELJDropTarget_Create(_obj) }
+        unsafe { @ELJDropTargetImpl(ELJDropTarget_Create(_obj)) as @ELJDropTarget }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -391,7 +391,7 @@ impl wxDropTarget for ELJFileDropTargetImpl { pub fn handle(&self) -> *u8 { **se
 trait ELJFileDropTarget : wxFileDropTarget {
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _func: *c_void) -> @ELJFileDropTarget {
-        unsafe { ELJFileDropTarget_Create(_obj, _func) }
+        unsafe { @ELJFileDropTargetImpl(ELJFileDropTarget_Create(_obj, _func)) as @ELJFileDropTarget }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -427,7 +427,7 @@ impl wxObject for ELJGridTableImpl { pub fn handle(&self) -> *u8 { **self } }
 trait ELJGridTable : wxGridTableBase {
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _EifGetNumberRows: *c_void, _EifGetNumberCols: *c_void, _EifGetValue: *c_void, _EifSetValue: *c_void, _EifIsEmptyCell: *c_void, _EifClear: *c_void, _EifInsertRows: *c_void, _EifAppendRows: *c_void, _EifDeleteRows: *c_void, _EifInsertCols: *c_void, _EifAppendCols: *c_void, _EifDeleteCols: *c_void, _EifSetRowLabelValue: *c_void, _EifSetColLabelValue: *c_void, _EifGetRowLabelValue: *c_void, _EifGetColLabelValue: *c_void) -> @ELJGridTable {
-        unsafe { ELJGridTable_Create(_obj, _EifGetNumberRows, _EifGetNumberCols, _EifGetValue, _EifSetValue, _EifIsEmptyCell, _EifClear, _EifInsertRows, _EifAppendRows, _EifDeleteRows, _EifInsertCols, _EifAppendCols, _EifDeleteCols, _EifSetRowLabelValue, _EifSetColLabelValue, _EifGetRowLabelValue, _EifGetColLabelValue) }
+        unsafe { @ELJGridTableImpl(ELJGridTable_Create(_obj, _EifGetNumberRows, _EifGetNumberCols, _EifGetValue, _EifSetValue, _EifIsEmptyCell, _EifClear, _EifInsertRows, _EifAppendRows, _EifDeleteRows, _EifInsertCols, _EifAppendCols, _EifDeleteCols, _EifSetRowLabelValue, _EifSetColLabelValue, _EifGetRowLabelValue, _EifGetColLabelValue)) as @ELJGridTable }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -435,7 +435,7 @@ trait ELJGridTable : wxGridTableBase {
     }
     #[fixed_stack_segment]
     fn getView(&self) -> @wxView {
-        unsafe { ELJGridTable_GetView(self.handle()) }
+        unsafe { @wxViewImpl(ELJGridTable_GetView(self.handle())) as @wxView }
     }
     #[fixed_stack_segment]
     fn sendTableMessage(&self, id: c_int, val1: c_int, val2: c_int) {
@@ -461,7 +461,7 @@ trait ELJLog : wxLog {
     }
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _fnc: *c_void) -> @ELJLog {
-        unsafe { ELJLog_Create(_obj, _fnc) }
+        unsafe { @ELJLogImpl(ELJLog_Create(_obj, _fnc)) as @ELJLog }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -561,7 +561,7 @@ impl wxObject for ELJPlotCurveImpl { pub fn handle(&self) -> *u8 { **self } }
 trait ELJPlotCurve : wxPlotCurve {
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _str: *c_void, _end: *c_void, _y: *c_void, offsetY: c_int, startY: c_double, endY: c_double) -> @ELJPlotCurve {
-        unsafe { ELJPlotCurve_Create(_obj, _str, _end, _y, offsetY, startY, endY) }
+        unsafe { @ELJPlotCurveImpl(ELJPlotCurve_Create(_obj, _str, _end, _y, offsetY, startY, endY)) as @ELJPlotCurve }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -612,7 +612,7 @@ impl wxObject for ELJPreviewControlBarImpl { pub fn handle(&self) -> *u8 { **sel
 trait ELJPreviewControlBar : wxPreviewControlBar {
     #[fixed_stack_segment]
     fn new(preview: *c_void, buttons: c_int, parent: @wxWindow, title: *c_void, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @ELJPreviewControlBar {
-        unsafe { ELJPreviewControlBar_Create(preview, buttons, parent.handle(), title, x, y, w, h, style) }
+        unsafe { @ELJPreviewControlBarImpl(ELJPreviewControlBar_Create(preview, buttons, parent.handle(), title, x, y, w, h, style)) as @ELJPreviewControlBar }
     }
 }
 
@@ -628,7 +628,7 @@ impl wxObject for ELJPreviewFrameImpl { pub fn handle(&self) -> *u8 { **self } }
 trait ELJPreviewFrame : wxPreviewFrame {
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _init: *c_void, _create_canvas: *c_void, _create_toolbar: *c_void, preview: *c_void, parent: @wxWindow, title: *c_void, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @ELJPreviewFrame {
-        unsafe { ELJPreviewFrame_Create(_obj, _init, _create_canvas, _create_toolbar, preview, parent.handle(), title, x, y, w, h, style) }
+        unsafe { @ELJPreviewFrameImpl(ELJPreviewFrame_Create(_obj, _init, _create_canvas, _create_toolbar, preview, parent.handle(), title, x, y, w, h, style)) as @ELJPreviewFrame }
     }
     #[fixed_stack_segment]
     fn getControlBar(&self) {
@@ -636,11 +636,11 @@ trait ELJPreviewFrame : wxPreviewFrame {
     }
     #[fixed_stack_segment]
     fn getPreviewCanvas(&self) -> @wxPreviewCanvas {
-        unsafe { ELJPreviewFrame_GetPreviewCanvas(self.handle()) }
+        unsafe { @wxPreviewCanvasImpl(ELJPreviewFrame_GetPreviewCanvas(self.handle())) as @wxPreviewCanvas }
     }
     #[fixed_stack_segment]
     fn getPrintPreview(&self) -> @wxPrintPreview {
-        unsafe { ELJPreviewFrame_GetPrintPreview(self.handle()) }
+        unsafe { @wxPrintPreviewImpl(ELJPreviewFrame_GetPrintPreview(self.handle())) as @wxPrintPreview }
     }
     #[fixed_stack_segment]
     fn initialize(&self) {
@@ -669,7 +669,7 @@ impl wxObject for ELJServerImpl { pub fn handle(&self) -> *u8 { **self } }
 trait ELJServer : wxServer {
     #[fixed_stack_segment]
     fn new(_eobj: *c_void, _cnct: *c_void) -> @ELJServer {
-        unsafe { ELJServer_Create(_eobj, _cnct) }
+        unsafe { @ELJServerImpl(ELJServer_Create(_eobj, _cnct)) as @ELJServer }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -689,7 +689,7 @@ impl wxDropTarget for ELJTextDropTargetImpl { pub fn handle(&self) -> *u8 { **se
 trait ELJTextDropTarget : wxTextDropTarget {
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _func: *c_void) -> @ELJTextDropTarget {
-        unsafe { ELJTextDropTarget_Create(_obj, _func) }
+        unsafe { @ELJTextDropTargetImpl(ELJTextDropTarget_Create(_obj, _func)) as @ELJTextDropTarget }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -727,7 +727,7 @@ impl wxObject for ELJTextValidatorImpl { pub fn handle(&self) -> *u8 { **self } 
 trait ELJTextValidator : wxTextValidator {
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _fnc: *c_void, _txt: *wchar_t, _stl: c_int) -> @ELJTextValidator {
-        unsafe { ELJTextValidator_Create(_obj, _fnc, _txt, _stl) }
+        unsafe { @ELJTextValidatorImpl(ELJTextValidator_Create(_obj, _fnc, _txt, _stl)) as @ELJTextValidator }
     }
 }
 
@@ -740,11 +740,11 @@ impl wxObject for cbAntiflickerPluginImpl { pub fn handle(&self) -> *u8 { **self
 trait cbAntiflickerPlugin : cbPluginBase {
     #[fixed_stack_segment]
     fn new(pPanel: *c_void, paneMask: c_int) -> @cbAntiflickerPlugin {
-        unsafe { cbAntiflickerPlugin_Create(pPanel, paneMask) }
+        unsafe { @cbAntiflickerPluginImpl(cbAntiflickerPlugin_Create(pPanel, paneMask)) as @cbAntiflickerPlugin }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbAntiflickerPlugin {
-        unsafe { cbAntiflickerPlugin_CreateDefault() }
+        unsafe { @cbAntiflickerPluginImpl(cbAntiflickerPlugin_CreateDefault()) as @cbAntiflickerPlugin }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -761,11 +761,11 @@ impl wxObject for cbBarDragPluginImpl { pub fn handle(&self) -> *u8 { **self } }
 trait cbBarDragPlugin : cbPluginBase {
     #[fixed_stack_segment]
     fn new(pPanel: *c_void, paneMask: c_int) -> @cbBarDragPlugin {
-        unsafe { cbBarDragPlugin_Create(pPanel, paneMask) }
+        unsafe { @cbBarDragPluginImpl(cbBarDragPlugin_Create(pPanel, paneMask)) as @cbBarDragPlugin }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbBarDragPlugin {
-        unsafe { cbBarDragPlugin_CreateDefault() }
+        unsafe { @cbBarDragPluginImpl(cbBarDragPlugin_CreateDefault()) as @cbBarDragPlugin }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -782,11 +782,11 @@ impl wxObject for cbBarHintsPluginImpl { pub fn handle(&self) -> *u8 { **self } 
 trait cbBarHintsPlugin : cbPluginBase {
     #[fixed_stack_segment]
     fn new(pPanel: *c_void, paneMask: c_int) -> @cbBarHintsPlugin {
-        unsafe { cbBarHintsPlugin_Create(pPanel, paneMask) }
+        unsafe { @cbBarHintsPluginImpl(cbBarHintsPlugin_Create(pPanel, paneMask)) as @cbBarHintsPlugin }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbBarHintsPlugin {
-        unsafe { cbBarHintsPlugin_CreateDefault() }
+        unsafe { @cbBarHintsPluginImpl(cbBarHintsPlugin_CreateDefault()) as @cbBarHintsPlugin }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -805,7 +805,7 @@ impl wxObject for cbBarInfoImpl { pub fn handle(&self) -> *u8 { **self } }
 trait cbBarInfo : wxObject {
     #[fixed_stack_segment]
     fn new() -> @cbBarInfo {
-        unsafe { cbBarInfo_Create() }
+        unsafe { @cbBarInfoImpl(cbBarInfo_Create()) as @cbBarInfo }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -829,11 +829,11 @@ impl wxObject for cbBarSpyImpl { pub fn handle(&self) -> *u8 { **self } }
 trait cbBarSpy : wxEvtHandler {
     #[fixed_stack_segment]
     fn new(pPanel: *c_void) -> @cbBarSpy {
-        unsafe { cbBarSpy_Create(pPanel) }
+        unsafe { @cbBarSpyImpl(cbBarSpy_Create(pPanel)) as @cbBarSpy }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbBarSpy {
-        unsafe { cbBarSpy_CreateDefault() }
+        unsafe { @cbBarSpyImpl(cbBarSpy_CreateDefault()) as @cbBarSpy }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -857,7 +857,7 @@ impl wxObject for cbCloseBoxImpl { pub fn handle(&self) -> *u8 { **self } }
 trait cbCloseBox : cbMiniButton {
     #[fixed_stack_segment]
     fn new() -> @cbCloseBox {
-        unsafe { cbCloseBox_Create() }
+        unsafe { @cbCloseBoxImpl(cbCloseBox_Create()) as @cbCloseBox }
     }
 }
 
@@ -869,7 +869,7 @@ impl wxObject for cbCollapseBoxImpl { pub fn handle(&self) -> *u8 { **self } }
 trait cbCollapseBox : cbMiniButton {
     #[fixed_stack_segment]
     fn new() -> @cbCollapseBox {
-        unsafe { cbCollapseBox_Create() }
+        unsafe { @cbCollapseBoxImpl(cbCollapseBox_Create()) as @cbCollapseBox }
     }
 }
 
@@ -900,7 +900,7 @@ trait cbCommonPaneProperties : wxObject {
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbCommonPaneProperties {
-        unsafe { cbCommonPaneProperties_CreateDefault() }
+        unsafe { @cbCommonPanePropertiesImpl(cbCommonPaneProperties_CreateDefault()) as @cbCommonPaneProperties }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1036,11 +1036,11 @@ trait cbDimInfo : wxObject {
     }
     #[fixed_stack_segment]
     fn new(x: c_int, y: c_int, isFixed: bool, gap: c_int, pDimHandler: *c_void) -> @cbDimInfo {
-        unsafe { cbDimInfo_Create(x, y, isFixed, gap, pDimHandler) }
+        unsafe { @cbDimInfoImpl(cbDimInfo_Create(x, y, isFixed, gap, pDimHandler)) as @cbDimInfo }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbDimInfo {
-        unsafe { cbDimInfo_CreateDefault() }
+        unsafe { @cbDimInfoImpl(cbDimInfo_CreateDefault()) as @cbDimInfo }
     }
     #[fixed_stack_segment]
     fn newWithHandler(&self, isFixed: bool) {
@@ -1068,7 +1068,7 @@ impl wxObject for cbDockBoxImpl { pub fn handle(&self) -> *u8 { **self } }
 trait cbDockBox : cbMiniButton {
     #[fixed_stack_segment]
     fn new() -> @cbDockBox {
-        unsafe { cbDockBox_Create() }
+        unsafe { @cbDockBoxImpl(cbDockBox_Create()) as @cbDockBox }
     }
 }
 
@@ -1083,11 +1083,11 @@ trait cbDockPane : wxObject {
     }
     #[fixed_stack_segment]
     fn new(alignment: c_int, pPanel: *c_void) -> @cbDockPane {
-        unsafe { cbDockPane_Create(alignment, pPanel) }
+        unsafe { @cbDockPaneImpl(cbDockPane_Create(alignment, pPanel)) as @cbDockPane }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbDockPane {
-        unsafe { cbDockPane_CreateDefault() }
+        unsafe { @cbDockPaneImpl(cbDockPane_CreateDefault()) as @cbDockPane }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1327,7 +1327,7 @@ impl wxObject for cbDynToolBarDimHandlerImpl { pub fn handle(&self) -> *u8 { **s
 trait cbDynToolBarDimHandler : cbDimHandlerBase {
     #[fixed_stack_segment]
     fn new() -> @cbDynToolBarDimHandler {
-        unsafe { cbDynToolBarDimHandler_Create() }
+        unsafe { @cbDynToolBarDimHandlerImpl(cbDynToolBarDimHandler_Create()) as @cbDynToolBarDimHandler }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1360,7 +1360,7 @@ impl wxObject for cbFloatedBarWindowImpl { pub fn handle(&self) -> *u8 { **self 
 trait cbFloatedBarWindow : wxToolWindow {
     #[fixed_stack_segment]
     fn new(_obj: *c_void) -> @cbFloatedBarWindow {
-        unsafe { cbFloatedBarWindow_Create(_obj) }
+        unsafe { @cbFloatedBarWindowImpl(cbFloatedBarWindow_Create(_obj)) as @cbFloatedBarWindow }
     }
     #[fixed_stack_segment]
     fn getBar(&self) {
@@ -1389,11 +1389,11 @@ impl wxObject for cbGCUpdatesMgrImpl { pub fn handle(&self) -> *u8 { **self } }
 trait cbGCUpdatesMgr : cbSimpleUpdatesMgr {
     #[fixed_stack_segment]
     fn new(pPanel: *c_void) -> @cbGCUpdatesMgr {
-        unsafe { cbGCUpdatesMgr_Create(pPanel) }
+        unsafe { @cbGCUpdatesMgrImpl(cbGCUpdatesMgr_Create(pPanel)) as @cbGCUpdatesMgr }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbGCUpdatesMgr {
-        unsafe { cbGCUpdatesMgr_CreateDefault() }
+        unsafe { @cbGCUpdatesMgrImpl(cbGCUpdatesMgr_CreateDefault()) as @cbGCUpdatesMgr }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1414,11 +1414,11 @@ impl wxObject for cbHintAnimationPluginImpl { pub fn handle(&self) -> *u8 { **se
 trait cbHintAnimationPlugin : cbPluginBase {
     #[fixed_stack_segment]
     fn new(pPanel: *c_void, paneMask: c_int) -> @cbHintAnimationPlugin {
-        unsafe { cbHintAnimationPlugin_Create(pPanel, paneMask) }
+        unsafe { @cbHintAnimationPluginImpl(cbHintAnimationPlugin_Create(pPanel, paneMask)) as @cbHintAnimationPlugin }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbHintAnimationPlugin {
-        unsafe { cbHintAnimationPlugin_CreateDefault() }
+        unsafe { @cbHintAnimationPluginImpl(cbHintAnimationPlugin_CreateDefault()) as @cbHintAnimationPlugin }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1502,7 +1502,7 @@ impl wxObject for cbMiniButtonImpl { pub fn handle(&self) -> *u8 { **self } }
 trait cbMiniButton : wxObject {
     #[fixed_stack_segment]
     fn new() -> @cbMiniButton {
-        unsafe { cbMiniButton_Create() }
+        unsafe { @cbMiniButtonImpl(cbMiniButton_Create()) as @cbMiniButton }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1600,11 +1600,11 @@ impl wxObject for cbPaneDrawPluginImpl { pub fn handle(&self) -> *u8 { **self } 
 trait cbPaneDrawPlugin : cbPluginBase {
     #[fixed_stack_segment]
     fn new(pPanel: *c_void, paneMask: c_int) -> @cbPaneDrawPlugin {
-        unsafe { cbPaneDrawPlugin_Create(pPanel, paneMask) }
+        unsafe { @cbPaneDrawPluginImpl(cbPaneDrawPlugin_Create(pPanel, paneMask)) as @cbPaneDrawPlugin }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbPaneDrawPlugin {
-        unsafe { cbPaneDrawPlugin_CreateDefault() }
+        unsafe { @cbPaneDrawPluginImpl(cbPaneDrawPlugin_CreateDefault()) as @cbPaneDrawPlugin }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1738,11 +1738,11 @@ impl wxObject for cbRowDragPluginImpl { pub fn handle(&self) -> *u8 { **self } }
 trait cbRowDragPlugin : cbPluginBase {
     #[fixed_stack_segment]
     fn new(pPanel: *c_void, paneMask: c_int) -> @cbRowDragPlugin {
-        unsafe { cbRowDragPlugin_Create(pPanel, paneMask) }
+        unsafe { @cbRowDragPluginImpl(cbRowDragPlugin_Create(pPanel, paneMask)) as @cbRowDragPlugin }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbRowDragPlugin {
-        unsafe { cbRowDragPlugin_CreateDefault() }
+        unsafe { @cbRowDragPluginImpl(cbRowDragPlugin_CreateDefault()) as @cbRowDragPlugin }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1757,7 +1757,7 @@ impl wxObject for cbRowInfoImpl { pub fn handle(&self) -> *u8 { **self } }
 trait cbRowInfo : wxObject {
     #[fixed_stack_segment]
     fn new() -> @cbRowInfo {
-        unsafe { cbRowInfo_Create() }
+        unsafe { @cbRowInfoImpl(cbRowInfo_Create()) as @cbRowInfo }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1778,11 +1778,11 @@ impl wxObject for cbRowLayoutPluginImpl { pub fn handle(&self) -> *u8 { **self }
 trait cbRowLayoutPlugin : cbPluginBase {
     #[fixed_stack_segment]
     fn new(pPanel: *c_void, paneMask: c_int) -> @cbRowLayoutPlugin {
-        unsafe { cbRowLayoutPlugin_Create(pPanel, paneMask) }
+        unsafe { @cbRowLayoutPluginImpl(cbRowLayoutPlugin_Create(pPanel, paneMask)) as @cbRowLayoutPlugin }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbRowLayoutPlugin {
-        unsafe { cbRowLayoutPlugin_CreateDefault() }
+        unsafe { @cbRowLayoutPluginImpl(cbRowLayoutPlugin_CreateDefault()) as @cbRowLayoutPlugin }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1799,11 +1799,11 @@ impl wxObject for cbSimpleCustomizationPluginImpl { pub fn handle(&self) -> *u8 
 trait cbSimpleCustomizationPlugin : cbPluginBase {
     #[fixed_stack_segment]
     fn new(pPanel: *c_void, paneMask: c_int) -> @cbSimpleCustomizationPlugin {
-        unsafe { cbSimpleCustomizationPlugin_Create(pPanel, paneMask) }
+        unsafe { @cbSimpleCustomizationPluginImpl(cbSimpleCustomizationPlugin_Create(pPanel, paneMask)) as @cbSimpleCustomizationPlugin }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @cbSimpleCustomizationPlugin {
-        unsafe { cbSimpleCustomizationPlugin_CreateDefault() }
+        unsafe { @cbSimpleCustomizationPluginImpl(cbSimpleCustomizationPlugin_CreateDefault()) as @cbSimpleCustomizationPlugin }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1881,7 +1881,7 @@ trait wxAcceleratorEntry {
     
     #[fixed_stack_segment]
     fn new(flags: c_int, keyCode: c_int, cmd: c_int) -> @wxAcceleratorEntry {
-        unsafe { wxAcceleratorEntry_Create(flags, keyCode, cmd) }
+        unsafe { @wxAcceleratorEntryImpl(wxAcceleratorEntry_Create(flags, keyCode, cmd)) as @wxAcceleratorEntry }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1913,7 +1913,7 @@ trait wxAcceleratorTable {
     
     #[fixed_stack_segment]
     fn new(n: c_int, entries: *c_void) -> @wxAcceleratorTable {
-        unsafe { wxAcceleratorTable_Create(n, entries) }
+        unsafe { @wxAcceleratorTableImpl(wxAcceleratorTable_Create(n, entries)) as @wxAcceleratorTable }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -1975,7 +1975,7 @@ impl wxObject for wxAutoBufferedPaintDCImpl { pub fn handle(&self) -> *u8 { **se
 trait wxAutoBufferedPaintDC : wxDC {
     #[fixed_stack_segment]
     fn new(window: @wxWindow) -> @wxAutoBufferedPaintDC {
-        unsafe { wxAutoBufferedPaintDC_Create(window.handle()) }
+        unsafe { @wxAutoBufferedPaintDCImpl(wxAutoBufferedPaintDC_Create(window.handle())) as @wxAutoBufferedPaintDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -2006,23 +2006,23 @@ trait wxBitmap : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn new(_data: *c_void, _type: c_int, _width: c_int, _height: c_int, _depth: c_int) -> @wxBitmap {
-        unsafe { wxBitmap_Create(_data, _type, _width, _height, _depth) }
+        unsafe { @wxBitmapImpl(wxBitmap_Create(_data, _type, _width, _height, _depth)) as @wxBitmap }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxBitmap {
-        unsafe { wxBitmap_CreateDefault() }
+        unsafe { @wxBitmapImpl(wxBitmap_CreateDefault()) as @wxBitmap }
     }
     #[fixed_stack_segment]
     fn newEmpty(_width: c_int, _height: c_int, _depth: c_int) -> @wxBitmap {
-        unsafe { wxBitmap_CreateEmpty(_width, _height, _depth) }
+        unsafe { @wxBitmapImpl(wxBitmap_CreateEmpty(_width, _height, _depth)) as @wxBitmap }
     }
     #[fixed_stack_segment]
     fn newFromXPM(&self) -> @wxBitmap {
-        unsafe { wxBitmap_CreateFromXPM(self.handle()) }
+        unsafe { @wxBitmapImpl(wxBitmap_CreateFromXPM(self.handle())) as @wxBitmap }
     }
     #[fixed_stack_segment]
     fn newLoad(name: @wxString, type_: c_int) -> @wxBitmap {
-        unsafe { wxBitmap_CreateLoad(name.handle(), type_) }
+        unsafe { @wxBitmapImpl(wxBitmap_CreateLoad(name.handle(), type_)) as @wxBitmap }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -2050,7 +2050,7 @@ trait wxBitmap : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn getMask(&self) -> @wxMask {
-        unsafe { wxBitmap_GetMask(self.handle()) }
+        unsafe { @wxMaskImpl(wxBitmap_GetMask(self.handle())) as @wxMask }
     }
     #[fixed_stack_segment]
     fn getSubBitmap(&self, x: c_int, y: c_int, w: c_int, h: c_int, _ref: @wxBitmap) {
@@ -2110,7 +2110,7 @@ trait wxBitmap : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn newFromImage(image: @wxImage, depth: c_int) -> @wxBitmap {
-        unsafe { wxBitmap_CreateFromImage(image.handle(), depth) }
+        unsafe { @wxBitmapImpl(wxBitmap_CreateFromImage(image.handle(), depth)) as @wxBitmap }
     }
 }
 
@@ -2125,7 +2125,7 @@ impl wxObject for wxBitmapButtonImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxBitmapButton : wxButton {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _bmp: @wxBitmap, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxBitmapButton {
-        unsafe { wxBitmapButton_Create(_prt.handle(), _id, _bmp.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxBitmapButtonImpl(wxBitmapButton_Create(_prt.handle(), _id, _bmp.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxBitmapButton }
     }
     #[fixed_stack_segment]
     fn getBitmapDisabled(&self, _ref: @wxBitmap) {
@@ -2184,7 +2184,7 @@ impl wxObject for wxBitmapToggleButtonImpl { pub fn handle(&self) -> *u8 { **sel
 trait wxBitmapToggleButton : wxToggleButton {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, id: c_int, _bmp: @wxBitmap, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @wxBitmapToggleButton {
-        unsafe { wxBitmapToggleButton_Create(parent.handle(), id, _bmp.handle(), x, y, w, h, style) }
+        unsafe { @wxBitmapToggleButtonImpl(wxBitmapToggleButton_Create(parent.handle(), id, _bmp.handle(), x, y, w, h, style)) as @wxBitmapToggleButton }
     }
     #[fixed_stack_segment]
     fn enable(&self, enable: bool) -> bool {
@@ -2227,11 +2227,11 @@ impl wxObject for wxBoxSizerImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxBoxSizer : wxSizer {
     #[fixed_stack_segment]
     fn calcMin(&self) -> @wxSize {
-        unsafe { wxBoxSizer_CalcMin(self.handle()) }
+        unsafe { @wxSizeImpl(wxBoxSizer_CalcMin(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn new(orient: c_int) -> @wxBoxSizer {
-        unsafe { wxBoxSizer_Create(orient) }
+        unsafe { @wxBoxSizerImpl(wxBoxSizer_Create(orient)) as @wxBoxSizer }
     }
     #[fixed_stack_segment]
     fn getOrientation(&self) -> c_int {
@@ -2255,19 +2255,19 @@ trait wxBrush : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxBrush {
-        unsafe { wxBrush_CreateDefault() }
+        unsafe { @wxBrushImpl(wxBrush_CreateDefault()) as @wxBrush }
     }
     #[fixed_stack_segment]
     fn newFromBitmap(bitmap: @wxBitmap) -> @wxBrush {
-        unsafe { wxBrush_CreateFromBitmap(bitmap.handle()) }
+        unsafe { @wxBrushImpl(wxBrush_CreateFromBitmap(bitmap.handle())) as @wxBrush }
     }
     #[fixed_stack_segment]
     fn newFromColour(col: @wxColour, style: c_int) -> @wxBrush {
-        unsafe { wxBrush_CreateFromColour(col.handle(), style) }
+        unsafe { @wxBrushImpl(wxBrush_CreateFromColour(col.handle(), style)) as @wxBrush }
     }
     #[fixed_stack_segment]
     fn newFromStock(id: c_int) -> @wxBrush {
-        unsafe { wxBrush_CreateFromStock(id) }
+        unsafe { @wxBrushImpl(wxBrush_CreateFromStock(id)) as @wxBrush }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -2335,11 +2335,11 @@ impl wxObject for wxBufferedDCImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxBufferedDC : wxDC {
     #[fixed_stack_segment]
     fn newByDCAndSize(dc: @wxDC, width: c_int, hight: c_int, style: c_int) -> @wxBufferedDC {
-        unsafe { wxBufferedDC_CreateByDCAndSize(dc.handle(), width, hight, style) }
+        unsafe { @wxBufferedDCImpl(wxBufferedDC_CreateByDCAndSize(dc.handle(), width, hight, style)) as @wxBufferedDC }
     }
     #[fixed_stack_segment]
     fn newByDCAndBitmap(dc: @wxDC, bitmap: @wxBitmap, style: c_int) -> @wxBufferedDC {
-        unsafe { wxBufferedDC_CreateByDCAndBitmap(dc.handle(), bitmap.handle(), style) }
+        unsafe { @wxBufferedDCImpl(wxBufferedDC_CreateByDCAndBitmap(dc.handle(), bitmap.handle(), style)) as @wxBufferedDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -2355,11 +2355,11 @@ impl wxObject for wxBufferedPaintDCImpl { pub fn handle(&self) -> *u8 { **self }
 trait wxBufferedPaintDC : wxDC {
     #[fixed_stack_segment]
     fn new(window: @wxWindow, style: c_int) -> @wxBufferedPaintDC {
-        unsafe { wxBufferedPaintDC_Create(window.handle(), style) }
+        unsafe { @wxBufferedPaintDCImpl(wxBufferedPaintDC_Create(window.handle(), style)) as @wxBufferedPaintDC }
     }
     #[fixed_stack_segment]
     fn newWithBitmap(window: @wxWindow, bitmap: @wxBitmap, style: c_int) -> @wxBufferedPaintDC {
-        unsafe { wxBufferedPaintDC_CreateWithBitmap(window.handle(), bitmap.handle(), style) }
+        unsafe { @wxBufferedPaintDCImpl(wxBufferedPaintDC_CreateWithBitmap(window.handle(), bitmap.handle(), style)) as @wxBufferedPaintDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -2393,7 +2393,7 @@ trait wxBusyCursor {
     
     #[fixed_stack_segment]
     fn new() -> @wxBusyCursor {
-        unsafe { wxBusyCursor_Create() }
+        unsafe { @wxBusyCursorImpl(wxBusyCursor_Create()) as @wxBusyCursor }
     }
     #[fixed_stack_segment]
     fn newWithCursor(&self) {
@@ -2413,7 +2413,7 @@ trait wxBusyInfo {
     
     #[fixed_stack_segment]
     fn new(_txt: @wxString) -> @wxBusyInfo {
-        unsafe { wxBusyInfo_Create(_txt.handle()) }
+        unsafe { @wxBusyInfoImpl(wxBusyInfo_Create(_txt.handle())) as @wxBusyInfo }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -2431,7 +2431,7 @@ impl wxObject for wxButtonImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxButton : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxButton {
-        unsafe { wxButton_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxButtonImpl(wxButton_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxButton }
     }
     #[fixed_stack_segment]
     fn setBackgroundColour(&self, colour: @wxColour) -> c_int {
@@ -2458,7 +2458,7 @@ impl wxObject for wxCalculateLayoutEventImpl { pub fn handle(&self) -> *u8 { **s
 trait wxCalculateLayoutEvent : wxEvent {
     #[fixed_stack_segment]
     fn new(id: c_int) -> @wxCalculateLayoutEvent {
-        unsafe { wxCalculateLayoutEvent_Create(id) }
+        unsafe { @wxCalculateLayoutEventImpl(wxCalculateLayoutEvent_Create(id)) as @wxCalculateLayoutEvent }
     }
     #[fixed_stack_segment]
     fn getFlags(&self) -> c_int {
@@ -2466,7 +2466,7 @@ trait wxCalculateLayoutEvent : wxEvent {
     }
     #[fixed_stack_segment]
     fn getRect(&self) -> @wxRect {
-        unsafe { wxCalculateLayoutEvent_GetRect(self.handle()) }
+        unsafe { @wxRectImpl(wxCalculateLayoutEvent_GetRect(self.handle())) as @wxRect }
     }
     #[fixed_stack_segment]
     fn setFlags(&self, flags: c_int) {
@@ -2488,7 +2488,7 @@ impl wxObject for wxCalendarCtrlImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxCalendarCtrl : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _dat: @wxDateTime, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxCalendarCtrl {
-        unsafe { wxCalendarCtrl_Create(_prt.handle(), _id, _dat.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxCalendarCtrlImpl(wxCalendarCtrl_Create(_prt.handle(), _id, _dat.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxCalendarCtrl }
     }
     #[fixed_stack_segment]
     fn enableHolidayDisplay(&self, display: c_int) {
@@ -2572,11 +2572,11 @@ trait wxCalendarDateAttr {
     
     #[fixed_stack_segment]
     fn new(_ctxt: *c_void, _cbck: *c_void, _cbrd: *c_void, _fnt: *c_void, _brd: c_int) -> @wxCalendarDateAttr {
-        unsafe { wxCalendarDateAttr_Create(_ctxt, _cbck, _cbrd, _fnt, _brd) }
+        unsafe { @wxCalendarDateAttrImpl(wxCalendarDateAttr_Create(_ctxt, _cbck, _cbrd, _fnt, _brd)) as @wxCalendarDateAttr }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxCalendarDateAttr {
-        unsafe { wxCalendarDateAttr_CreateDefault() }
+        unsafe { @wxCalendarDateAttrImpl(wxCalendarDateAttr_CreateDefault()) as @wxCalendarDateAttr }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -2677,7 +2677,7 @@ trait wxCaret {
     
     #[fixed_stack_segment]
     fn new(_wnd: @wxWindow, _wth: c_int, _hgt: c_int) -> @wxCaret {
-        unsafe { wxCaret_Create(_wnd.handle(), _wth, _hgt) }
+        unsafe { @wxCaretImpl(wxCaret_Create(_wnd.handle(), _wth, _hgt)) as @wxCaret }
     }
     #[fixed_stack_segment]
     fn getBlinkTime() -> c_int {
@@ -2685,15 +2685,15 @@ trait wxCaret {
     }
     #[fixed_stack_segment]
     fn getPosition(&self) -> @wxPoint {
-        unsafe { wxCaret_GetPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxCaret_GetPosition(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getSize(&self) -> @wxSize {
-        unsafe { wxCaret_GetSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxCaret_GetSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getWindow(&self) -> @wxWindow {
-        unsafe { wxCaret_GetWindow(self.handle()) }
+        unsafe { @wxWindowImpl(wxCaret_GetWindow(self.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn hide(&self) {
@@ -2735,7 +2735,7 @@ impl wxObject for wxCheckBoxImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxCheckBox : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxCheckBox {
-        unsafe { wxCheckBox_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxCheckBoxImpl(wxCheckBox_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxCheckBox }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -2766,7 +2766,7 @@ trait wxCheckListBox : wxListBox {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *wchar_t, _stl: c_int) -> @wxCheckListBox {
-        unsafe { wxCheckListBox_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, n, str, _stl) }
+        unsafe { @wxCheckListBoxImpl(wxCheckListBox_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, n, str, _stl)) as @wxCheckListBox }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -2796,7 +2796,7 @@ trait wxChoice : wxControl {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *wchar_t, _stl: c_int) -> @wxChoice {
-        unsafe { wxChoice_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, n, str, _stl) }
+        unsafe { @wxChoiceImpl(wxChoice_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, n, str, _stl)) as @wxChoice }
     }
     #[fixed_stack_segment]
     fn delete(&self, n: c_int) {
@@ -2816,7 +2816,7 @@ trait wxChoice : wxControl {
     }
     #[fixed_stack_segment]
     fn getString(&self, n: c_int) -> @wxString {
-        unsafe { wxChoice_GetString(self.handle(), n) }
+        unsafe { @wxStringImpl(wxChoice_GetString(self.handle(), n)) as @wxString }
     }
     #[fixed_stack_segment]
     fn setSelection(&self, n: c_int) {
@@ -2848,19 +2848,19 @@ trait wxClassInfo {
     }
     #[fixed_stack_segment]
     fn findClass(_txt: @wxString) -> @wxClassInfo {
-        unsafe { wxClassInfo_FindClass(_txt.handle()) }
+        unsafe { @wxClassInfoImpl(wxClassInfo_FindClass(_txt.handle())) as @wxClassInfo }
     }
     #[fixed_stack_segment]
     fn getBaseClassName1(&self) -> @wxString {
-        unsafe { wxClassInfo_GetBaseClassName1(self.handle()) }
+        unsafe { @wxStringImpl(wxClassInfo_GetBaseClassName1(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getBaseClassName2(&self) -> @wxString {
-        unsafe { wxClassInfo_GetBaseClassName2(self.handle()) }
+        unsafe { @wxStringImpl(wxClassInfo_GetBaseClassName2(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getClassNameEx(&self) -> @wxString {
-        unsafe { wxClassInfo_GetClassNameEx(self.handle()) }
+        unsafe { @wxStringImpl(wxClassInfo_GetClassNameEx(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getSize(&self) -> c_int {
@@ -2896,7 +2896,7 @@ impl wxObject for wxClientDCImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxClientDC : wxWindowDC {
     #[fixed_stack_segment]
     fn new(win: @wxWindow) -> @wxClientDC {
-        unsafe { wxClientDC_Create(win.handle()) }
+        unsafe { @wxClientDCImpl(wxClientDC_Create(win.handle())) as @wxClientDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -2939,7 +2939,7 @@ trait wxClipboard : wxObject {
     }
     #[fixed_stack_segment]
     fn new() -> @wxClipboard {
-        unsafe { wxClipboard_Create() }
+        unsafe { @wxClipboardImpl(wxClipboard_Create()) as @wxClipboard }
     }
     #[fixed_stack_segment]
     fn flush(&self) -> bool {
@@ -3014,7 +3014,7 @@ impl wxObject for wxClosureImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxClosure : wxObject {
     #[fixed_stack_segment]
     fn new(_fun_CEvent: *c_void, _data: *c_void) -> @wxClosure {
-        unsafe { wxClosure_Create(_fun_CEvent, _data) }
+        unsafe { @wxClosureImpl(wxClosure_Create(_fun_CEvent, _data)) as @wxClosure }
     }
     #[fixed_stack_segment]
     fn getData(&self) {
@@ -3045,19 +3045,19 @@ trait wxColour : wxObject {
     }
     #[fixed_stack_segment]
     fn newByName(_name: @wxString) -> @wxColour {
-        unsafe { wxColour_CreateByName(_name.handle()) }
+        unsafe { @wxColourImpl(wxColour_CreateByName(_name.handle())) as @wxColour }
     }
     #[fixed_stack_segment]
     fn newEmpty() -> @wxColour {
-        unsafe { wxColour_CreateEmpty() }
+        unsafe { @wxColourImpl(wxColour_CreateEmpty()) as @wxColour }
     }
     #[fixed_stack_segment]
     fn newFromStock(id: c_int) -> @wxColour {
-        unsafe { wxColour_CreateFromStock(id) }
+        unsafe { @wxColourImpl(wxColour_CreateFromStock(id)) as @wxColour }
     }
     #[fixed_stack_segment]
     fn newRGB(_red: uint8_t, _green: uint8_t, _blue: uint8_t, _alpha: uint8_t) -> @wxColour {
-        unsafe { wxColour_CreateRGB(_red, _green, _blue, _alpha) }
+        unsafe { @wxColourImpl(wxColour_CreateRGB(_red, _green, _blue, _alpha)) as @wxColour }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -3097,7 +3097,7 @@ trait wxColour : wxObject {
     }
     #[fixed_stack_segment]
     fn newFromInt(rgb: c_int) -> @wxColour {
-        unsafe { wxColour_CreateFromInt(rgb) }
+        unsafe { @wxColourImpl(wxColour_CreateFromInt(rgb)) as @wxColour }
     }
     #[fixed_stack_segment]
     fn getInt(&self) -> c_int {
@@ -3105,7 +3105,7 @@ trait wxColour : wxObject {
     }
     #[fixed_stack_segment]
     fn newFromUnsignedInt(rgba: uint32_t) -> @wxColour {
-        unsafe { wxColour_CreateFromUnsignedInt(rgba) }
+        unsafe { @wxColourImpl(wxColour_CreateFromUnsignedInt(rgba)) as @wxColour }
     }
     #[fixed_stack_segment]
     fn getUnsignedInt(&self) -> uint32_t {
@@ -3120,7 +3120,7 @@ impl wxObject for wxColourDataImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxColourData : wxObject {
     #[fixed_stack_segment]
     fn new() -> @wxColourData {
-        unsafe { wxColourData_Create() }
+        unsafe { @wxColourDataImpl(wxColourData_Create()) as @wxColourData }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -3171,7 +3171,7 @@ impl wxObject for wxColourDialogImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxColourDialog : wxDialog {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, col: @wxColourData) -> @wxColourDialog {
-        unsafe { wxColourDialog_Create(_prt.handle(), col.handle()) }
+        unsafe { @wxColourDialogImpl(wxColourDialog_Create(_prt.handle(), col.handle())) as @wxColourDialog }
     }
     #[fixed_stack_segment]
     fn getColourData(&self, _ref: @wxColourData) {
@@ -3206,7 +3206,7 @@ trait wxComboBox : wxChoice {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *wchar_t, _stl: c_int) -> @wxComboBox {
-        unsafe { wxComboBox_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, n, str, _stl) }
+        unsafe { @wxComboBoxImpl(wxComboBox_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, n, str, _stl)) as @wxComboBox }
     }
     #[fixed_stack_segment]
     fn cut(&self) {
@@ -3222,7 +3222,7 @@ trait wxComboBox : wxChoice {
     }
     #[fixed_stack_segment]
     fn getClientData(&self, n: c_int) -> @wxClientData {
-        unsafe { wxComboBox_GetClientData(self.handle(), n) }
+        unsafe { @wxClientDataImpl(wxComboBox_GetClientData(self.handle(), n)) as @wxClientData }
     }
     #[fixed_stack_segment]
     fn getCount(&self) -> c_int {
@@ -3242,15 +3242,15 @@ trait wxComboBox : wxChoice {
     }
     #[fixed_stack_segment]
     fn getString(&self, n: c_int) -> @wxString {
-        unsafe { wxComboBox_GetString(self.handle(), n) }
+        unsafe { @wxStringImpl(wxComboBox_GetString(self.handle(), n)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getStringSelection(&self) -> @wxString {
-        unsafe { wxComboBox_GetStringSelection(self.handle()) }
+        unsafe { @wxStringImpl(wxComboBox_GetStringSelection(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getValue(&self) -> @wxString {
-        unsafe { wxComboBox_GetValue(self.handle()) }
+        unsafe { @wxStringImpl(wxComboBox_GetValue(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn paste(&self) {
@@ -3309,7 +3309,7 @@ trait wxCommandEvent : wxEvent {
     }
     #[fixed_stack_segment]
     fn new(_typ: c_int, _id: c_int) -> @wxCommandEvent {
-        unsafe { wxCommandEvent_Create(_typ, _id) }
+        unsafe { @wxCommandEventImpl(wxCommandEvent_Create(_typ, _id)) as @wxCommandEvent }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -3317,11 +3317,11 @@ trait wxCommandEvent : wxEvent {
     }
     #[fixed_stack_segment]
     fn getClientData(&self) -> @wxClientData {
-        unsafe { wxCommandEvent_GetClientData(self.handle()) }
+        unsafe { @wxClientDataImpl(wxCommandEvent_GetClientData(self.handle())) as @wxClientData }
     }
     #[fixed_stack_segment]
     fn getClientObject(&self) -> @wxClientData {
-        unsafe { wxCommandEvent_GetClientObject(self.handle()) }
+        unsafe { @wxClientDataImpl(wxCommandEvent_GetClientObject(self.handle())) as @wxClientData }
     }
     #[fixed_stack_segment]
     fn getExtraLong(&self) -> c_long {
@@ -3337,7 +3337,7 @@ trait wxCommandEvent : wxEvent {
     }
     #[fixed_stack_segment]
     fn getString(&self) -> @wxString {
-        unsafe { wxCommandEvent_GetString(self.handle()) }
+        unsafe { @wxStringImpl(wxCommandEvent_GetString(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn isChecked(&self) -> bool {
@@ -3452,7 +3452,7 @@ trait wxCondition {
     }
     #[fixed_stack_segment]
     fn new(_mut: *c_void) -> @wxCondition {
-        unsafe { wxCondition_Create(_mut) }
+        unsafe { @wxConditionImpl(wxCondition_Create(_mut)) as @wxCondition }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -3480,7 +3480,7 @@ trait wxConfigBase {
     
     #[fixed_stack_segment]
     fn new() -> @wxConfigBase {
-        unsafe { wxConfigBase_Create() }
+        unsafe { @wxConfigBaseImpl(wxConfigBase_Create()) as @wxConfigBase }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -3504,7 +3504,7 @@ trait wxConfigBase {
     }
     #[fixed_stack_segment]
     fn expandEnvVars(&self, str: @wxString) -> @wxString {
-        unsafe { wxConfigBase_ExpandEnvVars(self.handle(), str.handle()) }
+        unsafe { @wxStringImpl(wxConfigBase_ExpandEnvVars(self.handle(), str.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn flush(&self, bCurrentOnly: bool) -> bool {
@@ -3512,7 +3512,7 @@ trait wxConfigBase {
     }
     #[fixed_stack_segment]
     fn getAppName(&self) -> @wxString {
-        unsafe { wxConfigBase_GetAppName(self.handle()) }
+        unsafe { @wxStringImpl(wxConfigBase_GetAppName(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getEntryType(&self, name: @wxString) -> c_int {
@@ -3520,19 +3520,19 @@ trait wxConfigBase {
     }
     #[fixed_stack_segment]
     fn getFirstEntry(&self, lIndex: *c_void) -> @wxString {
-        unsafe { wxConfigBase_GetFirstEntry(self.handle(), lIndex) }
+        unsafe { @wxStringImpl(wxConfigBase_GetFirstEntry(self.handle(), lIndex)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getFirstGroup(&self, lIndex: *c_void) -> @wxString {
-        unsafe { wxConfigBase_GetFirstGroup(self.handle(), lIndex) }
+        unsafe { @wxStringImpl(wxConfigBase_GetFirstGroup(self.handle(), lIndex)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getNextEntry(&self, lIndex: *c_void) -> @wxString {
-        unsafe { wxConfigBase_GetNextEntry(self.handle(), lIndex) }
+        unsafe { @wxStringImpl(wxConfigBase_GetNextEntry(self.handle(), lIndex)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getNextGroup(&self, lIndex: *c_void) -> @wxString {
-        unsafe { wxConfigBase_GetNextGroup(self.handle(), lIndex) }
+        unsafe { @wxStringImpl(wxConfigBase_GetNextGroup(self.handle(), lIndex)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getNumberOfEntries(&self, bRecursive: bool) -> c_int {
@@ -3544,7 +3544,7 @@ trait wxConfigBase {
     }
     #[fixed_stack_segment]
     fn getPath(&self) -> @wxString {
-        unsafe { wxConfigBase_GetPath(self.handle()) }
+        unsafe { @wxStringImpl(wxConfigBase_GetPath(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getStyle(&self) -> c_int {
@@ -3552,7 +3552,7 @@ trait wxConfigBase {
     }
     #[fixed_stack_segment]
     fn getVendorName(&self) -> @wxString {
-        unsafe { wxConfigBase_GetVendorName(self.handle()) }
+        unsafe { @wxStringImpl(wxConfigBase_GetVendorName(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn hasEntry(&self, strName: @wxString) -> bool {
@@ -3584,7 +3584,7 @@ trait wxConfigBase {
     }
     #[fixed_stack_segment]
     fn readString(&self, key: @wxString, defVal: @wxString) -> @wxString {
-        unsafe { wxConfigBase_ReadString(self.handle(), key.handle(), defVal.handle()) }
+        unsafe { @wxStringImpl(wxConfigBase_ReadString(self.handle(), key.handle(), defVal.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn renameEntry(&self, oldName: @wxString, newName: @wxString) -> bool {
@@ -3640,7 +3640,7 @@ trait wxConfigBase {
     }
     #[fixed_stack_segment]
     fn get() -> @wxConfigBase {
-        unsafe { wxConfigBase_Get() }
+        unsafe { @wxConfigBaseImpl(wxConfigBase_Get()) as @wxConfigBase }
     }
     #[fixed_stack_segment]
     fn set(self_: @wxConfigBase) {
@@ -3674,7 +3674,7 @@ trait wxContextHelp : wxObject {
     }
     #[fixed_stack_segment]
     fn new(win: @wxWindow, beginHelp: bool) -> @wxContextHelp {
-        unsafe { wxContextHelp_Create(win.handle(), beginHelp) }
+        unsafe { @wxContextHelpImpl(wxContextHelp_Create(win.handle(), beginHelp)) as @wxContextHelp }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -3698,7 +3698,7 @@ impl wxObject for wxContextHelpButtonImpl { pub fn handle(&self) -> *u8 { **self
 trait wxContextHelpButton : wxBitmapButton {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, id: c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_long) -> @wxContextHelpButton {
-        unsafe { wxContextHelpButton_Create(parent.handle(), id, x, y, w, h, style) }
+        unsafe { @wxContextHelpButtonImpl(wxContextHelpButton_Create(parent.handle(), id, x, y, w, h, style)) as @wxContextHelpButton }
     }
 }
 
@@ -3715,7 +3715,7 @@ trait wxControl : wxWindow {
     }
     #[fixed_stack_segment]
     fn getLabel(&self) -> @wxString {
-        unsafe { wxControl_GetLabel(self.handle()) }
+        unsafe { @wxStringImpl(wxControl_GetLabel(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn setLabel(&self, text: @wxString) {
@@ -3739,7 +3739,7 @@ trait wxCriticalSection {
     
     #[fixed_stack_segment]
     fn new() -> @wxCriticalSection {
-        unsafe { wxCriticalSection_Create() }
+        unsafe { @wxCriticalSectionImpl(wxCriticalSection_Create()) as @wxCriticalSection }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -3883,7 +3883,7 @@ trait wxDC : wxObject {
     }
     #[fixed_stack_segment]
     fn drawLabelBitmap(&self, str: @wxString, bmp: @wxBitmap, x: c_int, y: c_int, w: c_int, h: c_int, align: c_int, indexAccel: c_int) -> @wxRect {
-        unsafe { wxDC_DrawLabelBitmap(self.handle(), str.handle(), bmp.handle(), x, y, w, h, align, indexAccel) }
+        unsafe { @wxRectImpl(wxDC_DrawLabelBitmap(self.handle(), str.handle(), bmp.handle(), x, y, w, h, align, indexAccel)) as @wxRect }
     }
     #[fixed_stack_segment]
     fn drawLine(&self, x1: c_int, y1: c_int, x2: c_int, y2: c_int) {
@@ -3987,7 +3987,7 @@ trait wxDC : wxObject {
     }
     #[fixed_stack_segment]
     fn getPPI(&self) -> @wxSize {
-        unsafe { wxDC_GetPPI(self.handle()) }
+        unsafe { @wxSizeImpl(wxDC_GetPPI(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getPen(&self, _ref: @wxPen) {
@@ -3999,11 +3999,11 @@ trait wxDC : wxObject {
     }
     #[fixed_stack_segment]
     fn getSize(&self) -> @wxSize {
-        unsafe { wxDC_GetSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxDC_GetSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getSizeMM(&self) -> @wxSize {
-        unsafe { wxDC_GetSizeMM(self.handle()) }
+        unsafe { @wxSizeImpl(wxDC_GetSizeMM(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getTextBackground(&self, _ref: @wxColour) {
@@ -4195,11 +4195,11 @@ trait wxDataFormat {
     
     #[fixed_stack_segment]
     fn newFromId(name: @wxString) -> @wxDataFormat {
-        unsafe { wxDataFormat_CreateFromId(name.handle()) }
+        unsafe { @wxDataFormatImpl(wxDataFormat_CreateFromId(name.handle())) as @wxDataFormat }
     }
     #[fixed_stack_segment]
     fn newFromType(typ: c_int) -> @wxDataFormat {
-        unsafe { wxDataFormat_CreateFromType(typ) }
+        unsafe { @wxDataFormatImpl(wxDataFormat_CreateFromType(typ)) as @wxDataFormat }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -4207,7 +4207,7 @@ trait wxDataFormat {
     }
     #[fixed_stack_segment]
     fn getId(&self) -> @wxString {
-        unsafe { wxDataFormat_GetId(self.handle()) }
+        unsafe { @wxStringImpl(wxDataFormat_GetId(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getType(&self) -> c_int {
@@ -4254,7 +4254,7 @@ trait wxDataObjectComposite : wxDataObject {
     }
     #[fixed_stack_segment]
     fn new() -> @wxDataObjectComposite {
-        unsafe { wxDataObjectComposite_Create() }
+        unsafe { @wxDataObjectCompositeImpl(wxDataObjectComposite_Create()) as @wxDataObjectComposite }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -4312,31 +4312,31 @@ trait wxDateTime {
     }
     #[fixed_stack_segment]
     fn new() -> @wxDateTime {
-        unsafe { wxDateTime_Create() }
+        unsafe { @wxDateTimeImpl(wxDateTime_Create()) as @wxDateTime }
     }
     #[fixed_stack_segment]
     fn format(&self, format: *c_void, tz: c_int) -> @wxString {
-        unsafe { wxDateTime_Format(self.handle(), format, tz) }
+        unsafe { @wxStringImpl(wxDateTime_Format(self.handle(), format, tz)) as @wxString }
     }
     #[fixed_stack_segment]
     fn formatDate(&self) -> @wxString {
-        unsafe { wxDateTime_FormatDate(self.handle()) }
+        unsafe { @wxStringImpl(wxDateTime_FormatDate(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn formatISODate(&self) -> @wxString {
-        unsafe { wxDateTime_FormatISODate(self.handle()) }
+        unsafe { @wxStringImpl(wxDateTime_FormatISODate(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn formatISOTime(&self) -> @wxString {
-        unsafe { wxDateTime_FormatISOTime(self.handle()) }
+        unsafe { @wxStringImpl(wxDateTime_FormatISOTime(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn formatTime(&self) -> @wxString {
-        unsafe { wxDateTime_FormatTime(self.handle()) }
+        unsafe { @wxStringImpl(wxDateTime_FormatTime(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getAmString() -> @wxString {
-        unsafe { wxDateTime_GetAmString() }
+        unsafe { @wxStringImpl(wxDateTime_GetAmString()) as @wxString }
     }
     #[fixed_stack_segment]
     fn getBeginDST(year: c_int, country: c_int, dt: @wxDateTime) {
@@ -4396,7 +4396,7 @@ trait wxDateTime {
     }
     #[fixed_stack_segment]
     fn getMonthName(month: c_int, flags: c_int) -> @wxString {
-        unsafe { wxDateTime_GetMonthName(month, flags) }
+        unsafe { @wxStringImpl(wxDateTime_GetMonthName(month, flags)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getNextWeekDay(&self, weekday: c_int, _ref: @wxDateTime) {
@@ -4412,7 +4412,7 @@ trait wxDateTime {
     }
     #[fixed_stack_segment]
     fn getPmString() -> @wxString {
-        unsafe { wxDateTime_GetPmString() }
+        unsafe { @wxStringImpl(wxDateTime_GetPmString()) as @wxString }
     }
     #[fixed_stack_segment]
     fn getPrevWeekDay(&self, weekday: c_int, _ref: @wxDateTime) {
@@ -4444,7 +4444,7 @@ trait wxDateTime {
     }
     #[fixed_stack_segment]
     fn getWeekDayName(weekday: c_int, flags: c_int) -> @wxString {
-        unsafe { wxDateTime_GetWeekDayName(weekday, flags) }
+        unsafe { @wxStringImpl(wxDateTime_GetWeekDayName(weekday, flags)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getWeekDayTZ(&self, tz: c_int) -> c_int {
@@ -4768,7 +4768,7 @@ trait wxDialUpManager {
     }
     #[fixed_stack_segment]
     fn new() -> @wxDialUpManager {
-        unsafe { wxDialUpManager_Create() }
+        unsafe { @wxDialUpManagerImpl(wxDialUpManager_Create()) as @wxDialUpManager }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -4834,7 +4834,7 @@ impl wxObject for wxDialogImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxDialog : wxTopLevelWindow {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxDialog {
-        unsafe { wxDialog_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxDialogImpl(wxDialog_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxDialog }
     }
     #[fixed_stack_segment]
     fn endModal(&self, retCode: c_int) {
@@ -4869,15 +4869,15 @@ impl wxObject for wxDirDialogImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxDirDialog : wxDialog {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _msg: @wxString, _dir: @wxString, _lft: c_int, _top: c_int, _stl: c_int) -> @wxDirDialog {
-        unsafe { wxDirDialog_Create(_prt.handle(), _msg.handle(), _dir.handle(), _lft, _top, _stl) }
+        unsafe { @wxDirDialogImpl(wxDirDialog_Create(_prt.handle(), _msg.handle(), _dir.handle(), _lft, _top, _stl)) as @wxDirDialog }
     }
     #[fixed_stack_segment]
     fn getMessage(&self) -> @wxString {
-        unsafe { wxDirDialog_GetMessage(self.handle()) }
+        unsafe { @wxStringImpl(wxDirDialog_GetMessage(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getPath(&self) -> @wxString {
-        unsafe { wxDirDialog_GetPath(self.handle()) }
+        unsafe { @wxStringImpl(wxDirDialog_GetPath(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getStyle(&self) -> c_int {
@@ -4989,7 +4989,7 @@ impl wxObject for wxDragImageImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxDragImage : wxObject {
     #[fixed_stack_segment]
     fn new(image: @wxBitmap, x: c_int, y: c_int) -> @wxDragImage {
-        unsafe { wxDragImage_Create(image.handle(), x, y) }
+        unsafe { @wxDragImageImpl(wxDragImage_Create(image.handle(), x, y)) as @wxDragImage }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -5031,7 +5031,7 @@ impl wxObject for wxDrawControlImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxDrawControl : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxDrawControl {
-        unsafe { wxDrawControl_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxDrawControlImpl(wxDrawControl_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxDrawControl }
     }
 }
 
@@ -5044,7 +5044,7 @@ impl wxObject for wxDrawWindowImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxDrawWindow : wxWindow {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxDrawWindow {
-        unsafe { wxDrawWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxDrawWindowImpl(wxDrawWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxDrawWindow }
     }
 }
 
@@ -5117,7 +5117,7 @@ impl wxObject for wxDynamicSashWindowImpl { pub fn handle(&self) -> *u8 { **self
 trait wxDynamicSashWindow : wxWindow {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, id: c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @wxDynamicSashWindow {
-        unsafe { wxDynamicSashWindow_Create(parent.handle(), id, x, y, w, h, style) }
+        unsafe { @wxDynamicSashWindowImpl(wxDynamicSashWindow_Create(parent.handle(), id, x, y, w, h, style)) as @wxDynamicSashWindow }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -5164,11 +5164,11 @@ trait wxDynamicToolBar : wxToolBarBase {
     }
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, id: c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int, orientation: c_int, RowsOrColumns: c_int) -> @wxDynamicToolBar {
-        unsafe { wxDynamicToolBar_Create(parent.handle(), id, x, y, w, h, style, orientation, RowsOrColumns) }
+        unsafe { @wxDynamicToolBarImpl(wxDynamicToolBar_Create(parent.handle(), id, x, y, w, h, style, orientation, RowsOrColumns)) as @wxDynamicToolBar }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxDynamicToolBar {
-        unsafe { wxDynamicToolBar_CreateDefault() }
+        unsafe { @wxDynamicToolBarImpl(wxDynamicToolBar_CreateDefault()) as @wxDynamicToolBar }
     }
     #[fixed_stack_segment]
     fn newDefaultLayout(&self) {
@@ -5254,7 +5254,7 @@ impl wxObject for wxEditableListBoxImpl { pub fn handle(&self) -> *u8 { **self }
 trait wxEditableListBox : wxPanel {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, id: c_int, label: *wchar_t, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @wxEditableListBox {
-        unsafe { wxEditableListBox_Create(parent.handle(), id, label, x, y, w, h, style) }
+        unsafe { @wxEditableListBoxImpl(wxEditableListBox_Create(parent.handle(), id, label, x, y, w, h, style)) as @wxEditableListBox }
     }
     #[fixed_stack_segment]
     fn getDelButton(&self) {
@@ -5270,7 +5270,7 @@ trait wxEditableListBox : wxPanel {
     }
     #[fixed_stack_segment]
     fn getListCtrl(&self) -> @wxListCtrl {
-        unsafe { wxEditableListBox_GetListCtrl(self.handle()) }
+        unsafe { @wxListCtrlImpl(wxEditableListBox_GetListCtrl(self.handle())) as @wxListCtrl }
     }
     #[fixed_stack_segment]
     fn getNewButton(&self) {
@@ -5301,7 +5301,7 @@ trait wxEncodingConverter : wxObject {
     }
     #[fixed_stack_segment]
     fn new() -> @wxEncodingConverter {
-        unsafe { wxEncodingConverter_Create() }
+        unsafe { @wxEncodingConverterImpl(wxEncodingConverter_Create()) as @wxEncodingConverter }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -5333,7 +5333,7 @@ trait wxEraseEvent : wxEvent {
     }
     #[fixed_stack_segment]
     fn getDC(&self) -> @wxDC {
-        unsafe { wxEraseEvent_GetDC(self.handle()) }
+        unsafe { @wxDCImpl(wxEraseEvent_GetDC(self.handle())) as @wxDC }
     }
 }
 
@@ -5348,7 +5348,7 @@ trait wxEvent : wxObject {
     }
     #[fixed_stack_segment]
     fn getEventObject(&self) -> @wxObject {
-        unsafe { wxEvent_GetEventObject(self.handle()) }
+        unsafe { @wxObjectImpl(wxEvent_GetEventObject(self.handle())) as @wxObject }
     }
     #[fixed_stack_segment]
     fn getEventType(&self) -> c_int {
@@ -5411,7 +5411,7 @@ trait wxEvtHandler : wxObject {
     }
     #[fixed_stack_segment]
     fn new() -> @wxEvtHandler {
-        unsafe { wxEvtHandler_Create() }
+        unsafe { @wxEvtHandlerImpl(wxEvtHandler_Create()) as @wxEvtHandler }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -5427,11 +5427,11 @@ trait wxEvtHandler : wxObject {
     }
     #[fixed_stack_segment]
     fn getNextHandler(&self) -> @wxEvtHandler {
-        unsafe { wxEvtHandler_GetNextHandler(self.handle()) }
+        unsafe { @wxEvtHandlerImpl(wxEvtHandler_GetNextHandler(self.handle())) as @wxEvtHandler }
     }
     #[fixed_stack_segment]
     fn getPreviousHandler(&self) -> @wxEvtHandler {
-        unsafe { wxEvtHandler_GetPreviousHandler(self.handle()) }
+        unsafe { @wxEvtHandlerImpl(wxEvtHandler_GetPreviousHandler(self.handle())) as @wxEvtHandler }
     }
     #[fixed_stack_segment]
     fn processEvent(&self, event: @wxEvent) -> bool {
@@ -5455,11 +5455,11 @@ trait wxEvtHandler : wxObject {
     }
     #[fixed_stack_segment]
     fn getClosure(&self, id: c_int, type_: c_int) -> @wxClosure {
-        unsafe { wxEvtHandler_GetClosure(self.handle(), id, type_) }
+        unsafe { @wxClosureImpl(wxEvtHandler_GetClosure(self.handle(), id, type_)) as @wxClosure }
     }
     #[fixed_stack_segment]
     fn getClientClosure(&self) -> @wxClosure {
-        unsafe { wxEvtHandler_GetClientClosure(self.handle()) }
+        unsafe { @wxClosureImpl(wxEvtHandler_GetClientClosure(self.handle())) as @wxClosure }
     }
     #[fixed_stack_segment]
     fn setClientClosure(&self, closure: @wxClosure) {
@@ -5543,15 +5543,15 @@ impl wxObject for wxFileDialogImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxFileDialog : wxDialog {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _msg: @wxString, _dir: @wxString, _fle: @wxString, _wcd: @wxString, _lft: c_int, _top: c_int, _stl: c_int) -> @wxFileDialog {
-        unsafe { wxFileDialog_Create(_prt.handle(), _msg.handle(), _dir.handle(), _fle.handle(), _wcd.handle(), _lft, _top, _stl) }
+        unsafe { @wxFileDialogImpl(wxFileDialog_Create(_prt.handle(), _msg.handle(), _dir.handle(), _fle.handle(), _wcd.handle(), _lft, _top, _stl)) as @wxFileDialog }
     }
     #[fixed_stack_segment]
     fn getDirectory(&self) -> @wxString {
-        unsafe { wxFileDialog_GetDirectory(self.handle()) }
+        unsafe { @wxStringImpl(wxFileDialog_GetDirectory(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getFilename(&self) -> @wxString {
-        unsafe { wxFileDialog_GetFilename(self.handle()) }
+        unsafe { @wxStringImpl(wxFileDialog_GetFilename(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getFilenames(&self, paths: **wchar_t) -> c_int {
@@ -5563,11 +5563,11 @@ trait wxFileDialog : wxDialog {
     }
     #[fixed_stack_segment]
     fn getMessage(&self) -> @wxString {
-        unsafe { wxFileDialog_GetMessage(self.handle()) }
+        unsafe { @wxStringImpl(wxFileDialog_GetMessage(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getPath(&self) -> @wxString {
-        unsafe { wxFileDialog_GetPath(self.handle()) }
+        unsafe { @wxStringImpl(wxFileDialog_GetPath(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getPaths(&self, paths: **wchar_t) -> c_int {
@@ -5579,7 +5579,7 @@ trait wxFileDialog : wxDialog {
     }
     #[fixed_stack_segment]
     fn getWildcard(&self) -> @wxString {
-        unsafe { wxFileDialog_GetWildcard(self.handle()) }
+        unsafe { @wxStringImpl(wxFileDialog_GetWildcard(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn setDirectory(&self, dir: @wxString) {
@@ -5633,7 +5633,7 @@ trait wxFileHistory : wxObject {
     }
     #[fixed_stack_segment]
     fn new(maxFiles: c_int) -> @wxFileHistory {
-        unsafe { wxFileHistory_Create(maxFiles) }
+        unsafe { @wxFileHistoryImpl(wxFileHistory_Create(maxFiles)) as @wxFileHistory }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -5645,7 +5645,7 @@ trait wxFileHistory : wxObject {
     }
     #[fixed_stack_segment]
     fn getHistoryFile(&self, i: c_int) -> @wxString {
-        unsafe { wxFileHistory_GetHistoryFile(self.handle(), i) }
+        unsafe { @wxStringImpl(wxFileHistory_GetHistoryFile(self.handle(), i)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getMaxFiles(&self) -> c_int {
@@ -5727,11 +5727,11 @@ trait wxFileType {
     }
     #[fixed_stack_segment]
     fn expandCommand(&self, _cmd: *c_void, _params: *c_void) -> @wxString {
-        unsafe { wxFileType_ExpandCommand(self.handle(), _cmd, _params) }
+        unsafe { @wxStringImpl(wxFileType_ExpandCommand(self.handle(), _cmd, _params)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getDescription(&self) -> @wxString {
-        unsafe { wxFileType_GetDescription(self.handle()) }
+        unsafe { @wxStringImpl(wxFileType_GetDescription(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getExtensions(&self, _lst: @wxList) -> c_int {
@@ -5743,7 +5743,7 @@ trait wxFileType {
     }
     #[fixed_stack_segment]
     fn getMimeType(&self) -> @wxString {
-        unsafe { wxFileType_GetMimeType(self.handle()) }
+        unsafe { @wxStringImpl(wxFileType_GetMimeType(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getMimeTypes(&self, _lst: @wxList) -> c_int {
@@ -5803,11 +5803,11 @@ impl wxObject for wxFindReplaceDataImpl { pub fn handle(&self) -> *u8 { **self }
 trait wxFindReplaceData : wxObject {
     #[fixed_stack_segment]
     fn new(flags: c_int) -> @wxFindReplaceData {
-        unsafe { wxFindReplaceData_Create(flags) }
+        unsafe { @wxFindReplaceDataImpl(wxFindReplaceData_Create(flags)) as @wxFindReplaceData }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxFindReplaceData {
-        unsafe { wxFindReplaceData_CreateDefault() }
+        unsafe { @wxFindReplaceDataImpl(wxFindReplaceData_CreateDefault()) as @wxFindReplaceData }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -5815,7 +5815,7 @@ trait wxFindReplaceData : wxObject {
     }
     #[fixed_stack_segment]
     fn getFindString(&self) -> @wxString {
-        unsafe { wxFindReplaceData_GetFindString(self.handle()) }
+        unsafe { @wxStringImpl(wxFindReplaceData_GetFindString(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getFlags(&self) -> c_int {
@@ -5823,7 +5823,7 @@ trait wxFindReplaceData : wxObject {
     }
     #[fixed_stack_segment]
     fn getReplaceString(&self) -> @wxString {
-        unsafe { wxFindReplaceData_GetReplaceString(self.handle()) }
+        unsafe { @wxStringImpl(wxFindReplaceData_GetReplaceString(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn setFindString(&self, str: @wxString) {
@@ -5850,11 +5850,11 @@ impl wxObject for wxFindReplaceDialogImpl { pub fn handle(&self) -> *u8 { **self
 trait wxFindReplaceDialog : wxDialog {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, data: @wxFindReplaceData, title: @wxString, style: c_int) -> @wxFindReplaceDialog {
-        unsafe { wxFindReplaceDialog_Create(parent.handle(), data.handle(), title.handle(), style) }
+        unsafe { @wxFindReplaceDialogImpl(wxFindReplaceDialog_Create(parent.handle(), data.handle(), title.handle(), style)) as @wxFindReplaceDialog }
     }
     #[fixed_stack_segment]
     fn getData(&self) -> @wxFindReplaceData {
-        unsafe { wxFindReplaceDialog_GetData(self.handle()) }
+        unsafe { @wxFindReplaceDataImpl(wxFindReplaceDialog_GetData(self.handle())) as @wxFindReplaceData }
     }
     #[fixed_stack_segment]
     fn setData(&self, data: @wxFindReplaceData) {
@@ -5879,11 +5879,11 @@ trait wxFlexGridSizer : wxGridSizer {
     }
     #[fixed_stack_segment]
     fn calcMin(&self) -> @wxSize {
-        unsafe { wxFlexGridSizer_CalcMin(self.handle()) }
+        unsafe { @wxSizeImpl(wxFlexGridSizer_CalcMin(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn new(rows: c_int, cols: c_int, vgap: c_int, hgap: c_int) -> @wxFlexGridSizer {
-        unsafe { wxFlexGridSizer_Create(rows, cols, vgap, hgap) }
+        unsafe { @wxFlexGridSizerImpl(wxFlexGridSizer_Create(rows, cols, vgap, hgap)) as @wxFlexGridSizer }
     }
     #[fixed_stack_segment]
     fn recalcSizes(&self) {
@@ -5915,15 +5915,15 @@ impl wxObject for wxFontImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxFont : wxGDIObject {
     #[fixed_stack_segment]
     fn new(pointSize: c_int, family: c_int, style: c_int, weight: c_int, underlined: bool, face: @wxString, enc: c_int) -> @wxFont {
-        unsafe { wxFont_Create(pointSize, family, style, weight, underlined, face.handle(), enc) }
+        unsafe { @wxFontImpl(wxFont_Create(pointSize, family, style, weight, underlined, face.handle(), enc)) as @wxFont }
     }
     #[fixed_stack_segment]
     fn newFromStock(id: c_int) -> @wxFont {
-        unsafe { wxFont_CreateFromStock(id) }
+        unsafe { @wxFontImpl(wxFont_CreateFromStock(id)) as @wxFont }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxFont {
-        unsafe { wxFont_CreateDefault() }
+        unsafe { @wxFontImpl(wxFont_CreateDefault()) as @wxFont }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -5939,7 +5939,7 @@ trait wxFont : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn getFaceName(&self) -> @wxString {
-        unsafe { wxFont_GetFaceName(self.handle()) }
+        unsafe { @wxStringImpl(wxFont_GetFaceName(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getFamily(&self) -> c_int {
@@ -5947,7 +5947,7 @@ trait wxFont : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn getFamilyString(&self) -> @wxString {
-        unsafe { wxFont_GetFamilyString(self.handle()) }
+        unsafe { @wxStringImpl(wxFont_GetFamilyString(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getPointSize(&self) -> c_int {
@@ -5959,7 +5959,7 @@ trait wxFont : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn getStyleString(&self) -> @wxString {
-        unsafe { wxFont_GetStyleString(self.handle()) }
+        unsafe { @wxStringImpl(wxFont_GetStyleString(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getUnderlined(&self) -> c_int {
@@ -5971,7 +5971,7 @@ trait wxFont : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn getWeightString(&self) -> @wxString {
-        unsafe { wxFont_GetWeightString(self.handle()) }
+        unsafe { @wxStringImpl(wxFont_GetWeightString(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn isOk(&self) -> bool {
@@ -6026,7 +6026,7 @@ impl wxObject for wxFontDataImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxFontData : wxObject {
     #[fixed_stack_segment]
     fn new() -> @wxFontData {
-        unsafe { wxFontData_Create() }
+        unsafe { @wxFontDataImpl(wxFontData_Create()) as @wxFontData }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -6105,7 +6105,7 @@ impl wxObject for wxFontDialogImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxFontDialog : wxDialog {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, fnt: @wxFontData) -> @wxFontDialog {
-        unsafe { wxFontDialog_Create(_prt.handle(), fnt.handle()) }
+        unsafe { @wxFontDialogImpl(wxFontDialog_Create(_prt.handle(), fnt.handle())) as @wxFontDialog }
     }
     #[fixed_stack_segment]
     fn getFontData(&self, _ref: @wxFontData) {
@@ -6121,7 +6121,7 @@ trait wxFontEnumerator {
     
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _fnc: *c_void) -> @wxFontEnumerator {
-        unsafe { wxFontEnumerator_Create(_obj, _fnc) }
+        unsafe { @wxFontEnumeratorImpl(wxFontEnumerator_Create(_obj, _fnc)) as @wxFontEnumerator }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -6153,7 +6153,7 @@ trait wxFontMapper {
     
     #[fixed_stack_segment]
     fn new() -> @wxFontMapper {
-        unsafe { wxFontMapper_Create() }
+        unsafe { @wxFontMapperImpl(wxFontMapper_Create()) as @wxFontMapper }
     }
     #[fixed_stack_segment]
     fn getAltForEncoding(&self, encoding: c_int, alt_encoding: *c_void, _buf: @wxString) -> bool {
@@ -6175,15 +6175,15 @@ impl wxObject for wxFrameImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxFrame : wxTopLevelWindow {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxFrame {
-        unsafe { wxFrame_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxFrameImpl(wxFrame_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxFrame }
     }
     #[fixed_stack_segment]
     fn newStatusBar(&self, number: c_int, style: c_int) -> @wxStatusBar {
-        unsafe { wxFrame_CreateStatusBar(self.handle(), number, style) }
+        unsafe { @wxStatusBarImpl(wxFrame_CreateStatusBar(self.handle(), number, style)) as @wxStatusBar }
     }
     #[fixed_stack_segment]
     fn newToolBar(&self, style: c_long) -> @wxToolBar {
-        unsafe { wxFrame_CreateToolBar(self.handle(), style) }
+        unsafe { @wxToolBarImpl(wxFrame_CreateToolBar(self.handle(), style)) as @wxToolBar }
     }
     #[fixed_stack_segment]
     fn getClientAreaOrigin_left(&self) -> c_int {
@@ -6195,15 +6195,15 @@ trait wxFrame : wxTopLevelWindow {
     }
     #[fixed_stack_segment]
     fn getMenuBar(&self) -> @wxMenuBar {
-        unsafe { wxFrame_GetMenuBar(self.handle()) }
+        unsafe { @wxMenuBarImpl(wxFrame_GetMenuBar(self.handle())) as @wxMenuBar }
     }
     #[fixed_stack_segment]
     fn getStatusBar(&self) -> @wxStatusBar {
-        unsafe { wxFrame_GetStatusBar(self.handle()) }
+        unsafe { @wxStatusBarImpl(wxFrame_GetStatusBar(self.handle())) as @wxStatusBar }
     }
     #[fixed_stack_segment]
     fn getToolBar(&self) -> @wxToolBar {
-        unsafe { wxFrame_GetToolBar(self.handle()) }
+        unsafe { @wxToolBarImpl(wxFrame_GetToolBar(self.handle())) as @wxToolBar }
     }
     #[fixed_stack_segment]
     fn restore(&self) {
@@ -6231,7 +6231,7 @@ trait wxFrame : wxTopLevelWindow {
     }
     #[fixed_stack_segment]
     fn getTitle(&self) -> @wxString {
-        unsafe { wxFrame_GetTitle(self.handle()) }
+        unsafe { @wxStringImpl(wxFrame_GetTitle(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn setTitle(&self, _txt: @wxString) {
@@ -6291,7 +6291,7 @@ trait wxFrameLayout : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn new(pParentFrame: *c_void, pFrameClient: *c_void, activateNow: c_int) -> @wxFrameLayout {
-        unsafe { wxFrameLayout_Create(pParentFrame, pFrameClient, activateNow) }
+        unsafe { @wxFrameLayoutImpl(wxFrameLayout_Create(pParentFrame, pFrameClient, activateNow)) as @wxFrameLayout }
     }
     #[fixed_stack_segment]
     fn deactivate(&self) {
@@ -6497,7 +6497,7 @@ impl wxObject for wxGLCanvasImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxGLCanvas : wxScrolledWindow {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, windowID: c_int, attributes: *c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int, title: @wxString, palette: @wxPalette) -> @wxGLCanvas {
-        unsafe { wxGLCanvas_Create(parent.handle(), windowID, attributes, x, y, w, h, style, title.handle(), palette.handle()) }
+        unsafe { @wxGLCanvasImpl(wxGLCanvas_Create(parent.handle(), windowID, attributes, x, y, w, h, style, title.handle(), palette.handle())) as @wxGLCanvas }
     }
     #[fixed_stack_segment]
     fn setColour(&self, colour: @wxColour) -> bool {
@@ -6531,7 +6531,7 @@ impl wxObject for wxGaugeImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxGauge : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _rng: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxGauge {
-        unsafe { wxGauge_Create(_prt.handle(), _id, _rng, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxGaugeImpl(wxGauge_Create(_prt.handle(), _id, _rng, _lft, _top, _wdt, _hgt, _stl)) as @wxGauge }
     }
     #[fixed_stack_segment]
     fn getBezelFace(&self) -> c_int {
@@ -6629,7 +6629,7 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn blockToDeviceRect(&self, top: c_int, left: c_int, bottom: c_int, right: c_int) -> @wxRect {
-        unsafe { wxGrid_BlockToDeviceRect(self.handle(), top, left, bottom, right) }
+        unsafe { @wxRectImpl(wxGrid_BlockToDeviceRect(self.handle(), top, left, bottom, right)) as @wxRect }
     }
     #[fixed_stack_segment]
     fn canDragColSize(&self) -> bool {
@@ -6649,7 +6649,7 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn cellToRect(&self, row: c_int, col: c_int) -> @wxRect {
-        unsafe { wxGrid_CellToRect(self.handle(), row, col) }
+        unsafe { @wxRectImpl(wxGrid_CellToRect(self.handle(), row, col)) as @wxRect }
     }
     #[fixed_stack_segment]
     fn clearGrid(&self) {
@@ -6661,7 +6661,7 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxGrid {
-        unsafe { wxGrid_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxGridImpl(wxGrid_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxGrid }
     }
     #[fixed_stack_segment]
     fn newGrid(&self, rows: c_int, cols: c_int, selmode: c_int) {
@@ -6773,7 +6773,7 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getCellEditor(&self, row: c_int, col: c_int) -> @wxGridCellEditor {
-        unsafe { wxGrid_GetCellEditor(self.handle(), row, col) }
+        unsafe { @wxGridCellEditorImpl(wxGrid_GetCellEditor(self.handle(), row, col)) as @wxGridCellEditor }
     }
     #[fixed_stack_segment]
     fn getCellFont(&self, row: c_int, col: c_int, font: @wxFont) {
@@ -6785,7 +6785,7 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getCellRenderer(&self, row: c_int, col: c_int) -> @wxGridCellRenderer {
-        unsafe { wxGrid_GetCellRenderer(self.handle(), row, col) }
+        unsafe { @wxGridCellRendererImpl(wxGrid_GetCellRenderer(self.handle(), row, col)) as @wxGridCellRenderer }
     }
     #[fixed_stack_segment]
     fn getCellTextColour(&self, row: c_int, col: c_int, colour: @wxColour) {
@@ -6793,7 +6793,7 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getCellValue(&self, row: c_int, col: c_int) -> @wxString {
-        unsafe { wxGrid_GetCellValue(self.handle(), row, col) }
+        unsafe { @wxStringImpl(wxGrid_GetCellValue(self.handle(), row, col)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getColLabelAlignment(&self, horiz: *c_int, vert: *c_int) {
@@ -6805,7 +6805,7 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getColLabelValue(&self, col: c_int) -> @wxString {
-        unsafe { wxGrid_GetColLabelValue(self.handle(), col) }
+        unsafe { @wxStringImpl(wxGrid_GetColLabelValue(self.handle(), col)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getColSize(&self, col: c_int) -> c_int {
@@ -6837,27 +6837,27 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getDefaultEditor(&self) -> @wxGridCellEditor {
-        unsafe { wxGrid_GetDefaultEditor(self.handle()) }
+        unsafe { @wxGridCellEditorImpl(wxGrid_GetDefaultEditor(self.handle())) as @wxGridCellEditor }
     }
     #[fixed_stack_segment]
     fn getDefaultEditorForCell(&self, row: c_int, col: c_int) -> @wxGridCellEditor {
-        unsafe { wxGrid_GetDefaultEditorForCell(self.handle(), row, col) }
+        unsafe { @wxGridCellEditorImpl(wxGrid_GetDefaultEditorForCell(self.handle(), row, col)) as @wxGridCellEditor }
     }
     #[fixed_stack_segment]
     fn getDefaultEditorForType(&self, typeName: @wxString) -> @wxGridCellEditor {
-        unsafe { wxGrid_GetDefaultEditorForType(self.handle(), typeName.handle()) }
+        unsafe { @wxGridCellEditorImpl(wxGrid_GetDefaultEditorForType(self.handle(), typeName.handle())) as @wxGridCellEditor }
     }
     #[fixed_stack_segment]
     fn getDefaultRenderer(&self) -> @wxGridCellRenderer {
-        unsafe { wxGrid_GetDefaultRenderer(self.handle()) }
+        unsafe { @wxGridCellRendererImpl(wxGrid_GetDefaultRenderer(self.handle())) as @wxGridCellRenderer }
     }
     #[fixed_stack_segment]
     fn getDefaultRendererForCell(&self, row: c_int, col: c_int) -> @wxGridCellRenderer {
-        unsafe { wxGrid_GetDefaultRendererForCell(self.handle(), row, col) }
+        unsafe { @wxGridCellRendererImpl(wxGrid_GetDefaultRendererForCell(self.handle(), row, col)) as @wxGridCellRenderer }
     }
     #[fixed_stack_segment]
     fn getDefaultRendererForType(&self, typeName: @wxString) -> @wxGridCellRenderer {
-        unsafe { wxGrid_GetDefaultRendererForType(self.handle(), typeName.handle()) }
+        unsafe { @wxGridCellRendererImpl(wxGrid_GetDefaultRendererForType(self.handle(), typeName.handle())) as @wxGridCellRenderer }
     }
     #[fixed_stack_segment]
     fn getDefaultRowLabelSize(&self) -> c_int {
@@ -6909,7 +6909,7 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getRowLabelValue(&self, row: c_int) -> @wxString {
-        unsafe { wxGrid_GetRowLabelValue(self.handle(), row) }
+        unsafe { @wxStringImpl(wxGrid_GetRowLabelValue(self.handle(), row)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getRowSize(&self, row: c_int) -> c_int {
@@ -6925,7 +6925,7 @@ trait wxGrid : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getTable(&self) -> @wxGridTableBase {
-        unsafe { wxGrid_GetTable(self.handle()) }
+        unsafe { @wxGridTableBaseImpl(wxGrid_GetTable(self.handle())) as @wxGridTableBase }
     }
     #[fixed_stack_segment]
     fn getTextBoxSize(&self, dc: @wxDC, count: c_int, lines: *wchar_t, _w: *c_int, _h: *c_int) {
@@ -7289,7 +7289,7 @@ trait wxGridCellAttr {
     
     #[fixed_stack_segment]
     fn ctor() -> @wxGridCellAttr {
-        unsafe { wxGridCellAttr_Ctor() }
+        unsafe { @wxGridCellAttrImpl(wxGridCellAttr_Ctor()) as @wxGridCellAttr }
     }
     #[fixed_stack_segment]
     fn decRef(&self) {
@@ -7305,7 +7305,7 @@ trait wxGridCellAttr {
     }
     #[fixed_stack_segment]
     fn getEditor(&self, grid: @wxGrid, row: c_int, col: c_int) -> @wxGridCellEditor {
-        unsafe { wxGridCellAttr_GetEditor(self.handle(), grid.handle(), row, col) }
+        unsafe { @wxGridCellEditorImpl(wxGridCellAttr_GetEditor(self.handle(), grid.handle(), row, col)) as @wxGridCellEditor }
     }
     #[fixed_stack_segment]
     fn getFont(&self, _ref: @wxFont) {
@@ -7313,7 +7313,7 @@ trait wxGridCellAttr {
     }
     #[fixed_stack_segment]
     fn getRenderer(&self, grid: @wxGrid, row: c_int, col: c_int) -> @wxGridCellRenderer {
-        unsafe { wxGridCellAttr_GetRenderer(self.handle(), grid.handle(), row, col) }
+        unsafe { @wxGridCellRendererImpl(wxGridCellAttr_GetRenderer(self.handle(), grid.handle(), row, col)) as @wxGridCellRenderer }
     }
     #[fixed_stack_segment]
     fn getTextColour(&self, _ref: @wxColour) {
@@ -7393,7 +7393,7 @@ impl wxGridCellWorker for wxGridCellBoolEditorImpl { pub fn handle(&self) -> *u8
 trait wxGridCellBoolEditor : wxGridCellEditor {
     #[fixed_stack_segment]
     fn ctor() -> @wxGridCellBoolEditor {
-        unsafe { wxGridCellBoolEditor_Ctor() }
+        unsafe { @wxGridCellBoolEditorImpl(wxGridCellBoolEditor_Ctor()) as @wxGridCellBoolEditor }
     }
 }
 
@@ -7413,7 +7413,7 @@ impl wxGridCellWorker for wxGridCellChoiceEditorImpl { pub fn handle(&self) -> *
 trait wxGridCellChoiceEditor : wxGridCellEditor {
     #[fixed_stack_segment]
     fn ctor(count: c_int, choices: *wchar_t, allowOthers: c_int) -> @wxGridCellChoiceEditor {
-        unsafe { wxGridCellChoiceEditor_Ctor(count, choices, allowOthers) }
+        unsafe { @wxGridCellChoiceEditorImpl(wxGridCellChoiceEditor_Ctor(count, choices, allowOthers)) as @wxGridCellChoiceEditor }
     }
 }
 
@@ -7425,7 +7425,7 @@ trait wxGridCellCoordsArray {
     
     #[fixed_stack_segment]
     fn new() -> @wxGridCellCoordsArray {
-        unsafe { wxGridCellCoordsArray_Create() }
+        unsafe { @wxGridCellCoordsArrayImpl(wxGridCellCoordsArray_Create()) as @wxGridCellCoordsArray }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -7464,7 +7464,7 @@ trait wxGridCellEditor : wxGridCellWorker {
     }
     #[fixed_stack_segment]
     fn getControl(&self) -> @wxControl {
-        unsafe { wxGridCellEditor_GetControl(self.handle()) }
+        unsafe { @wxControlImpl(wxGridCellEditor_GetControl(self.handle())) as @wxControl }
     }
     #[fixed_stack_segment]
     fn handleReturn(&self, event: @wxEvent) {
@@ -7521,7 +7521,7 @@ impl wxGridCellWorker for wxGridCellFloatEditorImpl { pub fn handle(&self) -> *u
 trait wxGridCellFloatEditor : wxGridCellTextEditor {
     #[fixed_stack_segment]
     fn ctor(width: c_int, precision: c_int) -> @wxGridCellFloatEditor {
-        unsafe { wxGridCellFloatEditor_Ctor(width, precision) }
+        unsafe { @wxGridCellFloatEditorImpl(wxGridCellFloatEditor_Ctor(width, precision)) as @wxGridCellFloatEditor }
     }
 }
 
@@ -7543,7 +7543,7 @@ impl wxGridCellWorker for wxGridCellNumberEditorImpl { pub fn handle(&self) -> *
 trait wxGridCellNumberEditor : wxGridCellTextEditor {
     #[fixed_stack_segment]
     fn ctor(min: c_int, max: c_int) -> @wxGridCellNumberEditor {
-        unsafe { wxGridCellNumberEditor_Ctor(min, max) }
+        unsafe { @wxGridCellNumberEditorImpl(wxGridCellNumberEditor_Ctor(min, max)) as @wxGridCellNumberEditor }
     }
 }
 
@@ -7556,7 +7556,7 @@ impl wxGridCellWorker for wxGridCellNumberRendererImpl { pub fn handle(&self) ->
 trait wxGridCellNumberRenderer : wxGridCellStringRenderer {
     #[fixed_stack_segment]
     fn ctor() -> @wxGridCellNumberRenderer {
-        unsafe { wxGridCellNumberRenderer_Ctor() }
+        unsafe { @wxGridCellNumberRendererImpl(wxGridCellNumberRenderer_Ctor()) as @wxGridCellNumberRenderer }
     }
 }
 
@@ -7569,7 +7569,7 @@ impl wxGridCellWorker for wxGridCellAutoWrapStringRendererImpl { pub fn handle(&
 trait wxGridCellAutoWrapStringRenderer : wxGridCellStringRenderer {
     #[fixed_stack_segment]
     fn ctor() -> @wxGridCellAutoWrapStringRenderer {
-        unsafe { wxGridCellAutoWrapStringRenderer_Ctor() }
+        unsafe { @wxGridCellAutoWrapStringRendererImpl(wxGridCellAutoWrapStringRenderer_Ctor()) as @wxGridCellAutoWrapStringRenderer }
     }
 }
 
@@ -7596,7 +7596,7 @@ impl wxGridCellWorker for wxGridCellTextEditorImpl { pub fn handle(&self) -> *u8
 trait wxGridCellTextEditor : wxGridCellEditor {
     #[fixed_stack_segment]
     fn ctor() -> @wxGridCellTextEditor {
-        unsafe { wxGridCellTextEditor_Ctor() }
+        unsafe { @wxGridCellTextEditorImpl(wxGridCellTextEditor_Ctor()) as @wxGridCellTextEditor }
     }
 }
 
@@ -7621,7 +7621,7 @@ trait wxGridEditorCreatedEvent : wxCommandEvent {
     }
     #[fixed_stack_segment]
     fn getControl(&self) -> @wxControl {
-        unsafe { wxGridEditorCreatedEvent_GetControl(self.handle()) }
+        unsafe { @wxControlImpl(wxGridEditorCreatedEvent_GetControl(self.handle())) as @wxControl }
     }
     #[fixed_stack_segment]
     fn getRow(&self) -> c_int {
@@ -7663,7 +7663,7 @@ trait wxGridEvent : wxNotifyEvent {
     }
     #[fixed_stack_segment]
     fn getPosition(&self) -> @wxPoint {
-        unsafe { wxGridEvent_GetPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxGridEvent_GetPosition(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getRow(&self) -> c_int {
@@ -7751,7 +7751,7 @@ trait wxGridSizeEvent : wxNotifyEvent {
     }
     #[fixed_stack_segment]
     fn getPosition(&self) -> @wxPoint {
-        unsafe { wxGridSizeEvent_GetPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxGridSizeEvent_GetPosition(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn controlDown(&self) -> bool {
@@ -7779,11 +7779,11 @@ impl wxObject for wxGridSizerImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxGridSizer : wxSizer {
     #[fixed_stack_segment]
     fn calcMin(&self) -> @wxSize {
-        unsafe { wxGridSizer_CalcMin(self.handle()) }
+        unsafe { @wxSizeImpl(wxGridSizer_CalcMin(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn new(rows: c_int, cols: c_int, vgap: c_int, hgap: c_int) -> @wxGridSizer {
-        unsafe { wxGridSizer_Create(rows, cols, vgap, hgap) }
+        unsafe { @wxGridSizerImpl(wxGridSizer_Create(rows, cols, vgap, hgap)) as @wxGridSizer }
     }
     #[fixed_stack_segment]
     fn getCols(&self) -> c_int {
@@ -7871,11 +7871,11 @@ impl wxHelpProvider for wxHelpControllerHelpProviderImpl { pub fn handle(&self) 
 trait wxHelpControllerHelpProvider : wxSimpleHelpProvider {
     #[fixed_stack_segment]
     fn new(ctr: @wxHelpControllerBase) -> @wxHelpControllerHelpProvider {
-        unsafe { wxHelpControllerHelpProvider_Create(ctr.handle()) }
+        unsafe { @wxHelpControllerHelpProviderImpl(wxHelpControllerHelpProvider_Create(ctr.handle())) as @wxHelpControllerHelpProvider }
     }
     #[fixed_stack_segment]
     fn getHelpController(&self) -> @wxHelpControllerBase {
-        unsafe { wxHelpControllerHelpProvider_GetHelpController(self.handle()) }
+        unsafe { @wxHelpControllerBaseImpl(wxHelpControllerHelpProvider_GetHelpController(self.handle())) as @wxHelpControllerBase }
     }
     #[fixed_stack_segment]
     fn setHelpController(&self, hc: @wxHelpController) {
@@ -7892,15 +7892,15 @@ impl wxObject for wxHelpEventImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxHelpEvent : wxCommandEvent {
     #[fixed_stack_segment]
     fn getLink(&self) -> @wxString {
-        unsafe { wxHelpEvent_GetLink(self.handle()) }
+        unsafe { @wxStringImpl(wxHelpEvent_GetLink(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getPosition(&self) -> @wxPoint {
-        unsafe { wxHelpEvent_GetPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxHelpEvent_GetPosition(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getTarget(&self) -> @wxString {
-        unsafe { wxHelpEvent_GetTarget(self.handle()) }
+        unsafe { @wxStringImpl(wxHelpEvent_GetTarget(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn setLink(&self, link: @wxString) {
@@ -7936,11 +7936,11 @@ trait wxHelpProvider {
     }
     #[fixed_stack_segment]
     fn get() -> @wxHelpProvider {
-        unsafe { wxHelpProvider_Get() }
+        unsafe { @wxHelpProviderImpl(wxHelpProvider_Get()) as @wxHelpProvider }
     }
     #[fixed_stack_segment]
     fn getHelp(&self, window: @wxWindow) -> @wxString {
-        unsafe { wxHelpProvider_GetHelp(self.handle(), window.handle()) }
+        unsafe { @wxStringImpl(wxHelpProvider_GetHelp(self.handle(), window.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn removeHelp(&self, window: @wxWindow) {
@@ -7948,7 +7948,7 @@ trait wxHelpProvider {
     }
     #[fixed_stack_segment]
     fn set(&self) -> @wxHelpProvider {
-        unsafe { wxHelpProvider_Set(self.handle()) }
+        unsafe { @wxHelpProviderImpl(wxHelpProvider_Set(self.handle())) as @wxHelpProvider }
     }
     #[fixed_stack_segment]
     fn showHelp(&self, window: @wxWindow) -> bool {
@@ -8012,7 +8012,7 @@ trait wxHtmlHelpController : wxHelpControllerBase {
     }
     #[fixed_stack_segment]
     fn new(_style: c_int) -> @wxHtmlHelpController {
-        unsafe { wxHtmlHelpController_Create(_style) }
+        unsafe { @wxHtmlHelpControllerImpl(wxHtmlHelpController_Create(_style)) as @wxHtmlHelpController }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -8048,7 +8048,7 @@ trait wxHtmlHelpController : wxHelpControllerBase {
     }
     #[fixed_stack_segment]
     fn getFrame(&self) -> @wxFrame {
-        unsafe { wxHtmlHelpController_GetFrame(self.handle()) }
+        unsafe { @wxFrameImpl(wxHtmlHelpController_GetFrame(self.handle())) as @wxFrame }
     }
     #[fixed_stack_segment]
     fn getFrameParameters(&self, title: *c_void, width: *c_int, height: *c_int, pos_x: *c_int, pos_y: *c_int, newFrameEachTime: *c_int) {
@@ -8197,7 +8197,7 @@ impl wxObject for wxHtmlWindowImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxHtmlWindow : wxScrolledWindow {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: @wxString) -> @wxHtmlWindow {
-        unsafe { wxHtmlWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.handle()) }
+        unsafe { @wxHtmlWindowImpl(wxHtmlWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.handle())) as @wxHtmlWindow }
     }
     #[fixed_stack_segment]
     fn appendToPage(&self, source: @wxString) -> bool {
@@ -8205,23 +8205,23 @@ trait wxHtmlWindow : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getInternalRepresentation(&self) -> @wxHtmlContainerCell {
-        unsafe { wxHtmlWindow_GetInternalRepresentation(self.handle()) }
+        unsafe { @wxHtmlContainerCellImpl(wxHtmlWindow_GetInternalRepresentation(self.handle())) as @wxHtmlContainerCell }
     }
     #[fixed_stack_segment]
     fn getOpenedAnchor(&self) -> @wxString {
-        unsafe { wxHtmlWindow_GetOpenedAnchor(self.handle()) }
+        unsafe { @wxStringImpl(wxHtmlWindow_GetOpenedAnchor(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getOpenedPage(&self) -> @wxString {
-        unsafe { wxHtmlWindow_GetOpenedPage(self.handle()) }
+        unsafe { @wxStringImpl(wxHtmlWindow_GetOpenedPage(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getOpenedPageTitle(&self) -> @wxString {
-        unsafe { wxHtmlWindow_GetOpenedPageTitle(self.handle()) }
+        unsafe { @wxStringImpl(wxHtmlWindow_GetOpenedPageTitle(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getRelatedFrame(&self) -> @wxFrame {
-        unsafe { wxHtmlWindow_GetRelatedFrame(self.handle()) }
+        unsafe { @wxFrameImpl(wxHtmlWindow_GetRelatedFrame(self.handle())) as @wxFrame }
     }
     #[fixed_stack_segment]
     fn historyBack(&self) -> bool {
@@ -8302,11 +8302,11 @@ trait wxIcon : wxBitmap {
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxIcon {
-        unsafe { wxIcon_CreateDefault() }
+        unsafe { @wxIconImpl(wxIcon_CreateDefault()) as @wxIcon }
     }
     #[fixed_stack_segment]
     fn newLoad(name: @wxString, type_: c_long, width: c_int, height: c_int) -> @wxIcon {
-        unsafe { wxIcon_CreateLoad(name.handle(), type_, width, height) }
+        unsafe { @wxIconImpl(wxIcon_CreateLoad(name.handle(), type_, width, height)) as @wxIcon }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -8314,11 +8314,11 @@ trait wxIcon : wxBitmap {
     }
     #[fixed_stack_segment]
     fn fromRaw(&self, width: c_int, height: c_int) -> @wxIcon {
-        unsafe { wxIcon_FromRaw(self.handle(), width, height) }
+        unsafe { @wxIconImpl(wxIcon_FromRaw(self.handle(), width, height)) as @wxIcon }
     }
     #[fixed_stack_segment]
     fn fromXPM(&self) -> @wxIcon {
-        unsafe { wxIcon_FromXPM(self.handle()) }
+        unsafe { @wxIconImpl(wxIcon_FromXPM(self.handle())) as @wxIcon }
     }
     #[fixed_stack_segment]
     fn getDepth(&self) -> c_int {
@@ -8386,15 +8386,15 @@ trait wxIconBundle {
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxIconBundle {
-        unsafe { wxIconBundle_CreateDefault() }
+        unsafe { @wxIconBundleImpl(wxIconBundle_CreateDefault()) as @wxIconBundle }
     }
     #[fixed_stack_segment]
     fn newFromFile(file: @wxString, type_: c_int) -> @wxIconBundle {
-        unsafe { wxIconBundle_CreateFromFile(file.handle(), type_) }
+        unsafe { @wxIconBundleImpl(wxIconBundle_CreateFromFile(file.handle(), type_)) as @wxIconBundle }
     }
     #[fixed_stack_segment]
     fn newFromIcon(icon: @wxIcon) -> @wxIconBundle {
-        unsafe { wxIconBundle_CreateFromIcon(icon.handle()) }
+        unsafe { @wxIconBundleImpl(wxIconBundle_CreateFromIcon(icon.handle())) as @wxIconBundle }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -8461,31 +8461,31 @@ trait wxImage : wxObject {
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxImage {
-        unsafe { wxImage_CreateDefault() }
+        unsafe { @wxImageImpl(wxImage_CreateDefault()) as @wxImage }
     }
     #[fixed_stack_segment]
     fn newFromBitmap(bitmap: @wxBitmap) -> @wxImage {
-        unsafe { wxImage_CreateFromBitmap(bitmap.handle()) }
+        unsafe { @wxImageImpl(wxImage_CreateFromBitmap(bitmap.handle())) as @wxImage }
     }
     #[fixed_stack_segment]
     fn newFromByteString(data: **c_char, length: c_int, type_: c_int) -> @wxImage {
-        unsafe { wxImage_CreateFromByteString(data, length, type_) }
+        unsafe { @wxImageImpl(wxImage_CreateFromByteString(data, length, type_)) as @wxImage }
     }
     #[fixed_stack_segment]
     fn newFromLazyByteString(data: **c_char, length: c_int, type_: c_int) -> @wxImage {
-        unsafe { wxImage_CreateFromLazyByteString(data, length, type_) }
+        unsafe { @wxImageImpl(wxImage_CreateFromLazyByteString(data, length, type_)) as @wxImage }
     }
     #[fixed_stack_segment]
     fn newFromData(width: c_int, height: c_int, data: *c_void) -> @wxImage {
-        unsafe { wxImage_CreateFromData(width, height, data) }
+        unsafe { @wxImageImpl(wxImage_CreateFromData(width, height, data)) as @wxImage }
     }
     #[fixed_stack_segment]
     fn newFromFile(name: @wxString) -> @wxImage {
-        unsafe { wxImage_CreateFromFile(name.handle()) }
+        unsafe { @wxImageImpl(wxImage_CreateFromFile(name.handle())) as @wxImage }
     }
     #[fixed_stack_segment]
     fn newSized(width: c_int, height: c_int) -> @wxImage {
-        unsafe { wxImage_CreateSized(width, height) }
+        unsafe { @wxImageImpl(wxImage_CreateSized(width, height)) as @wxImage }
     }
     #[fixed_stack_segment]
     fn destroy(&self) {
@@ -8537,7 +8537,7 @@ trait wxImage : wxObject {
     }
     #[fixed_stack_segment]
     fn getOption(&self, name: @wxString) -> @wxString {
-        unsafe { wxImage_GetOption(self.handle(), name.handle()) }
+        unsafe { @wxStringImpl(wxImage_GetOption(self.handle(), name.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getOptionInt(&self, name: @wxString) -> bool {
@@ -8625,7 +8625,7 @@ trait wxImage : wxObject {
     }
     #[fixed_stack_segment]
     fn newFromDataEx(width: c_int, height: c_int, data: *c_void, isStaticData: c_int) -> @wxImage {
-        unsafe { wxImage_CreateFromDataEx(width, height, data, isStaticData) }
+        unsafe { @wxImageImpl(wxImage_CreateFromDataEx(width, height, data, isStaticData)) as @wxImage }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -8659,7 +8659,7 @@ trait wxImageList : wxObject {
     }
     #[fixed_stack_segment]
     fn new(width: c_int, height: c_int, mask: c_int, initialCount: c_int) -> @wxImageList {
-        unsafe { wxImageList_Create(width, height, mask, initialCount) }
+        unsafe { @wxImageListImpl(wxImageList_Create(width, height, mask, initialCount)) as @wxImageList }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -8872,7 +8872,7 @@ impl wxObject for wxJoystickImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxJoystick : wxObject {
     #[fixed_stack_segment]
     fn new(joystick: c_int) -> @wxJoystick {
-        unsafe { wxJoystick_Create(joystick) }
+        unsafe { @wxJoystickImpl(wxJoystick_Create(joystick)) as @wxJoystick }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -8928,7 +8928,7 @@ trait wxJoystick : wxObject {
     }
     #[fixed_stack_segment]
     fn getPosition(&self) -> @wxPoint {
-        unsafe { wxJoystick_GetPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxJoystick_GetPosition(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getProductId(&self) -> c_int {
@@ -8936,7 +8936,7 @@ trait wxJoystick : wxObject {
     }
     #[fixed_stack_segment]
     fn getProductName(&self) -> @wxString {
-        unsafe { wxJoystick_GetProductName(self.handle()) }
+        unsafe { @wxStringImpl(wxJoystick_GetProductName(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getRudderMax(&self) -> c_int {
@@ -9084,7 +9084,7 @@ trait wxJoystickEvent : wxEvent {
     }
     #[fixed_stack_segment]
     fn getPosition(&self) -> @wxPoint {
-        unsafe { wxJoystickEvent_GetPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxJoystickEvent_GetPosition(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getZPosition(&self) -> c_int {
@@ -9148,7 +9148,7 @@ trait wxKeyEvent : wxEvent {
     }
     #[fixed_stack_segment]
     fn getPosition(&self) -> @wxPoint {
-        unsafe { wxKeyEvent_GetPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxKeyEvent_GetPosition(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getX(&self) -> c_int {
@@ -9190,7 +9190,7 @@ impl wxObject for wxLEDNumberCtrlImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxLEDNumberCtrl : wxControl {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, id: c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @wxLEDNumberCtrl {
-        unsafe { wxLEDNumberCtrl_Create(parent.handle(), id, x, y, w, h, style) }
+        unsafe { @wxLEDNumberCtrlImpl(wxLEDNumberCtrl_Create(parent.handle(), id, x, y, w, h, style)) as @wxLEDNumberCtrl }
     }
     #[fixed_stack_segment]
     fn getAlignment(&self) -> c_int {
@@ -9225,7 +9225,7 @@ impl wxObject for wxLayoutAlgorithmImpl { pub fn handle(&self) -> *u8 { **self }
 trait wxLayoutAlgorithm : wxObject {
     #[fixed_stack_segment]
     fn new() -> @wxLayoutAlgorithm {
-        unsafe { wxLayoutAlgorithm_Create() }
+        unsafe { @wxLayoutAlgorithmImpl(wxLayoutAlgorithm_Create()) as @wxLayoutAlgorithm }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -9252,7 +9252,7 @@ impl wxObject for wxLayoutConstraintsImpl { pub fn handle(&self) -> *u8 { **self
 trait wxLayoutConstraints : wxObject {
     #[fixed_stack_segment]
     fn new() -> @wxLayoutConstraints {
-        unsafe { wxLayoutConstraints_Create() }
+        unsafe { @wxLayoutConstraintsImpl(wxLayoutConstraints_Create()) as @wxLayoutConstraints }
     }
     #[fixed_stack_segment]
     fn bottom(&self) {
@@ -9317,7 +9317,7 @@ trait wxListBox : wxControl {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *wchar_t, _stl: c_int) -> @wxListBox {
-        unsafe { wxListBox_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, n, str, _stl) }
+        unsafe { @wxListBoxImpl(wxListBox_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, n, str, _stl)) as @wxListBox }
     }
     #[fixed_stack_segment]
     fn delete(&self, n: c_int) {
@@ -9329,7 +9329,7 @@ trait wxListBox : wxControl {
     }
     #[fixed_stack_segment]
     fn getClientData(&self, n: c_int) -> @wxClientData {
-        unsafe { wxListBox_GetClientData(self.handle(), n) }
+        unsafe { @wxClientDataImpl(wxListBox_GetClientData(self.handle(), n)) as @wxClientData }
     }
     #[fixed_stack_segment]
     fn getCount(&self) -> c_int {
@@ -9345,7 +9345,7 @@ trait wxListBox : wxControl {
     }
     #[fixed_stack_segment]
     fn getString(&self, n: c_int) -> @wxString {
-        unsafe { wxListBox_GetString(self.handle(), n) }
+        unsafe { @wxStringImpl(wxListBox_GetString(self.handle(), n)) as @wxString }
     }
     #[fixed_stack_segment]
     fn insertItems(&self, items: *c_void, pos: c_int, count: c_int) {
@@ -9395,7 +9395,7 @@ trait wxListCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxListCtrl {
-        unsafe { wxListCtrl_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxListCtrlImpl(wxListCtrl_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxListCtrl }
     }
     #[fixed_stack_segment]
     fn deleteAllColumns(&self) -> bool {
@@ -9455,11 +9455,11 @@ trait wxListCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getEditControl(&self) -> @wxTextCtrl {
-        unsafe { wxListCtrl_GetEditControl(self.handle()) }
+        unsafe { @wxTextCtrlImpl(wxListCtrl_GetEditControl(self.handle())) as @wxTextCtrl }
     }
     #[fixed_stack_segment]
     fn getImageList(&self, which: c_int) -> @wxImageList {
-        unsafe { wxListCtrl_GetImageList(self.handle(), which) }
+        unsafe { @wxImageListImpl(wxListCtrl_GetImageList(self.handle(), which)) as @wxImageList }
     }
     #[fixed_stack_segment]
     fn getItem(&self, info: @wxListItem) -> bool {
@@ -9475,19 +9475,19 @@ trait wxListCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getItemFont(&self, item: c_long) -> @wxFont {
-        unsafe { wxListCtrl_GetItemFont(self.handle(), item) }
+        unsafe { @wxFontImpl(wxListCtrl_GetItemFont(self.handle(), item)) as @wxFont }
     }
     #[fixed_stack_segment]
     fn getItemPosition(&self, item: c_int) -> @wxPoint {
-        unsafe { wxListCtrl_GetItemPosition(self.handle(), item) }
+        unsafe { @wxPointImpl(wxListCtrl_GetItemPosition(self.handle(), item)) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getItemRect(&self, item: c_int, code: c_int) -> @wxRect {
-        unsafe { wxListCtrl_GetItemRect(self.handle(), item, code) }
+        unsafe { @wxRectImpl(wxListCtrl_GetItemRect(self.handle(), item, code)) as @wxRect }
     }
     #[fixed_stack_segment]
     fn getItemSpacing(&self, isSmall: bool) -> @wxSize {
-        unsafe { wxListCtrl_GetItemSpacing(self.handle(), isSmall) }
+        unsafe { @wxSizeImpl(wxListCtrl_GetItemSpacing(self.handle(), isSmall)) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getItemState(&self, item: c_int, stateMask: c_int) -> c_int {
@@ -9495,7 +9495,7 @@ trait wxListCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getItemText(&self, item: c_int) -> @wxString {
-        unsafe { wxListCtrl_GetItemText(self.handle(), item) }
+        unsafe { @wxStringImpl(wxListCtrl_GetItemText(self.handle(), item)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getNextItem(&self, item: c_int, geometry: c_int, state: c_int) -> c_int {
@@ -9635,7 +9635,7 @@ trait wxListCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getItemPosition2(&self, item: c_int) -> @wxPoint {
-        unsafe { wxListCtrl_GetItemPosition2(self.handle(), item) }
+        unsafe { @wxPointImpl(wxListCtrl_GetItemPosition2(self.handle(), item)) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn sortItems2(&self, closure: @wxClosure) -> bool {
@@ -9681,7 +9681,7 @@ trait wxListEvent : wxNotifyEvent {
     }
     #[fixed_stack_segment]
     fn getLabel(&self) -> @wxString {
-        unsafe { wxListEvent_GetLabel(self.handle()) }
+        unsafe { @wxStringImpl(wxListEvent_GetLabel(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getMask(&self) -> c_int {
@@ -9689,11 +9689,11 @@ trait wxListEvent : wxNotifyEvent {
     }
     #[fixed_stack_segment]
     fn getPoint(&self) -> @wxPoint {
-        unsafe { wxListEvent_GetPoint(self.handle()) }
+        unsafe { @wxPointImpl(wxListEvent_GetPoint(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getText(&self) -> @wxString {
-        unsafe { wxListEvent_GetText(self.handle()) }
+        unsafe { @wxStringImpl(wxListEvent_GetText(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getCacheFrom(&self) -> c_int {
@@ -9720,7 +9720,7 @@ trait wxListItem : wxObject {
     }
     #[fixed_stack_segment]
     fn new() -> @wxListItem {
-        unsafe { wxListItem_Create() }
+        unsafe { @wxListItemImpl(wxListItem_Create()) as @wxListItem }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -9768,7 +9768,7 @@ trait wxListItem : wxObject {
     }
     #[fixed_stack_segment]
     fn getText(&self) -> @wxString {
-        unsafe { wxListItem_GetText(self.handle()) }
+        unsafe { @wxStringImpl(wxListItem_GetText(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getTextColour(&self, _ref: @wxColour) {
@@ -9856,7 +9856,7 @@ trait wxLocale {
     }
     #[fixed_stack_segment]
     fn new(_name: c_int, _flags: c_int) -> @wxLocale {
-        unsafe { wxLocale_Create(_name, _flags) }
+        unsafe { @wxLocaleImpl(wxLocale_Create(_name, _flags)) as @wxLocale }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -9864,11 +9864,11 @@ trait wxLocale {
     }
     #[fixed_stack_segment]
     fn getLocale(&self) -> @wxLocale {
-        unsafe { wxLocale_GetLocale(self.handle()) }
+        unsafe { @wxLocaleImpl(wxLocale_GetLocale(self.handle())) as @wxLocale }
     }
     #[fixed_stack_segment]
     fn getName(&self) -> @wxString {
-        unsafe { wxLocale_GetName(self.handle()) }
+        unsafe { @wxStringImpl(wxLocale_GetName(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getString(&self, szOrigString: *c_void, szDomain: *c_void) -> *wchar_t {
@@ -9912,7 +9912,7 @@ trait wxLog {
     }
     #[fixed_stack_segment]
     fn getActiveTarget() -> @wxLog {
-        unsafe { wxLog_GetActiveTarget() }
+        unsafe { @wxLogImpl(wxLog_GetActiveTarget()) as @wxLog }
     }
     #[fixed_stack_segment]
     fn getTimestamp(&self) -> *c_char {
@@ -9948,7 +9948,7 @@ trait wxLog {
     }
     #[fixed_stack_segment]
     fn setActiveTarget(&self) -> @wxLog {
-        unsafe { wxLog_SetActiveTarget(self.handle()) }
+        unsafe { @wxLogImpl(wxLog_SetActiveTarget(self.handle())) as @wxLog }
     }
     #[fixed_stack_segment]
     fn setTimestamp(&self, ts: *wchar_t) {
@@ -9975,7 +9975,7 @@ impl wxLog for wxLogChainImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxLogChain : wxLog {
     #[fixed_stack_segment]
     fn new(logger: @wxLog) -> @wxLogChain {
-        unsafe { wxLogChain_Create(logger.handle()) }
+        unsafe { @wxLogChainImpl(wxLogChain_Create(logger.handle())) as @wxLogChain }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -9983,7 +9983,7 @@ trait wxLogChain : wxLog {
     }
     #[fixed_stack_segment]
     fn getOldLog(&self) -> @wxLog {
-        unsafe { wxLogChain_GetOldLog(self.handle()) }
+        unsafe { @wxLogImpl(wxLogChain_GetOldLog(self.handle())) as @wxLog }
     }
     #[fixed_stack_segment]
     fn isPassingMessages(&self) -> bool {
@@ -10013,7 +10013,7 @@ impl wxLog for wxLogNullImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxLogNull : wxLog {
     #[fixed_stack_segment]
     fn new() -> @wxLogNull {
-        unsafe { wxLogNull_Create() }
+        unsafe { @wxLogNullImpl(wxLogNull_Create()) as @wxLogNull }
     }
 }
 
@@ -10032,11 +10032,11 @@ impl wxLog for wxLogStderrImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxLogStderr : wxLog {
     #[fixed_stack_segment]
     fn new() -> @wxLogStderr {
-        unsafe { wxLogStderr_Create() }
+        unsafe { @wxLogStderrImpl(wxLogStderr_Create()) as @wxLogStderr }
     }
     #[fixed_stack_segment]
     fn newStdOut() -> @wxLogStderr {
-        unsafe { wxLogStderr_CreateStdOut() }
+        unsafe { @wxLogStderrImpl(wxLogStderr_CreateStdOut()) as @wxLogStderr }
     }
 }
 
@@ -10054,7 +10054,7 @@ impl wxLog for wxLogTextCtrlImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxLogTextCtrl : wxLog {
     #[fixed_stack_segment]
     fn new(text: @wxTextCtrl) -> @wxLogTextCtrl {
-        unsafe { wxLogTextCtrl_Create(text.handle()) }
+        unsafe { @wxLogTextCtrlImpl(wxLogTextCtrl_Create(text.handle())) as @wxLogTextCtrl }
     }
 }
 
@@ -10067,11 +10067,11 @@ impl wxLog for wxLogWindowImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxLogWindow : wxLogPassThrough {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, title: *wchar_t, showit: bool, passthrough: bool) -> @wxLogWindow {
-        unsafe { wxLogWindow_Create(parent.handle(), title, showit, passthrough) }
+        unsafe { @wxLogWindowImpl(wxLogWindow_Create(parent.handle(), title, showit, passthrough)) as @wxLogWindow }
     }
     #[fixed_stack_segment]
     fn getFrame(&self) -> @wxFrame {
-        unsafe { wxLogWindow_GetFrame(self.handle()) }
+        unsafe { @wxFrameImpl(wxLogWindow_GetFrame(self.handle())) as @wxFrame }
     }
 }
 
@@ -10127,7 +10127,7 @@ trait wxMDIChildFrame : wxFrame {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxMDIChildFrame {
-        unsafe { wxMDIChildFrame_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxMDIChildFrameImpl(wxMDIChildFrame_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxMDIChildFrame }
     }
 }
 
@@ -10167,23 +10167,23 @@ trait wxMDIParentFrame : wxFrame {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxMDIParentFrame {
-        unsafe { wxMDIParentFrame_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxMDIParentFrameImpl(wxMDIParentFrame_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxMDIParentFrame }
     }
     #[fixed_stack_segment]
     fn getActiveChild(&self) -> @wxMDIChildFrame {
-        unsafe { wxMDIParentFrame_GetActiveChild(self.handle()) }
+        unsafe { @wxMDIChildFrameImpl(wxMDIParentFrame_GetActiveChild(self.handle())) as @wxMDIChildFrame }
     }
     #[fixed_stack_segment]
     fn getClientWindow(&self) -> @wxMDIClientWindow {
-        unsafe { wxMDIParentFrame_GetClientWindow(self.handle()) }
+        unsafe { @wxMDIClientWindowImpl(wxMDIParentFrame_GetClientWindow(self.handle())) as @wxMDIClientWindow }
     }
     #[fixed_stack_segment]
     fn getWindowMenu(&self) -> @wxMenu {
-        unsafe { wxMDIParentFrame_GetWindowMenu(self.handle()) }
+        unsafe { @wxMenuImpl(wxMDIParentFrame_GetWindowMenu(self.handle())) as @wxMenu }
     }
     #[fixed_stack_segment]
     fn onCreateClient(&self) -> @wxMDIClientWindow {
-        unsafe { wxMDIParentFrame_OnCreateClient(self.handle()) }
+        unsafe { @wxMDIClientWindowImpl(wxMDIParentFrame_OnCreateClient(self.handle())) as @wxMDIClientWindow }
     }
     #[fixed_stack_segment]
     fn setWindowMenu(&self, menu: @wxMenu) {
@@ -10202,7 +10202,7 @@ impl wxObject for wxMaskImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxMask : wxObject {
     #[fixed_stack_segment]
     fn new(bitmap: @wxBitmap) -> @wxMask {
-        unsafe { wxMask_Create(bitmap.handle()) }
+        unsafe { @wxMaskImpl(wxMask_Create(bitmap.handle())) as @wxMask }
     }
     #[fixed_stack_segment]
     fn newColoured(bitmap: @wxBitmap, colour: @wxColour) {
@@ -10226,15 +10226,15 @@ impl wxObject for wxMemoryDCImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxMemoryDC : wxDC {
     #[fixed_stack_segment]
     fn new() -> @wxMemoryDC {
-        unsafe { wxMemoryDC_Create() }
+        unsafe { @wxMemoryDCImpl(wxMemoryDC_Create()) as @wxMemoryDC }
     }
     #[fixed_stack_segment]
     fn newCompatible(dc: @wxDC) -> @wxMemoryDC {
-        unsafe { wxMemoryDC_CreateCompatible(dc.handle()) }
+        unsafe { @wxMemoryDCImpl(wxMemoryDC_CreateCompatible(dc.handle())) as @wxMemoryDC }
     }
     #[fixed_stack_segment]
     fn newWithBitmap(bitmap: @wxBitmap) -> @wxMemoryDC {
-        unsafe { wxMemoryDC_CreateWithBitmap(bitmap.handle()) }
+        unsafe { @wxMemoryDCImpl(wxMemoryDC_CreateWithBitmap(bitmap.handle())) as @wxMemoryDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -10302,7 +10302,7 @@ trait wxMenu : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn new(title: @wxString, style: c_long) -> @wxMenu {
-        unsafe { wxMenu_Create(title.handle(), style) }
+        unsafe { @wxMenuImpl(wxMenu_Create(title.handle(), style)) as @wxMenu }
     }
     #[fixed_stack_segment]
     fn deleteById(&self, id: c_int) {
@@ -10330,7 +10330,7 @@ trait wxMenu : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn findItem(&self, id: c_int) -> @wxMenuItem {
-        unsafe { wxMenu_FindItem(self.handle(), id) }
+        unsafe { @wxMenuItemImpl(wxMenu_FindItem(self.handle(), id)) as @wxMenuItem }
     }
     #[fixed_stack_segment]
     fn findItemByLabel(&self, itemString: @wxString) -> c_int {
@@ -10338,19 +10338,19 @@ trait wxMenu : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getClientData(&self) -> @wxClientData {
-        unsafe { wxMenu_GetClientData(self.handle()) }
+        unsafe { @wxClientDataImpl(wxMenu_GetClientData(self.handle())) as @wxClientData }
     }
     #[fixed_stack_segment]
     fn getHelpString(&self, id: c_int) -> @wxString {
-        unsafe { wxMenu_GetHelpString(self.handle(), id) }
+        unsafe { @wxStringImpl(wxMenu_GetHelpString(self.handle(), id)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getInvokingWindow(&self) -> @wxWindow {
-        unsafe { wxMenu_GetInvokingWindow(self.handle()) }
+        unsafe { @wxWindowImpl(wxMenu_GetInvokingWindow(self.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn getLabel(&self, id: c_int) -> @wxString {
-        unsafe { wxMenu_GetLabel(self.handle(), id) }
+        unsafe { @wxStringImpl(wxMenu_GetLabel(self.handle(), id)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getMenuItemCount(&self) -> size_t {
@@ -10362,7 +10362,7 @@ trait wxMenu : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getParent(&self) -> @wxMenu {
-        unsafe { wxMenu_GetParent(self.handle()) }
+        unsafe { @wxMenuImpl(wxMenu_GetParent(self.handle())) as @wxMenu }
     }
     #[fixed_stack_segment]
     fn getStyle(&self) -> c_int {
@@ -10370,7 +10370,7 @@ trait wxMenu : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getTitle(&self) -> @wxString {
-        unsafe { wxMenu_GetTitle(self.handle()) }
+        unsafe { @wxStringImpl(wxMenu_GetTitle(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn insert(&self, pos: size_t, id: c_int, text: @wxString, help: @wxString, isCheckable: bool) {
@@ -10450,7 +10450,7 @@ trait wxMenu : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getMenuBar(&self) -> @wxMenuBar {
-        unsafe { wxMenu_GetMenuBar(self.handle()) }
+        unsafe { @wxMenuBarImpl(wxMenu_GetMenuBar(self.handle())) as @wxMenuBar }
     }
     #[fixed_stack_segment]
     fn appendRadioItem(&self, id: c_int, text: @wxString, help: @wxString) {
@@ -10474,7 +10474,7 @@ trait wxMenuBar : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn new(_style: c_int) -> @wxMenuBar {
-        unsafe { wxMenuBar_Create(_style) }
+        unsafe { @wxMenuBarImpl(wxMenuBar_Create(_style)) as @wxMenuBar }
     }
     #[fixed_stack_segment]
     fn deletePointer(&self) {
@@ -10494,7 +10494,7 @@ trait wxMenuBar : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn findItem(&self, id: c_int) -> @wxMenuItem {
-        unsafe { wxMenuBar_FindItem(self.handle(), id) }
+        unsafe { @wxMenuItemImpl(wxMenuBar_FindItem(self.handle(), id)) as @wxMenuItem }
     }
     #[fixed_stack_segment]
     fn findMenu(&self, title: @wxString) -> c_int {
@@ -10506,19 +10506,19 @@ trait wxMenuBar : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getHelpString(&self, id: c_int) -> @wxString {
-        unsafe { wxMenuBar_GetHelpString(self.handle(), id) }
+        unsafe { @wxStringImpl(wxMenuBar_GetHelpString(self.handle(), id)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getLabel(&self, id: c_int) -> @wxString {
-        unsafe { wxMenuBar_GetLabel(self.handle(), id) }
+        unsafe { @wxStringImpl(wxMenuBar_GetLabel(self.handle(), id)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getLabelTop(&self, pos: c_int) -> @wxString {
-        unsafe { wxMenuBar_GetLabelTop(self.handle(), pos) }
+        unsafe { @wxStringImpl(wxMenuBar_GetLabelTop(self.handle(), pos)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getMenu(&self, pos: c_int) -> @wxMenu {
-        unsafe { wxMenuBar_GetMenu(self.handle(), pos) }
+        unsafe { @wxMenuImpl(wxMenuBar_GetMenu(self.handle(), pos)) as @wxMenu }
     }
     #[fixed_stack_segment]
     fn getMenuCount(&self) -> c_int {
@@ -10538,11 +10538,11 @@ trait wxMenuBar : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn remove(&self, pos: c_int) -> @wxMenu {
-        unsafe { wxMenuBar_Remove(self.handle(), pos) }
+        unsafe { @wxMenuImpl(wxMenuBar_Remove(self.handle(), pos)) as @wxMenu }
     }
     #[fixed_stack_segment]
     fn replace(&self, pos: c_int, menu: @wxMenu, title: @wxString) -> @wxMenu {
-        unsafe { wxMenuBar_Replace(self.handle(), pos, menu.handle(), title.handle()) }
+        unsafe { @wxMenuImpl(wxMenuBar_Replace(self.handle(), pos, menu.handle(), title.handle())) as @wxMenu }
     }
     #[fixed_stack_segment]
     fn setHelpString(&self, id: c_int, helpString: @wxString) {
@@ -10562,7 +10562,7 @@ trait wxMenuBar : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getFrame(&self) -> @wxFrame {
-        unsafe { wxMenuBar_GetFrame(self.handle()) }
+        unsafe { @wxFrameImpl(wxMenuBar_GetFrame(self.handle())) as @wxFrame }
     }
 }
 
@@ -10593,7 +10593,7 @@ trait wxMenuItem : wxObject {
     }
     #[fixed_stack_segment]
     fn new() -> @wxMenuItem {
-        unsafe { wxMenuItem_Create() }
+        unsafe { @wxMenuItemImpl(wxMenuItem_Create()) as @wxMenuItem }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -10605,7 +10605,7 @@ trait wxMenuItem : wxObject {
     }
     #[fixed_stack_segment]
     fn getHelp(&self) -> @wxString {
-        unsafe { wxMenuItem_GetHelp(self.handle()) }
+        unsafe { @wxStringImpl(wxMenuItem_GetHelp(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getId(&self) -> c_int {
@@ -10613,23 +10613,23 @@ trait wxMenuItem : wxObject {
     }
     #[fixed_stack_segment]
     fn getLabel(&self) -> @wxString {
-        unsafe { wxMenuItem_GetLabel(self.handle()) }
+        unsafe { @wxStringImpl(wxMenuItem_GetLabel(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getLabelFromText(text: *wchar_t) -> @wxString {
-        unsafe { wxMenuItem_GetLabelFromText(text) }
+        unsafe { @wxStringImpl(wxMenuItem_GetLabelFromText(text)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getMenu(&self) -> @wxMenu {
-        unsafe { wxMenuItem_GetMenu(self.handle()) }
+        unsafe { @wxMenuImpl(wxMenuItem_GetMenu(self.handle())) as @wxMenu }
     }
     #[fixed_stack_segment]
     fn getSubMenu(&self) -> @wxMenu {
-        unsafe { wxMenuItem_GetSubMenu(self.handle()) }
+        unsafe { @wxMenuImpl(wxMenuItem_GetSubMenu(self.handle())) as @wxMenu }
     }
     #[fixed_stack_segment]
     fn getText(&self) -> @wxString {
-        unsafe { wxMenuItem_GetText(self.handle()) }
+        unsafe { @wxStringImpl(wxMenuItem_GetText(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn isCheckable(&self) -> bool {
@@ -10673,11 +10673,11 @@ trait wxMenuItem : wxObject {
     }
     #[fixed_stack_segment]
     fn newSeparator() -> @wxMenuItem {
-        unsafe { wxMenuItem_CreateSeparator() }
+        unsafe { @wxMenuItemImpl(wxMenuItem_CreateSeparator()) as @wxMenuItem }
     }
     #[fixed_stack_segment]
     fn newEx(id: c_int, label: @wxString, help: @wxString, itemkind: c_int, submenu: @wxMenu) -> @wxMenuItem {
-        unsafe { wxMenuItem_CreateEx(id, label.handle(), help.handle(), itemkind, submenu.handle()) }
+        unsafe { @wxMenuItemImpl(wxMenuItem_CreateEx(id, label.handle(), help.handle(), itemkind, submenu.handle())) as @wxMenuItem }
     }
 }
 
@@ -10692,7 +10692,7 @@ impl wxObject for wxMessageDialogImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxMessageDialog : wxDialog {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _msg: @wxString, _cap: @wxString, _stl: c_int) -> @wxMessageDialog {
-        unsafe { wxMessageDialog_Create(_prt.handle(), _msg.handle(), _cap.handle(), _stl) }
+        unsafe { @wxMessageDialogImpl(wxMessageDialog_Create(_prt.handle(), _msg.handle(), _cap.handle(), _stl)) as @wxMessageDialog }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -10711,7 +10711,7 @@ impl wxObject for wxMetafileImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxMetafile : wxObject {
     #[fixed_stack_segment]
     fn new(_file: @wxString) -> @wxMetafile {
-        unsafe { wxMetafile_Create(_file.handle()) }
+        unsafe { @wxMetafileImpl(wxMetafile_Create(_file.handle())) as @wxMetafile }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -10743,7 +10743,7 @@ trait wxMetafileDC : wxDC {
     }
     #[fixed_stack_segment]
     fn new(_file: @wxString) -> @wxMetafileDC {
-        unsafe { wxMetafileDC_Create(_file.handle()) }
+        unsafe { @wxMetafileDCImpl(wxMetafileDC_Create(_file.handle())) as @wxMetafileDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -10763,7 +10763,7 @@ trait wxMimeTypesManager {
     }
     #[fixed_stack_segment]
     fn new() -> @wxMimeTypesManager {
-        unsafe { wxMimeTypesManager_Create() }
+        unsafe { @wxMimeTypesManagerImpl(wxMimeTypesManager_Create()) as @wxMimeTypesManager }
     }
     #[fixed_stack_segment]
     fn enumAllFileTypes(&self, _lst: @wxList) -> c_int {
@@ -10771,11 +10771,11 @@ trait wxMimeTypesManager {
     }
     #[fixed_stack_segment]
     fn getFileTypeFromExtension(&self, _ext: @wxString) -> @wxFileType {
-        unsafe { wxMimeTypesManager_GetFileTypeFromExtension(self.handle(), _ext.handle()) }
+        unsafe { @wxFileTypeImpl(wxMimeTypesManager_GetFileTypeFromExtension(self.handle(), _ext.handle())) as @wxFileType }
     }
     #[fixed_stack_segment]
     fn getFileTypeFromMimeType(&self, _name: @wxString) -> @wxFileType {
-        unsafe { wxMimeTypesManager_GetFileTypeFromMimeType(self.handle(), _name.handle()) }
+        unsafe { @wxFileTypeImpl(wxMimeTypesManager_GetFileTypeFromMimeType(self.handle(), _name.handle())) as @wxFileType }
     }
     #[fixed_stack_segment]
     fn isOfType(&self, _type: @wxString, _wildcard: @wxString) -> bool {
@@ -10794,7 +10794,7 @@ impl wxObject for wxMiniFrameImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxMiniFrame : wxFrame {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxMiniFrame {
-        unsafe { wxMiniFrame_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxMiniFrameImpl(wxMiniFrame_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxMiniFrame }
     }
 }
 
@@ -10806,7 +10806,7 @@ impl wxObject for wxMirrorDCImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxMirrorDC : wxDC {
     #[fixed_stack_segment]
     fn new(dc: @wxDC) -> @wxMirrorDC {
-        unsafe { wxMirrorDC_Create(dc.handle()) }
+        unsafe { @wxMirrorDCImpl(wxMirrorDC_Create(dc.handle())) as @wxMirrorDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -10877,11 +10877,11 @@ trait wxMouseEvent : wxEvent {
     }
     #[fixed_stack_segment]
     fn getLogicalPosition(&self, dc: @wxDC) -> @wxPoint {
-        unsafe { wxMouseEvent_GetLogicalPosition(self.handle(), dc.handle()) }
+        unsafe { @wxPointImpl(wxMouseEvent_GetLogicalPosition(self.handle(), dc.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getPosition(&self) -> @wxPoint {
-        unsafe { wxMouseEvent_GetPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxMouseEvent_GetPosition(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getX(&self) -> c_int {
@@ -10985,7 +10985,7 @@ trait wxMoveEvent : wxEvent {
     }
     #[fixed_stack_segment]
     fn getPosition(&self) -> @wxPoint {
-        unsafe { wxMoveEvent_GetPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxMoveEvent_GetPosition(self.handle())) as @wxPoint }
     }
 }
 
@@ -11007,7 +11007,7 @@ trait wxMultiCellCanvas : wxFlexGridSizer {
     }
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, numRows: c_int, numCols: c_int) -> @wxMultiCellCanvas {
-        unsafe { wxMultiCellCanvas_Create(parent.handle(), numRows, numCols) }
+        unsafe { @wxMultiCellCanvasImpl(wxMultiCellCanvas_Create(parent.handle(), numRows, numCols)) as @wxMultiCellCanvas }
     }
     #[fixed_stack_segment]
     fn maxCols(&self) -> c_int {
@@ -11030,7 +11030,7 @@ impl wxObject for wxMultiCellItemHandleImpl { pub fn handle(&self) -> *u8 { **se
 trait wxMultiCellItemHandle : wxObject {
     #[fixed_stack_segment]
     fn new(row: c_int, column: c_int, height: c_int, width: c_int, sx: c_int, sy: c_int, style: c_int, wx: c_int, wy: c_int, align: c_int) -> @wxMultiCellItemHandle {
-        unsafe { wxMultiCellItemHandle_Create(row, column, height, width, sx, sy, style, wx, wy, align) }
+        unsafe { @wxMultiCellItemHandleImpl(wxMultiCellItemHandle_Create(row, column, height, width, sx, sy, style, wx, wy, align)) as @wxMultiCellItemHandle }
     }
     #[fixed_stack_segment]
     fn newWithSize(&self, row: c_int, column: c_int, sx: c_int, sy: c_int, style: c_int, wx: c_int, wy: c_int, align: c_int) {
@@ -11086,7 +11086,7 @@ trait wxMultiCellSizer : wxSizer {
     }
     #[fixed_stack_segment]
     fn new(rows: c_int, cols: c_int) -> @wxMultiCellSizer {
-        unsafe { wxMultiCellSizer_Create(rows, cols) }
+        unsafe { @wxMultiCellSizerImpl(wxMultiCellSizer_Create(rows, cols)) as @wxMultiCellSizer }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -11126,7 +11126,7 @@ trait wxMutex {
     
     #[fixed_stack_segment]
     fn new() -> @wxMutex {
-        unsafe { wxMutex_Create() }
+        unsafe { @wxMutexImpl(wxMutex_Create()) as @wxMutex }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -11204,11 +11204,11 @@ impl wxObject for wxNewBitmapButtonImpl { pub fn handle(&self) -> *u8 { **self }
 trait wxNewBitmapButton : wxPanel {
     #[fixed_stack_segment]
     fn new(labelBitmap: *c_void, labelText: *c_void, alignText: c_int, isFlat: bool, firedEventType: c_int, marginX: c_int, marginY: c_int, textToLabelGap: c_int, isSticky: bool) -> @wxNewBitmapButton {
-        unsafe { wxNewBitmapButton_Create(labelBitmap, labelText, alignText, isFlat, firedEventType, marginX, marginY, textToLabelGap, isSticky) }
+        unsafe { @wxNewBitmapButtonImpl(wxNewBitmapButton_Create(labelBitmap, labelText, alignText, isFlat, firedEventType, marginX, marginY, textToLabelGap, isSticky)) as @wxNewBitmapButton }
     }
     #[fixed_stack_segment]
     fn newFromFile(&self, bitmapFileType: c_int, labelText: *c_void, alignText: c_int, isFlat: bool, firedEventType: c_int, marginX: c_int, marginY: c_int, textToLabelGap: c_int, isSticky: bool) -> @wxNewBitmapButton {
-        unsafe { wxNewBitmapButton_CreateFromFile(self.handle(), bitmapFileType, labelText, alignText, isFlat, firedEventType, marginX, marginY, textToLabelGap, isSticky) }
+        unsafe { @wxNewBitmapButtonImpl(wxNewBitmapButton_CreateFromFile(self.handle(), bitmapFileType, labelText, alignText, isFlat, firedEventType, marginX, marginY, textToLabelGap, isSticky)) as @wxNewBitmapButton }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -11282,7 +11282,7 @@ trait wxNotebook : wxControl {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxNotebook {
-        unsafe { wxNotebook_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxNotebookImpl(wxNotebook_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxNotebook }
     }
     #[fixed_stack_segment]
     fn deleteAllPages(&self) -> bool {
@@ -11294,11 +11294,11 @@ trait wxNotebook : wxControl {
     }
     #[fixed_stack_segment]
     fn getImageList(&self) -> @wxImageList {
-        unsafe { wxNotebook_GetImageList(self.handle()) }
+        unsafe { @wxImageListImpl(wxNotebook_GetImageList(self.handle())) as @wxImageList }
     }
     #[fixed_stack_segment]
     fn getPage(&self, nPage: c_int) -> @wxWindow {
-        unsafe { wxNotebook_GetPage(self.handle(), nPage) }
+        unsafe { @wxWindowImpl(wxNotebook_GetPage(self.handle(), nPage)) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn getPageCount(&self) -> c_int {
@@ -11310,7 +11310,7 @@ trait wxNotebook : wxControl {
     }
     #[fixed_stack_segment]
     fn getPageText(&self, nPage: c_int) -> @wxString {
-        unsafe { wxNotebook_GetPageText(self.handle(), nPage) }
+        unsafe { @wxStringImpl(wxNotebook_GetPageText(self.handle(), nPage)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getRowCount(&self) -> c_int {
@@ -11409,7 +11409,7 @@ trait wxObject {
     }
     #[fixed_stack_segment]
     fn getClientClosure(&self) -> @wxClosure {
-        unsafe { wxObject_GetClientClosure(self.handle()) }
+        unsafe { @wxClosureImpl(wxObject_GetClientClosure(self.handle())) as @wxClosure }
     }
     #[fixed_stack_segment]
     fn setClientClosure(&self, closure: @wxClosure) {
@@ -11421,7 +11421,7 @@ trait wxObject {
     }
     #[fixed_stack_segment]
     fn getClassInfo(&self) -> @wxClassInfo {
-        unsafe { wxObject_GetClassInfo(self.handle()) }
+        unsafe { @wxClassInfoImpl(wxObject_GetClassInfo(self.handle())) as @wxClassInfo }
     }
     #[fixed_stack_segment]
     fn isKindOf(&self, classInfo: @wxClassInfo) -> bool {
@@ -11487,7 +11487,7 @@ impl wxObject for wxPageSetupDialogImpl { pub fn handle(&self) -> *u8 { **self }
 trait wxPageSetupDialog : wxDialog {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, data: @wxPageSetupDialogData) -> @wxPageSetupDialog {
-        unsafe { wxPageSetupDialog_Create(parent.handle(), data.handle()) }
+        unsafe { @wxPageSetupDialogImpl(wxPageSetupDialog_Create(parent.handle(), data.handle())) as @wxPageSetupDialog }
     }
     #[fixed_stack_segment]
     fn getPageSetupData(&self, _ref: @wxPageSetupDialogData) {
@@ -11518,11 +11518,11 @@ trait wxPageSetupDialogData : wxObject {
     }
     #[fixed_stack_segment]
     fn new() -> @wxPageSetupDialogData {
-        unsafe { wxPageSetupDialogData_Create() }
+        unsafe { @wxPageSetupDialogDataImpl(wxPageSetupDialogData_Create()) as @wxPageSetupDialogData }
     }
     #[fixed_stack_segment]
     fn newFromData(printData: @wxPrintData) -> @wxPageSetupDialogData {
-        unsafe { wxPageSetupDialogData_CreateFromData(printData.handle()) }
+        unsafe { @wxPageSetupDialogDataImpl(wxPageSetupDialogData_CreateFromData(printData.handle())) as @wxPageSetupDialogData }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -11578,19 +11578,19 @@ trait wxPageSetupDialogData : wxObject {
     }
     #[fixed_stack_segment]
     fn getMarginBottomRight(&self) -> @wxPoint {
-        unsafe { wxPageSetupDialogData_GetMarginBottomRight(self.handle()) }
+        unsafe { @wxPointImpl(wxPageSetupDialogData_GetMarginBottomRight(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getMarginTopLeft(&self) -> @wxPoint {
-        unsafe { wxPageSetupDialogData_GetMarginTopLeft(self.handle()) }
+        unsafe { @wxPointImpl(wxPageSetupDialogData_GetMarginTopLeft(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getMinMarginBottomRight(&self) -> @wxPoint {
-        unsafe { wxPageSetupDialogData_GetMinMarginBottomRight(self.handle()) }
+        unsafe { @wxPointImpl(wxPageSetupDialogData_GetMinMarginBottomRight(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getMinMarginTopLeft(&self) -> @wxPoint {
-        unsafe { wxPageSetupDialogData_GetMinMarginTopLeft(self.handle()) }
+        unsafe { @wxPointImpl(wxPageSetupDialogData_GetMinMarginTopLeft(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getPaperId(&self) -> c_int {
@@ -11598,7 +11598,7 @@ trait wxPageSetupDialogData : wxObject {
     }
     #[fixed_stack_segment]
     fn getPaperSize(&self) -> @wxSize {
-        unsafe { wxPageSetupDialogData_GetPaperSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxPageSetupDialogData_GetPaperSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getPrintData(&self, _ref: @wxPrintData) {
@@ -11655,7 +11655,7 @@ impl wxObject for wxPaintDCImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxPaintDC : wxWindowDC {
     #[fixed_stack_segment]
     fn new(win: @wxWindow) -> @wxPaintDC {
-        unsafe { wxPaintDC_Create(win.handle()) }
+        unsafe { @wxPaintDCImpl(wxPaintDC_Create(win.handle())) as @wxPaintDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -11683,11 +11683,11 @@ trait wxPalette : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxPalette {
-        unsafe { wxPalette_CreateDefault() }
+        unsafe { @wxPaletteImpl(wxPalette_CreateDefault()) as @wxPalette }
     }
     #[fixed_stack_segment]
     fn newRGB(n: c_int, red: *c_void, green: *c_void, blue: *c_void) -> @wxPalette {
-        unsafe { wxPalette_CreateRGB(n, red, green, blue) }
+        unsafe { @wxPaletteImpl(wxPalette_CreateRGB(n, red, green, blue)) as @wxPalette }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -11740,7 +11740,7 @@ impl wxObject for wxPanelImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxPanel : wxWindow {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxPanel {
-        unsafe { wxPanel_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxPanelImpl(wxPanel_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxPanel }
     }
     #[fixed_stack_segment]
     fn initDialog(&self) {
@@ -11772,19 +11772,19 @@ trait wxPen : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxPen {
-        unsafe { wxPen_CreateDefault() }
+        unsafe { @wxPenImpl(wxPen_CreateDefault()) as @wxPen }
     }
     #[fixed_stack_segment]
     fn newFromBitmap(stipple: @wxBitmap, width: c_int) -> @wxPen {
-        unsafe { wxPen_CreateFromBitmap(stipple.handle(), width) }
+        unsafe { @wxPenImpl(wxPen_CreateFromBitmap(stipple.handle(), width)) as @wxPen }
     }
     #[fixed_stack_segment]
     fn newFromColour(col: @wxColour, width: c_int, style: c_int) -> @wxPen {
-        unsafe { wxPen_CreateFromColour(col.handle(), width, style) }
+        unsafe { @wxPenImpl(wxPen_CreateFromColour(col.handle(), width, style)) as @wxPen }
     }
     #[fixed_stack_segment]
     fn newFromStock(id: c_int) -> @wxPen {
-        unsafe { wxPen_CreateFromStock(id) }
+        unsafe { @wxPenImpl(wxPen_CreateFromStock(id)) as @wxPen }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -11924,7 +11924,7 @@ trait wxPlotOnOffCurve : wxObject {
     }
     #[fixed_stack_segment]
     fn new(offsetY: c_int) -> @wxPlotOnOffCurve {
-        unsafe { wxPlotOnOffCurve_Create(offsetY) }
+        unsafe { @wxPlotOnOffCurveImpl(wxPlotOnOffCurve_Create(offsetY)) as @wxPlotOnOffCurve }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -11944,7 +11944,7 @@ trait wxPlotOnOffCurve : wxObject {
     }
     #[fixed_stack_segment]
     fn getClientData(&self, index: c_int) -> @wxClientData {
-        unsafe { wxPlotOnOffCurve_GetClientData(self.handle(), index) }
+        unsafe { @wxClientDataImpl(wxPlotOnOffCurve_GetClientData(self.handle(), index)) as @wxClientData }
     }
     #[fixed_stack_segment]
     fn getCount(&self) -> c_int {
@@ -11995,7 +11995,7 @@ trait wxPlotWindow : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, id: c_int, x: c_int, y: c_int, w: c_int, h: c_int, flags: c_int) -> @wxPlotWindow {
-        unsafe { wxPlotWindow_Create(parent.handle(), id, x, y, w, h, flags) }
+        unsafe { @wxPlotWindowImpl(wxPlotWindow_Create(parent.handle(), id, x, y, w, h, flags)) as @wxPlotWindow }
     }
     #[fixed_stack_segment]
     fn delete(&self, curve: @wxPlotCurve) {
@@ -12011,7 +12011,7 @@ trait wxPlotWindow : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getAt(&self, n: c_int) -> @wxPlotCurve {
-        unsafe { wxPlotWindow_GetAt(self.handle(), n) }
+        unsafe { @wxPlotCurveImpl(wxPlotWindow_GetAt(self.handle(), n)) as @wxPlotCurve }
     }
     #[fixed_stack_segment]
     fn getCount(&self) -> c_int {
@@ -12019,7 +12019,7 @@ trait wxPlotWindow : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getCurrent(&self) -> @wxPlotCurve {
-        unsafe { wxPlotWindow_GetCurrent(self.handle()) }
+        unsafe { @wxPlotCurveImpl(wxPlotWindow_GetCurrent(self.handle())) as @wxPlotCurve }
     }
     #[fixed_stack_segment]
     fn getEnlargeAroundWindowCentre(&self) -> c_int {
@@ -12027,7 +12027,7 @@ trait wxPlotWindow : wxScrolledWindow {
     }
     #[fixed_stack_segment]
     fn getOnOffCurveAt(&self, n: c_int) -> @wxPlotOnOffCurve {
-        unsafe { wxPlotWindow_GetOnOffCurveAt(self.handle(), n) }
+        unsafe { @wxPlotOnOffCurveImpl(wxPlotWindow_GetOnOffCurveAt(self.handle(), n)) as @wxPlotOnOffCurve }
     }
     #[fixed_stack_segment]
     fn getOnOffCurveCount(&self) -> c_int {
@@ -12095,7 +12095,7 @@ trait wxPoint {
     
     #[fixed_stack_segment]
     fn new(xx: c_int, yy: c_int) -> @wxPoint {
-        unsafe { wxPoint_Create(xx, yy) }
+        unsafe { @wxPointImpl(wxPoint_Create(xx, yy)) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn destroy(&self) {
@@ -12146,7 +12146,7 @@ impl wxObject for wxPostScriptDCImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxPostScriptDC : wxDC {
     #[fixed_stack_segment]
     fn new(data: @wxPrintData) -> @wxPostScriptDC {
-        unsafe { wxPostScriptDC_Create(data.handle()) }
+        unsafe { @wxPostScriptDCImpl(wxPostScriptDC_Create(data.handle())) as @wxPostScriptDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -12173,7 +12173,7 @@ impl wxObject for wxPreviewCanvasImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxPreviewCanvas : wxScrolledWindow {
     #[fixed_stack_segment]
     fn new(preview: @wxPrintPreview, parent: @wxWindow, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @wxPreviewCanvas {
-        unsafe { wxPreviewCanvas_Create(preview.handle(), parent.handle(), x, y, w, h, style) }
+        unsafe { @wxPreviewCanvasImpl(wxPreviewCanvas_Create(preview.handle(), parent.handle(), x, y, w, h, style)) as @wxPreviewCanvas }
     }
 }
 
@@ -12198,7 +12198,7 @@ impl wxObject for wxPreviewFrameImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxPreviewFrame : wxFrame {
     #[fixed_stack_segment]
     fn new(preview: @wxPrintPreview, parent: @wxFrame, title: @wxString, x: c_int, y: c_int, width: c_int, height: c_int, style: c_int, name: @wxString) -> @wxPreviewFrame {
-        unsafe { wxPreviewFrame_Create(preview.handle(), parent.handle(), title.handle(), x, y, width, height, style, name.handle()) }
+        unsafe { @wxPreviewFrameImpl(wxPreviewFrame_Create(preview.handle(), parent.handle(), title.handle(), x, y, width, height, style, name.handle())) as @wxPreviewFrame }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -12221,7 +12221,7 @@ trait wxPrintData : wxObject {
     }
     #[fixed_stack_segment]
     fn new() -> @wxPrintData {
-        unsafe { wxPrintData_Create() }
+        unsafe { @wxPrintDataImpl(wxPrintData_Create()) as @wxPrintData }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -12241,11 +12241,11 @@ trait wxPrintData : wxObject {
     }
     #[fixed_stack_segment]
     fn getFilename(&self) -> @wxString {
-        unsafe { wxPrintData_GetFilename(self.handle()) }
+        unsafe { @wxStringImpl(wxPrintData_GetFilename(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getFontMetricPath(&self) -> @wxString {
-        unsafe { wxPrintData_GetFontMetricPath(self.handle()) }
+        unsafe { @wxStringImpl(wxPrintData_GetFontMetricPath(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getNoCopies(&self) -> c_int {
@@ -12261,11 +12261,11 @@ trait wxPrintData : wxObject {
     }
     #[fixed_stack_segment]
     fn getPaperSize(&self) -> @wxSize {
-        unsafe { wxPrintData_GetPaperSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxPrintData_GetPaperSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getPreviewCommand(&self) -> @wxString {
-        unsafe { wxPrintData_GetPreviewCommand(self.handle()) }
+        unsafe { @wxStringImpl(wxPrintData_GetPreviewCommand(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getPrintMode(&self) -> c_int {
@@ -12273,15 +12273,15 @@ trait wxPrintData : wxObject {
     }
     #[fixed_stack_segment]
     fn getPrinterCommand(&self) -> @wxString {
-        unsafe { wxPrintData_GetPrinterCommand(self.handle()) }
+        unsafe { @wxStringImpl(wxPrintData_GetPrinterCommand(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getPrinterName(&self) -> @wxString {
-        unsafe { wxPrintData_GetPrinterName(self.handle()) }
+        unsafe { @wxStringImpl(wxPrintData_GetPrinterName(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getPrinterOptions(&self) -> @wxString {
-        unsafe { wxPrintData_GetPrinterOptions(self.handle()) }
+        unsafe { @wxStringImpl(wxPrintData_GetPrinterOptions(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getPrinterScaleX(&self) -> c_double {
@@ -12396,7 +12396,7 @@ impl wxObject for wxPostScriptPrintNativeDataImpl { pub fn handle(&self) -> *u8 
 trait wxPostScriptPrintNativeData : wxObject {
     #[fixed_stack_segment]
     fn new() -> @wxPostScriptPrintNativeData {
-        unsafe { wxPostScriptPrintNativeData_Create() }
+        unsafe { @wxPostScriptPrintNativeDataImpl(wxPostScriptPrintNativeData_Create()) as @wxPostScriptPrintNativeData }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -12415,11 +12415,11 @@ impl wxObject for wxPrintDialogImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxPrintDialog : wxDialog {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, data: @wxPrintDialogData) -> @wxPrintDialog {
-        unsafe { wxPrintDialog_Create(parent.handle(), data.handle()) }
+        unsafe { @wxPrintDialogImpl(wxPrintDialog_Create(parent.handle(), data.handle())) as @wxPrintDialog }
     }
     #[fixed_stack_segment]
     fn getPrintDC(&self) -> @wxDC {
-        unsafe { wxPrintDialog_GetPrintDC(self.handle()) }
+        unsafe { @wxDCImpl(wxPrintDialog_GetPrintDC(self.handle())) as @wxDC }
     }
     #[fixed_stack_segment]
     fn getPrintData(&self, _ref: @wxPrintData) {
@@ -12427,7 +12427,7 @@ trait wxPrintDialog : wxDialog {
     }
     #[fixed_stack_segment]
     fn getPrintDialogData(&self) -> @wxPrintDialogData {
-        unsafe { wxPrintDialog_GetPrintDialogData(self.handle()) }
+        unsafe { @wxPrintDialogDataImpl(wxPrintDialog_GetPrintDialogData(self.handle())) as @wxPrintDialogData }
     }
 }
 
@@ -12446,11 +12446,11 @@ trait wxPrintDialogData : wxObject {
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxPrintDialogData {
-        unsafe { wxPrintDialogData_CreateDefault() }
+        unsafe { @wxPrintDialogDataImpl(wxPrintDialogData_CreateDefault()) as @wxPrintDialogData }
     }
     #[fixed_stack_segment]
     fn newFromData(printData: @wxPrintData) -> @wxPrintDialogData {
-        unsafe { wxPrintDialogData_CreateFromData(printData.handle()) }
+        unsafe { @wxPrintDialogDataImpl(wxPrintDialogData_CreateFromData(printData.handle())) as @wxPrintDialogData }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -12577,11 +12577,11 @@ impl wxObject for wxPrintPreviewImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxPrintPreview : wxObject {
     #[fixed_stack_segment]
     fn newFromData(printout: @wxPrintout, printoutForPrinting: @wxPrintout, data: @wxPrintData) -> @wxPrintPreview {
-        unsafe { wxPrintPreview_CreateFromData(printout.handle(), printoutForPrinting.handle(), data.handle()) }
+        unsafe { @wxPrintPreviewImpl(wxPrintPreview_CreateFromData(printout.handle(), printoutForPrinting.handle(), data.handle())) as @wxPrintPreview }
     }
     #[fixed_stack_segment]
     fn newFromDialogData(printout: @wxPrintout, printoutForPrinting: @wxPrintout, data: @wxPrintDialogData) -> @wxPrintPreview {
-        unsafe { wxPrintPreview_CreateFromDialogData(printout.handle(), printoutForPrinting.handle(), data.handle()) }
+        unsafe { @wxPrintPreviewImpl(wxPrintPreview_CreateFromDialogData(printout.handle(), printoutForPrinting.handle(), data.handle())) as @wxPrintPreview }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -12597,7 +12597,7 @@ trait wxPrintPreview : wxObject {
     }
     #[fixed_stack_segment]
     fn getCanvas(&self) -> @wxPreviewCanvas {
-        unsafe { wxPrintPreview_GetCanvas(self.handle()) }
+        unsafe { @wxPreviewCanvasImpl(wxPrintPreview_GetCanvas(self.handle())) as @wxPreviewCanvas }
     }
     #[fixed_stack_segment]
     fn getCurrentPage(&self) -> c_int {
@@ -12605,7 +12605,7 @@ trait wxPrintPreview : wxObject {
     }
     #[fixed_stack_segment]
     fn getFrame(&self) -> @wxFrame {
-        unsafe { wxPrintPreview_GetFrame(self.handle()) }
+        unsafe { @wxFrameImpl(wxPrintPreview_GetFrame(self.handle())) as @wxFrame }
     }
     #[fixed_stack_segment]
     fn getMaxPage(&self) -> c_int {
@@ -12621,11 +12621,11 @@ trait wxPrintPreview : wxObject {
     }
     #[fixed_stack_segment]
     fn getPrintout(&self) -> @wxPrintout {
-        unsafe { wxPrintPreview_GetPrintout(self.handle()) }
+        unsafe { @wxPrintoutImpl(wxPrintPreview_GetPrintout(self.handle())) as @wxPrintout }
     }
     #[fixed_stack_segment]
     fn getPrintoutForPrinting(&self) -> @wxPrintout {
-        unsafe { wxPrintPreview_GetPrintoutForPrinting(self.handle()) }
+        unsafe { @wxPrintoutImpl(wxPrintPreview_GetPrintoutForPrinting(self.handle())) as @wxPrintout }
     }
     #[fixed_stack_segment]
     fn getZoom(&self) -> c_int {
@@ -12680,11 +12680,11 @@ impl wxObject for wxPrinterImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxPrinter : wxObject {
     #[fixed_stack_segment]
     fn new(data: @wxPrintDialogData) -> @wxPrinter {
-        unsafe { wxPrinter_Create(data.handle()) }
+        unsafe { @wxPrinterImpl(wxPrinter_Create(data.handle())) as @wxPrinter }
     }
     #[fixed_stack_segment]
     fn newAbortWindow(&self, parent: @wxWindow, printout: @wxPrintout) -> @wxWindow {
-        unsafe { wxPrinter_CreateAbortWindow(self.handle(), parent.handle(), printout.handle()) }
+        unsafe { @wxWindowImpl(wxPrinter_CreateAbortWindow(self.handle(), parent.handle(), printout.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -12708,7 +12708,7 @@ trait wxPrinter : wxObject {
     }
     #[fixed_stack_segment]
     fn printDialog(&self, parent: @wxWindow) -> @wxDC {
-        unsafe { wxPrinter_PrintDialog(self.handle(), parent.handle()) }
+        unsafe { @wxDCImpl(wxPrinter_PrintDialog(self.handle(), parent.handle())) as @wxDC }
     }
     #[fixed_stack_segment]
     fn reportError(&self, parent: @wxWindow, printout: @wxPrintout, message: @wxString) {
@@ -12728,7 +12728,7 @@ impl wxObject for wxPrinterDCImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxPrinterDC : wxDC {
     #[fixed_stack_segment]
     fn new(data: @wxPrintData) -> @wxPrinterDC {
-        unsafe { wxPrinterDC_Create(data.handle()) }
+        unsafe { @wxPrinterDCImpl(wxPrinterDC_Create(data.handle())) as @wxPrinterDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -12736,7 +12736,7 @@ trait wxPrinterDC : wxDC {
     }
     #[fixed_stack_segment]
     fn getPaperRect(&self) -> @wxRect {
-        unsafe { wxPrinterDC_GetPaperRect(self.handle()) }
+        unsafe { @wxRectImpl(wxPrinterDC_GetPaperRect(self.handle())) as @wxRect }
     }
 }
 
@@ -12747,7 +12747,7 @@ impl wxObject for wxPrintoutImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxPrintout : wxObject {
     #[fixed_stack_segment]
     fn getDC(&self) -> @wxDC {
-        unsafe { wxPrintout_GetDC(self.handle()) }
+        unsafe { @wxDCImpl(wxPrintout_GetDC(self.handle())) as @wxDC }
     }
     #[fixed_stack_segment]
     fn getPPIPrinter(&self, _x: *c_int, _y: *c_int) {
@@ -12767,7 +12767,7 @@ trait wxPrintout : wxObject {
     }
     #[fixed_stack_segment]
     fn getTitle(&self) -> @wxString {
-        unsafe { wxPrintout_GetTitle(self.handle()) }
+        unsafe { @wxStringImpl(wxPrintout_GetTitle(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn isPreview(&self) -> bool {
@@ -12814,11 +12814,11 @@ trait wxProcess : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn newDefault(_prt: @wxWindow, _id: c_int) -> @wxProcess {
-        unsafe { wxProcess_CreateDefault(_prt.handle(), _id) }
+        unsafe { @wxProcessImpl(wxProcess_CreateDefault(_prt.handle(), _id)) as @wxProcess }
     }
     #[fixed_stack_segment]
     fn newRedirect(_prt: @wxWindow, _rdr: bool) -> @wxProcess {
-        unsafe { wxProcess_CreateRedirect(_prt.handle(), _rdr) }
+        unsafe { @wxProcessImpl(wxProcess_CreateRedirect(_prt.handle(), _rdr)) as @wxProcess }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -12830,15 +12830,15 @@ trait wxProcess : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getErrorStream(&self) -> @wxInputStream {
-        unsafe { wxProcess_GetErrorStream(self.handle()) }
+        unsafe { @wxInputStreamImpl(wxProcess_GetErrorStream(self.handle())) as @wxInputStream }
     }
     #[fixed_stack_segment]
     fn getInputStream(&self) -> @wxInputStream {
-        unsafe { wxProcess_GetInputStream(self.handle()) }
+        unsafe { @wxInputStreamImpl(wxProcess_GetInputStream(self.handle())) as @wxInputStream }
     }
     #[fixed_stack_segment]
     fn getOutputStream(&self) -> @wxOutputStream {
-        unsafe { wxProcess_GetOutputStream(self.handle()) }
+        unsafe { @wxOutputStreamImpl(wxProcess_GetOutputStream(self.handle())) as @wxOutputStream }
     }
     #[fixed_stack_segment]
     fn isRedirected(&self) -> bool {
@@ -12850,7 +12850,7 @@ trait wxProcess : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn open(cmd: @wxString, flags: c_int) -> @wxProcess {
-        unsafe { wxProcess_Open(cmd.handle(), flags) }
+        unsafe { @wxProcessImpl(wxProcess_Open(cmd.handle(), flags)) as @wxProcess }
     }
     #[fixed_stack_segment]
     fn isErrorAvailable(&self) -> bool {
@@ -12893,7 +12893,7 @@ impl wxObject for wxProgressDialogImpl { pub fn handle(&self) -> *u8 { **self } 
 trait wxProgressDialog : wxFrame {
     #[fixed_stack_segment]
     fn new(title: @wxString, message: @wxString, max: c_int, parent: @wxWindow, style: c_int) -> @wxProgressDialog {
-        unsafe { wxProgressDialog_Create(title.handle(), message.handle(), max, parent.handle(), style) }
+        unsafe { @wxProgressDialogImpl(wxProgressDialog_Create(title.handle(), message.handle(), max, parent.handle(), style)) as @wxProgressDialog }
     }
     #[fixed_stack_segment]
     fn update(&self, value: c_int) -> bool {
@@ -12947,7 +12947,7 @@ impl wxObject for wxQueryLayoutInfoEventImpl { pub fn handle(&self) -> *u8 { **s
 trait wxQueryLayoutInfoEvent : wxEvent {
     #[fixed_stack_segment]
     fn new(id: c_int) -> @wxQueryLayoutInfoEvent {
-        unsafe { wxQueryLayoutInfoEvent_Create(id) }
+        unsafe { @wxQueryLayoutInfoEventImpl(wxQueryLayoutInfoEvent_Create(id)) as @wxQueryLayoutInfoEvent }
     }
     #[fixed_stack_segment]
     fn getAlignment(&self) -> c_int {
@@ -12967,7 +12967,7 @@ trait wxQueryLayoutInfoEvent : wxEvent {
     }
     #[fixed_stack_segment]
     fn getSize(&self) -> @wxSize {
-        unsafe { wxQueryLayoutInfoEvent_GetSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxQueryLayoutInfoEvent_GetSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn setAlignment(&self, align: c_int) {
@@ -13021,7 +13021,7 @@ impl wxObject for wxRadioBoxImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxRadioBox : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, _str: *wchar_t, _dim: c_int, _stl: c_int) -> @wxRadioBox {
-        unsafe { wxRadioBox_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, n, _str, _dim, _stl) }
+        unsafe { @wxRadioBoxImpl(wxRadioBox_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, n, _str, _dim, _stl)) as @wxRadioBox }
     }
     #[fixed_stack_segment]
     fn enableItem(&self, item: c_int, enable: bool) {
@@ -13033,7 +13033,7 @@ trait wxRadioBox : wxControl {
     }
     #[fixed_stack_segment]
     fn getItemLabel(&self, item: c_int) -> @wxString {
-        unsafe { wxRadioBox_GetItemLabel(self.handle(), item) }
+        unsafe { @wxStringImpl(wxRadioBox_GetItemLabel(self.handle(), item)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getNumberOfRowsOrCols(&self) -> c_int {
@@ -13045,7 +13045,7 @@ trait wxRadioBox : wxControl {
     }
     #[fixed_stack_segment]
     fn getStringSelection(&self) -> @wxString {
-        unsafe { wxRadioBox_GetStringSelection(self.handle()) }
+        unsafe { @wxStringImpl(wxRadioBox_GetStringSelection(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn number(&self) -> c_int {
@@ -13087,7 +13087,7 @@ impl wxObject for wxRadioButtonImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxRadioButton : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxRadioButton {
-        unsafe { wxRadioButton_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxRadioButtonImpl(wxRadioButton_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxRadioButton }
     }
     #[fixed_stack_segment]
     fn getValue(&self) -> bool {
@@ -13154,11 +13154,11 @@ trait wxRegion : wxGDIObject {
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxRegion {
-        unsafe { wxRegion_CreateDefault() }
+        unsafe { @wxRegionImpl(wxRegion_CreateDefault()) as @wxRegion }
     }
     #[fixed_stack_segment]
     fn newFromRect(x: c_int, y: c_int, w: c_int, h: c_int) -> @wxRegion {
-        unsafe { wxRegion_CreateFromRect(x, y, w, h) }
+        unsafe { @wxRegionImpl(wxRegion_CreateFromRect(x, y, w, h)) as @wxRegion }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -13213,11 +13213,11 @@ impl wxObject for wxRegionIteratorImpl { pub fn handle(&self) -> *u8 { **self } 
 trait wxRegionIterator : wxObject {
     #[fixed_stack_segment]
     fn new() -> @wxRegionIterator {
-        unsafe { wxRegionIterator_Create() }
+        unsafe { @wxRegionIteratorImpl(wxRegionIterator_Create()) as @wxRegionIterator }
     }
     #[fixed_stack_segment]
     fn newFromRegion(region: @wxRegion) -> @wxRegionIterator {
-        unsafe { wxRegionIterator_CreateFromRegion(region.handle()) }
+        unsafe { @wxRegionIteratorImpl(wxRegionIterator_CreateFromRegion(region.handle())) as @wxRegionIterator }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -13280,7 +13280,7 @@ trait wxRemotelyScrolledTreeCtrl : wxTreeCtrl {
     }
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _cmp: *c_void, parent: @wxWindow, id: c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @wxRemotelyScrolledTreeCtrl {
-        unsafe { wxRemotelyScrolledTreeCtrl_Create(_obj, _cmp, parent.handle(), id, x, y, w, h, style) }
+        unsafe { @wxRemotelyScrolledTreeCtrlImpl(wxRemotelyScrolledTreeCtrl_Create(_obj, _cmp, parent.handle(), id, x, y, w, h, style)) as @wxRemotelyScrolledTreeCtrl }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -13296,7 +13296,7 @@ trait wxRemotelyScrolledTreeCtrl : wxTreeCtrl {
     }
     #[fixed_stack_segment]
     fn getScrolledWindow(&self) -> @wxScrolledWindow {
-        unsafe { wxRemotelyScrolledTreeCtrl_GetScrolledWindow(self.handle()) }
+        unsafe { @wxScrolledWindowImpl(wxRemotelyScrolledTreeCtrl_GetScrolledWindow(self.handle())) as @wxScrolledWindow }
     }
     #[fixed_stack_segment]
     fn getViewStart(&self, _x: *c_int, _y: *c_int) {
@@ -13332,15 +13332,15 @@ impl wxObject for wxSVGFileDCImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxSVGFileDC : wxDC {
     #[fixed_stack_segment]
     fn new(fileName: @wxString) -> @wxSVGFileDC {
-        unsafe { wxSVGFileDC_Create(fileName.handle()) }
+        unsafe { @wxSVGFileDCImpl(wxSVGFileDC_Create(fileName.handle())) as @wxSVGFileDC }
     }
     #[fixed_stack_segment]
     fn newWithSize(fileName: @wxString, w: c_int, h: c_int) -> @wxSVGFileDC {
-        unsafe { wxSVGFileDC_CreateWithSize(fileName.handle(), w, h) }
+        unsafe { @wxSVGFileDCImpl(wxSVGFileDC_CreateWithSize(fileName.handle(), w, h)) as @wxSVGFileDC }
     }
     #[fixed_stack_segment]
     fn newWithSizeAndResolution(fileName: @wxString, w: c_int, h: c_int, a_dpi: c_float) -> @wxSVGFileDC {
-        unsafe { wxSVGFileDC_CreateWithSizeAndResolution(fileName.handle(), w, h, a_dpi) }
+        unsafe { @wxSVGFileDCImpl(wxSVGFileDC_CreateWithSizeAndResolution(fileName.handle(), w, h, a_dpi)) as @wxSVGFileDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -13356,11 +13356,11 @@ impl wxObject for wxSashEventImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxSashEvent : wxEvent {
     #[fixed_stack_segment]
     fn new(id: c_int, edge: c_int) -> @wxSashEvent {
-        unsafe { wxSashEvent_Create(id, edge) }
+        unsafe { @wxSashEventImpl(wxSashEvent_Create(id, edge)) as @wxSashEvent }
     }
     #[fixed_stack_segment]
     fn getDragRect(&self) -> @wxRect {
-        unsafe { wxSashEvent_GetDragRect(self.handle()) }
+        unsafe { @wxRectImpl(wxSashEvent_GetDragRect(self.handle())) as @wxRect }
     }
     #[fixed_stack_segment]
     fn getDragStatus(&self) -> c_int {
@@ -13394,7 +13394,7 @@ impl wxObject for wxSashLayoutWindowImpl { pub fn handle(&self) -> *u8 { **self 
 trait wxSashLayoutWindow : wxSashWindow {
     #[fixed_stack_segment]
     fn new(_par: @wxWindow, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> @wxSashLayoutWindow {
-        unsafe { wxSashLayoutWindow_Create(_par.handle(), _id, _x, _y, _w, _h, _stl) }
+        unsafe { @wxSashLayoutWindowImpl(wxSashLayoutWindow_Create(_par.handle(), _id, _x, _y, _w, _h, _stl)) as @wxSashLayoutWindow }
     }
     #[fixed_stack_segment]
     fn getAlignment(&self) -> c_int {
@@ -13427,7 +13427,7 @@ impl wxObject for wxSashWindowImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxSashWindow : wxWindow {
     #[fixed_stack_segment]
     fn new(_par: @wxWindow, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> @wxSashWindow {
-        unsafe { wxSashWindow_Create(_par.handle(), _id, _x, _y, _w, _h, _stl) }
+        unsafe { @wxSashWindowImpl(wxSashWindow_Create(_par.handle(), _id, _x, _y, _w, _h, _stl)) as @wxSashWindow }
     }
     #[fixed_stack_segment]
     fn getDefaultBorderSize(&self) -> c_int {
@@ -13523,7 +13523,7 @@ impl wxObject for wxScreenDCImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxScreenDC : wxDC {
     #[fixed_stack_segment]
     fn new() -> @wxScreenDC {
-        unsafe { wxScreenDC_Create() }
+        unsafe { @wxScreenDCImpl(wxScreenDC_Create()) as @wxScreenDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -13553,7 +13553,7 @@ impl wxObject for wxScrollBarImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxScrollBar : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxScrollBar {
-        unsafe { wxScrollBar_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxScrollBarImpl(wxScrollBar_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxScrollBar }
     }
     #[fixed_stack_segment]
     fn getPageSize(&self) -> c_int {
@@ -13643,7 +13643,7 @@ trait wxScrolledWindow : wxPanel {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxScrolledWindow {
-        unsafe { wxScrolledWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxScrolledWindowImpl(wxScrolledWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxScrolledWindow }
     }
     #[fixed_stack_segment]
     fn enableScrolling(&self, x_scrolling: bool, y_scrolling: bool) {
@@ -13667,7 +13667,7 @@ trait wxScrolledWindow : wxPanel {
     }
     #[fixed_stack_segment]
     fn getTargetWindow(&self) -> @wxWindow {
-        unsafe { wxScrolledWindow_GetTargetWindow(self.handle()) }
+        unsafe { @wxWindowImpl(wxScrolledWindow_GetTargetWindow(self.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn getViewStart(&self, _x: *c_int, _y: *c_int) {
@@ -13750,7 +13750,7 @@ impl wxObject for wxSetCursorEventImpl { pub fn handle(&self) -> *u8 { **self } 
 trait wxSetCursorEvent : wxEvent {
     #[fixed_stack_segment]
     fn getCursor(&self) -> @wxCursor {
-        unsafe { wxSetCursorEvent_GetCursor(self.handle()) }
+        unsafe { @wxCursorImpl(wxSetCursorEvent_GetCursor(self.handle())) as @wxCursor }
     }
     #[fixed_stack_segment]
     fn getX(&self) -> c_int {
@@ -13797,7 +13797,7 @@ impl wxHelpProvider for wxSimpleHelpProviderImpl { pub fn handle(&self) -> *u8 {
 trait wxSimpleHelpProvider : wxHelpProvider {
     #[fixed_stack_segment]
     fn new() -> @wxSimpleHelpProvider {
-        unsafe { wxSimpleHelpProvider_Create() }
+        unsafe { @wxSimpleHelpProviderImpl(wxSimpleHelpProvider_Create()) as @wxSimpleHelpProvider }
     }
 }
 
@@ -13824,7 +13824,7 @@ trait wxSingleInstanceChecker {
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxSingleInstanceChecker {
-        unsafe { wxSingleInstanceChecker_CreateDefault() }
+        unsafe { @wxSingleInstanceCheckerImpl(wxSingleInstanceChecker_CreateDefault()) as @wxSingleInstanceChecker }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -13844,7 +13844,7 @@ trait wxSize {
     
     #[fixed_stack_segment]
     fn new(w: c_int, h: c_int) -> @wxSize {
-        unsafe { wxSize_Create(w, h) }
+        unsafe { @wxSizeImpl(wxSize_Create(w, h)) as @wxSize }
     }
     #[fixed_stack_segment]
     fn destroy(&self) {
@@ -13880,7 +13880,7 @@ trait wxSizeEvent : wxEvent {
     }
     #[fixed_stack_segment]
     fn getSize(&self) -> @wxSize {
-        unsafe { wxSizeEvent_GetSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxSizeEvent_GetSize(self.handle())) as @wxSize }
     }
 }
 
@@ -13903,7 +13903,7 @@ trait wxSizer : wxObject {
     }
     #[fixed_stack_segment]
     fn calcMin(&self) -> @wxSize {
-        unsafe { wxSizer_CalcMin(self.handle()) }
+        unsafe { @wxSizeImpl(wxSizer_CalcMin(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn fit(&self, window: @wxWindow) {
@@ -13915,15 +13915,15 @@ trait wxSizer : wxObject {
     }
     #[fixed_stack_segment]
     fn getMinSize(&self) -> @wxSize {
-        unsafe { wxSizer_GetMinSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxSizer_GetMinSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getPosition(&self) -> @wxPoint {
-        unsafe { wxSizer_GetPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxSizer_GetPosition(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getSize(&self) -> @wxSize {
-        unsafe { wxSizer_GetSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxSizer_GetSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn insert(&self, before: c_int, width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *c_void) {
@@ -14011,19 +14011,19 @@ trait wxSizer : wxObject {
     }
     #[fixed_stack_segment]
     fn getContainingWindow(&self) -> @wxWindow {
-        unsafe { wxSizer_GetContainingWindow(self.handle()) }
+        unsafe { @wxWindowImpl(wxSizer_GetContainingWindow(self.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn getItemWindow(&self, window: @wxWindow, recursive: bool) -> @wxSizerItem {
-        unsafe { wxSizer_GetItemWindow(self.handle(), window.handle(), recursive) }
+        unsafe { @wxSizerItemImpl(wxSizer_GetItemWindow(self.handle(), window.handle(), recursive)) as @wxSizerItem }
     }
     #[fixed_stack_segment]
     fn getItemSizer(&self, window: @wxSizer, recursive: bool) -> @wxSizerItem {
-        unsafe { wxSizer_GetItemSizer(self.handle(), window.handle(), recursive) }
+        unsafe { @wxSizerItemImpl(wxSizer_GetItemSizer(self.handle(), window.handle(), recursive)) as @wxSizerItem }
     }
     #[fixed_stack_segment]
     fn getItem(&self, index: c_int) -> @wxSizerItem {
-        unsafe { wxSizer_GetItem(self.handle(), index) }
+        unsafe { @wxSizerItemImpl(wxSizer_GetItem(self.handle(), index)) as @wxSizerItem }
     }
     #[fixed_stack_segment]
     fn hideWindow(&self, window: @wxWindow) -> bool {
@@ -14039,11 +14039,11 @@ trait wxSizer : wxObject {
     }
     #[fixed_stack_segment]
     fn insertSpacer(&self, index: c_int, size: c_int) -> @wxSizerItem {
-        unsafe { wxSizer_InsertSpacer(self.handle(), index, size) }
+        unsafe { @wxSizerItemImpl(wxSizer_InsertSpacer(self.handle(), index, size)) as @wxSizerItem }
     }
     #[fixed_stack_segment]
     fn insertStretchSpacer(&self, index: c_int, prop: c_int) -> @wxSizerItem {
-        unsafe { wxSizer_InsertStretchSpacer(self.handle(), index, prop) }
+        unsafe { @wxSizerItemImpl(wxSizer_InsertStretchSpacer(self.handle(), index, prop)) as @wxSizerItem }
     }
     #[fixed_stack_segment]
     fn isShownWindow(&self, window: *@wxWindow) -> bool {
@@ -14059,11 +14059,11 @@ trait wxSizer : wxObject {
     }
     #[fixed_stack_segment]
     fn prependSpacer(&self, size: c_int) -> @wxSizerItem {
-        unsafe { wxSizer_PrependSpacer(self.handle(), size) }
+        unsafe { @wxSizerItemImpl(wxSizer_PrependSpacer(self.handle(), size)) as @wxSizerItem }
     }
     #[fixed_stack_segment]
     fn prependStretchSpacer(&self, prop: c_int) -> @wxSizerItem {
-        unsafe { wxSizer_PrependStretchSpacer(self.handle(), prop) }
+        unsafe { @wxSizerItemImpl(wxSizer_PrependStretchSpacer(self.handle(), prop)) as @wxSizerItem }
     }
     #[fixed_stack_segment]
     fn replaceWindow(&self, oldwin: @wxWindow, newwin: @wxWindow, recursive: bool) -> bool {
@@ -14102,11 +14102,11 @@ impl wxObject for wxSizerItemImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxSizerItem : wxObject {
     #[fixed_stack_segment]
     fn calcMin(&self) -> @wxSize {
-        unsafe { wxSizerItem_CalcMin(self.handle()) }
+        unsafe { @wxSizeImpl(wxSizerItem_CalcMin(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn new(width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *c_void) -> @wxSizerItem {
-        unsafe { wxSizerItem_Create(width, height, option, flag, border, userData) }
+        unsafe { @wxSizerItemImpl(wxSizerItem_Create(width, height, option, flag, border, userData)) as @wxSizerItem }
     }
     #[fixed_stack_segment]
     fn newInSizer(sizer: @wxSizer, option: c_int, flag: c_int, border: c_int, userData: *c_void) {
@@ -14126,11 +14126,11 @@ trait wxSizerItem : wxObject {
     }
     #[fixed_stack_segment]
     fn getMinSize(&self) -> @wxSize {
-        unsafe { wxSizerItem_GetMinSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxSizerItem_GetMinSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getPosition(&self) -> @wxPoint {
-        unsafe { wxSizerItem_GetPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxSizerItem_GetPosition(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getRatio(&self) -> c_float {
@@ -14138,11 +14138,11 @@ trait wxSizerItem : wxObject {
     }
     #[fixed_stack_segment]
     fn getSize(&self) -> @wxSize {
-        unsafe { wxSizerItem_GetSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxSizerItem_GetSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getSizer(&self) -> @wxSizer {
-        unsafe { wxSizerItem_GetSizer(self.handle()) }
+        unsafe { @wxSizerImpl(wxSizerItem_GetSizer(self.handle())) as @wxSizer }
     }
     #[fixed_stack_segment]
     fn getUserData(&self) {
@@ -14150,7 +14150,7 @@ trait wxSizerItem : wxObject {
     }
     #[fixed_stack_segment]
     fn getWindow(&self) -> @wxWindow {
-        unsafe { wxSizerItem_GetWindow(self.handle()) }
+        unsafe { @wxWindowImpl(wxSizerItem_GetWindow(self.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn isSizer(&self) -> bool {
@@ -14214,11 +14214,11 @@ trait wxSizerItem : wxObject {
     }
     #[fixed_stack_segment]
     fn getRect(&self) -> @wxRect {
-        unsafe { wxSizerItem_GetRect(self.handle()) }
+        unsafe { @wxRectImpl(wxSizerItem_GetRect(self.handle())) as @wxRect }
     }
     #[fixed_stack_segment]
     fn getSpacer(&self) -> @wxSize {
-        unsafe { wxSizerItem_GetSpacer(self.handle()) }
+        unsafe { @wxSizeImpl(wxSizerItem_GetSpacer(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn isShown(&self) -> c_int {
@@ -14256,7 +14256,7 @@ trait wxSlider : wxControl {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _init: c_int, _min: c_int, _max: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_long) -> @wxSlider {
-        unsafe { wxSlider_Create(_prt.handle(), _id, _init, _min, _max, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxSliderImpl(wxSlider_Create(_prt.handle(), _id, _init, _min, _max, _lft, _top, _wdt, _hgt, _stl)) as @wxSlider }
     }
     #[fixed_stack_segment]
     fn getLineSize(&self) -> c_int {
@@ -14392,7 +14392,7 @@ impl wxObject for wxSpinButtonImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxSpinButton : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_long) -> @wxSpinButton {
-        unsafe { wxSpinButton_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxSpinButtonImpl(wxSpinButton_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxSpinButton }
     }
     #[fixed_stack_segment]
     fn getMax(&self) -> c_int {
@@ -14426,7 +14426,7 @@ impl wxObject for wxSpinCtrlImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxSpinCtrl : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_long, _min: c_int, _max: c_int, _init: c_int) -> @wxSpinCtrl {
-        unsafe { wxSpinCtrl_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl, _min, _max, _init) }
+        unsafe { @wxSpinCtrlImpl(wxSpinCtrl_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl, _min, _max, _init)) as @wxSpinCtrl }
     }
     #[fixed_stack_segment]
     fn getMax(&self) -> c_int {
@@ -14500,7 +14500,7 @@ impl wxObject for wxSplitterScrolledWindowImpl { pub fn handle(&self) -> *u8 { *
 trait wxSplitterScrolledWindow : wxScrolledWindow {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, id: c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @wxSplitterScrolledWindow {
-        unsafe { wxSplitterScrolledWindow_Create(parent.handle(), id, x, y, w, h, style) }
+        unsafe { @wxSplitterScrolledWindowImpl(wxSplitterScrolledWindow_Create(parent.handle(), id, x, y, w, h, style)) as @wxSplitterScrolledWindow }
     }
 }
 
@@ -14513,7 +14513,7 @@ impl wxObject for wxSplitterWindowImpl { pub fn handle(&self) -> *u8 { **self } 
 trait wxSplitterWindow : wxWindow {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxSplitterWindow {
-        unsafe { wxSplitterWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxSplitterWindowImpl(wxSplitterWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxSplitterWindow }
     }
     #[fixed_stack_segment]
     fn getBorderSize(&self) -> c_int {
@@ -14537,11 +14537,11 @@ trait wxSplitterWindow : wxWindow {
     }
     #[fixed_stack_segment]
     fn getWindow1(&self) -> @wxWindow {
-        unsafe { wxSplitterWindow_GetWindow1(self.handle()) }
+        unsafe { @wxWindowImpl(wxSplitterWindow_GetWindow1(self.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn getWindow2(&self) -> @wxWindow {
-        unsafe { wxSplitterWindow_GetWindow2(self.handle()) }
+        unsafe { @wxWindowImpl(wxSplitterWindow_GetWindow2(self.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn initialize(&self, window: @wxWindow) {
@@ -14607,7 +14607,7 @@ impl wxObject for wxStaticBitmapImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxStaticBitmap : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, bitmap: @wxBitmap, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxStaticBitmap {
-        unsafe { wxStaticBitmap_Create(_prt.handle(), _id, bitmap.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxStaticBitmapImpl(wxStaticBitmap_Create(_prt.handle(), _id, bitmap.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxStaticBitmap }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -14641,7 +14641,7 @@ impl wxObject for wxStaticBoxImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxStaticBox : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxStaticBox {
-        unsafe { wxStaticBox_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxStaticBoxImpl(wxStaticBox_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxStaticBox }
     }
 }
 
@@ -14654,15 +14654,15 @@ impl wxObject for wxStaticBoxSizerImpl { pub fn handle(&self) -> *u8 { **self } 
 trait wxStaticBoxSizer : wxBoxSizer {
     #[fixed_stack_segment]
     fn calcMin(&self) -> @wxSize {
-        unsafe { wxStaticBoxSizer_CalcMin(self.handle()) }
+        unsafe { @wxSizeImpl(wxStaticBoxSizer_CalcMin(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn new(box: @wxStaticBox, orient: c_int) -> @wxStaticBoxSizer {
-        unsafe { wxStaticBoxSizer_Create(box.handle(), orient) }
+        unsafe { @wxStaticBoxSizerImpl(wxStaticBoxSizer_Create(box.handle(), orient)) as @wxStaticBoxSizer }
     }
     #[fixed_stack_segment]
     fn getStaticBox(&self) -> @wxStaticBox {
-        unsafe { wxStaticBoxSizer_GetStaticBox(self.handle()) }
+        unsafe { @wxStaticBoxImpl(wxStaticBoxSizer_GetStaticBox(self.handle())) as @wxStaticBox }
     }
     #[fixed_stack_segment]
     fn recalcSizes(&self) {
@@ -14680,7 +14680,7 @@ impl wxObject for wxStaticLineImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxStaticLine : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxStaticLine {
-        unsafe { wxStaticLine_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxStaticLineImpl(wxStaticLine_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxStaticLine }
     }
     #[fixed_stack_segment]
     fn getDefaultSize(&self) -> c_int {
@@ -14702,7 +14702,7 @@ impl wxObject for wxStaticTextImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxStaticText : wxControl {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxStaticText {
-        unsafe { wxStaticText_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxStaticTextImpl(wxStaticText_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxStaticText }
     }
 }
 
@@ -14715,7 +14715,7 @@ impl wxObject for wxStatusBarImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxStatusBar : wxWindow {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxStatusBar {
-        unsafe { wxStatusBar_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxStatusBarImpl(wxStatusBar_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxStatusBar }
     }
     #[fixed_stack_segment]
     fn getBorderX(&self) -> c_int {
@@ -14731,7 +14731,7 @@ trait wxStatusBar : wxWindow {
     }
     #[fixed_stack_segment]
     fn getStatusText(&self, number: c_int) -> @wxString {
-        unsafe { wxStatusBar_GetStatusText(self.handle(), number) }
+        unsafe { @wxStringImpl(wxStatusBar_GetStatusText(self.handle(), number)) as @wxString }
     }
     #[fixed_stack_segment]
     fn setFieldsCount(&self, number: c_int, widths: *c_int) {
@@ -14759,7 +14759,7 @@ trait wxStopWatch {
     
     #[fixed_stack_segment]
     fn new() -> @wxStopWatch {
-        unsafe { wxStopWatch_Create() }
+        unsafe { @wxStopWatchImpl(wxStopWatch_Create()) as @wxStopWatch }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -14831,11 +14831,11 @@ trait wxString {
     
     #[fixed_stack_segment]
     fn new(buffer: *wchar_t) -> @wxString {
-        unsafe { wxString_Create(buffer) }
+        unsafe { @wxStringImpl(wxString_Create(buffer)) as @wxString }
     }
     #[fixed_stack_segment]
     fn newLen(buffer: *wchar_t, len: c_int) -> @wxString {
-        unsafe { wxString_CreateLen(buffer, len) }
+        unsafe { @wxStringImpl(wxString_CreateLen(buffer, len)) as @wxString }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -14953,7 +14953,7 @@ impl wxObject for wxTaskBarIconImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxTaskBarIcon : wxEvtHandler {
     #[fixed_stack_segment]
     fn new() -> @wxTaskBarIcon {
-        unsafe { wxTaskBarIcon_Create() }
+        unsafe { @wxTaskBarIconImpl(wxTaskBarIcon_Create()) as @wxTaskBarIcon }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -14997,11 +14997,11 @@ trait wxTextAttr {
     
     #[fixed_stack_segment]
     fn new(colText: @wxColour, colBack: @wxColour, font: @wxFont) -> @wxTextAttr {
-        unsafe { wxTextAttr_Create(colText.handle(), colBack.handle(), font.handle()) }
+        unsafe { @wxTextAttrImpl(wxTextAttr_Create(colText.handle(), colBack.handle(), font.handle())) as @wxTextAttr }
     }
     #[fixed_stack_segment]
     fn newDefault() -> @wxTextAttr {
-        unsafe { wxTextAttr_CreateDefault() }
+        unsafe { @wxTextAttrImpl(wxTextAttr_CreateDefault()) as @wxTextAttr }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -15095,7 +15095,7 @@ trait wxTextCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_long) -> @wxTextCtrl {
-        unsafe { wxTextCtrl_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxTextCtrlImpl(wxTextCtrl_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, _stl)) as @wxTextCtrl }
     }
     #[fixed_stack_segment]
     fn cut(&self) {
@@ -15119,7 +15119,7 @@ trait wxTextCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getLineText(&self, lineNo: c_long) -> @wxString {
-        unsafe { wxTextCtrl_GetLineText(self.handle(), lineNo) }
+        unsafe { @wxStringImpl(wxTextCtrl_GetLineText(self.handle(), lineNo)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getNumberOfLines(&self) -> c_int {
@@ -15131,7 +15131,7 @@ trait wxTextCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getValue(&self) -> @wxString {
-        unsafe { wxTextCtrl_GetValue(self.handle()) }
+        unsafe { @wxStringImpl(wxTextCtrl_GetValue(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn isEditable(&self) -> bool {
@@ -15211,15 +15211,15 @@ trait wxTextCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getDefaultStyle(&self) -> @wxTextAttr {
-        unsafe { wxTextCtrl_GetDefaultStyle(self.handle()) }
+        unsafe { @wxTextAttrImpl(wxTextCtrl_GetDefaultStyle(self.handle())) as @wxTextAttr }
     }
     #[fixed_stack_segment]
     fn getRange(&self, from: c_long, to: c_long) -> @wxString {
-        unsafe { wxTextCtrl_GetRange(self.handle(), from, to) }
+        unsafe { @wxStringImpl(wxTextCtrl_GetRange(self.handle(), from, to)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getStringSelection(&self) -> @wxString {
-        unsafe { wxTextCtrl_GetStringSelection(self.handle()) }
+        unsafe { @wxStringImpl(wxTextCtrl_GetStringSelection(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn isMultiLine(&self) -> bool {
@@ -15285,7 +15285,7 @@ trait wxTextInputStream {
     
     #[fixed_stack_segment]
     fn new(inputStream: @wxInputStream, sep: @wxString) -> @wxTextInputStream {
-        unsafe { wxTextInputStream_Create(inputStream.handle(), sep.handle()) }
+        unsafe { @wxTextInputStreamImpl(wxTextInputStream_Create(inputStream.handle(), sep.handle())) as @wxTextInputStream }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -15293,7 +15293,7 @@ trait wxTextInputStream {
     }
     #[fixed_stack_segment]
     fn readLine(&self) -> @wxString {
-        unsafe { wxTextInputStream_ReadLine(self.handle()) }
+        unsafe { @wxStringImpl(wxTextInputStream_ReadLine(self.handle())) as @wxString }
     }
 }
 
@@ -15305,7 +15305,7 @@ trait wxTextOutputStream {
     
     #[fixed_stack_segment]
     fn new(outputStream: @wxOutputStream, mode: c_int) -> @wxTextOutputStream {
-        unsafe { wxTextOutputStream_Create(outputStream.handle(), mode) }
+        unsafe { @wxTextOutputStreamImpl(wxTextOutputStream_Create(outputStream.handle(), mode)) as @wxTextOutputStream }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -15326,7 +15326,7 @@ impl wxObject for wxTextValidatorImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxTextValidator : wxValidator {
     #[fixed_stack_segment]
     fn new(style: c_int, val: *c_void) -> @wxTextValidator {
-        unsafe { wxTextValidator_Create(style, val) }
+        unsafe { @wxTextValidatorImpl(wxTextValidator_Create(style, val)) as @wxTextValidator }
     }
     #[fixed_stack_segment]
     fn getExcludes(&self, _ref: **wchar_t) -> c_int {
@@ -15346,7 +15346,7 @@ trait wxTextValidator : wxValidator {
     }
     #[fixed_stack_segment]
     fn clone(&self) -> @wxValidator {
-        unsafe { wxTextValidator_Clone(self.handle()) }
+        unsafe { @wxValidatorImpl(wxTextValidator_Clone(self.handle())) as @wxValidator }
     }
     #[fixed_stack_segment]
     fn transferToWindow(&self) -> bool {
@@ -15380,7 +15380,7 @@ impl wxObject for wxThinSplitterWindowImpl { pub fn handle(&self) -> *u8 { **sel
 trait wxThinSplitterWindow : wxSplitterWindow {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, id: c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @wxThinSplitterWindow {
-        unsafe { wxThinSplitterWindow_Create(parent.handle(), id, x, y, w, h, style) }
+        unsafe { @wxThinSplitterWindowImpl(wxThinSplitterWindow_Create(parent.handle(), id, x, y, w, h, style)) as @wxThinSplitterWindow }
     }
     #[fixed_stack_segment]
     fn drawSash(&self, dc: @wxDC) {
@@ -15426,7 +15426,7 @@ impl wxObject for wxTimerImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxTimer : wxObject {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int) -> @wxTimer {
-        unsafe { wxTimer_Create(_prt.handle(), _id) }
+        unsafe { @wxTimerImpl(wxTimer_Create(_prt.handle(), _id)) as @wxTimer }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -15485,11 +15485,11 @@ trait wxTimerEx : wxTimer {
     }
     #[fixed_stack_segment]
     fn new() -> @wxTimerEx {
-        unsafe { wxTimerEx_Create() }
+        unsafe { @wxTimerExImpl(wxTimerEx_Create()) as @wxTimerEx }
     }
     #[fixed_stack_segment]
     fn getClosure(&self) -> @wxClosure {
-        unsafe { wxTimerEx_GetClosure(self.handle()) }
+        unsafe { @wxClosureImpl(wxTimerEx_GetClosure(self.handle())) as @wxClosure }
     }
 }
 
@@ -15524,7 +15524,7 @@ trait wxTipWindow : wxPopupTransientWindow {
     }
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, text: @wxString, maxLength: c_int) -> @wxTipWindow {
-        unsafe { wxTipWindow_Create(parent.handle(), text.handle(), maxLength) }
+        unsafe { @wxTipWindowImpl(wxTipWindow_Create(parent.handle(), text.handle(), maxLength)) as @wxTipWindow }
     }
     #[fixed_stack_segment]
     fn setBoundingRect(&self, x: c_int, y: c_int, w: c_int, h: c_int) {
@@ -15546,7 +15546,7 @@ impl wxObject for wxToggleButtonImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxToggleButton : wxControl {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, id: c_int, label: @wxString, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @wxToggleButton {
-        unsafe { wxToggleButton_Create(parent.handle(), id, label.handle(), x, y, w, h, style) }
+        unsafe { @wxToggleButtonImpl(wxToggleButton_Create(parent.handle(), id, label.handle(), x, y, w, h, style)) as @wxToggleButton }
     }
     #[fixed_stack_segment]
     fn enable(&self, enable: bool) -> bool {
@@ -15593,7 +15593,7 @@ trait wxToolBar : wxToolBarBase {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxToolBar {
-        unsafe { wxToolBar_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxToolBarImpl(wxToolBar_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxToolBar }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -15613,15 +15613,15 @@ trait wxToolBar : wxToolBarBase {
     }
     #[fixed_stack_segment]
     fn getMargins(&self) -> @wxPoint {
-        unsafe { wxToolBar_GetMargins(self.handle()) }
+        unsafe { @wxPointImpl(wxToolBar_GetMargins(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getToolBitmapSize(&self) -> @wxSize {
-        unsafe { wxToolBar_GetToolBitmapSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxToolBar_GetToolBitmapSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getToolClientData(&self, id: c_int) -> @wxObject {
-        unsafe { wxToolBar_GetToolClientData(self.handle(), id) }
+        unsafe { @wxObjectImpl(wxToolBar_GetToolClientData(self.handle(), id)) as @wxObject }
     }
     #[fixed_stack_segment]
     fn getToolEnabled(&self, id: c_int) -> bool {
@@ -15629,7 +15629,7 @@ trait wxToolBar : wxToolBarBase {
     }
     #[fixed_stack_segment]
     fn getToolLongHelp(&self, id: c_int) -> @wxString {
-        unsafe { wxToolBar_GetToolLongHelp(self.handle(), id) }
+        unsafe { @wxStringImpl(wxToolBar_GetToolLongHelp(self.handle(), id)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getToolPacking(&self) -> c_int {
@@ -15637,11 +15637,11 @@ trait wxToolBar : wxToolBarBase {
     }
     #[fixed_stack_segment]
     fn getToolShortHelp(&self, id: c_int) -> @wxString {
-        unsafe { wxToolBar_GetToolShortHelp(self.handle(), id) }
+        unsafe { @wxStringImpl(wxToolBar_GetToolShortHelp(self.handle(), id)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getToolSize(&self) -> @wxSize {
-        unsafe { wxToolBar_GetToolSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxToolBar_GetToolSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getToolState(&self, id: c_int) -> bool {
@@ -15752,11 +15752,11 @@ trait wxToolWindow : wxFrame {
     }
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _btn: *c_void, _ttl: *c_void) -> @wxToolWindow {
-        unsafe { wxToolWindow_Create(_obj, _btn, _ttl) }
+        unsafe { @wxToolWindowImpl(wxToolWindow_Create(_obj, _btn, _ttl)) as @wxToolWindow }
     }
     #[fixed_stack_segment]
     fn getClient(&self) -> @wxClient {
-        unsafe { wxToolWindow_GetClient(self.handle()) }
+        unsafe { @wxClientImpl(wxToolWindow_GetClient(self.handle())) as @wxClient }
     }
     #[fixed_stack_segment]
     fn setClient(&self, _wnd: @wxWindow) {
@@ -15781,19 +15781,19 @@ trait wxTopLevelWindow : wxWindow {
     }
     #[fixed_stack_segment]
     fn getDefaultButton(&self) -> @wxButton {
-        unsafe { wxTopLevelWindow_GetDefaultButton(self.handle()) }
+        unsafe { @wxButtonImpl(wxTopLevelWindow_GetDefaultButton(self.handle())) as @wxButton }
     }
     #[fixed_stack_segment]
     fn getDefaultItem(&self) -> @wxWindow {
-        unsafe { wxTopLevelWindow_GetDefaultItem(self.handle()) }
+        unsafe { @wxWindowImpl(wxTopLevelWindow_GetDefaultItem(self.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn getIcon(&self) -> @wxIcon {
-        unsafe { wxTopLevelWindow_GetIcon(self.handle()) }
+        unsafe { @wxIconImpl(wxTopLevelWindow_GetIcon(self.handle())) as @wxIcon }
     }
     #[fixed_stack_segment]
     fn getTitle(&self) -> @wxString {
-        unsafe { wxTopLevelWindow_GetTitle(self.handle()) }
+        unsafe { @wxStringImpl(wxTopLevelWindow_GetTitle(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn iconize(&self, iconize: bool) -> bool {
@@ -15858,7 +15858,7 @@ impl wxObject for wxTreeCompanionWindowImpl { pub fn handle(&self) -> *u8 { **se
 trait wxTreeCompanionWindow : wxWindow {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, id: c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @wxTreeCompanionWindow {
-        unsafe { wxTreeCompanionWindow_Create(parent.handle(), id, x, y, w, h, style) }
+        unsafe { @wxTreeCompanionWindowImpl(wxTreeCompanionWindow_Create(parent.handle(), id, x, y, w, h, style)) as @wxTreeCompanionWindow }
     }
     #[fixed_stack_segment]
     fn drawItem(&self, dc: @wxDC, id: *c_void, x: c_int, y: c_int, w: c_int, h: c_int) {
@@ -15866,7 +15866,7 @@ trait wxTreeCompanionWindow : wxWindow {
     }
     #[fixed_stack_segment]
     fn getTreeCtrl(&self) -> @wxTreeCtrl {
-        unsafe { wxTreeCompanionWindow_GetTreeCtrl(self.handle()) }
+        unsafe { @wxTreeCtrlImpl(wxTreeCompanionWindow_GetTreeCtrl(self.handle())) as @wxTreeCtrl }
     }
     #[fixed_stack_segment]
     fn setTreeCtrl(&self, treeCtrl: @wxTreeCtrl) {
@@ -15900,7 +15900,7 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn new(_obj: *c_void, _cmp: *c_void, _prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxTreeCtrl {
-        unsafe { wxTreeCtrl_Create(_obj, _cmp, _prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxTreeCtrlImpl(wxTreeCtrl_Create(_obj, _cmp, _prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxTreeCtrl }
     }
     #[fixed_stack_segment]
     fn delete(&self, item: @wxTreeItemId) {
@@ -15932,7 +15932,7 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getBoundingRect(&self, item: @wxTreeItemId, textOnly: bool) -> @wxRect {
-        unsafe { wxTreeCtrl_GetBoundingRect(self.handle(), item.handle(), textOnly) }
+        unsafe { @wxRectImpl(wxTreeCtrl_GetBoundingRect(self.handle(), item.handle(), textOnly)) as @wxRect }
     }
     #[fixed_stack_segment]
     fn getChildrenCount(&self, item: @wxTreeItemId, recursively: bool) -> c_int {
@@ -15944,7 +15944,7 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getEditControl(&self) -> @wxTextCtrl {
-        unsafe { wxTreeCtrl_GetEditControl(self.handle()) }
+        unsafe { @wxTextCtrlImpl(wxTreeCtrl_GetEditControl(self.handle())) as @wxTextCtrl }
     }
     #[fixed_stack_segment]
     fn getFirstChild(&self, item: @wxTreeItemId, cookie: *c_int, _item: @wxTreeItemId) {
@@ -15956,7 +15956,7 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getImageList(&self) -> @wxImageList {
-        unsafe { wxTreeCtrl_GetImageList(self.handle()) }
+        unsafe { @wxImageListImpl(wxTreeCtrl_GetImageList(self.handle())) as @wxImageList }
     }
     #[fixed_stack_segment]
     fn getIndent(&self) -> c_int {
@@ -15972,7 +15972,7 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getItemText(&self, item: @wxTreeItemId) -> @wxString {
-        unsafe { wxTreeCtrl_GetItemText(self.handle(), item.handle()) }
+        unsafe { @wxStringImpl(wxTreeCtrl_GetItemText(self.handle(), item.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getLastChild(&self, item: @wxTreeItemId, _item: @wxTreeItemId) {
@@ -16020,7 +16020,7 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getStateImageList(&self) -> @wxImageList {
-        unsafe { wxTreeCtrl_GetStateImageList(self.handle()) }
+        unsafe { @wxImageListImpl(wxTreeCtrl_GetStateImageList(self.handle())) as @wxImageList }
     }
     #[fixed_stack_segment]
     fn hitTest(&self, _x: c_int, _y: c_int, flags: *c_int, _item: @wxTreeItemId) {
@@ -16140,7 +16140,7 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn new2(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxTreeCtrl {
-        unsafe { wxTreeCtrl_Create2(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxTreeCtrlImpl(wxTreeCtrl_Create2(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxTreeCtrl }
     }
     #[fixed_stack_segment]
     fn insertItem2(&self, parent: @wxWindow, idPrevious: @wxTreeItemId, text: @wxString, image: c_int, selectedImage: c_int, closure: @wxClosure, _item: @wxTreeItemId) {
@@ -16152,7 +16152,7 @@ trait wxTreeCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getItemClientClosure(&self, item: @wxTreeItemId) -> @wxClosure {
-        unsafe { wxTreeCtrl_GetItemClientClosure(self.handle(), item.handle()) }
+        unsafe { @wxClosureImpl(wxTreeCtrl_GetItemClientClosure(self.handle(), item.handle())) as @wxClosure }
     }
     #[fixed_stack_segment]
     fn setItemClientClosure(&self, item: @wxTreeItemId, closure: @wxClosure) {
@@ -16186,7 +16186,7 @@ trait wxTreeEvent : wxNotifyEvent {
     }
     #[fixed_stack_segment]
     fn getLabel(&self) -> @wxString {
-        unsafe { wxTreeEvent_GetLabel(self.handle()) }
+        unsafe { @wxStringImpl(wxTreeEvent_GetLabel(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getOldItem(&self, _ref: @wxTreeItemId) {
@@ -16194,11 +16194,11 @@ trait wxTreeEvent : wxNotifyEvent {
     }
     #[fixed_stack_segment]
     fn getPoint(&self) -> @wxPoint {
-        unsafe { wxTreeEvent_GetPoint(self.handle()) }
+        unsafe { @wxPointImpl(wxTreeEvent_GetPoint(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getKeyEvent(&self) -> @wxKeyEvent {
-        unsafe { wxTreeEvent_GetKeyEvent(self.handle()) }
+        unsafe { @wxKeyEventImpl(wxTreeEvent_GetKeyEvent(self.handle())) as @wxKeyEvent }
     }
     #[fixed_stack_segment]
     fn isEditCancelled(&self) -> c_int {
@@ -16225,7 +16225,7 @@ trait wxTreeItemId {
     
     #[fixed_stack_segment]
     fn new() -> @wxTreeItemId {
-        unsafe { wxTreeItemId_Create() }
+        unsafe { @wxTreeItemIdImpl(wxTreeItemId_Create()) as @wxTreeItemId }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -16237,11 +16237,11 @@ trait wxTreeItemId {
     }
     #[fixed_stack_segment]
     fn clone(&self) -> @wxTreeItemId {
-        unsafe { wxTreeItemId_Clone(self.handle()) }
+        unsafe { @wxTreeItemIdImpl(wxTreeItemId_Clone(self.handle())) as @wxTreeItemId }
     }
     #[fixed_stack_segment]
     fn newFromValue(value: intptr_t) -> @wxTreeItemId {
-        unsafe { wxTreeItemId_CreateFromValue(value) }
+        unsafe { @wxTreeItemIdImpl(wxTreeItemId_CreateFromValue(value)) as @wxTreeItemId }
     }
     #[fixed_stack_segment]
     fn getValue(&self) -> intptr_t {
@@ -16311,7 +16311,7 @@ trait wxUpdateUIEvent : wxEvent {
     }
     #[fixed_stack_segment]
     fn getText(&self) -> @wxString {
-        unsafe { wxUpdateUIEvent_GetText(self.handle()) }
+        unsafe { @wxStringImpl(wxUpdateUIEvent_GetText(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn setText(&self, text: @wxString) {
@@ -16327,7 +16327,7 @@ impl wxObject for wxValidatorImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxValidator : wxEvtHandler {
     #[fixed_stack_segment]
     fn new() -> @wxValidator {
-        unsafe { wxValidator_Create() }
+        unsafe { @wxValidatorImpl(wxValidator_Create()) as @wxValidator }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -16335,7 +16335,7 @@ trait wxValidator : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getWindow(&self) -> @wxWindow {
-        unsafe { wxValidator_GetWindow(self.handle()) }
+        unsafe { @wxWindowImpl(wxValidator_GetWindow(self.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn setBellOnError(doIt: bool) {
@@ -16389,7 +16389,7 @@ impl wxObject for wxSoundImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxSound : wxEvtHandler {
     #[fixed_stack_segment]
     fn new(fileName: @wxString, isResource: bool) -> @wxSound {
-        unsafe { wxSound_Create(fileName.handle(), isResource) }
+        unsafe { @wxSoundImpl(wxSound_Create(fileName.handle(), isResource)) as @wxSound }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -16441,7 +16441,7 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn clientToScreen(&self, x: c_int, y: c_int) -> @wxPoint {
-        unsafe { wxWindow_ClientToScreen(self.handle(), x, y) }
+        unsafe { @wxPointImpl(wxWindow_ClientToScreen(self.handle(), x, y)) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn close(&self, _force: bool) -> bool {
@@ -16449,15 +16449,15 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn convertDialogToPixels(&self) -> @wxPoint {
-        unsafe { wxWindow_ConvertDialogToPixels(self.handle()) }
+        unsafe { @wxPointImpl(wxWindow_ConvertDialogToPixels(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn convertPixelsToDialog(&self) -> @wxPoint {
-        unsafe { wxWindow_ConvertPixelsToDialog(self.handle()) }
+        unsafe { @wxPointImpl(wxWindow_ConvertPixelsToDialog(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> @wxWindow {
-        unsafe { wxWindow_Create(_prt.handle(), _id, _x, _y, _w, _h, _stl) }
+        unsafe { @wxWindowImpl(wxWindow_Create(_prt.handle(), _id, _x, _y, _w, _h, _stl)) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn deleteRelatedConstraints(&self) {
@@ -16485,11 +16485,11 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn findFocus(&self) -> @wxWindow {
-        unsafe { wxWindow_FindFocus(self.handle()) }
+        unsafe { @wxWindowImpl(wxWindow_FindFocus(self.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn findWindow(&self, name: @wxString) -> @wxWindow {
-        unsafe { wxWindow_FindWindow(self.handle(), name.handle()) }
+        unsafe { @wxWindowImpl(wxWindow_FindWindow(self.handle(), name.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn fit(&self) {
@@ -16505,7 +16505,7 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getEffectiveMinSize(&self) -> @wxSize {
-        unsafe { wxWindow_GetEffectiveMinSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxWindow_GetEffectiveMinSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getAutoLayout(&self) -> c_int {
@@ -16517,11 +16517,11 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getBestSize(&self) -> @wxSize {
-        unsafe { wxWindow_GetBestSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxWindow_GetBestSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getCaret(&self) -> @wxCaret {
-        unsafe { wxWindow_GetCaret(self.handle()) }
+        unsafe { @wxCaretImpl(wxWindow_GetCaret(self.handle())) as @wxCaret }
     }
     #[fixed_stack_segment]
     fn getCharHeight(&self) -> c_int {
@@ -16537,11 +16537,11 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getClientData(&self) -> @wxClientData {
-        unsafe { wxWindow_GetClientData(self.handle()) }
+        unsafe { @wxClientDataImpl(wxWindow_GetClientData(self.handle())) as @wxClientData }
     }
     #[fixed_stack_segment]
     fn getClientSize(&self) -> @wxSize {
-        unsafe { wxWindow_GetClientSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxWindow_GetClientSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getClientSizeConstraint(&self, _w: *c_int, _h: *c_int) {
@@ -16549,7 +16549,7 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getConstraints(&self) -> @wxLayoutConstraints {
-        unsafe { wxWindow_GetConstraints(self.handle()) }
+        unsafe { @wxLayoutConstraintsImpl(wxWindow_GetConstraints(self.handle())) as @wxLayoutConstraints }
     }
     #[fixed_stack_segment]
     fn getConstraintsInvolvedIn(&self) {
@@ -16557,15 +16557,15 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getCursor(&self) -> @wxCursor {
-        unsafe { wxWindow_GetCursor(self.handle()) }
+        unsafe { @wxCursorImpl(wxWindow_GetCursor(self.handle())) as @wxCursor }
     }
     #[fixed_stack_segment]
     fn getDropTarget(&self) -> @wxDropTarget {
-        unsafe { wxWindow_GetDropTarget(self.handle()) }
+        unsafe { @wxDropTargetImpl(wxWindow_GetDropTarget(self.handle())) as @wxDropTarget }
     }
     #[fixed_stack_segment]
     fn getEventHandler(&self) -> @wxEvtHandler {
-        unsafe { wxWindow_GetEventHandler(self.handle()) }
+        unsafe { @wxEvtHandlerImpl(wxWindow_GetEventHandler(self.handle())) as @wxEvtHandler }
     }
     #[fixed_stack_segment]
     fn getFont(&self, _ref: @wxFont) {
@@ -16585,7 +16585,7 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getLabel(&self) -> @wxString {
-        unsafe { wxWindow_GetLabel(self.handle()) }
+        unsafe { @wxStringImpl(wxWindow_GetLabel(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getLabelEmpty(&self) -> c_int {
@@ -16609,15 +16609,15 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getName(&self) -> @wxString {
-        unsafe { wxWindow_GetName(self.handle()) }
+        unsafe { @wxStringImpl(wxWindow_GetName(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getParent(&self) -> @wxWindow {
-        unsafe { wxWindow_GetParent(self.handle()) }
+        unsafe { @wxWindowImpl(wxWindow_GetParent(self.handle())) as @wxWindow }
     }
     #[fixed_stack_segment]
     fn getPosition(&self) -> @wxPoint {
-        unsafe { wxWindow_GetPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxWindow_GetPosition(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn getPositionConstraint(&self, _x: *c_int, _y: *c_int) {
@@ -16625,7 +16625,7 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getRect(&self) -> @wxRect {
-        unsafe { wxWindow_GetRect(self.handle()) }
+        unsafe { @wxRectImpl(wxWindow_GetRect(self.handle())) as @wxRect }
     }
     #[fixed_stack_segment]
     fn getScrollPos(&self, orient: c_int) -> c_int {
@@ -16641,7 +16641,7 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getSize(&self) -> @wxSize {
-        unsafe { wxWindow_GetSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxWindow_GetSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getSizeConstraint(&self, _w: *c_int, _h: *c_int) {
@@ -16649,7 +16649,7 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getSizer(&self) -> @wxSizer {
-        unsafe { wxWindow_GetSizer(self.handle()) }
+        unsafe { @wxSizerImpl(wxWindow_GetSizer(self.handle())) as @wxSizer }
     }
     #[fixed_stack_segment]
     fn getTextExtent(&self, string: @wxString, x: *c_int, y: *c_int, descent: *c_int, externalLeading: *c_int, theFont: @wxFont) {
@@ -16657,19 +16657,19 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn getToolTip(&self) -> @wxString {
-        unsafe { wxWindow_GetToolTip(self.handle()) }
+        unsafe { @wxStringImpl(wxWindow_GetToolTip(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getUpdateRegion(&self) -> @wxRegion {
-        unsafe { wxWindow_GetUpdateRegion(self.handle()) }
+        unsafe { @wxRegionImpl(wxWindow_GetUpdateRegion(self.handle())) as @wxRegion }
     }
     #[fixed_stack_segment]
     fn getValidator(&self) -> @wxValidator {
-        unsafe { wxWindow_GetValidator(self.handle()) }
+        unsafe { @wxValidatorImpl(wxWindow_GetValidator(self.handle())) as @wxValidator }
     }
     #[fixed_stack_segment]
     fn getVirtualSize(&self) -> @wxSize {
-        unsafe { wxWindow_GetVirtualSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxWindow_GetVirtualSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getWindowStyleFlag(&self) -> c_int {
@@ -16785,7 +16785,7 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn screenToClient(&self, x: c_int, y: c_int) -> @wxPoint {
-        unsafe { wxWindow_ScreenToClient(self.handle(), x, y) }
+        unsafe { @wxPointImpl(wxWindow_ScreenToClient(self.handle(), x, y)) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn scrollWindow(&self, dx: c_int, dy: c_int) {
@@ -16941,15 +16941,15 @@ trait wxWindow : wxEvtHandler {
     }
     #[fixed_stack_segment]
     fn convertDialogToPixelsEx(&self) -> @wxPoint {
-        unsafe { wxWindow_ConvertDialogToPixelsEx(self.handle()) }
+        unsafe { @wxPointImpl(wxWindow_ConvertDialogToPixelsEx(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn convertPixelsToDialogEx(&self) -> @wxPoint {
-        unsafe { wxWindow_ConvertPixelsToDialogEx(self.handle()) }
+        unsafe { @wxPointImpl(wxWindow_ConvertPixelsToDialogEx(self.handle())) as @wxPoint }
     }
     #[fixed_stack_segment]
     fn screenToClient2(&self, x: c_int, y: c_int) -> @wxPoint {
-        unsafe { wxWindow_ScreenToClient2(self.handle(), x, y) }
+        unsafe { @wxPointImpl(wxWindow_ScreenToClient2(self.handle(), x, y)) as @wxPoint }
     }
 }
 
@@ -16962,7 +16962,7 @@ impl wxObject for wxWindowCreateEventImpl { pub fn handle(&self) -> *u8 { **self
 trait wxWindowCreateEvent : wxCommandEvent {
     #[fixed_stack_segment]
     fn getWindow(&self) -> @wxWindow {
-        unsafe { wxWindowCreateEvent_GetWindow(self.handle()) }
+        unsafe { @wxWindowImpl(wxWindowCreateEvent_GetWindow(self.handle())) as @wxWindow }
     }
 }
 
@@ -16974,7 +16974,7 @@ impl wxObject for wxWindowDCImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxWindowDC : wxDC {
     #[fixed_stack_segment]
     fn new(win: @wxWindow) -> @wxWindowDC {
-        unsafe { wxWindowDC_Create(win.handle()) }
+        unsafe { @wxWindowDCImpl(wxWindowDC_Create(win.handle())) as @wxWindowDC }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -16991,7 +16991,7 @@ impl wxObject for wxWindowDestroyEventImpl { pub fn handle(&self) -> *u8 { **sel
 trait wxWindowDestroyEvent : wxCommandEvent {
     #[fixed_stack_segment]
     fn getWindow(&self) -> @wxWindow {
-        unsafe { wxWindowDestroyEvent_GetWindow(self.handle()) }
+        unsafe { @wxWindowImpl(wxWindowDestroyEvent_GetWindow(self.handle())) as @wxWindow }
     }
 }
 
@@ -17018,15 +17018,15 @@ trait wxWizard : wxDialog {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _bmp: @wxBitmap, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int) -> @wxWizard {
-        unsafe { wxWizard_Create(_prt.handle(), _id, _txt.handle(), _bmp.handle(), _lft, _top, _wdt, _hgt) }
+        unsafe { @wxWizardImpl(wxWizard_Create(_prt.handle(), _id, _txt.handle(), _bmp.handle(), _lft, _top, _wdt, _hgt)) as @wxWizard }
     }
     #[fixed_stack_segment]
     fn getCurrentPage(&self) -> @wxWizardPage {
-        unsafe { wxWizard_GetCurrentPage(self.handle()) }
+        unsafe { @wxWizardPageImpl(wxWizard_GetCurrentPage(self.handle())) as @wxWizardPage }
     }
     #[fixed_stack_segment]
     fn getPageSize(&self) -> @wxSize {
-        unsafe { wxWizard_GetPageSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxWizard_GetPageSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn runWizard(&self, firstPage: @wxWizardPage) -> c_int {
@@ -17073,7 +17073,7 @@ impl wxObject for wxWizardPageSimpleImpl { pub fn handle(&self) -> *u8 { **self 
 trait wxWizardPageSimple : wxWizardPage {
     #[fixed_stack_segment]
     fn new(_prt: @wxWizard) -> @wxWizardPageSimple {
-        unsafe { wxWizardPageSimple_Create(_prt.handle()) }
+        unsafe { @wxWizardPageSimpleImpl(wxWizardPageSimple_Create(_prt.handle())) as @wxWizardPageSimple }
     }
     #[fixed_stack_segment]
     fn getBitmap(&self, _ref: @wxBitmap) {
@@ -17081,11 +17081,11 @@ trait wxWizardPageSimple : wxWizardPage {
     }
     #[fixed_stack_segment]
     fn getNext(&self) -> @wxWizardPageSimple {
-        unsafe { wxWizardPageSimple_GetNext(self.handle()) }
+        unsafe { @wxWizardPageSimpleImpl(wxWizardPageSimple_GetNext(self.handle())) as @wxWizardPageSimple }
     }
     #[fixed_stack_segment]
     fn getPrev(&self) -> @wxWizardPageSimple {
-        unsafe { wxWizardPageSimple_GetPrev(self.handle()) }
+        unsafe { @wxWizardPageSimpleImpl(wxWizardPageSimple_GetPrev(self.handle())) as @wxWizardPageSimple }
     }
     #[fixed_stack_segment]
     fn setNext(&self, next: @wxWizardPageSimple) {
@@ -17124,11 +17124,11 @@ trait wxXmlResource : wxObject {
     }
     #[fixed_stack_segment]
     fn new(flags: c_int) -> @wxXmlResource {
-        unsafe { wxXmlResource_Create(flags) }
+        unsafe { @wxXmlResourceImpl(wxXmlResource_Create(flags)) as @wxXmlResource }
     }
     #[fixed_stack_segment]
     fn newFromFile(filemask: @wxString, flags: c_int) -> @wxXmlResource {
-        unsafe { wxXmlResource_CreateFromFile(filemask.handle(), flags) }
+        unsafe { @wxXmlResourceImpl(wxXmlResource_CreateFromFile(filemask.handle(), flags)) as @wxXmlResource }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -17136,11 +17136,11 @@ trait wxXmlResource : wxObject {
     }
     #[fixed_stack_segment]
     fn get() -> @wxXmlResource {
-        unsafe { wxXmlResource_Get() }
+        unsafe { @wxXmlResourceImpl(wxXmlResource_Get()) as @wxXmlResource }
     }
     #[fixed_stack_segment]
     fn getDomain(&self) -> @wxString {
-        unsafe { wxXmlResource_GetDomain(self.handle()) }
+        unsafe { @wxStringImpl(wxXmlResource_GetDomain(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getFlags(&self) -> c_int {
@@ -17172,11 +17172,11 @@ trait wxXmlResource : wxObject {
     }
     #[fixed_stack_segment]
     fn loadDialog(&self, parent: @wxWindow, name: @wxString) -> @wxDialog {
-        unsafe { wxXmlResource_LoadDialog(self.handle(), parent.handle(), name.handle()) }
+        unsafe { @wxDialogImpl(wxXmlResource_LoadDialog(self.handle(), parent.handle(), name.handle())) as @wxDialog }
     }
     #[fixed_stack_segment]
     fn loadFrame(&self, parent: @wxWindow, name: @wxString) -> @wxFrame {
-        unsafe { wxXmlResource_LoadFrame(self.handle(), parent.handle(), name.handle()) }
+        unsafe { @wxFrameImpl(wxXmlResource_LoadFrame(self.handle(), parent.handle(), name.handle())) as @wxFrame }
     }
     #[fixed_stack_segment]
     fn loadIcon(&self, name: @wxString, _ref: @wxIcon) {
@@ -17184,171 +17184,171 @@ trait wxXmlResource : wxObject {
     }
     #[fixed_stack_segment]
     fn loadMenu(&self, name: @wxString) -> @wxMenu {
-        unsafe { wxXmlResource_LoadMenu(self.handle(), name.handle()) }
+        unsafe { @wxMenuImpl(wxXmlResource_LoadMenu(self.handle(), name.handle())) as @wxMenu }
     }
     #[fixed_stack_segment]
     fn loadMenuBar(&self, parent: @wxWindow, name: @wxString) -> @wxMenuBar {
-        unsafe { wxXmlResource_LoadMenuBar(self.handle(), parent.handle(), name.handle()) }
+        unsafe { @wxMenuBarImpl(wxXmlResource_LoadMenuBar(self.handle(), parent.handle(), name.handle())) as @wxMenuBar }
     }
     #[fixed_stack_segment]
     fn loadPanel(&self, parent: @wxWindow, name: @wxString) -> @wxPanel {
-        unsafe { wxXmlResource_LoadPanel(self.handle(), parent.handle(), name.handle()) }
+        unsafe { @wxPanelImpl(wxXmlResource_LoadPanel(self.handle(), parent.handle(), name.handle())) as @wxPanel }
     }
     #[fixed_stack_segment]
     fn loadToolBar(&self, parent: @wxWindow, name: @wxString) -> @wxToolBar {
-        unsafe { wxXmlResource_LoadToolBar(self.handle(), parent.handle(), name.handle()) }
+        unsafe { @wxToolBarImpl(wxXmlResource_LoadToolBar(self.handle(), parent.handle(), name.handle())) as @wxToolBar }
     }
     #[fixed_stack_segment]
     fn getSizer(&self, str_id: @wxString) -> @wxSizer {
-        unsafe { wxXmlResource_GetSizer(self.handle(), str_id.handle()) }
+        unsafe { @wxSizerImpl(wxXmlResource_GetSizer(self.handle(), str_id.handle())) as @wxSizer }
     }
     #[fixed_stack_segment]
     fn getBoxSizer(&self, str_id: @wxString) -> @wxBoxSizer {
-        unsafe { wxXmlResource_GetBoxSizer(self.handle(), str_id.handle()) }
+        unsafe { @wxBoxSizerImpl(wxXmlResource_GetBoxSizer(self.handle(), str_id.handle())) as @wxBoxSizer }
     }
     #[fixed_stack_segment]
     fn getStaticBoxSizer(&self, str_id: @wxString) -> @wxStaticBoxSizer {
-        unsafe { wxXmlResource_GetStaticBoxSizer(self.handle(), str_id.handle()) }
+        unsafe { @wxStaticBoxSizerImpl(wxXmlResource_GetStaticBoxSizer(self.handle(), str_id.handle())) as @wxStaticBoxSizer }
     }
     #[fixed_stack_segment]
     fn getGridSizer(&self, str_id: @wxString) -> @wxGridSizer {
-        unsafe { wxXmlResource_GetGridSizer(self.handle(), str_id.handle()) }
+        unsafe { @wxGridSizerImpl(wxXmlResource_GetGridSizer(self.handle(), str_id.handle())) as @wxGridSizer }
     }
     #[fixed_stack_segment]
     fn getFlexGridSizer(&self, str_id: @wxString) -> @wxFlexGridSizer {
-        unsafe { wxXmlResource_GetFlexGridSizer(self.handle(), str_id.handle()) }
+        unsafe { @wxFlexGridSizerImpl(wxXmlResource_GetFlexGridSizer(self.handle(), str_id.handle())) as @wxFlexGridSizer }
     }
     #[fixed_stack_segment]
     fn getBitmapButton(&self, str_id: @wxString) -> @wxBitmapButton {
-        unsafe { wxXmlResource_GetBitmapButton(self.handle(), str_id.handle()) }
+        unsafe { @wxBitmapButtonImpl(wxXmlResource_GetBitmapButton(self.handle(), str_id.handle())) as @wxBitmapButton }
     }
     #[fixed_stack_segment]
     fn getButton(&self, str_id: @wxString) -> @wxButton {
-        unsafe { wxXmlResource_GetButton(self.handle(), str_id.handle()) }
+        unsafe { @wxButtonImpl(wxXmlResource_GetButton(self.handle(), str_id.handle())) as @wxButton }
     }
     #[fixed_stack_segment]
     fn getCalendarCtrl(&self, str_id: @wxString) -> @wxCalendarCtrl {
-        unsafe { wxXmlResource_GetCalendarCtrl(self.handle(), str_id.handle()) }
+        unsafe { @wxCalendarCtrlImpl(wxXmlResource_GetCalendarCtrl(self.handle(), str_id.handle())) as @wxCalendarCtrl }
     }
     #[fixed_stack_segment]
     fn getCheckBox(&self, str_id: @wxString) -> @wxCheckBox {
-        unsafe { wxXmlResource_GetCheckBox(self.handle(), str_id.handle()) }
+        unsafe { @wxCheckBoxImpl(wxXmlResource_GetCheckBox(self.handle(), str_id.handle())) as @wxCheckBox }
     }
     #[fixed_stack_segment]
     fn getCheckListBox(&self, str_id: @wxString) -> @wxCheckListBox {
-        unsafe { wxXmlResource_GetCheckListBox(self.handle(), str_id.handle()) }
+        unsafe { @wxCheckListBoxImpl(wxXmlResource_GetCheckListBox(self.handle(), str_id.handle())) as @wxCheckListBox }
     }
     #[fixed_stack_segment]
     fn getChoice(&self, str_id: @wxString) -> @wxChoice {
-        unsafe { wxXmlResource_GetChoice(self.handle(), str_id.handle()) }
+        unsafe { @wxChoiceImpl(wxXmlResource_GetChoice(self.handle(), str_id.handle())) as @wxChoice }
     }
     #[fixed_stack_segment]
     fn getComboBox(&self, str_id: @wxString) -> @wxComboBox {
-        unsafe { wxXmlResource_GetComboBox(self.handle(), str_id.handle()) }
+        unsafe { @wxComboBoxImpl(wxXmlResource_GetComboBox(self.handle(), str_id.handle())) as @wxComboBox }
     }
     #[fixed_stack_segment]
     fn getGauge(&self, str_id: @wxString) -> @wxGauge {
-        unsafe { wxXmlResource_GetGauge(self.handle(), str_id.handle()) }
+        unsafe { @wxGaugeImpl(wxXmlResource_GetGauge(self.handle(), str_id.handle())) as @wxGauge }
     }
     #[fixed_stack_segment]
     fn getGrid(&self, str_id: @wxString) -> @wxGrid {
-        unsafe { wxXmlResource_GetGrid(self.handle(), str_id.handle()) }
+        unsafe { @wxGridImpl(wxXmlResource_GetGrid(self.handle(), str_id.handle())) as @wxGrid }
     }
     #[fixed_stack_segment]
     fn getHtmlWindow(&self, str_id: @wxString) -> @wxHtmlWindow {
-        unsafe { wxXmlResource_GetHtmlWindow(self.handle(), str_id.handle()) }
+        unsafe { @wxHtmlWindowImpl(wxXmlResource_GetHtmlWindow(self.handle(), str_id.handle())) as @wxHtmlWindow }
     }
     #[fixed_stack_segment]
     fn getListBox(&self, str_id: @wxString) -> @wxListBox {
-        unsafe { wxXmlResource_GetListBox(self.handle(), str_id.handle()) }
+        unsafe { @wxListBoxImpl(wxXmlResource_GetListBox(self.handle(), str_id.handle())) as @wxListBox }
     }
     #[fixed_stack_segment]
     fn getListCtrl(&self, str_id: @wxString) -> @wxListCtrl {
-        unsafe { wxXmlResource_GetListCtrl(self.handle(), str_id.handle()) }
+        unsafe { @wxListCtrlImpl(wxXmlResource_GetListCtrl(self.handle(), str_id.handle())) as @wxListCtrl }
     }
     #[fixed_stack_segment]
     fn getMDIChildFrame(&self, str_id: @wxString) -> @wxMDIChildFrame {
-        unsafe { wxXmlResource_GetMDIChildFrame(self.handle(), str_id.handle()) }
+        unsafe { @wxMDIChildFrameImpl(wxXmlResource_GetMDIChildFrame(self.handle(), str_id.handle())) as @wxMDIChildFrame }
     }
     #[fixed_stack_segment]
     fn getMDIParentFrame(&self, str_id: @wxString) -> @wxMDIParentFrame {
-        unsafe { wxXmlResource_GetMDIParentFrame(self.handle(), str_id.handle()) }
+        unsafe { @wxMDIParentFrameImpl(wxXmlResource_GetMDIParentFrame(self.handle(), str_id.handle())) as @wxMDIParentFrame }
     }
     #[fixed_stack_segment]
     fn getMenu(&self, str_id: @wxString) -> @wxMenu {
-        unsafe { wxXmlResource_GetMenu(self.handle(), str_id.handle()) }
+        unsafe { @wxMenuImpl(wxXmlResource_GetMenu(self.handle(), str_id.handle())) as @wxMenu }
     }
     #[fixed_stack_segment]
     fn getMenuBar(&self, str_id: @wxString) -> @wxMenuBar {
-        unsafe { wxXmlResource_GetMenuBar(self.handle(), str_id.handle()) }
+        unsafe { @wxMenuBarImpl(wxXmlResource_GetMenuBar(self.handle(), str_id.handle())) as @wxMenuBar }
     }
     #[fixed_stack_segment]
     fn getMenuItem(&self, str_id: @wxString) -> @wxMenuItem {
-        unsafe { wxXmlResource_GetMenuItem(self.handle(), str_id.handle()) }
+        unsafe { @wxMenuItemImpl(wxXmlResource_GetMenuItem(self.handle(), str_id.handle())) as @wxMenuItem }
     }
     #[fixed_stack_segment]
     fn getNotebook(&self, str_id: @wxString) -> @wxNotebook {
-        unsafe { wxXmlResource_GetNotebook(self.handle(), str_id.handle()) }
+        unsafe { @wxNotebookImpl(wxXmlResource_GetNotebook(self.handle(), str_id.handle())) as @wxNotebook }
     }
     #[fixed_stack_segment]
     fn getPanel(&self, str_id: @wxString) -> @wxPanel {
-        unsafe { wxXmlResource_GetPanel(self.handle(), str_id.handle()) }
+        unsafe { @wxPanelImpl(wxXmlResource_GetPanel(self.handle(), str_id.handle())) as @wxPanel }
     }
     #[fixed_stack_segment]
     fn getRadioButton(&self, str_id: @wxString) -> @wxRadioButton {
-        unsafe { wxXmlResource_GetRadioButton(self.handle(), str_id.handle()) }
+        unsafe { @wxRadioButtonImpl(wxXmlResource_GetRadioButton(self.handle(), str_id.handle())) as @wxRadioButton }
     }
     #[fixed_stack_segment]
     fn getRadioBox(&self, str_id: @wxString) -> @wxRadioBox {
-        unsafe { wxXmlResource_GetRadioBox(self.handle(), str_id.handle()) }
+        unsafe { @wxRadioBoxImpl(wxXmlResource_GetRadioBox(self.handle(), str_id.handle())) as @wxRadioBox }
     }
     #[fixed_stack_segment]
     fn getScrollBar(&self, str_id: @wxString) -> @wxScrollBar {
-        unsafe { wxXmlResource_GetScrollBar(self.handle(), str_id.handle()) }
+        unsafe { @wxScrollBarImpl(wxXmlResource_GetScrollBar(self.handle(), str_id.handle())) as @wxScrollBar }
     }
     #[fixed_stack_segment]
     fn getScrolledWindow(&self, str_id: @wxString) -> @wxScrolledWindow {
-        unsafe { wxXmlResource_GetScrolledWindow(self.handle(), str_id.handle()) }
+        unsafe { @wxScrolledWindowImpl(wxXmlResource_GetScrolledWindow(self.handle(), str_id.handle())) as @wxScrolledWindow }
     }
     #[fixed_stack_segment]
     fn getSlider(&self, str_id: @wxString) -> @wxSlider {
-        unsafe { wxXmlResource_GetSlider(self.handle(), str_id.handle()) }
+        unsafe { @wxSliderImpl(wxXmlResource_GetSlider(self.handle(), str_id.handle())) as @wxSlider }
     }
     #[fixed_stack_segment]
     fn getSpinButton(&self, str_id: @wxString) -> @wxSpinButton {
-        unsafe { wxXmlResource_GetSpinButton(self.handle(), str_id.handle()) }
+        unsafe { @wxSpinButtonImpl(wxXmlResource_GetSpinButton(self.handle(), str_id.handle())) as @wxSpinButton }
     }
     #[fixed_stack_segment]
     fn getSpinCtrl(&self, str_id: @wxString) -> @wxSpinCtrl {
-        unsafe { wxXmlResource_GetSpinCtrl(self.handle(), str_id.handle()) }
+        unsafe { @wxSpinCtrlImpl(wxXmlResource_GetSpinCtrl(self.handle(), str_id.handle())) as @wxSpinCtrl }
     }
     #[fixed_stack_segment]
     fn getSplitterWindow(&self, str_id: @wxString) -> @wxSplitterWindow {
-        unsafe { wxXmlResource_GetSplitterWindow(self.handle(), str_id.handle()) }
+        unsafe { @wxSplitterWindowImpl(wxXmlResource_GetSplitterWindow(self.handle(), str_id.handle())) as @wxSplitterWindow }
     }
     #[fixed_stack_segment]
     fn getStaticBitmap(&self, str_id: @wxString) -> @wxStaticBitmap {
-        unsafe { wxXmlResource_GetStaticBitmap(self.handle(), str_id.handle()) }
+        unsafe { @wxStaticBitmapImpl(wxXmlResource_GetStaticBitmap(self.handle(), str_id.handle())) as @wxStaticBitmap }
     }
     #[fixed_stack_segment]
     fn getStaticBox(&self, str_id: @wxString) -> @wxStaticBox {
-        unsafe { wxXmlResource_GetStaticBox(self.handle(), str_id.handle()) }
+        unsafe { @wxStaticBoxImpl(wxXmlResource_GetStaticBox(self.handle(), str_id.handle())) as @wxStaticBox }
     }
     #[fixed_stack_segment]
     fn getStaticLine(&self, str_id: @wxString) -> @wxStaticLine {
-        unsafe { wxXmlResource_GetStaticLine(self.handle(), str_id.handle()) }
+        unsafe { @wxStaticLineImpl(wxXmlResource_GetStaticLine(self.handle(), str_id.handle())) as @wxStaticLine }
     }
     #[fixed_stack_segment]
     fn getStaticText(&self, str_id: @wxString) -> @wxStaticText {
-        unsafe { wxXmlResource_GetStaticText(self.handle(), str_id.handle()) }
+        unsafe { @wxStaticTextImpl(wxXmlResource_GetStaticText(self.handle(), str_id.handle())) as @wxStaticText }
     }
     #[fixed_stack_segment]
     fn getTextCtrl(&self, str_id: @wxString) -> @wxTextCtrl {
-        unsafe { wxXmlResource_GetTextCtrl(self.handle(), str_id.handle()) }
+        unsafe { @wxTextCtrlImpl(wxXmlResource_GetTextCtrl(self.handle(), str_id.handle())) as @wxTextCtrl }
     }
     #[fixed_stack_segment]
     fn getTreeCtrl(&self, str_id: @wxString) -> @wxTreeCtrl {
-        unsafe { wxXmlResource_GetTreeCtrl(self.handle(), str_id.handle()) }
+        unsafe { @wxTreeCtrlImpl(wxXmlResource_GetTreeCtrl(self.handle(), str_id.handle())) as @wxTreeCtrl }
     }
     #[fixed_stack_segment]
     fn unload(&self, filemask: @wxString) -> bool {
@@ -17356,7 +17356,7 @@ trait wxXmlResource : wxObject {
     }
     #[fixed_stack_segment]
     fn set(&self, res: @wxXmlResource) -> @wxXmlResource {
-        unsafe { wxXmlResource_Set(self.handle(), res) }
+        unsafe { @wxXmlResourceImpl(wxXmlResource_Set(self.handle(), res)) as @wxXmlResource }
     }
     #[fixed_stack_segment]
     fn setDomain(&self, domain: @wxString) {
@@ -17368,7 +17368,7 @@ trait wxXmlResource : wxObject {
     }
     #[fixed_stack_segment]
     fn getStyledTextCtrl(&self, str_id: @wxString) -> @wxStyledTextCtrl {
-        unsafe { wxXmlResource_GetStyledTextCtrl(self.handle(), str_id.handle()) }
+        unsafe { @wxStyledTextCtrlImpl(wxXmlResource_GetStyledTextCtrl(self.handle(), str_id.handle())) as @wxStyledTextCtrl }
     }
 }
 
@@ -17415,11 +17415,11 @@ impl wxObject for wxPropertyGridImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxPropertyGrid : wxControl {
     #[fixed_stack_segment]
     fn append(&self, prop: @wxPGProperty) -> @wxPGProperty {
-        unsafe { wxPropertyGrid_Append(self.handle(), prop.handle()) }
+        unsafe { @wxPGPropertyImpl(wxPropertyGrid_Append(self.handle(), prop.handle())) as @wxPGProperty }
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxPropertyGrid {
-        unsafe { wxPropertyGrid_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) }
+        unsafe { @wxPropertyGridImpl(wxPropertyGrid_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) as @wxPropertyGrid }
     }
     #[fixed_stack_segment]
     fn disableProperty(&self, propName: @wxString) -> bool {
@@ -17441,7 +17441,7 @@ trait wxPropertyGridEvent : wxNotifyEvent {
     }
     #[fixed_stack_segment]
     fn getProperty(&self) -> @wxPGProperty {
-        unsafe { wxPropertyGridEvent_GetProperty(self.handle()) }
+        unsafe { @wxPGPropertyImpl(wxPropertyGridEvent_GetProperty(self.handle())) as @wxPGProperty }
     }
 }
 
@@ -17452,19 +17452,19 @@ impl wxObject for wxPGPropertyImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxPGProperty : wxObject {
     #[fixed_stack_segment]
     fn getLabel(&self) -> @wxString {
-        unsafe { wxPGProperty_GetLabel(self.handle()) }
+        unsafe { @wxStringImpl(wxPGProperty_GetLabel(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getName(&self) -> @wxString {
-        unsafe { wxPGProperty_GetName(self.handle()) }
+        unsafe { @wxStringImpl(wxPGProperty_GetName(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getValueAsString(&self) -> @wxString {
-        unsafe { wxPGProperty_GetValueAsString(self.handle()) }
+        unsafe { @wxStringImpl(wxPGProperty_GetValueAsString(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getValueType(&self) -> @wxString {
-        unsafe { wxPGProperty_GetValueType(self.handle()) }
+        unsafe { @wxStringImpl(wxPGProperty_GetValueType(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn setHelpString(&self, helpString: @wxString) {
@@ -17480,7 +17480,7 @@ impl wxObject for wxStringPropertyImpl { pub fn handle(&self) -> *u8 { **self } 
 trait wxStringProperty : wxPGProperty {
     #[fixed_stack_segment]
     fn new(label: @wxString, name: @wxString, value: @wxString) -> @wxStringProperty {
-        unsafe { wxStringProperty_Create(label.handle(), name.handle(), value.handle()) }
+        unsafe { @wxStringPropertyImpl(wxStringProperty_Create(label.handle(), name.handle(), value.handle())) as @wxStringProperty }
     }
 }
 
@@ -17492,7 +17492,7 @@ impl wxObject for wxIntPropertyImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxIntProperty : wxPGProperty {
     #[fixed_stack_segment]
     fn new(label: @wxString, name: @wxString, value: c_int) -> @wxIntProperty {
-        unsafe { wxIntProperty_Create(label.handle(), name.handle(), value) }
+        unsafe { @wxIntPropertyImpl(wxIntProperty_Create(label.handle(), name.handle(), value)) as @wxIntProperty }
     }
 }
 
@@ -17504,7 +17504,7 @@ impl wxObject for wxBoolPropertyImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxBoolProperty : wxPGProperty {
     #[fixed_stack_segment]
     fn new(label: @wxString, name: @wxString, value: bool) -> @wxBoolProperty {
-        unsafe { wxBoolProperty_Create(label.handle(), name.handle(), value) }
+        unsafe { @wxBoolPropertyImpl(wxBoolProperty_Create(label.handle(), name.handle(), value)) as @wxBoolProperty }
     }
 }
 
@@ -17516,7 +17516,7 @@ impl wxObject for wxFloatPropertyImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxFloatProperty : wxPGProperty {
     #[fixed_stack_segment]
     fn new(label: @wxString, name: @wxString, value: c_float) -> @wxFloatProperty {
-        unsafe { wxFloatProperty_Create(label.handle(), name.handle(), value) }
+        unsafe { @wxFloatPropertyImpl(wxFloatProperty_Create(label.handle(), name.handle(), value)) as @wxFloatProperty }
     }
 }
 
@@ -17528,7 +17528,7 @@ impl wxObject for wxDatePropertyImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxDateProperty : wxPGProperty {
     #[fixed_stack_segment]
     fn new(label: @wxString, name: @wxString, value: @wxDateTime) -> @wxDateProperty {
-        unsafe { wxDateProperty_Create(label.handle(), name.handle(), value.handle()) }
+        unsafe { @wxDatePropertyImpl(wxDateProperty_Create(label.handle(), name.handle(), value.handle())) as @wxDateProperty }
     }
 }
 
@@ -17540,7 +17540,7 @@ impl wxObject for wxFilePropertyImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxFileProperty : wxPGProperty {
     #[fixed_stack_segment]
     fn new(label: @wxString, name: @wxString, value: @wxString) -> @wxFileProperty {
-        unsafe { wxFileProperty_Create(label.handle(), name.handle(), value.handle()) }
+        unsafe { @wxFilePropertyImpl(wxFileProperty_Create(label.handle(), name.handle(), value.handle())) as @wxFileProperty }
     }
 }
 
@@ -17552,7 +17552,7 @@ impl wxObject for wxPropertyCategoryImpl { pub fn handle(&self) -> *u8 { **self 
 trait wxPropertyCategory : wxPGProperty {
     #[fixed_stack_segment]
     fn new(label: @wxString) -> @wxPropertyCategory {
-        unsafe { wxPropertyCategory_Create(label.handle()) }
+        unsafe { @wxPropertyCategoryImpl(wxPropertyCategory_Create(label.handle())) as @wxPropertyCategory }
     }
 }
 
@@ -17564,7 +17564,7 @@ impl wxObject for wxGenericDragImageImpl { pub fn handle(&self) -> *u8 { **self 
 trait wxGenericDragImage : wxDragImage {
     #[fixed_stack_segment]
     fn new(cursor: @wxCursor) -> @wxGenericDragImage {
-        unsafe { wxGenericDragImage_Create(cursor.handle()) }
+        unsafe { @wxGenericDragImageImpl(wxGenericDragImage_Create(cursor.handle())) as @wxGenericDragImage }
     }
     #[fixed_stack_segment]
     fn doDrawImage(&self, dc: @wxDC, x: c_int, y: c_int) -> bool {
@@ -17572,7 +17572,7 @@ trait wxGenericDragImage : wxDragImage {
     }
     #[fixed_stack_segment]
     fn getImageRect(&self, x_pos: c_int, y_pos: c_int) -> @wxRect {
-        unsafe { wxGenericDragImage_GetImageRect(self.handle(), x_pos, y_pos) }
+        unsafe { @wxRectImpl(wxGenericDragImage_GetImageRect(self.handle(), x_pos, y_pos)) as @wxRect }
     }
     #[fixed_stack_segment]
     fn updateBackingFromWindow(&self, windowDC: @wxDC, destDC: @wxMemoryDC, x: c_int, y: c_int, w: c_int, h: c_int, xdest: c_int, ydest: c_int, width: c_int, height: c_int) -> bool {
@@ -17587,7 +17587,7 @@ impl wxObject for wxGraphicsObjectImpl { pub fn handle(&self) -> *u8 { **self } 
 trait wxGraphicsObject : wxObject {
     #[fixed_stack_segment]
     fn getRenderer() -> @wxGraphicsRenderer {
-        unsafe { wxGraphicsObject_GetRenderer() }
+        unsafe { @wxGraphicsRendererImpl(wxGraphicsObject_GetRenderer()) as @wxGraphicsRenderer }
     }
     #[fixed_stack_segment]
     fn isNull(&self) -> bool {
@@ -17603,7 +17603,7 @@ impl wxObject for wxGraphicsBrushImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxGraphicsBrush : wxGraphicsObject {
     #[fixed_stack_segment]
     fn new() -> @wxGraphicsBrush {
-        unsafe { wxGraphicsBrush_Create() }
+        unsafe { @wxGraphicsBrushImpl(wxGraphicsBrush_Create()) as @wxGraphicsBrush }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -17619,11 +17619,11 @@ impl wxObject for wxGraphicsContextImpl { pub fn handle(&self) -> *u8 { **self }
 trait wxGraphicsContext : wxGraphicsObject {
     #[fixed_stack_segment]
     fn new(dc: @wxWindowDC) -> @wxGraphicsContext {
-        unsafe { wxGraphicsContext_Create(dc.handle()) }
+        unsafe { @wxGraphicsContextImpl(wxGraphicsContext_Create(dc.handle())) as @wxGraphicsContext }
     }
     #[fixed_stack_segment]
     fn newFromWindow(window: @wxWindow) -> @wxGraphicsContext {
-        unsafe { wxGraphicsContext_CreateFromWindow(window.handle()) }
+        unsafe { @wxGraphicsContextImpl(wxGraphicsContext_CreateFromWindow(window.handle())) as @wxGraphicsContext }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -17631,11 +17631,11 @@ trait wxGraphicsContext : wxGraphicsObject {
     }
     #[fixed_stack_segment]
     fn newFromNative(context: *c_void) -> @wxGraphicsContext {
-        unsafe { wxGraphicsContext_CreateFromNative(context) }
+        unsafe { @wxGraphicsContextImpl(wxGraphicsContext_CreateFromNative(context)) as @wxGraphicsContext }
     }
     #[fixed_stack_segment]
     fn newFromNativeWindow(window: *c_void) -> @wxGraphicsContext {
-        unsafe { wxGraphicsContext_CreateFromNativeWindow(window) }
+        unsafe { @wxGraphicsContextImpl(wxGraphicsContext_CreateFromNativeWindow(window)) as @wxGraphicsContext }
     }
     #[fixed_stack_segment]
     fn clip(&self, region: @wxRegion) {
@@ -17763,7 +17763,7 @@ impl wxObject for wxGraphicsFontImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxGraphicsFont : wxGraphicsObject {
     #[fixed_stack_segment]
     fn new() -> @wxGraphicsFont {
-        unsafe { wxGraphicsFont_Create() }
+        unsafe { @wxGraphicsFontImpl(wxGraphicsFont_Create()) as @wxGraphicsFont }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -17779,7 +17779,7 @@ impl wxObject for wxGraphicsMatrixImpl { pub fn handle(&self) -> *u8 { **self } 
 trait wxGraphicsMatrix : wxGraphicsObject {
     #[fixed_stack_segment]
     fn new() -> @wxGraphicsMatrix {
-        unsafe { wxGraphicsMatrix_Create() }
+        unsafe { @wxGraphicsMatrixImpl(wxGraphicsMatrix_Create()) as @wxGraphicsMatrix }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -17843,7 +17843,7 @@ impl wxObject for wxGraphicsPathImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxGraphicsPath : wxGraphicsObject {
     #[fixed_stack_segment]
     fn new() -> @wxGraphicsPath {
-        unsafe { wxGraphicsPath_Create() }
+        unsafe { @wxGraphicsPathImpl(wxGraphicsPath_Create()) as @wxGraphicsPath }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -17931,7 +17931,7 @@ impl wxObject for wxGraphicsPenImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxGraphicsPen : wxGraphicsObject {
     #[fixed_stack_segment]
     fn new() -> @wxGraphicsPen {
-        unsafe { wxGraphicsPen_Create() }
+        unsafe { @wxGraphicsPenImpl(wxGraphicsPen_Create()) as @wxGraphicsPen }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -17951,23 +17951,23 @@ trait wxGraphicsRenderer : wxGraphicsObject {
     }
     #[fixed_stack_segment]
     fn getDefaultRenderer(&self) -> @wxGraphicsRenderer {
-        unsafe { wxGraphicsRenderer_GetDefaultRenderer(self.handle()) }
+        unsafe { @wxGraphicsRendererImpl(wxGraphicsRenderer_GetDefaultRenderer(self.handle())) as @wxGraphicsRenderer }
     }
     #[fixed_stack_segment]
     fn newContext(dc: @wxWindowDC) -> @wxGraphicsContext {
-        unsafe { wxGraphicsRenderer_CreateContext(dc.handle()) }
+        unsafe { @wxGraphicsContextImpl(wxGraphicsRenderer_CreateContext(dc.handle())) as @wxGraphicsContext }
     }
     #[fixed_stack_segment]
     fn newContextFromWindow(window: @wxWindow) -> @wxGraphicsContext {
-        unsafe { wxGraphicsRenderer_CreateContextFromWindow(window.handle()) }
+        unsafe { @wxGraphicsContextImpl(wxGraphicsRenderer_CreateContextFromWindow(window.handle())) as @wxGraphicsContext }
     }
     #[fixed_stack_segment]
     fn newContextFromNativeContext(context: *c_void) -> @wxGraphicsContext {
-        unsafe { wxGraphicsRenderer_CreateContextFromNativeContext(context) }
+        unsafe { @wxGraphicsContextImpl(wxGraphicsRenderer_CreateContextFromNativeContext(context)) as @wxGraphicsContext }
     }
     #[fixed_stack_segment]
     fn newContextFromNativeWindow(window: *c_void) -> @wxGraphicsContext {
-        unsafe { wxGraphicsRenderer_CreateContextFromNativeWindow(window) }
+        unsafe { @wxGraphicsContextImpl(wxGraphicsRenderer_CreateContextFromNativeWindow(window)) as @wxGraphicsContext }
     }
 }
 
@@ -17978,11 +17978,11 @@ impl wxObject for wxGLContextImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxGLContext : wxObject {
     #[fixed_stack_segment]
     fn new(win: @wxGLCanvas, other: @wxGLContext) -> @wxGLContext {
-        unsafe { wxGLContext_Create(win.handle(), other.handle()) }
+        unsafe { @wxGLContextImpl(wxGLContext_Create(win.handle(), other.handle())) as @wxGLContext }
     }
     #[fixed_stack_segment]
     fn newFromNull(win: @wxGLCanvas) -> @wxGLContext {
-        unsafe { wxGLContext_CreateFromNull(win.handle()) }
+        unsafe { @wxGLContextImpl(wxGLContext_CreateFromNull(win.handle())) as @wxGLContext }
     }
     #[fixed_stack_segment]
     fn setCurrent(&self, win: @wxGLCanvas) -> bool {
@@ -18018,43 +18018,43 @@ trait wxManagedPtr {
     }
     #[fixed_stack_segment]
     fn newFromObject(obj: @wxObject) -> @wxManagedPtr {
-        unsafe { wxManagedPtr_CreateFromObject(obj.handle()) }
+        unsafe { @wxManagedPtrImpl(wxManagedPtr_CreateFromObject(obj.handle())) as @wxManagedPtr }
     }
     #[fixed_stack_segment]
     fn newFromDateTime(obj: @wxDateTime) -> @wxManagedPtr {
-        unsafe { wxManagedPtr_CreateFromDateTime(obj.handle()) }
+        unsafe { @wxManagedPtrImpl(wxManagedPtr_CreateFromDateTime(obj.handle())) as @wxManagedPtr }
     }
     #[fixed_stack_segment]
     fn newFromGridCellCoordsArray(obj: @wxGridCellCoordsArray) -> @wxManagedPtr {
-        unsafe { wxManagedPtr_CreateFromGridCellCoordsArray(obj.handle()) }
+        unsafe { @wxManagedPtrImpl(wxManagedPtr_CreateFromGridCellCoordsArray(obj.handle())) as @wxManagedPtr }
     }
     #[fixed_stack_segment]
     fn newFromBitmap(obj: @wxBitmap) -> @wxManagedPtr {
-        unsafe { wxManagedPtr_CreateFromBitmap(obj.handle()) }
+        unsafe { @wxManagedPtrImpl(wxManagedPtr_CreateFromBitmap(obj.handle())) as @wxManagedPtr }
     }
     #[fixed_stack_segment]
     fn newFromIcon(obj: @wxIcon) -> @wxManagedPtr {
-        unsafe { wxManagedPtr_CreateFromIcon(obj.handle()) }
+        unsafe { @wxManagedPtrImpl(wxManagedPtr_CreateFromIcon(obj.handle())) as @wxManagedPtr }
     }
     #[fixed_stack_segment]
     fn newFromBrush(obj: @wxBrush) -> @wxManagedPtr {
-        unsafe { wxManagedPtr_CreateFromBrush(obj.handle()) }
+        unsafe { @wxManagedPtrImpl(wxManagedPtr_CreateFromBrush(obj.handle())) as @wxManagedPtr }
     }
     #[fixed_stack_segment]
     fn newFromColour(obj: @wxColour) -> @wxManagedPtr {
-        unsafe { wxManagedPtr_CreateFromColour(obj.handle()) }
+        unsafe { @wxManagedPtrImpl(wxManagedPtr_CreateFromColour(obj.handle())) as @wxManagedPtr }
     }
     #[fixed_stack_segment]
     fn newFromCursor(obj: @wxCursor) -> @wxManagedPtr {
-        unsafe { wxManagedPtr_CreateFromCursor(obj.handle()) }
+        unsafe { @wxManagedPtrImpl(wxManagedPtr_CreateFromCursor(obj.handle())) as @wxManagedPtr }
     }
     #[fixed_stack_segment]
     fn newFromFont(obj: @wxFont) -> @wxManagedPtr {
-        unsafe { wxManagedPtr_CreateFromFont(obj.handle()) }
+        unsafe { @wxManagedPtrImpl(wxManagedPtr_CreateFromFont(obj.handle())) as @wxManagedPtr }
     }
     #[fixed_stack_segment]
     fn newFromPen(obj: @wxPen) -> @wxManagedPtr {
-        unsafe { wxManagedPtr_CreateFromPen(obj.handle()) }
+        unsafe { @wxManagedPtrImpl(wxManagedPtr_CreateFromPen(obj.handle())) as @wxManagedPtr }
     }
 }
 
@@ -18067,7 +18067,7 @@ impl wxObject for wxMediaCtrlImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxMediaCtrl : wxWindow {
     #[fixed_stack_segment]
     fn new(parent: @wxWindow, windowID: c_int, fileName: @wxString, x: c_int, y: c_int, w: c_int, h: c_int, style: c_long, szBackend: @wxString, name: @wxString) -> @wxMediaCtrl {
-        unsafe { wxMediaCtrl_Create(parent.handle(), windowID, fileName.handle(), x, y, w, h, style, szBackend.handle(), name.handle()) }
+        unsafe { @wxMediaCtrlImpl(wxMediaCtrl_Create(parent.handle(), windowID, fileName.handle(), x, y, w, h, style, szBackend.handle(), name.handle())) as @wxMediaCtrl }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -18075,7 +18075,7 @@ trait wxMediaCtrl : wxWindow {
     }
     #[fixed_stack_segment]
     fn getBestSize(&self) -> @wxSize {
-        unsafe { wxMediaCtrl_GetBestSize(self.handle()) }
+        unsafe { @wxSizeImpl(wxMediaCtrl_GetBestSize(self.handle())) as @wxSize }
     }
     #[fixed_stack_segment]
     fn getPlaybackRate(&self) -> c_double {
@@ -18157,7 +18157,7 @@ impl wxObject for wxcPrintoutImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxcPrintout : wxPrintout {
     #[fixed_stack_segment]
     fn new(title: @wxString) -> @wxcPrintout {
-        unsafe { wxcPrintout_Create(title.handle()) }
+        unsafe { @wxcPrintoutImpl(wxcPrintout_Create(title.handle())) as @wxcPrintout }
     }
     #[fixed_stack_segment]
     fn delete(&self) {
@@ -18169,7 +18169,7 @@ trait wxcPrintout : wxPrintout {
     }
     #[fixed_stack_segment]
     fn getEvtHandler(&self) -> @wxcPrintoutHandler {
-        unsafe { wxcPrintout_GetEvtHandler(self.handle()) }
+        unsafe { @wxcPrintoutHandlerImpl(wxcPrintout_GetEvtHandler(self.handle())) as @wxcPrintoutHandler }
     }
 }
 
@@ -18181,7 +18181,7 @@ impl wxObject for wxcPrintEventImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxcPrintEvent : wxEvent {
     #[fixed_stack_segment]
     fn getPrintout(&self) -> @wxcPrintout {
-        unsafe { wxcPrintEvent_GetPrintout(self.handle()) }
+        unsafe { @wxcPrintoutImpl(wxcPrintEvent_GetPrintout(self.handle())) as @wxcPrintout }
     }
     #[fixed_stack_segment]
     fn getPage(&self) -> c_int {
@@ -19503,15 +19503,15 @@ trait wxStyledTextCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _txt: @wxString, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, style: c_int) -> @wxStyledTextCtrl {
-        unsafe { wxStyledTextCtrl_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, style) }
+        unsafe { @wxStyledTextCtrlImpl(wxStyledTextCtrl_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, style)) as @wxStyledTextCtrl }
     }
     #[fixed_stack_segment]
     fn indicatorGetForeground(&self, indic: c_int) -> @wxColour {
-        unsafe { wxStyledTextCtrl_IndicatorGetForeground(self.handle(), indic) }
+        unsafe { @wxColourImpl(wxStyledTextCtrl_IndicatorGetForeground(self.handle(), indic)) as @wxColour }
     }
     #[fixed_stack_segment]
     fn getCaretLineBackground(&self) -> @wxColour {
-        unsafe { wxStyledTextCtrl_GetCaretLineBackground(self.handle()) }
+        unsafe { @wxColourImpl(wxStyledTextCtrl_GetCaretLineBackground(self.handle())) as @wxColour }
     }
     #[fixed_stack_segment]
     fn setCaretLineBackground(&self, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
@@ -19519,39 +19519,39 @@ trait wxStyledTextCtrl : wxControl {
     }
     #[fixed_stack_segment]
     fn getCaretForeground(&self) -> @wxColour {
-        unsafe { wxStyledTextCtrl_GetCaretForeground(self.handle()) }
+        unsafe { @wxColourImpl(wxStyledTextCtrl_GetCaretForeground(self.handle())) as @wxColour }
     }
     #[fixed_stack_segment]
     fn getLine(&self, line: c_int) -> @wxString {
-        unsafe { wxStyledTextCtrl_GetLine(self.handle(), line) }
+        unsafe { @wxStringImpl(wxStyledTextCtrl_GetLine(self.handle(), line)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getText(&self) -> @wxString {
-        unsafe { wxStyledTextCtrl_GetText(self.handle()) }
+        unsafe { @wxStringImpl(wxStyledTextCtrl_GetText(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getTextRange(&self, startPos: c_int, endPos: c_int) -> @wxString {
-        unsafe { wxStyledTextCtrl_GetTextRange(self.handle(), startPos, endPos) }
+        unsafe { @wxStringImpl(wxStyledTextCtrl_GetTextRange(self.handle(), startPos, endPos)) as @wxString }
     }
     #[fixed_stack_segment]
     fn getSelectedText(&self) -> @wxString {
-        unsafe { wxStyledTextCtrl_GetSelectedText(self.handle()) }
+        unsafe { @wxStringImpl(wxStyledTextCtrl_GetSelectedText(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn newDocument(&self) -> @wxSTCDoc {
-        unsafe { wxStyledTextCtrl_CreateDocument(self.handle()) }
+        unsafe { @wxSTCDocImpl(wxStyledTextCtrl_CreateDocument(self.handle())) as @wxSTCDoc }
     }
     #[fixed_stack_segment]
     fn getEdgeColour(&self) -> @wxColour {
-        unsafe { wxStyledTextCtrl_GetEdgeColour(self.handle()) }
+        unsafe { @wxColourImpl(wxStyledTextCtrl_GetEdgeColour(self.handle())) as @wxColour }
     }
     #[fixed_stack_segment]
     fn getDocPointer(&self) -> @wxSTCDoc {
-        unsafe { wxStyledTextCtrl_GetDocPointer(self.handle()) }
+        unsafe { @wxSTCDocImpl(wxStyledTextCtrl_GetDocPointer(self.handle())) as @wxSTCDoc }
     }
     #[fixed_stack_segment]
     fn pointFromPosition(&self) -> @wxPoint {
-        unsafe { wxStyledTextCtrl_PointFromPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxStyledTextCtrl_PointFromPosition(self.handle())) as @wxPoint }
     }
 }
 
@@ -19644,7 +19644,7 @@ trait wxStyledTextEvent : wxCommandEvent {
     }
     #[fixed_stack_segment]
     fn getDragText(&self) -> @wxString {
-        unsafe { wxStyledTextEvent_GetDragText(self.handle()) }
+        unsafe { @wxStringImpl(wxStyledTextEvent_GetDragText(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getDragAllowMove(&self) -> bool {
@@ -19668,11 +19668,11 @@ trait wxStyledTextEvent : wxCommandEvent {
     }
     #[fixed_stack_segment]
     fn getText(&self) -> @wxString {
-        unsafe { wxStyledTextEvent_GetText(self.handle()) }
+        unsafe { @wxStringImpl(wxStyledTextEvent_GetText(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn clone(&self) -> @wxStyledTextEvent {
-        unsafe { wxStyledTextEvent_Clone(self.handle()) }
+        unsafe { @wxStyledTextEventImpl(wxStyledTextEvent_Clone(self.handle())) as @wxStyledTextEvent }
     }
     #[fixed_stack_segment]
     fn setPosition(&self, pos: c_int) {
@@ -19808,11 +19808,11 @@ impl wxClientData for wxcTreeItemDataImpl { pub fn handle(&self) -> *u8 { **self
 trait wxcTreeItemData : wxTreeItemData {
     #[fixed_stack_segment]
     fn new(closure: @wxClosure) -> @wxcTreeItemData {
-        unsafe { wxcTreeItemData_Create(closure.handle()) }
+        unsafe { @wxcTreeItemDataImpl(wxcTreeItemData_Create(closure.handle())) as @wxcTreeItemData }
     }
     #[fixed_stack_segment]
     fn getClientClosure(&self) -> @wxClosure {
-        unsafe { wxcTreeItemData_GetClientClosure(self.handle()) }
+        unsafe { @wxClosureImpl(wxcTreeItemData_GetClientClosure(self.handle())) as @wxClosure }
     }
     #[fixed_stack_segment]
     fn setClientClosure(&self, closure: @wxClosure) {
@@ -19827,7 +19827,7 @@ impl wxThread for wxInputSinkImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxInputSink : wxThread {
     #[fixed_stack_segment]
     fn new(input: @wxInputStream, evtHandler: @wxEvtHandler, bufferLen: c_int) -> @wxInputSink {
-        unsafe { wxInputSink_Create(input.handle(), evtHandler.handle(), bufferLen) }
+        unsafe { @wxInputSinkImpl(wxInputSink_Create(input.handle(), evtHandler.handle(), bufferLen)) as @wxInputSink }
     }
     #[fixed_stack_segment]
     fn getId(&self) -> c_int {
@@ -19868,27 +19868,27 @@ impl wxObject for wxcHtmlEventImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxcHtmlEvent : wxCommandEvent {
     #[fixed_stack_segment]
     fn getMouseEvent(&self) -> @wxMouseEvent {
-        unsafe { wxcHtmlEvent_GetMouseEvent(self.handle()) }
+        unsafe { @wxMouseEventImpl(wxcHtmlEvent_GetMouseEvent(self.handle())) as @wxMouseEvent }
     }
     #[fixed_stack_segment]
     fn getHtmlCell(&self) -> @wxHtmlCell {
-        unsafe { wxcHtmlEvent_GetHtmlCell(self.handle()) }
+        unsafe { @wxHtmlCellImpl(wxcHtmlEvent_GetHtmlCell(self.handle())) as @wxHtmlCell }
     }
     #[fixed_stack_segment]
     fn getHtmlCellId(&self) -> @wxString {
-        unsafe { wxcHtmlEvent_GetHtmlCellId(self.handle()) }
+        unsafe { @wxStringImpl(wxcHtmlEvent_GetHtmlCellId(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getHref(&self) -> @wxString {
-        unsafe { wxcHtmlEvent_GetHref(self.handle()) }
+        unsafe { @wxStringImpl(wxcHtmlEvent_GetHref(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getTarget(&self) -> @wxString {
-        unsafe { wxcHtmlEvent_GetTarget(self.handle()) }
+        unsafe { @wxStringImpl(wxcHtmlEvent_GetTarget(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
     fn getLogicalPosition(&self) -> @wxPoint {
-        unsafe { wxcHtmlEvent_GetLogicalPosition(self.handle()) }
+        unsafe { @wxPointImpl(wxcHtmlEvent_GetLogicalPosition(self.handle())) as @wxPoint }
     }
 }
 
@@ -19904,7 +19904,7 @@ impl wxObject for wxcHtmlWindowImpl { pub fn handle(&self) -> *u8 { **self } }
 trait wxcHtmlWindow : wxHtmlWindow {
     #[fixed_stack_segment]
     fn new(_prt: @wxWindow, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: @wxString) -> @wxcHtmlWindow {
-        unsafe { wxcHtmlWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.handle()) }
+        unsafe { @wxcHtmlWindowImpl(wxcHtmlWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.handle())) as @wxcHtmlWindow }
     }
 }
 
@@ -19917,7 +19917,7 @@ impl wxGridCellWorker for wxGridCellTextEnterEditorImpl { pub fn handle(&self) -
 trait wxGridCellTextEnterEditor : wxGridCellTextEditor {
     #[fixed_stack_segment]
     fn ctor() -> @wxGridCellTextEnterEditor {
-        unsafe { wxGridCellTextEnterEditor_Ctor() }
+        unsafe { @wxGridCellTextEnterEditorImpl(wxGridCellTextEnterEditor_Ctor()) as @wxGridCellTextEnterEditor }
     }
 }
 
@@ -19928,7 +19928,7 @@ impl wxConfigBase for wxFileConfigImpl { pub fn handle(&self) -> *u8 { **self } 
 trait wxFileConfig : wxConfigBase {
     #[fixed_stack_segment]
     fn new(inp: @wxInputStream) -> @wxFileConfig {
-        unsafe { wxFileConfig_Create(inp.handle()) }
+        unsafe { @wxFileConfigImpl(wxFileConfig_Create(inp.handle())) as @wxFileConfig }
     }
 }
 

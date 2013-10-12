@@ -284,6 +284,7 @@ class Function(object):
         assert len(node) > 1
         assert node[1][0]
         self.__node = node
+        self.__return_type = Type(self.__node[0])
 
     @property
     def name(self):
@@ -316,17 +317,20 @@ class Function(object):
     
     @property
     def returns(self):
-        r = Type(self.__node[0])
-        if r.is_void:
+        if self.__return_type.is_void:
             return ''
-        return ' -> %s' % r
+        return ' -> %s' % self.__return_type
 
     def trait_fn(self, gen, classname):
         #gen.println('// %s' % self.__node)
         gen.println('#[fixed_stack_segment]')
         gen.println('fn %s(%s)%s {' % (self.method_name(classname), self.decl_args, self.returns))
         gen.indent()
-        gen.println('unsafe { %s(%s) }' % (self.name, self.calling_args))
+        body = '%s(%s)' % (self.name, self.calling_args)
+        if self.__return_type.is_self or \
+            self.__return_type.is_class:
+            body = '%sImpl(%s) as %s' % (self.__return_type, body, self.__return_type)
+        gen.println('unsafe { %s }' % body)
         gen.unindent()
         gen.println('}')
 
