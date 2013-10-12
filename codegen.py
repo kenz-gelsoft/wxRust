@@ -68,6 +68,54 @@ class Preprocessor(object):
         return text
 
 
+# Function style arg macros
+def TArrayString(args):
+    return [['int', args[0]],
+            [['*', 'wchar_t'], args[1]]]
+def TByteString(args):
+    return [[['*', ['*', 'char']], args[0]],
+            ['int', args[1]]]
+TByteStringLazy = TByteString
+def TColorRGB(args):
+    return [['uint8_t', args[0]],
+            ['uint8_t', args[1]],
+            ['uint8_t', args[2]]];
+def TPoint(args, T='int'):
+    return [[T, args[0]],
+            [T, args[1]]];
+def TPointDouble(args):
+    return TPoint(args, T='double')
+def TPointLong(args):
+    return TPoint(args, T='long')
+def TPointOut(args):
+    return TPoint(args, T=['*', 'int'])
+def TPointOutDouble(args):
+    return TPoint(args, T=['*', 'double'])
+def TPointOutVoid(args):
+    return TPoint(args, T=['*', 'int'])
+def TRect(args, T='int'):
+    return [[T, args[0]],
+            [T, args[1]],
+            [T, args[2]],
+            [T, args[3]]]
+def TRectDouble(args):
+    return TRect(args, T='double')
+def TRectOutDouble(args):
+    return TRect(args, T=['*', 'double'])
+def TRectOutVoid(args):
+    return TRect(args, T=['*', 'int'])
+TSize = TPoint
+def TSizeDouble(args):
+    return TSize(args, T='double')
+def TSizeOut(args):
+    return TSize(args, T=['*', 'int'])
+def TSizeOutDouble(args):
+    return TSize(args, T=['*', 'double'])
+def TSizeOutVoid(args):
+    return TSize(args, T=['*', 'int'])
+TVector = TPoint
+
+
 class Parser(object):
     def __init__(self):
         self.__classes   = []
@@ -90,6 +138,7 @@ class Parser(object):
             return
 
         # Trivial parser
+        # TODO: extract LineParser class
         stack = []
         node = []
         lexer = (t.group(0) for t in re.finditer(re.compile(r'\s+|\*|\(|,|\)|;|[^\s*(,);]+'), line))
@@ -112,6 +161,33 @@ class Parser(object):
                 node = stack.pop() # end-arg
                 stack[-1].append(node)
                 node = stack.pop() # end-arg-list
+                
+                # Handles function style argument macros here
+                tag = node[-1][0]
+                if tag in ['TArrayString',
+                           'TByteString', 'TByteStringLazy',
+                           'TColorRGB',
+                           'TPoint', 'TPointDouble', 'TPointLong', 'TPointOut', 'TPointOutDouble', 'TPointOutVoid',
+                           'TRect',  'TRectDouble',                             'TRectOutDouble',  'TRectOutVoid',
+                           'TSize',  'TSizeDouble',                'TSizeOut',  'TSizeOutDouble',  'TSizeOutVoid',
+                           'TVector']:
+#                    # ---- before
+#                    for pair in enumerate(stack):
+#                        print '%s: %s' % pair
+#                    print node
+                    macro = globals()[tag]
+                    macro_args = [arg[0] for arg in node.pop()[1:]]
+                    macro_result = macro(macro_args)
+                    for result_node in macro_result[:-1]:
+                        stack[-1].append(result_node)
+                    # We assume the last node read until here
+                    for item in macro_result[-1]:
+                        node.append(item)
+#                    # ---- after
+#                    for pair in enumerate(stack):
+#                        print '%s: %s' % pair
+#                    print node
+#                    sys.exit()
                 continue
             if token == '*':
                 node.append(['*', node.pop()])
@@ -119,6 +195,7 @@ class Parser(object):
             node.append(token)
             continue
         
+        #print node
         if 'TClassDef' in line:
             # class def
             clazz = Class(node)
@@ -222,48 +299,11 @@ class Function(object):
         gen.println('}')
 
 
-# Function stye type macros
+# Function style type macros
 def TArrayObjectOutVoid(args):
     return '~[@%s]' % args # it would be **c_void ?
-def TArrayString(args):
-    return '%s: c_int, %s: *wchar_t' % args
-def TByteString(args):
-    return '%s: **char, %s: c_int' % args
-TByteStringLazy = TByteString
 def TClassRef(args):
     return '@%s' % args
-def TColorRGB(args):
-    return '%s: u8, %s: u8, %s: u8' % args
-def TPoint(args, T='c_int'):
-    return '%s: %s, %s: %s' % (args[0], T, args[1], T)
-def TPointDouble(args):
-    return TPoint(args, T='c_double')
-def TPointLong(args):
-    return TPoint(args, T='c_long')
-def TPointOut(args):
-    return TPoint(args, T='*c_int')
-def TPointOutDouble(args):
-    return TPoint(args, T='*c_double')
-def TPointOutVoid(args):
-    return TPoint(args, T='*c_int')
-def TRect(args, T='c_int'):
-    return '%s: %s, %s: %s, %s: %s, %s: %s' % (args[0], T, args[1], T, args[2], T, args[3], T)
-def TRectDouble(args):
-    return TRect(args, T='c_double')
-def TRectOutDouble(args):
-    return TRect(args, T='*c_double')
-def TRectOutVoid(args):
-    return TRect(args, T='*c_int')
-TSize = TPoint
-def TSizeDouble(args):
-    return TSize(args, T='c_double')
-def TSizeOut(args):
-    return TSize(args, T='*c_int')
-def TSizeOutDouble(args):
-    return TSize(args, T='*c_double')
-def TSizeOutVoid(args):
-    return TSize(args, T='*c_int')
-TVector = TPoint
 
 
 class Arg(object):
@@ -291,16 +331,10 @@ class Arg(object):
     
     def __str__(self):
         tag = self.__node[0][0]
-        if tag in ['TArrayObjectOutVoid', 'TArrayString',
-                   'TByteString', 'TByteStringLazy',
-                   'TClassRef',
-                   'TColorRGB',
-                   'TPoint', 'TPointDouble', 'TPointLong', 'TPointOut', 'TPointOutDouble', 'TPointOutVoid',
-                   'TRect',  'TRectDouble',                             'TRectOutDouble',  'TRectOutVoid',
-                   'TSize',  'TSizeDouble',                'TSizeOut',  'TSizeOutDouble',  'TSizeOutVoid',
-                   'TVector']:
-            args = tuple([x[0] for x in self.__node[0][1:]])
-            return globals()[tag](args)
+        if tag in ['TArrayObjectOutVoid', 'TClassRef']:
+            macro = globals()[tag]
+            macro_args = tuple([x[0] for x in self.__node[0][1:]])
+            return '%s: %s' % (self.name, macro(macro_args))
         if self.is_self:
             return '&self'
         return '%s: %s' % (self.name, Type(self.__node[0]))
@@ -327,8 +361,10 @@ type_mapping = {
     'TStringVoid':         '*wchar_t',
     'TUInt':               'uint32_t',
     'TUInt8':              'uint8_t',
+    'char':                'c_char',
     'double':              'c_double',
     'float':               'c_float',
+    'int':                 'c_int',
     'long':                'c_long',
     'void':                'c_void',
 }
