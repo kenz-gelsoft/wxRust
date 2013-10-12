@@ -177,7 +177,7 @@ trait ELJApp : wxApp {
         unsafe { ELJApp_IsTerminating() }
     }
     #[fixed_stack_segment]
-    fn initializeC(closure: @wxClosure, _argc: c_int, _argv: **wchar_t) {
+    fn initializeC(closure: @wxClosure, _argc: c_int, _argv: *wchar_t) {
         unsafe { ELJApp_InitializeC(closure.handle(), _argc, _argv) }
     }
     #[fixed_stack_segment]
@@ -3013,7 +3013,7 @@ impl wxObject for wxClosureImpl { pub fn handle(&self) -> *u8 { **self } }
 
 trait wxClosure : wxObject {
     #[fixed_stack_segment]
-    fn new(_fun_CEvent: *c_void, _data: *u8) -> @wxClosure {
+    fn new(_fun_CEvent: *u8, _data: *u8) -> @wxClosure {
         unsafe { @wxClosureImpl(wxClosure_Create(_fun_CEvent, _data)) as @wxClosure }
     }
     #[fixed_stack_segment]
@@ -5277,7 +5277,7 @@ trait wxEditableListBox : wxPanel {
         unsafe { wxEditableListBox_GetNewButton(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getStrings(&self, _ref: **wchar_t) -> c_int {
+    fn getStrings(&self, _ref: *wchar_t) -> c_int {
         unsafe { wxEditableListBox_GetStrings(self.handle(), _ref) }
     }
     #[fixed_stack_segment]
@@ -5554,7 +5554,7 @@ trait wxFileDialog : wxDialog {
         unsafe { @wxStringImpl(wxFileDialog_GetFilename(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
-    fn getFilenames(&self, paths: **wchar_t) -> c_int {
+    fn getFilenames(&self, paths: *wchar_t) -> c_int {
         unsafe { wxFileDialog_GetFilenames(self.handle(), paths) }
     }
     #[fixed_stack_segment]
@@ -5570,7 +5570,7 @@ trait wxFileDialog : wxDialog {
         unsafe { @wxStringImpl(wxFileDialog_GetPath(self.handle())) as @wxString }
     }
     #[fixed_stack_segment]
-    fn getPaths(&self, paths: **wchar_t) -> c_int {
+    fn getPaths(&self, paths: *wchar_t) -> c_int {
         unsafe { wxFileDialog_GetPaths(self.handle(), paths) }
     }
     #[fixed_stack_segment]
@@ -5652,7 +5652,7 @@ trait wxFileHistory : wxObject {
         unsafe { wxFileHistory_GetMaxFiles(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getMenus(&self, _ref: ~[@wxMenu]) -> c_int {
+    fn getMenus(&self, _ref: *u8) -> c_int {
         unsafe { wxFileHistory_GetMenus(self.handle(), _ref) }
     }
     #[fixed_stack_segment]
@@ -8448,11 +8448,11 @@ trait wxImage : wxObject {
         unsafe { wxImage_ConvertToBitmap(self.handle(), bitmap.handle()) }
     }
     #[fixed_stack_segment]
-    fn convertToByteString(&self, type_: c_int, data: *c_char) -> c_int {
+    fn convertToByteString(&self, type_: c_int, data: *char) -> c_int {
         unsafe { wxImage_ConvertToByteString(self.handle(), type_, data) }
     }
     #[fixed_stack_segment]
-    fn convertToLazyByteString(&self, type_: c_int, data: *c_char) -> c_int {
+    fn convertToLazyByteString(&self, type_: c_int, data: *char) -> c_int {
         unsafe { wxImage_ConvertToLazyByteString(self.handle(), type_, data) }
     }
     #[fixed_stack_segment]
@@ -8468,11 +8468,11 @@ trait wxImage : wxObject {
         unsafe { @wxImageImpl(wxImage_CreateFromBitmap(bitmap.handle())) as @wxImage }
     }
     #[fixed_stack_segment]
-    fn newFromByteString(data: **char, length: c_int, type_: c_int) -> @wxImage {
+    fn newFromByteString(data: *char, length: c_int, type_: c_int) -> @wxImage {
         unsafe { @wxImageImpl(wxImage_CreateFromByteString(data, length, type_)) as @wxImage }
     }
     #[fixed_stack_segment]
-    fn newFromLazyByteString(data: **char, length: c_int, type_: c_int) -> @wxImage {
+    fn newFromLazyByteString(data: *char, length: c_int, type_: c_int) -> @wxImage {
         unsafe { @wxImageImpl(wxImage_CreateFromLazyByteString(data, length, type_)) as @wxImage }
     }
     #[fixed_stack_segment]
@@ -14046,11 +14046,11 @@ trait wxSizer : wxObject {
         unsafe { @wxSizerItemImpl(wxSizer_InsertStretchSpacer(self.handle(), index, prop)) as @wxSizerItem }
     }
     #[fixed_stack_segment]
-    fn isShownWindow(&self, window: *@wxWindow) -> bool {
+    fn isShownWindow(&self, window: *u8) -> bool {
         unsafe { wxSizer_IsShownWindow(self.handle(), window) }
     }
     #[fixed_stack_segment]
-    fn isShownSizer(&self, sizer: *@wxSizer) -> bool {
+    fn isShownSizer(&self, sizer: *u8) -> bool {
         unsafe { wxSizer_IsShownSizer(self.handle(), sizer) }
     }
     #[fixed_stack_segment]
@@ -14842,7 +14842,7 @@ trait wxString {
         unsafe { wxString_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn getString(&self, buffer: **wchar_t) -> c_int {
+    fn getString(&self, buffer: *wchar_t) -> c_int {
         unsafe { wxString_GetString(self.handle(), buffer) }
     }
     #[fixed_stack_segment]
@@ -15329,11 +15329,11 @@ trait wxTextValidator : wxValidator {
         unsafe { @wxTextValidatorImpl(wxTextValidator_Create(style, val)) as @wxTextValidator }
     }
     #[fixed_stack_segment]
-    fn getExcludes(&self, _ref: **wchar_t) -> c_int {
+    fn getExcludes(&self, _ref: *wchar_t) -> c_int {
         unsafe { wxTextValidator_GetExcludes(self.handle(), _ref) }
     }
     #[fixed_stack_segment]
-    fn getIncludes(&self, _ref: **wchar_t) -> c_int {
+    fn getIncludes(&self, _ref: *wchar_t) -> c_int {
         unsafe { wxTextValidator_GetIncludes(self.handle(), _ref) }
     }
     #[fixed_stack_segment]

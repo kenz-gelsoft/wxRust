@@ -86,7 +86,7 @@ def TArrayString(args):
     return [['int', args[0]],
             [['*', 'wchar_t'], args[1]]]
 def TByteString(args):
-    return [[['*', ['*', 'char']], args[0]],
+    return [[['*', 'char'], args[0]],
             ['int', args[1]]]
 TByteStringLazy = TByteString
 def TColorRGB(args):
@@ -337,7 +337,7 @@ class Function(object):
 
 # Function style type macros
 def TArrayObjectOutVoid(args):
-    return '~[@%s]' % args # it would be **c_void ?
+    return '*u8'#'~[@%s]' % args # it would be **c_void ?
 
 
 class Arg(object):
@@ -393,19 +393,19 @@ type_mapping = {
     'TArrayIntOutVoid':    '*intptr_t',
     'TArrayIntPtrOutVoid': '*intptr_t',
     'TArrayLen':           'c_int',
-    'TArrayStringOutVoid': '**wchar_t',
+    'TArrayStringOutVoid': '*wchar_t',#'**wchar_t',
     'TBool':               'bool',
     'TBoolInt':            'c_int',
-    'TByteStringLazyOut':  '*c_char',
+    'TByteStringLazyOut':  '*char',#'*c_char',
     'TByteStringLen':      'c_int',
-    'TByteStringOut':      '*c_char',
+    'TByteStringOut':      '*char',#'*c_char',
     'TChar':               'wchar_t',
-    'TClosureFun':         '*c_void',
+    'TClosureFun':         '*u8',#'*c_void',
     'TInt64':              'i64',
     'TIntPtr':             'intptr_t',
     'TString':             '*wchar_t',
     'TStringLen':          'c_int',
-    'TStringOut':          '**wchar_t',
+    'TStringOut':          '*wchar_t',#'**wchar_t',
     'TStringVoid':         '*wchar_t',
     'TUInt':               'uint32_t',
     'TUInt8':              'uint8_t',
@@ -459,7 +459,13 @@ class Type(object):
         if self.is_self or self.is_class:
             return '@%s' % self.__node[1][0]
         if self.is_ptr:
-            return '*%s' % Type(self.inner)
+            t = Type(self.inner)
+            if t.is_class:
+                return '*u8'
+            # work around native.rs bug
+            if t.is_ptr and t.inner == 'TChar':
+                return '*wchar_t'
+            return '*%s' % t
         s = str(self.__node)
         if s in type_mapping:
             return type_mapping[s]
