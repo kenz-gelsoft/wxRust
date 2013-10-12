@@ -7,20 +7,20 @@ add_subdirectory(wxc)
 set(RUSTCFLAGS ${RUSTCFLAGS} -L wxc)
 set(GENSRC wxHaskell/wxc/src/include)
 set(GENSRCS
-    ${GENSRC}/wxc_glue.h
     ${GENSRC}/wxc.h
 )
 
 add_custom_command(
-    OUTPUT  ${CMAKE_SOURCE_DIR}/native.rs
-    COMMAND python codegen.py ${GENSRCS} > native.rs
-    DEPENDS ${GENSRCS}
+    OUTPUT  ${CMAKE_SOURCE_DIR}/wrapper.rs
+    COMMAND python codegen.py ${GENSRCS} > wrapper.rs
+    DEPENDS codegen.py ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
 add_rust_crate(wxrust
     wx.rc
     native.rs
+    wrapper.rs
     wxc
 )
 
