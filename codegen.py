@@ -193,6 +193,19 @@ class Function(object):
         return s
     
     @property
+    def calling_args(self):
+        if len(self.__node[1][1]) == 0:
+            # no args
+            return ''
+        s = ''
+        _args = (self.__node[1])[1:]
+        for i, arg in enumerate(_args):
+            if i:
+                s += ', '
+            s += Arg(arg, i).name
+        return s
+    
+    @property
     def returns(self):
         r = Type(self.__node[0])
         if r.is_void:
@@ -201,7 +214,12 @@ class Function(object):
 
     def trait_fn(self, gen, classname):
         #gen.println('// %s' % self.__node)
-        gen.println('fn %s(%s)%s;' % (self.method_name(classname), self.args, self.returns))
+        gen.println('#[fixed_stack_segment]')
+        gen.println('fn %s(%s)%s {' % (self.method_name(classname), self.args, self.returns))
+        gen.indent()
+        gen.println('unsafe { %s(%s) }' % (self.name, self.calling_args))
+        gen.unindent()
+        gen.println('}')
 
 
 # Function stye type macros
@@ -264,8 +282,10 @@ class Arg(object):
         if len(self.__node) == 1:
             return '_arg%s' % self.__index
         else:
+            if self.is_self:
+                return 'self'
             _name = self.__node[1]
-            if _name in ['fn', 'self', 'type', 'use']:
+            if _name in ['fn', 'ref', 'self', 'type', 'use']:
                 _name += '_'
             return _name
     
