@@ -416,7 +416,7 @@ type_mapping = {
     'float':               'c_float',
     'int':                 'c_int',
     'long':                'c_long',
-    'void':                'c_void',
+    'void':                'u8',#'c_void',
 }
 
 class Type(object):
