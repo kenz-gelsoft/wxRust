@@ -23,7 +23,8 @@ class WrapperGenerator(object):
             self.print_class(clazz)
 
     def print_class(self, clazz):
-        self.println('trait %s {' % clazz.wrapper_name)
+        base = clazz.has_base and ' : %s' % clazz.base or ''
+        self.println('trait %s%s {' % (clazz.wrapper_name, base))
         self.indent()
         for method in clazz.methods:
             method.trait_fn(self, clazz.name)
@@ -219,6 +220,15 @@ class Class(object):
     @property
     def name(self):
         return self.__node[0][1][0]
+
+    @property
+    def has_base(self):
+        return self.__node[0][0] == 'TClassDefExtend'
+
+    @property
+    def base(self):
+        assert self.has_base
+        return self.__node[0][2][0]
 
     @property
     def wrapper_name(self):
