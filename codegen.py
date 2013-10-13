@@ -20,9 +20,9 @@ class WrapperGenerator(object):
         self.println('use native::*;')
         self.println()
         for clazz in self.__parser.classes:
-            self.print_class(clazz)
+            self._print_class(clazz)
 
-    def print_class(self, clazz):
+    def _print_class(self, clazz):
         struct_name = '%s' % clazz.struct_name
         self.println('struct %s(*u8);' % struct_name)
         for trait in clazz.inheritance:
@@ -95,19 +95,19 @@ class Parser(object):
                 clazz.add_if_member(f)
     
     @property
-    def root_classes(self):
-        return self.__root_classes
-    
-    @property
     def classes(self):
         return self.__classes
     
-    def classForName(self, name):
+    def class_for_name(self, name):
         for clazz in self.__classes:
             if clazz.name == name:
                 return clazz
         return None
-    
+
+    @property
+    def root_classes(self):
+        return self.__root_classes
+
     def _parse_line(self, line):
         if not len(line):
             return
@@ -226,19 +226,19 @@ class Preprocessor(object):
     def __init__(self):
         pass
     
-    def call_cpp(self, file):
-        cppflags = Popen(['wx-config', '--cppflags'], stdout=PIPE).communicate()[0].split()
-        cppflags.remove('-D__WXMAC__')
-        cmdline = ['cpp', '-DWXC_TYPES_H'] + cppflags + ['-I/Users/kenz/src/wxRust/wxHaskell/wxc/src/include', file]
-        return Popen(cmdline, stdout=PIPE).communicate()[0]
-    
     def preprocess(self, file):
-        for line in Preprocessor._normalize(self.call_cpp(file)).splitlines():
+        for line in Preprocessor._normalize(self._call_cpp(file)).splitlines():
             line = line.strip()
             if not len(line) or line.startswith('#'):
                 continue
             yield line
-    
+
+    def _call_cpp(self, file):
+        cppflags = Popen(['wx-config', '--cppflags'], stdout=PIPE).communicate()[0].split()
+        cppflags.remove('-D__WXMAC__')
+        cmdline = ['cpp', '-DWXC_TYPES_H'] + cppflags + ['-I/Users/kenz/src/wxRust/wxHaskell/wxc/src/include', file]
+        return Popen(cmdline, stdout=PIPE).communicate()[0]
+
     @staticmethod
     def _normalize(text):
         text = re.sub(r'^\s*\n', '', text)
@@ -280,7 +280,7 @@ class Class(object):
     def inheritance(self):
         list = [self.name]
         if self.has_base:
-            list += self.__parser.classForName(self.base).inheritance
+            list += self.__parser.class_for_name(self.base).inheritance
         return list
 
     @property
@@ -311,17 +311,32 @@ class Function(object):
         self.__return_type = Type(self.__node[0])
 
     @property
-    def name(self):
-        return self.__node[1][0]
-
-    @property
     def is_static(self):
-        args = list(self.args)
+        args = list(self._args)
         if len(args) < 1:
             return True
         return not args[0].type.is_self
 
-    def method_name(self, classname):
+    @property
+    def name(self):
+        return self.__node[1][0]
+
+    def trait_fn(self, gen, classname):
+        modifier = self.is_static and 'pub ' or ''
+        gen.println('#[fixed_stack_segment]')
+        gen.println('%sfn %s(%s)%s {' % (modifier,
+                                         self._method_name(classname),
+                                         self._decl_args,
+                                         self._returns))
+        with gen.indent():
+            body = '%s(%s)' % (self.name, self._calling_args)
+            if self.__return_type.is_self or self.__return_type.is_class:
+                # TODO: use StructName::from(handle) here.
+                body = '@%s(%s) as %s' % (self.__return_type.struct_name, body, self.__return_type)
+            gen.println('unsafe { %s }' % body)
+        gen.println('}')
+
+    def _method_name(self, classname):
         _name = self.name[len(classname)+1:]
         _name = _name[0].lower() + _name[1:]
         if _name in ['break', 'yield']:
@@ -329,43 +344,28 @@ class Function(object):
         if _name.startswith('create'):
             return 'new' + _name[len('create'):]
         return _name
+
+    @property
+    def _decl_args(self):
+        return ', '.join((str(a) for a in self._args))
     
     @property
-    def args(self):
+    def _calling_args(self):
+        return ', '.join((a.calling_arg for a in self._args))
+    
+    @property
+    def _args(self):
         if len(self.__node[1][1]) == 0:
             # no args
             return ()
-        _args = (self.__node[1])[1:]
-        return (Arg(arg, i) for i, arg in enumerate(_args))
-    
+        args = (self.__node[1])[1:]
+        return (Arg(arg, i) for i, arg in enumerate(args))
+
     @property
-    def decl_args(self):
-        return ', '.join((str(a) for a in self.args))
-    
-    @property
-    def calling_args(self):
-        return ', '.join((a.calling_arg for a in self.args))
-    
-    @property
-    def returns(self):
+    def _returns(self):
         if self.__return_type.is_void:
             return ''
         return ' -> %s' % self.__return_type
-
-    def trait_fn(self, gen, classname):
-        modifier = self.is_static and 'pub ' or ''
-        gen.println('#[fixed_stack_segment]')
-        gen.println('%sfn %s(%s)%s {' % (modifier,
-                                         self.method_name(classname),
-                                         self.decl_args,
-                                         self.returns))
-        with gen.indent():
-            body = '%s(%s)' % (self.name, self.calling_args)
-            if self.__return_type.is_self or \
-                self.__return_type.is_class:
-                body = '@%s(%s) as %s' % (self.__return_type.struct_name, body, self.__return_type)
-            gen.println('unsafe { %s }' % body)
-        gen.println('}')
 
 
 class Arg(object):
@@ -376,7 +376,7 @@ class Arg(object):
         self.__type = Type(self.__node[0])
 
     @property
-    def is_self(self):
+    def _is_self(self):
         # work around second TSelf(T) arguments...
         return self.__node[0][0] == 'TSelf' and self.__index == 0
     
@@ -385,7 +385,7 @@ class Arg(object):
         if len(self.__node) == 1:
             return '_arg%s' % self.__index
         else:
-            if self.is_self:
+            if self._is_self:
                 return 'self'
             _name = self.__node[1]
             if _name in ['fn', 'ref', 'self', 'type', 'use']:
@@ -398,7 +398,7 @@ class Arg(object):
 
     @property
     def calling_arg(self):
-        if self.is_self:
+        if self._is_self:
             return 'self.handle()'
         elif self.type.is_class:
             return '%s.handle()' % self.name
@@ -411,7 +411,7 @@ class Arg(object):
             macro = globals()[tag]
             macro_args = tuple([x[0] for x in self.__node[0][1:]])
             return '%s: %s' % (self.name, macro(macro_args))
-        if self.is_self:
+        if self._is_self:
             return '&self'
         return '%s: %s' % (self.name, self.type)
 
@@ -426,36 +426,36 @@ class Type(object):
         self.__node = node
 
     @property
-    def head(self):
-        if self.is_complex:
+    def _head(self):
+        if self._is_complex:
             return self.__node[0]
         return self.__node
 
     @property
-    def is_complex(self):
+    def _is_complex(self):
         return not isinstance(self.__node, basestring)
     
     @property
     def is_self(self):
-        return self.is_complex and self.head == 'TSelf'
+        return self._is_complex and self._head == 'TSelf'
     
     @property
-    def inner(self):
-        if self.is_complex:
+    def _inner(self):
+        if self._is_complex:
             return self.__node[1]
         return self.__node
     
     @property
     def is_void(self):
-        return self.head == 'void'
+        return self._head == 'void'
     
     @property
     def is_class(self):
-        return self.is_complex and self.head in ['TClass', 'TClassRef', 'TSelf']
+        return self._is_complex and self._head in ['TClass', 'TClassRef', 'TSelf']
     
     @property
-    def is_ptr(self):
-        return self.is_complex and self.head == '*'
+    def _is_ptr(self):
+        return self._is_complex and self._head == '*'
     
     @property
     def struct_name(self):
@@ -470,12 +470,12 @@ class Type(object):
     def __str__(self):
         if self.is_self or self.is_class:
             return '@%s' % self.trait_name
-        if self.is_ptr:
-            t = Type(self.inner)
+        if self._is_ptr:
+            t = Type(self._inner)
             if t.is_class:
                 return '*u8'
             # work around native.rs bug
-            if t.is_ptr and t.inner == 'TChar':
+            if t._is_ptr and t._inner == 'TChar':
                 return '*wchar_t'
             return '*%s' % t
         s = str(self.__node)
