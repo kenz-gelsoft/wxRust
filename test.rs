@@ -16,9 +16,9 @@ fn start(argc: int, argv: **u8, crate_map: *u8) -> int {
 
 #[fixed_stack_segment]
 fn on_main() {
-    let closure = wxClosureImpl::new(wx_main as *u8, nullptr);
+    let closure = wxClosure::new(wx_main as *u8, nullptr);
     let args: ~[*i32] = ~[];
-    ELJAppImpl::initializeC(closure, args.len() as i32, vec::raw::to_ptr(args) as *i32);
+    ELJApp::initializeC(closure, args.len() as i32, vec::raw::to_ptr(args) as *i32);
 }
 
 extern "C"
@@ -29,8 +29,8 @@ fn wx_main() {
         let idAny = -1;
         let defaultFrameStyle = 536878656 | 4194304;
         do "Hello, wxRust!".to_c_str().with_ref |s| {
-            let title = @wxStringImpl(wxString_CreateUTF8(s as *u8)) as @wxString;
-            let frame = wxFrameImpl::new(@wxWindowImpl(nullptr) as @wxWindow, idAny, title, -1, -1, -1, -1, defaultFrameStyle);
+            let title = wxString::from(wxString_CreateUTF8(s as *u8));
+            let frame = wxFrame::new(wxWindow::from(nullptr), idAny, title, -1, -1, -1, -1, defaultFrameStyle);
             println("OK");
             frame.show();
             frame.raise();
