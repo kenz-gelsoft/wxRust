@@ -23,17 +23,17 @@ class WrapperGenerator(object):
             self.print_class(clazz)
 
     def print_class(self, clazz):
-        implName = '%sImpl' % clazz.name
-        self.println('struct %s(*u8);' % implName)
+        struct_name = '%s' % clazz.struct_name
+        self.println('struct %s(*u8);' % struct_name)
         for trait in clazz.inheritance:
             body = ''
             if trait in self.__parser.root_classes:
                 body = ' fn handle(&self) -> *u8 { **self } '
-            self.println('impl %s for %s {%s}' % (trait, implName, body))
+            self.println('impl %s for %s {%s}' % (trait_name(trait), struct_name, body))
     
         # static methods go to struct impl
         self.println()
-        self.println('impl %s {' % implName)
+        self.println('impl %s {' % struct_name)
         self.indent()
         for method in clazz.static_methods:
             method.trait_fn(self, clazz.name)
@@ -41,9 +41,9 @@ class WrapperGenerator(object):
         self.println('}')
         
         # instance methods go to trait's default impl
-        base = clazz.has_base and ' : %s' % clazz.base or ''
+        base = clazz.has_base and ' : %s' % trait_name(clazz.base) or ''
         self.println()
-        self.println('trait %s%s {' % (clazz.wrapper_name, base))
+        self.println('trait %s%s {' % (clazz.trait_name, base))
         self.indent()
         if clazz.name in self.__parser.root_classes:
             self.println('fn handle(&self) -> *u8;')
@@ -65,6 +65,17 @@ class WrapperGenerator(object):
 
     def unindent(self):
         self.__indent -= 1
+
+
+def struct_name(name):
+    if not name.startswith('wx'):
+        return '%sImpl' % name
+    return name
+
+def trait_name(name):
+    if name.startswith('wx'):
+        return name[2:]
+    return name
 
 
 class Preprocessor(object):
@@ -260,6 +271,14 @@ class Class(object):
         return self.__node[0][1][0]
 
     @property
+    def struct_name(self):
+        return struct_name(self.name)
+
+    @property
+    def trait_name(self):
+        return trait_name(self.name)
+
+    @property
     def has_base(self):
         return self.__node[0][0] == 'TClassDefExtend'
 
@@ -274,13 +293,6 @@ class Class(object):
         if self.has_base:
             list += self.__parser.classForName(self.base).inheritance
         return list
-
-    @property
-    def wrapper_name(self):
-        return self.name
-#        if self.name.startswith('wx'):
-#            return self.name[2:]
-#        return self.name
 
     @property
     def static_methods(self):
@@ -357,7 +369,7 @@ class Function(object):
         body = '%s(%s)' % (self.name, self.calling_args)
         if self.__return_type.is_self or \
             self.__return_type.is_class:
-            body = '%sImpl(%s) as %s' % (self.__return_type, body, self.__return_type)
+            body = '@%s(%s) as %s' % (self.__return_type.struct_name, body, self.__return_type)
         gen.println('unsafe { %s }' % body)
         gen.unindent()
         gen.println('}')
@@ -415,6 +427,7 @@ class Arg(object):
             return '&self'
         return '%s: %s' % (self.name, self.type)
 
+
 # Other type mappings
 type_mapping = {
     # header type          # rust type
@@ -444,6 +457,7 @@ type_mapping = {
     'long':                'c_long',
     'void':                'u8',#'c_void',
 }
+
 
 class Type(object):
     def __init__(self, node):
@@ -483,9 +497,19 @@ class Type(object):
     def is_ptr(self):
         return self.is_complex and self.head == '*'
     
+    @property
+    def struct_name(self):
+        assert self.is_class
+        return struct_name(self.__node[1][0])
+    
+    @property
+    def trait_name(self):
+        assert self.is_class
+        return trait_name(self.__node[1][0])
+    
     def __str__(self):
         if self.is_self or self.is_class:
-            return '@%s' % self.__node[1][0]
+            return '@%s' % self.trait_name
         if self.is_ptr:
             t = Type(self.inner)
             if t.is_class:
