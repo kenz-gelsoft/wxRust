@@ -146,10 +146,6 @@ class Parser(object):
                            'TRect',  'TRectDouble',                             'TRectOutDouble',  'TRectOutVoid',
                            'TSize',  'TSizeDouble',                'TSizeOut',  'TSizeOutDouble',  'TSizeOutVoid',
                            'TVector']:
-#                    # ---- before
-#                    for pair in enumerate(stack):
-#                        print '%s: %s' % pair
-#                    print node
                     macro = globals()[tag]
                     macro_args = [arg[0] for arg in node.pop()[1:]]
                     macro_result = macro(macro_args)
@@ -158,11 +154,6 @@ class Parser(object):
                     # We assume the last node read until here
                     for item in macro_result[-1]:
                         node.append(item)
-#                    # ---- after
-#                    for pair in enumerate(stack):
-#                        print '%s: %s' % pair
-#                    print node
-#                    sys.exit()
                 continue
             if token == '*':
                 node.append(['*', node.pop()])
@@ -170,7 +161,6 @@ class Parser(object):
             node.append(token)
             continue
         
-        #print node
         if 'TClassDef' in line:
             # class def
             clazz = Class(self, node)
@@ -315,7 +305,6 @@ def trait_name(name):
 
 class Function(object):
     def __init__(self, node):
-        #print node
         assert len(node) > 1
         assert node[1][0]
         self.__node = node
@@ -364,7 +353,6 @@ class Function(object):
         return ' -> %s' % self.__return_type
 
     def trait_fn(self, gen, classname):
-        #gen.println('// %s' % self.__node)
         modifier = self.is_static and 'pub ' or ''
         gen.println('#[fixed_stack_segment]')
         gen.println('%sfn %s(%s)%s {' % (modifier,
@@ -459,8 +447,6 @@ class Type(object):
     
     @property
     def is_void(self):
-#        print self.head
-#        sys.exit()
         return self.head == 'void'
     
     @property
