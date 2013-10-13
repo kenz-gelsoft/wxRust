@@ -77,86 +77,6 @@ class WrapperGenerator(object):
         return Indent(self)
 
 
-def struct_name(name):
-    return name
-
-def trait_name(name):
-    return '_' + name
-
-
-class Preprocessor(object):
-    def __init__(self):
-        pass
-
-    def call_cpp(self, file):
-        cppflags = Popen(['wx-config', '--cppflags'], stdout=PIPE).communicate()[0].split()
-        cppflags.remove('-D__WXMAC__')
-        cmdline = ['cpp', '-DWXC_TYPES_H'] + cppflags + ['-I/Users/kenz/src/wxRust/wxHaskell/wxc/src/include', file]
-        return Popen(cmdline, stdout=PIPE).communicate()[0]
-    
-    def preprocess(self, file):
-        for line in Preprocessor._normalize(self.call_cpp(file)).splitlines():
-            line = line.strip()
-            if not len(line) or line.startswith('#'):
-                continue
-            yield line
-    
-    @staticmethod
-    def _normalize(text):
-        text = re.sub(r'^\s*\n', '', text)
-        text = re.sub(r'\n+', '\n', text)
-        text = re.sub(r'\\\n\s+', '', text)
-        return text
-
-
-# Function style arg macros
-def TArrayString(args):
-    return [['int', args[0]],
-            [['*', 'wchar_t'], args[1]]]
-def TByteString(args):
-    return [[['*', 'char'], args[0]],
-            ['int', args[1]]]
-TByteStringLazy = TByteString
-def TColorRGB(args):
-    return [['uint8_t', args[0]],
-            ['uint8_t', args[1]],
-            ['uint8_t', args[2]]];
-def TPoint(args, T='int'):
-    return [[T, args[0]],
-            [T, args[1]]];
-def TPointDouble(args):
-    return TPoint(args, T='double')
-def TPointLong(args):
-    return TPoint(args, T='long')
-def TPointOut(args):
-    return TPoint(args, T=['*', 'int'])
-def TPointOutDouble(args):
-    return TPoint(args, T=['*', 'double'])
-def TPointOutVoid(args):
-    return TPoint(args, T=['*', 'int'])
-def TRect(args, T='int'):
-    return [[T, args[0]],
-            [T, args[1]],
-            [T, args[2]],
-            [T, args[3]]]
-def TRectDouble(args):
-    return TRect(args, T='double')
-def TRectOutDouble(args):
-    return TRect(args, T=['*', 'double'])
-def TRectOutVoid(args):
-    return TRect(args, T=['*', 'int'])
-TSize = TPoint
-def TSizeDouble(args):
-    return TSize(args, T='double')
-def TSizeOut(args):
-    return TSize(args, T=['*', 'int'])
-def TSizeOutDouble(args):
-    return TSize(args, T=['*', 'double'])
-def TSizeOutVoid(args):
-    return TSize(args, T=['*', 'int'])
-TVector = TPoint
-
-
 class Parser(object):
     def __init__(self):
         self.__classes   = []
@@ -173,11 +93,11 @@ class Parser(object):
                 if f.name in missing_functions:
                     continue
                 clazz.add_if_member(f)
-
+    
     @property
     def root_classes(self):
         return self.__root_classes
-
+    
     @property
     def classes(self):
         return self.__classes
@@ -187,11 +107,11 @@ class Parser(object):
             if clazz.name == name:
                 return clazz
         return None
-
+    
     def _parse_line(self, line):
         if not len(line):
             return
-
+        
         # Trivial parser
         # TODO: extract LineParser class
         stack = []
@@ -264,6 +184,79 @@ class Parser(object):
             self.__functions.append(Function(node))
 
 
+# Function style arg macros
+def TArrayString(args):
+    return [['int', args[0]],
+            [['*', 'wchar_t'], args[1]]]
+def TByteString(args):
+    return [[['*', 'char'], args[0]],
+            ['int', args[1]]]
+TByteStringLazy = TByteString
+def TColorRGB(args):
+    return [['uint8_t', args[0]],
+            ['uint8_t', args[1]],
+            ['uint8_t', args[2]]];
+def TPoint(args, T='int'):
+    return [[T, args[0]],
+            [T, args[1]]];
+def TPointDouble(args):
+    return TPoint(args, T='double')
+def TPointLong(args):
+    return TPoint(args, T='long')
+def TPointOut(args):
+    return TPoint(args, T=['*', 'int'])
+def TPointOutDouble(args):
+    return TPoint(args, T=['*', 'double'])
+def TPointOutVoid(args):
+    return TPoint(args, T=['*', 'int'])
+def TRect(args, T='int'):
+    return [[T, args[0]],
+            [T, args[1]],
+            [T, args[2]],
+            [T, args[3]]]
+def TRectDouble(args):
+    return TRect(args, T='double')
+def TRectOutDouble(args):
+    return TRect(args, T=['*', 'double'])
+def TRectOutVoid(args):
+    return TRect(args, T=['*', 'int'])
+TSize = TPoint
+def TSizeDouble(args):
+    return TSize(args, T='double')
+def TSizeOut(args):
+    return TSize(args, T=['*', 'int'])
+def TSizeOutDouble(args):
+    return TSize(args, T=['*', 'double'])
+def TSizeOutVoid(args):
+    return TSize(args, T=['*', 'int'])
+TVector = TPoint
+
+
+class Preprocessor(object):
+    def __init__(self):
+        pass
+    
+    def call_cpp(self, file):
+        cppflags = Popen(['wx-config', '--cppflags'], stdout=PIPE).communicate()[0].split()
+        cppflags.remove('-D__WXMAC__')
+        cmdline = ['cpp', '-DWXC_TYPES_H'] + cppflags + ['-I/Users/kenz/src/wxRust/wxHaskell/wxc/src/include', file]
+        return Popen(cmdline, stdout=PIPE).communicate()[0]
+    
+    def preprocess(self, file):
+        for line in Preprocessor._normalize(self.call_cpp(file)).splitlines():
+            line = line.strip()
+            if not len(line) or line.startswith('#'):
+                continue
+            yield line
+    
+    @staticmethod
+    def _normalize(text):
+        text = re.sub(r'^\s*\n', '', text)
+        text = re.sub(r'\n+', '\n', text)
+        text = re.sub(r'\\\n\s+', '', text)
+        return text
+
+
 class Class(object):
     def __init__(self, parser, node):
         assert len(node) == 1
@@ -311,6 +304,13 @@ class Class(object):
     def add_if_member(self, f):
         if f.name.startswith('%s_' % self.name):
             self.__methods.append(f)
+
+
+def struct_name(name):
+    return name
+
+def trait_name(name):
+    return '_' + name
 
 
 class Function(object):
@@ -380,11 +380,6 @@ class Function(object):
         gen.println('}')
 
 
-# Function style type macros
-def TArrayObjectOutVoid(args):
-    return '*u8'#'~[@%s]' % args # it would be **c_void ?
-
-
 class Arg(object):
     def __init__(self, node, index):
         assert len(node) > 0
@@ -433,35 +428,9 @@ class Arg(object):
         return '%s: %s' % (self.name, self.type)
 
 
-# Other type mappings
-type_mapping = {
-    # header type          # rust type
-    'TArrayIntOutVoid':    '*intptr_t',
-    'TArrayIntPtrOutVoid': '*intptr_t',
-    'TArrayLen':           'c_int',
-    'TArrayStringOutVoid': '*wchar_t',#'**wchar_t',
-    'TBool':               'bool',
-    'TBoolInt':            'c_int',
-    'TByteStringLazyOut':  '*char',#'*c_char',
-    'TByteStringLen':      'c_int',
-    'TByteStringOut':      '*char',#'*c_char',
-    'TChar':               'wchar_t',
-    'TClosureFun':         '*u8',#'*c_void',
-    'TInt64':              'i64',
-    'TIntPtr':             'intptr_t',
-    'TString':             '*wchar_t',
-    'TStringLen':          'c_int',
-    'TStringOut':          '*wchar_t',#'**wchar_t',
-    'TStringVoid':         '*wchar_t',
-    'TUInt':               'uint32_t',
-    'TUInt8':              'uint8_t',
-#    'char':                'c_char',
-    'double':              'c_double',
-    'float':               'c_float',
-    'int':                 'c_int',
-    'long':                'c_long',
-    'void':                'u8',#'c_void',
-}
+# Function style type macros
+def TArrayObjectOutVoid(args):
+    return '*u8'#'~[@%s]' % args # it would be **c_void ?
 
 
 class Type(object):
@@ -527,6 +496,37 @@ class Type(object):
         if s in type_mapping:
             return type_mapping[s]
         return s
+
+
+# Other type mappings
+type_mapping = {
+    # header type          # rust type
+    'TArrayIntOutVoid':    '*intptr_t',
+    'TArrayIntPtrOutVoid': '*intptr_t',
+    'TArrayLen':           'c_int',
+    'TArrayStringOutVoid': '*wchar_t',#'**wchar_t',
+    'TBool':               'bool',
+    'TBoolInt':            'c_int',
+    'TByteStringLazyOut':  '*char',#'*c_char',
+    'TByteStringLen':      'c_int',
+    'TByteStringOut':      '*char',#'*c_char',
+    'TChar':               'wchar_t',
+    'TClosureFun':         '*u8',#'*c_void',
+    'TInt64':              'i64',
+    'TIntPtr':             'intptr_t',
+    'TString':             '*wchar_t',
+    'TStringLen':          'c_int',
+    'TStringOut':          '*wchar_t',#'**wchar_t',
+    'TStringVoid':         '*wchar_t',
+    'TUInt':               'uint32_t',
+    'TUInt8':              'uint8_t',
+    #    'char':                'c_char',
+    'double':              'c_double',
+    'float':               'c_float',
+    'int':                 'c_int',
+    'long':                'c_long',
+    'void':                'u8',#'c_void',
+}
 
 
 # These are in wxc.h but not linked yet. skip them.
