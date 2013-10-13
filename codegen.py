@@ -13,7 +13,7 @@ def main():
 class WrapperGenerator(object):
     def __init__(self, parser):
         self.__parser = parser
-        self.__indent = 0
+        self._indent = 0
 
     def generate(self):
         self.println('use std::libc::*;')
@@ -34,41 +34,47 @@ class WrapperGenerator(object):
     
         # static methods go to struct impl
         self.println('impl %s {' % struct_name)
-        self.indent()
-        self.println('pub fn from(handle: *u8) -> @%s {' % clazz.trait_name)
-        self.println('    @%s(handle) as @%s' % (clazz.struct_name, clazz.trait_name))
-        self.println('}')
-        self.println()
-        for method in clazz.static_methods:
-            method.trait_fn(self, clazz.name)
-        self.unindent()
+        with self.indent():
+            self.println('pub fn from(handle: *u8) -> @%s {' % clazz.trait_name)
+            self.println('    @%s(handle) as @%s' % (clazz.struct_name, clazz.trait_name))
+            self.println('}')
+            self.println()
+            for method in clazz.static_methods:
+                method.trait_fn(self, clazz.name)
         self.println('}')
         
         # instance methods go to trait's default impl
         base = clazz.has_base and ' : %s' % trait_name(clazz.base) or ''
         self.println()
         self.println('trait %s%s {' % (clazz.trait_name, base))
-        self.indent()
-        if clazz.name in self.__parser.root_classes:
-            self.println('fn handle(&self) -> *u8;')
-            self.println()
-        for method in clazz.methods:
-            method.trait_fn(self, clazz.name)
-        self.unindent()
+        with self.indent():
+            if clazz.name in self.__parser.root_classes:
+                self.println('fn handle(&self) -> *u8;')
+                self.println()
+            for method in clazz.methods:
+                method.trait_fn(self, clazz.name)
         self.println('}')
         self.println()
 
     def println(self, text=''):
         lines = text.split('\n')
         for line in lines:
-            line = '%s%s' % (''+(' ' * 4 * self.__indent), line)
+            line = '%s%s' % (''+(' ' * 4 * self._indent), line)
             print line
 
     def indent(self):
-        self.__indent += 1
-
-    def unindent(self):
-        self.__indent -= 1
+        class Indent:
+            def __init__(self, target):
+                self.__target = target
+                pass
+            
+            def __enter__(self):
+                self.__target._indent += 1
+                return self
+            
+            def __exit__(self, type, value, traceback):
+                self.__target._indent -= 1
+        return Indent(self)
 
 
 def struct_name(name):
@@ -365,13 +371,12 @@ class Function(object):
                                          self.method_name(classname),
                                          self.decl_args,
                                          self.returns))
-        gen.indent()
-        body = '%s(%s)' % (self.name, self.calling_args)
-        if self.__return_type.is_self or \
-            self.__return_type.is_class:
-            body = '@%s(%s) as %s' % (self.__return_type.struct_name, body, self.__return_type)
-        gen.println('unsafe { %s }' % body)
-        gen.unindent()
+        with gen.indent():
+            body = '%s(%s)' % (self.name, self.calling_args)
+            if self.__return_type.is_self or \
+                self.__return_type.is_class:
+                body = '@%s(%s) as %s' % (self.__return_type.struct_name, body, self.__return_type)
+            gen.println('unsafe { %s }' % body)
         gen.println('}')
 
 
