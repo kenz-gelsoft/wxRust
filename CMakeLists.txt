@@ -26,7 +26,7 @@ add_rust_crate(wxrust
 
 add_rust_crate(test
     test.rs
-    wxrust
+    wxrust.dummy
 )
 
 # Make Mac OS X App Bundle
