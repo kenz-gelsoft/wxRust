@@ -29,8 +29,8 @@ fn wx_main() {
         let idAny = -1;
         let defaultFrameStyle = 536878656 | 4194304;
         do "Hello, wxRust!".to_c_str().with_ref |s| {
-            let title = @wxString(wxString_CreateUTF8(s as *u8)) as @_wxString;
-            let frame = wxFrame::new(@wxWindow(nullptr) as @_wxWindow, idAny, title, -1, -1, -1, -1, defaultFrameStyle);
+            let title = wxString::from(wxString_CreateUTF8(s as *u8));
+            let frame = wxFrame::new(wxWindow::from(nullptr), idAny, title, -1, -1, -1, -1, defaultFrameStyle);
             println("OK");
             frame.show();
             frame.raise();
