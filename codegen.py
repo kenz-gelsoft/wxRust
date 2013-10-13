@@ -68,14 +68,10 @@ class WrapperGenerator(object):
 
 
 def struct_name(name):
-    if not name.startswith('wx'):
-        return '%sImpl' % name
     return name
 
 def trait_name(name):
-    if name.startswith('wx'):
-        return name[2:]
-    return name
+    return '_' + name
 
 
 class Preprocessor(object):
