@@ -112,58 +112,10 @@ class Parser(object):
         if not len(line):
             return
         
-        # Trivial parser
-        # TODO: extract LineParser class
-        stack = []
-        node = []
-        lexer = (t.group(0) for t in re.finditer(re.compile(r'\s+|\*|\(|,|\)|;|[^\s*(,);]+'), line))
-        for token in lexer:
-            if not token.strip() or token == ';':
-                # ignore separators
-                continue
-            if token == '(':
-                tagname = node.pop()
-                stack.append(node)
-                stack.append([tagname])
-                node = []
-                continue
-            if token == ',':
-                stack[-1].append(node)
-                node = [] # new-arg
-                continue
-            if token == ')':
-                stack[-1].append(node)
-                node = stack.pop() # end-arg
-                stack[-1].append(node)
-                node = stack.pop() # end-arg-list
-                
-                # Handles function style argument macros here
-                tag = node[-1][0]
-                if tag in ['TArrayString',
-                           'TByteString', 'TByteStringLazy',
-                           'TColorRGB',
-                           'TPoint', 'TPointDouble', 'TPointLong', 'TPointOut', 'TPointOutDouble', 'TPointOutVoid',
-                           'TRect',  'TRectDouble',                             'TRectOutDouble',  'TRectOutVoid',
-                           'TSize',  'TSizeDouble',                'TSizeOut',  'TSizeOutDouble',  'TSizeOutVoid',
-                           'TVector']:
-                    macro = globals()[tag]
-                    macro_args = [arg[0] for arg in node.pop()[1:]]
-                    macro_result = macro(macro_args)
-                    for result_node in macro_result[:-1]:
-                        stack[-1].append(result_node)
-                    # We assume the last node read until here
-                    for item in macro_result[-1]:
-                        node.append(item)
-                continue
-            if token == '*':
-                node.append(['*', node.pop()])
-                continue
-            node.append(token)
-            continue
-        
+        class_or_function = LineParser(line).parse()
         if 'TClassDef' in line:
             # class def
-            clazz = Class(self, node)
+            clazz = Class(self, class_or_function)
             # linear search isn't fast.
             for clazz2 in self.classes:
                 if clazz.name == clazz2.name:
@@ -171,7 +123,120 @@ class Parser(object):
             self.__classes.append(clazz)
         else:
             # func def
-            self.__functions.append(Function(node))
+            self.__functions.append(Function(class_or_function))
+
+
+class LineParser(object):
+    def __init__(self, line):
+        self.__line = line
+        self.__stack = []
+        self.__node = []
+    
+    def parse(self):
+        lexer = (t.group(0) for t in re.finditer(re.compile(r'\s+|\*|\(|,|\)|;|[^\s*(,);]+'), self.__line))
+        for token in lexer:
+            if not token.strip() or token == ';':
+                # ignore separators
+                continue
+            if token == '(':
+                self._function_start()
+                continue
+            if token == ',':
+                self._next_arg()
+                continue
+            if token == ')':
+                self._function_end()
+                # Handles function style argument macros here
+                self._expand_if_macro()
+                continue
+            if token == '*':
+                self._pointer()
+                continue
+            self.__node.append(token)
+            continue
+        return self.__node
+    
+    # a b(c); parsed to below:
+    # [ - function declaration
+    #    a - return type
+    #    [ - function
+    #        b
+    #        [ - arg list
+    #            [c] - arg pair
+    #        ]
+    #    ]
+    # ]
+    #
+    # TClass(F) a(TSelf(b), int c); parsed to below:
+    # [
+    #    [ - function (style macro) - return type
+    #        TClass - name
+    #        [ - arg list
+    #            [F] - arg pair (arg type only, the name is optional)
+    #        ]
+    #    ]
+    #    [ - function
+    #        a - name
+    #        [ - arg list
+    #            [ - arg pair
+    #                [
+    #                    TSelf - function (style macro) - arg type
+    #                    [ - arg list
+    #                        [b] - arg pair
+    #                    ]
+    #                    - arg name is optional
+    #                ]
+    #            ]
+    #            [ - arg pair
+    #                int - arg type
+    #                c   - arg name
+    #            ]
+    #        ]
+    #    ]
+    # ]
+    
+    def _function_start(self):
+        funcname = self.__node.pop()
+        self.__stack.append(self.__node)
+        self.__node = [funcname]
+        self.__stack.append(self.__node)
+        self.__node = [] # arg list start
+        self.__stack.append(self.__node)
+        self.__node = [] # type-(optional) name pair
+    
+    def _next_arg(self):
+        self.__stack[-1].append(self.__node)
+        self.__node = [] # new-arg
+    
+    def _function_end(self):
+        if len(self.__node):
+            self.__stack[-1].append(self.__node)
+        self.__node = self.__stack.pop() # end-arg
+        self.__stack[-1].append(self.__node)
+        self.__node = self.__stack.pop() # end-arg-list
+        self.__stack[-1].append(self.__node)
+        self.__node = self.__stack.pop() # end-function
+
+    def _expand_if_macro(self):
+        macro_name = self.__node[-1][0]
+        if macro_name in ['TArrayString',
+                          'TByteString', 'TByteStringLazy',
+                          'TColorRGB',
+                          'TPoint', 'TPointDouble', 'TPointLong', 'TPointOut', 'TPointOutDouble', 'TPointOutVoid',
+                          'TRect',  'TRectDouble',                             'TRectOutDouble',  'TRectOutVoid',
+                          'TSize',  'TSizeDouble',                'TSizeOut',  'TSizeOutDouble',  'TSizeOutVoid',
+                          'TVector']:
+            macro = globals()[macro_name]
+            macro_args = [arg[0] for arg in self.__node.pop()[1]]
+            macro_result = macro(macro_args)
+            for result_node in macro_result[:-1]:
+                self.__stack[-1].append(result_node)
+            # We assume the last node read until here
+            for item in macro_result[-1]:
+                self.__node.append(item)
+    
+    def _pointer(self):
+        self.__node.append(['*', self.__node.pop()])
 
 
 # Function style arg macros
@@ -257,7 +322,7 @@ class Class(object):
 
     @property
     def name(self):
-        return self.__node[0][1][0]
+        return self.__node[0][1][0][0]
 
     @property
     def struct_name(self):
@@ -274,7 +339,7 @@ class Class(object):
     @property
     def base(self):
         assert self.has_base
-        return self.__node[0][2][0]
+        return self.__node[0][1][1][0]
     
     @property
     def inheritance(self):
@@ -305,17 +370,17 @@ def trait_name(name):
 
 class Function(object):
     def __init__(self, node):
-        assert len(node) > 1
-        assert node[1][0]
+        assert len(node)    > 1
+        assert len(node[1]) > 1
         self.__node = node
         self.__return_type = Type(self.__node[0])
+        self.__args = [Arg(arg, i) for i, arg in enumerate(self.__node[1][1])]
 
     @property
     def is_static(self):
-        args = list(self._args)
-        if len(args) < 1:
+        if len(self.__args) < 1:
             return True
-        return not args[0].type.is_self
+        return not self.__args[0].type.is_self
 
     @property
     def name(self):
@@ -347,20 +412,12 @@ class Function(object):
 
     @property
     def _decl_args(self):
-        return ', '.join((str(a) for a in self._args))
+        return ', '.join((str(a) for a in self.__args))
     
     @property
     def _calling_args(self):
-        return ', '.join((a.calling_arg for a in self._args))
+        return ', '.join((a.calling_arg for a in self.__args))
     
-    @property
-    def _args(self):
-        if len(self.__node[1][1]) == 0:
-            # no args
-            return ()
-        args = (self.__node[1])[1:]
-        return (Arg(arg, i) for i, arg in enumerate(args))
-
     @property
     def _returns(self):
         if self.__return_type.is_void:
@@ -406,10 +463,10 @@ class Arg(object):
             return self.name
 
     def __str__(self):
-        tag = self.__node[0][0]
-        if tag in ['TArrayObjectOutVoid']:
-            macro = globals()[tag]
-            macro_args = tuple([x[0] for x in self.__node[0][1:]])
+        macro_name = self.__node[0][0]
+        if macro_name in ['TArrayObjectOutVoid']:
+            macro = globals()[macro_name]
+            macro_args = tuple((x[0] for x in self.__node[0][1]))
             return '%s: %s' % (self.name, macro(macro_args))
         if self._is_self:
             return '&self'
@@ -441,8 +498,10 @@ class Type(object):
     
     @property
     def _inner(self):
-        if self._is_complex:
+        if self._is_ptr:
             return self.__node[1]
+        if self._is_complex:
+            return self.__node[1][0][0]
         return self.__node
     
     @property
@@ -460,12 +519,12 @@ class Type(object):
     @property
     def struct_name(self):
         assert self.is_class
-        return struct_name(self.__node[1][0])
+        return struct_name(self._inner)
     
     @property
     def trait_name(self):
         assert self.is_class
-        return trait_name(self.__node[1][0])
+        return trait_name(self._inner)
     
     def __str__(self):
         if self.is_self or self.is_class:
