@@ -1,5 +1,7 @@
 #[ crate_type = "lib" ];
 
+#[feature(globs)];
+
 pub mod native;
 pub mod wrapper;
 

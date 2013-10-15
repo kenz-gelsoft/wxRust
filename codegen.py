@@ -407,7 +407,7 @@ class Function(object):
         with gen.indent():
             body = '%s(%s)' % (self.name, self._calling_args)
             if self.__return_type.is_self or self.__return_type.is_class:
-                body = '@%s(%s)' % (self.__return_type.struct_name, body)
+                body = '%s(%s)' % (self.__return_type.struct_name, body)
             gen.println('unsafe { %s }' % body)
         gen.println('}')
 
@@ -433,7 +433,7 @@ class Function(object):
         if self.__return_type.is_void:
             return ''
         if self.__return_type.is_class:
-            return ' -> @%s' % self.__return_type.struct_name
+            return ' -> %s' % self.__return_type.struct_name
         return ' -> %s' % self.__return_type
 
 
@@ -477,7 +477,7 @@ class Arg(object):
 
     def __str__(self):
         if self.type_param:
-            return '%s: @%s' % (self.name, self.type_param)
+            return '%s: %s' % (self.name, self.type_param)
         macro_name = self.__node[0][0]
         if macro_name in ['TArrayObjectOutVoid']:
             macro = globals()[macro_name]
@@ -543,7 +543,7 @@ class Type(object):
     
     def __str__(self):
         if self.is_self or self.is_class:
-            return '@%s' % self.trait_name
+            return '&%s' % self.trait_name
         if self._is_ptr:
             t = Type(self._inner)
             if t.is_class:
