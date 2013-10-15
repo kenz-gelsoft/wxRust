@@ -35,10 +35,6 @@ class WrapperGenerator(object):
         # static methods go to struct impl
         self.println('impl %s {' % struct_name)
         with self.indent():
-            self.println('pub fn from(handle: *u8) -> @%s {' % clazz.trait_name)
-            self.println('    @%s(handle) as @%s' % (clazz.struct_name, clazz.trait_name))
-            self.println('}')
-            self.println()
             for method in clazz.static_methods:
                 method.trait_fn(self, clazz.name)
         self.println('}')
@@ -385,19 +381,33 @@ class Function(object):
     @property
     def name(self):
         return self.__node[1][0]
+    
+    @property
+    def _type_params(self):
+        type_params = []
+        number = 0
+        for a in self.__args:
+            if a.type.is_class and not a.type.is_self:
+                letter = chr(ord('T') + number)
+                a.type_param = '%s' % letter
+                type_params.append('%s: %s' % (letter, a.type.trait_name))
+                number += 1
+        if len(type_params):
+            return '<%s>' % ', '.join(type_params)
+        return ''
 
     def trait_fn(self, gen, classname):
         modifier = self.is_static and 'pub ' or ''
         gen.println('#[fixed_stack_segment]')
-        gen.println('%sfn %s(%s)%s {' % (modifier,
+        gen.println('%sfn %s%s(%s)%s {' % (modifier,
                                          self._method_name(classname),
+                                         self._type_params,
                                          self._decl_args,
                                          self._returns))
         with gen.indent():
             body = '%s(%s)' % (self.name, self._calling_args)
             if self.__return_type.is_self or self.__return_type.is_class:
-                # TODO: use StructName::from(handle) here.
-                body = '@%s(%s) as %s' % (self.__return_type.struct_name, body, self.__return_type)
+                body = '@%s(%s)' % (self.__return_type.struct_name, body)
             gen.println('unsafe { %s }' % body)
         gen.println('}')
 
@@ -422,6 +432,8 @@ class Function(object):
     def _returns(self):
         if self.__return_type.is_void:
             return ''
+        if self.__return_type.is_class:
+            return ' -> @%s' % self.__return_type.struct_name
         return ' -> %s' % self.__return_type
 
 
@@ -431,6 +443,7 @@ class Arg(object):
         self.__node = node
         self.__index = index
         self.__type = Type(self.__node[0])
+        self.type_param = None
 
     @property
     def _is_self(self):
@@ -463,6 +476,8 @@ class Arg(object):
             return self.name
 
     def __str__(self):
+        if self.type_param:
+            return '%s: @%s' % (self.name, self.type_param)
         macro_name = self.__node[0][0]
         if macro_name in ['TArrayObjectOutVoid']:
             macro = globals()[macro_name]
