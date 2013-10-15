@@ -37,7 +37,7 @@ if(APPLE)
         COMMAND cp test  Test.app/Contents/MacOS/
         COMMAND cp ${CMAKE_SOURCE_DIR}/Info.plist Test.app/Contents/
         COMMAND touch Test.app.dummy
-        DEPENDS Info.plist test
+        DEPENDS Info.plist test.dummy
     )
     add_custom_target(Test.app ALL DEPENDS Test.app.dummy)
 endif(APPLE)
