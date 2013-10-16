@@ -46,7 +46,7 @@ fn wx_main() {
         
         let menubar = wxMenuBar::new(0);
         
-        let fileMenu = wxMenu::new(wxT("File2"), 1);
+        let fileMenu = wxMenu::new(wxT(""), 0);
         let fileNew = wxMenuItem::newEx(idAny, wxT("New"), wxT("Create a new file."), 0, wxMenu(nullptr));
         fileMenu.appendItem(fileNew);
 
