@@ -44,12 +44,26 @@ fn wx_main() {
         let frame = wxFrame::new(wxWindow(nullptr), idAny, wxT("Hello, wxRust!"), -1, -1, -1, -1, defaultFrameStyle);
         println("OK");
         
-        let button = wxButton::new(frame, idAny, wxT("Push me!"), 10, 10, 50, 30, 0);
-        fn button_clicked() {
-            println("hello!")
+        let menubar = wxMenuBar::new(0);
+        
+        let fileMenu = wxMenu::new(wxT("File2"), 1);
+        let fileNew = wxMenuItem::newEx(idAny, wxT("New"), wxT("Create a new file."), 0, wxMenu(nullptr));
+        fileMenu.appendItem(fileNew);
+
+        menubar.append(fileMenu, wxT("File"));
+        
+        frame.setMenuBar(menubar);
+
+        let id = 30;
+        let button = wxButton::new(frame, id, wxT("Push me!"), 10, 10, 50, 30, 0);
+        fn button_clicked(fun: *u8, data: *u8, evt: *u8) {
+            println("hello!");
+            let frame = wxFrame(data);
+            let msgDlg = wxMessageDialog::new(frame, wxT("Pushed!!"), wxT("The Button"), 0);
+            msgDlg.showModal();
         }
-        let closure = wxClosure::new(button_clicked as *u8, nullptr);
-        button.connect(idAny, idAny, expEVT_COMMAND_BUTTON_CLICKED(), closure.handle());
+        let closure = wxClosure::new(button_clicked as *u8, frame.handle());
+        button.connect(id, id, expEVT_COMMAND_BUTTON_CLICKED(), closure.handle());
         
         frame.show();
         frame.raise();

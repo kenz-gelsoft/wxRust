@@ -30,6 +30,11 @@ class WrapperGenerator(object):
             if trait in self.__parser.root_classes:
                 body = ' fn handle(&self) -> *u8 { **self } '
             self.println('impl %s for %s {%s}' % (trait_name(trait), struct_name, body))
+#            t = self.__parser.class_for_name(trait)
+#            for m in t.methods:
+#                if 'delete' == m.method_name(t.name):
+#                    self.println('impl Drop for %s { fn drop(&mut self) { println("%s deleted!"); self.delete() } }' % (struct_name, struct_name))
+#                    continue
         self.println()
     
         # static methods go to struct impl
@@ -89,6 +94,8 @@ class Parser(object):
                 if f.name in missing_functions:
                     continue
                 clazz.add_if_member(f)
+        for clazz in self.__classes:
+            clazz.remove_methods_in_base()
     
     @property
     def classes(self):
@@ -356,6 +363,17 @@ class Class(object):
         if f.name.startswith('%s_' % self.name):
             self.__methods.append(f)
 
+    def remove_methods_in_base(self):
+        removes = set()
+        for mym in self.methods:
+            for base_class in self.inheritance[1:]:
+                base = self.__parser.class_for_name(base_class)
+                for m in base.methods:
+                    if m.method_name(base.name) == mym.method_name(self.name):
+                        removes.add(mym)
+        for m in removes:
+            self.__methods.remove(m)
+
 
 def struct_name(name):
     return name
@@ -400,7 +418,7 @@ class Function(object):
         modifier = self.is_static and 'pub ' or ''
         gen.println('#[fixed_stack_segment]')
         gen.println('%sfn %s%s(%s)%s {' % (modifier,
-                                         self._method_name(classname),
+                                         self.method_name(classname),
                                          self._type_params,
                                          self._decl_args,
                                          self._returns))
@@ -411,7 +429,7 @@ class Function(object):
             gen.println('unsafe { %s }' % body)
         gen.println('}')
 
-    def _method_name(self, classname):
+    def method_name(self, classname):
         _name = self.name[len(classname)+1:]
         _name = _name[0].lower() + _name[1:]
         if _name in ['break', 'yield']:
@@ -828,6 +846,7 @@ missing_functions = ['ELJClient_Create',
                      'wxCriticalSection_Delete',
                      'wxCriticalSection_Enter',
                      'wxCriticalSection_Leave',
+                     'wxDC_SetDeviceClippingRegion',
                      'wxDateTime_IsGregorianDate',
                      'wxDialUpEvent_IsConnectedEvent',
                      'wxDialUpEvent_IsOwnEvent',
@@ -941,6 +960,7 @@ missing_functions = ['ELJClient_Create',
                      'wxFrameLayout_SetPaneProperties',
                      'wxFrameLayout_SetTopPlugin',
                      'wxFrameLayout_SetUpdatesManager',
+                     'wxGridCellEditor_PaintBackground',
                      'wxJoystick_Create',
                      'wxJoystick_Delete',
                      'wxJoystick_GetButtonState',

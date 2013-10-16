@@ -357,10 +357,6 @@ impl ELJGridTable {
 
 trait _ELJGridTable : _wxGridTableBase {
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { ELJGridTable_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn getView(&self) -> wxView {
         unsafe { wxView(ELJGridTable_GetView(self.handle())) }
     }
@@ -397,84 +393,12 @@ impl ELJLog {
 
 trait _ELJLog : _wxLog {
     #[fixed_stack_segment]
-    fn addTraceMask(&self, str: *wchar_t) {
-        unsafe { ELJLog_AddTraceMask(self.handle(), str) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { ELJLog_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn dontCreateOnDemand(&self) {
-        unsafe { ELJLog_DontCreateOnDemand(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn enableLogging(&self, doIt: bool) -> c_int {
         unsafe { ELJLog_EnableLogging(self.handle(), doIt) }
     }
     #[fixed_stack_segment]
-    fn flush(&self) {
-        unsafe { ELJLog_Flush(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn flushActive(&self) {
-        unsafe { ELJLog_FlushActive(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getTimestamp(&self) -> *u8 {
-        unsafe { ELJLog_GetTimestamp(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getTraceMask(&self) -> c_int {
-        unsafe { ELJLog_GetTraceMask(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getVerbose(&self) -> c_int {
-        unsafe { ELJLog_GetVerbose(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn hasPendingMessages(&self) -> bool {
-        unsafe { ELJLog_HasPendingMessages(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn isAllowedTraceMask<T: _wxMask>(&self, mask: T) -> bool {
-        unsafe { ELJLog_IsAllowedTraceMask(self.handle(), mask.handle()) }
-    }
-    #[fixed_stack_segment]
     fn isEnabled(&self) -> bool {
         unsafe { ELJLog_IsEnabled(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn onLog(&self, level: c_int, szString: *u8, t: c_int) {
-        unsafe { ELJLog_OnLog(self.handle(), level, szString, t) }
-    }
-    #[fixed_stack_segment]
-    fn removeTraceMask(&self, str: *wchar_t) {
-        unsafe { ELJLog_RemoveTraceMask(self.handle(), str) }
-    }
-    #[fixed_stack_segment]
-    fn resume(&self) {
-        unsafe { ELJLog_Resume(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn setActiveTarget(&self) -> *u8 {
-        unsafe { ELJLog_SetActiveTarget(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn setTimestamp(&self, ts: *u8) {
-        unsafe { ELJLog_SetTimestamp(self.handle(), ts) }
-    }
-    #[fixed_stack_segment]
-    fn setTraceMask(&self, ulMask: c_int) {
-        unsafe { ELJLog_SetTraceMask(self.handle(), ulMask) }
-    }
-    #[fixed_stack_segment]
-    fn setVerbose(&self, bVerbose: c_int) {
-        unsafe { ELJLog_SetVerbose(self.handle(), bVerbose) }
-    }
-    #[fixed_stack_segment]
-    fn suspend(&self) {
-        unsafe { ELJLog_Suspend(self.handle()) }
     }
 }
 
@@ -546,10 +470,6 @@ trait _ELJPreviewFrame : _wxPreviewFrame {
     #[fixed_stack_segment]
     fn getPrintPreview(&self) -> wxPrintPreview {
         unsafe { wxPrintPreview(ELJPreviewFrame_GetPrintPreview(self.handle())) }
-    }
-    #[fixed_stack_segment]
-    fn initialize(&self) {
-        unsafe { ELJPreviewFrame_Initialize(self.handle()) }
     }
     #[fixed_stack_segment]
     fn setControlBar(&self, obj: *u8) {
@@ -1288,10 +1208,6 @@ impl wxActivateEvent {
 
 trait _wxActivateEvent : _wxEvent {
     #[fixed_stack_segment]
-    fn copyObject(&self, obj: *u8) {
-        unsafe { wxActivateEvent_CopyObject(self.handle(), obj) }
-    }
-    #[fixed_stack_segment]
     fn getActive(&self) -> bool {
         unsafe { wxActivateEvent_GetActive(self.handle()) }
     }
@@ -1352,10 +1268,6 @@ impl wxAutoBufferedPaintDC {
 }
 
 trait _wxAutoBufferedPaintDC : _wxDC {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxAutoBufferedPaintDC_Delete(self.handle()) }
-    }
 }
 
 struct wxAutomationObject(*u8);
@@ -1430,10 +1342,6 @@ trait _wxBitmap : _wxGDIObject {
         unsafe { wxBitmap(wxBitmap_CreateFromXPM(self.handle())) }
     }
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxBitmap_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn findHandlerByExtension(&self, type_: c_int) -> *u8 {
         unsafe { wxBitmap_FindHandlerByExtension(self.handle(), type_) }
     }
@@ -1484,10 +1392,6 @@ trait _wxBitmap : _wxGDIObject {
     #[fixed_stack_segment]
     fn setWidth(&self, w: c_int) {
         unsafe { wxBitmap_SetWidth(self.handle(), w) }
-    }
-    #[fixed_stack_segment]
-    fn safeDelete(&self) {
-        unsafe { wxBitmap_SafeDelete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn isStatic(&self) -> bool {
@@ -1574,18 +1478,6 @@ impl wxBitmapToggleButton {
 
 trait _wxBitmapToggleButton : _wxToggleButton {
     #[fixed_stack_segment]
-    fn enable(&self, enable: bool) -> bool {
-        unsafe { wxBitmapToggleButton_Enable(self.handle(), enable) }
-    }
-    #[fixed_stack_segment]
-    fn getValue(&self) -> bool {
-        unsafe { wxBitmapToggleButton_GetValue(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn setValue(&self, state: bool) {
-        unsafe { wxBitmapToggleButton_SetValue(self.handle(), state) }
-    }
-    #[fixed_stack_segment]
     fn setBitmapLabel<T: _wxBitmap>(&self, _bmp: T) {
         unsafe { wxBitmapToggleButton_SetBitmapLabel(self.handle(), _bmp.handle()) }
     }
@@ -1626,16 +1518,8 @@ impl wxBoxSizer {
 
 trait _wxBoxSizer : _wxSizer {
     #[fixed_stack_segment]
-    fn calcMin(&self) -> wxSize {
-        unsafe { wxSize(wxBoxSizer_CalcMin(self.handle())) }
-    }
-    #[fixed_stack_segment]
     fn getOrientation(&self) -> c_int {
         unsafe { wxBoxSizer_GetOrientation(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn recalcSizes(&self) {
-        unsafe { wxBoxSizer_RecalcSizes(self.handle()) }
     }
 }
 
@@ -1667,10 +1551,6 @@ trait _wxBrush : _wxGDIObject {
     #[fixed_stack_segment]
     fn assign<T: _wxBrush>(&self, brush: T) {
         unsafe { wxBrush_Assign(self.handle(), brush.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxBrush_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn getColour<T: _wxColour>(&self, _ref: T) {
@@ -1709,10 +1589,6 @@ trait _wxBrush : _wxGDIObject {
         unsafe { wxBrush_SetStyle(self.handle(), style) }
     }
     #[fixed_stack_segment]
-    fn safeDelete(&self) {
-        unsafe { wxBrush_SafeDelete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn isStatic(&self) -> bool {
         unsafe { wxBrush_IsStatic(self.handle()) }
     }
@@ -1746,10 +1622,6 @@ impl wxBufferedDC {
 }
 
 trait _wxBufferedDC : _wxDC {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxBufferedDC_Delete(self.handle()) }
-    }
 }
 
 struct wxBufferedPaintDC(*u8);
@@ -1769,10 +1641,6 @@ impl wxBufferedPaintDC {
 }
 
 trait _wxBufferedPaintDC : _wxDC {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxBufferedPaintDC_Delete(self.handle()) }
-    }
 }
 
 struct wxBufferedInputStream(*u8);
@@ -1856,10 +1724,6 @@ impl wxButton {
 }
 
 trait _wxButton : _wxControl {
-    #[fixed_stack_segment]
-    fn setBackgroundColour<T: _wxColour>(&self, colour: T) -> c_int {
-        unsafe { wxButton_SetBackgroundColour(self.handle(), colour.handle()) }
-    }
     #[fixed_stack_segment]
     fn setDefault(&self) {
         unsafe { wxButton_SetDefault(self.handle()) }
@@ -2182,10 +2046,6 @@ impl wxCheckBox {
 
 trait _wxCheckBox : _wxControl {
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxCheckBox_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn getValue(&self) -> bool {
         unsafe { wxCheckBox_GetValue(self.handle()) }
     }
@@ -2216,10 +2076,6 @@ trait _wxCheckListBox : _wxListBox {
         unsafe { wxCheckListBox_Check(self.handle(), item, check) }
     }
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxCheckListBox_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn isChecked(&self, item: c_int) -> bool {
         unsafe { wxCheckListBox_IsChecked(self.handle(), item) }
     }
@@ -2247,10 +2103,6 @@ trait _wxChoice : _wxControl {
     #[fixed_stack_segment]
     fn clear(&self) {
         unsafe { wxChoice_Clear(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self, n: c_int) {
-        unsafe { wxChoice_Delete(self.handle(), n) }
     }
     #[fixed_stack_segment]
     fn findString<T: _wxString>(&self, s: T) -> c_int {
@@ -2360,10 +2212,6 @@ impl wxClientDC {
 }
 
 trait _wxClientDC : _wxWindowDC {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxClientDC_Delete(self.handle()) }
-    }
 }
 
 struct wxClientData(*u8);
@@ -2454,10 +2302,6 @@ trait _wxCloseEvent : _wxEvent {
     #[fixed_stack_segment]
     fn canVeto(&self) -> bool {
         unsafe { wxCloseEvent_CanVeto(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn copyObject<T: _wxObject>(&self, obj: T) {
-        unsafe { wxCloseEvent_CopyObject(self.handle(), obj.handle()) }
     }
     #[fixed_stack_segment]
     fn getLoggingOff(&self) -> bool {
@@ -2552,10 +2396,6 @@ trait _wxColour : _wxObject {
         unsafe { wxColour_Copy(self.handle(), _other) }
     }
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxColour_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn green(&self) -> uint8_t {
         unsafe { wxColour_Green(self.handle()) }
     }
@@ -2574,10 +2414,6 @@ trait _wxColour : _wxObject {
     #[fixed_stack_segment]
     fn setByName<T: _wxString>(&self, _name: T) {
         unsafe { wxColour_SetByName(self.handle(), _name.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn safeDelete(&self) {
-        unsafe { wxColour_SafeDelete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn isStatic(&self) -> bool {
@@ -2605,10 +2441,6 @@ impl wxColourData {
 }
 
 trait _wxColourData : _wxObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxColourData_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn getChooseFull(&self) -> bool {
         unsafe { wxColourData_GetChooseFull(self.handle()) }
@@ -2685,16 +2517,8 @@ impl wxComboBox {
 
 trait _wxComboBox : _wxChoice {
     #[fixed_stack_segment]
-    fn append<T: _wxString>(&self, item: T) {
-        unsafe { wxComboBox_Append(self.handle(), item.handle()) }
-    }
-    #[fixed_stack_segment]
     fn appendData<T: _wxString>(&self, item: T, d: *u8) {
         unsafe { wxComboBox_AppendData(self.handle(), item.handle(), d) }
-    }
-    #[fixed_stack_segment]
-    fn clear(&self) {
-        unsafe { wxComboBox_Clear(self.handle()) }
     }
     #[fixed_stack_segment]
     fn copy(&self) {
@@ -2705,36 +2529,12 @@ trait _wxComboBox : _wxChoice {
         unsafe { wxComboBox_Cut(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn delete(&self, n: c_int) {
-        unsafe { wxComboBox_Delete(self.handle(), n) }
-    }
-    #[fixed_stack_segment]
-    fn findString<T: _wxString>(&self, s: T) -> c_int {
-        unsafe { wxComboBox_FindString(self.handle(), s.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getClientData(&self, n: c_int) -> wxClientData {
-        unsafe { wxClientData(wxComboBox_GetClientData(self.handle(), n)) }
-    }
-    #[fixed_stack_segment]
-    fn getCount(&self) -> c_int {
-        unsafe { wxComboBox_GetCount(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn getInsertionPoint(&self) -> c_int {
         unsafe { wxComboBox_GetInsertionPoint(self.handle()) }
     }
     #[fixed_stack_segment]
     fn getLastPosition(&self) -> c_int {
         unsafe { wxComboBox_GetLastPosition(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getSelection(&self) -> c_int {
-        unsafe { wxComboBox_GetSelection(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getString(&self, n: c_int) -> wxString {
-        unsafe { wxString(wxComboBox_GetString(self.handle(), n)) }
     }
     #[fixed_stack_segment]
     fn getStringSelection(&self) -> wxString {
@@ -2757,10 +2557,6 @@ trait _wxComboBox : _wxChoice {
         unsafe { wxComboBox_Replace(self.handle(), from, to, value.handle()) }
     }
     #[fixed_stack_segment]
-    fn setClientData<T: _wxClientData>(&self, n: c_int, clientData: T) {
-        unsafe { wxComboBox_SetClientData(self.handle(), n, clientData.handle()) }
-    }
-    #[fixed_stack_segment]
     fn setEditable(&self, editable: bool) {
         unsafe { wxComboBox_SetEditable(self.handle(), editable) }
     }
@@ -2771,10 +2567,6 @@ trait _wxComboBox : _wxChoice {
     #[fixed_stack_segment]
     fn setInsertionPointEnd(&self) {
         unsafe { wxComboBox_SetInsertionPointEnd(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn setSelection(&self, n: c_int) {
-        unsafe { wxComboBox_SetSelection(self.handle(), n) }
     }
     #[fixed_stack_segment]
     fn setTextSelection(&self, from: c_int, to: c_int) {
@@ -2805,14 +2597,6 @@ impl wxCommandEvent {
 }
 
 trait _wxCommandEvent : _wxEvent {
-    #[fixed_stack_segment]
-    fn copyObject(&self, object_dest: *u8) {
-        unsafe { wxCommandEvent_CopyObject(self.handle(), object_dest) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxCommandEvent_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn getClientData(&self) -> wxClientData {
         unsafe { wxClientData(wxCommandEvent_GetClientData(self.handle())) }
@@ -3116,10 +2900,6 @@ trait _wxContextHelp : _wxObject {
         unsafe { wxContextHelp_BeginContextHelp(self.handle(), win.handle()) }
     }
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxContextHelp_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn endContextHelp(&self) -> bool {
         unsafe { wxContextHelp_EndContextHelp(self.handle()) }
     }
@@ -3157,14 +2937,6 @@ trait _wxControl : _wxWindow {
     #[fixed_stack_segment]
     fn command<T: _wxEvent>(&self, event: T) {
         unsafe { wxControl_Command(self.handle(), event.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getLabel(&self) -> wxString {
-        unsafe { wxString(wxControl_GetLabel(self.handle())) }
-    }
-    #[fixed_stack_segment]
-    fn setLabel<T: _wxString>(&self, text: T) {
-        unsafe { wxControl_SetLabel(self.handle(), text.handle()) }
     }
 }
 
@@ -3211,18 +2983,6 @@ impl wxCursor {
 }
 
 trait _wxCursor : _wxBitmap {
-    #[fixed_stack_segment]
-    fn safeDelete(&self) {
-        unsafe { wxCursor_SafeDelete(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn isStatic(&self) -> bool {
-        unsafe { wxCursor_IsStatic(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxCursor_Delete(self.handle()) }
-    }
 }
 
 struct wxCustomDataObject(*u8);
@@ -3271,10 +3031,6 @@ trait _wxDC : _wxObject {
     #[fixed_stack_segment]
     fn crossHair(&self, x: c_int, y: c_int) {
         unsafe { wxDC_CrossHair(self.handle(), x, y) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxDC_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn destroyClippingRegion(&self) {
@@ -4475,10 +4231,6 @@ impl wxDragImage {
 
 trait _wxDragImage : _wxObject {
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxDragImage_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn beginDragFullScreen<T: _wxWindow, U: _wxRect>(&self, x_pos: c_int, y_pos: c_int, window: T, fullScreen: bool, rect: U) -> bool {
         unsafe { wxDragImage_BeginDragFullScreen(self.handle(), x_pos, y_pos, window.handle(), fullScreen, rect.handle()) }
     }
@@ -4656,10 +4408,6 @@ trait _wxEncodingConverter : _wxObject {
         unsafe { wxEncodingConverter_Convert(self.handle(), input, output) }
     }
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxEncodingConverter_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn getAllEquivalents<T: _wxList>(&self, enc: c_int, _lst: T) -> c_int {
         unsafe { wxEncodingConverter_GetAllEquivalents(self.handle(), enc, _lst.handle()) }
     }
@@ -4682,10 +4430,6 @@ impl wxEraseEvent {
 }
 
 trait _wxEraseEvent : _wxEvent {
-    #[fixed_stack_segment]
-    fn copyObject(&self, obj: *u8) {
-        unsafe { wxEraseEvent_CopyObject(self.handle(), obj) }
-    }
     #[fixed_stack_segment]
     fn getDC(&self) -> wxDC {
         unsafe { wxDC(wxEraseEvent_GetDC(self.handle())) }
@@ -4775,10 +4519,6 @@ trait _wxEvtHandler : _wxObject {
         unsafe { wxEvtHandler_Connect(self.handle(), first, last, type_, data) }
     }
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxEvtHandler_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn disconnect(&self, first: c_int, last: c_int, type_: c_int, id: c_int) -> c_int {
         unsafe { wxEvtHandler_Disconnect(self.handle(), first, last, type_, id) }
     }
@@ -4817,14 +4557,6 @@ trait _wxEvtHandler : _wxObject {
     #[fixed_stack_segment]
     fn getClosure(&self, id: c_int, type_: c_int) -> wxClosure {
         unsafe { wxClosure(wxEvtHandler_GetClosure(self.handle(), id, type_)) }
-    }
-    #[fixed_stack_segment]
-    fn getClientClosure(&self) -> wxClosure {
-        unsafe { wxClosure(wxEvtHandler_GetClientClosure(self.handle())) }
-    }
-    #[fixed_stack_segment]
-    fn setClientClosure<T: _wxClosure>(&self, closure: T) {
-        unsafe { wxEvtHandler_SetClientClosure(self.handle(), closure.handle()) }
     }
 }
 
@@ -5030,10 +4762,6 @@ trait _wxFileHistory : _wxObject {
         unsafe { wxFileHistory_AddFilesToMenu(self.handle(), menu.handle()) }
     }
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxFileHistory_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn getCount(&self) -> c_int {
         unsafe { wxFileHistory_GetCount(self.handle()) }
     }
@@ -5234,10 +4962,6 @@ impl wxFindReplaceData {
 
 trait _wxFindReplaceData : _wxObject {
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxFindReplaceData_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn getFindString(&self) -> wxString {
         unsafe { wxString(wxFindReplaceData_GetFindString(self.handle())) }
     }
@@ -5312,14 +5036,6 @@ trait _wxFlexGridSizer : _wxGridSizer {
         unsafe { wxFlexGridSizer_AddGrowableRow(self.handle(), idx) }
     }
     #[fixed_stack_segment]
-    fn calcMin(&self) -> wxSize {
-        unsafe { wxSize(wxFlexGridSizer_CalcMin(self.handle())) }
-    }
-    #[fixed_stack_segment]
-    fn recalcSizes(&self) {
-        unsafe { wxFlexGridSizer_RecalcSizes(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn removeGrowableCol(&self, idx: size_t) {
         unsafe { wxFlexGridSizer_RemoveGrowableCol(self.handle(), idx) }
     }
@@ -5361,10 +5077,6 @@ impl wxFont {
 }
 
 trait _wxFont : _wxGDIObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxFont_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn getDefaultEncoding(&self) -> c_int {
         unsafe { wxFont_GetDefaultEncoding(self.handle()) }
@@ -5446,10 +5158,6 @@ trait _wxFont : _wxGDIObject {
         unsafe { wxFont_SetWeight(self.handle(), weight) }
     }
     #[fixed_stack_segment]
-    fn safeDelete(&self) {
-        unsafe { wxFont_SafeDelete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn isStatic(&self) -> bool {
         unsafe { wxFont_IsStatic(self.handle()) }
     }
@@ -5467,10 +5175,6 @@ impl wxFontData {
 }
 
 trait _wxFontData : _wxObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxFontData_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn enableEffects(&self, flag: bool) {
         unsafe { wxFontData_EnableEffects(self.handle(), flag) }
@@ -5682,14 +5386,6 @@ trait _wxFrame : _wxTopLevelWindow {
     #[fixed_stack_segment]
     fn setToolBar<T: _wxToolBar>(&self, _toolbar: T) {
         unsafe { wxFrame_SetToolBar(self.handle(), _toolbar.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getTitle(&self) -> wxString {
-        unsafe { wxString(wxFrame_GetTitle(self.handle())) }
-    }
-    #[fixed_stack_segment]
-    fn setTitle<T: _wxString>(&self, _txt: T) {
-        unsafe { wxFrame_SetTitle(self.handle(), _txt.handle()) }
     }
     #[fixed_stack_segment]
     fn setShape<T: _wxRegion>(&self, region: T) -> bool {
@@ -6756,10 +6452,6 @@ trait _wxGridCellEditor : _wxGridCellWorker {
         unsafe { wxGridCellEditor_IsCreated(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn paintBackground<T: _wxGridCellAttr>(&self, x: c_int, y: c_int, w: c_int, h: c_int, attr: T) {
-        unsafe { wxGridCellEditor_PaintBackground(self.handle(), x, y, w, h, attr.handle()) }
-    }
-    #[fixed_stack_segment]
     fn reset(&self) {
         unsafe { wxGridCellEditor_Reset(self.handle()) }
     }
@@ -7101,10 +6793,6 @@ impl wxGridSizer {
 
 trait _wxGridSizer : _wxSizer {
     #[fixed_stack_segment]
-    fn calcMin(&self) -> wxSize {
-        unsafe { wxSize(wxGridSizer_CalcMin(self.handle())) }
-    }
-    #[fixed_stack_segment]
     fn getCols(&self) -> c_int {
         unsafe { wxGridSizer_GetCols(self.handle()) }
     }
@@ -7119,10 +6807,6 @@ trait _wxGridSizer : _wxSizer {
     #[fixed_stack_segment]
     fn getVGap(&self) -> c_int {
         unsafe { wxGridSizer_GetVGap(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn recalcSizes(&self) {
-        unsafe { wxGridSizer_RecalcSizes(self.handle()) }
     }
     #[fixed_stack_segment]
     fn setCols(&self, cols: c_int) {
@@ -7377,10 +7061,6 @@ trait _wxHtmlHelpController : _wxHelpControllerBase {
     #[fixed_stack_segment]
     fn addBook(&self, book: *u8, show_wait_msg: c_int) -> bool {
         unsafe { wxHtmlHelpController_AddBook(self.handle(), book, show_wait_msg) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxHtmlHelpController_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn display(&self, x: *u8) -> c_int {
@@ -7715,10 +7395,6 @@ trait _wxIcon : _wxBitmap {
         unsafe { wxIcon_CopyFromBitmap(self.handle(), bmp.handle()) }
     }
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxIcon_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn fromRaw(&self, width: c_int, height: c_int) -> wxIcon {
         unsafe { wxIcon(wxIcon_FromRaw(self.handle(), width, height)) }
     }
@@ -7727,48 +7403,12 @@ trait _wxIcon : _wxBitmap {
         unsafe { wxIcon(wxIcon_FromXPM(self.handle())) }
     }
     #[fixed_stack_segment]
-    fn getDepth(&self) -> c_int {
-        unsafe { wxIcon_GetDepth(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getHeight(&self) -> c_int {
-        unsafe { wxIcon_GetHeight(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getWidth(&self) -> c_int {
-        unsafe { wxIcon_GetWidth(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn isEqual(&self, other: &_wxIcon) -> bool {
         unsafe { wxIcon_IsEqual(self.handle(), other.handle()) }
     }
     #[fixed_stack_segment]
     fn load<T: _wxString>(&self, name: T, type_: c_long, width: c_int, height: c_int) -> c_int {
         unsafe { wxIcon_Load(self.handle(), name.handle(), type_, width, height) }
-    }
-    #[fixed_stack_segment]
-    fn isOk(&self) -> bool {
-        unsafe { wxIcon_IsOk(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn setDepth(&self, depth: c_int) {
-        unsafe { wxIcon_SetDepth(self.handle(), depth) }
-    }
-    #[fixed_stack_segment]
-    fn setHeight(&self, height: c_int) {
-        unsafe { wxIcon_SetHeight(self.handle(), height) }
-    }
-    #[fixed_stack_segment]
-    fn setWidth(&self, width: c_int) {
-        unsafe { wxIcon_SetWidth(self.handle(), width) }
-    }
-    #[fixed_stack_segment]
-    fn safeDelete(&self) {
-        unsafe { wxIcon_SafeDelete(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn isStatic(&self) -> bool {
-        unsafe { wxIcon_IsStatic(self.handle()) }
     }
 }
 
@@ -7835,10 +7475,6 @@ impl wxIdleEvent {
 }
 
 trait _wxIdleEvent : _wxEvent {
-    #[fixed_stack_segment]
-    fn copyObject<T: _wxObject>(&self, object_dest: T) {
-        unsafe { wxIdleEvent_CopyObject(self.handle(), object_dest.handle()) }
-    }
     #[fixed_stack_segment]
     fn moreRequested(&self) -> bool {
         unsafe { wxIdleEvent_MoreRequested(self.handle()) }
@@ -8045,10 +7681,6 @@ trait _wxImage : _wxObject {
     fn setRGB(&self, x: c_int, y: c_int, r: uint8_t, g: uint8_t, b: uint8_t) {
         unsafe { wxImage_SetRGB(self.handle(), x, y, r, g, b) }
     }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxImage_Delete(self.handle()) }
-    }
 }
 
 struct wxImageHandler(*u8);
@@ -8084,10 +7716,6 @@ trait _wxImageList : _wxObject {
     #[fixed_stack_segment]
     fn addMasked<T: _wxBitmap, U: _wxColour>(&self, bitmap: T, maskColour: U) -> c_int {
         unsafe { wxImageList_AddMasked(self.handle(), bitmap.handle(), maskColour.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxImageList_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn draw<T: _wxDC>(&self, index: c_int, dc: T, x: c_int, y: c_int, flags: c_int, solidBackground: bool) -> bool {
@@ -8253,10 +7881,6 @@ impl wxInputStream {
 
 trait _wxInputStream : _wxStreamBase {
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxInputStream_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn eof(&self) -> bool {
         unsafe { wxInputStream_Eof(self.handle()) }
     }
@@ -8330,10 +7954,6 @@ trait _wxJoystickEvent : _wxEvent {
         unsafe { wxJoystickEvent_ButtonUp(self.handle(), but) }
     }
     #[fixed_stack_segment]
-    fn copyObject(&self, obj: *u8) {
-        unsafe { wxJoystickEvent_CopyObject(self.handle(), obj) }
-    }
-    #[fixed_stack_segment]
     fn getButtonChange(&self) -> c_int {
         unsafe { wxJoystickEvent_GetButtonChange(self.handle()) }
     }
@@ -8405,10 +8025,6 @@ trait _wxKeyEvent : _wxEvent {
         unsafe { wxKeyEvent_ControlDown(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn copyObject(&self, obj: *u8) {
-        unsafe { wxKeyEvent_CopyObject(self.handle(), obj) }
-    }
-    #[fixed_stack_segment]
     fn getKeyCode(&self) -> c_int {
         unsafe { wxKeyEvent_GetKeyCode(self.handle()) }
     }
@@ -8471,10 +8087,6 @@ impl wxLayoutAlgorithm {
 }
 
 trait _wxLayoutAlgorithm : _wxObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxLayoutAlgorithm_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn layoutFrame<T: _wxFrame>(&self, frame: T, mainWindow: *u8) -> bool {
         unsafe { wxLayoutAlgorithm_LayoutFrame(self.handle(), frame.handle(), mainWindow) }
@@ -8573,16 +8185,8 @@ trait _wxListBox : _wxControl {
         unsafe { wxListBox_Clear(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn delete(&self, n: c_int) {
-        unsafe { wxListBox_Delete(self.handle(), n) }
-    }
-    #[fixed_stack_segment]
     fn findString<T: _wxString>(&self, s: T) -> c_int {
         unsafe { wxListBox_FindString(self.handle(), s.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getClientData(&self, n: c_int) -> wxClientData {
-        unsafe { wxClientData(wxListBox_GetClientData(self.handle(), n)) }
     }
     #[fixed_stack_segment]
     fn getCount(&self) -> c_int {
@@ -8607,10 +8211,6 @@ trait _wxListBox : _wxControl {
     #[fixed_stack_segment]
     fn isSelected(&self, n: c_int) -> bool {
         unsafe { wxListBox_IsSelected(self.handle(), n) }
-    }
-    #[fixed_stack_segment]
-    fn setClientData<T: _wxClientData>(&self, n: c_int, clientData: T) {
-        unsafe { wxListBox_SetClientData(self.handle(), n, clientData.handle()) }
     }
     #[fixed_stack_segment]
     fn setFirstItem(&self, n: c_int) {
@@ -8810,20 +8410,12 @@ trait _wxListCtrl : _wxControl {
         unsafe { wxListCtrl_ScrollList(self.handle(), dx, dy) }
     }
     #[fixed_stack_segment]
-    fn setBackgroundColour<T: _wxColour>(&self, col: T) {
-        unsafe { wxListCtrl_SetBackgroundColour(self.handle(), col.handle()) }
-    }
-    #[fixed_stack_segment]
     fn setColumn<T: _wxListItem>(&self, col: c_int, item: T) -> bool {
         unsafe { wxListCtrl_SetColumn(self.handle(), col, item.handle()) }
     }
     #[fixed_stack_segment]
     fn setColumnWidth(&self, col: c_int, width: c_int) -> bool {
         unsafe { wxListCtrl_SetColumnWidth(self.handle(), col, width) }
-    }
-    #[fixed_stack_segment]
-    fn setForegroundColour<T: _wxColour>(&self, col: T) -> c_int {
-        unsafe { wxListCtrl_SetForegroundColour(self.handle(), col.handle()) }
     }
     #[fixed_stack_segment]
     fn setImageList<T: _wxImageList>(&self, imageList: T, which: c_int) {
@@ -8864,10 +8456,6 @@ trait _wxListCtrl : _wxControl {
     #[fixed_stack_segment]
     fn setTextColour<T: _wxColour>(&self, col: T) {
         unsafe { wxListCtrl_SetTextColour(self.handle(), col.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn setWindowStyleFlag(&self, style: c_int) {
-        unsafe { wxListCtrl_SetWindowStyleFlag(self.handle(), style) }
     }
     #[fixed_stack_segment]
     fn sortItems(&self, fn_: *u8, eif_obj: *u8) -> bool {
@@ -8983,10 +8571,6 @@ trait _wxListItem : _wxObject {
     #[fixed_stack_segment]
     fn clearAttributes(&self) {
         unsafe { wxListItem_ClearAttributes(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxListItem_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn getAlign(&self) -> c_int {
@@ -9248,10 +8832,6 @@ impl wxLogChain {
 }
 
 trait _wxLogChain : _wxLog {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxLogChain_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn getOldLog(&self) -> wxLog {
         unsafe { wxLog(wxLogChain_GetOldLog(self.handle())) }
@@ -9561,10 +9141,6 @@ impl wxMemoryDC {
 }
 
 trait _wxMemoryDC : _wxDC {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxMemoryDC_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn selectObject<T: _wxBitmap>(&self, bitmap: T) {
         unsafe { wxMemoryDC_SelectObject(self.handle(), bitmap.handle()) }
@@ -9916,10 +9492,6 @@ impl wxMenuEvent {
 
 trait _wxMenuEvent : _wxEvent {
     #[fixed_stack_segment]
-    fn copyObject(&self, obj: *u8) {
-        unsafe { wxMenuEvent_CopyObject(self.handle(), obj) }
-    }
-    #[fixed_stack_segment]
     fn getMenuId(&self) -> c_int {
         unsafe { wxMenuEvent_GetMenuId(self.handle()) }
     }
@@ -9952,10 +9524,6 @@ trait _wxMenuItem : _wxObject {
     #[fixed_stack_segment]
     fn check(&self, check: bool) {
         unsafe { wxMenuItem_Check(self.handle(), check) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxMenuItem_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn enable(&self, enable: bool) {
@@ -10043,14 +9611,6 @@ impl wxMessageDialog {
 }
 
 trait _wxMessageDialog : _wxDialog {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxMessageDialog_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn showModal(&self) -> c_int {
-        unsafe { wxMessageDialog_ShowModal(self.handle()) }
-    }
 }
 
 struct wxMetafile(*u8);
@@ -10065,10 +9625,6 @@ impl wxMetafile {
 }
 
 trait _wxMetafile : _wxObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxMetafile_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn isOk(&self) -> bool {
         unsafe { wxMetafile_IsOk(self.handle()) }
@@ -10099,10 +9655,6 @@ trait _wxMetafileDC : _wxDC {
     #[fixed_stack_segment]
     fn close(&self) -> *u8 {
         unsafe { wxMetafileDC_Close(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxMetafileDC_Delete(self.handle()) }
     }
 }
 
@@ -10172,10 +9724,6 @@ impl wxMirrorDC {
 }
 
 trait _wxMirrorDC : _wxDC {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxMirrorDC_Delete(self.handle()) }
-    }
 }
 
 struct wxModule(*u8);
@@ -10235,10 +9783,6 @@ trait _wxMouseEvent : _wxEvent {
     #[fixed_stack_segment]
     fn controlDown(&self) -> bool {
         unsafe { wxMouseEvent_ControlDown(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn copyObject(&self, object_dest: *u8) {
-        unsafe { wxMouseEvent_CopyObject(self.handle(), object_dest) }
     }
     #[fixed_stack_segment]
     fn dragging(&self) -> bool {
@@ -10355,10 +9899,6 @@ impl wxMoveEvent {
 }
 
 trait _wxMoveEvent : _wxEvent {
-    #[fixed_stack_segment]
-    fn copyObject(&self, obj: *u8) {
-        unsafe { wxMoveEvent_CopyObject(self.handle(), obj) }
-    }
     #[fixed_stack_segment]
     fn getPosition(&self) -> wxPoint {
         unsafe { wxPoint(wxMoveEvent_GetPosition(self.handle())) }
@@ -10613,10 +10153,6 @@ trait _wxNotifyEvent : _wxCommandEvent {
         unsafe { wxNotifyEvent_Allow(self.handle()) }
     }
     #[fixed_stack_segment]
-    fn copyObject(&self, object_dest: *u8) {
-        unsafe { wxNotifyEvent_CopyObject(self.handle(), object_dest) }
-    }
-    #[fixed_stack_segment]
     fn isAllowed(&self) -> bool {
         unsafe { wxNotifyEvent_IsAllowed(self.handle()) }
     }
@@ -10684,10 +10220,6 @@ impl wxOutputStream {
 }
 
 trait _wxOutputStream : _wxStreamBase {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxOutputStream_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn lastWrite(&self) -> c_int {
         unsafe { wxOutputStream_LastWrite(self.handle()) }
@@ -10767,10 +10299,6 @@ trait _wxPageSetupDialogData : _wxObject {
     #[fixed_stack_segment]
     fn calculatePaperSizeFromId(&self) {
         unsafe { wxPageSetupDialogData_CalculatePaperSizeFromId(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxPageSetupDialogData_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn enableHelp(&self, flag: bool) {
@@ -10904,10 +10432,6 @@ impl wxPaintDC {
 }
 
 trait _wxPaintDC : _wxWindowDC {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxPaintDC_Delete(self.handle()) }
-    }
 }
 
 struct wxPaintEvent(*u8);
@@ -10943,10 +10467,6 @@ trait _wxPalette : _wxGDIObject {
         unsafe { wxPalette_Assign(self.handle(), palette.handle()) }
     }
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxPalette_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn getPixel(&self, red: uint8_t, green: uint8_t, blue: uint8_t) -> c_int {
         unsafe { wxPalette_GetPixel(self.handle(), red, green, blue) }
     }
@@ -10974,10 +10494,6 @@ impl wxPaletteChangedEvent {
 
 trait _wxPaletteChangedEvent : _wxEvent {
     #[fixed_stack_segment]
-    fn copyObject(&self, obj: *u8) {
-        unsafe { wxPaletteChangedEvent_CopyObject(self.handle(), obj) }
-    }
-    #[fixed_stack_segment]
     fn getChangedWindow(&self) -> *u8 {
         unsafe { wxPaletteChangedEvent_GetChangedWindow(self.handle()) }
     }
@@ -11001,14 +10517,6 @@ impl wxPanel {
 }
 
 trait _wxPanel : _wxWindow {
-    #[fixed_stack_segment]
-    fn initDialog(&self) {
-        unsafe { wxPanel_InitDialog(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn setFocus(&self) {
-        unsafe { wxPanel_SetFocus(self.handle()) }
-    }
 }
 
 struct wxPathList(*u8);
@@ -11050,10 +10558,6 @@ trait _wxPen : _wxGDIObject {
     #[fixed_stack_segment]
     fn assign<T: _wxPen>(&self, pen: T) {
         unsafe { wxPen_Assign(self.handle(), pen.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxPen_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn getCap(&self) -> c_int {
@@ -11122,10 +10626,6 @@ trait _wxPen : _wxGDIObject {
     #[fixed_stack_segment]
     fn setWidth(&self, width: c_int) {
         unsafe { wxPen_SetWidth(self.handle(), width) }
-    }
-    #[fixed_stack_segment]
-    fn safeDelete(&self) {
-        unsafe { wxPen_SafeDelete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn isStatic(&self) -> bool {
@@ -11261,10 +10761,6 @@ impl wxPostScriptDC {
 
 trait _wxPostScriptDC : _wxDC {
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxPostScriptDC_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn setResolution(&self, ppi: c_int) {
         unsafe { wxPostScriptDC_SetResolution(self.handle(), ppi) }
     }
@@ -11322,10 +10818,6 @@ impl wxPreviewFrame {
 
 trait _wxPreviewFrame : _wxFrame {
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxPreviewFrame_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn initialize(&self) {
         unsafe { wxPreviewFrame_Initialize(self.handle()) }
     }
@@ -11346,10 +10838,6 @@ trait _wxPrintData : _wxObject {
     #[fixed_stack_segment]
     fn assign<T: _wxPrintData>(&self, data: T) {
         unsafe { wxPrintData_Assign(self.handle(), data.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxPrintData_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn getCollate(&self) -> bool {
@@ -11525,10 +11013,6 @@ impl wxPostScriptPrintNativeData {
 }
 
 trait _wxPostScriptPrintNativeData : _wxObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxPostScriptPrintNativeData_Delete(self.handle()) }
-    }
 }
 
 struct wxPrintDialog(*u8);
@@ -11584,10 +11068,6 @@ trait _wxPrintDialogData : _wxObject {
     #[fixed_stack_segment]
     fn assignData<T: _wxPrintData>(&self, data: T) {
         unsafe { wxPrintDialogData_AssignData(self.handle(), data.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxPrintDialogData_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn enableHelp(&self, flag: bool) {
@@ -11720,10 +11200,6 @@ impl wxPrintPreview {
 
 trait _wxPrintPreview : _wxObject {
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxPrintPreview_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn determineScaling(&self) {
         unsafe { wxPrintPreview_DetermineScaling(self.handle()) }
     }
@@ -11826,10 +11302,6 @@ trait _wxPrinter : _wxObject {
         unsafe { wxWindow(wxPrinter_CreateAbortWindow(self.handle(), parent.handle(), printout.handle())) }
     }
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxPrinter_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn getAbort(&self) -> bool {
         unsafe { wxPrinter_GetAbort(self.handle()) }
     }
@@ -11872,10 +11344,6 @@ impl wxPrinterDC {
 }
 
 trait _wxPrinterDC : _wxDC {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxPrinterDC_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn getPaperRect(&self) -> wxRect {
         unsafe { wxRect(wxPrinterDC_GetPaperRect(self.handle())) }
@@ -11974,10 +11442,6 @@ trait _wxProcess : _wxEvtHandler {
     #[fixed_stack_segment]
     fn closeOutput(&self) {
         unsafe { wxProcess_CloseOutput(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxProcess_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn detach(&self) {
@@ -12173,10 +11637,6 @@ impl wxQueryNewPaletteEvent {
 
 trait _wxQueryNewPaletteEvent : _wxEvent {
     #[fixed_stack_segment]
-    fn copyObject<T: _wxObject>(&self, obj: T) {
-        unsafe { wxQueryNewPaletteEvent_CopyObject(self.handle(), obj.handle()) }
-    }
-    #[fixed_stack_segment]
     fn getPaletteRealized(&self) -> bool {
         unsafe { wxQueryNewPaletteEvent_GetPaletteRealized(self.handle()) }
     }
@@ -12357,10 +11817,6 @@ trait _wxRegion : _wxGDIObject {
         unsafe { wxRegion_ContainsRect(self.handle(), x, y, width, height) }
     }
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxRegion_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn isEmpty(&self) -> bool {
         unsafe { wxRegion_IsEmpty(self.handle()) }
     }
@@ -12418,10 +11874,6 @@ impl wxRegionIterator {
 }
 
 trait _wxRegionIterator : _wxObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxRegionIterator_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn getHeight(&self) -> c_int {
         unsafe { wxRegionIterator_GetHeight(self.handle()) }
@@ -12491,10 +11943,6 @@ impl wxSVGFileDC {
 }
 
 trait _wxSVGFileDC : _wxDC {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxSVGFileDC_Delete(self.handle()) }
-    }
 }
 
 struct wxSashEvent(*u8);
@@ -12693,10 +12141,6 @@ impl wxScreenDC {
 
 trait _wxScreenDC : _wxDC {
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxScreenDC_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn endDrawingOnTop(&self) -> bool {
         unsafe { wxScreenDC_EndDrawingOnTop(self.handle()) }
     }
@@ -12740,10 +12184,6 @@ trait _wxScrollBar : _wxControl {
     #[fixed_stack_segment]
     fn getThumbSize(&self) -> c_int {
         unsafe { wxScrollBar_GetThumbSize(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn setScrollbar(&self, position: c_int, thumbSize: c_int, range: c_int, pageSize: c_int, refresh: bool) {
-        unsafe { wxScrollBar_SetScrollbar(self.handle(), position, thumbSize, range, pageSize, refresh) }
     }
     #[fixed_stack_segment]
     fn setThumbPosition(&self, viewStart: c_int) {
@@ -12853,16 +12293,8 @@ trait _wxScrolledWindow : _wxPanel {
         unsafe { wxScrolledWindow_GetViewStart(self.handle(), _x, _y) }
     }
     #[fixed_stack_segment]
-    fn getVirtualSize(&self, _x: *c_int, _y: *c_int) {
-        unsafe { wxScrolledWindow_GetVirtualSize(self.handle(), _x, _y) }
-    }
-    #[fixed_stack_segment]
     fn onDraw<T: _wxDC>(&self, dc: T) {
         unsafe { wxScrolledWindow_OnDraw(self.handle(), dc.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn prepareDC<T: _wxDC>(&self, dc: T) {
-        unsafe { wxScrolledWindow_PrepareDC(self.handle(), dc.handle()) }
     }
     #[fixed_stack_segment]
     fn scroll(&self, x_pos: c_int, y_pos: c_int) {
@@ -12971,10 +12403,6 @@ impl wxShowEvent {
 
 trait _wxShowEvent : _wxEvent {
     #[fixed_stack_segment]
-    fn copyObject<T: _wxObject>(&self, obj: T) {
-        unsafe { wxShowEvent_CopyObject(self.handle(), obj.handle()) }
-    }
-    #[fixed_stack_segment]
     fn isShown(&self) -> bool {
         unsafe { wxShowEvent_IsShown(self.handle()) }
     }
@@ -13079,10 +12507,6 @@ impl wxSizeEvent {
 }
 
 trait _wxSizeEvent : _wxEvent {
-    #[fixed_stack_segment]
-    fn copyObject(&self, obj: *u8) {
-        unsafe { wxSizeEvent_CopyObject(self.handle(), obj) }
-    }
     #[fixed_stack_segment]
     fn getSize(&self) -> wxSize {
         unsafe { wxSize(wxSizeEvent_GetSize(self.handle())) }
@@ -13406,10 +12830,6 @@ trait _wxSizerItem : _wxObject {
     #[fixed_stack_segment]
     fn setWindow<T: _wxWindow>(&self, window: T) {
         unsafe { wxSizerItem_SetWindow(self.handle(), window.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxSizerItem_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn deleteWindows(&self) {
@@ -13865,10 +13285,6 @@ impl wxStaticBitmap {
 
 trait _wxStaticBitmap : _wxControl {
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxStaticBitmap_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn getBitmap<T: _wxBitmap>(&self, _ref: T) {
         unsafe { wxStaticBitmap_GetBitmap(self.handle(), _ref.handle()) }
     }
@@ -13918,16 +13334,8 @@ impl wxStaticBoxSizer {
 
 trait _wxStaticBoxSizer : _wxBoxSizer {
     #[fixed_stack_segment]
-    fn calcMin(&self) -> wxSize {
-        unsafe { wxSize(wxStaticBoxSizer_CalcMin(self.handle())) }
-    }
-    #[fixed_stack_segment]
     fn getStaticBox(&self) -> wxStaticBox {
         unsafe { wxStaticBox(wxStaticBoxSizer_GetStaticBox(self.handle())) }
-    }
-    #[fixed_stack_segment]
-    fn recalcSizes(&self) {
-        unsafe { wxStaticBoxSizer_RecalcSizes(self.handle()) }
     }
 }
 
@@ -14273,10 +13681,6 @@ impl wxTaskBarIcon {
 }
 
 trait _wxTaskBarIcon : _wxEvtHandler {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxTaskBarIcon_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn isIconInstalled(&self) -> bool {
         unsafe { wxTaskBarIcon_IsIconInstalled(self.handle()) }
@@ -14697,14 +14101,6 @@ trait _wxTextValidator : _wxValidator {
         unsafe { wxValidator(wxTextValidator_Clone(self.handle())) }
     }
     #[fixed_stack_segment]
-    fn transferToWindow(&self) -> bool {
-        unsafe { wxTextValidator_TransferToWindow(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn transferFromWindow(&self) -> bool {
-        unsafe { wxTextValidator_TransferFromWindow(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn getStyle(&self) -> c_int {
         unsafe { wxTextValidator_GetStyle(self.handle()) }
     }
@@ -14775,10 +14171,6 @@ impl wxTimer {
 }
 
 trait _wxTimer : _wxObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxTimer_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn getInterval(&self) -> c_int {
         unsafe { wxTimer_GetInterval(self.handle()) }
@@ -14888,10 +14280,6 @@ impl wxTipWindow {
 
 trait _wxTipWindow : _wxPopupTransientWindow {
     #[fixed_stack_segment]
-    fn close(&self) {
-        unsafe { wxTipWindow_Close(self.handle()) }
-    }
-    #[fixed_stack_segment]
     fn setBoundingRect(&self, x: c_int, y: c_int, w: c_int, h: c_int) {
         unsafe { wxTipWindow_SetBoundingRect(self.handle(), x, y, w, h) }
     }
@@ -14917,16 +14305,8 @@ impl wxToggleButton {
 
 trait _wxToggleButton : _wxControl {
     #[fixed_stack_segment]
-    fn enable(&self, enable: bool) -> bool {
-        unsafe { wxToggleButton_Enable(self.handle(), enable) }
-    }
-    #[fixed_stack_segment]
     fn getValue(&self) -> bool {
         unsafe { wxToggleButton_GetValue(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn setLabel<T: _wxString>(&self, label: T) {
-        unsafe { wxToggleButton_SetLabel(self.handle(), label.handle()) }
     }
     #[fixed_stack_segment]
     fn setValue(&self, state: bool) {
@@ -14965,10 +14345,6 @@ trait _wxToolBar : _wxToolBarBase {
     #[fixed_stack_segment]
     fn addToolEx<T: _wxBitmap, U: _wxBitmap, V: _wxObject, W: _wxString, X: _wxString>(&self, id: c_int, bmp1: T, bmp2: U, isToggle: bool, x: c_int, y: c_int, data: V, shelp: W, lhelp: X) {
         unsafe { wxToolBar_AddToolEx(self.handle(), id, bmp1.handle(), bmp2.handle(), isToggle, x, y, data.handle(), shelp.handle(), lhelp.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxToolBar_Delete(self.handle()) }
     }
     #[fixed_stack_segment]
     fn deleteTool(&self, id: c_int) -> bool {
@@ -15255,10 +14631,6 @@ trait _wxTreeCtrl : _wxControl {
         unsafe { wxTreeCtrl_CollapseAndReset(self.handle(), item.handle()) }
     }
     #[fixed_stack_segment]
-    fn delete<T: _wxTreeItemId>(&self, item: T) {
-        unsafe { wxTreeCtrl_Delete(self.handle(), item.handle()) }
-    }
-    #[fixed_stack_segment]
     fn deleteAllItems(&self) {
         unsafe { wxTreeCtrl_DeleteAllItems(self.handle()) }
     }
@@ -15341,10 +14713,6 @@ trait _wxTreeCtrl : _wxControl {
     #[fixed_stack_segment]
     fn getNextVisible<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: T, _item: U) {
         unsafe { wxTreeCtrl_GetNextVisible(self.handle(), item.handle(), _item.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getParent<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: T, _item: U) {
-        unsafe { wxTreeCtrl_GetParent(self.handle(), item.handle(), _item.handle()) }
     }
     #[fixed_stack_segment]
     fn getPrevSibling<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: T, _item: U) {
@@ -15555,10 +14923,6 @@ trait _wxTreeEvent : _wxNotifyEvent {
     fn isEditCancelled(&self) -> c_int {
         unsafe { wxTreeEvent_IsEditCancelled(self.handle()) }
     }
-    #[fixed_stack_segment]
-    fn allow(&self) {
-        unsafe { wxTreeEvent_Allow(self.handle()) }
-    }
 }
 
 struct wxTreeItemData(*u8);
@@ -15651,10 +15015,6 @@ trait _wxUpdateUIEvent : _wxEvent {
         unsafe { wxUpdateUIEvent_Check(self.handle(), check) }
     }
     #[fixed_stack_segment]
-    fn copyObject<T: _wxObject>(&self, obj: T) {
-        unsafe { wxUpdateUIEvent_CopyObject(self.handle(), obj.handle()) }
-    }
-    #[fixed_stack_segment]
     fn enable(&self, enable: bool) {
         unsafe { wxUpdateUIEvent_Enable(self.handle(), enable) }
     }
@@ -15705,10 +15065,6 @@ impl wxValidator {
 }
 
 trait _wxValidator : _wxEvtHandler {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxValidator_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn getWindow(&self) -> wxWindow {
         unsafe { wxWindow(wxValidator_GetWindow(self.handle())) }
@@ -15775,10 +15131,6 @@ impl wxSound {
 }
 
 trait _wxSound : _wxEvtHandler {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxSound_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn isOk(&self) -> bool {
         unsafe { wxSound_IsOk(self.handle()) }
@@ -16369,10 +15721,6 @@ impl wxWindowDC {
 }
 
 trait _wxWindowDC : _wxDC {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxWindowDC_Delete(self.handle()) }
-    }
 }
 
 struct wxWindowDestroyEvent(*u8);
@@ -17066,10 +16414,6 @@ impl wxGraphicsBrush {
 }
 
 trait _wxGraphicsBrush : _wxGraphicsObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxGraphicsBrush_Delete(self.handle()) }
-    }
 }
 
 struct wxGraphicsContext(*u8);
@@ -17097,10 +16441,6 @@ impl wxGraphicsContext {
 }
 
 trait _wxGraphicsContext : _wxGraphicsObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxGraphicsContext_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn clip<T: _wxRegion>(&self, region: T) {
         unsafe { wxGraphicsContext_Clip(self.handle(), region.handle()) }
@@ -17232,10 +16572,6 @@ impl wxGraphicsFont {
 }
 
 trait _wxGraphicsFont : _wxGraphicsObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxGraphicsFont_Delete(self.handle()) }
-    }
 }
 
 struct wxGraphicsMatrix(*u8);
@@ -17251,10 +16587,6 @@ impl wxGraphicsMatrix {
 }
 
 trait _wxGraphicsMatrix : _wxGraphicsObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxGraphicsMatrix_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn concat<T: _wxGraphicsMatrix>(&self, t: T) {
         unsafe { wxGraphicsMatrix_Concat(self.handle(), t.handle()) }
@@ -17322,10 +16654,6 @@ impl wxGraphicsPath {
 }
 
 trait _wxGraphicsPath : _wxGraphicsObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxGraphicsPath_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn moveToPoint(&self, x: c_double, y: c_double) {
         unsafe { wxGraphicsPath_MoveToPoint(self.handle(), x, y) }
@@ -17409,10 +16737,6 @@ impl wxGraphicsPen {
 }
 
 trait _wxGraphicsPen : _wxGraphicsObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxGraphicsPen_Delete(self.handle()) }
-    }
 }
 
 struct wxGraphicsRenderer(*u8);
@@ -17440,10 +16764,6 @@ impl wxGraphicsRenderer {
 }
 
 trait _wxGraphicsRenderer : _wxGraphicsObject {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxGraphicsRenderer_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn getDefaultRenderer(&self) -> wxGraphicsRenderer {
         unsafe { wxGraphicsRenderer(wxGraphicsRenderer_GetDefaultRenderer(self.handle())) }
@@ -17558,14 +16878,6 @@ impl wxMediaCtrl {
 
 trait _wxMediaCtrl : _wxWindow {
     #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxMediaCtrl_Delete(self.handle()) }
-    }
-    #[fixed_stack_segment]
-    fn getBestSize(&self) -> wxSize {
-        unsafe { wxSize(wxMediaCtrl_GetBestSize(self.handle())) }
-    }
-    #[fixed_stack_segment]
     fn getPlaybackRate(&self) -> c_double {
         unsafe { wxMediaCtrl_GetPlaybackRate(self.handle()) }
     }
@@ -17653,10 +16965,6 @@ impl wxcPrintout {
 }
 
 trait _wxcPrintout : _wxPrintout {
-    #[fixed_stack_segment]
-    fn delete(&self) {
-        unsafe { wxcPrintout_Delete(self.handle()) }
-    }
     #[fixed_stack_segment]
     fn setPageLimits(&self, startPage: c_int, endPage: c_int, fromPage: c_int, toPage: c_int) {
         unsafe { wxcPrintout_SetPageLimits(self.handle(), startPage, endPage, fromPage, toPage) }
