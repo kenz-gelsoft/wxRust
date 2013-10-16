@@ -6452,6 +6452,10 @@ trait _wxGridCellEditor : _wxGridCellWorker {
         unsafe { wxGridCellEditor_IsCreated(self.handle()) }
     }
     #[fixed_stack_segment]
+    fn paintBackground<T: _wxGridCellAttr>(&self, x: c_int, y: c_int, w: c_int, h: c_int, attr: T) {
+        unsafe { wxGridCellEditor_PaintBackground(self.handle(), x, y, w, h, attr.handle()) }
+    }
+    #[fixed_stack_segment]
     fn reset(&self) {
         unsafe { wxGridCellEditor_Reset(self.handle()) }
     }
