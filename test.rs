@@ -24,15 +24,6 @@ fn on_main() {
     ELJApp::initializeC(closure, args.len() as i32, vec::raw::to_ptr(args) as *i32);
 }
 
-#[fixed_stack_segment]
-fn wxT(s: &str) -> wxString {
-    unsafe {
-        do s.to_c_str().with_ref |c_str| {
-            wxString(wxString_CreateUTF8(c_str as *u8))
-        }
-    }
-}
-
 extern "C"
 fn wx_main() {
     unsafe {
@@ -41,25 +32,25 @@ fn wx_main() {
         let idAny = -1;
         let defaultFrameStyle = 536878656 | 4194304;
         
-        let frame = wxFrame::new(wxWindow(nullptr), idAny, wxT("Hello, wxRust!"), -1, -1, -1, -1, defaultFrameStyle);
+        let frame = wxFrame::new(wxWindow(nullptr), idAny, "Hello, wxRust!", -1, -1, -1, -1, defaultFrameStyle);
         println("OK");
         
         let menubar = wxMenuBar::new(0);
         
-        let fileMenu = wxMenu::new(wxT(""), 0);
-        let fileNew = wxMenuItem::newEx(idAny, wxT("New"), wxT("Create a new file."), 0, wxMenu(nullptr));
+        let fileMenu = wxMenu::new("", 0);
+        let fileNew = wxMenuItem::newEx(idAny, "New", "Create a new file.", 0, wxMenu(nullptr));
         fileMenu.appendItem(fileNew);
 
-        menubar.append(fileMenu, wxT("File"));
+        menubar.append(fileMenu, "File");
         
         frame.setMenuBar(menubar);
 
         let id = 30;
-        let button = wxButton::new(frame, id, wxT("Push me!"), 10, 10, 50, 30, 0);
+        let button = wxButton::new(frame, id, "Push me!", 10, 10, 50, 30, 0);
         fn button_clicked(fun: *u8, data: *u8, evt: *u8) {
             println("hello!");
             let frame = wxFrame(data);
-            let msgDlg = wxMessageDialog::new(frame, wxT("Pushed!!"), wxT("The Button"), 0);
+            let msgDlg = wxMessageDialog::new(frame, "Pushed!!", "The Button", 0);
             msgDlg.showModal();
         }
         let closure = wxClosure::new(button_clicked as *u8, frame.handle());

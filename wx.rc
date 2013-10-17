@@ -4,8 +4,3 @@
 
 pub mod native;
 pub mod wrapper;
-
-#[link_args="-lwxc"]
-extern {
-    pub fn wxString_CreateUTF8(buffer: *u8) -> *u8;
-}

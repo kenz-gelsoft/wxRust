@@ -16,9 +16,46 @@ class WrapperGenerator(object):
         self._indent = 0
 
     def generate(self):
-        self.println('use std::libc::*;')
-        self.println('use native::*;')
-        self.println()
+        self.println('''\
+use std::libc::*;
+use std::str;
+use native::*;
+
+#[link_args="-lwxc"]
+extern {
+    fn wxString_CreateUTF8(buffer: *u8) -> *u8;
+    fn wxString_GetUtf8(wxs: *u8) -> *u8;
+    fn wxCharBuffer_DataUtf8(wxcb: *u8) -> *c_char;
+    fn wxCharBuffer_Delete(wxcb: *u8);
+}
+
+#[fixed_stack_segment]
+fn wxT(s: &str) -> wxString {
+    unsafe {
+        do s.to_c_str().with_ref |c_str| {
+            wxString { handle: wxString_CreateUTF8(c_str as *u8) }
+        }
+    }
+}
+
+struct wxString { handle: *u8 }
+impl Drop for wxString {
+    fn drop(&self) {
+        unsafe { wxString_Delete(self.handle); } println("wxString deleted!");
+    }
+}
+impl wxString {
+    fn handle(&self) -> *u8 { self.handle }
+    fn to_str(&self) -> ~str {
+        unsafe {
+            let charBuffer = wxString_GetUtf8(self.handle);
+            let utf8 = wxCharBuffer_DataUtf8(charBuffer);
+            wxCharBuffer_Delete(charBuffer);
+            str::raw::from_c_str(utf8)
+        }
+    }
+}
+''')
         for clazz in self.__parser.classes:
             self._print_class(clazz)
 
@@ -30,11 +67,6 @@ class WrapperGenerator(object):
             if trait in self.__parser.root_classes:
                 body = ' fn handle(&self) -> *u8 { **self } '
             self.println('impl %s for %s {%s}' % (trait_name(trait), struct_name, body))
-#            t = self.__parser.class_for_name(trait)
-#            for m in t.methods:
-#                if 'delete' == m.method_name(t.name):
-#                    self.println('impl Drop for %s { fn drop(&mut self) { println("%s deleted!"); self.delete() } }' % (struct_name, struct_name))
-#                    continue
         self.println()
     
         # static methods go to struct impl
@@ -119,6 +151,8 @@ class Parser(object):
         if 'TClassDef' in line:
             # class def
             clazz = Class(self, class_or_function)
+            if clazz.name == 'wxString':
+                return # ignore
             # linear search isn't fast.
             for clazz2 in self.classes:
                 if clazz.name == clazz2.name:
@@ -424,11 +458,21 @@ class Function(object):
                                          self._returns))
         with gen.indent():
             body = '%s(%s)' % (self.name, self._calling_args)
+            if self.__return_type.is_string:
+                body = 'wxString { handle: %s }.to_str()' % (body)
             if self.__return_type.is_self or self.__return_type.is_class:
                 body = '%s(%s)' % (self.__return_type.struct_name, body)
-            gen.println('unsafe { %s }' % body)
+            gen.println('%sunsafe { %s }' % (self._strings, body))
         gen.println('}')
 
+    @property
+    def _strings(self):
+        s = ''
+        for a in self.__args:
+            if a.type.is_string:
+                s += 'let %s = wxT(%s);\n' % (a.name, a.name)
+        return s
+    
     def method_name(self, classname):
         _name = self.name[len(classname)+1:]
         _name = _name[0].lower() + _name[1:]
@@ -450,6 +494,8 @@ class Function(object):
     def _returns(self):
         if self.__return_type.is_void:
             return ''
+        if self.__return_type.is_string:
+            return ' -> ~str'
         if self.__return_type.is_class:
             return ' -> %s' % self.__return_type.struct_name
         return ' -> %s' % self.__return_type
@@ -488,6 +534,8 @@ class Arg(object):
     def calling_arg(self):
         if self._is_self:
             return 'self.handle()'
+        if self.type.is_string:
+            return '%s.handle()' % self.name
         elif self.type.is_class:
             return '%s.handle()' % self.name
         else:
@@ -542,8 +590,12 @@ class Type(object):
         return self._head == 'void'
     
     @property
+    def is_string(self):
+        return self._head.startswith('TClass') and self._inner == 'wxString'
+    
+    @property
     def is_class(self):
-        return self._is_complex and self._head in ['TClass', 'TClassRef', 'TSelf']
+        return self._is_complex and self._head in ['TClass', 'TClassRef', 'TSelf'] and not self.is_string
     
     @property
     def _is_ptr(self):
@@ -560,6 +612,8 @@ class Type(object):
         return trait_name(self._inner)
     
     def __str__(self):
+        if self.is_string:
+            return '&str'
         if self.is_self or self.is_class:
             return '&%s' % self.trait_name
         if self._is_ptr:
