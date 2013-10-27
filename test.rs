@@ -2,6 +2,7 @@
 
 extern mod wx;
 
+use std::libc::*;
 use std::rt::start_on_main_thread;
 use std::vec;
 
@@ -10,6 +11,8 @@ use wx::wrapper::*;
 
 
 static nullptr: *u8 = 0 as *u8;
+static idAny: c_int = -1;
+
 
 #[start]
 fn start(argc: int, argv: **u8, crate_map: *u8) -> int {
@@ -26,15 +29,32 @@ fn on_main() {
 
 extern "C"
 fn wx_main() {
-    unsafe {
-        // not mandatory
-        // ELJApp::initAllImageHandlers();
-        let idAny = -1;
+    let frame = MyFrame::new();
+    frame.show();
+    frame.raise();
+}
+
+struct MyFrame(wxFrame);
+impl MyFrame {
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn new() -> MyFrame {
         let defaultFrameStyle = 536878656 | 4194304;
         
         let frame = wxFrame::new(wxWindow(nullptr), idAny, "Hello, wxRust!", -1, -1, -1, -1, defaultFrameStyle);
-        println("OK");
+        frame.setMenuBar(MyMenuBar::new().asMenuBar());
         
+        MyButton::new(frame);
+
+        MyFrame(frame)
+    }
+}
+
+struct MyMenuBar(wxMenuBar);
+impl MyMenuBar {
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn new() -> MyMenuBar {
         let menubar = wxMenuBar::new(0);
         
         let fileMenu = wxMenu::new("", 0);
@@ -42,22 +62,33 @@ fn wx_main() {
         fileMenu.appendItem(fileNew);
 
         menubar.append(fileMenu, "File");
-        
-        frame.setMenuBar(menubar);
-
-        let id = 30;
-        let button = wxButton::new(frame, id, "Push me!", 10, 10, 50, 30, 0);
-        fn button_clicked(fun: *u8, data: *u8, evt: *u8) {
-            println("hello!");
-            let frame = wxFrame(data);
-            let msgDlg = wxMessageDialog::new(frame, "Pushed!!", "The Button", 0);
-            msgDlg.showModal();
-        }
-        let closure = wxClosure::new(button_clicked as *u8, frame.handle());
-        button.connect(id, id, expEVT_COMMAND_BUTTON_CLICKED(), closure.handle());
-        
-        frame.show();
-        frame.raise();
+        MyMenuBar(menubar)
+    }
+    fn asMenuBar(&self) -> wxMenuBar {
+        return **self;
     }
 }
 
+struct MyButton(wxButton);
+impl MyButton {
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn new<T: _wxWindow>(parent: T) -> MyButton {
+        // XXX: I don't want passing parent ownership.
+        let button = wxButton::new(wxFrame(parent.handle()), idAny, "Push me!", 10, 10, 50, 30, 0);
+        let closure = wxClosure::new(MyButton::clicked as *u8, parent.handle());
+        unsafe {
+            button.connect(idAny, idAny, expEVT_COMMAND_BUTTON_CLICKED(), closure.handle());
+        }
+
+        MyButton(button)
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn clicked(fun: *u8, data: *u8, evt: *u8) {
+        println("hello!");
+        let parent = wxWindow(data);
+        let msgDlg = wxMessageDialog::new(parent, "Pushed!!", "The Button", 0);
+        msgDlg.showModal();
+    }
+}
