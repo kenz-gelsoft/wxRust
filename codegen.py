@@ -30,6 +30,7 @@ extern {
 }
 
 #[fixed_stack_segment]
+#[inline(never)]
 fn wxT(s: &str) -> wxString {
     unsafe {
         do s.to_c_str().with_ref |c_str| {
@@ -41,7 +42,7 @@ fn wxT(s: &str) -> wxString {
 struct wxString { handle: *u8 }
 impl Drop for wxString {
     fn drop(&self) {
-        unsafe { wxString_Delete(self.handle); } println("wxString deleted!");
+        unsafe { wxString_Delete(self.handle); }
     }
 }
 impl wxString {
@@ -451,6 +452,7 @@ class Function(object):
     def trait_fn(self, gen, classname):
         modifier = self.is_static and 'pub ' or ''
         gen.println('#[fixed_stack_segment]')
+        gen.println('#[inline(never)]')
         gen.println('%sfn %s%s(%s)%s {' % (modifier,
                                          self.method_name(classname),
                                          self._type_params,

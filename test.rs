@@ -5,7 +5,6 @@ extern mod wx;
 use std::rt::start_on_main_thread;
 use std::vec;
 
-use wx::*;
 use wx::native::*;
 use wx::wrapper::*;
 
@@ -18,6 +17,7 @@ fn start(argc: int, argv: **u8, crate_map: *u8) -> int {
 }
 
 #[fixed_stack_segment]
+#[inline(never)]
 fn on_main() {
     let closure = wxClosure::new(wx_main as *u8, nullptr);
     let args: ~[*i32] = ~[];
