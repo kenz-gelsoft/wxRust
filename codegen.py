@@ -442,7 +442,7 @@ class Function(object):
         for a in self.__args:
             if a.type.is_class and not a.type.is_self:
                 letter = chr(ord('T') + number)
-                a.type_param = '%s' % letter
+                a.type_param = '&%s' % letter
                 type_params.append('%s: %s' % (letter, a.type.trait_name))
                 number += 1
         if len(type_params):
@@ -463,7 +463,7 @@ class Function(object):
             if self.__return_type.is_string:
                 body = 'wxString { handle: %s }.to_str()' % (body)
             if self.__return_type.is_self or self.__return_type.is_class:
-                body = '%s(%s)' % (self.__return_type.struct_name, body)
+                body = '@%s(%s)' % (self.__return_type.struct_name, body)
             gen.println('%sunsafe { %s }' % (self._strings, body))
         gen.println('}')
 
@@ -499,7 +499,7 @@ class Function(object):
         if self.__return_type.is_string:
             return ' -> ~str'
         if self.__return_type.is_class:
-            return ' -> %s' % self.__return_type.struct_name
+            return ' -> @%s' % self.__return_type.struct_name
         return ' -> %s' % self.__return_type
 
 

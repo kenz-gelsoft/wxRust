@@ -34,15 +34,16 @@ fn wx_main() {
     frame.raise();
 }
 
-struct MyFrame(wxFrame);
+struct MyFrame(@wxFrame);
 impl MyFrame {
     #[fixed_stack_segment]
     #[inline(never)]
     fn new() -> MyFrame {
         let defaultFrameStyle = 536878656 | 4194304;
         
-        let frame = wxFrame::new(wxWindow(nullptr), idAny, "Hello, wxRust!", -1, -1, -1, -1, defaultFrameStyle);
-        frame.setMenuBar(MyMenuBar::new().asMenuBar());
+        let frame = wxFrame::new(@wxWindow(nullptr), idAny, "Hello, wxRust!", -1, -1, -1, -1, defaultFrameStyle);
+        let menubar = MyMenuBar::new();
+        frame.setMenuBar(menubar.asMenuBar());
         
         MyButton::new(frame);
 
@@ -50,7 +51,7 @@ impl MyFrame {
     }
 }
 
-struct MyMenuBar(wxMenuBar);
+struct MyMenuBar(@wxMenuBar);
 impl MyMenuBar {
     #[fixed_stack_segment]
     #[inline(never)]
@@ -58,24 +59,23 @@ impl MyMenuBar {
         let menubar = wxMenuBar::new(0);
         
         let fileMenu = wxMenu::new("", 0);
-        let fileNew = wxMenuItem::newEx(idAny, "New", "Create a new file.", 0, wxMenu(nullptr));
+        let fileNew = wxMenuItem::newEx(idAny, "New", "Create a new file.", 0, @wxMenu(nullptr));
         fileMenu.appendItem(fileNew);
 
         menubar.append(fileMenu, "File");
         MyMenuBar(menubar)
     }
-    fn asMenuBar(&self) -> wxMenuBar {
+    fn asMenuBar(&self) -> @wxMenuBar {
         return **self;
     }
 }
 
-struct MyButton(wxButton);
+struct MyButton(@wxButton);
 impl MyButton {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn new<T: _wxWindow>(parent: T) -> MyButton {
-        // XXX: I don't want passing parent ownership.
-        let button = wxButton::new(wxFrame(parent.handle()), idAny, "Push me!", 10, 10, 50, 30, 0);
+    fn new<T: _wxWindow>(parent: &T) -> MyButton {
+        let button = wxButton::new(parent, idAny, "Push me!", 10, 10, 50, 30, 0);
         let closure = wxClosure::new(MyButton::clicked as *u8, parent.handle());
         unsafe {
             button.connect(idAny, idAny, expEVT_COMMAND_BUTTON_CLICKED(), closure.handle());
@@ -87,7 +87,7 @@ impl MyButton {
     #[inline(never)]
     fn clicked(fun: *u8, data: *u8, evt: *u8) {
         println("hello!");
-        let parent = wxWindow(data);
+        let parent = @wxFrame(data);
         let msgDlg = wxMessageDialog::new(parent, "Pushed!!", "The Button", 0);
         msgDlg.showModal();
     }
