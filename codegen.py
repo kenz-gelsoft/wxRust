@@ -73,6 +73,9 @@ impl wxString {
         # static methods go to struct impl
         self.println('impl %s {' % struct_name)
         with self.indent():
+            self.println('pub fn from(handle: *u8) -> @%s { @%s(handle) }' % (struct_name, struct_name))
+            self.println('pub fn null() -> @%s { %s::from(0 as *u8) }' % (struct_name, struct_name))
+            self.println()
             for method in clazz.static_methods:
                 method.trait_fn(self, clazz.name)
         self.println('}')

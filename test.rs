@@ -41,7 +41,7 @@ impl MyFrame {
     fn new() -> MyFrame {
         let defaultFrameStyle = 536878656 | 4194304;
         
-        let frame = wxFrame::new(@wxWindow(nullptr), idAny, "Hello, wxRust!", -1, -1, -1, -1, defaultFrameStyle);
+        let frame = wxFrame::new(wxWindow::null(), idAny, "Hello, wxRust!", -1, -1, -1, -1, defaultFrameStyle);
         let menubar = MyMenuBar::new();
         frame.setMenuBar(menubar.asMenuBar());
         
@@ -59,7 +59,7 @@ impl MyMenuBar {
         let menubar = wxMenuBar::new(0);
         
         let fileMenu = wxMenu::new("", 0);
-        let fileNew = wxMenuItem::newEx(idAny, "New", "Create a new file.", 0, @wxMenu(nullptr));
+        let fileNew = wxMenuItem::newEx(idAny, "New", "Create a new file.", 0, wxMenu::null());
         fileMenu.appendItem(fileNew);
 
         menubar.append(fileMenu, "File");
@@ -87,7 +87,7 @@ impl MyButton {
     #[inline(never)]
     fn clicked(fun: *u8, data: *u8, evt: *u8) {
         println("hello!");
-        let parent = @wxFrame(data);
+        let parent = wxWindow::from(data);
         let msgDlg = wxMessageDialog::new(parent, "Pushed!!", "The Button", 0);
         msgDlg.showModal();
     }
