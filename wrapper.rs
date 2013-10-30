@@ -4,10 +4,10 @@ use native::*;
 
 #[link_args="-lwxc"]
 extern {
-    fn wxString_CreateUTF8(buffer: *u8) -> *u8;
-    fn wxString_GetUtf8(wxs: *u8) -> *u8;
-    fn wxCharBuffer_DataUtf8(wxcb: *u8) -> *c_char;
-    fn wxCharBuffer_Delete(wxcb: *u8);
+    fn wxString_CreateUTF8(buffer: *mut c_void) -> *mut c_void;
+    fn wxString_GetUtf8(wxs: *mut c_void) -> *mut c_void;
+    fn wxCharBuffer_DataUtf8(wxcb: *mut c_void) -> *c_char;
+    fn wxCharBuffer_Delete(wxcb: *mut c_void);
 }
 
 #[fixed_stack_segment]
@@ -15,19 +15,19 @@ extern {
 fn wxT(s: &str) -> wxString {
     unsafe {
         do s.to_c_str().with_ref |c_str| {
-            wxString { handle: wxString_CreateUTF8(c_str as *u8) }
+            wxString { handle: wxString_CreateUTF8(c_str as *mut c_void) }
         }
     }
 }
 
-struct wxString { handle: *u8 }
+struct wxString { handle: *mut c_void }
 impl Drop for wxString {
     fn drop(&self) {
         unsafe { wxString_Delete(self.handle); }
     }
 }
 impl wxString {
-    fn handle(&self) -> *u8 { self.handle }
+    fn handle(&self) -> *mut c_void { self.handle }
     fn to_str(&self) -> ~str {
         unsafe {
             let charBuffer = wxString_GetUtf8(self.handle);
@@ -38,15 +38,15 @@ impl wxString {
     }
 }
 
-struct ELJApp(*u8);
+struct ELJApp(*mut c_void);
 impl _ELJApp for ELJApp {}
 impl _wxApp for ELJApp {}
 impl _wxEvtHandler for ELJApp {}
-impl _wxObject for ELJApp { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for ELJApp { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJApp {
-    pub fn from(handle: *u8) -> @ELJApp { @ELJApp(handle) }
-    pub fn null() -> @ELJApp { ELJApp::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJApp { @ELJApp(handle) }
+    pub fn null() -> @ELJApp { ELJApp::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -70,7 +70,7 @@ impl ELJApp {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn enableTooltips(_enable: bool) {
+    pub fn enableTooltips(_enable: c_int) {
         unsafe { ELJApp_EnableTooltips(_enable) }
     }
     #[fixed_stack_segment]
@@ -96,7 +96,7 @@ impl ELJApp {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn findWindowById<T: _wxWindow>(_id: c_int, _prt: &T) -> *u8 {
+    pub fn findWindowById<T: _wxWindow>(_id: c_int, _prt: &T) -> *mut c_void {
         unsafe { ELJApp_FindWindowById(_id, _prt.handle()) }
     }
     #[fixed_stack_segment]
@@ -138,7 +138,7 @@ impl ELJApp {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn getOsVersion(_maj: *u8, _min: *u8) -> c_int {
+    pub fn getOsVersion(_maj: *mut c_void, _min: *mut c_void) -> c_int {
         unsafe { ELJApp_GetOsVersion(_maj, _min) }
     }
     #[fixed_stack_segment]
@@ -153,7 +153,7 @@ impl ELJApp {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn getUserHome(_usr: *u8) -> ~str {
+    pub fn getUserHome(_usr: *mut c_void) -> ~str {
         unsafe { wxString { handle: ELJApp_GetUserHome(_usr) }.to_str() }
     }
     #[fixed_stack_segment]
@@ -178,7 +178,7 @@ impl ELJApp {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn initialized() -> bool {
+    pub fn initialized() -> c_int {
         unsafe { ELJApp_Initialized() }
     }
     #[fixed_stack_segment]
@@ -266,7 +266,7 @@ impl ELJApp {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn initializeC<T: _wxClosure>(closure: &T, _argc: c_int, _argv: *wchar_t) {
+    pub fn initializeC<T: _wxClosure>(closure: &T, _argc: c_int, _argv: *mut *mut c_char) {
         unsafe { ELJApp_InitializeC(closure.handle(), _argc, _argv) }
     }
     #[fixed_stack_segment]
@@ -284,18 +284,18 @@ impl ELJApp {
 trait _ELJApp : _wxApp {
 }
 
-struct ELJArtProv(*u8);
+struct ELJArtProv(*mut c_void);
 impl _ELJArtProv for ELJArtProv {}
 impl _wxArtProvider for ELJArtProv {}
-impl _wxObject for ELJArtProv { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for ELJArtProv { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJArtProv {
-    pub fn from(handle: *u8) -> @ELJArtProv { @ELJArtProv(handle) }
-    pub fn null() -> @ELJArtProv { ELJArtProv::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJArtProv { @ELJArtProv(handle) }
+    pub fn null() -> @ELJArtProv { ELJArtProv::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_obj: *u8, _clb: *u8) -> @ELJArtProv {
+    pub fn new(_obj: *mut c_void, _clb: *mut c_void) -> @ELJArtProv {
         unsafe { @ELJArtProv(ELJArtProv_Create(_obj, _clb)) }
     }
 }
@@ -308,67 +308,67 @@ trait _ELJArtProv : _wxArtProvider {
     }
 }
 
-struct ELJClient(*u8);
+struct ELJClient(*mut c_void);
 impl _ELJClient for ELJClient {}
 impl _wxClient for ELJClient {}
 impl _wxClientBase for ELJClient {}
-impl _wxObject for ELJClient { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for ELJClient { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJClient {
-    pub fn from(handle: *u8) -> @ELJClient { @ELJClient(handle) }
-    pub fn null() -> @ELJClient { ELJClient::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJClient { @ELJClient(handle) }
+    pub fn null() -> @ELJClient { ELJClient::from(0 as *mut c_void) }
     
 }
 
 trait _ELJClient : _wxClient {
 }
 
-struct ELJCommand(*u8);
+struct ELJCommand(*mut c_void);
 impl _ELJCommand for ELJCommand {}
 impl _wxCommand for ELJCommand {}
-impl _wxObject for ELJCommand { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for ELJCommand { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJCommand {
-    pub fn from(handle: *u8) -> @ELJCommand { @ELJCommand(handle) }
-    pub fn null() -> @ELJCommand { ELJCommand::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJCommand { @ELJCommand(handle) }
+    pub fn null() -> @ELJCommand { ELJCommand::from(0 as *mut c_void) }
     
 }
 
 trait _ELJCommand : _wxCommand {
 }
 
-struct ELJConnection(*u8);
+struct ELJConnection(*mut c_void);
 impl _ELJConnection for ELJConnection {}
 impl _wxConnection for ELJConnection {}
 impl _wxConnectionBase for ELJConnection {}
-impl _wxObject for ELJConnection { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for ELJConnection { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJConnection {
-    pub fn from(handle: *u8) -> @ELJConnection { @ELJConnection(handle) }
-    pub fn null() -> @ELJConnection { ELJConnection::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJConnection { @ELJConnection(handle) }
+    pub fn null() -> @ELJConnection { ELJConnection::from(0 as *mut c_void) }
     
 }
 
 trait _ELJConnection : _wxConnection {
 }
 
-struct ELJDragDataObject(*u8);
-impl _ELJDragDataObject for ELJDragDataObject { fn handle(&self) -> *u8 { **self } }
+struct ELJDragDataObject(*mut c_void);
+impl _ELJDragDataObject for ELJDragDataObject { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJDragDataObject {
-    pub fn from(handle: *u8) -> @ELJDragDataObject { @ELJDragDataObject(handle) }
-    pub fn null() -> @ELJDragDataObject { ELJDragDataObject::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJDragDataObject { @ELJDragDataObject(handle) }
+    pub fn null() -> @ELJDragDataObject { ELJDragDataObject::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_obj: *u8, _fmt: &str, _func1: *u8, _func2: *u8, _func3: *u8) -> @ELJDragDataObject {
+    pub fn new(_obj: *mut c_void, _fmt: &str, _func1: *mut c_void, _func2: *mut c_void, _func3: *mut c_void) -> @ELJDragDataObject {
         let _fmt = wxT(_fmt);
         unsafe { @ELJDragDataObject(ELJDragDataObject_Create(_obj, _fmt.handle(), _func1, _func2, _func3)) }
     }
 }
 
 trait _ELJDragDataObject {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -377,17 +377,17 @@ trait _ELJDragDataObject {
     }
 }
 
-struct ELJDropTarget(*u8);
+struct ELJDropTarget(*mut c_void);
 impl _ELJDropTarget for ELJDropTarget {}
-impl _wxDropTarget for ELJDropTarget { fn handle(&self) -> *u8 { **self } }
+impl _wxDropTarget for ELJDropTarget { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJDropTarget {
-    pub fn from(handle: *u8) -> @ELJDropTarget { @ELJDropTarget(handle) }
-    pub fn null() -> @ELJDropTarget { ELJDropTarget::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJDropTarget { @ELJDropTarget(handle) }
+    pub fn null() -> @ELJDropTarget { ELJDropTarget::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_obj: *u8) -> @ELJDropTarget {
+    pub fn new(_obj: *mut c_void) -> @ELJDropTarget {
         unsafe { @ELJDropTarget(ELJDropTarget_Create(_obj)) }
     }
 }
@@ -400,43 +400,43 @@ trait _ELJDropTarget : _wxDropTarget {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnData(&self, _func: *u8) {
+    fn setOnData(&self, _func: *mut c_void) {
         unsafe { ELJDropTarget_SetOnData(self.handle(), _func) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnDragOver(&self, _func: *u8) {
+    fn setOnDragOver(&self, _func: *mut c_void) {
         unsafe { ELJDropTarget_SetOnDragOver(self.handle(), _func) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnDrop(&self, _func: *u8) {
+    fn setOnDrop(&self, _func: *mut c_void) {
         unsafe { ELJDropTarget_SetOnDrop(self.handle(), _func) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnEnter(&self, _func: *u8) {
+    fn setOnEnter(&self, _func: *mut c_void) {
         unsafe { ELJDropTarget_SetOnEnter(self.handle(), _func) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnLeave(&self, _func: *u8) {
+    fn setOnLeave(&self, _func: *mut c_void) {
         unsafe { ELJDropTarget_SetOnLeave(self.handle(), _func) }
     }
 }
 
-struct ELJFileDropTarget(*u8);
+struct ELJFileDropTarget(*mut c_void);
 impl _ELJFileDropTarget for ELJFileDropTarget {}
 impl _wxFileDropTarget for ELJFileDropTarget {}
-impl _wxDropTarget for ELJFileDropTarget { fn handle(&self) -> *u8 { **self } }
+impl _wxDropTarget for ELJFileDropTarget { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJFileDropTarget {
-    pub fn from(handle: *u8) -> @ELJFileDropTarget { @ELJFileDropTarget(handle) }
-    pub fn null() -> @ELJFileDropTarget { ELJFileDropTarget::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJFileDropTarget { @ELJFileDropTarget(handle) }
+    pub fn null() -> @ELJFileDropTarget { ELJFileDropTarget::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_obj: *u8, _func: *u8) -> @ELJFileDropTarget {
+    pub fn new(_obj: *mut c_void, _func: *mut c_void) -> @ELJFileDropTarget {
         unsafe { @ELJFileDropTarget(ELJFileDropTarget_Create(_obj, _func)) }
     }
 }
@@ -449,43 +449,43 @@ trait _ELJFileDropTarget : _wxFileDropTarget {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnData(&self, _func: *u8) {
+    fn setOnData(&self, _func: *mut c_void) {
         unsafe { ELJFileDropTarget_SetOnData(self.handle(), _func) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnDragOver(&self, _func: *u8) {
+    fn setOnDragOver(&self, _func: *mut c_void) {
         unsafe { ELJFileDropTarget_SetOnDragOver(self.handle(), _func) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnDrop(&self, _func: *u8) {
+    fn setOnDrop(&self, _func: *mut c_void) {
         unsafe { ELJFileDropTarget_SetOnDrop(self.handle(), _func) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnEnter(&self, _func: *u8) {
+    fn setOnEnter(&self, _func: *mut c_void) {
         unsafe { ELJFileDropTarget_SetOnEnter(self.handle(), _func) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnLeave(&self, _func: *u8) {
+    fn setOnLeave(&self, _func: *mut c_void) {
         unsafe { ELJFileDropTarget_SetOnLeave(self.handle(), _func) }
     }
 }
 
-struct ELJGridTable(*u8);
+struct ELJGridTable(*mut c_void);
 impl _ELJGridTable for ELJGridTable {}
 impl _wxGridTableBase for ELJGridTable {}
-impl _wxObject for ELJGridTable { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for ELJGridTable { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJGridTable {
-    pub fn from(handle: *u8) -> @ELJGridTable { @ELJGridTable(handle) }
-    pub fn null() -> @ELJGridTable { ELJGridTable::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJGridTable { @ELJGridTable(handle) }
+    pub fn null() -> @ELJGridTable { ELJGridTable::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_obj: *u8, _EifGetNumberRows: *u8, _EifGetNumberCols: *u8, _EifGetValue: *u8, _EifSetValue: *u8, _EifIsEmptyCell: *u8, _EifClear: *u8, _EifInsertRows: *u8, _EifAppendRows: *u8, _EifDeleteRows: *u8, _EifInsertCols: *u8, _EifAppendCols: *u8, _EifDeleteCols: *u8, _EifSetRowLabelValue: *u8, _EifSetColLabelValue: *u8, _EifGetRowLabelValue: *u8, _EifGetColLabelValue: *u8) -> @ELJGridTable {
+    pub fn new(_obj: *mut c_void, _EifGetNumberRows: *mut c_void, _EifGetNumberCols: *mut c_void, _EifGetValue: *mut c_void, _EifSetValue: *mut c_void, _EifIsEmptyCell: *mut c_void, _EifClear: *mut c_void, _EifInsertRows: *mut c_void, _EifAppendRows: *mut c_void, _EifDeleteRows: *mut c_void, _EifInsertCols: *mut c_void, _EifAppendCols: *mut c_void, _EifDeleteCols: *mut c_void, _EifSetRowLabelValue: *mut c_void, _EifSetColLabelValue: *mut c_void, _EifGetRowLabelValue: *mut c_void, _EifGetColLabelValue: *mut c_void) -> @ELJGridTable {
         unsafe { @ELJGridTable(ELJGridTable_Create(_obj, _EifGetNumberRows, _EifGetNumberCols, _EifGetValue, _EifSetValue, _EifIsEmptyCell, _EifClear, _EifInsertRows, _EifAppendRows, _EifDeleteRows, _EifInsertCols, _EifAppendCols, _EifDeleteCols, _EifSetRowLabelValue, _EifSetColLabelValue, _EifGetRowLabelValue, _EifGetColLabelValue)) }
     }
 }
@@ -498,40 +498,40 @@ trait _ELJGridTable : _wxGridTableBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn sendTableMessage(&self, id: c_int, val1: c_int, val2: c_int) -> *u8 {
+    fn sendTableMessage(&self, id: c_int, val1: c_int, val2: c_int) -> *mut c_void {
         unsafe { ELJGridTable_SendTableMessage(self.handle(), id, val1, val2) }
     }
 }
 
-struct ELJLocale(*u8);
+struct ELJLocale(*mut c_void);
 impl _ELJLocale for ELJLocale {}
-impl _wxLocale for ELJLocale { fn handle(&self) -> *u8 { **self } }
+impl _wxLocale for ELJLocale { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJLocale {
-    pub fn from(handle: *u8) -> @ELJLocale { @ELJLocale(handle) }
-    pub fn null() -> @ELJLocale { ELJLocale::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJLocale { @ELJLocale(handle) }
+    pub fn null() -> @ELJLocale { ELJLocale::from(0 as *mut c_void) }
     
 }
 
 trait _ELJLocale : _wxLocale {
 }
 
-struct ELJLog(*u8);
+struct ELJLog(*mut c_void);
 impl _ELJLog for ELJLog {}
-impl _wxLog for ELJLog { fn handle(&self) -> *u8 { **self } }
+impl _wxLog for ELJLog { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJLog {
-    pub fn from(handle: *u8) -> @ELJLog { @ELJLog(handle) }
-    pub fn null() -> @ELJLog { ELJLog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJLog { @ELJLog(handle) }
+    pub fn null() -> @ELJLog { ELJLog::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_obj: *u8, _fnc: *u8) -> @ELJLog {
+    pub fn new(_obj: *mut c_void, _fnc: *mut c_void) -> @ELJLog {
         unsafe { @ELJLog(ELJLog_Create(_obj, _fnc)) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn getActiveTarget() -> *u8 {
+    pub fn getActiveTarget() -> *mut c_void {
         unsafe { ELJLog_GetActiveTarget() }
     }
 }
@@ -539,59 +539,59 @@ impl ELJLog {
 trait _ELJLog : _wxLog {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableLogging(&self, doIt: bool) -> c_int {
+    fn enableLogging(&self, doIt: c_int) -> c_int {
         unsafe { ELJLog_EnableLogging(self.handle(), doIt) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEnabled(&self) -> bool {
+    fn isEnabled(&self) -> c_int {
         unsafe { ELJLog_IsEnabled(self.handle()) }
     }
 }
 
-struct ELJMessageParameters(*u8);
-impl _ELJMessageParameters for ELJMessageParameters { fn handle(&self) -> *u8 { **self } }
+struct ELJMessageParameters(*mut c_void);
+impl _ELJMessageParameters for ELJMessageParameters { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJMessageParameters {
-    pub fn from(handle: *u8) -> @ELJMessageParameters { @ELJMessageParameters(handle) }
-    pub fn null() -> @ELJMessageParameters { ELJMessageParameters::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJMessageParameters { @ELJMessageParameters(handle) }
+    pub fn null() -> @ELJMessageParameters { ELJMessageParameters::from(0 as *mut c_void) }
     
 }
 
 trait _ELJMessageParameters {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct ELJPlotCurve(*u8);
+struct ELJPlotCurve(*mut c_void);
 impl _ELJPlotCurve for ELJPlotCurve {}
 impl _wxPlotCurve for ELJPlotCurve {}
-impl _wxObject for ELJPlotCurve { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for ELJPlotCurve { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJPlotCurve {
-    pub fn from(handle: *u8) -> @ELJPlotCurve { @ELJPlotCurve(handle) }
-    pub fn null() -> @ELJPlotCurve { ELJPlotCurve::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJPlotCurve { @ELJPlotCurve(handle) }
+    pub fn null() -> @ELJPlotCurve { ELJPlotCurve::from(0 as *mut c_void) }
     
 }
 
 trait _ELJPlotCurve : _wxPlotCurve {
 }
 
-struct ELJPreviewControlBar(*u8);
+struct ELJPreviewControlBar(*mut c_void);
 impl _ELJPreviewControlBar for ELJPreviewControlBar {}
 impl _wxPreviewControlBar for ELJPreviewControlBar {}
 impl _wxPanel for ELJPreviewControlBar {}
 impl _wxWindow for ELJPreviewControlBar {}
 impl _wxEvtHandler for ELJPreviewControlBar {}
-impl _wxObject for ELJPreviewControlBar { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for ELJPreviewControlBar { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJPreviewControlBar {
-    pub fn from(handle: *u8) -> @ELJPreviewControlBar { @ELJPreviewControlBar(handle) }
-    pub fn null() -> @ELJPreviewControlBar { ELJPreviewControlBar::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJPreviewControlBar { @ELJPreviewControlBar(handle) }
+    pub fn null() -> @ELJPreviewControlBar { ELJPreviewControlBar::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(preview: *u8, buttons: c_int, parent: &T, title: *u8, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @ELJPreviewControlBar {
+    pub fn new<T: _wxWindow>(preview: *mut c_void, buttons: c_int, parent: &T, title: *mut c_void, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @ELJPreviewControlBar {
         unsafe { @ELJPreviewControlBar(ELJPreviewControlBar_Create(preview, buttons, parent.handle(), title, x, y, w, h, style)) }
     }
 }
@@ -599,22 +599,22 @@ impl ELJPreviewControlBar {
 trait _ELJPreviewControlBar : _wxPreviewControlBar {
 }
 
-struct ELJPreviewFrame(*u8);
+struct ELJPreviewFrame(*mut c_void);
 impl _ELJPreviewFrame for ELJPreviewFrame {}
 impl _wxPreviewFrame for ELJPreviewFrame {}
 impl _wxFrame for ELJPreviewFrame {}
 impl _wxTopLevelWindow for ELJPreviewFrame {}
 impl _wxWindow for ELJPreviewFrame {}
 impl _wxEvtHandler for ELJPreviewFrame {}
-impl _wxObject for ELJPreviewFrame { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for ELJPreviewFrame { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJPreviewFrame {
-    pub fn from(handle: *u8) -> @ELJPreviewFrame { @ELJPreviewFrame(handle) }
-    pub fn null() -> @ELJPreviewFrame { ELJPreviewFrame::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJPreviewFrame { @ELJPreviewFrame(handle) }
+    pub fn null() -> @ELJPreviewFrame { ELJPreviewFrame::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(_obj: *u8, _init: *u8, _create_canvas: *u8, _create_toolbar: *u8, preview: *u8, parent: &T, title: *u8, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @ELJPreviewFrame {
+    pub fn new<T: _wxWindow>(_obj: *mut c_void, _init: *mut c_void, _create_canvas: *mut c_void, _create_toolbar: *mut c_void, preview: *mut c_void, parent: &T, title: *mut c_void, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> @ELJPreviewFrame {
         unsafe { @ELJPreviewFrame(ELJPreviewFrame_Create(_obj, _init, _create_canvas, _create_toolbar, preview, parent.handle(), title, x, y, w, h, style)) }
     }
 }
@@ -622,7 +622,7 @@ impl ELJPreviewFrame {
 trait _ELJPreviewFrame : _wxPreviewFrame {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getControlBar(&self) -> *u8 {
+    fn getControlBar(&self) -> *mut c_void {
         unsafe { ELJPreviewFrame_GetControlBar(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -637,7 +637,7 @@ trait _ELJPreviewFrame : _wxPreviewFrame {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setControlBar(&self, obj: *u8) {
+    fn setControlBar(&self, obj: *mut c_void) {
         unsafe { ELJPreviewFrame_SetControlBar(self.handle(), obj) }
     }
     #[fixed_stack_segment]
@@ -652,33 +652,33 @@ trait _ELJPreviewFrame : _wxPreviewFrame {
     }
 }
 
-struct ELJServer(*u8);
+struct ELJServer(*mut c_void);
 impl _ELJServer for ELJServer {}
 impl _wxServer for ELJServer {}
 impl _wxServerBase for ELJServer {}
-impl _wxObject for ELJServer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for ELJServer { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJServer {
-    pub fn from(handle: *u8) -> @ELJServer { @ELJServer(handle) }
-    pub fn null() -> @ELJServer { ELJServer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJServer { @ELJServer(handle) }
+    pub fn null() -> @ELJServer { ELJServer::from(0 as *mut c_void) }
     
 }
 
 trait _ELJServer : _wxServer {
 }
 
-struct ELJTextDropTarget(*u8);
+struct ELJTextDropTarget(*mut c_void);
 impl _ELJTextDropTarget for ELJTextDropTarget {}
 impl _wxTextDropTarget for ELJTextDropTarget {}
-impl _wxDropTarget for ELJTextDropTarget { fn handle(&self) -> *u8 { **self } }
+impl _wxDropTarget for ELJTextDropTarget { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJTextDropTarget {
-    pub fn from(handle: *u8) -> @ELJTextDropTarget { @ELJTextDropTarget(handle) }
-    pub fn null() -> @ELJTextDropTarget { ELJTextDropTarget::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJTextDropTarget { @ELJTextDropTarget(handle) }
+    pub fn null() -> @ELJTextDropTarget { ELJTextDropTarget::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_obj: *u8, _func: *u8) -> @ELJTextDropTarget {
+    pub fn new(_obj: *mut c_void, _func: *mut c_void) -> @ELJTextDropTarget {
         unsafe { @ELJTextDropTarget(ELJTextDropTarget_Create(_obj, _func)) }
     }
 }
@@ -691,45 +691,45 @@ trait _ELJTextDropTarget : _wxTextDropTarget {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnData(&self, _func: *u8) {
+    fn setOnData(&self, _func: *mut c_void) {
         unsafe { ELJTextDropTarget_SetOnData(self.handle(), _func) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnDragOver(&self, _func: *u8) {
+    fn setOnDragOver(&self, _func: *mut c_void) {
         unsafe { ELJTextDropTarget_SetOnDragOver(self.handle(), _func) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnDrop(&self, _func: *u8) {
+    fn setOnDrop(&self, _func: *mut c_void) {
         unsafe { ELJTextDropTarget_SetOnDrop(self.handle(), _func) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnEnter(&self, _func: *u8) {
+    fn setOnEnter(&self, _func: *mut c_void) {
         unsafe { ELJTextDropTarget_SetOnEnter(self.handle(), _func) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOnLeave(&self, _func: *u8) {
+    fn setOnLeave(&self, _func: *mut c_void) {
         unsafe { ELJTextDropTarget_SetOnLeave(self.handle(), _func) }
     }
 }
 
-struct ELJTextValidator(*u8);
+struct ELJTextValidator(*mut c_void);
 impl _ELJTextValidator for ELJTextValidator {}
 impl _wxTextValidator for ELJTextValidator {}
 impl _wxValidator for ELJTextValidator {}
 impl _wxEvtHandler for ELJTextValidator {}
-impl _wxObject for ELJTextValidator { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for ELJTextValidator { fn handle(&self) -> *mut c_void { **self } }
 
 impl ELJTextValidator {
-    pub fn from(handle: *u8) -> @ELJTextValidator { @ELJTextValidator(handle) }
-    pub fn null() -> @ELJTextValidator { ELJTextValidator::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @ELJTextValidator { @ELJTextValidator(handle) }
+    pub fn null() -> @ELJTextValidator { ELJTextValidator::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_obj: *u8, _fnc: *u8, _txt: *wchar_t, _stl: c_int) -> @ELJTextValidator {
+    pub fn new(_obj: *mut c_void, _fnc: *mut c_void, _txt: *mut c_void, _stl: c_int) -> @ELJTextValidator {
         unsafe { @ELJTextValidator(ELJTextValidator_Create(_obj, _fnc, _txt, _stl)) }
     }
 }
@@ -737,756 +737,756 @@ impl ELJTextValidator {
 trait _ELJTextValidator : _wxTextValidator {
 }
 
-struct cbAntiflickerPlugin(*u8);
+struct cbAntiflickerPlugin(*mut c_void);
 impl _cbAntiflickerPlugin for cbAntiflickerPlugin {}
 impl _cbPluginBase for cbAntiflickerPlugin {}
 impl _wxEvtHandler for cbAntiflickerPlugin {}
-impl _wxObject for cbAntiflickerPlugin { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbAntiflickerPlugin { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbAntiflickerPlugin {
-    pub fn from(handle: *u8) -> @cbAntiflickerPlugin { @cbAntiflickerPlugin(handle) }
-    pub fn null() -> @cbAntiflickerPlugin { cbAntiflickerPlugin::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbAntiflickerPlugin { @cbAntiflickerPlugin(handle) }
+    pub fn null() -> @cbAntiflickerPlugin { cbAntiflickerPlugin::from(0 as *mut c_void) }
     
 }
 
 trait _cbAntiflickerPlugin : _cbPluginBase {
 }
 
-struct cbBarDragPlugin(*u8);
+struct cbBarDragPlugin(*mut c_void);
 impl _cbBarDragPlugin for cbBarDragPlugin {}
 impl _cbPluginBase for cbBarDragPlugin {}
 impl _wxEvtHandler for cbBarDragPlugin {}
-impl _wxObject for cbBarDragPlugin { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbBarDragPlugin { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbBarDragPlugin {
-    pub fn from(handle: *u8) -> @cbBarDragPlugin { @cbBarDragPlugin(handle) }
-    pub fn null() -> @cbBarDragPlugin { cbBarDragPlugin::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbBarDragPlugin { @cbBarDragPlugin(handle) }
+    pub fn null() -> @cbBarDragPlugin { cbBarDragPlugin::from(0 as *mut c_void) }
     
 }
 
 trait _cbBarDragPlugin : _cbPluginBase {
 }
 
-struct cbBarHintsPlugin(*u8);
+struct cbBarHintsPlugin(*mut c_void);
 impl _cbBarHintsPlugin for cbBarHintsPlugin {}
 impl _cbPluginBase for cbBarHintsPlugin {}
 impl _wxEvtHandler for cbBarHintsPlugin {}
-impl _wxObject for cbBarHintsPlugin { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbBarHintsPlugin { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbBarHintsPlugin {
-    pub fn from(handle: *u8) -> @cbBarHintsPlugin { @cbBarHintsPlugin(handle) }
-    pub fn null() -> @cbBarHintsPlugin { cbBarHintsPlugin::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbBarHintsPlugin { @cbBarHintsPlugin(handle) }
+    pub fn null() -> @cbBarHintsPlugin { cbBarHintsPlugin::from(0 as *mut c_void) }
     
 }
 
 trait _cbBarHintsPlugin : _cbPluginBase {
 }
 
-struct cbBarInfo(*u8);
+struct cbBarInfo(*mut c_void);
 impl _cbBarInfo for cbBarInfo {}
-impl _wxObject for cbBarInfo { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbBarInfo { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbBarInfo {
-    pub fn from(handle: *u8) -> @cbBarInfo { @cbBarInfo(handle) }
-    pub fn null() -> @cbBarInfo { cbBarInfo::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbBarInfo { @cbBarInfo(handle) }
+    pub fn null() -> @cbBarInfo { cbBarInfo::from(0 as *mut c_void) }
     
 }
 
 trait _cbBarInfo : _wxObject {
 }
 
-struct cbBarSpy(*u8);
+struct cbBarSpy(*mut c_void);
 impl _cbBarSpy for cbBarSpy {}
 impl _wxEvtHandler for cbBarSpy {}
-impl _wxObject for cbBarSpy { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbBarSpy { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbBarSpy {
-    pub fn from(handle: *u8) -> @cbBarSpy { @cbBarSpy(handle) }
-    pub fn null() -> @cbBarSpy { cbBarSpy::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbBarSpy { @cbBarSpy(handle) }
+    pub fn null() -> @cbBarSpy { cbBarSpy::from(0 as *mut c_void) }
     
 }
 
 trait _cbBarSpy : _wxEvtHandler {
 }
 
-struct cbCloseBox(*u8);
+struct cbCloseBox(*mut c_void);
 impl _cbCloseBox for cbCloseBox {}
 impl _cbMiniButton for cbCloseBox {}
-impl _wxObject for cbCloseBox { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbCloseBox { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbCloseBox {
-    pub fn from(handle: *u8) -> @cbCloseBox { @cbCloseBox(handle) }
-    pub fn null() -> @cbCloseBox { cbCloseBox::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbCloseBox { @cbCloseBox(handle) }
+    pub fn null() -> @cbCloseBox { cbCloseBox::from(0 as *mut c_void) }
     
 }
 
 trait _cbCloseBox : _cbMiniButton {
 }
 
-struct cbCollapseBox(*u8);
+struct cbCollapseBox(*mut c_void);
 impl _cbCollapseBox for cbCollapseBox {}
 impl _cbMiniButton for cbCollapseBox {}
-impl _wxObject for cbCollapseBox { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbCollapseBox { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbCollapseBox {
-    pub fn from(handle: *u8) -> @cbCollapseBox { @cbCollapseBox(handle) }
-    pub fn null() -> @cbCollapseBox { cbCollapseBox::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbCollapseBox { @cbCollapseBox(handle) }
+    pub fn null() -> @cbCollapseBox { cbCollapseBox::from(0 as *mut c_void) }
     
 }
 
 trait _cbCollapseBox : _cbMiniButton {
 }
 
-struct cbCommonPaneProperties(*u8);
+struct cbCommonPaneProperties(*mut c_void);
 impl _cbCommonPaneProperties for cbCommonPaneProperties {}
-impl _wxObject for cbCommonPaneProperties { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbCommonPaneProperties { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbCommonPaneProperties {
-    pub fn from(handle: *u8) -> @cbCommonPaneProperties { @cbCommonPaneProperties(handle) }
-    pub fn null() -> @cbCommonPaneProperties { cbCommonPaneProperties::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbCommonPaneProperties { @cbCommonPaneProperties(handle) }
+    pub fn null() -> @cbCommonPaneProperties { cbCommonPaneProperties::from(0 as *mut c_void) }
     
 }
 
 trait _cbCommonPaneProperties : _wxObject {
 }
 
-struct cbCustomizeBarEvent(*u8);
+struct cbCustomizeBarEvent(*mut c_void);
 impl _cbCustomizeBarEvent for cbCustomizeBarEvent {}
 impl _cbPluginEvent for cbCustomizeBarEvent {}
 impl _wxEvent for cbCustomizeBarEvent {}
-impl _wxObject for cbCustomizeBarEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbCustomizeBarEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbCustomizeBarEvent {
-    pub fn from(handle: *u8) -> @cbCustomizeBarEvent { @cbCustomizeBarEvent(handle) }
-    pub fn null() -> @cbCustomizeBarEvent { cbCustomizeBarEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbCustomizeBarEvent { @cbCustomizeBarEvent(handle) }
+    pub fn null() -> @cbCustomizeBarEvent { cbCustomizeBarEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbCustomizeBarEvent : _cbPluginEvent {
 }
 
-struct cbCustomizeLayoutEvent(*u8);
+struct cbCustomizeLayoutEvent(*mut c_void);
 impl _cbCustomizeLayoutEvent for cbCustomizeLayoutEvent {}
 impl _cbPluginEvent for cbCustomizeLayoutEvent {}
 impl _wxEvent for cbCustomizeLayoutEvent {}
-impl _wxObject for cbCustomizeLayoutEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbCustomizeLayoutEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbCustomizeLayoutEvent {
-    pub fn from(handle: *u8) -> @cbCustomizeLayoutEvent { @cbCustomizeLayoutEvent(handle) }
-    pub fn null() -> @cbCustomizeLayoutEvent { cbCustomizeLayoutEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbCustomizeLayoutEvent { @cbCustomizeLayoutEvent(handle) }
+    pub fn null() -> @cbCustomizeLayoutEvent { cbCustomizeLayoutEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbCustomizeLayoutEvent : _cbPluginEvent {
 }
 
-struct cbDimHandlerBase(*u8);
+struct cbDimHandlerBase(*mut c_void);
 impl _cbDimHandlerBase for cbDimHandlerBase {}
-impl _wxObject for cbDimHandlerBase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDimHandlerBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDimHandlerBase {
-    pub fn from(handle: *u8) -> @cbDimHandlerBase { @cbDimHandlerBase(handle) }
-    pub fn null() -> @cbDimHandlerBase { cbDimHandlerBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDimHandlerBase { @cbDimHandlerBase(handle) }
+    pub fn null() -> @cbDimHandlerBase { cbDimHandlerBase::from(0 as *mut c_void) }
     
 }
 
 trait _cbDimHandlerBase : _wxObject {
 }
 
-struct cbDimInfo(*u8);
+struct cbDimInfo(*mut c_void);
 impl _cbDimInfo for cbDimInfo {}
-impl _wxObject for cbDimInfo { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDimInfo { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDimInfo {
-    pub fn from(handle: *u8) -> @cbDimInfo { @cbDimInfo(handle) }
-    pub fn null() -> @cbDimInfo { cbDimInfo::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDimInfo { @cbDimInfo(handle) }
+    pub fn null() -> @cbDimInfo { cbDimInfo::from(0 as *mut c_void) }
     
 }
 
 trait _cbDimInfo : _wxObject {
 }
 
-struct cbDockBox(*u8);
+struct cbDockBox(*mut c_void);
 impl _cbDockBox for cbDockBox {}
 impl _cbMiniButton for cbDockBox {}
-impl _wxObject for cbDockBox { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDockBox { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDockBox {
-    pub fn from(handle: *u8) -> @cbDockBox { @cbDockBox(handle) }
-    pub fn null() -> @cbDockBox { cbDockBox::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDockBox { @cbDockBox(handle) }
+    pub fn null() -> @cbDockBox { cbDockBox::from(0 as *mut c_void) }
     
 }
 
 trait _cbDockBox : _cbMiniButton {
 }
 
-struct cbDockPane(*u8);
+struct cbDockPane(*mut c_void);
 impl _cbDockPane for cbDockPane {}
-impl _wxObject for cbDockPane { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDockPane { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDockPane {
-    pub fn from(handle: *u8) -> @cbDockPane { @cbDockPane(handle) }
-    pub fn null() -> @cbDockPane { cbDockPane::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDockPane { @cbDockPane(handle) }
+    pub fn null() -> @cbDockPane { cbDockPane::from(0 as *mut c_void) }
     
 }
 
 trait _cbDockPane : _wxObject {
 }
 
-struct cbDrawBarDecorEvent(*u8);
+struct cbDrawBarDecorEvent(*mut c_void);
 impl _cbDrawBarDecorEvent for cbDrawBarDecorEvent {}
 impl _cbPluginEvent for cbDrawBarDecorEvent {}
 impl _wxEvent for cbDrawBarDecorEvent {}
-impl _wxObject for cbDrawBarDecorEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDrawBarDecorEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDrawBarDecorEvent {
-    pub fn from(handle: *u8) -> @cbDrawBarDecorEvent { @cbDrawBarDecorEvent(handle) }
-    pub fn null() -> @cbDrawBarDecorEvent { cbDrawBarDecorEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDrawBarDecorEvent { @cbDrawBarDecorEvent(handle) }
+    pub fn null() -> @cbDrawBarDecorEvent { cbDrawBarDecorEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbDrawBarDecorEvent : _cbPluginEvent {
 }
 
-struct cbDrawBarHandlesEvent(*u8);
+struct cbDrawBarHandlesEvent(*mut c_void);
 impl _cbDrawBarHandlesEvent for cbDrawBarHandlesEvent {}
 impl _cbPluginEvent for cbDrawBarHandlesEvent {}
 impl _wxEvent for cbDrawBarHandlesEvent {}
-impl _wxObject for cbDrawBarHandlesEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDrawBarHandlesEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDrawBarHandlesEvent {
-    pub fn from(handle: *u8) -> @cbDrawBarHandlesEvent { @cbDrawBarHandlesEvent(handle) }
-    pub fn null() -> @cbDrawBarHandlesEvent { cbDrawBarHandlesEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDrawBarHandlesEvent { @cbDrawBarHandlesEvent(handle) }
+    pub fn null() -> @cbDrawBarHandlesEvent { cbDrawBarHandlesEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbDrawBarHandlesEvent : _cbPluginEvent {
 }
 
-struct cbDrawHintRectEvent(*u8);
+struct cbDrawHintRectEvent(*mut c_void);
 impl _cbDrawHintRectEvent for cbDrawHintRectEvent {}
 impl _cbPluginEvent for cbDrawHintRectEvent {}
 impl _wxEvent for cbDrawHintRectEvent {}
-impl _wxObject for cbDrawHintRectEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDrawHintRectEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDrawHintRectEvent {
-    pub fn from(handle: *u8) -> @cbDrawHintRectEvent { @cbDrawHintRectEvent(handle) }
-    pub fn null() -> @cbDrawHintRectEvent { cbDrawHintRectEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDrawHintRectEvent { @cbDrawHintRectEvent(handle) }
+    pub fn null() -> @cbDrawHintRectEvent { cbDrawHintRectEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbDrawHintRectEvent : _cbPluginEvent {
 }
 
-struct cbDrawPaneBkGroundEvent(*u8);
+struct cbDrawPaneBkGroundEvent(*mut c_void);
 impl _cbDrawPaneBkGroundEvent for cbDrawPaneBkGroundEvent {}
 impl _cbPluginEvent for cbDrawPaneBkGroundEvent {}
 impl _wxEvent for cbDrawPaneBkGroundEvent {}
-impl _wxObject for cbDrawPaneBkGroundEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDrawPaneBkGroundEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDrawPaneBkGroundEvent {
-    pub fn from(handle: *u8) -> @cbDrawPaneBkGroundEvent { @cbDrawPaneBkGroundEvent(handle) }
-    pub fn null() -> @cbDrawPaneBkGroundEvent { cbDrawPaneBkGroundEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDrawPaneBkGroundEvent { @cbDrawPaneBkGroundEvent(handle) }
+    pub fn null() -> @cbDrawPaneBkGroundEvent { cbDrawPaneBkGroundEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbDrawPaneBkGroundEvent : _cbPluginEvent {
 }
 
-struct cbDrawPaneDecorEvent(*u8);
+struct cbDrawPaneDecorEvent(*mut c_void);
 impl _cbDrawPaneDecorEvent for cbDrawPaneDecorEvent {}
 impl _cbPluginEvent for cbDrawPaneDecorEvent {}
 impl _wxEvent for cbDrawPaneDecorEvent {}
-impl _wxObject for cbDrawPaneDecorEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDrawPaneDecorEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDrawPaneDecorEvent {
-    pub fn from(handle: *u8) -> @cbDrawPaneDecorEvent { @cbDrawPaneDecorEvent(handle) }
-    pub fn null() -> @cbDrawPaneDecorEvent { cbDrawPaneDecorEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDrawPaneDecorEvent { @cbDrawPaneDecorEvent(handle) }
+    pub fn null() -> @cbDrawPaneDecorEvent { cbDrawPaneDecorEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbDrawPaneDecorEvent : _cbPluginEvent {
 }
 
-struct cbDrawRowBkGroundEvent(*u8);
+struct cbDrawRowBkGroundEvent(*mut c_void);
 impl _cbDrawRowBkGroundEvent for cbDrawRowBkGroundEvent {}
 impl _cbPluginEvent for cbDrawRowBkGroundEvent {}
 impl _wxEvent for cbDrawRowBkGroundEvent {}
-impl _wxObject for cbDrawRowBkGroundEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDrawRowBkGroundEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDrawRowBkGroundEvent {
-    pub fn from(handle: *u8) -> @cbDrawRowBkGroundEvent { @cbDrawRowBkGroundEvent(handle) }
-    pub fn null() -> @cbDrawRowBkGroundEvent { cbDrawRowBkGroundEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDrawRowBkGroundEvent { @cbDrawRowBkGroundEvent(handle) }
+    pub fn null() -> @cbDrawRowBkGroundEvent { cbDrawRowBkGroundEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbDrawRowBkGroundEvent : _cbPluginEvent {
 }
 
-struct cbDrawRowDecorEvent(*u8);
+struct cbDrawRowDecorEvent(*mut c_void);
 impl _cbDrawRowDecorEvent for cbDrawRowDecorEvent {}
 impl _cbPluginEvent for cbDrawRowDecorEvent {}
 impl _wxEvent for cbDrawRowDecorEvent {}
-impl _wxObject for cbDrawRowDecorEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDrawRowDecorEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDrawRowDecorEvent {
-    pub fn from(handle: *u8) -> @cbDrawRowDecorEvent { @cbDrawRowDecorEvent(handle) }
-    pub fn null() -> @cbDrawRowDecorEvent { cbDrawRowDecorEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDrawRowDecorEvent { @cbDrawRowDecorEvent(handle) }
+    pub fn null() -> @cbDrawRowDecorEvent { cbDrawRowDecorEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbDrawRowDecorEvent : _cbPluginEvent {
 }
 
-struct cbDrawRowHandlesEvent(*u8);
+struct cbDrawRowHandlesEvent(*mut c_void);
 impl _cbDrawRowHandlesEvent for cbDrawRowHandlesEvent {}
 impl _cbPluginEvent for cbDrawRowHandlesEvent {}
 impl _wxEvent for cbDrawRowHandlesEvent {}
-impl _wxObject for cbDrawRowHandlesEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDrawRowHandlesEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDrawRowHandlesEvent {
-    pub fn from(handle: *u8) -> @cbDrawRowHandlesEvent { @cbDrawRowHandlesEvent(handle) }
-    pub fn null() -> @cbDrawRowHandlesEvent { cbDrawRowHandlesEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDrawRowHandlesEvent { @cbDrawRowHandlesEvent(handle) }
+    pub fn null() -> @cbDrawRowHandlesEvent { cbDrawRowHandlesEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbDrawRowHandlesEvent : _cbPluginEvent {
 }
 
-struct cbDynToolBarDimHandler(*u8);
+struct cbDynToolBarDimHandler(*mut c_void);
 impl _cbDynToolBarDimHandler for cbDynToolBarDimHandler {}
 impl _cbDimHandlerBase for cbDynToolBarDimHandler {}
-impl _wxObject for cbDynToolBarDimHandler { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbDynToolBarDimHandler { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbDynToolBarDimHandler {
-    pub fn from(handle: *u8) -> @cbDynToolBarDimHandler { @cbDynToolBarDimHandler(handle) }
-    pub fn null() -> @cbDynToolBarDimHandler { cbDynToolBarDimHandler::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbDynToolBarDimHandler { @cbDynToolBarDimHandler(handle) }
+    pub fn null() -> @cbDynToolBarDimHandler { cbDynToolBarDimHandler::from(0 as *mut c_void) }
     
 }
 
 trait _cbDynToolBarDimHandler : _cbDimHandlerBase {
 }
 
-struct cbFinishDrawInAreaEvent(*u8);
+struct cbFinishDrawInAreaEvent(*mut c_void);
 impl _cbFinishDrawInAreaEvent for cbFinishDrawInAreaEvent {}
 impl _cbPluginEvent for cbFinishDrawInAreaEvent {}
 impl _wxEvent for cbFinishDrawInAreaEvent {}
-impl _wxObject for cbFinishDrawInAreaEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbFinishDrawInAreaEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbFinishDrawInAreaEvent {
-    pub fn from(handle: *u8) -> @cbFinishDrawInAreaEvent { @cbFinishDrawInAreaEvent(handle) }
-    pub fn null() -> @cbFinishDrawInAreaEvent { cbFinishDrawInAreaEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbFinishDrawInAreaEvent { @cbFinishDrawInAreaEvent(handle) }
+    pub fn null() -> @cbFinishDrawInAreaEvent { cbFinishDrawInAreaEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbFinishDrawInAreaEvent : _cbPluginEvent {
 }
 
-struct cbFloatedBarWindow(*u8);
+struct cbFloatedBarWindow(*mut c_void);
 impl _cbFloatedBarWindow for cbFloatedBarWindow {}
 impl _wxToolWindow for cbFloatedBarWindow {}
 impl _wxFrame for cbFloatedBarWindow {}
 impl _wxTopLevelWindow for cbFloatedBarWindow {}
 impl _wxWindow for cbFloatedBarWindow {}
 impl _wxEvtHandler for cbFloatedBarWindow {}
-impl _wxObject for cbFloatedBarWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbFloatedBarWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbFloatedBarWindow {
-    pub fn from(handle: *u8) -> @cbFloatedBarWindow { @cbFloatedBarWindow(handle) }
-    pub fn null() -> @cbFloatedBarWindow { cbFloatedBarWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbFloatedBarWindow { @cbFloatedBarWindow(handle) }
+    pub fn null() -> @cbFloatedBarWindow { cbFloatedBarWindow::from(0 as *mut c_void) }
     
 }
 
 trait _cbFloatedBarWindow : _wxToolWindow {
 }
 
-struct cbGCUpdatesMgr(*u8);
+struct cbGCUpdatesMgr(*mut c_void);
 impl _cbGCUpdatesMgr for cbGCUpdatesMgr {}
 impl _cbSimpleUpdatesMgr for cbGCUpdatesMgr {}
 impl _cbUpdatesManagerBase for cbGCUpdatesMgr {}
-impl _wxObject for cbGCUpdatesMgr { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbGCUpdatesMgr { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbGCUpdatesMgr {
-    pub fn from(handle: *u8) -> @cbGCUpdatesMgr { @cbGCUpdatesMgr(handle) }
-    pub fn null() -> @cbGCUpdatesMgr { cbGCUpdatesMgr::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbGCUpdatesMgr { @cbGCUpdatesMgr(handle) }
+    pub fn null() -> @cbGCUpdatesMgr { cbGCUpdatesMgr::from(0 as *mut c_void) }
     
 }
 
 trait _cbGCUpdatesMgr : _cbSimpleUpdatesMgr {
 }
 
-struct cbHintAnimationPlugin(*u8);
+struct cbHintAnimationPlugin(*mut c_void);
 impl _cbHintAnimationPlugin for cbHintAnimationPlugin {}
 impl _cbPluginBase for cbHintAnimationPlugin {}
 impl _wxEvtHandler for cbHintAnimationPlugin {}
-impl _wxObject for cbHintAnimationPlugin { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbHintAnimationPlugin { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbHintAnimationPlugin {
-    pub fn from(handle: *u8) -> @cbHintAnimationPlugin { @cbHintAnimationPlugin(handle) }
-    pub fn null() -> @cbHintAnimationPlugin { cbHintAnimationPlugin::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbHintAnimationPlugin { @cbHintAnimationPlugin(handle) }
+    pub fn null() -> @cbHintAnimationPlugin { cbHintAnimationPlugin::from(0 as *mut c_void) }
     
 }
 
 trait _cbHintAnimationPlugin : _cbPluginBase {
 }
 
-struct cbInsertBarEvent(*u8);
+struct cbInsertBarEvent(*mut c_void);
 impl _cbInsertBarEvent for cbInsertBarEvent {}
 impl _cbPluginEvent for cbInsertBarEvent {}
 impl _wxEvent for cbInsertBarEvent {}
-impl _wxObject for cbInsertBarEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbInsertBarEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbInsertBarEvent {
-    pub fn from(handle: *u8) -> @cbInsertBarEvent { @cbInsertBarEvent(handle) }
-    pub fn null() -> @cbInsertBarEvent { cbInsertBarEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbInsertBarEvent { @cbInsertBarEvent(handle) }
+    pub fn null() -> @cbInsertBarEvent { cbInsertBarEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbInsertBarEvent : _cbPluginEvent {
 }
 
-struct cbLayoutRowEvent(*u8);
+struct cbLayoutRowEvent(*mut c_void);
 impl _cbLayoutRowEvent for cbLayoutRowEvent {}
 impl _cbPluginEvent for cbLayoutRowEvent {}
 impl _wxEvent for cbLayoutRowEvent {}
-impl _wxObject for cbLayoutRowEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbLayoutRowEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbLayoutRowEvent {
-    pub fn from(handle: *u8) -> @cbLayoutRowEvent { @cbLayoutRowEvent(handle) }
-    pub fn null() -> @cbLayoutRowEvent { cbLayoutRowEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbLayoutRowEvent { @cbLayoutRowEvent(handle) }
+    pub fn null() -> @cbLayoutRowEvent { cbLayoutRowEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbLayoutRowEvent : _cbPluginEvent {
 }
 
-struct cbLeftDClickEvent(*u8);
+struct cbLeftDClickEvent(*mut c_void);
 impl _cbLeftDClickEvent for cbLeftDClickEvent {}
 impl _cbPluginEvent for cbLeftDClickEvent {}
 impl _wxEvent for cbLeftDClickEvent {}
-impl _wxObject for cbLeftDClickEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbLeftDClickEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbLeftDClickEvent {
-    pub fn from(handle: *u8) -> @cbLeftDClickEvent { @cbLeftDClickEvent(handle) }
-    pub fn null() -> @cbLeftDClickEvent { cbLeftDClickEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbLeftDClickEvent { @cbLeftDClickEvent(handle) }
+    pub fn null() -> @cbLeftDClickEvent { cbLeftDClickEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbLeftDClickEvent : _cbPluginEvent {
 }
 
-struct cbLeftDownEvent(*u8);
+struct cbLeftDownEvent(*mut c_void);
 impl _cbLeftDownEvent for cbLeftDownEvent {}
 impl _cbPluginEvent for cbLeftDownEvent {}
 impl _wxEvent for cbLeftDownEvent {}
-impl _wxObject for cbLeftDownEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbLeftDownEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbLeftDownEvent {
-    pub fn from(handle: *u8) -> @cbLeftDownEvent { @cbLeftDownEvent(handle) }
-    pub fn null() -> @cbLeftDownEvent { cbLeftDownEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbLeftDownEvent { @cbLeftDownEvent(handle) }
+    pub fn null() -> @cbLeftDownEvent { cbLeftDownEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbLeftDownEvent : _cbPluginEvent {
 }
 
-struct cbLeftUpEvent(*u8);
+struct cbLeftUpEvent(*mut c_void);
 impl _cbLeftUpEvent for cbLeftUpEvent {}
 impl _cbPluginEvent for cbLeftUpEvent {}
 impl _wxEvent for cbLeftUpEvent {}
-impl _wxObject for cbLeftUpEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbLeftUpEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbLeftUpEvent {
-    pub fn from(handle: *u8) -> @cbLeftUpEvent { @cbLeftUpEvent(handle) }
-    pub fn null() -> @cbLeftUpEvent { cbLeftUpEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbLeftUpEvent { @cbLeftUpEvent(handle) }
+    pub fn null() -> @cbLeftUpEvent { cbLeftUpEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbLeftUpEvent : _cbPluginEvent {
 }
 
-struct cbMiniButton(*u8);
+struct cbMiniButton(*mut c_void);
 impl _cbMiniButton for cbMiniButton {}
-impl _wxObject for cbMiniButton { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbMiniButton { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbMiniButton {
-    pub fn from(handle: *u8) -> @cbMiniButton { @cbMiniButton(handle) }
-    pub fn null() -> @cbMiniButton { cbMiniButton::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbMiniButton { @cbMiniButton(handle) }
+    pub fn null() -> @cbMiniButton { cbMiniButton::from(0 as *mut c_void) }
     
 }
 
 trait _cbMiniButton : _wxObject {
 }
 
-struct cbMotionEvent(*u8);
+struct cbMotionEvent(*mut c_void);
 impl _cbMotionEvent for cbMotionEvent {}
 impl _cbPluginEvent for cbMotionEvent {}
 impl _wxEvent for cbMotionEvent {}
-impl _wxObject for cbMotionEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbMotionEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbMotionEvent {
-    pub fn from(handle: *u8) -> @cbMotionEvent { @cbMotionEvent(handle) }
-    pub fn null() -> @cbMotionEvent { cbMotionEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbMotionEvent { @cbMotionEvent(handle) }
+    pub fn null() -> @cbMotionEvent { cbMotionEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbMotionEvent : _cbPluginEvent {
 }
 
-struct cbPaneDrawPlugin(*u8);
+struct cbPaneDrawPlugin(*mut c_void);
 impl _cbPaneDrawPlugin for cbPaneDrawPlugin {}
 impl _cbPluginBase for cbPaneDrawPlugin {}
 impl _wxEvtHandler for cbPaneDrawPlugin {}
-impl _wxObject for cbPaneDrawPlugin { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbPaneDrawPlugin { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbPaneDrawPlugin {
-    pub fn from(handle: *u8) -> @cbPaneDrawPlugin { @cbPaneDrawPlugin(handle) }
-    pub fn null() -> @cbPaneDrawPlugin { cbPaneDrawPlugin::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbPaneDrawPlugin { @cbPaneDrawPlugin(handle) }
+    pub fn null() -> @cbPaneDrawPlugin { cbPaneDrawPlugin::from(0 as *mut c_void) }
     
 }
 
 trait _cbPaneDrawPlugin : _cbPluginBase {
 }
 
-struct cbPluginBase(*u8);
+struct cbPluginBase(*mut c_void);
 impl _cbPluginBase for cbPluginBase {}
 impl _wxEvtHandler for cbPluginBase {}
-impl _wxObject for cbPluginBase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbPluginBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbPluginBase {
-    pub fn from(handle: *u8) -> @cbPluginBase { @cbPluginBase(handle) }
-    pub fn null() -> @cbPluginBase { cbPluginBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbPluginBase { @cbPluginBase(handle) }
+    pub fn null() -> @cbPluginBase { cbPluginBase::from(0 as *mut c_void) }
     
 }
 
 trait _cbPluginBase : _wxEvtHandler {
 }
 
-struct cbPluginEvent(*u8);
+struct cbPluginEvent(*mut c_void);
 impl _cbPluginEvent for cbPluginEvent {}
 impl _wxEvent for cbPluginEvent {}
-impl _wxObject for cbPluginEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbPluginEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbPluginEvent {
-    pub fn from(handle: *u8) -> @cbPluginEvent { @cbPluginEvent(handle) }
-    pub fn null() -> @cbPluginEvent { cbPluginEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbPluginEvent { @cbPluginEvent(handle) }
+    pub fn null() -> @cbPluginEvent { cbPluginEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbPluginEvent : _wxEvent {
 }
 
-struct cbRemoveBarEvent(*u8);
+struct cbRemoveBarEvent(*mut c_void);
 impl _cbRemoveBarEvent for cbRemoveBarEvent {}
 impl _cbPluginEvent for cbRemoveBarEvent {}
 impl _wxEvent for cbRemoveBarEvent {}
-impl _wxObject for cbRemoveBarEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbRemoveBarEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbRemoveBarEvent {
-    pub fn from(handle: *u8) -> @cbRemoveBarEvent { @cbRemoveBarEvent(handle) }
-    pub fn null() -> @cbRemoveBarEvent { cbRemoveBarEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbRemoveBarEvent { @cbRemoveBarEvent(handle) }
+    pub fn null() -> @cbRemoveBarEvent { cbRemoveBarEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbRemoveBarEvent : _cbPluginEvent {
 }
 
-struct cbResizeBarEvent(*u8);
+struct cbResizeBarEvent(*mut c_void);
 impl _cbResizeBarEvent for cbResizeBarEvent {}
 impl _cbPluginEvent for cbResizeBarEvent {}
 impl _wxEvent for cbResizeBarEvent {}
-impl _wxObject for cbResizeBarEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbResizeBarEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbResizeBarEvent {
-    pub fn from(handle: *u8) -> @cbResizeBarEvent { @cbResizeBarEvent(handle) }
-    pub fn null() -> @cbResizeBarEvent { cbResizeBarEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbResizeBarEvent { @cbResizeBarEvent(handle) }
+    pub fn null() -> @cbResizeBarEvent { cbResizeBarEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbResizeBarEvent : _cbPluginEvent {
 }
 
-struct cbResizeRowEvent(*u8);
+struct cbResizeRowEvent(*mut c_void);
 impl _cbResizeRowEvent for cbResizeRowEvent {}
 impl _cbPluginEvent for cbResizeRowEvent {}
 impl _wxEvent for cbResizeRowEvent {}
-impl _wxObject for cbResizeRowEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbResizeRowEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbResizeRowEvent {
-    pub fn from(handle: *u8) -> @cbResizeRowEvent { @cbResizeRowEvent(handle) }
-    pub fn null() -> @cbResizeRowEvent { cbResizeRowEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbResizeRowEvent { @cbResizeRowEvent(handle) }
+    pub fn null() -> @cbResizeRowEvent { cbResizeRowEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbResizeRowEvent : _cbPluginEvent {
 }
 
-struct cbRightDownEvent(*u8);
+struct cbRightDownEvent(*mut c_void);
 impl _cbRightDownEvent for cbRightDownEvent {}
 impl _cbPluginEvent for cbRightDownEvent {}
 impl _wxEvent for cbRightDownEvent {}
-impl _wxObject for cbRightDownEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbRightDownEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbRightDownEvent {
-    pub fn from(handle: *u8) -> @cbRightDownEvent { @cbRightDownEvent(handle) }
-    pub fn null() -> @cbRightDownEvent { cbRightDownEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbRightDownEvent { @cbRightDownEvent(handle) }
+    pub fn null() -> @cbRightDownEvent { cbRightDownEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbRightDownEvent : _cbPluginEvent {
 }
 
-struct cbRightUpEvent(*u8);
+struct cbRightUpEvent(*mut c_void);
 impl _cbRightUpEvent for cbRightUpEvent {}
 impl _cbPluginEvent for cbRightUpEvent {}
 impl _wxEvent for cbRightUpEvent {}
-impl _wxObject for cbRightUpEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbRightUpEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbRightUpEvent {
-    pub fn from(handle: *u8) -> @cbRightUpEvent { @cbRightUpEvent(handle) }
-    pub fn null() -> @cbRightUpEvent { cbRightUpEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbRightUpEvent { @cbRightUpEvent(handle) }
+    pub fn null() -> @cbRightUpEvent { cbRightUpEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbRightUpEvent : _cbPluginEvent {
 }
 
-struct cbRowDragPlugin(*u8);
+struct cbRowDragPlugin(*mut c_void);
 impl _cbRowDragPlugin for cbRowDragPlugin {}
 impl _cbPluginBase for cbRowDragPlugin {}
 impl _wxEvtHandler for cbRowDragPlugin {}
-impl _wxObject for cbRowDragPlugin { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbRowDragPlugin { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbRowDragPlugin {
-    pub fn from(handle: *u8) -> @cbRowDragPlugin { @cbRowDragPlugin(handle) }
-    pub fn null() -> @cbRowDragPlugin { cbRowDragPlugin::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbRowDragPlugin { @cbRowDragPlugin(handle) }
+    pub fn null() -> @cbRowDragPlugin { cbRowDragPlugin::from(0 as *mut c_void) }
     
 }
 
 trait _cbRowDragPlugin : _cbPluginBase {
 }
 
-struct cbRowInfo(*u8);
+struct cbRowInfo(*mut c_void);
 impl _cbRowInfo for cbRowInfo {}
-impl _wxObject for cbRowInfo { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbRowInfo { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbRowInfo {
-    pub fn from(handle: *u8) -> @cbRowInfo { @cbRowInfo(handle) }
-    pub fn null() -> @cbRowInfo { cbRowInfo::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbRowInfo { @cbRowInfo(handle) }
+    pub fn null() -> @cbRowInfo { cbRowInfo::from(0 as *mut c_void) }
     
 }
 
 trait _cbRowInfo : _wxObject {
 }
 
-struct cbRowLayoutPlugin(*u8);
+struct cbRowLayoutPlugin(*mut c_void);
 impl _cbRowLayoutPlugin for cbRowLayoutPlugin {}
 impl _cbPluginBase for cbRowLayoutPlugin {}
 impl _wxEvtHandler for cbRowLayoutPlugin {}
-impl _wxObject for cbRowLayoutPlugin { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbRowLayoutPlugin { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbRowLayoutPlugin {
-    pub fn from(handle: *u8) -> @cbRowLayoutPlugin { @cbRowLayoutPlugin(handle) }
-    pub fn null() -> @cbRowLayoutPlugin { cbRowLayoutPlugin::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbRowLayoutPlugin { @cbRowLayoutPlugin(handle) }
+    pub fn null() -> @cbRowLayoutPlugin { cbRowLayoutPlugin::from(0 as *mut c_void) }
     
 }
 
 trait _cbRowLayoutPlugin : _cbPluginBase {
 }
 
-struct cbSimpleCustomizationPlugin(*u8);
+struct cbSimpleCustomizationPlugin(*mut c_void);
 impl _cbSimpleCustomizationPlugin for cbSimpleCustomizationPlugin {}
 impl _cbPluginBase for cbSimpleCustomizationPlugin {}
 impl _wxEvtHandler for cbSimpleCustomizationPlugin {}
-impl _wxObject for cbSimpleCustomizationPlugin { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbSimpleCustomizationPlugin { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbSimpleCustomizationPlugin {
-    pub fn from(handle: *u8) -> @cbSimpleCustomizationPlugin { @cbSimpleCustomizationPlugin(handle) }
-    pub fn null() -> @cbSimpleCustomizationPlugin { cbSimpleCustomizationPlugin::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbSimpleCustomizationPlugin { @cbSimpleCustomizationPlugin(handle) }
+    pub fn null() -> @cbSimpleCustomizationPlugin { cbSimpleCustomizationPlugin::from(0 as *mut c_void) }
     
 }
 
 trait _cbSimpleCustomizationPlugin : _cbPluginBase {
 }
 
-struct cbSimpleUpdatesMgr(*u8);
+struct cbSimpleUpdatesMgr(*mut c_void);
 impl _cbSimpleUpdatesMgr for cbSimpleUpdatesMgr {}
 impl _cbUpdatesManagerBase for cbSimpleUpdatesMgr {}
-impl _wxObject for cbSimpleUpdatesMgr { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbSimpleUpdatesMgr { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbSimpleUpdatesMgr {
-    pub fn from(handle: *u8) -> @cbSimpleUpdatesMgr { @cbSimpleUpdatesMgr(handle) }
-    pub fn null() -> @cbSimpleUpdatesMgr { cbSimpleUpdatesMgr::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbSimpleUpdatesMgr { @cbSimpleUpdatesMgr(handle) }
+    pub fn null() -> @cbSimpleUpdatesMgr { cbSimpleUpdatesMgr::from(0 as *mut c_void) }
     
 }
 
 trait _cbSimpleUpdatesMgr : _cbUpdatesManagerBase {
 }
 
-struct cbSizeBarWndEvent(*u8);
+struct cbSizeBarWndEvent(*mut c_void);
 impl _cbSizeBarWndEvent for cbSizeBarWndEvent {}
 impl _cbPluginEvent for cbSizeBarWndEvent {}
 impl _wxEvent for cbSizeBarWndEvent {}
-impl _wxObject for cbSizeBarWndEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbSizeBarWndEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbSizeBarWndEvent {
-    pub fn from(handle: *u8) -> @cbSizeBarWndEvent { @cbSizeBarWndEvent(handle) }
-    pub fn null() -> @cbSizeBarWndEvent { cbSizeBarWndEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbSizeBarWndEvent { @cbSizeBarWndEvent(handle) }
+    pub fn null() -> @cbSizeBarWndEvent { cbSizeBarWndEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbSizeBarWndEvent : _cbPluginEvent {
 }
 
-struct cbStartBarDraggingEvent(*u8);
+struct cbStartBarDraggingEvent(*mut c_void);
 impl _cbStartBarDraggingEvent for cbStartBarDraggingEvent {}
 impl _cbPluginEvent for cbStartBarDraggingEvent {}
 impl _wxEvent for cbStartBarDraggingEvent {}
-impl _wxObject for cbStartBarDraggingEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbStartBarDraggingEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbStartBarDraggingEvent {
-    pub fn from(handle: *u8) -> @cbStartBarDraggingEvent { @cbStartBarDraggingEvent(handle) }
-    pub fn null() -> @cbStartBarDraggingEvent { cbStartBarDraggingEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbStartBarDraggingEvent { @cbStartBarDraggingEvent(handle) }
+    pub fn null() -> @cbStartBarDraggingEvent { cbStartBarDraggingEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbStartBarDraggingEvent : _cbPluginEvent {
 }
 
-struct cbStartDrawInAreaEvent(*u8);
+struct cbStartDrawInAreaEvent(*mut c_void);
 impl _cbStartDrawInAreaEvent for cbStartDrawInAreaEvent {}
 impl _cbPluginEvent for cbStartDrawInAreaEvent {}
 impl _wxEvent for cbStartDrawInAreaEvent {}
-impl _wxObject for cbStartDrawInAreaEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbStartDrawInAreaEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbStartDrawInAreaEvent {
-    pub fn from(handle: *u8) -> @cbStartDrawInAreaEvent { @cbStartDrawInAreaEvent(handle) }
-    pub fn null() -> @cbStartDrawInAreaEvent { cbStartDrawInAreaEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbStartDrawInAreaEvent { @cbStartDrawInAreaEvent(handle) }
+    pub fn null() -> @cbStartDrawInAreaEvent { cbStartDrawInAreaEvent::from(0 as *mut c_void) }
     
 }
 
 trait _cbStartDrawInAreaEvent : _cbPluginEvent {
 }
 
-struct cbUpdatesManagerBase(*u8);
+struct cbUpdatesManagerBase(*mut c_void);
 impl _cbUpdatesManagerBase for cbUpdatesManagerBase {}
-impl _wxObject for cbUpdatesManagerBase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for cbUpdatesManagerBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl cbUpdatesManagerBase {
-    pub fn from(handle: *u8) -> @cbUpdatesManagerBase { @cbUpdatesManagerBase(handle) }
-    pub fn null() -> @cbUpdatesManagerBase { cbUpdatesManagerBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @cbUpdatesManagerBase { @cbUpdatesManagerBase(handle) }
+    pub fn null() -> @cbUpdatesManagerBase { cbUpdatesManagerBase::from(0 as *mut c_void) }
     
 }
 
 trait _cbUpdatesManagerBase : _wxObject {
 }
 
-struct wxAcceleratorEntry(*u8);
-impl _wxAcceleratorEntry for wxAcceleratorEntry { fn handle(&self) -> *u8 { **self } }
+struct wxAcceleratorEntry(*mut c_void);
+impl _wxAcceleratorEntry for wxAcceleratorEntry { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxAcceleratorEntry {
-    pub fn from(handle: *u8) -> @wxAcceleratorEntry { @wxAcceleratorEntry(handle) }
-    pub fn null() -> @wxAcceleratorEntry { wxAcceleratorEntry::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxAcceleratorEntry { @wxAcceleratorEntry(handle) }
+    pub fn null() -> @wxAcceleratorEntry { wxAcceleratorEntry::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1496,7 +1496,7 @@ impl wxAcceleratorEntry {
 }
 
 trait _wxAcceleratorEntry {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1525,22 +1525,22 @@ trait _wxAcceleratorEntry {
     }
 }
 
-struct wxAcceleratorTable(*u8);
-impl _wxAcceleratorTable for wxAcceleratorTable { fn handle(&self) -> *u8 { **self } }
+struct wxAcceleratorTable(*mut c_void);
+impl _wxAcceleratorTable for wxAcceleratorTable { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxAcceleratorTable {
-    pub fn from(handle: *u8) -> @wxAcceleratorTable { @wxAcceleratorTable(handle) }
-    pub fn null() -> @wxAcceleratorTable { wxAcceleratorTable::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxAcceleratorTable { @wxAcceleratorTable(handle) }
+    pub fn null() -> @wxAcceleratorTable { wxAcceleratorTable::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(n: c_int, entries: *u8) -> @wxAcceleratorTable {
+    pub fn new(n: c_int, entries: *mut c_void) -> @wxAcceleratorTable {
         unsafe { @wxAcceleratorTable(wxAcceleratorTable_Create(n, entries)) }
     }
 }
 
 trait _wxAcceleratorTable {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1549,87 +1549,87 @@ trait _wxAcceleratorTable {
     }
 }
 
-struct wxActivateEvent(*u8);
+struct wxActivateEvent(*mut c_void);
 impl _wxActivateEvent for wxActivateEvent {}
 impl _wxEvent for wxActivateEvent {}
-impl _wxObject for wxActivateEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxActivateEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxActivateEvent {
-    pub fn from(handle: *u8) -> @wxActivateEvent { @wxActivateEvent(handle) }
-    pub fn null() -> @wxActivateEvent { wxActivateEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxActivateEvent { @wxActivateEvent(handle) }
+    pub fn null() -> @wxActivateEvent { wxActivateEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxActivateEvent : _wxEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getActive(&self) -> bool {
+    fn getActive(&self) -> c_int {
         unsafe { wxActivateEvent_GetActive(self.handle()) }
     }
 }
 
-struct wxApp(*u8);
+struct wxApp(*mut c_void);
 impl _wxApp for wxApp {}
 impl _wxEvtHandler for wxApp {}
-impl _wxObject for wxApp { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxApp { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxApp {
-    pub fn from(handle: *u8) -> @wxApp { @wxApp(handle) }
-    pub fn null() -> @wxApp { wxApp::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxApp { @wxApp(handle) }
+    pub fn null() -> @wxApp { wxApp::from(0 as *mut c_void) }
     
 }
 
 trait _wxApp : _wxEvtHandler {
 }
 
-struct wxArray(*u8);
-impl _wxArray for wxArray { fn handle(&self) -> *u8 { **self } }
+struct wxArray(*mut c_void);
+impl _wxArray for wxArray { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxArray {
-    pub fn from(handle: *u8) -> @wxArray { @wxArray(handle) }
-    pub fn null() -> @wxArray { wxArray::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxArray { @wxArray(handle) }
+    pub fn null() -> @wxArray { wxArray::from(0 as *mut c_void) }
     
 }
 
 trait _wxArray {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxArrayString(*u8);
+struct wxArrayString(*mut c_void);
 impl _wxArrayString for wxArrayString {}
-impl _wxArray for wxArrayString { fn handle(&self) -> *u8 { **self } }
+impl _wxArray for wxArrayString { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxArrayString {
-    pub fn from(handle: *u8) -> @wxArrayString { @wxArrayString(handle) }
-    pub fn null() -> @wxArrayString { wxArrayString::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxArrayString { @wxArrayString(handle) }
+    pub fn null() -> @wxArrayString { wxArrayString::from(0 as *mut c_void) }
     
 }
 
 trait _wxArrayString : _wxArray {
 }
 
-struct wxArtProvider(*u8);
+struct wxArtProvider(*mut c_void);
 impl _wxArtProvider for wxArtProvider {}
-impl _wxObject for wxArtProvider { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxArtProvider { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxArtProvider {
-    pub fn from(handle: *u8) -> @wxArtProvider { @wxArtProvider(handle) }
-    pub fn null() -> @wxArtProvider { wxArtProvider::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxArtProvider { @wxArtProvider(handle) }
+    pub fn null() -> @wxArtProvider { wxArtProvider::from(0 as *mut c_void) }
     
 }
 
 trait _wxArtProvider : _wxObject {
 }
 
-struct wxAutoBufferedPaintDC(*u8);
+struct wxAutoBufferedPaintDC(*mut c_void);
 impl _wxAutoBufferedPaintDC for wxAutoBufferedPaintDC {}
 impl _wxDC for wxAutoBufferedPaintDC {}
-impl _wxObject for wxAutoBufferedPaintDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxAutoBufferedPaintDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxAutoBufferedPaintDC {
-    pub fn from(handle: *u8) -> @wxAutoBufferedPaintDC { @wxAutoBufferedPaintDC(handle) }
-    pub fn null() -> @wxAutoBufferedPaintDC { wxAutoBufferedPaintDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxAutoBufferedPaintDC { @wxAutoBufferedPaintDC(handle) }
+    pub fn null() -> @wxAutoBufferedPaintDC { wxAutoBufferedPaintDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1641,27 +1641,27 @@ impl wxAutoBufferedPaintDC {
 trait _wxAutoBufferedPaintDC : _wxDC {
 }
 
-struct wxAutomationObject(*u8);
+struct wxAutomationObject(*mut c_void);
 impl _wxAutomationObject for wxAutomationObject {}
-impl _wxObject for wxAutomationObject { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxAutomationObject { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxAutomationObject {
-    pub fn from(handle: *u8) -> @wxAutomationObject { @wxAutomationObject(handle) }
-    pub fn null() -> @wxAutomationObject { wxAutomationObject::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxAutomationObject { @wxAutomationObject(handle) }
+    pub fn null() -> @wxAutomationObject { wxAutomationObject::from(0 as *mut c_void) }
     
 }
 
 trait _wxAutomationObject : _wxObject {
 }
 
-struct wxBitmap(*u8);
+struct wxBitmap(*mut c_void);
 impl _wxBitmap for wxBitmap {}
 impl _wxGDIObject for wxBitmap {}
-impl _wxObject for wxBitmap { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxBitmap { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBitmap {
-    pub fn from(handle: *u8) -> @wxBitmap { @wxBitmap(handle) }
-    pub fn null() -> @wxBitmap { wxBitmap::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBitmap { @wxBitmap(handle) }
+    pub fn null() -> @wxBitmap { wxBitmap::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1675,7 +1675,7 @@ impl wxBitmap {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_data: *u8, _type: c_int, _width: c_int, _height: c_int, _depth: c_int) -> @wxBitmap {
+    pub fn new(_data: *mut c_void, _type: c_int, _width: c_int, _height: c_int, _depth: c_int) -> @wxBitmap {
         unsafe { @wxBitmap(wxBitmap_Create(_data, _type, _width, _height, _depth)) }
     }
     #[fixed_stack_segment]
@@ -1696,13 +1696,13 @@ impl wxBitmap {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn findHandlerByName(name: &str) -> *u8 {
+    pub fn findHandlerByName(name: &str) -> *mut c_void {
         let name = wxT(name);
         unsafe { wxBitmap_FindHandlerByName(name.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn findHandlerByType(type_: c_int) -> *u8 {
+    pub fn findHandlerByType(type_: c_int) -> *mut c_void {
         unsafe { wxBitmap_FindHandlerByType(type_) }
     }
     #[fixed_stack_segment]
@@ -1717,7 +1717,7 @@ impl wxBitmap {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn removeHandler(name: &str) -> bool {
+    pub fn removeHandler(name: &str) -> c_int {
         let name = wxT(name);
         unsafe { wxBitmap_RemoveHandler(name.handle()) }
     }
@@ -1736,7 +1736,7 @@ trait _wxBitmap : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn findHandlerByExtension(&self, type_: c_int) -> *u8 {
+    fn findHandlerByExtension(&self, type_: c_int) -> *mut c_void {
         unsafe { wxBitmap_FindHandlerByExtension(self.handle(), type_) }
     }
     #[fixed_stack_segment]
@@ -1772,7 +1772,7 @@ trait _wxBitmap : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxBitmap_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -1803,22 +1803,22 @@ trait _wxBitmap : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isStatic(&self) -> bool {
+    fn isStatic(&self) -> c_int {
         unsafe { wxBitmap_IsStatic(self.handle()) }
     }
 }
 
-struct wxBitmapButton(*u8);
+struct wxBitmapButton(*mut c_void);
 impl _wxBitmapButton for wxBitmapButton {}
 impl _wxButton for wxBitmapButton {}
 impl _wxControl for wxBitmapButton {}
 impl _wxWindow for wxBitmapButton {}
 impl _wxEvtHandler for wxBitmapButton {}
-impl _wxObject for wxBitmapButton { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxBitmapButton { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBitmapButton {
-    pub fn from(handle: *u8) -> @wxBitmapButton { @wxBitmapButton(handle) }
-    pub fn null() -> @wxBitmapButton { wxBitmapButton::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBitmapButton { @wxBitmapButton(handle) }
+    pub fn null() -> @wxBitmapButton { wxBitmapButton::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1885,17 +1885,17 @@ trait _wxBitmapButton : _wxButton {
     }
 }
 
-struct wxBitmapToggleButton(*u8);
+struct wxBitmapToggleButton(*mut c_void);
 impl _wxBitmapToggleButton for wxBitmapToggleButton {}
 impl _wxToggleButton for wxBitmapToggleButton {}
 impl _wxControl for wxBitmapToggleButton {}
 impl _wxWindow for wxBitmapToggleButton {}
 impl _wxEvtHandler for wxBitmapToggleButton {}
-impl _wxObject for wxBitmapToggleButton { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxBitmapToggleButton { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBitmapToggleButton {
-    pub fn from(handle: *u8) -> @wxBitmapToggleButton { @wxBitmapToggleButton(handle) }
-    pub fn null() -> @wxBitmapToggleButton { wxBitmapToggleButton::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBitmapToggleButton { @wxBitmapToggleButton(handle) }
+    pub fn null() -> @wxBitmapToggleButton { wxBitmapToggleButton::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1912,41 +1912,41 @@ trait _wxBitmapToggleButton : _wxToggleButton {
     }
 }
 
-struct wxBitmapDataObject(*u8);
+struct wxBitmapDataObject(*mut c_void);
 impl _wxBitmapDataObject for wxBitmapDataObject {}
 impl _wxDataObjectSimple for wxBitmapDataObject {}
-impl _wxDataObject for wxBitmapDataObject { fn handle(&self) -> *u8 { **self } }
+impl _wxDataObject for wxBitmapDataObject { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBitmapDataObject {
-    pub fn from(handle: *u8) -> @wxBitmapDataObject { @wxBitmapDataObject(handle) }
-    pub fn null() -> @wxBitmapDataObject { wxBitmapDataObject::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBitmapDataObject { @wxBitmapDataObject(handle) }
+    pub fn null() -> @wxBitmapDataObject { wxBitmapDataObject::from(0 as *mut c_void) }
     
 }
 
 trait _wxBitmapDataObject : _wxDataObjectSimple {
 }
 
-struct wxBitmapHandler(*u8);
+struct wxBitmapHandler(*mut c_void);
 impl _wxBitmapHandler for wxBitmapHandler {}
-impl _wxObject for wxBitmapHandler { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxBitmapHandler { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBitmapHandler {
-    pub fn from(handle: *u8) -> @wxBitmapHandler { @wxBitmapHandler(handle) }
-    pub fn null() -> @wxBitmapHandler { wxBitmapHandler::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBitmapHandler { @wxBitmapHandler(handle) }
+    pub fn null() -> @wxBitmapHandler { wxBitmapHandler::from(0 as *mut c_void) }
     
 }
 
 trait _wxBitmapHandler : _wxObject {
 }
 
-struct wxBoxSizer(*u8);
+struct wxBoxSizer(*mut c_void);
 impl _wxBoxSizer for wxBoxSizer {}
 impl _wxSizer for wxBoxSizer {}
-impl _wxObject for wxBoxSizer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxBoxSizer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBoxSizer {
-    pub fn from(handle: *u8) -> @wxBoxSizer { @wxBoxSizer(handle) }
-    pub fn null() -> @wxBoxSizer { wxBoxSizer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBoxSizer { @wxBoxSizer(handle) }
+    pub fn null() -> @wxBoxSizer { wxBoxSizer::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1963,14 +1963,14 @@ trait _wxBoxSizer : _wxSizer {
     }
 }
 
-struct wxBrush(*u8);
+struct wxBrush(*mut c_void);
 impl _wxBrush for wxBrush {}
 impl _wxGDIObject for wxBrush {}
-impl _wxObject for wxBrush { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxBrush { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBrush {
-    pub fn from(handle: *u8) -> @wxBrush { @wxBrush(handle) }
-    pub fn null() -> @wxBrush { wxBrush::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBrush { @wxBrush(handle) }
+    pub fn null() -> @wxBrush { wxBrush::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2017,12 +2017,12 @@ trait _wxBrush : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEqual<T: _wxBrush>(&self, brush: &T) -> bool {
+    fn isEqual<T: _wxBrush>(&self, brush: &T) -> c_int {
         unsafe { wxBrush_IsEqual(self.handle(), brush.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxBrush_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -2032,7 +2032,7 @@ trait _wxBrush : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setColourSingle(&self, r: wchar_t, g: wchar_t, b: wchar_t) {
+    fn setColourSingle(&self, r: int8_t, g: int8_t, b: int8_t) {
         unsafe { wxBrush_SetColourSingle(self.handle(), r, g, b) }
     }
     #[fixed_stack_segment]
@@ -2047,33 +2047,33 @@ trait _wxBrush : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isStatic(&self) -> bool {
+    fn isStatic(&self) -> c_int {
         unsafe { wxBrush_IsStatic(self.handle()) }
     }
 }
 
-struct wxBrushList(*u8);
+struct wxBrushList(*mut c_void);
 impl _wxBrushList for wxBrushList {}
 impl _wxList for wxBrushList {}
-impl _wxObject for wxBrushList { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxBrushList { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBrushList {
-    pub fn from(handle: *u8) -> @wxBrushList { @wxBrushList(handle) }
-    pub fn null() -> @wxBrushList { wxBrushList::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBrushList { @wxBrushList(handle) }
+    pub fn null() -> @wxBrushList { wxBrushList::from(0 as *mut c_void) }
     
 }
 
 trait _wxBrushList : _wxList {
 }
 
-struct wxBufferedDC(*u8);
+struct wxBufferedDC(*mut c_void);
 impl _wxBufferedDC for wxBufferedDC {}
 impl _wxDC for wxBufferedDC {}
-impl _wxObject for wxBufferedDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxBufferedDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBufferedDC {
-    pub fn from(handle: *u8) -> @wxBufferedDC { @wxBufferedDC(handle) }
-    pub fn null() -> @wxBufferedDC { wxBufferedDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBufferedDC { @wxBufferedDC(handle) }
+    pub fn null() -> @wxBufferedDC { wxBufferedDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2090,14 +2090,14 @@ impl wxBufferedDC {
 trait _wxBufferedDC : _wxDC {
 }
 
-struct wxBufferedPaintDC(*u8);
+struct wxBufferedPaintDC(*mut c_void);
 impl _wxBufferedPaintDC for wxBufferedPaintDC {}
 impl _wxDC for wxBufferedPaintDC {}
-impl _wxObject for wxBufferedPaintDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxBufferedPaintDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBufferedPaintDC {
-    pub fn from(handle: *u8) -> @wxBufferedPaintDC { @wxBufferedPaintDC(handle) }
-    pub fn null() -> @wxBufferedPaintDC { wxBufferedPaintDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBufferedPaintDC { @wxBufferedPaintDC(handle) }
+    pub fn null() -> @wxBufferedPaintDC { wxBufferedPaintDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2114,42 +2114,42 @@ impl wxBufferedPaintDC {
 trait _wxBufferedPaintDC : _wxDC {
 }
 
-struct wxBufferedInputStream(*u8);
+struct wxBufferedInputStream(*mut c_void);
 impl _wxBufferedInputStream for wxBufferedInputStream {}
 impl _wxFilterInputStream for wxBufferedInputStream {}
 impl _wxInputStream for wxBufferedInputStream {}
-impl _wxStreamBase for wxBufferedInputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxBufferedInputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBufferedInputStream {
-    pub fn from(handle: *u8) -> @wxBufferedInputStream { @wxBufferedInputStream(handle) }
-    pub fn null() -> @wxBufferedInputStream { wxBufferedInputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBufferedInputStream { @wxBufferedInputStream(handle) }
+    pub fn null() -> @wxBufferedInputStream { wxBufferedInputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxBufferedInputStream : _wxFilterInputStream {
 }
 
-struct wxBufferedOutputStream(*u8);
+struct wxBufferedOutputStream(*mut c_void);
 impl _wxBufferedOutputStream for wxBufferedOutputStream {}
 impl _wxFilterOutputStream for wxBufferedOutputStream {}
 impl _wxOutputStream for wxBufferedOutputStream {}
-impl _wxStreamBase for wxBufferedOutputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxBufferedOutputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBufferedOutputStream {
-    pub fn from(handle: *u8) -> @wxBufferedOutputStream { @wxBufferedOutputStream(handle) }
-    pub fn null() -> @wxBufferedOutputStream { wxBufferedOutputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBufferedOutputStream { @wxBufferedOutputStream(handle) }
+    pub fn null() -> @wxBufferedOutputStream { wxBufferedOutputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxBufferedOutputStream : _wxFilterOutputStream {
 }
 
-struct wxBusyCursor(*u8);
-impl _wxBusyCursor for wxBusyCursor { fn handle(&self) -> *u8 { **self } }
+struct wxBusyCursor(*mut c_void);
+impl _wxBusyCursor for wxBusyCursor { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBusyCursor {
-    pub fn from(handle: *u8) -> @wxBusyCursor { @wxBusyCursor(handle) }
-    pub fn null() -> @wxBusyCursor { wxBusyCursor::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBusyCursor { @wxBusyCursor(handle) }
+    pub fn null() -> @wxBusyCursor { wxBusyCursor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2159,11 +2159,11 @@ impl wxBusyCursor {
 }
 
 trait _wxBusyCursor {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
-    fn newWithCursor(&self) -> *u8 {
+    fn newWithCursor(&self) -> *mut c_void {
         unsafe { wxBusyCursor_CreateWithCursor(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -2173,12 +2173,12 @@ trait _wxBusyCursor {
     }
 }
 
-struct wxBusyInfo(*u8);
-impl _wxBusyInfo for wxBusyInfo { fn handle(&self) -> *u8 { **self } }
+struct wxBusyInfo(*mut c_void);
+impl _wxBusyInfo for wxBusyInfo { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBusyInfo {
-    pub fn from(handle: *u8) -> @wxBusyInfo { @wxBusyInfo(handle) }
-    pub fn null() -> @wxBusyInfo { wxBusyInfo::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBusyInfo { @wxBusyInfo(handle) }
+    pub fn null() -> @wxBusyInfo { wxBusyInfo::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2189,7 +2189,7 @@ impl wxBusyInfo {
 }
 
 trait _wxBusyInfo {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2198,16 +2198,16 @@ trait _wxBusyInfo {
     }
 }
 
-struct wxButton(*u8);
+struct wxButton(*mut c_void);
 impl _wxButton for wxButton {}
 impl _wxControl for wxButton {}
 impl _wxWindow for wxButton {}
 impl _wxEvtHandler for wxButton {}
-impl _wxObject for wxButton { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxButton { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxButton {
-    pub fn from(handle: *u8) -> @wxButton { @wxButton(handle) }
-    pub fn null() -> @wxButton { wxButton::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxButton { @wxButton(handle) }
+    pub fn null() -> @wxButton { wxButton::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2225,27 +2225,27 @@ trait _wxButton : _wxControl {
     }
 }
 
-struct wxCSConv(*u8);
+struct wxCSConv(*mut c_void);
 impl _wxCSConv for wxCSConv {}
-impl _wxMBConv for wxCSConv { fn handle(&self) -> *u8 { **self } }
+impl _wxMBConv for wxCSConv { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCSConv {
-    pub fn from(handle: *u8) -> @wxCSConv { @wxCSConv(handle) }
-    pub fn null() -> @wxCSConv { wxCSConv::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCSConv { @wxCSConv(handle) }
+    pub fn null() -> @wxCSConv { wxCSConv::from(0 as *mut c_void) }
     
 }
 
 trait _wxCSConv : _wxMBConv {
 }
 
-struct wxCalculateLayoutEvent(*u8);
+struct wxCalculateLayoutEvent(*mut c_void);
 impl _wxCalculateLayoutEvent for wxCalculateLayoutEvent {}
 impl _wxEvent for wxCalculateLayoutEvent {}
-impl _wxObject for wxCalculateLayoutEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxCalculateLayoutEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCalculateLayoutEvent {
-    pub fn from(handle: *u8) -> @wxCalculateLayoutEvent { @wxCalculateLayoutEvent(handle) }
-    pub fn null() -> @wxCalculateLayoutEvent { wxCalculateLayoutEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCalculateLayoutEvent { @wxCalculateLayoutEvent(handle) }
+    pub fn null() -> @wxCalculateLayoutEvent { wxCalculateLayoutEvent::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2277,16 +2277,16 @@ trait _wxCalculateLayoutEvent : _wxEvent {
     }
 }
 
-struct wxCalendarCtrl(*u8);
+struct wxCalendarCtrl(*mut c_void);
 impl _wxCalendarCtrl for wxCalendarCtrl {}
 impl _wxControl for wxCalendarCtrl {}
 impl _wxWindow for wxCalendarCtrl {}
 impl _wxEvtHandler for wxCalendarCtrl {}
-impl _wxObject for wxCalendarCtrl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxCalendarCtrl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCalendarCtrl {
-    pub fn from(handle: *u8) -> @wxCalendarCtrl { @wxCalendarCtrl(handle) }
-    pub fn null() -> @wxCalendarCtrl { wxCalendarCtrl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCalendarCtrl { @wxCalendarCtrl(handle) }
+    pub fn null() -> @wxCalendarCtrl { wxCalendarCtrl::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2303,17 +2303,17 @@ trait _wxCalendarCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableMonthChange(&self, enable: bool) {
+    fn enableMonthChange(&self, enable: c_int) {
         unsafe { wxCalendarCtrl_EnableMonthChange(self.handle(), enable) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getAttr(&self, day: c_int) -> *u8 {
+    fn getAttr(&self, day: c_int) -> *mut c_void {
         unsafe { wxCalendarCtrl_GetAttr(self.handle(), day) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDate(&self, date: *u8) {
+    fn getDate(&self, date: *mut c_void) {
         unsafe { wxCalendarCtrl_GetDate(self.handle(), date) }
     }
     #[fixed_stack_segment]
@@ -2348,7 +2348,7 @@ trait _wxCalendarCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hitTest(&self, x: c_int, y: c_int, date: *u8, wd: *u8) -> c_int {
+    fn hitTest(&self, x: c_int, y: c_int, date: *mut c_void, wd: *mut c_void) -> c_int {
         unsafe { wxCalendarCtrl_HitTest(self.handle(), x, y, date, wd) }
     }
     #[fixed_stack_segment]
@@ -2358,22 +2358,22 @@ trait _wxCalendarCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setAttr(&self, day: c_int, attr: *u8) {
+    fn setAttr(&self, day: c_int, attr: *mut c_void) {
         unsafe { wxCalendarCtrl_SetAttr(self.handle(), day, attr) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setDate(&self, date: *u8) {
+    fn setDate(&self, date: *mut c_void) {
         unsafe { wxCalendarCtrl_SetDate(self.handle(), date) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setHeaderColours(&self, colFg: *u8, colBg: *u8) {
+    fn setHeaderColours(&self, colFg: *mut c_void, colBg: *mut c_void) {
         unsafe { wxCalendarCtrl_SetHeaderColours(self.handle(), colFg, colBg) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setHighlightColours(&self, colFg: *u8, colBg: *u8) {
+    fn setHighlightColours(&self, colFg: *mut c_void, colBg: *mut c_void) {
         unsafe { wxCalendarCtrl_SetHighlightColours(self.handle(), colFg, colBg) }
     }
     #[fixed_stack_segment]
@@ -2383,21 +2383,21 @@ trait _wxCalendarCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setHolidayColours(&self, colFg: *u8, colBg: *u8) {
+    fn setHolidayColours(&self, colFg: *mut c_void, colBg: *mut c_void) {
         unsafe { wxCalendarCtrl_SetHolidayColours(self.handle(), colFg, colBg) }
     }
 }
 
-struct wxCalendarDateAttr(*u8);
-impl _wxCalendarDateAttr for wxCalendarDateAttr { fn handle(&self) -> *u8 { **self } }
+struct wxCalendarDateAttr(*mut c_void);
+impl _wxCalendarDateAttr for wxCalendarDateAttr { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCalendarDateAttr {
-    pub fn from(handle: *u8) -> @wxCalendarDateAttr { @wxCalendarDateAttr(handle) }
-    pub fn null() -> @wxCalendarDateAttr { wxCalendarDateAttr::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCalendarDateAttr { @wxCalendarDateAttr(handle) }
+    pub fn null() -> @wxCalendarDateAttr { wxCalendarDateAttr::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_ctxt: *u8, _cbck: *u8, _cbrd: *u8, _fnt: *u8, _brd: c_int) -> @wxCalendarDateAttr {
+    pub fn new(_ctxt: *mut c_void, _cbck: *mut c_void, _cbrd: *mut c_void, _fnt: *mut c_void, _brd: c_int) -> @wxCalendarDateAttr {
         unsafe { @wxCalendarDateAttr(wxCalendarDateAttr_Create(_ctxt, _cbck, _cbrd, _fnt, _brd)) }
     }
     #[fixed_stack_segment]
@@ -2408,7 +2408,7 @@ impl wxCalendarDateAttr {
 }
 
 trait _wxCalendarDateAttr {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2442,32 +2442,32 @@ trait _wxCalendarDateAttr {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasBackgroundColour(&self) -> bool {
+    fn hasBackgroundColour(&self) -> c_int {
         unsafe { wxCalendarDateAttr_HasBackgroundColour(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasBorder(&self) -> bool {
+    fn hasBorder(&self) -> c_int {
         unsafe { wxCalendarDateAttr_HasBorder(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasBorderColour(&self) -> bool {
+    fn hasBorderColour(&self) -> c_int {
         unsafe { wxCalendarDateAttr_HasBorderColour(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasFont(&self) -> bool {
+    fn hasFont(&self) -> c_int {
         unsafe { wxCalendarDateAttr_HasFont(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasTextColour(&self) -> bool {
+    fn hasTextColour(&self) -> c_int {
         unsafe { wxCalendarDateAttr_HasTextColour(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isHoliday(&self) -> bool {
+    fn isHoliday(&self) -> c_int {
         unsafe { wxCalendarDateAttr_IsHoliday(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -2502,22 +2502,22 @@ trait _wxCalendarDateAttr {
     }
 }
 
-struct wxCalendarEvent(*u8);
+struct wxCalendarEvent(*mut c_void);
 impl _wxCalendarEvent for wxCalendarEvent {}
 impl _wxCommandEvent for wxCalendarEvent {}
 impl _wxEvent for wxCalendarEvent {}
-impl _wxObject for wxCalendarEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxCalendarEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCalendarEvent {
-    pub fn from(handle: *u8) -> @wxCalendarEvent { @wxCalendarEvent(handle) }
-    pub fn null() -> @wxCalendarEvent { wxCalendarEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCalendarEvent { @wxCalendarEvent(handle) }
+    pub fn null() -> @wxCalendarEvent { wxCalendarEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxCalendarEvent : _wxCommandEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDate(&self, _dte: *u8) {
+    fn getDate(&self, _dte: *mut c_void) {
         unsafe { wxCalendarEvent_GetDate(self.handle(), _dte) }
     }
     #[fixed_stack_segment]
@@ -2527,12 +2527,12 @@ trait _wxCalendarEvent : _wxCommandEvent {
     }
 }
 
-struct wxCaret(*u8);
-impl _wxCaret for wxCaret { fn handle(&self) -> *u8 { **self } }
+struct wxCaret(*mut c_void);
+impl _wxCaret for wxCaret { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCaret {
-    pub fn from(handle: *u8) -> @wxCaret { @wxCaret(handle) }
-    pub fn null() -> @wxCaret { wxCaret::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCaret { @wxCaret(handle) }
+    pub fn null() -> @wxCaret { wxCaret::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2552,7 +2552,7 @@ impl wxCaret {
 }
 
 trait _wxCaret {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2576,12 +2576,12 @@ trait _wxCaret {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxCaret_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isVisible(&self) -> bool {
+    fn isVisible(&self) -> c_int {
         unsafe { wxCaret_IsVisible(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -2601,16 +2601,16 @@ trait _wxCaret {
     }
 }
 
-struct wxCheckBox(*u8);
+struct wxCheckBox(*mut c_void);
 impl _wxCheckBox for wxCheckBox {}
 impl _wxControl for wxCheckBox {}
 impl _wxWindow for wxCheckBox {}
 impl _wxEvtHandler for wxCheckBox {}
-impl _wxObject for wxCheckBox { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxCheckBox { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCheckBox {
-    pub fn from(handle: *u8) -> @wxCheckBox { @wxCheckBox(handle) }
-    pub fn null() -> @wxCheckBox { wxCheckBox::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCheckBox { @wxCheckBox(handle) }
+    pub fn null() -> @wxCheckBox { wxCheckBox::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2623,7 +2623,7 @@ impl wxCheckBox {
 trait _wxCheckBox : _wxControl {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getValue(&self) -> bool {
+    fn getValue(&self) -> c_int {
         unsafe { wxCheckBox_GetValue(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -2633,21 +2633,21 @@ trait _wxCheckBox : _wxControl {
     }
 }
 
-struct wxCheckListBox(*u8);
+struct wxCheckListBox(*mut c_void);
 impl _wxCheckListBox for wxCheckListBox {}
 impl _wxListBox for wxCheckListBox {}
 impl _wxControl for wxCheckListBox {}
 impl _wxWindow for wxCheckListBox {}
 impl _wxEvtHandler for wxCheckListBox {}
-impl _wxObject for wxCheckListBox { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxCheckListBox { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCheckListBox {
-    pub fn from(handle: *u8) -> @wxCheckListBox { @wxCheckListBox(handle) }
-    pub fn null() -> @wxCheckListBox { wxCheckListBox::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCheckListBox { @wxCheckListBox(handle) }
+    pub fn null() -> @wxCheckListBox { wxCheckListBox::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *wchar_t, _stl: c_int) -> @wxCheckListBox {
+    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *mut *mut c_char, _stl: c_int) -> @wxCheckListBox {
         unsafe { @wxCheckListBox(wxCheckListBox_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, n, str, _stl)) }
     }
 }
@@ -2655,30 +2655,30 @@ impl wxCheckListBox {
 trait _wxCheckListBox : _wxListBox {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn check(&self, item: c_int, check: bool) {
+    fn check(&self, item: c_int, check: c_int) {
         unsafe { wxCheckListBox_Check(self.handle(), item, check) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isChecked(&self, item: c_int) -> bool {
+    fn isChecked(&self, item: c_int) -> c_int {
         unsafe { wxCheckListBox_IsChecked(self.handle(), item) }
     }
 }
 
-struct wxChoice(*u8);
+struct wxChoice(*mut c_void);
 impl _wxChoice for wxChoice {}
 impl _wxControl for wxChoice {}
 impl _wxWindow for wxChoice {}
 impl _wxEvtHandler for wxChoice {}
-impl _wxObject for wxChoice { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxChoice { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxChoice {
-    pub fn from(handle: *u8) -> @wxChoice { @wxChoice(handle) }
-    pub fn null() -> @wxChoice { wxChoice::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxChoice { @wxChoice(handle) }
+    pub fn null() -> @wxChoice { wxChoice::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *wchar_t, _stl: c_int) -> @wxChoice {
+    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *mut *mut c_char, _stl: c_int) -> @wxChoice {
         unsafe { @wxChoice(wxChoice_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, n, str, _stl)) }
     }
 }
@@ -2729,12 +2729,12 @@ trait _wxChoice : _wxControl {
     }
 }
 
-struct wxClassInfo(*u8);
-impl _wxClassInfo for wxClassInfo { fn handle(&self) -> *u8 { **self } }
+struct wxClassInfo(*mut c_void);
+impl _wxClassInfo for wxClassInfo { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxClassInfo {
-    pub fn from(handle: *u8) -> @wxClassInfo { @wxClassInfo(handle) }
-    pub fn null() -> @wxClassInfo { wxClassInfo::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxClassInfo { @wxClassInfo(handle) }
+    pub fn null() -> @wxClassInfo { wxClassInfo::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2745,21 +2745,21 @@ impl wxClassInfo {
 }
 
 trait _wxClassInfo {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
-    fn newClassByName(&self) -> *u8 {
+    fn newClassByName(&self) -> *mut c_void {
         unsafe { wxClassInfo_CreateClassByName(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getClassName(&self) -> *u8 {
+    fn getClassName(&self) -> *mut c_void {
         unsafe { wxClassInfo_GetClassName(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isKindOf(&self, _name: &str) -> bool {
+    fn isKindOf(&self, _name: &str) -> c_int {
         let _name = wxT(_name);
         unsafe { wxClassInfo_IsKindOf(self.handle(), _name.handle()) }
     }
@@ -2785,47 +2785,47 @@ trait _wxClassInfo {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isKindOfEx<T: _wxClassInfo>(&self, classInfo: &T) -> bool {
+    fn isKindOfEx<T: _wxClassInfo>(&self, classInfo: &T) -> c_int {
         unsafe { wxClassInfo_IsKindOfEx(self.handle(), classInfo.handle()) }
     }
 }
 
-struct wxClient(*u8);
+struct wxClient(*mut c_void);
 impl _wxClient for wxClient {}
 impl _wxClientBase for wxClient {}
-impl _wxObject for wxClient { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxClient { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxClient {
-    pub fn from(handle: *u8) -> @wxClient { @wxClient(handle) }
-    pub fn null() -> @wxClient { wxClient::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxClient { @wxClient(handle) }
+    pub fn null() -> @wxClient { wxClient::from(0 as *mut c_void) }
     
 }
 
 trait _wxClient : _wxClientBase {
 }
 
-struct wxClientBase(*u8);
+struct wxClientBase(*mut c_void);
 impl _wxClientBase for wxClientBase {}
-impl _wxObject for wxClientBase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxClientBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxClientBase {
-    pub fn from(handle: *u8) -> @wxClientBase { @wxClientBase(handle) }
-    pub fn null() -> @wxClientBase { wxClientBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxClientBase { @wxClientBase(handle) }
+    pub fn null() -> @wxClientBase { wxClientBase::from(0 as *mut c_void) }
     
 }
 
 trait _wxClientBase : _wxObject {
 }
 
-struct wxClientDC(*u8);
+struct wxClientDC(*mut c_void);
 impl _wxClientDC for wxClientDC {}
 impl _wxWindowDC for wxClientDC {}
 impl _wxDC for wxClientDC {}
-impl _wxObject for wxClientDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxClientDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxClientDC {
-    pub fn from(handle: *u8) -> @wxClientDC { @wxClientDC(handle) }
-    pub fn null() -> @wxClientDC { wxClientDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxClientDC { @wxClientDC(handle) }
+    pub fn null() -> @wxClientDC { wxClientDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2837,41 +2837,41 @@ impl wxClientDC {
 trait _wxClientDC : _wxWindowDC {
 }
 
-struct wxClientData(*u8);
-impl _wxClientData for wxClientData { fn handle(&self) -> *u8 { **self } }
+struct wxClientData(*mut c_void);
+impl _wxClientData for wxClientData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxClientData {
-    pub fn from(handle: *u8) -> @wxClientData { @wxClientData(handle) }
-    pub fn null() -> @wxClientData { wxClientData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxClientData { @wxClientData(handle) }
+    pub fn null() -> @wxClientData { wxClientData::from(0 as *mut c_void) }
     
 }
 
 trait _wxClientData {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxClientDataContainer(*u8);
-impl _wxClientDataContainer for wxClientDataContainer { fn handle(&self) -> *u8 { **self } }
+struct wxClientDataContainer(*mut c_void);
+impl _wxClientDataContainer for wxClientDataContainer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxClientDataContainer {
-    pub fn from(handle: *u8) -> @wxClientDataContainer { @wxClientDataContainer(handle) }
-    pub fn null() -> @wxClientDataContainer { wxClientDataContainer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxClientDataContainer { @wxClientDataContainer(handle) }
+    pub fn null() -> @wxClientDataContainer { wxClientDataContainer::from(0 as *mut c_void) }
     
 }
 
 trait _wxClientDataContainer {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxClipboard(*u8);
+struct wxClipboard(*mut c_void);
 impl _wxClipboard for wxClipboard {}
-impl _wxObject for wxClipboard { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxClipboard { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxClipboard {
-    pub fn from(handle: *u8) -> @wxClipboard { @wxClipboard(handle) }
-    pub fn null() -> @wxClipboard { wxClipboard::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxClipboard { @wxClipboard(handle) }
+    pub fn null() -> @wxClipboard { wxClipboard::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2883,7 +2883,7 @@ impl wxClipboard {
 trait _wxClipboard : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addData<T: _wxDataObject>(&self, data: &T) -> bool {
+    fn addData<T: _wxDataObject>(&self, data: &T) -> c_int {
         unsafe { wxClipboard_AddData(self.handle(), data.handle()) }
     }
     #[fixed_stack_segment]
@@ -2898,96 +2898,96 @@ trait _wxClipboard : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn flush(&self) -> bool {
+    fn flush(&self) -> c_int {
         unsafe { wxClipboard_Flush(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getData<T: _wxDataObject>(&self, data: &T) -> bool {
+    fn getData<T: _wxDataObject>(&self, data: &T) -> c_int {
         unsafe { wxClipboard_GetData(self.handle(), data.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOpened(&self) -> bool {
+    fn isOpened(&self) -> c_int {
         unsafe { wxClipboard_IsOpened(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSupported<T: _wxDataFormat>(&self, format: &T) -> bool {
+    fn isSupported<T: _wxDataFormat>(&self, format: &T) -> c_int {
         unsafe { wxClipboard_IsSupported(self.handle(), format.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn open(&self) -> bool {
+    fn open(&self) -> c_int {
         unsafe { wxClipboard_Open(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setData<T: _wxDataObject>(&self, data: &T) -> bool {
+    fn setData<T: _wxDataObject>(&self, data: &T) -> c_int {
         unsafe { wxClipboard_SetData(self.handle(), data.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn usePrimarySelection(&self, primary: bool) {
+    fn usePrimarySelection(&self, primary: c_int) {
         unsafe { wxClipboard_UsePrimarySelection(self.handle(), primary) }
     }
 }
 
-struct wxCloseEvent(*u8);
+struct wxCloseEvent(*mut c_void);
 impl _wxCloseEvent for wxCloseEvent {}
 impl _wxEvent for wxCloseEvent {}
-impl _wxObject for wxCloseEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxCloseEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCloseEvent {
-    pub fn from(handle: *u8) -> @wxCloseEvent { @wxCloseEvent(handle) }
-    pub fn null() -> @wxCloseEvent { wxCloseEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCloseEvent { @wxCloseEvent(handle) }
+    pub fn null() -> @wxCloseEvent { wxCloseEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxCloseEvent : _wxEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canVeto(&self) -> bool {
+    fn canVeto(&self) -> c_int {
         unsafe { wxCloseEvent_CanVeto(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getLoggingOff(&self) -> bool {
+    fn getLoggingOff(&self) -> c_int {
         unsafe { wxCloseEvent_GetLoggingOff(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getVeto(&self) -> bool {
+    fn getVeto(&self) -> c_int {
         unsafe { wxCloseEvent_GetVeto(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setCanVeto(&self, canVeto: bool) {
+    fn setCanVeto(&self, canVeto: c_int) {
         unsafe { wxCloseEvent_SetCanVeto(self.handle(), canVeto) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setLoggingOff(&self, logOff: bool) {
+    fn setLoggingOff(&self, logOff: c_int) {
         unsafe { wxCloseEvent_SetLoggingOff(self.handle(), logOff) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn veto(&self, veto: bool) {
+    fn veto(&self, veto: c_int) {
         unsafe { wxCloseEvent_Veto(self.handle(), veto) }
     }
 }
 
-struct wxClosure(*u8);
+struct wxClosure(*mut c_void);
 impl _wxClosure for wxClosure {}
-impl _wxObject for wxClosure { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxClosure { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxClosure {
-    pub fn from(handle: *u8) -> @wxClosure { @wxClosure(handle) }
-    pub fn null() -> @wxClosure { wxClosure::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxClosure { @wxClosure(handle) }
+    pub fn null() -> @wxClosure { wxClosure::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_fun_CEvent: *u8, _data: *u8) -> @wxClosure {
+    pub fn new(_fun_CEvent: *mut c_void, _data: *mut c_void) -> @wxClosure {
         unsafe { @wxClosure(wxClosure_Create(_fun_CEvent, _data)) }
     }
 }
@@ -2995,18 +2995,18 @@ impl wxClosure {
 trait _wxClosure : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getData(&self) -> *u8 {
+    fn getData(&self) -> *mut c_void {
         unsafe { wxClosure_GetData(self.handle()) }
     }
 }
 
-struct wxColour(*u8);
+struct wxColour(*mut c_void);
 impl _wxColour for wxColour {}
-impl _wxObject for wxColour { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxColour { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxColour {
-    pub fn from(handle: *u8) -> @wxColour { @wxColour(handle) }
-    pub fn null() -> @wxColour { wxColour::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxColour { @wxColour(handle) }
+    pub fn null() -> @wxColour { wxColour::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -3031,7 +3031,7 @@ impl wxColour {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn validName(_name: *wchar_t) -> bool {
+    pub fn validName(_name: *mut c_void) -> c_int {
         unsafe { wxColour_ValidName(_name) }
     }
     #[fixed_stack_segment]
@@ -3054,7 +3054,7 @@ trait _wxColour : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn assign(&self, other: *u8) {
+    fn assign(&self, other: *mut c_void) {
         unsafe { wxColour_Assign(self.handle(), other) }
     }
     #[fixed_stack_segment]
@@ -3064,7 +3064,7 @@ trait _wxColour : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn copy(&self, _other: *u8) {
+    fn copy(&self, _other: *mut c_void) {
         unsafe { wxColour_Copy(self.handle(), _other) }
     }
     #[fixed_stack_segment]
@@ -3074,7 +3074,7 @@ trait _wxColour : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxColour_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -3095,7 +3095,7 @@ trait _wxColour : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isStatic(&self) -> bool {
+    fn isStatic(&self) -> c_int {
         unsafe { wxColour_IsStatic(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -3110,13 +3110,13 @@ trait _wxColour : _wxObject {
     }
 }
 
-struct wxColourData(*u8);
+struct wxColourData(*mut c_void);
 impl _wxColourData for wxColourData {}
-impl _wxObject for wxColourData { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxColourData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxColourData {
-    pub fn from(handle: *u8) -> @wxColourData { @wxColourData(handle) }
-    pub fn null() -> @wxColourData { wxColourData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxColourData { @wxColourData(handle) }
+    pub fn null() -> @wxColourData { wxColourData::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -3128,7 +3128,7 @@ impl wxColourData {
 trait _wxColourData : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getChooseFull(&self) -> bool {
+    fn getChooseFull(&self) -> c_int {
         unsafe { wxColourData_GetChooseFull(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -3143,7 +3143,7 @@ trait _wxColourData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setChooseFull(&self, flag: bool) {
+    fn setChooseFull(&self, flag: c_int) {
         unsafe { wxColourData_SetChooseFull(self.handle(), flag) }
     }
     #[fixed_stack_segment]
@@ -3158,31 +3158,31 @@ trait _wxColourData : _wxObject {
     }
 }
 
-struct wxColourDatabase(*u8);
+struct wxColourDatabase(*mut c_void);
 impl _wxColourDatabase for wxColourDatabase {}
 impl _wxList for wxColourDatabase {}
-impl _wxObject for wxColourDatabase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxColourDatabase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxColourDatabase {
-    pub fn from(handle: *u8) -> @wxColourDatabase { @wxColourDatabase(handle) }
-    pub fn null() -> @wxColourDatabase { wxColourDatabase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxColourDatabase { @wxColourDatabase(handle) }
+    pub fn null() -> @wxColourDatabase { wxColourDatabase::from(0 as *mut c_void) }
     
 }
 
 trait _wxColourDatabase : _wxList {
 }
 
-struct wxColourDialog(*u8);
+struct wxColourDialog(*mut c_void);
 impl _wxColourDialog for wxColourDialog {}
 impl _wxDialog for wxColourDialog {}
 impl _wxTopLevelWindow for wxColourDialog {}
 impl _wxWindow for wxColourDialog {}
 impl _wxEvtHandler for wxColourDialog {}
-impl _wxObject for wxColourDialog { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxColourDialog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxColourDialog {
-    pub fn from(handle: *u8) -> @wxColourDialog { @wxColourDialog(handle) }
-    pub fn null() -> @wxColourDialog { wxColourDialog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxColourDialog { @wxColourDialog(handle) }
+    pub fn null() -> @wxColourDialog { wxColourDialog::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -3199,21 +3199,21 @@ trait _wxColourDialog : _wxDialog {
     }
 }
 
-struct wxComboBox(*u8);
+struct wxComboBox(*mut c_void);
 impl _wxComboBox for wxComboBox {}
 impl _wxChoice for wxComboBox {}
 impl _wxControl for wxComboBox {}
 impl _wxWindow for wxComboBox {}
 impl _wxEvtHandler for wxComboBox {}
-impl _wxObject for wxComboBox { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxComboBox { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxComboBox {
-    pub fn from(handle: *u8) -> @wxComboBox { @wxComboBox(handle) }
-    pub fn null() -> @wxComboBox { wxComboBox::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxComboBox { @wxComboBox(handle) }
+    pub fn null() -> @wxComboBox { wxComboBox::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *wchar_t, _stl: c_int) -> @wxComboBox {
+    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *mut *mut c_char, _stl: c_int) -> @wxComboBox {
         let _txt = wxT(_txt);
         unsafe { @wxComboBox(wxComboBox_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, n, str, _stl)) }
     }
@@ -3222,7 +3222,7 @@ impl wxComboBox {
 trait _wxComboBox : _wxChoice {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn appendData(&self, item: &str, d: *u8) {
+    fn appendData(&self, item: &str, d: *mut c_void) {
         let item = wxT(item);
         unsafe { wxComboBox_AppendData(self.handle(), item.handle(), d) }
     }
@@ -3274,7 +3274,7 @@ trait _wxComboBox : _wxChoice {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setEditable(&self, editable: bool) {
+    fn setEditable(&self, editable: c_int) {
         unsafe { wxComboBox_SetEditable(self.handle(), editable) }
     }
     #[fixed_stack_segment]
@@ -3294,27 +3294,27 @@ trait _wxComboBox : _wxChoice {
     }
 }
 
-struct wxCommand(*u8);
+struct wxCommand(*mut c_void);
 impl _wxCommand for wxCommand {}
-impl _wxObject for wxCommand { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxCommand { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCommand {
-    pub fn from(handle: *u8) -> @wxCommand { @wxCommand(handle) }
-    pub fn null() -> @wxCommand { wxCommand::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCommand { @wxCommand(handle) }
+    pub fn null() -> @wxCommand { wxCommand::from(0 as *mut c_void) }
     
 }
 
 trait _wxCommand : _wxObject {
 }
 
-struct wxCommandEvent(*u8);
+struct wxCommandEvent(*mut c_void);
 impl _wxCommandEvent for wxCommandEvent {}
 impl _wxEvent for wxCommandEvent {}
-impl _wxObject for wxCommandEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxCommandEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCommandEvent {
-    pub fn from(handle: *u8) -> @wxCommandEvent { @wxCommandEvent(handle) }
-    pub fn null() -> @wxCommandEvent { wxCommandEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCommandEvent { @wxCommandEvent(handle) }
+    pub fn null() -> @wxCommandEvent { wxCommandEvent::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -3356,12 +3356,12 @@ trait _wxCommandEvent : _wxEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isChecked(&self) -> bool {
+    fn isChecked(&self) -> c_int {
         unsafe { wxCommandEvent_IsChecked(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSelection(&self) -> bool {
+    fn isSelection(&self) -> c_int {
         unsafe { wxCommandEvent_IsSelection(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -3392,53 +3392,53 @@ trait _wxCommandEvent : _wxEvent {
     }
 }
 
-struct wxCommandLineParser(*u8);
-impl _wxCommandLineParser for wxCommandLineParser { fn handle(&self) -> *u8 { **self } }
+struct wxCommandLineParser(*mut c_void);
+impl _wxCommandLineParser for wxCommandLineParser { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCommandLineParser {
-    pub fn from(handle: *u8) -> @wxCommandLineParser { @wxCommandLineParser(handle) }
-    pub fn null() -> @wxCommandLineParser { wxCommandLineParser::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCommandLineParser { @wxCommandLineParser(handle) }
+    pub fn null() -> @wxCommandLineParser { wxCommandLineParser::from(0 as *mut c_void) }
     
 }
 
 trait _wxCommandLineParser {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxCommandProcessor(*u8);
+struct wxCommandProcessor(*mut c_void);
 impl _wxCommandProcessor for wxCommandProcessor {}
-impl _wxObject for wxCommandProcessor { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxCommandProcessor { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCommandProcessor {
-    pub fn from(handle: *u8) -> @wxCommandProcessor { @wxCommandProcessor(handle) }
-    pub fn null() -> @wxCommandProcessor { wxCommandProcessor::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCommandProcessor { @wxCommandProcessor(handle) }
+    pub fn null() -> @wxCommandProcessor { wxCommandProcessor::from(0 as *mut c_void) }
     
 }
 
 trait _wxCommandProcessor : _wxObject {
 }
 
-struct wxCondition(*u8);
-impl _wxCondition for wxCondition { fn handle(&self) -> *u8 { **self } }
+struct wxCondition(*mut c_void);
+impl _wxCondition for wxCondition { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCondition {
-    pub fn from(handle: *u8) -> @wxCondition { @wxCondition(handle) }
-    pub fn null() -> @wxCondition { wxCondition::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCondition { @wxCondition(handle) }
+    pub fn null() -> @wxCondition { wxCondition::from(0 as *mut c_void) }
     
 }
 
 trait _wxCondition {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxConfigBase(*u8);
-impl _wxConfigBase for wxConfigBase { fn handle(&self) -> *u8 { **self } }
+struct wxConfigBase(*mut c_void);
+impl _wxConfigBase for wxConfigBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxConfigBase {
-    pub fn from(handle: *u8) -> @wxConfigBase { @wxConfigBase(handle) }
-    pub fn null() -> @wxConfigBase { wxConfigBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxConfigBase { @wxConfigBase(handle) }
+    pub fn null() -> @wxConfigBase { wxConfigBase::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -3458,7 +3458,7 @@ impl wxConfigBase {
 }
 
 trait _wxConfigBase {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -3467,24 +3467,24 @@ trait _wxConfigBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deleteAll(&self) -> bool {
+    fn deleteAll(&self) -> c_int {
         unsafe { wxConfigBase_DeleteAll(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deleteEntry(&self, key: &str, bDeleteGroupIfEmpty: bool) -> bool {
+    fn deleteEntry(&self, key: &str, bDeleteGroupIfEmpty: c_int) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_DeleteEntry(self.handle(), key.handle(), bDeleteGroupIfEmpty) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deleteGroup(&self, key: &str) -> bool {
+    fn deleteGroup(&self, key: &str) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_DeleteGroup(self.handle(), key.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn exists(&self, strName: &str) -> bool {
+    fn exists(&self, strName: &str) -> c_int {
         let strName = wxT(strName);
         unsafe { wxConfigBase_Exists(self.handle(), strName.handle()) }
     }
@@ -3496,7 +3496,7 @@ trait _wxConfigBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn flush(&self, bCurrentOnly: bool) -> bool {
+    fn flush(&self, bCurrentOnly: c_int) -> c_int {
         unsafe { wxConfigBase_Flush(self.handle(), bCurrentOnly) }
     }
     #[fixed_stack_segment]
@@ -3512,32 +3512,32 @@ trait _wxConfigBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getFirstEntry(&self, lIndex: *u8) -> ~str {
+    fn getFirstEntry(&self, lIndex: *mut c_void) -> ~str {
         unsafe { wxString { handle: wxConfigBase_GetFirstEntry(self.handle(), lIndex) }.to_str() }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getFirstGroup(&self, lIndex: *u8) -> ~str {
+    fn getFirstGroup(&self, lIndex: *mut c_void) -> ~str {
         unsafe { wxString { handle: wxConfigBase_GetFirstGroup(self.handle(), lIndex) }.to_str() }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getNextEntry(&self, lIndex: *u8) -> ~str {
+    fn getNextEntry(&self, lIndex: *mut c_void) -> ~str {
         unsafe { wxString { handle: wxConfigBase_GetNextEntry(self.handle(), lIndex) }.to_str() }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getNextGroup(&self, lIndex: *u8) -> ~str {
+    fn getNextGroup(&self, lIndex: *mut c_void) -> ~str {
         unsafe { wxString { handle: wxConfigBase_GetNextGroup(self.handle(), lIndex) }.to_str() }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getNumberOfEntries(&self, bRecursive: bool) -> c_int {
+    fn getNumberOfEntries(&self, bRecursive: c_int) -> c_int {
         unsafe { wxConfigBase_GetNumberOfEntries(self.handle(), bRecursive) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getNumberOfGroups(&self, bRecursive: bool) -> c_int {
+    fn getNumberOfGroups(&self, bRecursive: c_int) -> c_int {
         unsafe { wxConfigBase_GetNumberOfGroups(self.handle(), bRecursive) }
     }
     #[fixed_stack_segment]
@@ -3557,29 +3557,29 @@ trait _wxConfigBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasEntry(&self, strName: &str) -> bool {
+    fn hasEntry(&self, strName: &str) -> c_int {
         let strName = wxT(strName);
         unsafe { wxConfigBase_HasEntry(self.handle(), strName.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasGroup(&self, strName: &str) -> bool {
+    fn hasGroup(&self, strName: &str) -> c_int {
         let strName = wxT(strName);
         unsafe { wxConfigBase_HasGroup(self.handle(), strName.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isExpandingEnvVars(&self) -> bool {
+    fn isExpandingEnvVars(&self) -> c_int {
         unsafe { wxConfigBase_IsExpandingEnvVars(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isRecordingDefaults(&self) -> bool {
+    fn isRecordingDefaults(&self) -> c_int {
         unsafe { wxConfigBase_IsRecordingDefaults(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn readBool(&self, key: &str, defVal: bool) -> bool {
+    fn readBool(&self, key: &str, defVal: c_int) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_ReadBool(self.handle(), key.handle(), defVal) }
     }
@@ -3604,14 +3604,14 @@ trait _wxConfigBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn renameEntry(&self, oldName: &str, newName: &str) -> bool {
+    fn renameEntry(&self, oldName: &str, newName: &str) -> c_int {
         let oldName = wxT(oldName);
         let newName = wxT(newName);
         unsafe { wxConfigBase_RenameEntry(self.handle(), oldName.handle(), newName.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn renameGroup(&self, oldName: &str, newName: &str) -> bool {
+    fn renameGroup(&self, oldName: &str, newName: &str) -> c_int {
         let oldName = wxT(oldName);
         let newName = wxT(newName);
         unsafe { wxConfigBase_RenameGroup(self.handle(), oldName.handle(), newName.handle()) }
@@ -3624,7 +3624,7 @@ trait _wxConfigBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setExpandEnvVars(&self, bDoIt: bool) {
+    fn setExpandEnvVars(&self, bDoIt: c_int) {
         unsafe { wxConfigBase_SetExpandEnvVars(self.handle(), bDoIt) }
     }
     #[fixed_stack_segment]
@@ -3635,7 +3635,7 @@ trait _wxConfigBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setRecordDefaults(&self, bDoIt: bool) {
+    fn setRecordDefaults(&self, bDoIt: c_int) {
         unsafe { wxConfigBase_SetRecordDefaults(self.handle(), bDoIt) }
     }
     #[fixed_stack_segment]
@@ -3651,75 +3651,75 @@ trait _wxConfigBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn writeBool(&self, key: &str, value: bool) -> bool {
+    fn writeBool(&self, key: &str, value: c_int) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_WriteBool(self.handle(), key.handle(), value) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn writeDouble(&self, key: &str, value: c_double) -> bool {
+    fn writeDouble(&self, key: &str, value: c_double) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_WriteDouble(self.handle(), key.handle(), value) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn writeInteger(&self, key: &str, value: c_int) -> bool {
+    fn writeInteger(&self, key: &str, value: c_int) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_WriteInteger(self.handle(), key.handle(), value) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn writeLong(&self, key: &str, value: c_long) -> bool {
+    fn writeLong(&self, key: &str, value: c_long) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_WriteLong(self.handle(), key.handle(), value) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn writeString(&self, key: &str, value: &str) -> bool {
+    fn writeString(&self, key: &str, value: &str) -> c_int {
         let key = wxT(key);
         let value = wxT(value);
         unsafe { wxConfigBase_WriteString(self.handle(), key.handle(), value.handle()) }
     }
 }
 
-struct wxConnection(*u8);
+struct wxConnection(*mut c_void);
 impl _wxConnection for wxConnection {}
 impl _wxConnectionBase for wxConnection {}
-impl _wxObject for wxConnection { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxConnection { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxConnection {
-    pub fn from(handle: *u8) -> @wxConnection { @wxConnection(handle) }
-    pub fn null() -> @wxConnection { wxConnection::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxConnection { @wxConnection(handle) }
+    pub fn null() -> @wxConnection { wxConnection::from(0 as *mut c_void) }
     
 }
 
 trait _wxConnection : _wxConnectionBase {
 }
 
-struct wxConnectionBase(*u8);
+struct wxConnectionBase(*mut c_void);
 impl _wxConnectionBase for wxConnectionBase {}
-impl _wxObject for wxConnectionBase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxConnectionBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxConnectionBase {
-    pub fn from(handle: *u8) -> @wxConnectionBase { @wxConnectionBase(handle) }
-    pub fn null() -> @wxConnectionBase { wxConnectionBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxConnectionBase { @wxConnectionBase(handle) }
+    pub fn null() -> @wxConnectionBase { wxConnectionBase::from(0 as *mut c_void) }
     
 }
 
 trait _wxConnectionBase : _wxObject {
 }
 
-struct wxContextHelp(*u8);
+struct wxContextHelp(*mut c_void);
 impl _wxContextHelp for wxContextHelp {}
-impl _wxObject for wxContextHelp { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxContextHelp { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxContextHelp {
-    pub fn from(handle: *u8) -> @wxContextHelp { @wxContextHelp(handle) }
-    pub fn null() -> @wxContextHelp { wxContextHelp::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxContextHelp { @wxContextHelp(handle) }
+    pub fn null() -> @wxContextHelp { wxContextHelp::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(win: &T, beginHelp: bool) -> @wxContextHelp {
+    pub fn new<T: _wxWindow>(win: &T, beginHelp: c_int) -> @wxContextHelp {
         unsafe { @wxContextHelp(wxContextHelp_Create(win.handle(), beginHelp)) }
     }
 }
@@ -3727,28 +3727,28 @@ impl wxContextHelp {
 trait _wxContextHelp : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn beginContextHelp<T: _wxWindow>(&self, win: &T) -> bool {
+    fn beginContextHelp<T: _wxWindow>(&self, win: &T) -> c_int {
         unsafe { wxContextHelp_BeginContextHelp(self.handle(), win.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn endContextHelp(&self) -> bool {
+    fn endContextHelp(&self) -> c_int {
         unsafe { wxContextHelp_EndContextHelp(self.handle()) }
     }
 }
 
-struct wxContextHelpButton(*u8);
+struct wxContextHelpButton(*mut c_void);
 impl _wxContextHelpButton for wxContextHelpButton {}
 impl _wxBitmapButton for wxContextHelpButton {}
 impl _wxButton for wxContextHelpButton {}
 impl _wxControl for wxContextHelpButton {}
 impl _wxWindow for wxContextHelpButton {}
 impl _wxEvtHandler for wxContextHelpButton {}
-impl _wxObject for wxContextHelpButton { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxContextHelpButton { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxContextHelpButton {
-    pub fn from(handle: *u8) -> @wxContextHelpButton { @wxContextHelpButton(handle) }
-    pub fn null() -> @wxContextHelpButton { wxContextHelpButton::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxContextHelpButton { @wxContextHelpButton(handle) }
+    pub fn null() -> @wxContextHelpButton { wxContextHelpButton::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -3760,15 +3760,15 @@ impl wxContextHelpButton {
 trait _wxContextHelpButton : _wxBitmapButton {
 }
 
-struct wxControl(*u8);
+struct wxControl(*mut c_void);
 impl _wxControl for wxControl {}
 impl _wxWindow for wxControl {}
 impl _wxEvtHandler for wxControl {}
-impl _wxObject for wxControl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxControl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxControl {
-    pub fn from(handle: *u8) -> @wxControl { @wxControl(handle) }
-    pub fn null() -> @wxControl { wxControl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxControl { @wxControl(handle) }
+    pub fn null() -> @wxControl { wxControl::from(0 as *mut c_void) }
     
 }
 
@@ -3780,91 +3780,91 @@ trait _wxControl : _wxWindow {
     }
 }
 
-struct wxCountingOutputStream(*u8);
+struct wxCountingOutputStream(*mut c_void);
 impl _wxCountingOutputStream for wxCountingOutputStream {}
 impl _wxOutputStream for wxCountingOutputStream {}
-impl _wxStreamBase for wxCountingOutputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxCountingOutputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCountingOutputStream {
-    pub fn from(handle: *u8) -> @wxCountingOutputStream { @wxCountingOutputStream(handle) }
-    pub fn null() -> @wxCountingOutputStream { wxCountingOutputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCountingOutputStream { @wxCountingOutputStream(handle) }
+    pub fn null() -> @wxCountingOutputStream { wxCountingOutputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxCountingOutputStream : _wxOutputStream {
 }
 
-struct wxCriticalSection(*u8);
-impl _wxCriticalSection for wxCriticalSection { fn handle(&self) -> *u8 { **self } }
+struct wxCriticalSection(*mut c_void);
+impl _wxCriticalSection for wxCriticalSection { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCriticalSection {
-    pub fn from(handle: *u8) -> @wxCriticalSection { @wxCriticalSection(handle) }
-    pub fn null() -> @wxCriticalSection { wxCriticalSection::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCriticalSection { @wxCriticalSection(handle) }
+    pub fn null() -> @wxCriticalSection { wxCriticalSection::from(0 as *mut c_void) }
     
 }
 
 trait _wxCriticalSection {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxCriticalSectionLocker(*u8);
-impl _wxCriticalSectionLocker for wxCriticalSectionLocker { fn handle(&self) -> *u8 { **self } }
+struct wxCriticalSectionLocker(*mut c_void);
+impl _wxCriticalSectionLocker for wxCriticalSectionLocker { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCriticalSectionLocker {
-    pub fn from(handle: *u8) -> @wxCriticalSectionLocker { @wxCriticalSectionLocker(handle) }
-    pub fn null() -> @wxCriticalSectionLocker { wxCriticalSectionLocker::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCriticalSectionLocker { @wxCriticalSectionLocker(handle) }
+    pub fn null() -> @wxCriticalSectionLocker { wxCriticalSectionLocker::from(0 as *mut c_void) }
     
 }
 
 trait _wxCriticalSectionLocker {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxCursor(*u8);
+struct wxCursor(*mut c_void);
 impl _wxCursor for wxCursor {}
 impl _wxBitmap for wxCursor {}
 impl _wxGDIObject for wxCursor {}
-impl _wxObject for wxCursor { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxCursor { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCursor {
-    pub fn from(handle: *u8) -> @wxCursor { @wxCursor(handle) }
-    pub fn null() -> @wxCursor { wxCursor::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCursor { @wxCursor(handle) }
+    pub fn null() -> @wxCursor { wxCursor::from(0 as *mut c_void) }
     
 }
 
 trait _wxCursor : _wxBitmap {
 }
 
-struct wxCustomDataObject(*u8);
+struct wxCustomDataObject(*mut c_void);
 impl _wxCustomDataObject for wxCustomDataObject {}
 impl _wxDataObjectSimple for wxCustomDataObject {}
-impl _wxDataObject for wxCustomDataObject { fn handle(&self) -> *u8 { **self } }
+impl _wxDataObject for wxCustomDataObject { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxCustomDataObject {
-    pub fn from(handle: *u8) -> @wxCustomDataObject { @wxCustomDataObject(handle) }
-    pub fn null() -> @wxCustomDataObject { wxCustomDataObject::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxCustomDataObject { @wxCustomDataObject(handle) }
+    pub fn null() -> @wxCustomDataObject { wxCustomDataObject::from(0 as *mut c_void) }
     
 }
 
 trait _wxCustomDataObject : _wxDataObjectSimple {
 }
 
-struct wxDC(*u8);
+struct wxDC(*mut c_void);
 impl _wxDC for wxDC {}
-impl _wxObject for wxDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDC {
-    pub fn from(handle: *u8) -> @wxDC { @wxDC(handle) }
-    pub fn null() -> @wxDC { wxDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDC { @wxDC(handle) }
+    pub fn null() -> @wxDC { wxDC::from(0 as *mut c_void) }
     
 }
 
 trait _wxDC : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn blit<T: _wxDC>(&self, xdest: c_int, ydest: c_int, width: c_int, height: c_int, source: &T, xsrc: c_int, ysrc: c_int, rop: c_int, useMask: bool) -> bool {
+    fn blit<T: _wxDC>(&self, xdest: c_int, ydest: c_int, width: c_int, height: c_int, source: &T, xsrc: c_int, ysrc: c_int, rop: c_int, useMask: c_int) -> c_int {
         unsafe { wxDC_Blit(self.handle(), xdest, ydest, width, height, source.handle(), xsrc, ysrc, rop, useMask) }
     }
     #[fixed_stack_segment]
@@ -3874,12 +3874,12 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canDrawBitmap(&self) -> bool {
+    fn canDrawBitmap(&self) -> c_int {
         unsafe { wxDC_CanDrawBitmap(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canGetTextExtent(&self) -> bool {
+    fn canGetTextExtent(&self) -> c_int {
         unsafe { wxDC_CanGetTextExtent(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -3929,7 +3929,7 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn drawBitmap<T: _wxBitmap>(&self, bmp: &T, x: c_int, y: c_int, useMask: bool) {
+    fn drawBitmap<T: _wxBitmap>(&self, bmp: &T, x: c_int, y: c_int, useMask: c_int) {
         unsafe { wxDC_DrawBitmap(self.handle(), bmp.handle(), x, y, useMask) }
     }
     #[fixed_stack_segment]
@@ -3976,7 +3976,7 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn drawLines(&self, n: c_int, x: *u8, y: *u8, xoffset: c_int, yoffset: c_int) {
+    fn drawLines(&self, n: c_int, x: *mut c_void, y: *mut c_void, xoffset: c_int, yoffset: c_int) {
         unsafe { wxDC_DrawLines(self.handle(), n, x, y, xoffset, yoffset) }
     }
     #[fixed_stack_segment]
@@ -3986,12 +3986,12 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn drawPolygon(&self, n: c_int, x: *u8, y: *u8, xoffset: c_int, yoffset: c_int, fillStyle: c_int) {
+    fn drawPolygon(&self, n: c_int, x: *mut c_void, y: *mut c_void, xoffset: c_int, yoffset: c_int, fillStyle: c_int) {
         unsafe { wxDC_DrawPolygon(self.handle(), n, x, y, xoffset, yoffset, fillStyle) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn drawPolyPolygon(&self, n: c_int, count: *u8, x: *u8, y: *u8, xoffset: c_int, yoffset: c_int, fillStyle: c_int) {
+    fn drawPolyPolygon(&self, n: c_int, count: *mut c_void, x: *mut c_void, y: *mut c_void, xoffset: c_int, yoffset: c_int, fillStyle: c_int) {
         unsafe { wxDC_DrawPolyPolygon(self.handle(), n, count, x, y, xoffset, yoffset, fillStyle) }
     }
     #[fixed_stack_segment]
@@ -4058,7 +4058,7 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getClippingBox(&self, _x: *c_int, _y: *c_int, _w: *c_int, _h: *c_int) {
+    fn getClippingBox(&self, _x: *mut c_void, _y: *mut c_void, _w: *mut c_void, _h: *mut c_void) {
         unsafe { wxDC_GetClippingBox(self.handle(), _x, _y, _w, _h) }
     }
     #[fixed_stack_segment]
@@ -4068,7 +4068,7 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDeviceOrigin(&self, _x: *c_int, _y: *c_int) {
+    fn getDeviceOrigin(&self, _x: *mut c_void, _y: *mut c_void) {
         unsafe { wxDC_GetDeviceOrigin(self.handle(), _x, _y) }
     }
     #[fixed_stack_segment]
@@ -4083,12 +4083,12 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getLogicalOrigin(&self, _x: *c_int, _y: *c_int) {
+    fn getLogicalOrigin(&self, _x: *mut c_void, _y: *mut c_void) {
         unsafe { wxDC_GetLogicalOrigin(self.handle(), _x, _y) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getLogicalScale(&self, _x: *c_double, _y: *c_double) {
+    fn getLogicalScale(&self, _x: *mut c_double, _y: *mut c_double) {
         unsafe { wxDC_GetLogicalScale(self.handle(), _x, _y) }
     }
     #[fixed_stack_segment]
@@ -4108,7 +4108,7 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPixel<T: _wxColour>(&self, x: c_int, y: c_int, col: &T) -> bool {
+    fn getPixel<T: _wxColour>(&self, x: c_int, y: c_int, col: &T) -> c_int {
         unsafe { wxDC_GetPixel(self.handle(), x, y, col.handle()) }
     }
     #[fixed_stack_segment]
@@ -4128,13 +4128,13 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getTextExtent<T: _wxFont>(&self, string: &str, w: *u8, h: *u8, descent: *u8, externalLeading: *u8, theFont: &T) {
+    fn getTextExtent<T: _wxFont>(&self, string: &str, w: *mut c_void, h: *mut c_void, descent: *mut c_void, externalLeading: *mut c_void, theFont: &T) {
         let string = wxT(string);
         unsafe { wxDC_GetTextExtent(self.handle(), string.handle(), w, h, descent, externalLeading, theFont.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getMultiLineTextExtent<T: _wxFont>(&self, string: &str, w: *u8, h: *u8, heightLine: *u8, theFont: &T) {
+    fn getMultiLineTextExtent<T: _wxFont>(&self, string: &str, w: *mut c_void, h: *mut c_void, heightLine: *mut c_void, theFont: &T) {
         let string = wxT(string);
         unsafe { wxDC_GetMultiLineTextExtent(self.handle(), string.handle(), w, h, heightLine, theFont.handle()) }
     }
@@ -4145,7 +4145,7 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getUserScale(&self, x: *c_double, y: *c_double) {
+    fn getUserScale(&self, x: *mut c_double, y: *mut c_double) {
         unsafe { wxDC_GetUserScale(self.handle(), x, y) }
     }
     #[fixed_stack_segment]
@@ -4190,7 +4190,7 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxDC_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -4200,7 +4200,7 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setAxisOrientation(&self, xLeftRight: bool, yBottomUp: bool) {
+    fn setAxisOrientation(&self, xLeftRight: c_int, yBottomUp: c_int) {
         unsafe { wxDC_SetAxisOrientation(self.handle(), xLeftRight, yBottomUp) }
     }
     #[fixed_stack_segment]
@@ -4285,7 +4285,7 @@ trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn startDoc(&self, msg: &str) -> bool {
+    fn startDoc(&self, msg: &str) -> c_int {
         let msg = wxT(msg);
         unsafe { wxDC_StartDoc(self.handle(), msg.handle()) }
     }
@@ -4311,68 +4311,68 @@ trait _wxDC : _wxObject {
     }
 }
 
-struct wxDCClipper(*u8);
-impl _wxDCClipper for wxDCClipper { fn handle(&self) -> *u8 { **self } }
+struct wxDCClipper(*mut c_void);
+impl _wxDCClipper for wxDCClipper { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDCClipper {
-    pub fn from(handle: *u8) -> @wxDCClipper { @wxDCClipper(handle) }
-    pub fn null() -> @wxDCClipper { wxDCClipper::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDCClipper { @wxDCClipper(handle) }
+    pub fn null() -> @wxDCClipper { wxDCClipper::from(0 as *mut c_void) }
     
 }
 
 trait _wxDCClipper {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDDEClient(*u8);
+struct wxDDEClient(*mut c_void);
 impl _wxDDEClient for wxDDEClient {}
 impl _wxClientBase for wxDDEClient {}
-impl _wxObject for wxDDEClient { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDDEClient { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDDEClient {
-    pub fn from(handle: *u8) -> @wxDDEClient { @wxDDEClient(handle) }
-    pub fn null() -> @wxDDEClient { wxDDEClient::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDDEClient { @wxDDEClient(handle) }
+    pub fn null() -> @wxDDEClient { wxDDEClient::from(0 as *mut c_void) }
     
 }
 
 trait _wxDDEClient : _wxClientBase {
 }
 
-struct wxDDEConnection(*u8);
+struct wxDDEConnection(*mut c_void);
 impl _wxDDEConnection for wxDDEConnection {}
 impl _wxConnectionBase for wxDDEConnection {}
-impl _wxObject for wxDDEConnection { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDDEConnection { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDDEConnection {
-    pub fn from(handle: *u8) -> @wxDDEConnection { @wxDDEConnection(handle) }
-    pub fn null() -> @wxDDEConnection { wxDDEConnection::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDDEConnection { @wxDDEConnection(handle) }
+    pub fn null() -> @wxDDEConnection { wxDDEConnection::from(0 as *mut c_void) }
     
 }
 
 trait _wxDDEConnection : _wxConnectionBase {
 }
 
-struct wxDDEServer(*u8);
+struct wxDDEServer(*mut c_void);
 impl _wxDDEServer for wxDDEServer {}
 impl _wxServerBase for wxDDEServer {}
-impl _wxObject for wxDDEServer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDDEServer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDDEServer {
-    pub fn from(handle: *u8) -> @wxDDEServer { @wxDDEServer(handle) }
-    pub fn null() -> @wxDDEServer { wxDDEServer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDDEServer { @wxDDEServer(handle) }
+    pub fn null() -> @wxDDEServer { wxDDEServer::from(0 as *mut c_void) }
     
 }
 
 trait _wxDDEServer : _wxServerBase {
 }
 
-struct wxDataFormat(*u8);
-impl _wxDataFormat for wxDataFormat { fn handle(&self) -> *u8 { **self } }
+struct wxDataFormat(*mut c_void);
+impl _wxDataFormat for wxDataFormat { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDataFormat {
-    pub fn from(handle: *u8) -> @wxDataFormat { @wxDataFormat(handle) }
-    pub fn null() -> @wxDataFormat { wxDataFormat::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDataFormat { @wxDataFormat(handle) }
+    pub fn null() -> @wxDataFormat { wxDataFormat::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -4388,7 +4388,7 @@ impl wxDataFormat {
 }
 
 trait _wxDataFormat {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -4407,12 +4407,12 @@ trait _wxDataFormat {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEqual(&self, other: *u8) -> bool {
+    fn isEqual(&self, other: *mut c_void) -> c_int {
         unsafe { wxDataFormat_IsEqual(self.handle(), other) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setId(&self, id: *u8) {
+    fn setId(&self, id: *mut c_void) {
         unsafe { wxDataFormat_SetId(self.handle(), id) }
     }
     #[fixed_stack_segment]
@@ -4422,41 +4422,41 @@ trait _wxDataFormat {
     }
 }
 
-struct wxDataInputStream(*u8);
-impl _wxDataInputStream for wxDataInputStream { fn handle(&self) -> *u8 { **self } }
+struct wxDataInputStream(*mut c_void);
+impl _wxDataInputStream for wxDataInputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDataInputStream {
-    pub fn from(handle: *u8) -> @wxDataInputStream { @wxDataInputStream(handle) }
-    pub fn null() -> @wxDataInputStream { wxDataInputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDataInputStream { @wxDataInputStream(handle) }
+    pub fn null() -> @wxDataInputStream { wxDataInputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxDataInputStream {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDataObject(*u8);
-impl _wxDataObject for wxDataObject { fn handle(&self) -> *u8 { **self } }
+struct wxDataObject(*mut c_void);
+impl _wxDataObject for wxDataObject { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDataObject {
-    pub fn from(handle: *u8) -> @wxDataObject { @wxDataObject(handle) }
-    pub fn null() -> @wxDataObject { wxDataObject::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDataObject { @wxDataObject(handle) }
+    pub fn null() -> @wxDataObject { wxDataObject::from(0 as *mut c_void) }
     
 }
 
 trait _wxDataObject {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDataObjectComposite(*u8);
+struct wxDataObjectComposite(*mut c_void);
 impl _wxDataObjectComposite for wxDataObjectComposite {}
-impl _wxDataObject for wxDataObjectComposite { fn handle(&self) -> *u8 { **self } }
+impl _wxDataObject for wxDataObjectComposite { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDataObjectComposite {
-    pub fn from(handle: *u8) -> @wxDataObjectComposite { @wxDataObjectComposite(handle) }
-    pub fn null() -> @wxDataObjectComposite { wxDataObjectComposite::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDataObjectComposite { @wxDataObjectComposite(handle) }
+    pub fn null() -> @wxDataObjectComposite { wxDataObjectComposite::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -4468,7 +4468,7 @@ impl wxDataObjectComposite {
 trait _wxDataObjectComposite : _wxDataObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn add(&self, _dat: *u8, _preferred: c_int) {
+    fn add(&self, _dat: *mut c_void, _preferred: c_int) {
         unsafe { wxDataObjectComposite_Add(self.handle(), _dat, _preferred) }
     }
     #[fixed_stack_segment]
@@ -4478,52 +4478,52 @@ trait _wxDataObjectComposite : _wxDataObject {
     }
 }
 
-struct wxDataObjectSimple(*u8);
+struct wxDataObjectSimple(*mut c_void);
 impl _wxDataObjectSimple for wxDataObjectSimple {}
-impl _wxDataObject for wxDataObjectSimple { fn handle(&self) -> *u8 { **self } }
+impl _wxDataObject for wxDataObjectSimple { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDataObjectSimple {
-    pub fn from(handle: *u8) -> @wxDataObjectSimple { @wxDataObjectSimple(handle) }
-    pub fn null() -> @wxDataObjectSimple { wxDataObjectSimple::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDataObjectSimple { @wxDataObjectSimple(handle) }
+    pub fn null() -> @wxDataObjectSimple { wxDataObjectSimple::from(0 as *mut c_void) }
     
 }
 
 trait _wxDataObjectSimple : _wxDataObject {
 }
 
-struct wxDataOutputStream(*u8);
-impl _wxDataOutputStream for wxDataOutputStream { fn handle(&self) -> *u8 { **self } }
+struct wxDataOutputStream(*mut c_void);
+impl _wxDataOutputStream for wxDataOutputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDataOutputStream {
-    pub fn from(handle: *u8) -> @wxDataOutputStream { @wxDataOutputStream(handle) }
-    pub fn null() -> @wxDataOutputStream { wxDataOutputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDataOutputStream { @wxDataOutputStream(handle) }
+    pub fn null() -> @wxDataOutputStream { wxDataOutputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxDataOutputStream {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDatabase(*u8);
+struct wxDatabase(*mut c_void);
 impl _wxDatabase for wxDatabase {}
-impl _wxObject for wxDatabase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDatabase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDatabase {
-    pub fn from(handle: *u8) -> @wxDatabase { @wxDatabase(handle) }
-    pub fn null() -> @wxDatabase { wxDatabase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDatabase { @wxDatabase(handle) }
+    pub fn null() -> @wxDatabase { wxDatabase::from(0 as *mut c_void) }
     
 }
 
 trait _wxDatabase : _wxObject {
 }
 
-struct wxDateTime(*u8);
-impl _wxDateTime for wxDateTime { fn handle(&self) -> *u8 { **self } }
+struct wxDateTime(*mut c_void);
+impl _wxDateTime for wxDateTime { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDateTime {
-    pub fn from(handle: *u8) -> @wxDateTime { @wxDateTime(handle) }
-    pub fn null() -> @wxDateTime { wxDateTime::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDateTime { @wxDateTime(handle) }
+    pub fn null() -> @wxDateTime { wxDateTime::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -4602,17 +4602,17 @@ impl wxDateTime {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn isDSTApplicable(year: c_int, country: c_int) -> bool {
+    pub fn isDSTApplicable(year: c_int, country: c_int) -> c_int {
         unsafe { wxDateTime_IsDSTApplicable(year, country) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn isLeapYear(year: c_int, cal: c_int) -> bool {
+    pub fn isLeapYear(year: c_int, cal: c_int) -> c_int {
         unsafe { wxDateTime_IsLeapYear(year, cal) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn isWestEuropeanCountry(country: c_int) -> bool {
+    pub fn isWestEuropeanCountry(country: c_int) -> c_int {
         unsafe { wxDateTime_IsWestEuropeanCountry(country) }
     }
     #[fixed_stack_segment]
@@ -4622,17 +4622,17 @@ impl wxDateTime {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn wxDateTime(hi_long: c_int, lo_long: c_int) -> *u8 {
+    pub fn wxDateTime(hi_long: c_int, lo_long: c_int) -> *mut c_void {
         unsafe { wxDateTime_wxDateTime(hi_long, lo_long) }
     }
 }
 
 trait _wxDateTime {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addDate<T: _wxDateTime>(&self, diff: *u8, _ref: &T) {
+    fn addDate<T: _wxDateTime>(&self, diff: *mut c_void, _ref: &T) {
         unsafe { wxDateTime_AddDate(self.handle(), diff, _ref.handle()) }
     }
     #[fixed_stack_segment]
@@ -4642,7 +4642,7 @@ trait _wxDateTime {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addTime<T: _wxDateTime>(&self, diff: *u8, _ref: &T) {
+    fn addTime<T: _wxDateTime>(&self, diff: *mut c_void, _ref: &T) {
         unsafe { wxDateTime_AddTime(self.handle(), diff, _ref.handle()) }
     }
     #[fixed_stack_segment]
@@ -4652,7 +4652,7 @@ trait _wxDateTime {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn format(&self, format: *u8, tz: c_int) -> ~str {
+    fn format(&self, format: *mut c_void, tz: c_int) -> ~str {
         unsafe { wxString { handle: wxDateTime_Format(self.handle(), format, tz) }.to_str() }
     }
     #[fixed_stack_segment]
@@ -4737,7 +4737,7 @@ trait _wxDateTime {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getValue(&self, hi_long: *u8, lo_long: *u8) {
+    fn getValue(&self, hi_long: *mut c_void, lo_long: *mut c_void) {
         unsafe { wxDateTime_GetValue(self.handle(), hi_long, lo_long) }
     }
     #[fixed_stack_segment]
@@ -4772,57 +4772,57 @@ trait _wxDateTime {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isBetween<T: _wxDateTime, U: _wxDateTime>(&self, t1: &T, t2: &U) -> bool {
+    fn isBetween<T: _wxDateTime, U: _wxDateTime>(&self, t1: &T, t2: &U) -> c_int {
         unsafe { wxDateTime_IsBetween(self.handle(), t1.handle(), t2.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isDST(&self, country: c_int) -> bool {
+    fn isDST(&self, country: c_int) -> c_int {
         unsafe { wxDateTime_IsDST(self.handle(), country) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEarlierThan(&self, datetime: *u8) -> bool {
+    fn isEarlierThan(&self, datetime: *mut c_void) -> c_int {
         unsafe { wxDateTime_IsEarlierThan(self.handle(), datetime) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEqualTo(&self, datetime: *u8) -> bool {
+    fn isEqualTo(&self, datetime: *mut c_void) -> c_int {
         unsafe { wxDateTime_IsEqualTo(self.handle(), datetime) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEqualUpTo<T: _wxDateTime>(&self, dt: &T, ts: *u8) -> bool {
+    fn isEqualUpTo<T: _wxDateTime>(&self, dt: &T, ts: *mut c_void) -> c_int {
         unsafe { wxDateTime_IsEqualUpTo(self.handle(), dt.handle(), ts) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isLaterThan(&self, datetime: *u8) -> bool {
+    fn isLaterThan(&self, datetime: *mut c_void) -> c_int {
         unsafe { wxDateTime_IsLaterThan(self.handle(), datetime) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSameDate<T: _wxDateTime>(&self, dt: &T) -> bool {
+    fn isSameDate<T: _wxDateTime>(&self, dt: &T) -> c_int {
         unsafe { wxDateTime_IsSameDate(self.handle(), dt.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSameTime<T: _wxDateTime>(&self, dt: &T) -> bool {
+    fn isSameTime<T: _wxDateTime>(&self, dt: &T) -> c_int {
         unsafe { wxDateTime_IsSameTime(self.handle(), dt.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isStrictlyBetween<T: _wxDateTime, U: _wxDateTime>(&self, t1: &T, t2: &U) -> bool {
+    fn isStrictlyBetween<T: _wxDateTime, U: _wxDateTime>(&self, t1: &T, t2: &U) -> c_int {
         unsafe { wxDateTime_IsStrictlyBetween(self.handle(), t1.handle(), t2.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isValid(&self) -> bool {
+    fn isValid(&self) -> c_int {
         unsafe { wxDateTime_IsValid(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isWorkDay(&self, country: c_int) -> bool {
+    fn isWorkDay(&self, country: c_int) -> c_int {
         unsafe { wxDateTime_IsWorkDay(self.handle(), country) }
     }
     #[fixed_stack_segment]
@@ -4842,27 +4842,27 @@ trait _wxDateTime {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn parseDate(&self, date: *u8) -> *u8 {
+    fn parseDate(&self, date: *mut c_void) -> *mut c_void {
         unsafe { wxDateTime_ParseDate(self.handle(), date) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn parseDateTime(&self, datetime: *u8) -> *u8 {
+    fn parseDateTime(&self, datetime: *mut c_void) -> *mut c_void {
         unsafe { wxDateTime_ParseDateTime(self.handle(), datetime) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn parseFormat(&self, date: *u8, format: *u8, dateDef: *u8) -> *u8 {
+    fn parseFormat(&self, date: *mut c_void, format: *mut c_void, dateDef: *mut c_void) -> *mut c_void {
         unsafe { wxDateTime_ParseFormat(self.handle(), date, format, dateDef) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn parseRfc822Date(&self, date: *u8) -> *u8 {
+    fn parseRfc822Date(&self, date: *mut c_void) -> *mut c_void {
         unsafe { wxDateTime_ParseRfc822Date(self.handle(), date) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn parseTime<T: _wxTime>(&self, time: &T) -> *u8 {
+    fn parseTime<T: _wxTime>(&self, time: &T) -> *mut c_void {
         unsafe { wxDateTime_ParseTime(self.handle(), time.handle()) }
     }
     #[fixed_stack_segment]
@@ -4922,7 +4922,7 @@ trait _wxDateTime {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setToLastWeekDay(&self, weekday: c_int, month: c_int, year: c_int) -> bool {
+    fn setToLastWeekDay(&self, weekday: c_int, month: c_int, year: c_int) -> c_int {
         unsafe { wxDateTime_SetToLastWeekDay(self.handle(), weekday, month, year) }
     }
     #[fixed_stack_segment]
@@ -4937,7 +4937,7 @@ trait _wxDateTime {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setToWeekDay(&self, weekday: c_int, n: c_int, month: c_int, year: c_int) -> bool {
+    fn setToWeekDay(&self, weekday: c_int, n: c_int, month: c_int, year: c_int) -> c_int {
         unsafe { wxDateTime_SetToWeekDay(self.handle(), weekday, n, month, year) }
     }
     #[fixed_stack_segment]
@@ -4952,12 +4952,12 @@ trait _wxDateTime {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn subtractDate<T: _wxDateTime>(&self, diff: *u8, _ref: &T) {
+    fn subtractDate<T: _wxDateTime>(&self, diff: *mut c_void, _ref: &T) {
         unsafe { wxDateTime_SubtractDate(self.handle(), diff, _ref.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn subtractTime<T: _wxDateTime>(&self, diff: *u8, _ref: &T) {
+    fn subtractTime<T: _wxDateTime>(&self, diff: *mut c_void, _ref: &T) {
         unsafe { wxDateTime_SubtractTime(self.handle(), diff, _ref.handle()) }
     }
     #[fixed_stack_segment]
@@ -4987,184 +4987,184 @@ trait _wxDateTime {
     }
 }
 
-struct wxDb(*u8);
-impl _wxDb for wxDb { fn handle(&self) -> *u8 { **self } }
+struct wxDb(*mut c_void);
+impl _wxDb for wxDb { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDb {
-    pub fn from(handle: *u8) -> @wxDb { @wxDb(handle) }
-    pub fn null() -> @wxDb { wxDb::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDb { @wxDb(handle) }
+    pub fn null() -> @wxDb { wxDb::from(0 as *mut c_void) }
     
 }
 
 trait _wxDb {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDbColDef(*u8);
-impl _wxDbColDef for wxDbColDef { fn handle(&self) -> *u8 { **self } }
+struct wxDbColDef(*mut c_void);
+impl _wxDbColDef for wxDbColDef { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDbColDef {
-    pub fn from(handle: *u8) -> @wxDbColDef { @wxDbColDef(handle) }
-    pub fn null() -> @wxDbColDef { wxDbColDef::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDbColDef { @wxDbColDef(handle) }
+    pub fn null() -> @wxDbColDef { wxDbColDef::from(0 as *mut c_void) }
     
 }
 
 trait _wxDbColDef {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDbColFor(*u8);
-impl _wxDbColFor for wxDbColFor { fn handle(&self) -> *u8 { **self } }
+struct wxDbColFor(*mut c_void);
+impl _wxDbColFor for wxDbColFor { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDbColFor {
-    pub fn from(handle: *u8) -> @wxDbColFor { @wxDbColFor(handle) }
-    pub fn null() -> @wxDbColFor { wxDbColFor::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDbColFor { @wxDbColFor(handle) }
+    pub fn null() -> @wxDbColFor { wxDbColFor::from(0 as *mut c_void) }
     
 }
 
 trait _wxDbColFor {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDbColInf(*u8);
-impl _wxDbColInf for wxDbColInf { fn handle(&self) -> *u8 { **self } }
+struct wxDbColInf(*mut c_void);
+impl _wxDbColInf for wxDbColInf { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDbColInf {
-    pub fn from(handle: *u8) -> @wxDbColInf { @wxDbColInf(handle) }
-    pub fn null() -> @wxDbColInf { wxDbColInf::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDbColInf { @wxDbColInf(handle) }
+    pub fn null() -> @wxDbColInf { wxDbColInf::from(0 as *mut c_void) }
     
 }
 
 trait _wxDbColInf {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDbConnectInf(*u8);
-impl _wxDbConnectInf for wxDbConnectInf { fn handle(&self) -> *u8 { **self } }
+struct wxDbConnectInf(*mut c_void);
+impl _wxDbConnectInf for wxDbConnectInf { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDbConnectInf {
-    pub fn from(handle: *u8) -> @wxDbConnectInf { @wxDbConnectInf(handle) }
-    pub fn null() -> @wxDbConnectInf { wxDbConnectInf::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDbConnectInf { @wxDbConnectInf(handle) }
+    pub fn null() -> @wxDbConnectInf { wxDbConnectInf::from(0 as *mut c_void) }
     
 }
 
 trait _wxDbConnectInf {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDbInf(*u8);
-impl _wxDbInf for wxDbInf { fn handle(&self) -> *u8 { **self } }
+struct wxDbInf(*mut c_void);
+impl _wxDbInf for wxDbInf { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDbInf {
-    pub fn from(handle: *u8) -> @wxDbInf { @wxDbInf(handle) }
-    pub fn null() -> @wxDbInf { wxDbInf::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDbInf { @wxDbInf(handle) }
+    pub fn null() -> @wxDbInf { wxDbInf::from(0 as *mut c_void) }
     
 }
 
 trait _wxDbInf {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDbSqlTypeInfo(*u8);
-impl _wxDbSqlTypeInfo for wxDbSqlTypeInfo { fn handle(&self) -> *u8 { **self } }
+struct wxDbSqlTypeInfo(*mut c_void);
+impl _wxDbSqlTypeInfo for wxDbSqlTypeInfo { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDbSqlTypeInfo {
-    pub fn from(handle: *u8) -> @wxDbSqlTypeInfo { @wxDbSqlTypeInfo(handle) }
-    pub fn null() -> @wxDbSqlTypeInfo { wxDbSqlTypeInfo::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDbSqlTypeInfo { @wxDbSqlTypeInfo(handle) }
+    pub fn null() -> @wxDbSqlTypeInfo { wxDbSqlTypeInfo::from(0 as *mut c_void) }
     
 }
 
 trait _wxDbSqlTypeInfo {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDbTable(*u8);
-impl _wxDbTable for wxDbTable { fn handle(&self) -> *u8 { **self } }
+struct wxDbTable(*mut c_void);
+impl _wxDbTable for wxDbTable { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDbTable {
-    pub fn from(handle: *u8) -> @wxDbTable { @wxDbTable(handle) }
-    pub fn null() -> @wxDbTable { wxDbTable::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDbTable { @wxDbTable(handle) }
+    pub fn null() -> @wxDbTable { wxDbTable::from(0 as *mut c_void) }
     
 }
 
 trait _wxDbTable {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDbTableInfo(*u8);
-impl _wxDbTableInfo for wxDbTableInfo { fn handle(&self) -> *u8 { **self } }
+struct wxDbTableInfo(*mut c_void);
+impl _wxDbTableInfo for wxDbTableInfo { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDbTableInfo {
-    pub fn from(handle: *u8) -> @wxDbTableInfo { @wxDbTableInfo(handle) }
-    pub fn null() -> @wxDbTableInfo { wxDbTableInfo::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDbTableInfo { @wxDbTableInfo(handle) }
+    pub fn null() -> @wxDbTableInfo { wxDbTableInfo::from(0 as *mut c_void) }
     
 }
 
 trait _wxDbTableInfo {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDebugContext(*u8);
-impl _wxDebugContext for wxDebugContext { fn handle(&self) -> *u8 { **self } }
+struct wxDebugContext(*mut c_void);
+impl _wxDebugContext for wxDebugContext { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDebugContext {
-    pub fn from(handle: *u8) -> @wxDebugContext { @wxDebugContext(handle) }
-    pub fn null() -> @wxDebugContext { wxDebugContext::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDebugContext { @wxDebugContext(handle) }
+    pub fn null() -> @wxDebugContext { wxDebugContext::from(0 as *mut c_void) }
     
 }
 
 trait _wxDebugContext {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDialUpEvent(*u8);
+struct wxDialUpEvent(*mut c_void);
 impl _wxDialUpEvent for wxDialUpEvent {}
 impl _wxEvent for wxDialUpEvent {}
-impl _wxObject for wxDialUpEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDialUpEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDialUpEvent {
-    pub fn from(handle: *u8) -> @wxDialUpEvent { @wxDialUpEvent(handle) }
-    pub fn null() -> @wxDialUpEvent { wxDialUpEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDialUpEvent { @wxDialUpEvent(handle) }
+    pub fn null() -> @wxDialUpEvent { wxDialUpEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxDialUpEvent : _wxEvent {
 }
 
-struct wxDialUpManager(*u8);
-impl _wxDialUpManager for wxDialUpManager { fn handle(&self) -> *u8 { **self } }
+struct wxDialUpManager(*mut c_void);
+impl _wxDialUpManager for wxDialUpManager { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDialUpManager {
-    pub fn from(handle: *u8) -> @wxDialUpManager { @wxDialUpManager(handle) }
-    pub fn null() -> @wxDialUpManager { wxDialUpManager::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDialUpManager { @wxDialUpManager(handle) }
+    pub fn null() -> @wxDialUpManager { wxDialUpManager::from(0 as *mut c_void) }
     
 }
 
 trait _wxDialUpManager {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDialog(*u8);
+struct wxDialog(*mut c_void);
 impl _wxDialog for wxDialog {}
 impl _wxTopLevelWindow for wxDialog {}
 impl _wxWindow for wxDialog {}
 impl _wxEvtHandler for wxDialog {}
-impl _wxObject for wxDialog { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDialog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDialog {
-    pub fn from(handle: *u8) -> @wxDialog { @wxDialog(handle) }
-    pub fn null() -> @wxDialog { wxDialog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDialog { @wxDialog(handle) }
+    pub fn null() -> @wxDialog { wxDialog::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -5187,7 +5187,7 @@ trait _wxDialog : _wxTopLevelWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isModal(&self) -> bool {
+    fn isModal(&self) -> c_int {
         unsafe { wxDialog_IsModal(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -5202,17 +5202,17 @@ trait _wxDialog : _wxTopLevelWindow {
     }
 }
 
-struct wxDirDialog(*u8);
+struct wxDirDialog(*mut c_void);
 impl _wxDirDialog for wxDirDialog {}
 impl _wxDialog for wxDirDialog {}
 impl _wxTopLevelWindow for wxDirDialog {}
 impl _wxWindow for wxDirDialog {}
 impl _wxEvtHandler for wxDirDialog {}
-impl _wxObject for wxDirDialog { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDirDialog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDirDialog {
-    pub fn from(handle: *u8) -> @wxDirDialog { @wxDirDialog(handle) }
-    pub fn null() -> @wxDirDialog { wxDirDialog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDirDialog { @wxDirDialog(handle) }
+    pub fn null() -> @wxDirDialog { wxDirDialog::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -5258,152 +5258,152 @@ trait _wxDirDialog : _wxDialog {
     }
 }
 
-struct wxDirTraverser(*u8);
-impl _wxDirTraverser for wxDirTraverser { fn handle(&self) -> *u8 { **self } }
+struct wxDirTraverser(*mut c_void);
+impl _wxDirTraverser for wxDirTraverser { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDirTraverser {
-    pub fn from(handle: *u8) -> @wxDirTraverser { @wxDirTraverser(handle) }
-    pub fn null() -> @wxDirTraverser { wxDirTraverser::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDirTraverser { @wxDirTraverser(handle) }
+    pub fn null() -> @wxDirTraverser { wxDirTraverser::from(0 as *mut c_void) }
     
 }
 
 trait _wxDirTraverser {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDllLoader(*u8);
-impl _wxDllLoader for wxDllLoader { fn handle(&self) -> *u8 { **self } }
+struct wxDllLoader(*mut c_void);
+impl _wxDllLoader for wxDllLoader { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDllLoader {
-    pub fn from(handle: *u8) -> @wxDllLoader { @wxDllLoader(handle) }
-    pub fn null() -> @wxDllLoader { wxDllLoader::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDllLoader { @wxDllLoader(handle) }
+    pub fn null() -> @wxDllLoader { wxDllLoader::from(0 as *mut c_void) }
     
 }
 
 trait _wxDllLoader {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDocChildFrame(*u8);
+struct wxDocChildFrame(*mut c_void);
 impl _wxDocChildFrame for wxDocChildFrame {}
 impl _wxFrame for wxDocChildFrame {}
 impl _wxTopLevelWindow for wxDocChildFrame {}
 impl _wxWindow for wxDocChildFrame {}
 impl _wxEvtHandler for wxDocChildFrame {}
-impl _wxObject for wxDocChildFrame { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDocChildFrame { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDocChildFrame {
-    pub fn from(handle: *u8) -> @wxDocChildFrame { @wxDocChildFrame(handle) }
-    pub fn null() -> @wxDocChildFrame { wxDocChildFrame::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDocChildFrame { @wxDocChildFrame(handle) }
+    pub fn null() -> @wxDocChildFrame { wxDocChildFrame::from(0 as *mut c_void) }
     
 }
 
 trait _wxDocChildFrame : _wxFrame {
 }
 
-struct wxDocMDIChildFrame(*u8);
+struct wxDocMDIChildFrame(*mut c_void);
 impl _wxDocMDIChildFrame for wxDocMDIChildFrame {}
 impl _wxMDIChildFrame for wxDocMDIChildFrame {}
 impl _wxFrame for wxDocMDIChildFrame {}
 impl _wxTopLevelWindow for wxDocMDIChildFrame {}
 impl _wxWindow for wxDocMDIChildFrame {}
 impl _wxEvtHandler for wxDocMDIChildFrame {}
-impl _wxObject for wxDocMDIChildFrame { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDocMDIChildFrame { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDocMDIChildFrame {
-    pub fn from(handle: *u8) -> @wxDocMDIChildFrame { @wxDocMDIChildFrame(handle) }
-    pub fn null() -> @wxDocMDIChildFrame { wxDocMDIChildFrame::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDocMDIChildFrame { @wxDocMDIChildFrame(handle) }
+    pub fn null() -> @wxDocMDIChildFrame { wxDocMDIChildFrame::from(0 as *mut c_void) }
     
 }
 
 trait _wxDocMDIChildFrame : _wxMDIChildFrame {
 }
 
-struct wxDocMDIParentFrame(*u8);
+struct wxDocMDIParentFrame(*mut c_void);
 impl _wxDocMDIParentFrame for wxDocMDIParentFrame {}
 impl _wxMDIParentFrame for wxDocMDIParentFrame {}
 impl _wxFrame for wxDocMDIParentFrame {}
 impl _wxTopLevelWindow for wxDocMDIParentFrame {}
 impl _wxWindow for wxDocMDIParentFrame {}
 impl _wxEvtHandler for wxDocMDIParentFrame {}
-impl _wxObject for wxDocMDIParentFrame { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDocMDIParentFrame { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDocMDIParentFrame {
-    pub fn from(handle: *u8) -> @wxDocMDIParentFrame { @wxDocMDIParentFrame(handle) }
-    pub fn null() -> @wxDocMDIParentFrame { wxDocMDIParentFrame::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDocMDIParentFrame { @wxDocMDIParentFrame(handle) }
+    pub fn null() -> @wxDocMDIParentFrame { wxDocMDIParentFrame::from(0 as *mut c_void) }
     
 }
 
 trait _wxDocMDIParentFrame : _wxMDIParentFrame {
 }
 
-struct wxDocManager(*u8);
+struct wxDocManager(*mut c_void);
 impl _wxDocManager for wxDocManager {}
 impl _wxEvtHandler for wxDocManager {}
-impl _wxObject for wxDocManager { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDocManager { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDocManager {
-    pub fn from(handle: *u8) -> @wxDocManager { @wxDocManager(handle) }
-    pub fn null() -> @wxDocManager { wxDocManager::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDocManager { @wxDocManager(handle) }
+    pub fn null() -> @wxDocManager { wxDocManager::from(0 as *mut c_void) }
     
 }
 
 trait _wxDocManager : _wxEvtHandler {
 }
 
-struct wxDocParentFrame(*u8);
+struct wxDocParentFrame(*mut c_void);
 impl _wxDocParentFrame for wxDocParentFrame {}
 impl _wxFrame for wxDocParentFrame {}
 impl _wxTopLevelWindow for wxDocParentFrame {}
 impl _wxWindow for wxDocParentFrame {}
 impl _wxEvtHandler for wxDocParentFrame {}
-impl _wxObject for wxDocParentFrame { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDocParentFrame { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDocParentFrame {
-    pub fn from(handle: *u8) -> @wxDocParentFrame { @wxDocParentFrame(handle) }
-    pub fn null() -> @wxDocParentFrame { wxDocParentFrame::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDocParentFrame { @wxDocParentFrame(handle) }
+    pub fn null() -> @wxDocParentFrame { wxDocParentFrame::from(0 as *mut c_void) }
     
 }
 
 trait _wxDocParentFrame : _wxFrame {
 }
 
-struct wxDocTemplate(*u8);
+struct wxDocTemplate(*mut c_void);
 impl _wxDocTemplate for wxDocTemplate {}
-impl _wxObject for wxDocTemplate { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDocTemplate { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDocTemplate {
-    pub fn from(handle: *u8) -> @wxDocTemplate { @wxDocTemplate(handle) }
-    pub fn null() -> @wxDocTemplate { wxDocTemplate::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDocTemplate { @wxDocTemplate(handle) }
+    pub fn null() -> @wxDocTemplate { wxDocTemplate::from(0 as *mut c_void) }
     
 }
 
 trait _wxDocTemplate : _wxObject {
 }
 
-struct wxDocument(*u8);
+struct wxDocument(*mut c_void);
 impl _wxDocument for wxDocument {}
 impl _wxEvtHandler for wxDocument {}
-impl _wxObject for wxDocument { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDocument { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDocument {
-    pub fn from(handle: *u8) -> @wxDocument { @wxDocument(handle) }
-    pub fn null() -> @wxDocument { wxDocument::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDocument { @wxDocument(handle) }
+    pub fn null() -> @wxDocument { wxDocument::from(0 as *mut c_void) }
     
 }
 
 trait _wxDocument : _wxEvtHandler {
 }
 
-struct wxDragImage(*u8);
+struct wxDragImage(*mut c_void);
 impl _wxDragImage for wxDragImage {}
-impl _wxObject for wxDragImage { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDragImage { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDragImage {
-    pub fn from(handle: *u8) -> @wxDragImage { @wxDragImage(handle) }
-    pub fn null() -> @wxDragImage { wxDragImage::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDragImage { @wxDragImage(handle) }
+    pub fn null() -> @wxDragImage { wxDragImage::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -5415,12 +5415,12 @@ impl wxDragImage {
 trait _wxDragImage : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn beginDragFullScreen<T: _wxWindow, U: _wxRect>(&self, x_pos: c_int, y_pos: c_int, window: &T, fullScreen: bool, rect: &U) -> bool {
+    fn beginDragFullScreen<T: _wxWindow, U: _wxRect>(&self, x_pos: c_int, y_pos: c_int, window: &T, fullScreen: c_int, rect: &U) -> c_int {
         unsafe { wxDragImage_BeginDragFullScreen(self.handle(), x_pos, y_pos, window.handle(), fullScreen, rect.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn beginDrag<T: _wxWindow, U: _wxWindow>(&self, x: c_int, y: c_int, window: &T, boundingWindow: &U) -> bool {
+    fn beginDrag<T: _wxWindow, U: _wxWindow>(&self, x: c_int, y: c_int, window: &T, boundingWindow: &U) -> c_int {
         unsafe { wxDragImage_BeginDrag(self.handle(), x, y, window.handle(), boundingWindow.handle()) }
     }
     #[fixed_stack_segment]
@@ -5430,31 +5430,31 @@ trait _wxDragImage : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hide(&self) -> bool {
+    fn hide(&self) -> c_int {
         unsafe { wxDragImage_Hide(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn move(&self, x: c_int, y: c_int) -> bool {
+    fn move(&self, x: c_int, y: c_int) -> c_int {
         unsafe { wxDragImage_Move(self.handle(), x, y) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn show(&self) -> bool {
+    fn show(&self) -> c_int {
         unsafe { wxDragImage_Show(self.handle()) }
     }
 }
 
-struct wxDrawControl(*u8);
+struct wxDrawControl(*mut c_void);
 impl _wxDrawControl for wxDrawControl {}
 impl _wxControl for wxDrawControl {}
 impl _wxWindow for wxDrawControl {}
 impl _wxEvtHandler for wxDrawControl {}
-impl _wxObject for wxDrawControl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDrawControl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDrawControl {
-    pub fn from(handle: *u8) -> @wxDrawControl { @wxDrawControl(handle) }
-    pub fn null() -> @wxDrawControl { wxDrawControl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDrawControl { @wxDrawControl(handle) }
+    pub fn null() -> @wxDrawControl { wxDrawControl::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -5466,15 +5466,15 @@ impl wxDrawControl {
 trait _wxDrawControl : _wxControl {
 }
 
-struct wxDrawWindow(*u8);
+struct wxDrawWindow(*mut c_void);
 impl _wxDrawWindow for wxDrawWindow {}
 impl _wxWindow for wxDrawWindow {}
 impl _wxEvtHandler for wxDrawWindow {}
-impl _wxObject for wxDrawWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDrawWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDrawWindow {
-    pub fn from(handle: *u8) -> @wxDrawWindow { @wxDrawWindow(handle) }
-    pub fn null() -> @wxDrawWindow { wxDrawWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDrawWindow { @wxDrawWindow(handle) }
+    pub fn null() -> @wxDrawWindow { wxDrawWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -5486,45 +5486,45 @@ impl wxDrawWindow {
 trait _wxDrawWindow : _wxWindow {
 }
 
-struct wxDropFilesEvent(*u8);
+struct wxDropFilesEvent(*mut c_void);
 impl _wxDropFilesEvent for wxDropFilesEvent {}
 impl _wxEvent for wxDropFilesEvent {}
-impl _wxObject for wxDropFilesEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDropFilesEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDropFilesEvent {
-    pub fn from(handle: *u8) -> @wxDropFilesEvent { @wxDropFilesEvent(handle) }
-    pub fn null() -> @wxDropFilesEvent { wxDropFilesEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDropFilesEvent { @wxDropFilesEvent(handle) }
+    pub fn null() -> @wxDropFilesEvent { wxDropFilesEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxDropFilesEvent : _wxEvent {
 }
 
-struct wxDropSource(*u8);
-impl _wxDropSource for wxDropSource { fn handle(&self) -> *u8 { **self } }
+struct wxDropSource(*mut c_void);
+impl _wxDropSource for wxDropSource { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDropSource {
-    pub fn from(handle: *u8) -> @wxDropSource { @wxDropSource(handle) }
-    pub fn null() -> @wxDropSource { wxDropSource::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDropSource { @wxDropSource(handle) }
+    pub fn null() -> @wxDropSource { wxDropSource::from(0 as *mut c_void) }
     
 }
 
 trait _wxDropSource {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDropTarget(*u8);
-impl _wxDropTarget for wxDropTarget { fn handle(&self) -> *u8 { **self } }
+struct wxDropTarget(*mut c_void);
+impl _wxDropTarget for wxDropTarget { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDropTarget {
-    pub fn from(handle: *u8) -> @wxDropTarget { @wxDropTarget(handle) }
-    pub fn null() -> @wxDropTarget { wxDropTarget::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDropTarget { @wxDropTarget(handle) }
+    pub fn null() -> @wxDropTarget { wxDropTarget::from(0 as *mut c_void) }
     
 }
 
 trait _wxDropTarget {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -5538,89 +5538,89 @@ trait _wxDropTarget {
     }
 }
 
-struct wxDynToolInfo(*u8);
+struct wxDynToolInfo(*mut c_void);
 impl _wxDynToolInfo for wxDynToolInfo {}
 impl _wxToolLayoutItem for wxDynToolInfo {}
-impl _wxObject for wxDynToolInfo { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDynToolInfo { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDynToolInfo {
-    pub fn from(handle: *u8) -> @wxDynToolInfo { @wxDynToolInfo(handle) }
-    pub fn null() -> @wxDynToolInfo { wxDynToolInfo::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDynToolInfo { @wxDynToolInfo(handle) }
+    pub fn null() -> @wxDynToolInfo { wxDynToolInfo::from(0 as *mut c_void) }
     
 }
 
 trait _wxDynToolInfo : _wxToolLayoutItem {
 }
 
-struct wxDynamicLibrary(*u8);
-impl _wxDynamicLibrary for wxDynamicLibrary { fn handle(&self) -> *u8 { **self } }
+struct wxDynamicLibrary(*mut c_void);
+impl _wxDynamicLibrary for wxDynamicLibrary { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDynamicLibrary {
-    pub fn from(handle: *u8) -> @wxDynamicLibrary { @wxDynamicLibrary(handle) }
-    pub fn null() -> @wxDynamicLibrary { wxDynamicLibrary::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDynamicLibrary { @wxDynamicLibrary(handle) }
+    pub fn null() -> @wxDynamicLibrary { wxDynamicLibrary::from(0 as *mut c_void) }
     
 }
 
 trait _wxDynamicLibrary {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxDynamicSashWindow(*u8);
+struct wxDynamicSashWindow(*mut c_void);
 impl _wxDynamicSashWindow for wxDynamicSashWindow {}
 impl _wxWindow for wxDynamicSashWindow {}
 impl _wxEvtHandler for wxDynamicSashWindow {}
-impl _wxObject for wxDynamicSashWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDynamicSashWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDynamicSashWindow {
-    pub fn from(handle: *u8) -> @wxDynamicSashWindow { @wxDynamicSashWindow(handle) }
-    pub fn null() -> @wxDynamicSashWindow { wxDynamicSashWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDynamicSashWindow { @wxDynamicSashWindow(handle) }
+    pub fn null() -> @wxDynamicSashWindow { wxDynamicSashWindow::from(0 as *mut c_void) }
     
 }
 
 trait _wxDynamicSashWindow : _wxWindow {
 }
 
-struct wxDynamicToolBar(*u8);
+struct wxDynamicToolBar(*mut c_void);
 impl _wxDynamicToolBar for wxDynamicToolBar {}
 impl _wxToolBarBase for wxDynamicToolBar {}
 impl _wxControl for wxDynamicToolBar {}
 impl _wxWindow for wxDynamicToolBar {}
 impl _wxEvtHandler for wxDynamicToolBar {}
-impl _wxObject for wxDynamicToolBar { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDynamicToolBar { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDynamicToolBar {
-    pub fn from(handle: *u8) -> @wxDynamicToolBar { @wxDynamicToolBar(handle) }
-    pub fn null() -> @wxDynamicToolBar { wxDynamicToolBar::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDynamicToolBar { @wxDynamicToolBar(handle) }
+    pub fn null() -> @wxDynamicToolBar { wxDynamicToolBar::from(0 as *mut c_void) }
     
 }
 
 trait _wxDynamicToolBar : _wxToolBarBase {
 }
 
-struct wxEditableListBox(*u8);
+struct wxEditableListBox(*mut c_void);
 impl _wxEditableListBox for wxEditableListBox {}
 impl _wxPanel for wxEditableListBox {}
 impl _wxWindow for wxEditableListBox {}
 impl _wxEvtHandler for wxEditableListBox {}
-impl _wxObject for wxEditableListBox { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxEditableListBox { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxEditableListBox {
-    pub fn from(handle: *u8) -> @wxEditableListBox { @wxEditableListBox(handle) }
-    pub fn null() -> @wxEditableListBox { wxEditableListBox::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxEditableListBox { @wxEditableListBox(handle) }
+    pub fn null() -> @wxEditableListBox { wxEditableListBox::from(0 as *mut c_void) }
     
 }
 
 trait _wxEditableListBox : _wxPanel {
 }
 
-struct wxEncodingConverter(*u8);
+struct wxEncodingConverter(*mut c_void);
 impl _wxEncodingConverter for wxEncodingConverter {}
-impl _wxObject for wxEncodingConverter { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxEncodingConverter { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxEncodingConverter {
-    pub fn from(handle: *u8) -> @wxEncodingConverter { @wxEncodingConverter(handle) }
-    pub fn null() -> @wxEncodingConverter { wxEncodingConverter::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxEncodingConverter { @wxEncodingConverter(handle) }
+    pub fn null() -> @wxEncodingConverter { wxEncodingConverter::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -5632,7 +5632,7 @@ impl wxEncodingConverter {
 trait _wxEncodingConverter : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn convert(&self, input: *u8, output: *u8) {
+    fn convert(&self, input: *mut c_void, output: *mut c_void) {
         unsafe { wxEncodingConverter_Convert(self.handle(), input, output) }
     }
     #[fixed_stack_segment]
@@ -5652,14 +5652,14 @@ trait _wxEncodingConverter : _wxObject {
     }
 }
 
-struct wxEraseEvent(*u8);
+struct wxEraseEvent(*mut c_void);
 impl _wxEraseEvent for wxEraseEvent {}
 impl _wxEvent for wxEraseEvent {}
-impl _wxObject for wxEraseEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxEraseEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxEraseEvent {
-    pub fn from(handle: *u8) -> @wxEraseEvent { @wxEraseEvent(handle) }
-    pub fn null() -> @wxEraseEvent { wxEraseEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxEraseEvent { @wxEraseEvent(handle) }
+    pub fn null() -> @wxEraseEvent { wxEraseEvent::from(0 as *mut c_void) }
     
 }
 
@@ -5671,13 +5671,13 @@ trait _wxEraseEvent : _wxEvent {
     }
 }
 
-struct wxEvent(*u8);
+struct wxEvent(*mut c_void);
 impl _wxEvent for wxEvent {}
-impl _wxObject for wxEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxEvent {
-    pub fn from(handle: *u8) -> @wxEvent { @wxEvent(handle) }
-    pub fn null() -> @wxEvent { wxEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxEvent { @wxEvent(handle) }
+    pub fn null() -> @wxEvent { wxEvent::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -5689,7 +5689,7 @@ impl wxEvent {
 trait _wxEvent : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn copyObject(&self, object_dest: *u8) {
+    fn copyObject(&self, object_dest: *mut c_void) {
         unsafe { wxEvent_CopyObject(self.handle(), object_dest) }
     }
     #[fixed_stack_segment]
@@ -5709,7 +5709,7 @@ trait _wxEvent : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSkipped(&self) -> bool {
+    fn getSkipped(&self) -> c_int {
         unsafe { wxEvent_GetSkipped(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -5719,7 +5719,7 @@ trait _wxEvent : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isCommandEvent(&self) -> bool {
+    fn isCommandEvent(&self) -> c_int {
         unsafe { wxEvent_IsCommandEvent(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -5749,13 +5749,13 @@ trait _wxEvent : _wxObject {
     }
 }
 
-struct wxEvtHandler(*u8);
+struct wxEvtHandler(*mut c_void);
 impl _wxEvtHandler for wxEvtHandler {}
-impl _wxObject for wxEvtHandler { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxEvtHandler { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxEvtHandler {
-    pub fn from(handle: *u8) -> @wxEvtHandler { @wxEvtHandler(handle) }
-    pub fn null() -> @wxEvtHandler { wxEvtHandler::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxEvtHandler { @wxEvtHandler(handle) }
+    pub fn null() -> @wxEvtHandler { wxEvtHandler::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -5772,7 +5772,7 @@ trait _wxEvtHandler : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn connect(&self, first: c_int, last: c_int, type_: c_int, data: *u8) -> c_int {
+    fn connect(&self, first: c_int, last: c_int, type_: c_int, data: *mut c_void) -> c_int {
         unsafe { wxEvtHandler_Connect(self.handle(), first, last, type_, data) }
     }
     #[fixed_stack_segment]
@@ -5782,7 +5782,7 @@ trait _wxEvtHandler : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEvtHandlerEnabled(&self) -> bool {
+    fn getEvtHandlerEnabled(&self) -> c_int {
         unsafe { wxEvtHandler_GetEvtHandlerEnabled(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -5797,7 +5797,7 @@ trait _wxEvtHandler : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn processEvent<T: _wxEvent>(&self, event: &T) -> bool {
+    fn processEvent<T: _wxEvent>(&self, event: &T) -> c_int {
         unsafe { wxEvtHandler_ProcessEvent(self.handle(), event.handle()) }
     }
     #[fixed_stack_segment]
@@ -5807,7 +5807,7 @@ trait _wxEvtHandler : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setEvtHandlerEnabled(&self, enabled: bool) {
+    fn setEvtHandlerEnabled(&self, enabled: c_int) {
         unsafe { wxEvtHandler_SetEvtHandlerEnabled(self.handle(), enabled) }
     }
     #[fixed_stack_segment]
@@ -5827,130 +5827,130 @@ trait _wxEvtHandler : _wxObject {
     }
 }
 
-struct wxExpr(*u8);
-impl _wxExpr for wxExpr { fn handle(&self) -> *u8 { **self } }
+struct wxExpr(*mut c_void);
+impl _wxExpr for wxExpr { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxExpr {
-    pub fn from(handle: *u8) -> @wxExpr { @wxExpr(handle) }
-    pub fn null() -> @wxExpr { wxExpr::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxExpr { @wxExpr(handle) }
+    pub fn null() -> @wxExpr { wxExpr::from(0 as *mut c_void) }
     
 }
 
 trait _wxExpr {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxExprDatabase(*u8);
+struct wxExprDatabase(*mut c_void);
 impl _wxExprDatabase for wxExprDatabase {}
 impl _wxList for wxExprDatabase {}
-impl _wxObject for wxExprDatabase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxExprDatabase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxExprDatabase {
-    pub fn from(handle: *u8) -> @wxExprDatabase { @wxExprDatabase(handle) }
-    pub fn null() -> @wxExprDatabase { wxExprDatabase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxExprDatabase { @wxExprDatabase(handle) }
+    pub fn null() -> @wxExprDatabase { wxExprDatabase::from(0 as *mut c_void) }
     
 }
 
 trait _wxExprDatabase : _wxList {
 }
 
-struct wxFFile(*u8);
-impl _wxFFile for wxFFile { fn handle(&self) -> *u8 { **self } }
+struct wxFFile(*mut c_void);
+impl _wxFFile for wxFFile { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFFile {
-    pub fn from(handle: *u8) -> @wxFFile { @wxFFile(handle) }
-    pub fn null() -> @wxFFile { wxFFile::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFFile { @wxFFile(handle) }
+    pub fn null() -> @wxFFile { wxFFile::from(0 as *mut c_void) }
     
 }
 
 trait _wxFFile {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxFFileInputStream(*u8);
+struct wxFFileInputStream(*mut c_void);
 impl _wxFFileInputStream for wxFFileInputStream {}
 impl _wxInputStream for wxFFileInputStream {}
-impl _wxStreamBase for wxFFileInputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxFFileInputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFFileInputStream {
-    pub fn from(handle: *u8) -> @wxFFileInputStream { @wxFFileInputStream(handle) }
-    pub fn null() -> @wxFFileInputStream { wxFFileInputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFFileInputStream { @wxFFileInputStream(handle) }
+    pub fn null() -> @wxFFileInputStream { wxFFileInputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxFFileInputStream : _wxInputStream {
 }
 
-struct wxFFileOutputStream(*u8);
+struct wxFFileOutputStream(*mut c_void);
 impl _wxFFileOutputStream for wxFFileOutputStream {}
 impl _wxOutputStream for wxFFileOutputStream {}
-impl _wxStreamBase for wxFFileOutputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxFFileOutputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFFileOutputStream {
-    pub fn from(handle: *u8) -> @wxFFileOutputStream { @wxFFileOutputStream(handle) }
-    pub fn null() -> @wxFFileOutputStream { wxFFileOutputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFFileOutputStream { @wxFFileOutputStream(handle) }
+    pub fn null() -> @wxFFileOutputStream { wxFFileOutputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxFFileOutputStream : _wxOutputStream {
 }
 
-struct wxFSFile(*u8);
+struct wxFSFile(*mut c_void);
 impl _wxFSFile for wxFSFile {}
-impl _wxObject for wxFSFile { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFSFile { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFSFile {
-    pub fn from(handle: *u8) -> @wxFSFile { @wxFSFile(handle) }
-    pub fn null() -> @wxFSFile { wxFSFile::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFSFile { @wxFSFile(handle) }
+    pub fn null() -> @wxFSFile { wxFSFile::from(0 as *mut c_void) }
     
 }
 
 trait _wxFSFile : _wxObject {
 }
 
-struct wxFTP(*u8);
+struct wxFTP(*mut c_void);
 impl _wxFTP for wxFTP {}
 impl _wxProtocol for wxFTP {}
 impl _wxSocketClient for wxFTP {}
 impl _wxSocketBase for wxFTP {}
-impl _wxObject for wxFTP { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFTP { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFTP {
-    pub fn from(handle: *u8) -> @wxFTP { @wxFTP(handle) }
-    pub fn null() -> @wxFTP { wxFTP::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFTP { @wxFTP(handle) }
+    pub fn null() -> @wxFTP { wxFTP::from(0 as *mut c_void) }
     
 }
 
 trait _wxFTP : _wxProtocol {
 }
 
-struct wxFileDataObject(*u8);
+struct wxFileDataObject(*mut c_void);
 impl _wxFileDataObject for wxFileDataObject {}
 impl _wxDataObjectSimple for wxFileDataObject {}
-impl _wxDataObject for wxFileDataObject { fn handle(&self) -> *u8 { **self } }
+impl _wxDataObject for wxFileDataObject { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFileDataObject {
-    pub fn from(handle: *u8) -> @wxFileDataObject { @wxFileDataObject(handle) }
-    pub fn null() -> @wxFileDataObject { wxFileDataObject::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFileDataObject { @wxFileDataObject(handle) }
+    pub fn null() -> @wxFileDataObject { wxFileDataObject::from(0 as *mut c_void) }
     
 }
 
 trait _wxFileDataObject : _wxDataObjectSimple {
 }
 
-struct wxFileDialog(*u8);
+struct wxFileDialog(*mut c_void);
 impl _wxFileDialog for wxFileDialog {}
 impl _wxDialog for wxFileDialog {}
 impl _wxTopLevelWindow for wxFileDialog {}
 impl _wxWindow for wxFileDialog {}
 impl _wxEvtHandler for wxFileDialog {}
-impl _wxObject for wxFileDialog { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFileDialog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFileDialog {
-    pub fn from(handle: *u8) -> @wxFileDialog { @wxFileDialog(handle) }
-    pub fn null() -> @wxFileDialog { wxFileDialog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFileDialog { @wxFileDialog(handle) }
+    pub fn null() -> @wxFileDialog { wxFileDialog::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -5976,7 +5976,7 @@ trait _wxFileDialog : _wxDialog {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getFilenames(&self, paths: *wchar_t) -> c_int {
+    fn getFilenames(&self, paths: *mut c_void) -> c_int {
         unsafe { wxFileDialog_GetFilenames(self.handle(), paths) }
     }
     #[fixed_stack_segment]
@@ -5996,7 +5996,7 @@ trait _wxFileDialog : _wxDialog {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPaths(&self, paths: *wchar_t) -> c_int {
+    fn getPaths(&self, paths: *mut c_void) -> c_int {
         unsafe { wxFileDialog_GetPaths(self.handle(), paths) }
     }
     #[fixed_stack_segment]
@@ -6051,26 +6051,26 @@ trait _wxFileDialog : _wxDialog {
     }
 }
 
-struct wxFileDropTarget(*u8);
+struct wxFileDropTarget(*mut c_void);
 impl _wxFileDropTarget for wxFileDropTarget {}
-impl _wxDropTarget for wxFileDropTarget { fn handle(&self) -> *u8 { **self } }
+impl _wxDropTarget for wxFileDropTarget { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFileDropTarget {
-    pub fn from(handle: *u8) -> @wxFileDropTarget { @wxFileDropTarget(handle) }
-    pub fn null() -> @wxFileDropTarget { wxFileDropTarget::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFileDropTarget { @wxFileDropTarget(handle) }
+    pub fn null() -> @wxFileDropTarget { wxFileDropTarget::from(0 as *mut c_void) }
     
 }
 
 trait _wxFileDropTarget : _wxDropTarget {
 }
 
-struct wxFileHistory(*u8);
+struct wxFileHistory(*mut c_void);
 impl _wxFileHistory for wxFileHistory {}
-impl _wxObject for wxFileHistory { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFileHistory { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFileHistory {
-    pub fn from(handle: *u8) -> @wxFileHistory { @wxFileHistory(handle) }
-    pub fn null() -> @wxFileHistory { wxFileHistory::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFileHistory { @wxFileHistory(handle) }
+    pub fn null() -> @wxFileHistory { wxFileHistory::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -6108,7 +6108,7 @@ trait _wxFileHistory : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getMenus(&self, _ref: *u8) -> c_int {
+    fn getMenus(&self, _ref: *mut c_void) -> c_int {
         unsafe { wxFileHistory_GetMenus(self.handle(), _ref) }
     }
     #[fixed_stack_segment]
@@ -6138,85 +6138,85 @@ trait _wxFileHistory : _wxObject {
     }
 }
 
-struct wxFileInputStream(*u8);
+struct wxFileInputStream(*mut c_void);
 impl _wxFileInputStream for wxFileInputStream {}
 impl _wxInputStream for wxFileInputStream {}
-impl _wxStreamBase for wxFileInputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxFileInputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFileInputStream {
-    pub fn from(handle: *u8) -> @wxFileInputStream { @wxFileInputStream(handle) }
-    pub fn null() -> @wxFileInputStream { wxFileInputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFileInputStream { @wxFileInputStream(handle) }
+    pub fn null() -> @wxFileInputStream { wxFileInputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxFileInputStream : _wxInputStream {
 }
 
-struct wxFileName(*u8);
-impl _wxFileName for wxFileName { fn handle(&self) -> *u8 { **self } }
+struct wxFileName(*mut c_void);
+impl _wxFileName for wxFileName { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFileName {
-    pub fn from(handle: *u8) -> @wxFileName { @wxFileName(handle) }
-    pub fn null() -> @wxFileName { wxFileName::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFileName { @wxFileName(handle) }
+    pub fn null() -> @wxFileName { wxFileName::from(0 as *mut c_void) }
     
 }
 
 trait _wxFileName {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxFileOutputStream(*u8);
+struct wxFileOutputStream(*mut c_void);
 impl _wxFileOutputStream for wxFileOutputStream {}
 impl _wxOutputStream for wxFileOutputStream {}
-impl _wxStreamBase for wxFileOutputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxFileOutputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFileOutputStream {
-    pub fn from(handle: *u8) -> @wxFileOutputStream { @wxFileOutputStream(handle) }
-    pub fn null() -> @wxFileOutputStream { wxFileOutputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFileOutputStream { @wxFileOutputStream(handle) }
+    pub fn null() -> @wxFileOutputStream { wxFileOutputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxFileOutputStream : _wxOutputStream {
 }
 
-struct wxFileSystem(*u8);
+struct wxFileSystem(*mut c_void);
 impl _wxFileSystem for wxFileSystem {}
-impl _wxObject for wxFileSystem { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFileSystem { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFileSystem {
-    pub fn from(handle: *u8) -> @wxFileSystem { @wxFileSystem(handle) }
-    pub fn null() -> @wxFileSystem { wxFileSystem::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFileSystem { @wxFileSystem(handle) }
+    pub fn null() -> @wxFileSystem { wxFileSystem::from(0 as *mut c_void) }
     
 }
 
 trait _wxFileSystem : _wxObject {
 }
 
-struct wxFileSystemHandler(*u8);
+struct wxFileSystemHandler(*mut c_void);
 impl _wxFileSystemHandler for wxFileSystemHandler {}
-impl _wxObject for wxFileSystemHandler { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFileSystemHandler { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFileSystemHandler {
-    pub fn from(handle: *u8) -> @wxFileSystemHandler { @wxFileSystemHandler(handle) }
-    pub fn null() -> @wxFileSystemHandler { wxFileSystemHandler::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFileSystemHandler { @wxFileSystemHandler(handle) }
+    pub fn null() -> @wxFileSystemHandler { wxFileSystemHandler::from(0 as *mut c_void) }
     
 }
 
 trait _wxFileSystemHandler : _wxObject {
 }
 
-struct wxFileType(*u8);
-impl _wxFileType for wxFileType { fn handle(&self) -> *u8 { **self } }
+struct wxFileType(*mut c_void);
+impl _wxFileType for wxFileType { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFileType {
-    pub fn from(handle: *u8) -> @wxFileType { @wxFileType(handle) }
-    pub fn null() -> @wxFileType { wxFileType::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFileType { @wxFileType(handle) }
+    pub fn null() -> @wxFileType { wxFileType::from(0 as *mut c_void) }
     
 }
 
 trait _wxFileType {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -6225,7 +6225,7 @@ trait _wxFileType {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn expandCommand(&self, _cmd: *u8, _params: *u8) -> ~str {
+    fn expandCommand(&self, _cmd: *mut c_void, _params: *mut c_void) -> ~str {
         unsafe { wxString { handle: wxFileType_ExpandCommand(self.handle(), _cmd, _params) }.to_str() }
     }
     #[fixed_stack_segment]
@@ -6255,60 +6255,60 @@ trait _wxFileType {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getOpenCommand(&self, _buf: *u8, _params: *u8) -> c_int {
+    fn getOpenCommand(&self, _buf: *mut c_void, _params: *mut c_void) -> c_int {
         unsafe { wxFileType_GetOpenCommand(self.handle(), _buf, _params) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPrintCommand(&self, _buf: *u8, _params: *u8) -> c_int {
+    fn getPrintCommand(&self, _buf: *mut c_void, _params: *mut c_void) -> c_int {
         unsafe { wxFileType_GetPrintCommand(self.handle(), _buf, _params) }
     }
 }
 
-struct wxFilterInputStream(*u8);
+struct wxFilterInputStream(*mut c_void);
 impl _wxFilterInputStream for wxFilterInputStream {}
 impl _wxInputStream for wxFilterInputStream {}
-impl _wxStreamBase for wxFilterInputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxFilterInputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFilterInputStream {
-    pub fn from(handle: *u8) -> @wxFilterInputStream { @wxFilterInputStream(handle) }
-    pub fn null() -> @wxFilterInputStream { wxFilterInputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFilterInputStream { @wxFilterInputStream(handle) }
+    pub fn null() -> @wxFilterInputStream { wxFilterInputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxFilterInputStream : _wxInputStream {
 }
 
-struct wxFilterOutputStream(*u8);
+struct wxFilterOutputStream(*mut c_void);
 impl _wxFilterOutputStream for wxFilterOutputStream {}
 impl _wxOutputStream for wxFilterOutputStream {}
-impl _wxStreamBase for wxFilterOutputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxFilterOutputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFilterOutputStream {
-    pub fn from(handle: *u8) -> @wxFilterOutputStream { @wxFilterOutputStream(handle) }
-    pub fn null() -> @wxFilterOutputStream { wxFilterOutputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFilterOutputStream { @wxFilterOutputStream(handle) }
+    pub fn null() -> @wxFilterOutputStream { wxFilterOutputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxFilterOutputStream : _wxOutputStream {
 }
 
-struct wxFindDialogEvent(*u8);
+struct wxFindDialogEvent(*mut c_void);
 impl _wxFindDialogEvent for wxFindDialogEvent {}
 impl _wxCommandEvent for wxFindDialogEvent {}
 impl _wxEvent for wxFindDialogEvent {}
-impl _wxObject for wxFindDialogEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFindDialogEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFindDialogEvent {
-    pub fn from(handle: *u8) -> @wxFindDialogEvent { @wxFindDialogEvent(handle) }
-    pub fn null() -> @wxFindDialogEvent { wxFindDialogEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFindDialogEvent { @wxFindDialogEvent(handle) }
+    pub fn null() -> @wxFindDialogEvent { wxFindDialogEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxFindDialogEvent : _wxCommandEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getFindString(&self, _ref: *u8) -> c_int {
+    fn getFindString(&self, _ref: *mut c_void) -> c_int {
         unsafe { wxFindDialogEvent_GetFindString(self.handle(), _ref) }
     }
     #[fixed_stack_segment]
@@ -6318,18 +6318,18 @@ trait _wxFindDialogEvent : _wxCommandEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getReplaceString(&self, _ref: *u8) -> c_int {
+    fn getReplaceString(&self, _ref: *mut c_void) -> c_int {
         unsafe { wxFindDialogEvent_GetReplaceString(self.handle(), _ref) }
     }
 }
 
-struct wxFindReplaceData(*u8);
+struct wxFindReplaceData(*mut c_void);
 impl _wxFindReplaceData for wxFindReplaceData {}
-impl _wxObject for wxFindReplaceData { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFindReplaceData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFindReplaceData {
-    pub fn from(handle: *u8) -> @wxFindReplaceData { @wxFindReplaceData(handle) }
-    pub fn null() -> @wxFindReplaceData { wxFindReplaceData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFindReplaceData { @wxFindReplaceData(handle) }
+    pub fn null() -> @wxFindReplaceData { wxFindReplaceData::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -6378,17 +6378,17 @@ trait _wxFindReplaceData : _wxObject {
     }
 }
 
-struct wxFindReplaceDialog(*u8);
+struct wxFindReplaceDialog(*mut c_void);
 impl _wxFindReplaceDialog for wxFindReplaceDialog {}
 impl _wxDialog for wxFindReplaceDialog {}
 impl _wxTopLevelWindow for wxFindReplaceDialog {}
 impl _wxWindow for wxFindReplaceDialog {}
 impl _wxEvtHandler for wxFindReplaceDialog {}
-impl _wxObject for wxFindReplaceDialog { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFindReplaceDialog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFindReplaceDialog {
-    pub fn from(handle: *u8) -> @wxFindReplaceDialog { @wxFindReplaceDialog(handle) }
-    pub fn null() -> @wxFindReplaceDialog { wxFindReplaceDialog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFindReplaceDialog { @wxFindReplaceDialog(handle) }
+    pub fn null() -> @wxFindReplaceDialog { wxFindReplaceDialog::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -6411,15 +6411,15 @@ trait _wxFindReplaceDialog : _wxDialog {
     }
 }
 
-struct wxFlexGridSizer(*u8);
+struct wxFlexGridSizer(*mut c_void);
 impl _wxFlexGridSizer for wxFlexGridSizer {}
 impl _wxGridSizer for wxFlexGridSizer {}
 impl _wxSizer for wxFlexGridSizer {}
-impl _wxObject for wxFlexGridSizer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFlexGridSizer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFlexGridSizer {
-    pub fn from(handle: *u8) -> @wxFlexGridSizer { @wxFlexGridSizer(handle) }
-    pub fn null() -> @wxFlexGridSizer { wxFlexGridSizer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFlexGridSizer { @wxFlexGridSizer(handle) }
+    pub fn null() -> @wxFlexGridSizer { wxFlexGridSizer::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -6451,32 +6451,32 @@ trait _wxFlexGridSizer : _wxGridSizer {
     }
 }
 
-struct wxFocusEvent(*u8);
+struct wxFocusEvent(*mut c_void);
 impl _wxFocusEvent for wxFocusEvent {}
 impl _wxEvent for wxFocusEvent {}
-impl _wxObject for wxFocusEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFocusEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFocusEvent {
-    pub fn from(handle: *u8) -> @wxFocusEvent { @wxFocusEvent(handle) }
-    pub fn null() -> @wxFocusEvent { wxFocusEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFocusEvent { @wxFocusEvent(handle) }
+    pub fn null() -> @wxFocusEvent { wxFocusEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxFocusEvent : _wxEvent {
 }
 
-struct wxFont(*u8);
+struct wxFont(*mut c_void);
 impl _wxFont for wxFont {}
 impl _wxGDIObject for wxFont {}
-impl _wxObject for wxFont { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFont { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFont {
-    pub fn from(handle: *u8) -> @wxFont { @wxFont(handle) }
-    pub fn null() -> @wxFont { wxFont::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFont { @wxFont(handle) }
+    pub fn null() -> @wxFont { wxFont::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(pointSize: c_int, family: c_int, style: c_int, weight: c_int, underlined: bool, face: &str, enc: c_int) -> @wxFont {
+    pub fn new(pointSize: c_int, family: c_int, style: c_int, weight: c_int, underlined: c_int, face: &str, enc: c_int) -> @wxFont {
         let face = wxT(face);
         unsafe { @wxFont(wxFont_Create(pointSize, family, style, weight, underlined, face.handle(), enc)) }
     }
@@ -6550,7 +6550,7 @@ trait _wxFont : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxFont_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -6596,18 +6596,18 @@ trait _wxFont : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isStatic(&self) -> bool {
+    fn isStatic(&self) -> c_int {
         unsafe { wxFont_IsStatic(self.handle()) }
     }
 }
 
-struct wxFontData(*u8);
+struct wxFontData(*mut c_void);
 impl _wxFontData for wxFontData {}
-impl _wxObject for wxFontData { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFontData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFontData {
-    pub fn from(handle: *u8) -> @wxFontData { @wxFontData(handle) }
-    pub fn null() -> @wxFontData { wxFontData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFontData { @wxFontData(handle) }
+    pub fn null() -> @wxFontData { wxFontData::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -6619,12 +6619,12 @@ impl wxFontData {
 trait _wxFontData : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableEffects(&self, flag: bool) {
+    fn enableEffects(&self, flag: c_int) {
         unsafe { wxFontData_EnableEffects(self.handle(), flag) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getAllowSymbols(&self) -> bool {
+    fn getAllowSymbols(&self) -> c_int {
         unsafe { wxFontData_GetAllowSymbols(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -6639,7 +6639,7 @@ trait _wxFontData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEnableEffects(&self) -> bool {
+    fn getEnableEffects(&self) -> c_int {
         unsafe { wxFontData_GetEnableEffects(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -6659,7 +6659,7 @@ trait _wxFontData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setAllowSymbols(&self, flag: bool) {
+    fn setAllowSymbols(&self, flag: c_int) {
         unsafe { wxFontData_SetAllowSymbols(self.handle(), flag) }
     }
     #[fixed_stack_segment]
@@ -6689,22 +6689,22 @@ trait _wxFontData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setShowHelp(&self, flag: bool) {
+    fn setShowHelp(&self, flag: c_int) {
         unsafe { wxFontData_SetShowHelp(self.handle(), flag) }
     }
 }
 
-struct wxFontDialog(*u8);
+struct wxFontDialog(*mut c_void);
 impl _wxFontDialog for wxFontDialog {}
 impl _wxDialog for wxFontDialog {}
 impl _wxTopLevelWindow for wxFontDialog {}
 impl _wxWindow for wxFontDialog {}
 impl _wxEvtHandler for wxFontDialog {}
-impl _wxObject for wxFontDialog { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFontDialog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFontDialog {
-    pub fn from(handle: *u8) -> @wxFontDialog { @wxFontDialog(handle) }
-    pub fn null() -> @wxFontDialog { wxFontDialog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFontDialog { @wxFontDialog(handle) }
+    pub fn null() -> @wxFontDialog { wxFontDialog::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -6721,22 +6721,22 @@ trait _wxFontDialog : _wxDialog {
     }
 }
 
-struct wxFontEnumerator(*u8);
-impl _wxFontEnumerator for wxFontEnumerator { fn handle(&self) -> *u8 { **self } }
+struct wxFontEnumerator(*mut c_void);
+impl _wxFontEnumerator for wxFontEnumerator { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFontEnumerator {
-    pub fn from(handle: *u8) -> @wxFontEnumerator { @wxFontEnumerator(handle) }
-    pub fn null() -> @wxFontEnumerator { wxFontEnumerator::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFontEnumerator { @wxFontEnumerator(handle) }
+    pub fn null() -> @wxFontEnumerator { wxFontEnumerator::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_obj: *u8, _fnc: *u8) -> @wxFontEnumerator {
+    pub fn new(_obj: *mut c_void, _fnc: *mut c_void) -> @wxFontEnumerator {
         unsafe { @wxFontEnumerator(wxFontEnumerator_Create(_obj, _fnc)) }
     }
 }
 
 trait _wxFontEnumerator {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -6745,37 +6745,37 @@ trait _wxFontEnumerator {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enumerateEncodings(&self, facename: &str) -> bool {
+    fn enumerateEncodings(&self, facename: &str) -> c_int {
         let facename = wxT(facename);
         unsafe { wxFontEnumerator_EnumerateEncodings(self.handle(), facename.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enumerateFacenames(&self, encoding: c_int, fixedWidthOnly: c_int) -> bool {
+    fn enumerateFacenames(&self, encoding: c_int, fixedWidthOnly: c_int) -> c_int {
         unsafe { wxFontEnumerator_EnumerateFacenames(self.handle(), encoding, fixedWidthOnly) }
     }
 }
 
-struct wxFontList(*u8);
+struct wxFontList(*mut c_void);
 impl _wxFontList for wxFontList {}
 impl _wxList for wxFontList {}
-impl _wxObject for wxFontList { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFontList { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFontList {
-    pub fn from(handle: *u8) -> @wxFontList { @wxFontList(handle) }
-    pub fn null() -> @wxFontList { wxFontList::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFontList { @wxFontList(handle) }
+    pub fn null() -> @wxFontList { wxFontList::from(0 as *mut c_void) }
     
 }
 
 trait _wxFontList : _wxList {
 }
 
-struct wxFontMapper(*u8);
-impl _wxFontMapper for wxFontMapper { fn handle(&self) -> *u8 { **self } }
+struct wxFontMapper(*mut c_void);
+impl _wxFontMapper for wxFontMapper { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFontMapper {
-    pub fn from(handle: *u8) -> @wxFontMapper { @wxFontMapper(handle) }
-    pub fn null() -> @wxFontMapper { wxFontMapper::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFontMapper { @wxFontMapper(handle) }
+    pub fn null() -> @wxFontMapper { wxFontMapper::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -6785,32 +6785,32 @@ impl wxFontMapper {
 }
 
 trait _wxFontMapper {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getAltForEncoding(&self, encoding: c_int, alt_encoding: *u8, _buf: &str) -> bool {
+    fn getAltForEncoding(&self, encoding: c_int, alt_encoding: *mut c_void, _buf: &str) -> c_int {
         let _buf = wxT(_buf);
         unsafe { wxFontMapper_GetAltForEncoding(self.handle(), encoding, alt_encoding, _buf.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEncodingAvailable(&self, encoding: c_int, _buf: &str) -> bool {
+    fn isEncodingAvailable(&self, encoding: c_int, _buf: &str) -> c_int {
         let _buf = wxT(_buf);
         unsafe { wxFontMapper_IsEncodingAvailable(self.handle(), encoding, _buf.handle()) }
     }
 }
 
-struct wxFrame(*u8);
+struct wxFrame(*mut c_void);
 impl _wxFrame for wxFrame {}
 impl _wxTopLevelWindow for wxFrame {}
 impl _wxWindow for wxFrame {}
 impl _wxEvtHandler for wxFrame {}
-impl _wxObject for wxFrame { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFrame { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFrame {
-    pub fn from(handle: *u8) -> @wxFrame { @wxFrame(handle) }
-    pub fn null() -> @wxFrame { wxFrame::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFrame { @wxFrame(handle) }
+    pub fn null() -> @wxFrame { wxFrame::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -6879,7 +6879,7 @@ trait _wxFrame : _wxTopLevelWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setStatusWidths(&self, _n: c_int, _widths_field: *u8) {
+    fn setStatusWidths(&self, _n: c_int, _widths_field: *mut c_void) {
         unsafe { wxFrame_SetStatusWidths(self.handle(), _n, _widths_field) }
     }
     #[fixed_stack_segment]
@@ -6889,17 +6889,17 @@ trait _wxFrame : _wxTopLevelWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setShape<T: _wxRegion>(&self, region: &T) -> bool {
+    fn setShape<T: _wxRegion>(&self, region: &T) -> c_int {
         unsafe { wxFrame_SetShape(self.handle(), region.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn showFullScreen(&self, show: bool, style: c_int) -> bool {
+    fn showFullScreen(&self, show: c_int, style: c_int) -> c_int {
         unsafe { wxFrame_ShowFullScreen(self.handle(), show, style) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isFullScreen(&self) -> bool {
+    fn isFullScreen(&self) -> c_int {
         unsafe { wxFrame_IsFullScreen(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -6909,59 +6909,59 @@ trait _wxFrame : _wxTopLevelWindow {
     }
 }
 
-struct wxFrameLayout(*u8);
+struct wxFrameLayout(*mut c_void);
 impl _wxFrameLayout for wxFrameLayout {}
 impl _wxEvtHandler for wxFrameLayout {}
-impl _wxObject for wxFrameLayout { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFrameLayout { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFrameLayout {
-    pub fn from(handle: *u8) -> @wxFrameLayout { @wxFrameLayout(handle) }
-    pub fn null() -> @wxFrameLayout { wxFrameLayout::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFrameLayout { @wxFrameLayout(handle) }
+    pub fn null() -> @wxFrameLayout { wxFrameLayout::from(0 as *mut c_void) }
     
 }
 
 trait _wxFrameLayout : _wxEvtHandler {
 }
 
-struct wxGDIObject(*u8);
+struct wxGDIObject(*mut c_void);
 impl _wxGDIObject for wxGDIObject {}
-impl _wxObject for wxGDIObject { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGDIObject { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGDIObject {
-    pub fn from(handle: *u8) -> @wxGDIObject { @wxGDIObject(handle) }
-    pub fn null() -> @wxGDIObject { wxGDIObject::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGDIObject { @wxGDIObject(handle) }
+    pub fn null() -> @wxGDIObject { wxGDIObject::from(0 as *mut c_void) }
     
 }
 
 trait _wxGDIObject : _wxObject {
 }
 
-struct wxGLCanvas(*u8);
+struct wxGLCanvas(*mut c_void);
 impl _wxGLCanvas for wxGLCanvas {}
 impl _wxScrolledWindow for wxGLCanvas {}
 impl _wxPanel for wxGLCanvas {}
 impl _wxWindow for wxGLCanvas {}
 impl _wxEvtHandler for wxGLCanvas {}
-impl _wxObject for wxGLCanvas { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGLCanvas { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGLCanvas {
-    pub fn from(handle: *u8) -> @wxGLCanvas { @wxGLCanvas(handle) }
-    pub fn null() -> @wxGLCanvas { wxGLCanvas::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGLCanvas { @wxGLCanvas(handle) }
+    pub fn null() -> @wxGLCanvas { wxGLCanvas::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow, U: _wxPalette>(parent: &T, windowID: c_int, attributes: *c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int, title: &str, palette: &U) -> @wxGLCanvas {
+    pub fn new<T: _wxWindow, U: _wxPalette>(parent: &T, windowID: c_int, attributes: *mut c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int, title: &str, palette: &U) -> @wxGLCanvas {
         let title = wxT(title);
         unsafe { @wxGLCanvas(wxGLCanvas_Create(parent.handle(), windowID, attributes, x, y, w, h, style, title.handle(), palette.handle())) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn isDisplaySupported(attributes: *c_int) -> bool {
+    pub fn isDisplaySupported(attributes: *mut c_int) -> c_int {
         unsafe { wxGLCanvas_IsDisplaySupported(attributes) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn isExtensionSupported(extension: &str) -> bool {
+    pub fn isExtensionSupported(extension: &str) -> c_int {
         let extension = wxT(extension);
         unsafe { wxGLCanvas_IsExtensionSupported(extension.handle()) }
     }
@@ -6970,31 +6970,31 @@ impl wxGLCanvas {
 trait _wxGLCanvas : _wxScrolledWindow {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setColour<T: _wxColour>(&self, colour: &T) -> bool {
+    fn setColour<T: _wxColour>(&self, colour: &T) -> c_int {
         unsafe { wxGLCanvas_SetColour(self.handle(), colour.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setCurrent<T: _wxGLContext>(&self, ctxt: &T) -> bool {
+    fn setCurrent<T: _wxGLContext>(&self, ctxt: &T) -> c_int {
         unsafe { wxGLCanvas_SetCurrent(self.handle(), ctxt.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn swapBuffers(&self) -> bool {
+    fn swapBuffers(&self) -> c_int {
         unsafe { wxGLCanvas_SwapBuffers(self.handle()) }
     }
 }
 
-struct wxGauge(*u8);
+struct wxGauge(*mut c_void);
 impl _wxGauge for wxGauge {}
 impl _wxControl for wxGauge {}
 impl _wxWindow for wxGauge {}
 impl _wxEvtHandler for wxGauge {}
-impl _wxObject for wxGauge { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGauge { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGauge {
-    pub fn from(handle: *u8) -> @wxGauge { @wxGauge(handle) }
-    pub fn null() -> @wxGauge { wxGauge::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGauge { @wxGauge(handle) }
+    pub fn null() -> @wxGauge { wxGauge::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -7046,48 +7046,48 @@ trait _wxGauge : _wxControl {
     }
 }
 
-struct wxGenericDirCtrl(*u8);
+struct wxGenericDirCtrl(*mut c_void);
 impl _wxGenericDirCtrl for wxGenericDirCtrl {}
 impl _wxControl for wxGenericDirCtrl {}
 impl _wxWindow for wxGenericDirCtrl {}
 impl _wxEvtHandler for wxGenericDirCtrl {}
-impl _wxObject for wxGenericDirCtrl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGenericDirCtrl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGenericDirCtrl {
-    pub fn from(handle: *u8) -> @wxGenericDirCtrl { @wxGenericDirCtrl(handle) }
-    pub fn null() -> @wxGenericDirCtrl { wxGenericDirCtrl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGenericDirCtrl { @wxGenericDirCtrl(handle) }
+    pub fn null() -> @wxGenericDirCtrl { wxGenericDirCtrl::from(0 as *mut c_void) }
     
 }
 
 trait _wxGenericDirCtrl : _wxControl {
 }
 
-struct wxGenericValidator(*u8);
+struct wxGenericValidator(*mut c_void);
 impl _wxGenericValidator for wxGenericValidator {}
 impl _wxValidator for wxGenericValidator {}
 impl _wxEvtHandler for wxGenericValidator {}
-impl _wxObject for wxGenericValidator { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGenericValidator { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGenericValidator {
-    pub fn from(handle: *u8) -> @wxGenericValidator { @wxGenericValidator(handle) }
-    pub fn null() -> @wxGenericValidator { wxGenericValidator::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGenericValidator { @wxGenericValidator(handle) }
+    pub fn null() -> @wxGenericValidator { wxGenericValidator::from(0 as *mut c_void) }
     
 }
 
 trait _wxGenericValidator : _wxValidator {
 }
 
-struct wxGrid(*u8);
+struct wxGrid(*mut c_void);
 impl _wxGrid for wxGrid {}
 impl _wxScrolledWindow for wxGrid {}
 impl _wxPanel for wxGrid {}
 impl _wxWindow for wxGrid {}
 impl _wxEvtHandler for wxGrid {}
-impl _wxObject for wxGrid { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGrid { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGrid {
-    pub fn from(handle: *u8) -> @wxGrid { @wxGrid(handle) }
-    pub fn null() -> @wxGrid { wxGrid::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGrid { @wxGrid(handle) }
+    pub fn null() -> @wxGrid { wxGrid::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -7099,12 +7099,12 @@ impl wxGrid {
 trait _wxGrid : _wxScrolledWindow {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn appendCols(&self, numCols: c_int, updateLabels: bool) -> bool {
+    fn appendCols(&self, numCols: c_int, updateLabels: c_int) -> c_int {
         unsafe { wxGrid_AppendCols(self.handle(), numCols, updateLabels) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn appendRows(&self, numRows: c_int, updateLabels: bool) -> bool {
+    fn appendRows(&self, numRows: c_int, updateLabels: c_int) -> c_int {
         unsafe { wxGrid_AppendRows(self.handle(), numRows, updateLabels) }
     }
     #[fixed_stack_segment]
@@ -7144,22 +7144,22 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canDragColSize(&self) -> bool {
+    fn canDragColSize(&self) -> c_int {
         unsafe { wxGrid_CanDragColSize(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canDragGridSize(&self) -> bool {
+    fn canDragGridSize(&self) -> c_int {
         unsafe { wxGrid_CanDragGridSize(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canDragRowSize(&self) -> bool {
+    fn canDragRowSize(&self) -> c_int {
         unsafe { wxGrid_CanDragRowSize(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canEnableCellControl(&self) -> bool {
+    fn canEnableCellControl(&self) -> c_int {
         unsafe { wxGrid_CanEnableCellControl(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -7184,12 +7184,12 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deleteCols(&self, pos: c_int, numCols: c_int, updateLabels: bool) -> bool {
+    fn deleteCols(&self, pos: c_int, numCols: c_int, updateLabels: c_int) -> c_int {
         unsafe { wxGrid_DeleteCols(self.handle(), pos, numCols, updateLabels) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deleteRows(&self, pos: c_int, numRows: c_int, updateLabels: bool) -> bool {
+    fn deleteRows(&self, pos: c_int, numRows: c_int, updateLabels: c_int) -> c_int {
         unsafe { wxGrid_DeleteRows(self.handle(), pos, numRows, updateLabels) }
     }
     #[fixed_stack_segment]
@@ -7265,22 +7265,22 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableCellEditControl(&self, enable: bool) {
+    fn enableCellEditControl(&self, enable: c_int) {
         unsafe { wxGrid_EnableCellEditControl(self.handle(), enable) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableDragColSize(&self, enable: bool) {
+    fn enableDragColSize(&self, enable: c_int) {
         unsafe { wxGrid_EnableDragColSize(self.handle(), enable) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableDragGridSize(&self, enable: bool) {
+    fn enableDragGridSize(&self, enable: c_int) {
         unsafe { wxGrid_EnableDragGridSize(self.handle(), enable) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableDragRowSize(&self, enable: bool) {
+    fn enableDragRowSize(&self, enable: c_int) {
         unsafe { wxGrid_EnableDragRowSize(self.handle(), enable) }
     }
     #[fixed_stack_segment]
@@ -7290,7 +7290,7 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableGridLines(&self, enable: bool) {
+    fn enableGridLines(&self, enable: c_int) {
         unsafe { wxGrid_EnableGridLines(self.handle(), enable) }
     }
     #[fixed_stack_segment]
@@ -7305,7 +7305,7 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getCellAlignment(&self, row: c_int, col: c_int, horiz: *c_int, vert: *c_int) {
+    fn getCellAlignment(&self, row: c_int, col: c_int, horiz: *mut c_int, vert: *mut c_int) {
         unsafe { wxGrid_GetCellAlignment(self.handle(), row, col, horiz, vert) }
     }
     #[fixed_stack_segment]
@@ -7345,7 +7345,7 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getColLabelAlignment(&self, horiz: *c_int, vert: *c_int) {
+    fn getColLabelAlignment(&self, horiz: *mut c_int, vert: *mut c_int) {
         unsafe { wxGrid_GetColLabelAlignment(self.handle(), horiz, vert) }
     }
     #[fixed_stack_segment]
@@ -7365,7 +7365,7 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDefaultCellAlignment(&self, horiz: *c_int, vert: *c_int) {
+    fn getDefaultCellAlignment(&self, horiz: *mut c_int, vert: *mut c_int) {
         unsafe { wxGrid_GetDefaultCellAlignment(self.handle(), horiz, vert) }
     }
     #[fixed_stack_segment]
@@ -7477,7 +7477,7 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getRowLabelAlignment(&self, horiz: *c_int, vert: *c_int) {
+    fn getRowLabelAlignment(&self, horiz: *mut c_int, vert: *mut c_int) {
         unsafe { wxGrid_GetRowLabelAlignment(self.handle(), horiz, vert) }
     }
     #[fixed_stack_segment]
@@ -7512,7 +7512,7 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getTextBoxSize<T: _wxDC>(&self, dc: &T, count: c_int, lines: *wchar_t, _w: *c_int, _h: *c_int) {
+    fn getTextBoxSize<T: _wxDC>(&self, dc: &T, count: c_int, lines: *mut *mut c_char, _w: *mut c_void, _h: *mut c_void) {
         unsafe { wxGrid_GetTextBoxSize(self.handle(), dc.handle(), count, lines, _w, _h) }
     }
     #[fixed_stack_segment]
@@ -7527,52 +7527,52 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn insertCols(&self, pos: c_int, numCols: c_int, updateLabels: bool) -> bool {
+    fn insertCols(&self, pos: c_int, numCols: c_int, updateLabels: c_int) -> c_int {
         unsafe { wxGrid_InsertCols(self.handle(), pos, numCols, updateLabels) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn insertRows(&self, pos: c_int, numRows: c_int, updateLabels: bool) -> bool {
+    fn insertRows(&self, pos: c_int, numRows: c_int, updateLabels: c_int) -> c_int {
         unsafe { wxGrid_InsertRows(self.handle(), pos, numRows, updateLabels) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isCellEditControlEnabled(&self) -> bool {
+    fn isCellEditControlEnabled(&self) -> c_int {
         unsafe { wxGrid_IsCellEditControlEnabled(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isCellEditControlShown(&self) -> bool {
+    fn isCellEditControlShown(&self) -> c_int {
         unsafe { wxGrid_IsCellEditControlShown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isCurrentCellReadOnly(&self) -> bool {
+    fn isCurrentCellReadOnly(&self) -> c_int {
         unsafe { wxGrid_IsCurrentCellReadOnly(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEditable(&self) -> bool {
+    fn isEditable(&self) -> c_int {
         unsafe { wxGrid_IsEditable(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isInSelection(&self, row: c_int, col: c_int) -> bool {
+    fn isInSelection(&self, row: c_int, col: c_int) -> c_int {
         unsafe { wxGrid_IsInSelection(self.handle(), row, col) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isReadOnly(&self, row: c_int, col: c_int) -> bool {
+    fn isReadOnly(&self, row: c_int, col: c_int) -> c_int {
         unsafe { wxGrid_IsReadOnly(self.handle(), row, col) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSelection(&self) -> bool {
+    fn isSelection(&self) -> c_int {
         unsafe { wxGrid_IsSelection(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isVisible(&self, row: c_int, col: c_int, wholeCellVisible: bool) -> bool {
+    fn isVisible(&self, row: c_int, col: c_int, wholeCellVisible: c_int) -> c_int {
         unsafe { wxGrid_IsVisible(self.handle(), row, col, wholeCellVisible) }
     }
     #[fixed_stack_segment]
@@ -7582,57 +7582,57 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn moveCursorDown(&self, expandSelection: bool) -> bool {
+    fn moveCursorDown(&self, expandSelection: c_int) -> c_int {
         unsafe { wxGrid_MoveCursorDown(self.handle(), expandSelection) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn moveCursorDownBlock(&self, expandSelection: bool) -> bool {
+    fn moveCursorDownBlock(&self, expandSelection: c_int) -> c_int {
         unsafe { wxGrid_MoveCursorDownBlock(self.handle(), expandSelection) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn moveCursorLeft(&self, expandSelection: bool) -> bool {
+    fn moveCursorLeft(&self, expandSelection: c_int) -> c_int {
         unsafe { wxGrid_MoveCursorLeft(self.handle(), expandSelection) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn moveCursorLeftBlock(&self, expandSelection: bool) -> bool {
+    fn moveCursorLeftBlock(&self, expandSelection: c_int) -> c_int {
         unsafe { wxGrid_MoveCursorLeftBlock(self.handle(), expandSelection) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn moveCursorRight(&self, expandSelection: bool) -> bool {
+    fn moveCursorRight(&self, expandSelection: c_int) -> c_int {
         unsafe { wxGrid_MoveCursorRight(self.handle(), expandSelection) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn moveCursorRightBlock(&self, expandSelection: bool) -> bool {
+    fn moveCursorRightBlock(&self, expandSelection: c_int) -> c_int {
         unsafe { wxGrid_MoveCursorRightBlock(self.handle(), expandSelection) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn moveCursorUp(&self, expandSelection: bool) -> bool {
+    fn moveCursorUp(&self, expandSelection: c_int) -> c_int {
         unsafe { wxGrid_MoveCursorUp(self.handle(), expandSelection) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn moveCursorUpBlock(&self, expandSelection: bool) -> bool {
+    fn moveCursorUpBlock(&self, expandSelection: c_int) -> c_int {
         unsafe { wxGrid_MoveCursorUpBlock(self.handle(), expandSelection) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn movePageDown(&self) -> bool {
+    fn movePageDown(&self) -> c_int {
         unsafe { wxGrid_MovePageDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn movePageUp(&self) -> bool {
+    fn movePageUp(&self) -> c_int {
         unsafe { wxGrid_MovePageUp(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn processTableMessage<T: _wxEvent>(&self, evt: &T) -> bool {
+    fn processTableMessage<T: _wxEvent>(&self, evt: &T) -> c_int {
         unsafe { wxGrid_ProcessTableMessage(self.handle(), evt.handle()) }
     }
     #[fixed_stack_segment]
@@ -7831,7 +7831,7 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setReadOnly(&self, row: c_int, col: c_int, isReadOnly: bool) {
+    fn setReadOnly(&self, row: c_int, col: c_int, isReadOnly: c_int) {
         unsafe { wxGrid_SetReadOnly(self.handle(), row, col, isReadOnly) }
     }
     #[fixed_stack_segment]
@@ -7882,7 +7882,7 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setTable<T: _wxGridTableBase>(&self, table: &T, takeOwnership: bool, selmode: c_int) -> bool {
+    fn setTable<T: _wxGridTableBase>(&self, table: &T, takeOwnership: c_int, selmode: c_int) -> c_int {
         unsafe { wxGrid_SetTable(self.handle(), table.handle(), takeOwnership, selmode) }
     }
     #[fixed_stack_segment]
@@ -7892,7 +7892,7 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn stringToLines(&self, value: &str, lines: *u8) -> c_int {
+    fn stringToLines(&self, value: &str, lines: *mut c_void) -> c_int {
         let value = wxT(value);
         unsafe { wxGrid_StringToLines(self.handle(), value.handle(), lines) }
     }
@@ -7908,7 +7908,7 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn xYToCell(&self, x: c_int, y: c_int, row: *c_int, col: *c_int) {
+    fn xYToCell(&self, x: c_int, y: c_int, row: *mut c_int, col: *mut c_int) {
         unsafe { wxGrid_XYToCell(self.handle(), x, y, row, col) }
     }
     #[fixed_stack_segment]
@@ -7938,17 +7938,17 @@ trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSelectedRows(&self, _arr: *intptr_t) -> c_int {
+    fn getSelectedRows(&self, _arr: *mut c_void) -> c_int {
         unsafe { wxGrid_GetSelectedRows(self.handle(), _arr) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSelectedCols(&self, _arr: *intptr_t) -> c_int {
+    fn getSelectedCols(&self, _arr: *mut c_void) -> c_int {
         unsafe { wxGrid_GetSelectedCols(self.handle(), _arr) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getCellSize(&self, row: c_int, col: c_int, srow: *c_int, scol: *c_int) {
+    fn getCellSize(&self, row: c_int, col: c_int, srow: *mut c_int, scol: *mut c_int) {
         unsafe { wxGrid_GetCellSize(self.handle(), row, col, srow, scol) }
     }
     #[fixed_stack_segment]
@@ -7958,12 +7958,12 @@ trait _wxGrid : _wxScrolledWindow {
     }
 }
 
-struct wxGridCellAttr(*u8);
-impl _wxGridCellAttr for wxGridCellAttr { fn handle(&self) -> *u8 { **self } }
+struct wxGridCellAttr(*mut c_void);
+impl _wxGridCellAttr for wxGridCellAttr { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellAttr {
-    pub fn from(handle: *u8) -> @wxGridCellAttr { @wxGridCellAttr(handle) }
-    pub fn null() -> @wxGridCellAttr { wxGridCellAttr::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellAttr { @wxGridCellAttr(handle) }
+    pub fn null() -> @wxGridCellAttr { wxGridCellAttr::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -7973,7 +7973,7 @@ impl wxGridCellAttr {
 }
 
 trait _wxGridCellAttr {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -7982,7 +7982,7 @@ trait _wxGridCellAttr {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getAlignment(&self, hAlign: *c_int, vAlign: *c_int) {
+    fn getAlignment(&self, hAlign: *mut c_int, vAlign: *mut c_int) {
         unsafe { wxGridCellAttr_GetAlignment(self.handle(), hAlign, vAlign) }
     }
     #[fixed_stack_segment]
@@ -8012,32 +8012,32 @@ trait _wxGridCellAttr {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasAlignment(&self) -> bool {
+    fn hasAlignment(&self) -> c_int {
         unsafe { wxGridCellAttr_HasAlignment(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasBackgroundColour(&self) -> bool {
+    fn hasBackgroundColour(&self) -> c_int {
         unsafe { wxGridCellAttr_HasBackgroundColour(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasEditor(&self) -> bool {
+    fn hasEditor(&self) -> c_int {
         unsafe { wxGridCellAttr_HasEditor(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasFont(&self) -> bool {
+    fn hasFont(&self) -> c_int {
         unsafe { wxGridCellAttr_HasFont(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasRenderer(&self) -> bool {
+    fn hasRenderer(&self) -> c_int {
         unsafe { wxGridCellAttr_HasRenderer(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasTextColour(&self) -> bool {
+    fn hasTextColour(&self) -> c_int {
         unsafe { wxGridCellAttr_HasTextColour(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -8047,7 +8047,7 @@ trait _wxGridCellAttr {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isReadOnly(&self) -> bool {
+    fn isReadOnly(&self) -> c_int {
         unsafe { wxGridCellAttr_IsReadOnly(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -8077,7 +8077,7 @@ trait _wxGridCellAttr {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setReadOnly(&self, isReadOnly: bool) {
+    fn setReadOnly(&self, isReadOnly: c_int) {
         unsafe { wxGridCellAttr_SetReadOnly(self.handle(), isReadOnly) }
     }
     #[fixed_stack_segment]
@@ -8092,14 +8092,14 @@ trait _wxGridCellAttr {
     }
 }
 
-struct wxGridCellBoolEditor(*u8);
+struct wxGridCellBoolEditor(*mut c_void);
 impl _wxGridCellBoolEditor for wxGridCellBoolEditor {}
 impl _wxGridCellEditor for wxGridCellBoolEditor {}
-impl _wxGridCellWorker for wxGridCellBoolEditor { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellBoolEditor { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellBoolEditor {
-    pub fn from(handle: *u8) -> @wxGridCellBoolEditor { @wxGridCellBoolEditor(handle) }
-    pub fn null() -> @wxGridCellBoolEditor { wxGridCellBoolEditor::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellBoolEditor { @wxGridCellBoolEditor(handle) }
+    pub fn null() -> @wxGridCellBoolEditor { wxGridCellBoolEditor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -8111,32 +8111,32 @@ impl wxGridCellBoolEditor {
 trait _wxGridCellBoolEditor : _wxGridCellEditor {
 }
 
-struct wxGridCellBoolRenderer(*u8);
+struct wxGridCellBoolRenderer(*mut c_void);
 impl _wxGridCellBoolRenderer for wxGridCellBoolRenderer {}
 impl _wxGridCellRenderer for wxGridCellBoolRenderer {}
-impl _wxGridCellWorker for wxGridCellBoolRenderer { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellBoolRenderer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellBoolRenderer {
-    pub fn from(handle: *u8) -> @wxGridCellBoolRenderer { @wxGridCellBoolRenderer(handle) }
-    pub fn null() -> @wxGridCellBoolRenderer { wxGridCellBoolRenderer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellBoolRenderer { @wxGridCellBoolRenderer(handle) }
+    pub fn null() -> @wxGridCellBoolRenderer { wxGridCellBoolRenderer::from(0 as *mut c_void) }
     
 }
 
 trait _wxGridCellBoolRenderer : _wxGridCellRenderer {
 }
 
-struct wxGridCellChoiceEditor(*u8);
+struct wxGridCellChoiceEditor(*mut c_void);
 impl _wxGridCellChoiceEditor for wxGridCellChoiceEditor {}
 impl _wxGridCellEditor for wxGridCellChoiceEditor {}
-impl _wxGridCellWorker for wxGridCellChoiceEditor { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellChoiceEditor { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellChoiceEditor {
-    pub fn from(handle: *u8) -> @wxGridCellChoiceEditor { @wxGridCellChoiceEditor(handle) }
-    pub fn null() -> @wxGridCellChoiceEditor { wxGridCellChoiceEditor::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellChoiceEditor { @wxGridCellChoiceEditor(handle) }
+    pub fn null() -> @wxGridCellChoiceEditor { wxGridCellChoiceEditor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn ctor(count: c_int, choices: *wchar_t, allowOthers: c_int) -> @wxGridCellChoiceEditor {
+    pub fn ctor(count: c_int, choices: *mut *mut c_char, allowOthers: c_int) -> @wxGridCellChoiceEditor {
         unsafe { @wxGridCellChoiceEditor(wxGridCellChoiceEditor_Ctor(count, choices, allowOthers)) }
     }
 }
@@ -8144,12 +8144,12 @@ impl wxGridCellChoiceEditor {
 trait _wxGridCellChoiceEditor : _wxGridCellEditor {
 }
 
-struct wxGridCellCoordsArray(*u8);
-impl _wxGridCellCoordsArray for wxGridCellCoordsArray { fn handle(&self) -> *u8 { **self } }
+struct wxGridCellCoordsArray(*mut c_void);
+impl _wxGridCellCoordsArray for wxGridCellCoordsArray { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellCoordsArray {
-    pub fn from(handle: *u8) -> @wxGridCellCoordsArray { @wxGridCellCoordsArray(handle) }
-    pub fn null() -> @wxGridCellCoordsArray { wxGridCellCoordsArray::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellCoordsArray { @wxGridCellCoordsArray(handle) }
+    pub fn null() -> @wxGridCellCoordsArray { wxGridCellCoordsArray::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -8159,7 +8159,7 @@ impl wxGridCellCoordsArray {
 }
 
 trait _wxGridCellCoordsArray {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -8173,18 +8173,18 @@ trait _wxGridCellCoordsArray {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn item(&self, _idx: c_int, _c: *c_int, _r: *c_int) {
+    fn item(&self, _idx: c_int, _c: *mut c_int, _r: *mut c_int) {
         unsafe { wxGridCellCoordsArray_Item(self.handle(), _idx, _c, _r) }
     }
 }
 
-struct wxGridCellEditor(*u8);
+struct wxGridCellEditor(*mut c_void);
 impl _wxGridCellEditor for wxGridCellEditor {}
-impl _wxGridCellWorker for wxGridCellEditor { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellEditor { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellEditor {
-    pub fn from(handle: *u8) -> @wxGridCellEditor { @wxGridCellEditor(handle) }
-    pub fn null() -> @wxGridCellEditor { wxGridCellEditor::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellEditor { @wxGridCellEditor(handle) }
+    pub fn null() -> @wxGridCellEditor { wxGridCellEditor::from(0 as *mut c_void) }
     
 }
 
@@ -8223,12 +8223,12 @@ trait _wxGridCellEditor : _wxGridCellWorker {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isAcceptedKey<T: _wxEvent>(&self, event: &T) -> bool {
+    fn isAcceptedKey<T: _wxEvent>(&self, event: &T) -> c_int {
         unsafe { wxGridCellEditor_IsAcceptedKey(self.handle(), event.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isCreated(&self) -> bool {
+    fn isCreated(&self) -> c_int {
         unsafe { wxGridCellEditor_IsCreated(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -8274,15 +8274,15 @@ trait _wxGridCellEditor : _wxGridCellWorker {
     }
 }
 
-struct wxGridCellFloatEditor(*u8);
+struct wxGridCellFloatEditor(*mut c_void);
 impl _wxGridCellFloatEditor for wxGridCellFloatEditor {}
 impl _wxGridCellTextEditor for wxGridCellFloatEditor {}
 impl _wxGridCellEditor for wxGridCellFloatEditor {}
-impl _wxGridCellWorker for wxGridCellFloatEditor { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellFloatEditor { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellFloatEditor {
-    pub fn from(handle: *u8) -> @wxGridCellFloatEditor { @wxGridCellFloatEditor(handle) }
-    pub fn null() -> @wxGridCellFloatEditor { wxGridCellFloatEditor::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellFloatEditor { @wxGridCellFloatEditor(handle) }
+    pub fn null() -> @wxGridCellFloatEditor { wxGridCellFloatEditor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -8294,30 +8294,30 @@ impl wxGridCellFloatEditor {
 trait _wxGridCellFloatEditor : _wxGridCellTextEditor {
 }
 
-struct wxGridCellFloatRenderer(*u8);
+struct wxGridCellFloatRenderer(*mut c_void);
 impl _wxGridCellFloatRenderer for wxGridCellFloatRenderer {}
 impl _wxGridCellStringRenderer for wxGridCellFloatRenderer {}
 impl _wxGridCellRenderer for wxGridCellFloatRenderer {}
-impl _wxGridCellWorker for wxGridCellFloatRenderer { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellFloatRenderer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellFloatRenderer {
-    pub fn from(handle: *u8) -> @wxGridCellFloatRenderer { @wxGridCellFloatRenderer(handle) }
-    pub fn null() -> @wxGridCellFloatRenderer { wxGridCellFloatRenderer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellFloatRenderer { @wxGridCellFloatRenderer(handle) }
+    pub fn null() -> @wxGridCellFloatRenderer { wxGridCellFloatRenderer::from(0 as *mut c_void) }
     
 }
 
 trait _wxGridCellFloatRenderer : _wxGridCellStringRenderer {
 }
 
-struct wxGridCellNumberEditor(*u8);
+struct wxGridCellNumberEditor(*mut c_void);
 impl _wxGridCellNumberEditor for wxGridCellNumberEditor {}
 impl _wxGridCellTextEditor for wxGridCellNumberEditor {}
 impl _wxGridCellEditor for wxGridCellNumberEditor {}
-impl _wxGridCellWorker for wxGridCellNumberEditor { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellNumberEditor { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellNumberEditor {
-    pub fn from(handle: *u8) -> @wxGridCellNumberEditor { @wxGridCellNumberEditor(handle) }
-    pub fn null() -> @wxGridCellNumberEditor { wxGridCellNumberEditor::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellNumberEditor { @wxGridCellNumberEditor(handle) }
+    pub fn null() -> @wxGridCellNumberEditor { wxGridCellNumberEditor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -8329,15 +8329,15 @@ impl wxGridCellNumberEditor {
 trait _wxGridCellNumberEditor : _wxGridCellTextEditor {
 }
 
-struct wxGridCellNumberRenderer(*u8);
+struct wxGridCellNumberRenderer(*mut c_void);
 impl _wxGridCellNumberRenderer for wxGridCellNumberRenderer {}
 impl _wxGridCellStringRenderer for wxGridCellNumberRenderer {}
 impl _wxGridCellRenderer for wxGridCellNumberRenderer {}
-impl _wxGridCellWorker for wxGridCellNumberRenderer { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellNumberRenderer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellNumberRenderer {
-    pub fn from(handle: *u8) -> @wxGridCellNumberRenderer { @wxGridCellNumberRenderer(handle) }
-    pub fn null() -> @wxGridCellNumberRenderer { wxGridCellNumberRenderer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellNumberRenderer { @wxGridCellNumberRenderer(handle) }
+    pub fn null() -> @wxGridCellNumberRenderer { wxGridCellNumberRenderer::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -8349,15 +8349,15 @@ impl wxGridCellNumberRenderer {
 trait _wxGridCellNumberRenderer : _wxGridCellStringRenderer {
 }
 
-struct wxGridCellAutoWrapStringRenderer(*u8);
+struct wxGridCellAutoWrapStringRenderer(*mut c_void);
 impl _wxGridCellAutoWrapStringRenderer for wxGridCellAutoWrapStringRenderer {}
 impl _wxGridCellStringRenderer for wxGridCellAutoWrapStringRenderer {}
 impl _wxGridCellRenderer for wxGridCellAutoWrapStringRenderer {}
-impl _wxGridCellWorker for wxGridCellAutoWrapStringRenderer { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellAutoWrapStringRenderer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellAutoWrapStringRenderer {
-    pub fn from(handle: *u8) -> @wxGridCellAutoWrapStringRenderer { @wxGridCellAutoWrapStringRenderer(handle) }
-    pub fn null() -> @wxGridCellAutoWrapStringRenderer { wxGridCellAutoWrapStringRenderer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellAutoWrapStringRenderer { @wxGridCellAutoWrapStringRenderer(handle) }
+    pub fn null() -> @wxGridCellAutoWrapStringRenderer { wxGridCellAutoWrapStringRenderer::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -8369,41 +8369,41 @@ impl wxGridCellAutoWrapStringRenderer {
 trait _wxGridCellAutoWrapStringRenderer : _wxGridCellStringRenderer {
 }
 
-struct wxGridCellRenderer(*u8);
+struct wxGridCellRenderer(*mut c_void);
 impl _wxGridCellRenderer for wxGridCellRenderer {}
-impl _wxGridCellWorker for wxGridCellRenderer { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellRenderer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellRenderer {
-    pub fn from(handle: *u8) -> @wxGridCellRenderer { @wxGridCellRenderer(handle) }
-    pub fn null() -> @wxGridCellRenderer { wxGridCellRenderer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellRenderer { @wxGridCellRenderer(handle) }
+    pub fn null() -> @wxGridCellRenderer { wxGridCellRenderer::from(0 as *mut c_void) }
     
 }
 
 trait _wxGridCellRenderer : _wxGridCellWorker {
 }
 
-struct wxGridCellStringRenderer(*u8);
+struct wxGridCellStringRenderer(*mut c_void);
 impl _wxGridCellStringRenderer for wxGridCellStringRenderer {}
 impl _wxGridCellRenderer for wxGridCellStringRenderer {}
-impl _wxGridCellWorker for wxGridCellStringRenderer { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellStringRenderer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellStringRenderer {
-    pub fn from(handle: *u8) -> @wxGridCellStringRenderer { @wxGridCellStringRenderer(handle) }
-    pub fn null() -> @wxGridCellStringRenderer { wxGridCellStringRenderer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellStringRenderer { @wxGridCellStringRenderer(handle) }
+    pub fn null() -> @wxGridCellStringRenderer { wxGridCellStringRenderer::from(0 as *mut c_void) }
     
 }
 
 trait _wxGridCellStringRenderer : _wxGridCellRenderer {
 }
 
-struct wxGridCellTextEditor(*u8);
+struct wxGridCellTextEditor(*mut c_void);
 impl _wxGridCellTextEditor for wxGridCellTextEditor {}
 impl _wxGridCellEditor for wxGridCellTextEditor {}
-impl _wxGridCellWorker for wxGridCellTextEditor { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellTextEditor { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellTextEditor {
-    pub fn from(handle: *u8) -> @wxGridCellTextEditor { @wxGridCellTextEditor(handle) }
-    pub fn null() -> @wxGridCellTextEditor { wxGridCellTextEditor::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellTextEditor { @wxGridCellTextEditor(handle) }
+    pub fn null() -> @wxGridCellTextEditor { wxGridCellTextEditor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -8415,29 +8415,29 @@ impl wxGridCellTextEditor {
 trait _wxGridCellTextEditor : _wxGridCellEditor {
 }
 
-struct wxGridCellWorker(*u8);
-impl _wxGridCellWorker for wxGridCellWorker { fn handle(&self) -> *u8 { **self } }
+struct wxGridCellWorker(*mut c_void);
+impl _wxGridCellWorker for wxGridCellWorker { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellWorker {
-    pub fn from(handle: *u8) -> @wxGridCellWorker { @wxGridCellWorker(handle) }
-    pub fn null() -> @wxGridCellWorker { wxGridCellWorker::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellWorker { @wxGridCellWorker(handle) }
+    pub fn null() -> @wxGridCellWorker { wxGridCellWorker::from(0 as *mut c_void) }
     
 }
 
 trait _wxGridCellWorker {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxGridEditorCreatedEvent(*u8);
+struct wxGridEditorCreatedEvent(*mut c_void);
 impl _wxGridEditorCreatedEvent for wxGridEditorCreatedEvent {}
 impl _wxCommandEvent for wxGridEditorCreatedEvent {}
 impl _wxEvent for wxGridEditorCreatedEvent {}
-impl _wxObject for wxGridEditorCreatedEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGridEditorCreatedEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridEditorCreatedEvent {
-    pub fn from(handle: *u8) -> @wxGridEditorCreatedEvent { @wxGridEditorCreatedEvent(handle) }
-    pub fn null() -> @wxGridEditorCreatedEvent { wxGridEditorCreatedEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridEditorCreatedEvent { @wxGridEditorCreatedEvent(handle) }
+    pub fn null() -> @wxGridEditorCreatedEvent { wxGridEditorCreatedEvent::from(0 as *mut c_void) }
     
 }
 
@@ -8474,28 +8474,28 @@ trait _wxGridEditorCreatedEvent : _wxCommandEvent {
     }
 }
 
-struct wxGridEvent(*u8);
+struct wxGridEvent(*mut c_void);
 impl _wxGridEvent for wxGridEvent {}
 impl _wxNotifyEvent for wxGridEvent {}
 impl _wxCommandEvent for wxGridEvent {}
 impl _wxEvent for wxGridEvent {}
-impl _wxObject for wxGridEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGridEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridEvent {
-    pub fn from(handle: *u8) -> @wxGridEvent { @wxGridEvent(handle) }
-    pub fn null() -> @wxGridEvent { wxGridEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridEvent { @wxGridEvent(handle) }
+    pub fn null() -> @wxGridEvent { wxGridEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxGridEvent : _wxNotifyEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn altDown(&self) -> bool {
+    fn altDown(&self) -> c_int {
         unsafe { wxGridEvent_AltDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn controlDown(&self) -> bool {
+    fn controlDown(&self) -> c_int {
         unsafe { wxGridEvent_ControlDown(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -8515,43 +8515,43 @@ trait _wxGridEvent : _wxNotifyEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn metaDown(&self) -> bool {
+    fn metaDown(&self) -> c_int {
         unsafe { wxGridEvent_MetaDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn selecting(&self) -> bool {
+    fn selecting(&self) -> c_int {
         unsafe { wxGridEvent_Selecting(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn shiftDown(&self) -> bool {
+    fn shiftDown(&self) -> c_int {
         unsafe { wxGridEvent_ShiftDown(self.handle()) }
     }
 }
 
-struct wxGridRangeSelectEvent(*u8);
+struct wxGridRangeSelectEvent(*mut c_void);
 impl _wxGridRangeSelectEvent for wxGridRangeSelectEvent {}
 impl _wxNotifyEvent for wxGridRangeSelectEvent {}
 impl _wxCommandEvent for wxGridRangeSelectEvent {}
 impl _wxEvent for wxGridRangeSelectEvent {}
-impl _wxObject for wxGridRangeSelectEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGridRangeSelectEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridRangeSelectEvent {
-    pub fn from(handle: *u8) -> @wxGridRangeSelectEvent { @wxGridRangeSelectEvent(handle) }
-    pub fn null() -> @wxGridRangeSelectEvent { wxGridRangeSelectEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridRangeSelectEvent { @wxGridRangeSelectEvent(handle) }
+    pub fn null() -> @wxGridRangeSelectEvent { wxGridRangeSelectEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxGridRangeSelectEvent : _wxNotifyEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getTopLeftCoords(&self, col: *c_int, row: *c_int) {
+    fn getTopLeftCoords(&self, col: *mut c_void, row: *mut c_void) {
         unsafe { wxGridRangeSelectEvent_GetTopLeftCoords(self.handle(), col, row) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getBottomRightCoords(&self, col: *c_int, row: *c_int) {
+    fn getBottomRightCoords(&self, col: *mut c_void, row: *mut c_void) {
         unsafe { wxGridRangeSelectEvent_GetBottomRightCoords(self.handle(), col, row) }
     }
     #[fixed_stack_segment]
@@ -8576,41 +8576,41 @@ trait _wxGridRangeSelectEvent : _wxNotifyEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn selecting(&self) -> bool {
+    fn selecting(&self) -> c_int {
         unsafe { wxGridRangeSelectEvent_Selecting(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn controlDown(&self) -> bool {
+    fn controlDown(&self) -> c_int {
         unsafe { wxGridRangeSelectEvent_ControlDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn metaDown(&self) -> bool {
+    fn metaDown(&self) -> c_int {
         unsafe { wxGridRangeSelectEvent_MetaDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn shiftDown(&self) -> bool {
+    fn shiftDown(&self) -> c_int {
         unsafe { wxGridRangeSelectEvent_ShiftDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn altDown(&self) -> bool {
+    fn altDown(&self) -> c_int {
         unsafe { wxGridRangeSelectEvent_AltDown(self.handle()) }
     }
 }
 
-struct wxGridSizeEvent(*u8);
+struct wxGridSizeEvent(*mut c_void);
 impl _wxGridSizeEvent for wxGridSizeEvent {}
 impl _wxNotifyEvent for wxGridSizeEvent {}
 impl _wxCommandEvent for wxGridSizeEvent {}
 impl _wxEvent for wxGridSizeEvent {}
-impl _wxObject for wxGridSizeEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGridSizeEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridSizeEvent {
-    pub fn from(handle: *u8) -> @wxGridSizeEvent { @wxGridSizeEvent(handle) }
-    pub fn null() -> @wxGridSizeEvent { wxGridSizeEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridSizeEvent { @wxGridSizeEvent(handle) }
+    pub fn null() -> @wxGridSizeEvent { wxGridSizeEvent::from(0 as *mut c_void) }
     
 }
 
@@ -8627,34 +8627,34 @@ trait _wxGridSizeEvent : _wxNotifyEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn controlDown(&self) -> bool {
+    fn controlDown(&self) -> c_int {
         unsafe { wxGridSizeEvent_ControlDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn metaDown(&self) -> bool {
+    fn metaDown(&self) -> c_int {
         unsafe { wxGridSizeEvent_MetaDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn shiftDown(&self) -> bool {
+    fn shiftDown(&self) -> c_int {
         unsafe { wxGridSizeEvent_ShiftDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn altDown(&self) -> bool {
+    fn altDown(&self) -> c_int {
         unsafe { wxGridSizeEvent_AltDown(self.handle()) }
     }
 }
 
-struct wxGridSizer(*u8);
+struct wxGridSizer(*mut c_void);
 impl _wxGridSizer for wxGridSizer {}
 impl _wxSizer for wxGridSizer {}
-impl _wxObject for wxGridSizer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGridSizer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridSizer {
-    pub fn from(handle: *u8) -> @wxGridSizer { @wxGridSizer(handle) }
-    pub fn null() -> @wxGridSizer { wxGridSizer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridSizer { @wxGridSizer(handle) }
+    pub fn null() -> @wxGridSizer { wxGridSizer::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -8706,84 +8706,84 @@ trait _wxGridSizer : _wxSizer {
     }
 }
 
-struct wxGridTableBase(*u8);
+struct wxGridTableBase(*mut c_void);
 impl _wxGridTableBase for wxGridTableBase {}
-impl _wxObject for wxGridTableBase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGridTableBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridTableBase {
-    pub fn from(handle: *u8) -> @wxGridTableBase { @wxGridTableBase(handle) }
-    pub fn null() -> @wxGridTableBase { wxGridTableBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridTableBase { @wxGridTableBase(handle) }
+    pub fn null() -> @wxGridTableBase { wxGridTableBase::from(0 as *mut c_void) }
     
 }
 
 trait _wxGridTableBase : _wxObject {
 }
 
-struct wxHTTP(*u8);
+struct wxHTTP(*mut c_void);
 impl _wxHTTP for wxHTTP {}
 impl _wxProtocol for wxHTTP {}
 impl _wxSocketClient for wxHTTP {}
 impl _wxSocketBase for wxHTTP {}
-impl _wxObject for wxHTTP { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHTTP { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHTTP {
-    pub fn from(handle: *u8) -> @wxHTTP { @wxHTTP(handle) }
-    pub fn null() -> @wxHTTP { wxHTTP::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHTTP { @wxHTTP(handle) }
+    pub fn null() -> @wxHTTP { wxHTTP::from(0 as *mut c_void) }
     
 }
 
 trait _wxHTTP : _wxProtocol {
 }
 
-struct wxHashMap(*u8);
-impl _wxHashMap for wxHashMap { fn handle(&self) -> *u8 { **self } }
+struct wxHashMap(*mut c_void);
+impl _wxHashMap for wxHashMap { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHashMap {
-    pub fn from(handle: *u8) -> @wxHashMap { @wxHashMap(handle) }
-    pub fn null() -> @wxHashMap { wxHashMap::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHashMap { @wxHashMap(handle) }
+    pub fn null() -> @wxHashMap { wxHashMap::from(0 as *mut c_void) }
     
 }
 
 trait _wxHashMap {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxHelpController(*u8);
+struct wxHelpController(*mut c_void);
 impl _wxHelpController for wxHelpController {}
 impl _wxHelpControllerBase for wxHelpController {}
-impl _wxObject for wxHelpController { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHelpController { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHelpController {
-    pub fn from(handle: *u8) -> @wxHelpController { @wxHelpController(handle) }
-    pub fn null() -> @wxHelpController { wxHelpController::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHelpController { @wxHelpController(handle) }
+    pub fn null() -> @wxHelpController { wxHelpController::from(0 as *mut c_void) }
     
 }
 
 trait _wxHelpController : _wxHelpControllerBase {
 }
 
-struct wxHelpControllerBase(*u8);
+struct wxHelpControllerBase(*mut c_void);
 impl _wxHelpControllerBase for wxHelpControllerBase {}
-impl _wxObject for wxHelpControllerBase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHelpControllerBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHelpControllerBase {
-    pub fn from(handle: *u8) -> @wxHelpControllerBase { @wxHelpControllerBase(handle) }
-    pub fn null() -> @wxHelpControllerBase { wxHelpControllerBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHelpControllerBase { @wxHelpControllerBase(handle) }
+    pub fn null() -> @wxHelpControllerBase { wxHelpControllerBase::from(0 as *mut c_void) }
     
 }
 
 trait _wxHelpControllerBase : _wxObject {
 }
 
-struct wxHelpControllerHelpProvider(*u8);
+struct wxHelpControllerHelpProvider(*mut c_void);
 impl _wxHelpControllerHelpProvider for wxHelpControllerHelpProvider {}
 impl _wxSimpleHelpProvider for wxHelpControllerHelpProvider {}
-impl _wxHelpProvider for wxHelpControllerHelpProvider { fn handle(&self) -> *u8 { **self } }
+impl _wxHelpProvider for wxHelpControllerHelpProvider { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHelpControllerHelpProvider {
-    pub fn from(handle: *u8) -> @wxHelpControllerHelpProvider { @wxHelpControllerHelpProvider(handle) }
-    pub fn null() -> @wxHelpControllerHelpProvider { wxHelpControllerHelpProvider::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHelpControllerHelpProvider { @wxHelpControllerHelpProvider(handle) }
+    pub fn null() -> @wxHelpControllerHelpProvider { wxHelpControllerHelpProvider::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -8805,15 +8805,15 @@ trait _wxHelpControllerHelpProvider : _wxSimpleHelpProvider {
     }
 }
 
-struct wxHelpEvent(*u8);
+struct wxHelpEvent(*mut c_void);
 impl _wxHelpEvent for wxHelpEvent {}
 impl _wxCommandEvent for wxHelpEvent {}
 impl _wxEvent for wxHelpEvent {}
-impl _wxObject for wxHelpEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHelpEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHelpEvent {
-    pub fn from(handle: *u8) -> @wxHelpEvent { @wxHelpEvent(handle) }
-    pub fn null() -> @wxHelpEvent { wxHelpEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHelpEvent { @wxHelpEvent(handle) }
+    pub fn null() -> @wxHelpEvent { wxHelpEvent::from(0 as *mut c_void) }
     
 }
 
@@ -8852,12 +8852,12 @@ trait _wxHelpEvent : _wxCommandEvent {
     }
 }
 
-struct wxHelpProvider(*u8);
-impl _wxHelpProvider for wxHelpProvider { fn handle(&self) -> *u8 { **self } }
+struct wxHelpProvider(*mut c_void);
+impl _wxHelpProvider for wxHelpProvider { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHelpProvider {
-    pub fn from(handle: *u8) -> @wxHelpProvider { @wxHelpProvider(handle) }
-    pub fn null() -> @wxHelpProvider { wxHelpProvider::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHelpProvider { @wxHelpProvider(handle) }
+    pub fn null() -> @wxHelpProvider { wxHelpProvider::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -8867,7 +8867,7 @@ impl wxHelpProvider {
 }
 
 trait _wxHelpProvider {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -8903,99 +8903,99 @@ trait _wxHelpProvider {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn showHelp<T: _wxWindow>(&self, window: &T) -> bool {
+    fn showHelp<T: _wxWindow>(&self, window: &T) -> c_int {
         unsafe { wxHelpProvider_ShowHelp(self.handle(), window.handle()) }
     }
 }
 
-struct wxHtmlCell(*u8);
+struct wxHtmlCell(*mut c_void);
 impl _wxHtmlCell for wxHtmlCell {}
-impl _wxObject for wxHtmlCell { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlCell { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlCell {
-    pub fn from(handle: *u8) -> @wxHtmlCell { @wxHtmlCell(handle) }
-    pub fn null() -> @wxHtmlCell { wxHtmlCell::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlCell { @wxHtmlCell(handle) }
+    pub fn null() -> @wxHtmlCell { wxHtmlCell::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlCell : _wxObject {
 }
 
-struct wxHtmlColourCell(*u8);
+struct wxHtmlColourCell(*mut c_void);
 impl _wxHtmlColourCell for wxHtmlColourCell {}
 impl _wxHtmlCell for wxHtmlColourCell {}
-impl _wxObject for wxHtmlColourCell { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlColourCell { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlColourCell {
-    pub fn from(handle: *u8) -> @wxHtmlColourCell { @wxHtmlColourCell(handle) }
-    pub fn null() -> @wxHtmlColourCell { wxHtmlColourCell::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlColourCell { @wxHtmlColourCell(handle) }
+    pub fn null() -> @wxHtmlColourCell { wxHtmlColourCell::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlColourCell : _wxHtmlCell {
 }
 
-struct wxHtmlContainerCell(*u8);
+struct wxHtmlContainerCell(*mut c_void);
 impl _wxHtmlContainerCell for wxHtmlContainerCell {}
 impl _wxHtmlCell for wxHtmlContainerCell {}
-impl _wxObject for wxHtmlContainerCell { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlContainerCell { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlContainerCell {
-    pub fn from(handle: *u8) -> @wxHtmlContainerCell { @wxHtmlContainerCell(handle) }
-    pub fn null() -> @wxHtmlContainerCell { wxHtmlContainerCell::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlContainerCell { @wxHtmlContainerCell(handle) }
+    pub fn null() -> @wxHtmlContainerCell { wxHtmlContainerCell::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlContainerCell : _wxHtmlCell {
 }
 
-struct wxHtmlDCRenderer(*u8);
+struct wxHtmlDCRenderer(*mut c_void);
 impl _wxHtmlDCRenderer for wxHtmlDCRenderer {}
-impl _wxObject for wxHtmlDCRenderer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlDCRenderer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlDCRenderer {
-    pub fn from(handle: *u8) -> @wxHtmlDCRenderer { @wxHtmlDCRenderer(handle) }
-    pub fn null() -> @wxHtmlDCRenderer { wxHtmlDCRenderer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlDCRenderer { @wxHtmlDCRenderer(handle) }
+    pub fn null() -> @wxHtmlDCRenderer { wxHtmlDCRenderer::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlDCRenderer : _wxObject {
 }
 
-struct wxHtmlEasyPrinting(*u8);
+struct wxHtmlEasyPrinting(*mut c_void);
 impl _wxHtmlEasyPrinting for wxHtmlEasyPrinting {}
-impl _wxObject for wxHtmlEasyPrinting { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlEasyPrinting { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlEasyPrinting {
-    pub fn from(handle: *u8) -> @wxHtmlEasyPrinting { @wxHtmlEasyPrinting(handle) }
-    pub fn null() -> @wxHtmlEasyPrinting { wxHtmlEasyPrinting::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlEasyPrinting { @wxHtmlEasyPrinting(handle) }
+    pub fn null() -> @wxHtmlEasyPrinting { wxHtmlEasyPrinting::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlEasyPrinting : _wxObject {
 }
 
-struct wxHtmlFilter(*u8);
+struct wxHtmlFilter(*mut c_void);
 impl _wxHtmlFilter for wxHtmlFilter {}
-impl _wxObject for wxHtmlFilter { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlFilter { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlFilter {
-    pub fn from(handle: *u8) -> @wxHtmlFilter { @wxHtmlFilter(handle) }
-    pub fn null() -> @wxHtmlFilter { wxHtmlFilter::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlFilter { @wxHtmlFilter(handle) }
+    pub fn null() -> @wxHtmlFilter { wxHtmlFilter::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlFilter : _wxObject {
 }
 
-struct wxHtmlHelpController(*u8);
+struct wxHtmlHelpController(*mut c_void);
 impl _wxHtmlHelpController for wxHtmlHelpController {}
 impl _wxHelpControllerBase for wxHtmlHelpController {}
-impl _wxObject for wxHtmlHelpController { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlHelpController { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlHelpController {
-    pub fn from(handle: *u8) -> @wxHtmlHelpController { @wxHtmlHelpController(handle) }
-    pub fn null() -> @wxHtmlHelpController { wxHtmlHelpController::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlHelpController { @wxHtmlHelpController(handle) }
+    pub fn null() -> @wxHtmlHelpController { wxHtmlHelpController::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -9007,17 +9007,17 @@ impl wxHtmlHelpController {
 trait _wxHtmlHelpController : _wxHelpControllerBase {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addBook(&self, book: *u8, show_wait_msg: c_int) -> bool {
+    fn addBook(&self, book: *mut c_void, show_wait_msg: c_int) -> c_int {
         unsafe { wxHtmlHelpController_AddBook(self.handle(), book, show_wait_msg) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn display(&self, x: *u8) -> c_int {
+    fn display(&self, x: *mut c_void) -> c_int {
         unsafe { wxHtmlHelpController_Display(self.handle(), x) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn displayBlock(&self, blockNo: c_int) -> bool {
+    fn displayBlock(&self, blockNo: c_int) -> c_int {
         unsafe { wxHtmlHelpController_DisplayBlock(self.handle(), blockNo) }
     }
     #[fixed_stack_segment]
@@ -9037,13 +9037,13 @@ trait _wxHtmlHelpController : _wxHelpControllerBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn displaySection(&self, section: &str) -> bool {
+    fn displaySection(&self, section: &str) -> c_int {
         let section = wxT(section);
         unsafe { wxHtmlHelpController_DisplaySection(self.handle(), section.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn displaySectionNumber(&self, sectionNo: c_int) -> bool {
+    fn displaySectionNumber(&self, sectionNo: c_int) -> c_int {
         unsafe { wxHtmlHelpController_DisplaySectionNumber(self.handle(), sectionNo) }
     }
     #[fixed_stack_segment]
@@ -9053,30 +9053,30 @@ trait _wxHtmlHelpController : _wxHelpControllerBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getFrameParameters(&self, title: *u8, width: *c_int, height: *c_int, pos_x: *c_int, pos_y: *c_int, newFrameEachTime: *c_int) -> *u8 {
+    fn getFrameParameters(&self, title: *mut c_void, width: *mut c_int, height: *mut c_int, pos_x: *mut c_int, pos_y: *mut c_int, newFrameEachTime: *mut c_int) -> *mut c_void {
         unsafe { wxHtmlHelpController_GetFrameParameters(self.handle(), title, width, height, pos_x, pos_y, newFrameEachTime) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn initialize(&self, file: &str) -> bool {
+    fn initialize(&self, file: &str) -> c_int {
         let file = wxT(file);
         unsafe { wxHtmlHelpController_Initialize(self.handle(), file.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn keywordSearch(&self, keyword: &str) -> bool {
+    fn keywordSearch(&self, keyword: &str) -> c_int {
         let keyword = wxT(keyword);
         unsafe { wxHtmlHelpController_KeywordSearch(self.handle(), keyword.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn loadFile(&self, file: &str) -> bool {
+    fn loadFile(&self, file: &str) -> c_int {
         let file = wxT(file);
         unsafe { wxHtmlHelpController_LoadFile(self.handle(), file.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn quit(&self) -> bool {
+    fn quit(&self) -> c_int {
         unsafe { wxHtmlHelpController_Quit(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -9087,7 +9087,7 @@ trait _wxHtmlHelpController : _wxHelpControllerBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setFrameParameters(&self, title: *u8, width: c_int, height: c_int, pos_x: c_int, pos_y: c_int, newFrameEachTime: bool) {
+    fn setFrameParameters(&self, title: *mut c_void, width: c_int, height: c_int, pos_x: c_int, pos_y: c_int, newFrameEachTime: c_int) {
         unsafe { wxHtmlHelpController_SetFrameParameters(self.handle(), title, width, height, pos_x, pos_y, newFrameEachTime) }
     }
     #[fixed_stack_segment]
@@ -9098,7 +9098,7 @@ trait _wxHtmlHelpController : _wxHelpControllerBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setTitleFormat(&self, format: *u8) {
+    fn setTitleFormat(&self, format: *mut c_void) {
         unsafe { wxHtmlHelpController_SetTitleFormat(self.handle(), format) }
     }
     #[fixed_stack_segment]
@@ -9121,169 +9121,169 @@ trait _wxHtmlHelpController : _wxHelpControllerBase {
     }
 }
 
-struct wxHtmlHelpData(*u8);
+struct wxHtmlHelpData(*mut c_void);
 impl _wxHtmlHelpData for wxHtmlHelpData {}
-impl _wxObject for wxHtmlHelpData { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlHelpData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlHelpData {
-    pub fn from(handle: *u8) -> @wxHtmlHelpData { @wxHtmlHelpData(handle) }
-    pub fn null() -> @wxHtmlHelpData { wxHtmlHelpData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlHelpData { @wxHtmlHelpData(handle) }
+    pub fn null() -> @wxHtmlHelpData { wxHtmlHelpData::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlHelpData : _wxObject {
 }
 
-struct wxHtmlHelpFrame(*u8);
+struct wxHtmlHelpFrame(*mut c_void);
 impl _wxHtmlHelpFrame for wxHtmlHelpFrame {}
 impl _wxFrame for wxHtmlHelpFrame {}
 impl _wxTopLevelWindow for wxHtmlHelpFrame {}
 impl _wxWindow for wxHtmlHelpFrame {}
 impl _wxEvtHandler for wxHtmlHelpFrame {}
-impl _wxObject for wxHtmlHelpFrame { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlHelpFrame { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlHelpFrame {
-    pub fn from(handle: *u8) -> @wxHtmlHelpFrame { @wxHtmlHelpFrame(handle) }
-    pub fn null() -> @wxHtmlHelpFrame { wxHtmlHelpFrame::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlHelpFrame { @wxHtmlHelpFrame(handle) }
+    pub fn null() -> @wxHtmlHelpFrame { wxHtmlHelpFrame::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlHelpFrame : _wxFrame {
 }
 
-struct wxHtmlLinkInfo(*u8);
+struct wxHtmlLinkInfo(*mut c_void);
 impl _wxHtmlLinkInfo for wxHtmlLinkInfo {}
-impl _wxObject for wxHtmlLinkInfo { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlLinkInfo { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlLinkInfo {
-    pub fn from(handle: *u8) -> @wxHtmlLinkInfo { @wxHtmlLinkInfo(handle) }
-    pub fn null() -> @wxHtmlLinkInfo { wxHtmlLinkInfo::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlLinkInfo { @wxHtmlLinkInfo(handle) }
+    pub fn null() -> @wxHtmlLinkInfo { wxHtmlLinkInfo::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlLinkInfo : _wxObject {
 }
 
-struct wxHtmlParser(*u8);
+struct wxHtmlParser(*mut c_void);
 impl _wxHtmlParser for wxHtmlParser {}
-impl _wxObject for wxHtmlParser { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlParser { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlParser {
-    pub fn from(handle: *u8) -> @wxHtmlParser { @wxHtmlParser(handle) }
-    pub fn null() -> @wxHtmlParser { wxHtmlParser::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlParser { @wxHtmlParser(handle) }
+    pub fn null() -> @wxHtmlParser { wxHtmlParser::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlParser : _wxObject {
 }
 
-struct wxHtmlPrintout(*u8);
+struct wxHtmlPrintout(*mut c_void);
 impl _wxHtmlPrintout for wxHtmlPrintout {}
 impl _wxPrintout for wxHtmlPrintout {}
-impl _wxObject for wxHtmlPrintout { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlPrintout { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlPrintout {
-    pub fn from(handle: *u8) -> @wxHtmlPrintout { @wxHtmlPrintout(handle) }
-    pub fn null() -> @wxHtmlPrintout { wxHtmlPrintout::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlPrintout { @wxHtmlPrintout(handle) }
+    pub fn null() -> @wxHtmlPrintout { wxHtmlPrintout::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlPrintout : _wxPrintout {
 }
 
-struct wxHtmlTag(*u8);
+struct wxHtmlTag(*mut c_void);
 impl _wxHtmlTag for wxHtmlTag {}
-impl _wxObject for wxHtmlTag { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlTag { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlTag {
-    pub fn from(handle: *u8) -> @wxHtmlTag { @wxHtmlTag(handle) }
-    pub fn null() -> @wxHtmlTag { wxHtmlTag::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlTag { @wxHtmlTag(handle) }
+    pub fn null() -> @wxHtmlTag { wxHtmlTag::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlTag : _wxObject {
 }
 
-struct wxHtmlTagHandler(*u8);
+struct wxHtmlTagHandler(*mut c_void);
 impl _wxHtmlTagHandler for wxHtmlTagHandler {}
-impl _wxObject for wxHtmlTagHandler { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlTagHandler { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlTagHandler {
-    pub fn from(handle: *u8) -> @wxHtmlTagHandler { @wxHtmlTagHandler(handle) }
-    pub fn null() -> @wxHtmlTagHandler { wxHtmlTagHandler::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlTagHandler { @wxHtmlTagHandler(handle) }
+    pub fn null() -> @wxHtmlTagHandler { wxHtmlTagHandler::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlTagHandler : _wxObject {
 }
 
-struct wxHtmlTagsModule(*u8);
+struct wxHtmlTagsModule(*mut c_void);
 impl _wxHtmlTagsModule for wxHtmlTagsModule {}
 impl _wxModule for wxHtmlTagsModule {}
-impl _wxObject for wxHtmlTagsModule { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlTagsModule { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlTagsModule {
-    pub fn from(handle: *u8) -> @wxHtmlTagsModule { @wxHtmlTagsModule(handle) }
-    pub fn null() -> @wxHtmlTagsModule { wxHtmlTagsModule::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlTagsModule { @wxHtmlTagsModule(handle) }
+    pub fn null() -> @wxHtmlTagsModule { wxHtmlTagsModule::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlTagsModule : _wxModule {
 }
 
-struct wxHtmlWidgetCell(*u8);
+struct wxHtmlWidgetCell(*mut c_void);
 impl _wxHtmlWidgetCell for wxHtmlWidgetCell {}
 impl _wxHtmlCell for wxHtmlWidgetCell {}
-impl _wxObject for wxHtmlWidgetCell { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlWidgetCell { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlWidgetCell {
-    pub fn from(handle: *u8) -> @wxHtmlWidgetCell { @wxHtmlWidgetCell(handle) }
-    pub fn null() -> @wxHtmlWidgetCell { wxHtmlWidgetCell::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlWidgetCell { @wxHtmlWidgetCell(handle) }
+    pub fn null() -> @wxHtmlWidgetCell { wxHtmlWidgetCell::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlWidgetCell : _wxHtmlCell {
 }
 
-struct wxHtmlWinParser(*u8);
+struct wxHtmlWinParser(*mut c_void);
 impl _wxHtmlWinParser for wxHtmlWinParser {}
 impl _wxHtmlParser for wxHtmlWinParser {}
-impl _wxObject for wxHtmlWinParser { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlWinParser { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlWinParser {
-    pub fn from(handle: *u8) -> @wxHtmlWinParser { @wxHtmlWinParser(handle) }
-    pub fn null() -> @wxHtmlWinParser { wxHtmlWinParser::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlWinParser { @wxHtmlWinParser(handle) }
+    pub fn null() -> @wxHtmlWinParser { wxHtmlWinParser::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlWinParser : _wxHtmlParser {
 }
 
-struct wxHtmlWinTagHandler(*u8);
+struct wxHtmlWinTagHandler(*mut c_void);
 impl _wxHtmlWinTagHandler for wxHtmlWinTagHandler {}
 impl _wxHtmlTagHandler for wxHtmlWinTagHandler {}
-impl _wxObject for wxHtmlWinTagHandler { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlWinTagHandler { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlWinTagHandler {
-    pub fn from(handle: *u8) -> @wxHtmlWinTagHandler { @wxHtmlWinTagHandler(handle) }
-    pub fn null() -> @wxHtmlWinTagHandler { wxHtmlWinTagHandler::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlWinTagHandler { @wxHtmlWinTagHandler(handle) }
+    pub fn null() -> @wxHtmlWinTagHandler { wxHtmlWinTagHandler::from(0 as *mut c_void) }
     
 }
 
 trait _wxHtmlWinTagHandler : _wxHtmlTagHandler {
 }
 
-struct wxHtmlWindow(*u8);
+struct wxHtmlWindow(*mut c_void);
 impl _wxHtmlWindow for wxHtmlWindow {}
 impl _wxScrolledWindow for wxHtmlWindow {}
 impl _wxPanel for wxHtmlWindow {}
 impl _wxWindow for wxHtmlWindow {}
 impl _wxEvtHandler for wxHtmlWindow {}
-impl _wxObject for wxHtmlWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxHtmlWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxHtmlWindow {
-    pub fn from(handle: *u8) -> @wxHtmlWindow { @wxHtmlWindow(handle) }
-    pub fn null() -> @wxHtmlWindow { wxHtmlWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxHtmlWindow { @wxHtmlWindow(handle) }
+    pub fn null() -> @wxHtmlWindow { wxHtmlWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -9296,7 +9296,7 @@ impl wxHtmlWindow {
 trait _wxHtmlWindow : _wxScrolledWindow {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn appendToPage(&self, source: &str) -> bool {
+    fn appendToPage(&self, source: &str) -> c_int {
         let source = wxT(source);
         unsafe { wxHtmlWindow_AppendToPage(self.handle(), source.handle()) }
     }
@@ -9327,17 +9327,17 @@ trait _wxHtmlWindow : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn historyBack(&self) -> bool {
+    fn historyBack(&self) -> c_int {
         unsafe { wxHtmlWindow_HistoryBack(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn historyCanBack(&self) -> bool {
+    fn historyCanBack(&self) -> c_int {
         unsafe { wxHtmlWindow_HistoryCanBack(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn historyCanForward(&self) -> bool {
+    fn historyCanForward(&self) -> c_int {
         unsafe { wxHtmlWindow_HistoryCanForward(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -9347,12 +9347,12 @@ trait _wxHtmlWindow : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn historyForward(&self) -> bool {
+    fn historyForward(&self) -> c_int {
         unsafe { wxHtmlWindow_HistoryForward(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn loadPage(&self, location: &str) -> bool {
+    fn loadPage(&self, location: &str) -> c_int {
         let location = wxT(location);
         unsafe { wxHtmlWindow_LoadPage(self.handle(), location.handle()) }
     }
@@ -9369,7 +9369,7 @@ trait _wxHtmlWindow : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setFonts(&self, normal_face: &str, fixed_face: &str, sizes: *c_int) {
+    fn setFonts(&self, normal_face: &str, fixed_face: &str, sizes: *mut c_int) {
         let normal_face = wxT(normal_face);
         let fixed_face = wxT(fixed_face);
         unsafe { wxHtmlWindow_SetFonts(self.handle(), normal_face.handle(), fixed_face.handle(), sizes) }
@@ -9399,29 +9399,29 @@ trait _wxHtmlWindow : _wxScrolledWindow {
     }
 }
 
-struct wxIPV4address(*u8);
+struct wxIPV4address(*mut c_void);
 impl _wxIPV4address for wxIPV4address {}
 impl _wxSockAddress for wxIPV4address {}
-impl _wxObject for wxIPV4address { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxIPV4address { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxIPV4address {
-    pub fn from(handle: *u8) -> @wxIPV4address { @wxIPV4address(handle) }
-    pub fn null() -> @wxIPV4address { wxIPV4address::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxIPV4address { @wxIPV4address(handle) }
+    pub fn null() -> @wxIPV4address { wxIPV4address::from(0 as *mut c_void) }
     
 }
 
 trait _wxIPV4address : _wxSockAddress {
 }
 
-struct wxIcon(*u8);
+struct wxIcon(*mut c_void);
 impl _wxIcon for wxIcon {}
 impl _wxBitmap for wxIcon {}
 impl _wxGDIObject for wxIcon {}
-impl _wxObject for wxIcon { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxIcon { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxIcon {
-    pub fn from(handle: *u8) -> @wxIcon { @wxIcon(handle) }
-    pub fn null() -> @wxIcon { wxIcon::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxIcon { @wxIcon(handle) }
+    pub fn null() -> @wxIcon { wxIcon::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -9439,7 +9439,7 @@ impl wxIcon {
 trait _wxIcon : _wxBitmap {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn assign(&self, other: *u8) {
+    fn assign(&self, other: *mut c_void) {
         unsafe { wxIcon_Assign(self.handle(), other) }
     }
     #[fixed_stack_segment]
@@ -9459,7 +9459,7 @@ trait _wxIcon : _wxBitmap {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEqual(&self, other: &_wxIcon) -> bool {
+    fn isEqual(&self, other: &_wxIcon) -> c_int {
         unsafe { wxIcon_IsEqual(self.handle(), other.handle()) }
     }
     #[fixed_stack_segment]
@@ -9470,12 +9470,12 @@ trait _wxIcon : _wxBitmap {
     }
 }
 
-struct wxIconBundle(*u8);
-impl _wxIconBundle for wxIconBundle { fn handle(&self) -> *u8 { **self } }
+struct wxIconBundle(*mut c_void);
+impl _wxIconBundle for wxIconBundle { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxIconBundle {
-    pub fn from(handle: *u8) -> @wxIconBundle { @wxIconBundle(handle) }
-    pub fn null() -> @wxIconBundle { wxIconBundle::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxIconBundle { @wxIconBundle(handle) }
+    pub fn null() -> @wxIconBundle { wxIconBundle::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -9496,7 +9496,7 @@ impl wxIconBundle {
 }
 
 trait _wxIconBundle {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -9526,55 +9526,55 @@ trait _wxIconBundle {
     }
 }
 
-struct wxIconizeEvent(*u8);
+struct wxIconizeEvent(*mut c_void);
 impl _wxIconizeEvent for wxIconizeEvent {}
 impl _wxEvent for wxIconizeEvent {}
-impl _wxObject for wxIconizeEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxIconizeEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxIconizeEvent {
-    pub fn from(handle: *u8) -> @wxIconizeEvent { @wxIconizeEvent(handle) }
-    pub fn null() -> @wxIconizeEvent { wxIconizeEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxIconizeEvent { @wxIconizeEvent(handle) }
+    pub fn null() -> @wxIconizeEvent { wxIconizeEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxIconizeEvent : _wxEvent {
 }
 
-struct wxIdleEvent(*u8);
+struct wxIdleEvent(*mut c_void);
 impl _wxIdleEvent for wxIdleEvent {}
 impl _wxEvent for wxIdleEvent {}
-impl _wxObject for wxIdleEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxIdleEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxIdleEvent {
-    pub fn from(handle: *u8) -> @wxIdleEvent { @wxIdleEvent(handle) }
-    pub fn null() -> @wxIdleEvent { wxIdleEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxIdleEvent { @wxIdleEvent(handle) }
+    pub fn null() -> @wxIdleEvent { wxIdleEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxIdleEvent : _wxEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn moreRequested(&self) -> bool {
+    fn moreRequested(&self) -> c_int {
         unsafe { wxIdleEvent_MoreRequested(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn requestMore(&self, needMore: bool) {
+    fn requestMore(&self, needMore: c_int) {
         unsafe { wxIdleEvent_RequestMore(self.handle(), needMore) }
     }
 }
 
-struct wxImage(*u8);
+struct wxImage(*mut c_void);
 impl _wxImage for wxImage {}
-impl _wxObject for wxImage { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxImage { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxImage {
-    pub fn from(handle: *u8) -> @wxImage { @wxImage(handle) }
-    pub fn null() -> @wxImage { wxImage::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxImage { @wxImage(handle) }
+    pub fn null() -> @wxImage { wxImage::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn canRead(name: &str) -> bool {
+    pub fn canRead(name: &str) -> c_int {
         let name = wxT(name);
         unsafe { wxImage_CanRead(name.handle()) }
     }
@@ -9590,17 +9590,17 @@ impl wxImage {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromByteString(data: *char, length: c_int, type_: c_int) -> @wxImage {
+    pub fn newFromByteString(data: *mut *mut c_char, length: c_int, type_: c_int) -> @wxImage {
         unsafe { @wxImage(wxImage_CreateFromByteString(data, length, type_)) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromLazyByteString(data: *char, length: c_int, type_: c_int) -> @wxImage {
+    pub fn newFromLazyByteString(data: *mut *mut c_char, length: c_int, type_: c_int) -> @wxImage {
         unsafe { @wxImage(wxImage_CreateFromLazyByteString(data, length, type_)) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromData(width: c_int, height: c_int, data: *u8) -> @wxImage {
+    pub fn newFromData(width: c_int, height: c_int, data: *mut c_void) -> @wxImage {
         unsafe { @wxImage(wxImage_CreateFromData(width, height, data)) }
     }
     #[fixed_stack_segment]
@@ -9616,7 +9616,7 @@ impl wxImage {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromDataEx(width: c_int, height: c_int, data: *u8, isStaticData: c_int) -> @wxImage {
+    pub fn newFromDataEx(width: c_int, height: c_int, data: *mut c_void, isStaticData: c_int) -> @wxImage {
         unsafe { @wxImage(wxImage_CreateFromDataEx(width, height, data, isStaticData)) }
     }
 }
@@ -9629,12 +9629,12 @@ trait _wxImage : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn convertToByteString(&self, type_: c_int, data: *char) -> c_int {
+    fn convertToByteString(&self, type_: c_int, data: *mut c_char) -> c_int {
         unsafe { wxImage_ConvertToByteString(self.handle(), type_, data) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn convertToLazyByteString(&self, type_: c_int, data: *char) -> c_int {
+    fn convertToLazyByteString(&self, type_: c_int, data: *mut c_char) -> c_int {
         unsafe { wxImage_ConvertToLazyByteString(self.handle(), type_, data) }
     }
     #[fixed_stack_segment]
@@ -9649,17 +9649,17 @@ trait _wxImage : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getBlue(&self, x: c_int, y: c_int) -> wchar_t {
+    fn getBlue(&self, x: c_int, y: c_int) -> int8_t {
         unsafe { wxImage_GetBlue(self.handle(), x, y) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getData(&self) -> *u8 {
+    fn getData(&self) -> *mut c_void {
         unsafe { wxImage_GetData(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getGreen(&self, x: c_int, y: c_int) -> wchar_t {
+    fn getGreen(&self, x: c_int, y: c_int) -> int8_t {
         unsafe { wxImage_GetGreen(self.handle(), x, y) }
     }
     #[fixed_stack_segment]
@@ -9669,22 +9669,22 @@ trait _wxImage : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getMaskBlue(&self) -> wchar_t {
+    fn getMaskBlue(&self) -> int8_t {
         unsafe { wxImage_GetMaskBlue(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getMaskGreen(&self) -> wchar_t {
+    fn getMaskGreen(&self) -> int8_t {
         unsafe { wxImage_GetMaskGreen(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getMaskRed(&self) -> wchar_t {
+    fn getMaskRed(&self) -> int8_t {
         unsafe { wxImage_GetMaskRed(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getRed(&self, x: c_int, y: c_int) -> wchar_t {
+    fn getRed(&self, x: c_int, y: c_int) -> int8_t {
         unsafe { wxImage_GetRed(self.handle(), x, y) }
     }
     #[fixed_stack_segment]
@@ -9699,7 +9699,7 @@ trait _wxImage : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasMask(&self) -> bool {
+    fn hasMask(&self) -> c_int {
         unsafe { wxImage_HasMask(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -9710,13 +9710,13 @@ trait _wxImage : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getOptionInt(&self, name: &str) -> bool {
+    fn getOptionInt(&self, name: &str) -> c_int {
         let name = wxT(name);
         unsafe { wxImage_GetOptionInt(self.handle(), name.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasOption(&self, name: &str) -> bool {
+    fn hasOption(&self, name: &str) -> c_int {
         let name = wxT(name);
         unsafe { wxImage_HasOption(self.handle(), name.handle()) }
     }
@@ -9727,12 +9727,12 @@ trait _wxImage : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn initializeFromData(&self, width: c_int, height: c_int, data: *u8) {
+    fn initializeFromData(&self, width: c_int, height: c_int, data: *mut c_void) {
         unsafe { wxImage_InitializeFromData(self.handle(), width, height, data) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn loadFile(&self, name: &str, type_: c_int) -> bool {
+    fn loadFile(&self, name: &str, type_: c_int) -> c_int {
         let name = wxT(name);
         unsafe { wxImage_LoadFile(self.handle(), name.handle(), type_) }
     }
@@ -9743,7 +9743,7 @@ trait _wxImage : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxImage_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -9763,7 +9763,7 @@ trait _wxImage : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn rotate<T: _wxImage>(&self, angle: c_double, c_x: c_int, c_y: c_int, interpolating: c_int, offset_after_rotation: *u8, image: &T) {
+    fn rotate<T: _wxImage>(&self, angle: c_double, c_x: c_int, c_y: c_int, interpolating: c_int, offset_after_rotation: *mut c_void, image: &T) {
         unsafe { wxImage_Rotate(self.handle(), angle, c_x, c_y, interpolating, offset_after_rotation, image.handle()) }
     }
     #[fixed_stack_segment]
@@ -9773,7 +9773,7 @@ trait _wxImage : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn saveFile(&self, name: &str, type_: c_int) -> bool {
+    fn saveFile(&self, name: &str, type_: c_int) -> c_int {
         let name = wxT(name);
         unsafe { wxImage_SaveFile(self.handle(), name.handle(), type_) }
     }
@@ -9784,12 +9784,12 @@ trait _wxImage : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setData(&self, data: *u8) {
+    fn setData(&self, data: *mut c_void) {
         unsafe { wxImage_SetData(self.handle(), data) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setDataAndSize(&self, data: *u8, new_width: c_int, new_height: c_int) {
+    fn setDataAndSize(&self, data: *mut c_void, new_width: c_int, new_height: c_int) {
         unsafe { wxImage_SetDataAndSize(self.handle(), data, new_width, new_height) }
     }
     #[fixed_stack_segment]
@@ -9822,26 +9822,26 @@ trait _wxImage : _wxObject {
     }
 }
 
-struct wxImageHandler(*u8);
+struct wxImageHandler(*mut c_void);
 impl _wxImageHandler for wxImageHandler {}
-impl _wxObject for wxImageHandler { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxImageHandler { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxImageHandler {
-    pub fn from(handle: *u8) -> @wxImageHandler { @wxImageHandler(handle) }
-    pub fn null() -> @wxImageHandler { wxImageHandler::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxImageHandler { @wxImageHandler(handle) }
+    pub fn null() -> @wxImageHandler { wxImageHandler::from(0 as *mut c_void) }
     
 }
 
 trait _wxImageHandler : _wxObject {
 }
 
-struct wxImageList(*u8);
+struct wxImageList(*mut c_void);
 impl _wxImageList for wxImageList {}
-impl _wxObject for wxImageList { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxImageList { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxImageList {
-    pub fn from(handle: *u8) -> @wxImageList { @wxImageList(handle) }
-    pub fn null() -> @wxImageList { wxImageList::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxImageList { @wxImageList(handle) }
+    pub fn null() -> @wxImageList { wxImageList::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -9868,7 +9868,7 @@ trait _wxImageList : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn draw<T: _wxDC>(&self, index: c_int, dc: &T, x: c_int, y: c_int, flags: c_int, solidBackground: bool) -> bool {
+    fn draw<T: _wxDC>(&self, index: c_int, dc: &T, x: c_int, y: c_int, flags: c_int, solidBackground: c_int) -> c_int {
         unsafe { wxImageList_Draw(self.handle(), index, dc.handle(), x, y, flags, solidBackground) }
     }
     #[fixed_stack_segment]
@@ -9878,38 +9878,38 @@ trait _wxImageList : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSize(&self, index: c_int, width: *c_int, height: *c_int) {
+    fn getSize(&self, index: c_int, width: *mut c_int, height: *mut c_int) {
         unsafe { wxImageList_GetSize(self.handle(), index, width, height) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn remove(&self, index: c_int) -> bool {
+    fn remove(&self, index: c_int) -> c_int {
         unsafe { wxImageList_Remove(self.handle(), index) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn removeAll(&self) -> bool {
+    fn removeAll(&self) -> c_int {
         unsafe { wxImageList_RemoveAll(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn replace<T: _wxBitmap, U: _wxBitmap>(&self, index: c_int, bitmap: &T, mask: &U) -> bool {
+    fn replace<T: _wxBitmap, U: _wxBitmap>(&self, index: c_int, bitmap: &T, mask: &U) -> c_int {
         unsafe { wxImageList_Replace(self.handle(), index, bitmap.handle(), mask.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn replaceIcon<T: _wxIcon>(&self, index: c_int, icon: &T) -> bool {
+    fn replaceIcon<T: _wxIcon>(&self, index: c_int, icon: &T) -> c_int {
         unsafe { wxImageList_ReplaceIcon(self.handle(), index, icon.handle()) }
     }
 }
 
-struct wxIndividualLayoutConstraint(*u8);
+struct wxIndividualLayoutConstraint(*mut c_void);
 impl _wxIndividualLayoutConstraint for wxIndividualLayoutConstraint {}
-impl _wxObject for wxIndividualLayoutConstraint { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxIndividualLayoutConstraint { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxIndividualLayoutConstraint {
-    pub fn from(handle: *u8) -> @wxIndividualLayoutConstraint { @wxIndividualLayoutConstraint(handle) }
-    pub fn null() -> @wxIndividualLayoutConstraint { wxIndividualLayoutConstraint::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxIndividualLayoutConstraint { @wxIndividualLayoutConstraint(handle) }
+    pub fn null() -> @wxIndividualLayoutConstraint { wxIndividualLayoutConstraint::from(0 as *mut c_void) }
     
 }
 
@@ -9936,12 +9936,12 @@ trait _wxIndividualLayoutConstraint : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDone(&self) -> bool {
+    fn getDone(&self) -> c_int {
         unsafe { wxIndividualLayoutConstraint_GetDone(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEdge(&self, which: c_int, thisWin: *u8, other: *u8) -> c_int {
+    fn getEdge(&self, which: c_int, thisWin: *mut c_void, other: *mut c_void) -> c_int {
         unsafe { wxIndividualLayoutConstraint_GetEdge(self.handle(), which, thisWin, other) }
     }
     #[fixed_stack_segment]
@@ -9961,7 +9961,7 @@ trait _wxIndividualLayoutConstraint : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getOtherWindow(&self) -> *u8 {
+    fn getOtherWindow(&self) -> *mut c_void {
         unsafe { wxIndividualLayoutConstraint_GetOtherWindow(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -9991,7 +9991,7 @@ trait _wxIndividualLayoutConstraint : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn resetIfWin<T: _wxWindow>(&self, otherW: &T) -> bool {
+    fn resetIfWin<T: _wxWindow>(&self, otherW: &T) -> c_int {
         unsafe { wxIndividualLayoutConstraint_ResetIfWin(self.handle(), otherW.handle()) }
     }
     #[fixed_stack_segment]
@@ -10006,7 +10006,7 @@ trait _wxIndividualLayoutConstraint : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn satisfyConstraint<T: _wxWindow>(&self, constraints: *u8, win: &T) -> bool {
+    fn satisfyConstraint<T: _wxWindow>(&self, constraints: *mut c_void, win: &T) -> c_int {
         unsafe { wxIndividualLayoutConstraint_SatisfyConstraint(self.handle(), constraints, win.handle()) }
     }
     #[fixed_stack_segment]
@@ -10016,7 +10016,7 @@ trait _wxIndividualLayoutConstraint : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setDone(&self, d: bool) {
+    fn setDone(&self, d: c_int) {
         unsafe { wxIndividualLayoutConstraint_SetDone(self.handle(), d) }
     }
     #[fixed_stack_segment]
@@ -10046,39 +10046,39 @@ trait _wxIndividualLayoutConstraint : _wxObject {
     }
 }
 
-struct wxInitDialogEvent(*u8);
+struct wxInitDialogEvent(*mut c_void);
 impl _wxInitDialogEvent for wxInitDialogEvent {}
 impl _wxEvent for wxInitDialogEvent {}
-impl _wxObject for wxInitDialogEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxInitDialogEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxInitDialogEvent {
-    pub fn from(handle: *u8) -> @wxInitDialogEvent { @wxInitDialogEvent(handle) }
-    pub fn null() -> @wxInitDialogEvent { wxInitDialogEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxInitDialogEvent { @wxInitDialogEvent(handle) }
+    pub fn null() -> @wxInitDialogEvent { wxInitDialogEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxInitDialogEvent : _wxEvent {
 }
 
-struct wxInputStream(*u8);
+struct wxInputStream(*mut c_void);
 impl _wxInputStream for wxInputStream {}
-impl _wxStreamBase for wxInputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxInputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxInputStream {
-    pub fn from(handle: *u8) -> @wxInputStream { @wxInputStream(handle) }
-    pub fn null() -> @wxInputStream { wxInputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxInputStream { @wxInputStream(handle) }
+    pub fn null() -> @wxInputStream { wxInputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxInputStream : _wxStreamBase {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn eof(&self) -> bool {
+    fn eof(&self) -> c_int {
         unsafe { wxInputStream_Eof(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getC(&self) -> wchar_t {
+    fn getC(&self) -> int8_t {
         unsafe { wxInputStream_GetC(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -10088,12 +10088,12 @@ trait _wxInputStream : _wxStreamBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn peek(&self) -> wchar_t {
+    fn peek(&self) -> int8_t {
         unsafe { wxInputStream_Peek(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn read(&self, buffer: *u8, size: c_int) {
+    fn read(&self, buffer: *mut c_void, size: c_int) {
         unsafe { wxInputStream_Read(self.handle(), buffer, size) }
     }
     #[fixed_stack_segment]
@@ -10108,59 +10108,59 @@ trait _wxInputStream : _wxStreamBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn ungetBuffer(&self, buffer: *u8, size: c_int) -> c_int {
+    fn ungetBuffer(&self, buffer: *mut c_void, size: c_int) -> c_int {
         unsafe { wxInputStream_UngetBuffer(self.handle(), buffer, size) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn ungetch(&self, c: wchar_t) -> c_int {
+    fn ungetch(&self, c: int8_t) -> c_int {
         unsafe { wxInputStream_Ungetch(self.handle(), c) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canRead(&self) -> bool {
+    fn canRead(&self) -> c_int {
         unsafe { wxInputStream_CanRead(self.handle()) }
     }
 }
 
-struct wxJoystick(*u8);
+struct wxJoystick(*mut c_void);
 impl _wxJoystick for wxJoystick {}
-impl _wxObject for wxJoystick { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxJoystick { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxJoystick {
-    pub fn from(handle: *u8) -> @wxJoystick { @wxJoystick(handle) }
-    pub fn null() -> @wxJoystick { wxJoystick::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxJoystick { @wxJoystick(handle) }
+    pub fn null() -> @wxJoystick { wxJoystick::from(0 as *mut c_void) }
     
 }
 
 trait _wxJoystick : _wxObject {
 }
 
-struct wxJoystickEvent(*u8);
+struct wxJoystickEvent(*mut c_void);
 impl _wxJoystickEvent for wxJoystickEvent {}
 impl _wxEvent for wxJoystickEvent {}
-impl _wxObject for wxJoystickEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxJoystickEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxJoystickEvent {
-    pub fn from(handle: *u8) -> @wxJoystickEvent { @wxJoystickEvent(handle) }
-    pub fn null() -> @wxJoystickEvent { wxJoystickEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxJoystickEvent { @wxJoystickEvent(handle) }
+    pub fn null() -> @wxJoystickEvent { wxJoystickEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxJoystickEvent : _wxEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn buttonDown(&self, but: c_int) -> bool {
+    fn buttonDown(&self, but: c_int) -> c_int {
         unsafe { wxJoystickEvent_ButtonDown(self.handle(), but) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn buttonIsDown(&self, but: c_int) -> bool {
+    fn buttonIsDown(&self, but: c_int) -> c_int {
         unsafe { wxJoystickEvent_ButtonIsDown(self.handle(), but) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn buttonUp(&self, but: c_int) -> bool {
+    fn buttonUp(&self, but: c_int) -> c_int {
         unsafe { wxJoystickEvent_ButtonUp(self.handle(), but) }
     }
     #[fixed_stack_segment]
@@ -10190,17 +10190,17 @@ trait _wxJoystickEvent : _wxEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isButton(&self) -> bool {
+    fn isButton(&self) -> c_int {
         unsafe { wxJoystickEvent_IsButton(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isMove(&self) -> bool {
+    fn isMove(&self) -> c_int {
         unsafe { wxJoystickEvent_IsMove(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isZMove(&self) -> bool {
+    fn isZMove(&self) -> c_int {
         unsafe { wxJoystickEvent_IsZMove(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -10230,26 +10230,26 @@ trait _wxJoystickEvent : _wxEvent {
     }
 }
 
-struct wxKeyEvent(*u8);
+struct wxKeyEvent(*mut c_void);
 impl _wxKeyEvent for wxKeyEvent {}
 impl _wxEvent for wxKeyEvent {}
-impl _wxObject for wxKeyEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxKeyEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxKeyEvent {
-    pub fn from(handle: *u8) -> @wxKeyEvent { @wxKeyEvent(handle) }
-    pub fn null() -> @wxKeyEvent { wxKeyEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxKeyEvent { @wxKeyEvent(handle) }
+    pub fn null() -> @wxKeyEvent { wxKeyEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxKeyEvent : _wxEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn altDown(&self) -> bool {
+    fn altDown(&self) -> c_int {
         unsafe { wxKeyEvent_AltDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn controlDown(&self) -> bool {
+    fn controlDown(&self) -> c_int {
         unsafe { wxKeyEvent_ControlDown(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -10279,12 +10279,12 @@ trait _wxKeyEvent : _wxEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasModifiers(&self) -> bool {
+    fn hasModifiers(&self) -> c_int {
         unsafe { wxKeyEvent_HasModifiers(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn metaDown(&self) -> bool {
+    fn metaDown(&self) -> c_int {
         unsafe { wxKeyEvent_MetaDown(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -10294,34 +10294,34 @@ trait _wxKeyEvent : _wxEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn shiftDown(&self) -> bool {
+    fn shiftDown(&self) -> c_int {
         unsafe { wxKeyEvent_ShiftDown(self.handle()) }
     }
 }
 
-struct wxLEDNumberCtrl(*u8);
+struct wxLEDNumberCtrl(*mut c_void);
 impl _wxLEDNumberCtrl for wxLEDNumberCtrl {}
 impl _wxControl for wxLEDNumberCtrl {}
 impl _wxWindow for wxLEDNumberCtrl {}
 impl _wxEvtHandler for wxLEDNumberCtrl {}
-impl _wxObject for wxLEDNumberCtrl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxLEDNumberCtrl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLEDNumberCtrl {
-    pub fn from(handle: *u8) -> @wxLEDNumberCtrl { @wxLEDNumberCtrl(handle) }
-    pub fn null() -> @wxLEDNumberCtrl { wxLEDNumberCtrl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLEDNumberCtrl { @wxLEDNumberCtrl(handle) }
+    pub fn null() -> @wxLEDNumberCtrl { wxLEDNumberCtrl::from(0 as *mut c_void) }
     
 }
 
 trait _wxLEDNumberCtrl : _wxControl {
 }
 
-struct wxLayoutAlgorithm(*u8);
+struct wxLayoutAlgorithm(*mut c_void);
 impl _wxLayoutAlgorithm for wxLayoutAlgorithm {}
-impl _wxObject for wxLayoutAlgorithm { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxLayoutAlgorithm { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLayoutAlgorithm {
-    pub fn from(handle: *u8) -> @wxLayoutAlgorithm { @wxLayoutAlgorithm(handle) }
-    pub fn null() -> @wxLayoutAlgorithm { wxLayoutAlgorithm::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLayoutAlgorithm { @wxLayoutAlgorithm(handle) }
+    pub fn null() -> @wxLayoutAlgorithm { wxLayoutAlgorithm::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -10333,28 +10333,28 @@ impl wxLayoutAlgorithm {
 trait _wxLayoutAlgorithm : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn layoutFrame<T: _wxFrame>(&self, frame: &T, mainWindow: *u8) -> bool {
+    fn layoutFrame<T: _wxFrame>(&self, frame: &T, mainWindow: *mut c_void) -> c_int {
         unsafe { wxLayoutAlgorithm_LayoutFrame(self.handle(), frame.handle(), mainWindow) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn layoutMDIFrame<T: _wxFrame>(&self, frame: &T, x: c_int, y: c_int, w: c_int, h: c_int, use_: c_int) -> bool {
+    fn layoutMDIFrame<T: _wxFrame>(&self, frame: &T, x: c_int, y: c_int, w: c_int, h: c_int, use_: c_int) -> c_int {
         unsafe { wxLayoutAlgorithm_LayoutMDIFrame(self.handle(), frame.handle(), x, y, w, h, use_) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn layoutWindow<T: _wxFrame>(&self, frame: &T, mainWindow: *u8) -> bool {
+    fn layoutWindow<T: _wxFrame>(&self, frame: &T, mainWindow: *mut c_void) -> c_int {
         unsafe { wxLayoutAlgorithm_LayoutWindow(self.handle(), frame.handle(), mainWindow) }
     }
 }
 
-struct wxLayoutConstraints(*u8);
+struct wxLayoutConstraints(*mut c_void);
 impl _wxLayoutConstraints for wxLayoutConstraints {}
-impl _wxObject for wxLayoutConstraints { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxLayoutConstraints { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLayoutConstraints {
-    pub fn from(handle: *u8) -> @wxLayoutConstraints { @wxLayoutConstraints(handle) }
-    pub fn null() -> @wxLayoutConstraints { wxLayoutConstraints::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLayoutConstraints { @wxLayoutConstraints(handle) }
+    pub fn null() -> @wxLayoutConstraints { wxLayoutConstraints::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -10366,73 +10366,73 @@ impl wxLayoutConstraints {
 trait _wxLayoutConstraints : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn bottom(&self) -> *u8 {
+    fn bottom(&self) -> *mut c_void {
         unsafe { wxLayoutConstraints_bottom(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn centreX(&self) -> *u8 {
+    fn centreX(&self) -> *mut c_void {
         unsafe { wxLayoutConstraints_centreX(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn centreY(&self) -> *u8 {
+    fn centreY(&self) -> *mut c_void {
         unsafe { wxLayoutConstraints_centreY(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn height(&self) -> *u8 {
+    fn height(&self) -> *mut c_void {
         unsafe { wxLayoutConstraints_height(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn left(&self) -> *u8 {
+    fn left(&self) -> *mut c_void {
         unsafe { wxLayoutConstraints_left(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn right(&self) -> *u8 {
+    fn right(&self) -> *mut c_void {
         unsafe { wxLayoutConstraints_right(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn top(&self) -> *u8 {
+    fn top(&self) -> *mut c_void {
         unsafe { wxLayoutConstraints_top(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn width(&self) -> *u8 {
+    fn width(&self) -> *mut c_void {
         unsafe { wxLayoutConstraints_width(self.handle()) }
     }
 }
 
-struct wxList(*u8);
+struct wxList(*mut c_void);
 impl _wxList for wxList {}
-impl _wxObject for wxList { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxList { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxList {
-    pub fn from(handle: *u8) -> @wxList { @wxList(handle) }
-    pub fn null() -> @wxList { wxList::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxList { @wxList(handle) }
+    pub fn null() -> @wxList { wxList::from(0 as *mut c_void) }
     
 }
 
 trait _wxList : _wxObject {
 }
 
-struct wxListBox(*u8);
+struct wxListBox(*mut c_void);
 impl _wxListBox for wxListBox {}
 impl _wxControl for wxListBox {}
 impl _wxWindow for wxListBox {}
 impl _wxEvtHandler for wxListBox {}
-impl _wxObject for wxListBox { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxListBox { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxListBox {
-    pub fn from(handle: *u8) -> @wxListBox { @wxListBox(handle) }
-    pub fn null() -> @wxListBox { wxListBox::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxListBox { @wxListBox(handle) }
+    pub fn null() -> @wxListBox { wxListBox::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *wchar_t, _stl: c_int) -> @wxListBox {
+    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *mut *mut c_char, _stl: c_int) -> @wxListBox {
         unsafe { @wxListBox(wxListBox_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, n, str, _stl)) }
     }
 }
@@ -10446,7 +10446,7 @@ trait _wxListBox : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn appendData(&self, item: &str, data: *u8) {
+    fn appendData(&self, item: &str, data: *mut c_void) {
         let item = wxT(item);
         unsafe { wxListBox_AppendData(self.handle(), item.handle(), data) }
     }
@@ -10473,7 +10473,7 @@ trait _wxListBox : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSelections(&self, aSelections: *c_int, allocated: c_int) -> c_int {
+    fn getSelections(&self, aSelections: *mut c_int, allocated: c_int) -> c_int {
         unsafe { wxListBox_GetSelections(self.handle(), aSelections, allocated) }
     }
     #[fixed_stack_segment]
@@ -10483,12 +10483,12 @@ trait _wxListBox : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn insertItems(&self, items: *u8, pos: c_int, count: c_int) {
+    fn insertItems(&self, items: *mut c_void, pos: c_int, count: c_int) {
         unsafe { wxListBox_InsertItems(self.handle(), items, pos, count) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSelected(&self, n: c_int) -> bool {
+    fn isSelected(&self, n: c_int) -> c_int {
         unsafe { wxListBox_IsSelected(self.handle(), n) }
     }
     #[fixed_stack_segment]
@@ -10509,22 +10509,22 @@ trait _wxListBox : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setStringSelection(&self, str: &str, sel: bool) {
+    fn setStringSelection(&self, str: &str, sel: c_int) {
         let str = wxT(str);
         unsafe { wxListBox_SetStringSelection(self.handle(), str.handle(), sel) }
     }
 }
 
-struct wxListCtrl(*u8);
+struct wxListCtrl(*mut c_void);
 impl _wxListCtrl for wxListCtrl {}
 impl _wxControl for wxListCtrl {}
 impl _wxWindow for wxListCtrl {}
 impl _wxEvtHandler for wxListCtrl {}
-impl _wxObject for wxListCtrl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxListCtrl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxListCtrl {
-    pub fn from(handle: *u8) -> @wxListCtrl { @wxListCtrl(handle) }
-    pub fn null() -> @wxListCtrl { wxListCtrl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxListCtrl { @wxListCtrl(handle) }
+    pub fn null() -> @wxListCtrl { wxListCtrl::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -10536,7 +10536,7 @@ impl wxListCtrl {
 trait _wxListCtrl : _wxControl {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn arrange(&self, flag: c_int) -> bool {
+    fn arrange(&self, flag: c_int) -> c_int {
         unsafe { wxListCtrl_Arrange(self.handle(), flag) }
     }
     #[fixed_stack_segment]
@@ -10546,22 +10546,22 @@ trait _wxListCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deleteAllColumns(&self) -> bool {
+    fn deleteAllColumns(&self) -> c_int {
         unsafe { wxListCtrl_DeleteAllColumns(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deleteAllItems(&self) -> bool {
+    fn deleteAllItems(&self) -> c_int {
         unsafe { wxListCtrl_DeleteAllItems(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deleteColumn(&self, col: c_int) -> bool {
+    fn deleteColumn(&self, col: c_int) -> c_int {
         unsafe { wxListCtrl_DeleteColumn(self.handle(), col) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deleteItem(&self, item: c_int) -> bool {
+    fn deleteItem(&self, item: c_int) -> c_int {
         unsafe { wxListCtrl_DeleteItem(self.handle(), item) }
     }
     #[fixed_stack_segment]
@@ -10571,17 +10571,17 @@ trait _wxListCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn endEditLabel(&self, cancel: c_int) -> bool {
+    fn endEditLabel(&self, cancel: c_int) -> c_int {
         unsafe { wxListCtrl_EndEditLabel(self.handle(), cancel) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn ensureVisible(&self, item: c_int) -> bool {
+    fn ensureVisible(&self, item: c_int) -> c_int {
         unsafe { wxListCtrl_EnsureVisible(self.handle(), item) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn findItem(&self, start: c_int, str: &str, partial: bool) -> c_int {
+    fn findItem(&self, start: c_int, str: &str, partial: c_int) -> c_int {
         let str = wxT(str);
         unsafe { wxListCtrl_FindItem(self.handle(), start, str.handle(), partial) }
     }
@@ -10597,7 +10597,7 @@ trait _wxListCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getColumn<T: _wxListItem>(&self, col: c_int, item: &T) -> bool {
+    fn getColumn<T: _wxListItem>(&self, col: c_int, item: &T) -> c_int {
         unsafe { wxListCtrl_GetColumn(self.handle(), col, item.handle()) }
     }
     #[fixed_stack_segment]
@@ -10627,7 +10627,7 @@ trait _wxListCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getItem<T: _wxListItem>(&self, info: &T) -> bool {
+    fn getItem<T: _wxListItem>(&self, info: &T) -> c_int {
         unsafe { wxListCtrl_GetItem(self.handle(), info.handle()) }
     }
     #[fixed_stack_segment]
@@ -10657,7 +10657,7 @@ trait _wxListCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getItemSpacing(&self, isSmall: bool) -> @wxSize {
+    fn getItemSpacing(&self, isSmall: c_int) -> @wxSize {
         unsafe { @wxSize(wxListCtrl_GetItemSpacing(self.handle(), isSmall)) }
     }
     #[fixed_stack_segment]
@@ -10692,7 +10692,7 @@ trait _wxListCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hitTest(&self, x: c_int, y: c_int, flags: *u8) -> c_int {
+    fn hitTest(&self, x: c_int, y: c_int, flags: *mut c_void) -> c_int {
         unsafe { wxListCtrl_HitTest(self.handle(), x, y, flags) }
     }
     #[fixed_stack_segment]
@@ -10730,7 +10730,7 @@ trait _wxListCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isVirtual(&self) -> bool {
+    fn isVirtual(&self) -> c_int {
         unsafe { wxListCtrl_IsVirtual(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -10740,17 +10740,17 @@ trait _wxListCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn scrollList(&self, dx: c_int, dy: c_int) -> bool {
+    fn scrollList(&self, dx: c_int, dy: c_int) -> c_int {
         unsafe { wxListCtrl_ScrollList(self.handle(), dx, dy) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setColumn<T: _wxListItem>(&self, col: c_int, item: &T) -> bool {
+    fn setColumn<T: _wxListItem>(&self, col: c_int, item: &T) -> c_int {
         unsafe { wxListCtrl_SetColumn(self.handle(), col, item.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setColumnWidth(&self, col: c_int, width: c_int) -> bool {
+    fn setColumnWidth(&self, col: c_int, width: c_int) -> c_int {
         unsafe { wxListCtrl_SetColumnWidth(self.handle(), col, width) }
     }
     #[fixed_stack_segment]
@@ -10760,33 +10760,33 @@ trait _wxListCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setItem(&self, index: c_int, col: c_int, label: &str, imageId: c_int) -> bool {
+    fn setItem(&self, index: c_int, col: c_int, label: &str, imageId: c_int) -> c_int {
         let label = wxT(label);
         unsafe { wxListCtrl_SetItem(self.handle(), index, col, label.handle(), imageId) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setItemData(&self, item: c_int, data: c_int) -> bool {
+    fn setItemData(&self, item: c_int, data: c_int) -> c_int {
         unsafe { wxListCtrl_SetItemData(self.handle(), item, data) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setItemFromInfo<T: _wxListItem>(&self, info: &T) -> bool {
+    fn setItemFromInfo<T: _wxListItem>(&self, info: &T) -> c_int {
         unsafe { wxListCtrl_SetItemFromInfo(self.handle(), info.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setItemImage(&self, item: c_int, image: c_int, selImage: c_int) -> bool {
+    fn setItemImage(&self, item: c_int, image: c_int, selImage: c_int) -> c_int {
         unsafe { wxListCtrl_SetItemImage(self.handle(), item, image, selImage) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setItemPosition(&self, item: c_int, x: c_int, y: c_int) -> bool {
+    fn setItemPosition(&self, item: c_int, x: c_int, y: c_int) -> c_int {
         unsafe { wxListCtrl_SetItemPosition(self.handle(), item, x, y) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setItemState(&self, item: c_int, state: c_int, stateMask: c_int) -> bool {
+    fn setItemState(&self, item: c_int, state: c_int, stateMask: c_int) -> c_int {
         unsafe { wxListCtrl_SetItemState(self.handle(), item, state, stateMask) }
     }
     #[fixed_stack_segment]
@@ -10797,7 +10797,7 @@ trait _wxListCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setSingleStyle(&self, style: c_int, add: bool) {
+    fn setSingleStyle(&self, style: c_int, add: c_int) {
         unsafe { wxListCtrl_SetSingleStyle(self.handle(), style, add) }
     }
     #[fixed_stack_segment]
@@ -10807,7 +10807,7 @@ trait _wxListCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn sortItems(&self, fn_: *u8, eif_obj: *u8) -> bool {
+    fn sortItems(&self, fn_: *mut c_void, eif_obj: *mut c_void) -> c_int {
         unsafe { wxListCtrl_SortItems(self.handle(), fn_, eif_obj) }
     }
     #[fixed_stack_segment]
@@ -10837,28 +10837,28 @@ trait _wxListCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn sortItems2<T: _wxClosure>(&self, closure: &T) -> bool {
+    fn sortItems2<T: _wxClosure>(&self, closure: &T) -> c_int {
         unsafe { wxListCtrl_SortItems2(self.handle(), closure.handle()) }
     }
 }
 
-struct wxListEvent(*u8);
+struct wxListEvent(*mut c_void);
 impl _wxListEvent for wxListEvent {}
 impl _wxNotifyEvent for wxListEvent {}
 impl _wxCommandEvent for wxListEvent {}
 impl _wxEvent for wxListEvent {}
-impl _wxObject for wxListEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxListEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxListEvent {
-    pub fn from(handle: *u8) -> @wxListEvent { @wxListEvent(handle) }
-    pub fn null() -> @wxListEvent { wxListEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxListEvent { @wxListEvent(handle) }
+    pub fn null() -> @wxListEvent { wxListEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxListEvent : _wxNotifyEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn cancelled(&self) -> bool {
+    fn cancelled(&self) -> c_int {
         unsafe { wxListEvent_Cancelled(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -10923,13 +10923,13 @@ trait _wxListEvent : _wxNotifyEvent {
     }
 }
 
-struct wxListItem(*u8);
+struct wxListItem(*mut c_void);
 impl _wxListItem for wxListItem {}
-impl _wxObject for wxListItem { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxListItem { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxListItem {
-    pub fn from(handle: *u8) -> @wxListItem { @wxListItem(handle) }
-    pub fn null() -> @wxListItem { wxListItem::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxListItem { @wxListItem(handle) }
+    pub fn null() -> @wxListItem { wxListItem::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -10956,7 +10956,7 @@ trait _wxListItem : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getAttributes(&self) -> *u8 {
+    fn getAttributes(&self) -> *mut c_void {
         unsafe { wxListItem_GetAttributes(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -11016,7 +11016,7 @@ trait _wxListItem : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasAttributes(&self) -> bool {
+    fn hasAttributes(&self) -> c_int {
         unsafe { wxListItem_HasAttributes(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -11041,7 +11041,7 @@ trait _wxListItem : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setDataPointer(&self, data: *u8) {
+    fn setDataPointer(&self, data: *mut c_void) {
         unsafe { wxListItem_SetDataPointer(self.handle(), data) }
     }
     #[fixed_stack_segment]
@@ -11092,12 +11092,12 @@ trait _wxListItem : _wxObject {
     }
 }
 
-struct wxLocale(*u8);
-impl _wxLocale for wxLocale { fn handle(&self) -> *u8 { **self } }
+struct wxLocale(*mut c_void);
+impl _wxLocale for wxLocale { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLocale {
-    pub fn from(handle: *u8) -> @wxLocale { @wxLocale(handle) }
-    pub fn null() -> @wxLocale { wxLocale::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLocale { @wxLocale(handle) }
+    pub fn null() -> @wxLocale { wxLocale::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -11107,16 +11107,16 @@ impl wxLocale {
 }
 
 trait _wxLocale {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addCatalog(&self, szDomain: *u8) -> c_int {
+    fn addCatalog(&self, szDomain: *mut c_void) -> c_int {
         unsafe { wxLocale_AddCatalog(self.handle(), szDomain) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addCatalogLookupPathPrefix(&self, prefix: *u8) {
+    fn addCatalogLookupPathPrefix(&self, prefix: *mut c_void) {
         unsafe { wxLocale_AddCatalogLookupPathPrefix(self.handle(), prefix) }
     }
     #[fixed_stack_segment]
@@ -11136,27 +11136,27 @@ trait _wxLocale {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getString(&self, szOrigString: *u8, szDomain: *u8) -> *wchar_t {
+    fn getString(&self, szOrigString: *mut c_void, szDomain: *mut c_void) -> *mut int8_t {
         unsafe { wxLocale_GetString(self.handle(), szOrigString, szDomain) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isLoaded(&self, szDomain: *u8) -> bool {
+    fn isLoaded(&self, szDomain: *mut c_void) -> c_int {
         unsafe { wxLocale_IsLoaded(self.handle(), szDomain) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxLocale_IsOk(self.handle()) }
     }
 }
 
-struct wxLog(*u8);
-impl _wxLog for wxLog { fn handle(&self) -> *u8 { **self } }
+struct wxLog(*mut c_void);
+impl _wxLog for wxLog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLog {
-    pub fn from(handle: *u8) -> @wxLog { @wxLog(handle) }
-    pub fn null() -> @wxLog { wxLog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLog { @wxLog(handle) }
+    pub fn null() -> @wxLog { wxLog::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -11166,7 +11166,7 @@ impl wxLog {
 }
 
 trait _wxLog {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -11196,7 +11196,7 @@ trait _wxLog {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getTimestamp(&self) -> *char {
+    fn getTimestamp(&self) -> *mut c_char {
         unsafe { wxLog_GetTimestamp(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -11211,17 +11211,17 @@ trait _wxLog {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasPendingMessages(&self) -> bool {
+    fn hasPendingMessages(&self) -> c_int {
         unsafe { wxLog_HasPendingMessages(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isAllowedTraceMask<T: _wxMask>(&self, mask: &T) -> bool {
+    fn isAllowedTraceMask<T: _wxMask>(&self, mask: &T) -> c_int {
         unsafe { wxLog_IsAllowedTraceMask(self.handle(), mask.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn onLog(&self, level: c_int, szString: *wchar_t, t: c_int) {
+    fn onLog(&self, level: c_int, szString: *mut c_void, t: c_int) {
         unsafe { wxLog_OnLog(self.handle(), level, szString, t) }
     }
     #[fixed_stack_segment]
@@ -11242,7 +11242,7 @@ trait _wxLog {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setTimestamp(&self, ts: *wchar_t) {
+    fn setTimestamp(&self, ts: *mut c_void) {
         unsafe { wxLog_SetTimestamp(self.handle(), ts) }
     }
     #[fixed_stack_segment]
@@ -11262,13 +11262,13 @@ trait _wxLog {
     }
 }
 
-struct wxLogChain(*u8);
+struct wxLogChain(*mut c_void);
 impl _wxLogChain for wxLogChain {}
-impl _wxLog for wxLogChain { fn handle(&self) -> *u8 { **self } }
+impl _wxLog for wxLogChain { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLogChain {
-    pub fn from(handle: *u8) -> @wxLogChain { @wxLogChain(handle) }
-    pub fn null() -> @wxLogChain { wxLogChain::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLogChain { @wxLogChain(handle) }
+    pub fn null() -> @wxLogChain { wxLogChain::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -11285,12 +11285,12 @@ trait _wxLogChain : _wxLog {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isPassingMessages(&self) -> bool {
+    fn isPassingMessages(&self) -> c_int {
         unsafe { wxLogChain_IsPassingMessages(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn passMessages(&self, bDoPass: bool) {
+    fn passMessages(&self, bDoPass: c_int) {
         unsafe { wxLogChain_PassMessages(self.handle(), bDoPass) }
     }
     #[fixed_stack_segment]
@@ -11300,26 +11300,26 @@ trait _wxLogChain : _wxLog {
     }
 }
 
-struct wxLogGUI(*u8);
+struct wxLogGUI(*mut c_void);
 impl _wxLogGUI for wxLogGUI {}
-impl _wxLog for wxLogGUI { fn handle(&self) -> *u8 { **self } }
+impl _wxLog for wxLogGUI { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLogGUI {
-    pub fn from(handle: *u8) -> @wxLogGUI { @wxLogGUI(handle) }
-    pub fn null() -> @wxLogGUI { wxLogGUI::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLogGUI { @wxLogGUI(handle) }
+    pub fn null() -> @wxLogGUI { wxLogGUI::from(0 as *mut c_void) }
     
 }
 
 trait _wxLogGUI : _wxLog {
 }
 
-struct wxLogNull(*u8);
+struct wxLogNull(*mut c_void);
 impl _wxLogNull for wxLogNull {}
-impl _wxLog for wxLogNull { fn handle(&self) -> *u8 { **self } }
+impl _wxLog for wxLogNull { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLogNull {
-    pub fn from(handle: *u8) -> @wxLogNull { @wxLogNull(handle) }
-    pub fn null() -> @wxLogNull { wxLogNull::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLogNull { @wxLogNull(handle) }
+    pub fn null() -> @wxLogNull { wxLogNull::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -11331,27 +11331,27 @@ impl wxLogNull {
 trait _wxLogNull : _wxLog {
 }
 
-struct wxLogPassThrough(*u8);
+struct wxLogPassThrough(*mut c_void);
 impl _wxLogPassThrough for wxLogPassThrough {}
 impl _wxLogChain for wxLogPassThrough {}
-impl _wxLog for wxLogPassThrough { fn handle(&self) -> *u8 { **self } }
+impl _wxLog for wxLogPassThrough { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLogPassThrough {
-    pub fn from(handle: *u8) -> @wxLogPassThrough { @wxLogPassThrough(handle) }
-    pub fn null() -> @wxLogPassThrough { wxLogPassThrough::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLogPassThrough { @wxLogPassThrough(handle) }
+    pub fn null() -> @wxLogPassThrough { wxLogPassThrough::from(0 as *mut c_void) }
     
 }
 
 trait _wxLogPassThrough : _wxLogChain {
 }
 
-struct wxLogStderr(*u8);
+struct wxLogStderr(*mut c_void);
 impl _wxLogStderr for wxLogStderr {}
-impl _wxLog for wxLogStderr { fn handle(&self) -> *u8 { **self } }
+impl _wxLog for wxLogStderr { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLogStderr {
-    pub fn from(handle: *u8) -> @wxLogStderr { @wxLogStderr(handle) }
-    pub fn null() -> @wxLogStderr { wxLogStderr::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLogStderr { @wxLogStderr(handle) }
+    pub fn null() -> @wxLogStderr { wxLogStderr::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -11368,26 +11368,26 @@ impl wxLogStderr {
 trait _wxLogStderr : _wxLog {
 }
 
-struct wxLogStream(*u8);
+struct wxLogStream(*mut c_void);
 impl _wxLogStream for wxLogStream {}
-impl _wxLog for wxLogStream { fn handle(&self) -> *u8 { **self } }
+impl _wxLog for wxLogStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLogStream {
-    pub fn from(handle: *u8) -> @wxLogStream { @wxLogStream(handle) }
-    pub fn null() -> @wxLogStream { wxLogStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLogStream { @wxLogStream(handle) }
+    pub fn null() -> @wxLogStream { wxLogStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxLogStream : _wxLog {
 }
 
-struct wxLogTextCtrl(*u8);
+struct wxLogTextCtrl(*mut c_void);
 impl _wxLogTextCtrl for wxLogTextCtrl {}
-impl _wxLog for wxLogTextCtrl { fn handle(&self) -> *u8 { **self } }
+impl _wxLog for wxLogTextCtrl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLogTextCtrl {
-    pub fn from(handle: *u8) -> @wxLogTextCtrl { @wxLogTextCtrl(handle) }
-    pub fn null() -> @wxLogTextCtrl { wxLogTextCtrl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLogTextCtrl { @wxLogTextCtrl(handle) }
+    pub fn null() -> @wxLogTextCtrl { wxLogTextCtrl::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -11399,19 +11399,19 @@ impl wxLogTextCtrl {
 trait _wxLogTextCtrl : _wxLog {
 }
 
-struct wxLogWindow(*u8);
+struct wxLogWindow(*mut c_void);
 impl _wxLogWindow for wxLogWindow {}
 impl _wxLogPassThrough for wxLogWindow {}
 impl _wxLogChain for wxLogWindow {}
-impl _wxLog for wxLogWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxLog for wxLogWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLogWindow {
-    pub fn from(handle: *u8) -> @wxLogWindow { @wxLogWindow(handle) }
-    pub fn null() -> @wxLogWindow { wxLogWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLogWindow { @wxLogWindow(handle) }
+    pub fn null() -> @wxLogWindow { wxLogWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(parent: &T, title: *wchar_t, showit: bool, passthrough: bool) -> @wxLogWindow {
+    pub fn new<T: _wxWindow>(parent: &T, title: *mut int8_t, showit: c_int, passthrough: c_int) -> @wxLogWindow {
         unsafe { @wxLogWindow(wxLogWindow_Create(parent.handle(), title, showit, passthrough)) }
     }
 }
@@ -11424,84 +11424,84 @@ trait _wxLogWindow : _wxLogPassThrough {
     }
 }
 
-struct wxLongLong(*u8);
-impl _wxLongLong for wxLongLong { fn handle(&self) -> *u8 { **self } }
+struct wxLongLong(*mut c_void);
+impl _wxLongLong for wxLongLong { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxLongLong {
-    pub fn from(handle: *u8) -> @wxLongLong { @wxLongLong(handle) }
-    pub fn null() -> @wxLongLong { wxLongLong::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxLongLong { @wxLongLong(handle) }
+    pub fn null() -> @wxLongLong { wxLongLong::from(0 as *mut c_void) }
     
 }
 
 trait _wxLongLong {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxMBConv(*u8);
-impl _wxMBConv for wxMBConv { fn handle(&self) -> *u8 { **self } }
+struct wxMBConv(*mut c_void);
+impl _wxMBConv for wxMBConv { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMBConv {
-    pub fn from(handle: *u8) -> @wxMBConv { @wxMBConv(handle) }
-    pub fn null() -> @wxMBConv { wxMBConv::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMBConv { @wxMBConv(handle) }
+    pub fn null() -> @wxMBConv { wxMBConv::from(0 as *mut c_void) }
     
 }
 
 trait _wxMBConv {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxMBConvFile(*u8);
+struct wxMBConvFile(*mut c_void);
 impl _wxMBConvFile for wxMBConvFile {}
-impl _wxMBConv for wxMBConvFile { fn handle(&self) -> *u8 { **self } }
+impl _wxMBConv for wxMBConvFile { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMBConvFile {
-    pub fn from(handle: *u8) -> @wxMBConvFile { @wxMBConvFile(handle) }
-    pub fn null() -> @wxMBConvFile { wxMBConvFile::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMBConvFile { @wxMBConvFile(handle) }
+    pub fn null() -> @wxMBConvFile { wxMBConvFile::from(0 as *mut c_void) }
     
 }
 
 trait _wxMBConvFile : _wxMBConv {
 }
 
-struct wxMBConvUTF7(*u8);
+struct wxMBConvUTF7(*mut c_void);
 impl _wxMBConvUTF7 for wxMBConvUTF7 {}
-impl _wxMBConv for wxMBConvUTF7 { fn handle(&self) -> *u8 { **self } }
+impl _wxMBConv for wxMBConvUTF7 { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMBConvUTF7 {
-    pub fn from(handle: *u8) -> @wxMBConvUTF7 { @wxMBConvUTF7(handle) }
-    pub fn null() -> @wxMBConvUTF7 { wxMBConvUTF7::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMBConvUTF7 { @wxMBConvUTF7(handle) }
+    pub fn null() -> @wxMBConvUTF7 { wxMBConvUTF7::from(0 as *mut c_void) }
     
 }
 
 trait _wxMBConvUTF7 : _wxMBConv {
 }
 
-struct wxMBConvUTF8(*u8);
+struct wxMBConvUTF8(*mut c_void);
 impl _wxMBConvUTF8 for wxMBConvUTF8 {}
-impl _wxMBConv for wxMBConvUTF8 { fn handle(&self) -> *u8 { **self } }
+impl _wxMBConv for wxMBConvUTF8 { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMBConvUTF8 {
-    pub fn from(handle: *u8) -> @wxMBConvUTF8 { @wxMBConvUTF8(handle) }
-    pub fn null() -> @wxMBConvUTF8 { wxMBConvUTF8::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMBConvUTF8 { @wxMBConvUTF8(handle) }
+    pub fn null() -> @wxMBConvUTF8 { wxMBConvUTF8::from(0 as *mut c_void) }
     
 }
 
 trait _wxMBConvUTF8 : _wxMBConv {
 }
 
-struct wxMDIChildFrame(*u8);
+struct wxMDIChildFrame(*mut c_void);
 impl _wxMDIChildFrame for wxMDIChildFrame {}
 impl _wxFrame for wxMDIChildFrame {}
 impl _wxTopLevelWindow for wxMDIChildFrame {}
 impl _wxWindow for wxMDIChildFrame {}
 impl _wxEvtHandler for wxMDIChildFrame {}
-impl _wxObject for wxMDIChildFrame { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMDIChildFrame { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMDIChildFrame {
-    pub fn from(handle: *u8) -> @wxMDIChildFrame { @wxMDIChildFrame(handle) }
-    pub fn null() -> @wxMDIChildFrame { wxMDIChildFrame::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMDIChildFrame { @wxMDIChildFrame(handle) }
+    pub fn null() -> @wxMDIChildFrame { wxMDIChildFrame::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -11519,32 +11519,32 @@ trait _wxMDIChildFrame : _wxFrame {
     }
 }
 
-struct wxMDIClientWindow(*u8);
+struct wxMDIClientWindow(*mut c_void);
 impl _wxMDIClientWindow for wxMDIClientWindow {}
 impl _wxWindow for wxMDIClientWindow {}
 impl _wxEvtHandler for wxMDIClientWindow {}
-impl _wxObject for wxMDIClientWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMDIClientWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMDIClientWindow {
-    pub fn from(handle: *u8) -> @wxMDIClientWindow { @wxMDIClientWindow(handle) }
-    pub fn null() -> @wxMDIClientWindow { wxMDIClientWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMDIClientWindow { @wxMDIClientWindow(handle) }
+    pub fn null() -> @wxMDIClientWindow { wxMDIClientWindow::from(0 as *mut c_void) }
     
 }
 
 trait _wxMDIClientWindow : _wxWindow {
 }
 
-struct wxMDIParentFrame(*u8);
+struct wxMDIParentFrame(*mut c_void);
 impl _wxMDIParentFrame for wxMDIParentFrame {}
 impl _wxFrame for wxMDIParentFrame {}
 impl _wxTopLevelWindow for wxMDIParentFrame {}
 impl _wxWindow for wxMDIParentFrame {}
 impl _wxEvtHandler for wxMDIParentFrame {}
-impl _wxObject for wxMDIParentFrame { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMDIParentFrame { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMDIParentFrame {
-    pub fn from(handle: *u8) -> @wxMDIParentFrame { @wxMDIParentFrame(handle) }
-    pub fn null() -> @wxMDIParentFrame { wxMDIParentFrame::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMDIParentFrame { @wxMDIParentFrame(handle) }
+    pub fn null() -> @wxMDIParentFrame { wxMDIParentFrame::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -11607,13 +11607,13 @@ trait _wxMDIParentFrame : _wxFrame {
     }
 }
 
-struct wxMask(*u8);
+struct wxMask(*mut c_void);
 impl _wxMask for wxMask {}
-impl _wxObject for wxMask { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMask { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMask {
-    pub fn from(handle: *u8) -> @wxMask { @wxMask(handle) }
-    pub fn null() -> @wxMask { wxMask::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMask { @wxMask(handle) }
+    pub fn null() -> @wxMask { wxMask::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -11622,7 +11622,7 @@ impl wxMask {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newColoured<T: _wxBitmap, U: _wxColour>(bitmap: &T, colour: &U) -> *u8 {
+    pub fn newColoured<T: _wxBitmap, U: _wxColour>(bitmap: &T, colour: &U) -> *mut c_void {
         unsafe { wxMask_CreateColoured(bitmap.handle(), colour.handle()) }
     }
 }
@@ -11630,28 +11630,28 @@ impl wxMask {
 trait _wxMask : _wxObject {
 }
 
-struct wxMaximizeEvent(*u8);
+struct wxMaximizeEvent(*mut c_void);
 impl _wxMaximizeEvent for wxMaximizeEvent {}
 impl _wxEvent for wxMaximizeEvent {}
-impl _wxObject for wxMaximizeEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMaximizeEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMaximizeEvent {
-    pub fn from(handle: *u8) -> @wxMaximizeEvent { @wxMaximizeEvent(handle) }
-    pub fn null() -> @wxMaximizeEvent { wxMaximizeEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMaximizeEvent { @wxMaximizeEvent(handle) }
+    pub fn null() -> @wxMaximizeEvent { wxMaximizeEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxMaximizeEvent : _wxEvent {
 }
 
-struct wxMemoryDC(*u8);
+struct wxMemoryDC(*mut c_void);
 impl _wxMemoryDC for wxMemoryDC {}
 impl _wxDC for wxMemoryDC {}
-impl _wxObject for wxMemoryDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMemoryDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMemoryDC {
-    pub fn from(handle: *u8) -> @wxMemoryDC { @wxMemoryDC(handle) }
-    pub fn null() -> @wxMemoryDC { wxMemoryDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMemoryDC { @wxMemoryDC(handle) }
+    pub fn null() -> @wxMemoryDC { wxMemoryDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -11678,56 +11678,56 @@ trait _wxMemoryDC : _wxDC {
     }
 }
 
-struct wxMemoryFSHandler(*u8);
+struct wxMemoryFSHandler(*mut c_void);
 impl _wxMemoryFSHandler for wxMemoryFSHandler {}
 impl _wxFileSystemHandler for wxMemoryFSHandler {}
-impl _wxObject for wxMemoryFSHandler { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMemoryFSHandler { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMemoryFSHandler {
-    pub fn from(handle: *u8) -> @wxMemoryFSHandler { @wxMemoryFSHandler(handle) }
-    pub fn null() -> @wxMemoryFSHandler { wxMemoryFSHandler::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMemoryFSHandler { @wxMemoryFSHandler(handle) }
+    pub fn null() -> @wxMemoryFSHandler { wxMemoryFSHandler::from(0 as *mut c_void) }
     
 }
 
 trait _wxMemoryFSHandler : _wxFileSystemHandler {
 }
 
-struct wxMemoryInputStream(*u8);
+struct wxMemoryInputStream(*mut c_void);
 impl _wxMemoryInputStream for wxMemoryInputStream {}
 impl _wxInputStream for wxMemoryInputStream {}
-impl _wxStreamBase for wxMemoryInputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxMemoryInputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMemoryInputStream {
-    pub fn from(handle: *u8) -> @wxMemoryInputStream { @wxMemoryInputStream(handle) }
-    pub fn null() -> @wxMemoryInputStream { wxMemoryInputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMemoryInputStream { @wxMemoryInputStream(handle) }
+    pub fn null() -> @wxMemoryInputStream { wxMemoryInputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxMemoryInputStream : _wxInputStream {
 }
 
-struct wxMemoryOutputStream(*u8);
+struct wxMemoryOutputStream(*mut c_void);
 impl _wxMemoryOutputStream for wxMemoryOutputStream {}
 impl _wxOutputStream for wxMemoryOutputStream {}
-impl _wxStreamBase for wxMemoryOutputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxMemoryOutputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMemoryOutputStream {
-    pub fn from(handle: *u8) -> @wxMemoryOutputStream { @wxMemoryOutputStream(handle) }
-    pub fn null() -> @wxMemoryOutputStream { wxMemoryOutputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMemoryOutputStream { @wxMemoryOutputStream(handle) }
+    pub fn null() -> @wxMemoryOutputStream { wxMemoryOutputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxMemoryOutputStream : _wxOutputStream {
 }
 
-struct wxMenu(*u8);
+struct wxMenu(*mut c_void);
 impl _wxMenu for wxMenu {}
 impl _wxEvtHandler for wxMenu {}
-impl _wxObject for wxMenu { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMenu { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMenu {
-    pub fn from(handle: *u8) -> @wxMenu { @wxMenu(handle) }
-    pub fn null() -> @wxMenu { wxMenu::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMenu { @wxMenu(handle) }
+    pub fn null() -> @wxMenu { wxMenu::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -11740,7 +11740,7 @@ impl wxMenu {
 trait _wxMenu : _wxEvtHandler {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn append(&self, id: c_int, text: &str, help: &str, isCheckable: bool) {
+    fn append(&self, id: c_int, text: &str, help: &str, isCheckable: c_int) {
         let text = wxT(text);
         let help = wxT(help);
         unsafe { wxMenu_Append(self.handle(), id, text.handle(), help.handle(), isCheckable) }
@@ -11769,7 +11769,7 @@ trait _wxMenu : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn check(&self, id: c_int, check: bool) {
+    fn check(&self, id: c_int, check: c_int) {
         unsafe { wxMenu_Check(self.handle(), id, check) }
     }
     #[fixed_stack_segment]
@@ -11799,7 +11799,7 @@ trait _wxMenu : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enable(&self, id: c_int, enable: bool) {
+    fn enable(&self, id: c_int, enable: c_int) {
         unsafe { wxMenu_Enable(self.handle(), id, enable) }
     }
     #[fixed_stack_segment]
@@ -11860,7 +11860,7 @@ trait _wxMenu : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn insert(&self, pos: size_t, id: c_int, text: &str, help: &str, isCheckable: bool) {
+    fn insert(&self, pos: size_t, id: c_int, text: &str, help: &str, isCheckable: c_int) {
         let text = wxT(text);
         let help = wxT(help);
         unsafe { wxMenu_Insert(self.handle(), pos, id, text.handle(), help.handle(), isCheckable) }
@@ -11879,22 +11879,22 @@ trait _wxMenu : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isAttached(&self) -> bool {
+    fn isAttached(&self) -> c_int {
         unsafe { wxMenu_IsAttached(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isChecked(&self, id: c_int) -> bool {
+    fn isChecked(&self, id: c_int) -> c_int {
         unsafe { wxMenu_IsChecked(self.handle(), id) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEnabled(&self, id: c_int) -> bool {
+    fn isEnabled(&self, id: c_int) -> c_int {
         unsafe { wxMenu_IsEnabled(self.handle(), id) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn prepend(&self, id: c_int, text: &str, help: &str, isCheckable: bool) {
+    fn prepend(&self, id: c_int, text: &str, help: &str, isCheckable: c_int) {
         let text = wxT(text);
         let help = wxT(help);
         unsafe { wxMenu_Prepend(self.handle(), id, text.handle(), help.handle(), isCheckable) }
@@ -11918,7 +11918,7 @@ trait _wxMenu : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn removeByItem(&self, item: *u8) {
+    fn removeByItem(&self, item: *mut c_void) {
         unsafe { wxMenu_RemoveByItem(self.handle(), item) }
     }
     #[fixed_stack_segment]
@@ -11961,7 +11961,7 @@ trait _wxMenu : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn updateUI(&self, source: *u8) {
+    fn updateUI(&self, source: *mut c_void) {
         unsafe { wxMenu_UpdateUI(self.handle(), source) }
     }
     #[fixed_stack_segment]
@@ -11978,14 +11978,14 @@ trait _wxMenu : _wxEvtHandler {
     }
 }
 
-struct wxMenuBar(*u8);
+struct wxMenuBar(*mut c_void);
 impl _wxMenuBar for wxMenuBar {}
 impl _wxEvtHandler for wxMenuBar {}
-impl _wxObject for wxMenuBar { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMenuBar { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMenuBar {
-    pub fn from(handle: *u8) -> @wxMenuBar { @wxMenuBar(handle) }
-    pub fn null() -> @wxMenuBar { wxMenuBar::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMenuBar { @wxMenuBar(handle) }
+    pub fn null() -> @wxMenuBar { wxMenuBar::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -12003,7 +12003,7 @@ trait _wxMenuBar : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn check(&self, id: c_int, check: bool) {
+    fn check(&self, id: c_int, check: c_int) {
         unsafe { wxMenuBar_Check(self.handle(), id, check) }
     }
     #[fixed_stack_segment]
@@ -12013,17 +12013,17 @@ trait _wxMenuBar : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enable(&self, enable: bool) -> c_int {
+    fn enable(&self, enable: c_int) -> c_int {
         unsafe { wxMenuBar_Enable(self.handle(), enable) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableItem(&self, id: c_int, enable: bool) {
+    fn enableItem(&self, id: c_int, enable: c_int) {
         unsafe { wxMenuBar_EnableItem(self.handle(), id, enable) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableTop(&self, pos: c_int, enable: bool) {
+    fn enableTop(&self, pos: c_int, enable: c_int) {
         unsafe { wxMenuBar_EnableTop(self.handle(), pos, enable) }
     }
     #[fixed_stack_segment]
@@ -12077,12 +12077,12 @@ trait _wxMenuBar : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isChecked(&self, id: c_int) -> bool {
+    fn isChecked(&self, id: c_int) -> c_int {
         unsafe { wxMenuBar_IsChecked(self.handle(), id) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEnabled(&self, id: c_int) -> bool {
+    fn isEnabled(&self, id: c_int) -> c_int {
         unsafe { wxMenuBar_IsEnabled(self.handle(), id) }
     }
     #[fixed_stack_segment]
@@ -12127,14 +12127,14 @@ trait _wxMenuBar : _wxEvtHandler {
     }
 }
 
-struct wxMenuEvent(*u8);
+struct wxMenuEvent(*mut c_void);
 impl _wxMenuEvent for wxMenuEvent {}
 impl _wxEvent for wxMenuEvent {}
-impl _wxObject for wxMenuEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMenuEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMenuEvent {
-    pub fn from(handle: *u8) -> @wxMenuEvent { @wxMenuEvent(handle) }
-    pub fn null() -> @wxMenuEvent { wxMenuEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMenuEvent { @wxMenuEvent(handle) }
+    pub fn null() -> @wxMenuEvent { wxMenuEvent::from(0 as *mut c_void) }
     
 }
 
@@ -12146,13 +12146,13 @@ trait _wxMenuEvent : _wxEvent {
     }
 }
 
-struct wxMenuItem(*u8);
+struct wxMenuItem(*mut c_void);
 impl _wxMenuItem for wxMenuItem {}
-impl _wxObject for wxMenuItem { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMenuItem { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMenuItem {
-    pub fn from(handle: *u8) -> @wxMenuItem { @wxMenuItem(handle) }
-    pub fn null() -> @wxMenuItem { wxMenuItem::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMenuItem { @wxMenuItem(handle) }
+    pub fn null() -> @wxMenuItem { wxMenuItem::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -12161,7 +12161,7 @@ impl wxMenuItem {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn getLabelFromText(text: *wchar_t) -> ~str {
+    pub fn getLabelFromText(text: *mut c_void) -> ~str {
         unsafe { wxString { handle: wxMenuItem_GetLabelFromText(text) }.to_str() }
     }
     #[fixed_stack_segment]
@@ -12181,12 +12181,12 @@ impl wxMenuItem {
 trait _wxMenuItem : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn check(&self, check: bool) {
+    fn check(&self, check: c_int) {
         unsafe { wxMenuItem_Check(self.handle(), check) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enable(&self, enable: bool) {
+    fn enable(&self, enable: c_int) {
         unsafe { wxMenuItem_Enable(self.handle(), enable) }
     }
     #[fixed_stack_segment]
@@ -12221,32 +12221,32 @@ trait _wxMenuItem : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isCheckable(&self) -> bool {
+    fn isCheckable(&self) -> c_int {
         unsafe { wxMenuItem_IsCheckable(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isChecked(&self) -> bool {
+    fn isChecked(&self) -> c_int {
         unsafe { wxMenuItem_IsChecked(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEnabled(&self) -> bool {
+    fn isEnabled(&self) -> c_int {
         unsafe { wxMenuItem_IsEnabled(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSeparator(&self) -> bool {
+    fn isSeparator(&self) -> c_int {
         unsafe { wxMenuItem_IsSeparator(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSubMenu(&self) -> bool {
+    fn isSubMenu(&self) -> c_int {
         unsafe { wxMenuItem_IsSubMenu(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setCheckable(&self, checkable: bool) {
+    fn setCheckable(&self, checkable: c_int) {
         unsafe { wxMenuItem_SetCheckable(self.handle(), checkable) }
     }
     #[fixed_stack_segment]
@@ -12273,17 +12273,17 @@ trait _wxMenuItem : _wxObject {
     }
 }
 
-struct wxMessageDialog(*u8);
+struct wxMessageDialog(*mut c_void);
 impl _wxMessageDialog for wxMessageDialog {}
 impl _wxDialog for wxMessageDialog {}
 impl _wxTopLevelWindow for wxMessageDialog {}
 impl _wxWindow for wxMessageDialog {}
 impl _wxEvtHandler for wxMessageDialog {}
-impl _wxObject for wxMessageDialog { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMessageDialog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMessageDialog {
-    pub fn from(handle: *u8) -> @wxMessageDialog { @wxMessageDialog(handle) }
-    pub fn null() -> @wxMessageDialog { wxMessageDialog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMessageDialog { @wxMessageDialog(handle) }
+    pub fn null() -> @wxMessageDialog { wxMessageDialog::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -12297,13 +12297,13 @@ impl wxMessageDialog {
 trait _wxMessageDialog : _wxDialog {
 }
 
-struct wxMetafile(*u8);
+struct wxMetafile(*mut c_void);
 impl _wxMetafile for wxMetafile {}
-impl _wxObject for wxMetafile { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMetafile { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMetafile {
-    pub fn from(handle: *u8) -> @wxMetafile { @wxMetafile(handle) }
-    pub fn null() -> @wxMetafile { wxMetafile::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMetafile { @wxMetafile(handle) }
+    pub fn null() -> @wxMetafile { wxMetafile::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -12316,29 +12316,29 @@ impl wxMetafile {
 trait _wxMetafile : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxMetafile_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn play<T: _wxDC>(&self, _dc: &T) -> bool {
+    fn play<T: _wxDC>(&self, _dc: &T) -> c_int {
         unsafe { wxMetafile_Play(self.handle(), _dc.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setClipboard(&self, width: c_int, height: c_int) -> bool {
+    fn setClipboard(&self, width: c_int, height: c_int) -> c_int {
         unsafe { wxMetafile_SetClipboard(self.handle(), width, height) }
     }
 }
 
-struct wxMetafileDC(*u8);
+struct wxMetafileDC(*mut c_void);
 impl _wxMetafileDC for wxMetafileDC {}
 impl _wxDC for wxMetafileDC {}
-impl _wxObject for wxMetafileDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMetafileDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMetafileDC {
-    pub fn from(handle: *u8) -> @wxMetafileDC { @wxMetafileDC(handle) }
-    pub fn null() -> @wxMetafileDC { wxMetafileDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMetafileDC { @wxMetafileDC(handle) }
+    pub fn null() -> @wxMetafileDC { wxMetafileDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -12351,17 +12351,17 @@ impl wxMetafileDC {
 trait _wxMetafileDC : _wxDC {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn close(&self) -> *u8 {
+    fn close(&self) -> *mut c_void {
         unsafe { wxMetafileDC_Close(self.handle()) }
     }
 }
 
-struct wxMimeTypesManager(*u8);
-impl _wxMimeTypesManager for wxMimeTypesManager { fn handle(&self) -> *u8 { **self } }
+struct wxMimeTypesManager(*mut c_void);
+impl _wxMimeTypesManager for wxMimeTypesManager { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMimeTypesManager {
-    pub fn from(handle: *u8) -> @wxMimeTypesManager { @wxMimeTypesManager(handle) }
-    pub fn null() -> @wxMimeTypesManager { wxMimeTypesManager::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMimeTypesManager { @wxMimeTypesManager(handle) }
+    pub fn null() -> @wxMimeTypesManager { wxMimeTypesManager::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -12371,11 +12371,11 @@ impl wxMimeTypesManager {
 }
 
 trait _wxMimeTypesManager {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addFallbacks(&self, _types: *u8) {
+    fn addFallbacks(&self, _types: *mut c_void) {
         unsafe { wxMimeTypesManager_AddFallbacks(self.handle(), _types) }
     }
     #[fixed_stack_segment]
@@ -12397,24 +12397,24 @@ trait _wxMimeTypesManager {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOfType(&self, _type: &str, _wildcard: &str) -> bool {
+    fn isOfType(&self, _type: &str, _wildcard: &str) -> c_int {
         let _type = wxT(_type);
         let _wildcard = wxT(_wildcard);
         unsafe { wxMimeTypesManager_IsOfType(self.handle(), _type.handle(), _wildcard.handle()) }
     }
 }
 
-struct wxMiniFrame(*u8);
+struct wxMiniFrame(*mut c_void);
 impl _wxMiniFrame for wxMiniFrame {}
 impl _wxFrame for wxMiniFrame {}
 impl _wxTopLevelWindow for wxMiniFrame {}
 impl _wxWindow for wxMiniFrame {}
 impl _wxEvtHandler for wxMiniFrame {}
-impl _wxObject for wxMiniFrame { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMiniFrame { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMiniFrame {
-    pub fn from(handle: *u8) -> @wxMiniFrame { @wxMiniFrame(handle) }
-    pub fn null() -> @wxMiniFrame { wxMiniFrame::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMiniFrame { @wxMiniFrame(handle) }
+    pub fn null() -> @wxMiniFrame { wxMiniFrame::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -12427,14 +12427,14 @@ impl wxMiniFrame {
 trait _wxMiniFrame : _wxFrame {
 }
 
-struct wxMirrorDC(*u8);
+struct wxMirrorDC(*mut c_void);
 impl _wxMirrorDC for wxMirrorDC {}
 impl _wxDC for wxMirrorDC {}
-impl _wxObject for wxMirrorDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMirrorDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMirrorDC {
-    pub fn from(handle: *u8) -> @wxMirrorDC { @wxMirrorDC(handle) }
-    pub fn null() -> @wxMirrorDC { wxMirrorDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMirrorDC { @wxMirrorDC(handle) }
+    pub fn null() -> @wxMirrorDC { wxMirrorDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -12446,88 +12446,88 @@ impl wxMirrorDC {
 trait _wxMirrorDC : _wxDC {
 }
 
-struct wxModule(*u8);
+struct wxModule(*mut c_void);
 impl _wxModule for wxModule {}
-impl _wxObject for wxModule { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxModule { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxModule {
-    pub fn from(handle: *u8) -> @wxModule { @wxModule(handle) }
-    pub fn null() -> @wxModule { wxModule::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxModule { @wxModule(handle) }
+    pub fn null() -> @wxModule { wxModule::from(0 as *mut c_void) }
     
 }
 
 trait _wxModule : _wxObject {
 }
 
-struct wxMouseCaptureChangedEvent(*u8);
+struct wxMouseCaptureChangedEvent(*mut c_void);
 impl _wxMouseCaptureChangedEvent for wxMouseCaptureChangedEvent {}
 impl _wxEvent for wxMouseCaptureChangedEvent {}
-impl _wxObject for wxMouseCaptureChangedEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMouseCaptureChangedEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMouseCaptureChangedEvent {
-    pub fn from(handle: *u8) -> @wxMouseCaptureChangedEvent { @wxMouseCaptureChangedEvent(handle) }
-    pub fn null() -> @wxMouseCaptureChangedEvent { wxMouseCaptureChangedEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMouseCaptureChangedEvent { @wxMouseCaptureChangedEvent(handle) }
+    pub fn null() -> @wxMouseCaptureChangedEvent { wxMouseCaptureChangedEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxMouseCaptureChangedEvent : _wxEvent {
 }
 
-struct wxMouseEvent(*u8);
+struct wxMouseEvent(*mut c_void);
 impl _wxMouseEvent for wxMouseEvent {}
 impl _wxEvent for wxMouseEvent {}
-impl _wxObject for wxMouseEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMouseEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMouseEvent {
-    pub fn from(handle: *u8) -> @wxMouseEvent { @wxMouseEvent(handle) }
-    pub fn null() -> @wxMouseEvent { wxMouseEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMouseEvent { @wxMouseEvent(handle) }
+    pub fn null() -> @wxMouseEvent { wxMouseEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxMouseEvent : _wxEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn altDown(&self) -> bool {
+    fn altDown(&self) -> c_int {
         unsafe { wxMouseEvent_AltDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn button(&self, but: c_int) -> bool {
+    fn button(&self, but: c_int) -> c_int {
         unsafe { wxMouseEvent_Button(self.handle(), but) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn buttonDClick(&self, but: c_int) -> bool {
+    fn buttonDClick(&self, but: c_int) -> c_int {
         unsafe { wxMouseEvent_ButtonDClick(self.handle(), but) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn buttonDown(&self, but: c_int) -> bool {
+    fn buttonDown(&self, but: c_int) -> c_int {
         unsafe { wxMouseEvent_ButtonDown(self.handle(), but) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn buttonIsDown(&self, but: c_int) -> bool {
+    fn buttonIsDown(&self, but: c_int) -> c_int {
         unsafe { wxMouseEvent_ButtonIsDown(self.handle(), but) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn buttonUp(&self, but: c_int) -> bool {
+    fn buttonUp(&self, but: c_int) -> c_int {
         unsafe { wxMouseEvent_ButtonUp(self.handle(), but) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn controlDown(&self) -> bool {
+    fn controlDown(&self) -> c_int {
         unsafe { wxMouseEvent_ControlDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn dragging(&self) -> bool {
+    fn dragging(&self) -> c_int {
         unsafe { wxMouseEvent_Dragging(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn entering(&self) -> bool {
+    fn entering(&self) -> c_int {
         unsafe { wxMouseEvent_Entering(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -12552,87 +12552,87 @@ trait _wxMouseEvent : _wxEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isButton(&self) -> bool {
+    fn isButton(&self) -> c_int {
         unsafe { wxMouseEvent_IsButton(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn leaving(&self) -> bool {
+    fn leaving(&self) -> c_int {
         unsafe { wxMouseEvent_Leaving(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn leftDClick(&self) -> bool {
+    fn leftDClick(&self) -> c_int {
         unsafe { wxMouseEvent_LeftDClick(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn leftDown(&self) -> bool {
+    fn leftDown(&self) -> c_int {
         unsafe { wxMouseEvent_LeftDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn leftIsDown(&self) -> bool {
+    fn leftIsDown(&self) -> c_int {
         unsafe { wxMouseEvent_LeftIsDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn leftUp(&self) -> bool {
+    fn leftUp(&self) -> c_int {
         unsafe { wxMouseEvent_LeftUp(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn metaDown(&self) -> bool {
+    fn metaDown(&self) -> c_int {
         unsafe { wxMouseEvent_MetaDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn middleDClick(&self) -> bool {
+    fn middleDClick(&self) -> c_int {
         unsafe { wxMouseEvent_MiddleDClick(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn middleDown(&self) -> bool {
+    fn middleDown(&self) -> c_int {
         unsafe { wxMouseEvent_MiddleDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn middleIsDown(&self) -> bool {
+    fn middleIsDown(&self) -> c_int {
         unsafe { wxMouseEvent_MiddleIsDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn middleUp(&self) -> bool {
+    fn middleUp(&self) -> c_int {
         unsafe { wxMouseEvent_MiddleUp(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn moving(&self) -> bool {
+    fn moving(&self) -> c_int {
         unsafe { wxMouseEvent_Moving(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn rightDClick(&self) -> bool {
+    fn rightDClick(&self) -> c_int {
         unsafe { wxMouseEvent_RightDClick(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn rightDown(&self) -> bool {
+    fn rightDown(&self) -> c_int {
         unsafe { wxMouseEvent_RightDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn rightIsDown(&self) -> bool {
+    fn rightIsDown(&self) -> c_int {
         unsafe { wxMouseEvent_RightIsDown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn rightUp(&self) -> bool {
+    fn rightUp(&self) -> c_int {
         unsafe { wxMouseEvent_RightUp(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn shiftDown(&self) -> bool {
+    fn shiftDown(&self) -> c_int {
         unsafe { wxMouseEvent_ShiftDown(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -12652,14 +12652,14 @@ trait _wxMouseEvent : _wxEvent {
     }
 }
 
-struct wxMoveEvent(*u8);
+struct wxMoveEvent(*mut c_void);
 impl _wxMoveEvent for wxMoveEvent {}
 impl _wxEvent for wxMoveEvent {}
-impl _wxObject for wxMoveEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMoveEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMoveEvent {
-    pub fn from(handle: *u8) -> @wxMoveEvent { @wxMoveEvent(handle) }
-    pub fn null() -> @wxMoveEvent { wxMoveEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMoveEvent { @wxMoveEvent(handle) }
+    pub fn null() -> @wxMoveEvent { wxMoveEvent::from(0 as *mut c_void) }
     
 }
 
@@ -12671,102 +12671,102 @@ trait _wxMoveEvent : _wxEvent {
     }
 }
 
-struct wxMultiCellCanvas(*u8);
+struct wxMultiCellCanvas(*mut c_void);
 impl _wxMultiCellCanvas for wxMultiCellCanvas {}
 impl _wxFlexGridSizer for wxMultiCellCanvas {}
 impl _wxGridSizer for wxMultiCellCanvas {}
 impl _wxSizer for wxMultiCellCanvas {}
-impl _wxObject for wxMultiCellCanvas { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMultiCellCanvas { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMultiCellCanvas {
-    pub fn from(handle: *u8) -> @wxMultiCellCanvas { @wxMultiCellCanvas(handle) }
-    pub fn null() -> @wxMultiCellCanvas { wxMultiCellCanvas::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMultiCellCanvas { @wxMultiCellCanvas(handle) }
+    pub fn null() -> @wxMultiCellCanvas { wxMultiCellCanvas::from(0 as *mut c_void) }
     
 }
 
 trait _wxMultiCellCanvas : _wxFlexGridSizer {
 }
 
-struct wxMultiCellItemHandle(*u8);
+struct wxMultiCellItemHandle(*mut c_void);
 impl _wxMultiCellItemHandle for wxMultiCellItemHandle {}
-impl _wxObject for wxMultiCellItemHandle { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMultiCellItemHandle { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMultiCellItemHandle {
-    pub fn from(handle: *u8) -> @wxMultiCellItemHandle { @wxMultiCellItemHandle(handle) }
-    pub fn null() -> @wxMultiCellItemHandle { wxMultiCellItemHandle::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMultiCellItemHandle { @wxMultiCellItemHandle(handle) }
+    pub fn null() -> @wxMultiCellItemHandle { wxMultiCellItemHandle::from(0 as *mut c_void) }
     
 }
 
 trait _wxMultiCellItemHandle : _wxObject {
 }
 
-struct wxMultiCellSizer(*u8);
+struct wxMultiCellSizer(*mut c_void);
 impl _wxMultiCellSizer for wxMultiCellSizer {}
 impl _wxSizer for wxMultiCellSizer {}
-impl _wxObject for wxMultiCellSizer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMultiCellSizer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMultiCellSizer {
-    pub fn from(handle: *u8) -> @wxMultiCellSizer { @wxMultiCellSizer(handle) }
-    pub fn null() -> @wxMultiCellSizer { wxMultiCellSizer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMultiCellSizer { @wxMultiCellSizer(handle) }
+    pub fn null() -> @wxMultiCellSizer { wxMultiCellSizer::from(0 as *mut c_void) }
     
 }
 
 trait _wxMultiCellSizer : _wxSizer {
 }
 
-struct wxMutex(*u8);
-impl _wxMutex for wxMutex { fn handle(&self) -> *u8 { **self } }
+struct wxMutex(*mut c_void);
+impl _wxMutex for wxMutex { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMutex {
-    pub fn from(handle: *u8) -> @wxMutex { @wxMutex(handle) }
-    pub fn null() -> @wxMutex { wxMutex::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMutex { @wxMutex(handle) }
+    pub fn null() -> @wxMutex { wxMutex::from(0 as *mut c_void) }
     
 }
 
 trait _wxMutex {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxMutexLocker(*u8);
-impl _wxMutexLocker for wxMutexLocker { fn handle(&self) -> *u8 { **self } }
+struct wxMutexLocker(*mut c_void);
+impl _wxMutexLocker for wxMutexLocker { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMutexLocker {
-    pub fn from(handle: *u8) -> @wxMutexLocker { @wxMutexLocker(handle) }
-    pub fn null() -> @wxMutexLocker { wxMutexLocker::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMutexLocker { @wxMutexLocker(handle) }
+    pub fn null() -> @wxMutexLocker { wxMutexLocker::from(0 as *mut c_void) }
     
 }
 
 trait _wxMutexLocker {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxNavigationKeyEvent(*u8);
+struct wxNavigationKeyEvent(*mut c_void);
 impl _wxNavigationKeyEvent for wxNavigationKeyEvent {}
 impl _wxEvent for wxNavigationKeyEvent {}
-impl _wxObject for wxNavigationKeyEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxNavigationKeyEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxNavigationKeyEvent {
-    pub fn from(handle: *u8) -> @wxNavigationKeyEvent { @wxNavigationKeyEvent(handle) }
-    pub fn null() -> @wxNavigationKeyEvent { wxNavigationKeyEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxNavigationKeyEvent { @wxNavigationKeyEvent(handle) }
+    pub fn null() -> @wxNavigationKeyEvent { wxNavigationKeyEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxNavigationKeyEvent : _wxEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getCurrentFocus(&self) -> *u8 {
+    fn getCurrentFocus(&self) -> *mut c_void {
         unsafe { wxNavigationKeyEvent_GetCurrentFocus(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDirection(&self) -> bool {
+    fn getDirection(&self) -> c_int {
         unsafe { wxNavigationKeyEvent_GetDirection(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isWindowChange(&self) -> bool {
+    fn isWindowChange(&self) -> c_int {
         unsafe { wxNavigationKeyEvent_IsWindowChange(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -12776,12 +12776,12 @@ trait _wxNavigationKeyEvent : _wxEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setDirection(&self, bForward: bool) {
+    fn setDirection(&self, bForward: c_int) {
         unsafe { wxNavigationKeyEvent_SetDirection(self.handle(), bForward) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setWindowChange(&self, bIs: bool) {
+    fn setWindowChange(&self, bIs: c_int) {
         unsafe { wxNavigationKeyEvent_SetWindowChange(self.handle(), bIs) }
     }
     #[fixed_stack_segment]
@@ -12791,46 +12791,46 @@ trait _wxNavigationKeyEvent : _wxEvent {
     }
 }
 
-struct wxNewBitmapButton(*u8);
+struct wxNewBitmapButton(*mut c_void);
 impl _wxNewBitmapButton for wxNewBitmapButton {}
 impl _wxPanel for wxNewBitmapButton {}
 impl _wxWindow for wxNewBitmapButton {}
 impl _wxEvtHandler for wxNewBitmapButton {}
-impl _wxObject for wxNewBitmapButton { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxNewBitmapButton { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxNewBitmapButton {
-    pub fn from(handle: *u8) -> @wxNewBitmapButton { @wxNewBitmapButton(handle) }
-    pub fn null() -> @wxNewBitmapButton { wxNewBitmapButton::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxNewBitmapButton { @wxNewBitmapButton(handle) }
+    pub fn null() -> @wxNewBitmapButton { wxNewBitmapButton::from(0 as *mut c_void) }
     
 }
 
 trait _wxNewBitmapButton : _wxPanel {
 }
 
-struct wxNodeBase(*u8);
-impl _wxNodeBase for wxNodeBase { fn handle(&self) -> *u8 { **self } }
+struct wxNodeBase(*mut c_void);
+impl _wxNodeBase for wxNodeBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxNodeBase {
-    pub fn from(handle: *u8) -> @wxNodeBase { @wxNodeBase(handle) }
-    pub fn null() -> @wxNodeBase { wxNodeBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxNodeBase { @wxNodeBase(handle) }
+    pub fn null() -> @wxNodeBase { wxNodeBase::from(0 as *mut c_void) }
     
 }
 
 trait _wxNodeBase {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxNotebook(*u8);
+struct wxNotebook(*mut c_void);
 impl _wxNotebook for wxNotebook {}
 impl _wxControl for wxNotebook {}
 impl _wxWindow for wxNotebook {}
 impl _wxEvtHandler for wxNotebook {}
-impl _wxObject for wxNotebook { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxNotebook { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxNotebook {
-    pub fn from(handle: *u8) -> @wxNotebook { @wxNotebook(handle) }
-    pub fn null() -> @wxNotebook { wxNotebook::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxNotebook { @wxNotebook(handle) }
+    pub fn null() -> @wxNotebook { wxNotebook::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -12842,23 +12842,23 @@ impl wxNotebook {
 trait _wxNotebook : _wxControl {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addPage<T: _wxWindow>(&self, pPage: &T, strText: &str, bSelect: bool, imageId: c_int) -> bool {
+    fn addPage<T: _wxWindow>(&self, pPage: &T, strText: &str, bSelect: c_int, imageId: c_int) -> c_int {
         let strText = wxT(strText);
         unsafe { wxNotebook_AddPage(self.handle(), pPage.handle(), strText.handle(), bSelect, imageId) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn advanceSelection(&self, bForward: bool) {
+    fn advanceSelection(&self, bForward: c_int) {
         unsafe { wxNotebook_AdvanceSelection(self.handle(), bForward) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deleteAllPages(&self) -> bool {
+    fn deleteAllPages(&self) -> c_int {
         unsafe { wxNotebook_DeleteAllPages(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deletePage(&self, nPage: c_int) -> bool {
+    fn deletePage(&self, nPage: c_int) -> c_int {
         unsafe { wxNotebook_DeletePage(self.handle(), nPage) }
     }
     #[fixed_stack_segment]
@@ -12898,18 +12898,18 @@ trait _wxNotebook : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hitTest(&self, x: c_int, y: c_int, flags: *c_long) -> c_int {
+    fn hitTest(&self, x: c_int, y: c_int, flags: *mut c_long) -> c_int {
         unsafe { wxNotebook_HitTest(self.handle(), x, y, flags) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn insertPage<T: _wxWindow>(&self, nPage: c_int, pPage: &T, strText: &str, bSelect: bool, imageId: c_int) -> bool {
+    fn insertPage<T: _wxWindow>(&self, nPage: c_int, pPage: &T, strText: &str, bSelect: c_int, imageId: c_int) -> c_int {
         let strText = wxT(strText);
         unsafe { wxNotebook_InsertPage(self.handle(), nPage, pPage.handle(), strText.handle(), bSelect, imageId) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn removePage(&self, nPage: c_int) -> bool {
+    fn removePage(&self, nPage: c_int) -> c_int {
         unsafe { wxNotebook_RemovePage(self.handle(), nPage) }
     }
     #[fixed_stack_segment]
@@ -12924,7 +12924,7 @@ trait _wxNotebook : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setPageImage(&self, nPage: c_int, nImage: c_int) -> bool {
+    fn setPageImage(&self, nPage: c_int, nImage: c_int) -> c_int {
         unsafe { wxNotebook_SetPageImage(self.handle(), nPage, nImage) }
     }
     #[fixed_stack_segment]
@@ -12934,7 +12934,7 @@ trait _wxNotebook : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setPageText(&self, nPage: c_int, strText: &str) -> bool {
+    fn setPageText(&self, nPage: c_int, strText: &str) -> c_int {
         let strText = wxT(strText);
         unsafe { wxNotebook_SetPageText(self.handle(), nPage, strText.handle()) }
     }
@@ -12950,31 +12950,31 @@ trait _wxNotebook : _wxControl {
     }
 }
 
-struct wxNotebookEvent(*u8);
+struct wxNotebookEvent(*mut c_void);
 impl _wxNotebookEvent for wxNotebookEvent {}
 impl _wxNotifyEvent for wxNotebookEvent {}
 impl _wxCommandEvent for wxNotebookEvent {}
 impl _wxEvent for wxNotebookEvent {}
-impl _wxObject for wxNotebookEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxNotebookEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxNotebookEvent {
-    pub fn from(handle: *u8) -> @wxNotebookEvent { @wxNotebookEvent(handle) }
-    pub fn null() -> @wxNotebookEvent { wxNotebookEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxNotebookEvent { @wxNotebookEvent(handle) }
+    pub fn null() -> @wxNotebookEvent { wxNotebookEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxNotebookEvent : _wxNotifyEvent {
 }
 
-struct wxNotifyEvent(*u8);
+struct wxNotifyEvent(*mut c_void);
 impl _wxNotifyEvent for wxNotifyEvent {}
 impl _wxCommandEvent for wxNotifyEvent {}
 impl _wxEvent for wxNotifyEvent {}
-impl _wxObject for wxNotifyEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxNotifyEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxNotifyEvent {
-    pub fn from(handle: *u8) -> @wxNotifyEvent { @wxNotifyEvent(handle) }
-    pub fn null() -> @wxNotifyEvent { wxNotifyEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxNotifyEvent { @wxNotifyEvent(handle) }
+    pub fn null() -> @wxNotifyEvent { wxNotifyEvent::from(0 as *mut c_void) }
     
 }
 
@@ -12986,7 +12986,7 @@ trait _wxNotifyEvent : _wxCommandEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isAllowed(&self) -> bool {
+    fn isAllowed(&self) -> c_int {
         unsafe { wxNotifyEvent_IsAllowed(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -12996,17 +12996,17 @@ trait _wxNotifyEvent : _wxCommandEvent {
     }
 }
 
-struct wxObject(*u8);
-impl _wxObject for wxObject { fn handle(&self) -> *u8 { **self } }
+struct wxObject(*mut c_void);
+impl _wxObject for wxObject { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxObject {
-    pub fn from(handle: *u8) -> @wxObject { @wxObject(handle) }
-    pub fn null() -> @wxObject { wxObject::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxObject { @wxObject(handle) }
+    pub fn null() -> @wxObject { wxObject::from(0 as *mut c_void) }
     
 }
 
 trait _wxObject {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13035,37 +13035,37 @@ trait _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isKindOf<T: _wxClassInfo>(&self, classInfo: &T) -> bool {
+    fn isKindOf<T: _wxClassInfo>(&self, classInfo: &T) -> c_int {
         unsafe { wxObject_IsKindOf(self.handle(), classInfo.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isScrolledWindow(&self) -> bool {
+    fn isScrolledWindow(&self) -> c_int {
         unsafe { wxObject_IsScrolledWindow(self.handle()) }
     }
 }
 
-struct wxObjectRefData(*u8);
-impl _wxObjectRefData for wxObjectRefData { fn handle(&self) -> *u8 { **self } }
+struct wxObjectRefData(*mut c_void);
+impl _wxObjectRefData for wxObjectRefData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxObjectRefData {
-    pub fn from(handle: *u8) -> @wxObjectRefData { @wxObjectRefData(handle) }
-    pub fn null() -> @wxObjectRefData { wxObjectRefData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxObjectRefData { @wxObjectRefData(handle) }
+    pub fn null() -> @wxObjectRefData { wxObjectRefData::from(0 as *mut c_void) }
     
 }
 
 trait _wxObjectRefData {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxOutputStream(*u8);
+struct wxOutputStream(*mut c_void);
 impl _wxOutputStream for wxOutputStream {}
-impl _wxStreamBase for wxOutputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxOutputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxOutputStream {
-    pub fn from(handle: *u8) -> @wxOutputStream { @wxOutputStream(handle) }
-    pub fn null() -> @wxOutputStream { wxOutputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxOutputStream { @wxOutputStream(handle) }
+    pub fn null() -> @wxOutputStream { wxOutputStream::from(0 as *mut c_void) }
     
 }
 
@@ -13077,7 +13077,7 @@ trait _wxOutputStream : _wxStreamBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn putC(&self, c: wchar_t) {
+    fn putC(&self, c: int8_t) {
         unsafe { wxOutputStream_PutC(self.handle(), c) }
     }
     #[fixed_stack_segment]
@@ -13097,22 +13097,22 @@ trait _wxOutputStream : _wxStreamBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn write(&self, buffer: *u8, size: c_int) {
+    fn write(&self, buffer: *mut c_void, size: c_int) {
         unsafe { wxOutputStream_Write(self.handle(), buffer, size) }
     }
 }
 
-struct wxPageSetupDialog(*u8);
+struct wxPageSetupDialog(*mut c_void);
 impl _wxPageSetupDialog for wxPageSetupDialog {}
 impl _wxDialog for wxPageSetupDialog {}
 impl _wxTopLevelWindow for wxPageSetupDialog {}
 impl _wxWindow for wxPageSetupDialog {}
 impl _wxEvtHandler for wxPageSetupDialog {}
-impl _wxObject for wxPageSetupDialog { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPageSetupDialog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPageSetupDialog {
-    pub fn from(handle: *u8) -> @wxPageSetupDialog { @wxPageSetupDialog(handle) }
-    pub fn null() -> @wxPageSetupDialog { wxPageSetupDialog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPageSetupDialog { @wxPageSetupDialog(handle) }
+    pub fn null() -> @wxPageSetupDialog { wxPageSetupDialog::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13129,13 +13129,13 @@ trait _wxPageSetupDialog : _wxDialog {
     }
 }
 
-struct wxPageSetupDialogData(*u8);
+struct wxPageSetupDialogData(*mut c_void);
 impl _wxPageSetupDialogData for wxPageSetupDialogData {}
-impl _wxObject for wxPageSetupDialogData { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPageSetupDialogData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPageSetupDialogData {
-    pub fn from(handle: *u8) -> @wxPageSetupDialogData { @wxPageSetupDialogData(handle) }
-    pub fn null() -> @wxPageSetupDialogData { wxPageSetupDialogData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPageSetupDialogData { @wxPageSetupDialogData(handle) }
+    pub fn null() -> @wxPageSetupDialogData { wxPageSetupDialogData::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13172,62 +13172,62 @@ trait _wxPageSetupDialogData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableHelp(&self, flag: bool) {
+    fn enableHelp(&self, flag: c_int) {
         unsafe { wxPageSetupDialogData_EnableHelp(self.handle(), flag) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableMargins(&self, flag: bool) {
+    fn enableMargins(&self, flag: c_int) {
         unsafe { wxPageSetupDialogData_EnableMargins(self.handle(), flag) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableOrientation(&self, flag: bool) {
+    fn enableOrientation(&self, flag: c_int) {
         unsafe { wxPageSetupDialogData_EnableOrientation(self.handle(), flag) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enablePaper(&self, flag: bool) {
+    fn enablePaper(&self, flag: c_int) {
         unsafe { wxPageSetupDialogData_EnablePaper(self.handle(), flag) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enablePrinter(&self, flag: bool) {
+    fn enablePrinter(&self, flag: c_int) {
         unsafe { wxPageSetupDialogData_EnablePrinter(self.handle(), flag) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDefaultInfo(&self) -> bool {
+    fn getDefaultInfo(&self) -> c_int {
         unsafe { wxPageSetupDialogData_GetDefaultInfo(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDefaultMinMargins(&self) -> bool {
+    fn getDefaultMinMargins(&self) -> c_int {
         unsafe { wxPageSetupDialogData_GetDefaultMinMargins(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEnableHelp(&self) -> bool {
+    fn getEnableHelp(&self) -> c_int {
         unsafe { wxPageSetupDialogData_GetEnableHelp(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEnableMargins(&self) -> bool {
+    fn getEnableMargins(&self) -> c_int {
         unsafe { wxPageSetupDialogData_GetEnableMargins(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEnableOrientation(&self) -> bool {
+    fn getEnableOrientation(&self) -> c_int {
         unsafe { wxPageSetupDialogData_GetEnableOrientation(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEnablePaper(&self) -> bool {
+    fn getEnablePaper(&self) -> c_int {
         unsafe { wxPageSetupDialogData_GetEnablePaper(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEnablePrinter(&self) -> bool {
+    fn getEnablePrinter(&self) -> c_int {
         unsafe { wxPageSetupDialogData_GetEnablePrinter(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -13267,7 +13267,7 @@ trait _wxPageSetupDialogData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setDefaultInfo(&self, flag: bool) {
+    fn setDefaultInfo(&self, flag: c_int) {
         unsafe { wxPageSetupDialogData_SetDefaultInfo(self.handle(), flag) }
     }
     #[fixed_stack_segment]
@@ -13297,7 +13297,7 @@ trait _wxPageSetupDialogData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setPaperId(&self, id: *u8) {
+    fn setPaperId(&self, id: *mut c_void) {
         unsafe { wxPageSetupDialogData_SetPaperId(self.handle(), id) }
     }
     #[fixed_stack_segment]
@@ -13317,15 +13317,15 @@ trait _wxPageSetupDialogData : _wxObject {
     }
 }
 
-struct wxPaintDC(*u8);
+struct wxPaintDC(*mut c_void);
 impl _wxPaintDC for wxPaintDC {}
 impl _wxWindowDC for wxPaintDC {}
 impl _wxDC for wxPaintDC {}
-impl _wxObject for wxPaintDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPaintDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPaintDC {
-    pub fn from(handle: *u8) -> @wxPaintDC { @wxPaintDC(handle) }
-    pub fn null() -> @wxPaintDC { wxPaintDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPaintDC { @wxPaintDC(handle) }
+    pub fn null() -> @wxPaintDC { wxPaintDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13337,28 +13337,28 @@ impl wxPaintDC {
 trait _wxPaintDC : _wxWindowDC {
 }
 
-struct wxPaintEvent(*u8);
+struct wxPaintEvent(*mut c_void);
 impl _wxPaintEvent for wxPaintEvent {}
 impl _wxEvent for wxPaintEvent {}
-impl _wxObject for wxPaintEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPaintEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPaintEvent {
-    pub fn from(handle: *u8) -> @wxPaintEvent { @wxPaintEvent(handle) }
-    pub fn null() -> @wxPaintEvent { wxPaintEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPaintEvent { @wxPaintEvent(handle) }
+    pub fn null() -> @wxPaintEvent { wxPaintEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxPaintEvent : _wxEvent {
 }
 
-struct wxPalette(*u8);
+struct wxPalette(*mut c_void);
 impl _wxPalette for wxPalette {}
 impl _wxGDIObject for wxPalette {}
-impl _wxObject for wxPalette { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPalette { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPalette {
-    pub fn from(handle: *u8) -> @wxPalette { @wxPalette(handle) }
-    pub fn null() -> @wxPalette { wxPalette::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPalette { @wxPalette(handle) }
+    pub fn null() -> @wxPalette { wxPalette::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13367,7 +13367,7 @@ impl wxPalette {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newRGB(n: c_int, red: *u8, green: *u8, blue: *u8) -> @wxPalette {
+    pub fn newRGB(n: c_int, red: *mut c_void, green: *mut c_void, blue: *mut c_void) -> @wxPalette {
         unsafe { @wxPalette(wxPalette_CreateRGB(n, red, green, blue)) }
     }
 }
@@ -13385,36 +13385,36 @@ trait _wxPalette : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getRGB(&self, pixel: c_int, red: *u8, green: *u8, blue: *u8) -> bool {
+    fn getRGB(&self, pixel: c_int, red: *mut c_void, green: *mut c_void, blue: *mut c_void) -> c_int {
         unsafe { wxPalette_GetRGB(self.handle(), pixel, red, green, blue) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEqual<T: _wxPalette>(&self, palette: &T) -> bool {
+    fn isEqual<T: _wxPalette>(&self, palette: &T) -> c_int {
         unsafe { wxPalette_IsEqual(self.handle(), palette.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxPalette_IsOk(self.handle()) }
     }
 }
 
-struct wxPaletteChangedEvent(*u8);
+struct wxPaletteChangedEvent(*mut c_void);
 impl _wxPaletteChangedEvent for wxPaletteChangedEvent {}
 impl _wxEvent for wxPaletteChangedEvent {}
-impl _wxObject for wxPaletteChangedEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPaletteChangedEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPaletteChangedEvent {
-    pub fn from(handle: *u8) -> @wxPaletteChangedEvent { @wxPaletteChangedEvent(handle) }
-    pub fn null() -> @wxPaletteChangedEvent { wxPaletteChangedEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPaletteChangedEvent { @wxPaletteChangedEvent(handle) }
+    pub fn null() -> @wxPaletteChangedEvent { wxPaletteChangedEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxPaletteChangedEvent : _wxEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getChangedWindow(&self) -> *u8 {
+    fn getChangedWindow(&self) -> *mut c_void {
         unsafe { wxPaletteChangedEvent_GetChangedWindow(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -13424,15 +13424,15 @@ trait _wxPaletteChangedEvent : _wxEvent {
     }
 }
 
-struct wxPanel(*u8);
+struct wxPanel(*mut c_void);
 impl _wxPanel for wxPanel {}
 impl _wxWindow for wxPanel {}
 impl _wxEvtHandler for wxPanel {}
-impl _wxObject for wxPanel { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPanel { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPanel {
-    pub fn from(handle: *u8) -> @wxPanel { @wxPanel(handle) }
-    pub fn null() -> @wxPanel { wxPanel::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPanel { @wxPanel(handle) }
+    pub fn null() -> @wxPanel { wxPanel::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13444,28 +13444,28 @@ impl wxPanel {
 trait _wxPanel : _wxWindow {
 }
 
-struct wxPathList(*u8);
+struct wxPathList(*mut c_void);
 impl _wxPathList for wxPathList {}
 impl _wxList for wxPathList {}
-impl _wxObject for wxPathList { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPathList { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPathList {
-    pub fn from(handle: *u8) -> @wxPathList { @wxPathList(handle) }
-    pub fn null() -> @wxPathList { wxPathList::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPathList { @wxPathList(handle) }
+    pub fn null() -> @wxPathList { wxPathList::from(0 as *mut c_void) }
     
 }
 
 trait _wxPathList : _wxList {
 }
 
-struct wxPen(*u8);
+struct wxPen(*mut c_void);
 impl _wxPen for wxPen {}
 impl _wxGDIObject for wxPen {}
-impl _wxObject for wxPen { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPen { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPen {
-    pub fn from(handle: *u8) -> @wxPen { @wxPen(handle) }
-    pub fn null() -> @wxPen { wxPen::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPen { @wxPen(handle) }
+    pub fn null() -> @wxPen { wxPen::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13507,7 +13507,7 @@ trait _wxPen : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDashes(&self, ptr: *u8) -> c_int {
+    fn getDashes(&self, ptr: *mut c_void) -> c_int {
         unsafe { wxPen_GetDashes(self.handle(), ptr) }
     }
     #[fixed_stack_segment]
@@ -13532,12 +13532,12 @@ trait _wxPen : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEqual<T: _wxPen>(&self, pen: &T) -> bool {
+    fn isEqual<T: _wxPen>(&self, pen: &T) -> c_int {
         unsafe { wxPen_IsEqual(self.handle(), pen.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxPen_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -13552,12 +13552,12 @@ trait _wxPen : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setColourSingle(&self, r: wchar_t, g: wchar_t, b: wchar_t) {
+    fn setColourSingle(&self, r: int8_t, g: int8_t, b: int8_t) {
         unsafe { wxPen_SetColourSingle(self.handle(), r, g, b) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setDashes(&self, nb_dashes: c_int, dash: *u8) {
+    fn setDashes(&self, nb_dashes: c_int, dash: *mut c_void) {
         unsafe { wxPen_SetDashes(self.handle(), nb_dashes, dash) }
     }
     #[fixed_stack_segment]
@@ -13582,90 +13582,90 @@ trait _wxPen : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isStatic(&self) -> bool {
+    fn isStatic(&self) -> c_int {
         unsafe { wxPen_IsStatic(self.handle()) }
     }
 }
 
-struct wxPenList(*u8);
+struct wxPenList(*mut c_void);
 impl _wxPenList for wxPenList {}
 impl _wxList for wxPenList {}
-impl _wxObject for wxPenList { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPenList { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPenList {
-    pub fn from(handle: *u8) -> @wxPenList { @wxPenList(handle) }
-    pub fn null() -> @wxPenList { wxPenList::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPenList { @wxPenList(handle) }
+    pub fn null() -> @wxPenList { wxPenList::from(0 as *mut c_void) }
     
 }
 
 trait _wxPenList : _wxList {
 }
 
-struct wxPlotCurve(*u8);
+struct wxPlotCurve(*mut c_void);
 impl _wxPlotCurve for wxPlotCurve {}
-impl _wxObject for wxPlotCurve { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPlotCurve { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPlotCurve {
-    pub fn from(handle: *u8) -> @wxPlotCurve { @wxPlotCurve(handle) }
-    pub fn null() -> @wxPlotCurve { wxPlotCurve::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPlotCurve { @wxPlotCurve(handle) }
+    pub fn null() -> @wxPlotCurve { wxPlotCurve::from(0 as *mut c_void) }
     
 }
 
 trait _wxPlotCurve : _wxObject {
 }
 
-struct wxPlotEvent(*u8);
+struct wxPlotEvent(*mut c_void);
 impl _wxPlotEvent for wxPlotEvent {}
 impl _wxNotifyEvent for wxPlotEvent {}
 impl _wxCommandEvent for wxPlotEvent {}
 impl _wxEvent for wxPlotEvent {}
-impl _wxObject for wxPlotEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPlotEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPlotEvent {
-    pub fn from(handle: *u8) -> @wxPlotEvent { @wxPlotEvent(handle) }
-    pub fn null() -> @wxPlotEvent { wxPlotEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPlotEvent { @wxPlotEvent(handle) }
+    pub fn null() -> @wxPlotEvent { wxPlotEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxPlotEvent : _wxNotifyEvent {
 }
 
-struct wxPlotOnOffCurve(*u8);
+struct wxPlotOnOffCurve(*mut c_void);
 impl _wxPlotOnOffCurve for wxPlotOnOffCurve {}
-impl _wxObject for wxPlotOnOffCurve { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPlotOnOffCurve { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPlotOnOffCurve {
-    pub fn from(handle: *u8) -> @wxPlotOnOffCurve { @wxPlotOnOffCurve(handle) }
-    pub fn null() -> @wxPlotOnOffCurve { wxPlotOnOffCurve::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPlotOnOffCurve { @wxPlotOnOffCurve(handle) }
+    pub fn null() -> @wxPlotOnOffCurve { wxPlotOnOffCurve::from(0 as *mut c_void) }
     
 }
 
 trait _wxPlotOnOffCurve : _wxObject {
 }
 
-struct wxPlotWindow(*u8);
+struct wxPlotWindow(*mut c_void);
 impl _wxPlotWindow for wxPlotWindow {}
 impl _wxScrolledWindow for wxPlotWindow {}
 impl _wxPanel for wxPlotWindow {}
 impl _wxWindow for wxPlotWindow {}
 impl _wxEvtHandler for wxPlotWindow {}
-impl _wxObject for wxPlotWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPlotWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPlotWindow {
-    pub fn from(handle: *u8) -> @wxPlotWindow { @wxPlotWindow(handle) }
-    pub fn null() -> @wxPlotWindow { wxPlotWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPlotWindow { @wxPlotWindow(handle) }
+    pub fn null() -> @wxPlotWindow { wxPlotWindow::from(0 as *mut c_void) }
     
 }
 
 trait _wxPlotWindow : _wxScrolledWindow {
 }
 
-struct wxPoint(*u8);
-impl _wxPoint for wxPoint { fn handle(&self) -> *u8 { **self } }
+struct wxPoint(*mut c_void);
+impl _wxPoint for wxPoint { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPoint {
-    pub fn from(handle: *u8) -> @wxPoint { @wxPoint(handle) }
-    pub fn null() -> @wxPoint { wxPoint::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPoint { @wxPoint(handle) }
+    pub fn null() -> @wxPoint { wxPoint::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13675,7 +13675,7 @@ impl wxPoint {
 }
 
 trait _wxPoint {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13699,45 +13699,45 @@ trait _wxPoint {
     }
 }
 
-struct wxPopupTransientWindow(*u8);
+struct wxPopupTransientWindow(*mut c_void);
 impl _wxPopupTransientWindow for wxPopupTransientWindow {}
 impl _wxPopupWindow for wxPopupTransientWindow {}
 impl _wxWindow for wxPopupTransientWindow {}
 impl _wxEvtHandler for wxPopupTransientWindow {}
-impl _wxObject for wxPopupTransientWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPopupTransientWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPopupTransientWindow {
-    pub fn from(handle: *u8) -> @wxPopupTransientWindow { @wxPopupTransientWindow(handle) }
-    pub fn null() -> @wxPopupTransientWindow { wxPopupTransientWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPopupTransientWindow { @wxPopupTransientWindow(handle) }
+    pub fn null() -> @wxPopupTransientWindow { wxPopupTransientWindow::from(0 as *mut c_void) }
     
 }
 
 trait _wxPopupTransientWindow : _wxPopupWindow {
 }
 
-struct wxPopupWindow(*u8);
+struct wxPopupWindow(*mut c_void);
 impl _wxPopupWindow for wxPopupWindow {}
 impl _wxWindow for wxPopupWindow {}
 impl _wxEvtHandler for wxPopupWindow {}
-impl _wxObject for wxPopupWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPopupWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPopupWindow {
-    pub fn from(handle: *u8) -> @wxPopupWindow { @wxPopupWindow(handle) }
-    pub fn null() -> @wxPopupWindow { wxPopupWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPopupWindow { @wxPopupWindow(handle) }
+    pub fn null() -> @wxPopupWindow { wxPopupWindow::from(0 as *mut c_void) }
     
 }
 
 trait _wxPopupWindow : _wxWindow {
 }
 
-struct wxPostScriptDC(*u8);
+struct wxPostScriptDC(*mut c_void);
 impl _wxPostScriptDC for wxPostScriptDC {}
 impl _wxDC for wxPostScriptDC {}
-impl _wxObject for wxPostScriptDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPostScriptDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPostScriptDC {
-    pub fn from(handle: *u8) -> @wxPostScriptDC { @wxPostScriptDC(handle) }
-    pub fn null() -> @wxPostScriptDC { wxPostScriptDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPostScriptDC { @wxPostScriptDC(handle) }
+    pub fn null() -> @wxPostScriptDC { wxPostScriptDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13759,17 +13759,17 @@ trait _wxPostScriptDC : _wxDC {
     }
 }
 
-struct wxPreviewCanvas(*u8);
+struct wxPreviewCanvas(*mut c_void);
 impl _wxPreviewCanvas for wxPreviewCanvas {}
 impl _wxScrolledWindow for wxPreviewCanvas {}
 impl _wxPanel for wxPreviewCanvas {}
 impl _wxWindow for wxPreviewCanvas {}
 impl _wxEvtHandler for wxPreviewCanvas {}
-impl _wxObject for wxPreviewCanvas { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPreviewCanvas { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPreviewCanvas {
-    pub fn from(handle: *u8) -> @wxPreviewCanvas { @wxPreviewCanvas(handle) }
-    pub fn null() -> @wxPreviewCanvas { wxPreviewCanvas::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPreviewCanvas { @wxPreviewCanvas(handle) }
+    pub fn null() -> @wxPreviewCanvas { wxPreviewCanvas::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13781,33 +13781,33 @@ impl wxPreviewCanvas {
 trait _wxPreviewCanvas : _wxScrolledWindow {
 }
 
-struct wxPreviewControlBar(*u8);
+struct wxPreviewControlBar(*mut c_void);
 impl _wxPreviewControlBar for wxPreviewControlBar {}
 impl _wxPanel for wxPreviewControlBar {}
 impl _wxWindow for wxPreviewControlBar {}
 impl _wxEvtHandler for wxPreviewControlBar {}
-impl _wxObject for wxPreviewControlBar { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPreviewControlBar { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPreviewControlBar {
-    pub fn from(handle: *u8) -> @wxPreviewControlBar { @wxPreviewControlBar(handle) }
-    pub fn null() -> @wxPreviewControlBar { wxPreviewControlBar::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPreviewControlBar { @wxPreviewControlBar(handle) }
+    pub fn null() -> @wxPreviewControlBar { wxPreviewControlBar::from(0 as *mut c_void) }
     
 }
 
 trait _wxPreviewControlBar : _wxPanel {
 }
 
-struct wxPreviewFrame(*u8);
+struct wxPreviewFrame(*mut c_void);
 impl _wxPreviewFrame for wxPreviewFrame {}
 impl _wxFrame for wxPreviewFrame {}
 impl _wxTopLevelWindow for wxPreviewFrame {}
 impl _wxWindow for wxPreviewFrame {}
 impl _wxEvtHandler for wxPreviewFrame {}
-impl _wxObject for wxPreviewFrame { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPreviewFrame { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPreviewFrame {
-    pub fn from(handle: *u8) -> @wxPreviewFrame { @wxPreviewFrame(handle) }
-    pub fn null() -> @wxPreviewFrame { wxPreviewFrame::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPreviewFrame { @wxPreviewFrame(handle) }
+    pub fn null() -> @wxPreviewFrame { wxPreviewFrame::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13826,13 +13826,13 @@ trait _wxPreviewFrame : _wxFrame {
     }
 }
 
-struct wxPrintData(*u8);
+struct wxPrintData(*mut c_void);
 impl _wxPrintData for wxPrintData {}
-impl _wxObject for wxPrintData { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPrintData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPrintData {
-    pub fn from(handle: *u8) -> @wxPrintData { @wxPrintData(handle) }
-    pub fn null() -> @wxPrintData { wxPrintData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPrintData { @wxPrintData(handle) }
+    pub fn null() -> @wxPrintData { wxPrintData::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -13849,12 +13849,12 @@ trait _wxPrintData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getCollate(&self) -> bool {
+    fn getCollate(&self) -> c_int {
         unsafe { wxPrintData_GetCollate(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getColour(&self) -> bool {
+    fn getColour(&self) -> c_int {
         unsafe { wxPrintData_GetColour(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -14053,13 +14053,13 @@ trait _wxPrintData : _wxObject {
     }
 }
 
-struct wxPostScriptPrintNativeData(*u8);
+struct wxPostScriptPrintNativeData(*mut c_void);
 impl _wxPostScriptPrintNativeData for wxPostScriptPrintNativeData {}
-impl _wxObject for wxPostScriptPrintNativeData { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPostScriptPrintNativeData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPostScriptPrintNativeData {
-    pub fn from(handle: *u8) -> @wxPostScriptPrintNativeData { @wxPostScriptPrintNativeData(handle) }
-    pub fn null() -> @wxPostScriptPrintNativeData { wxPostScriptPrintNativeData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPostScriptPrintNativeData { @wxPostScriptPrintNativeData(handle) }
+    pub fn null() -> @wxPostScriptPrintNativeData { wxPostScriptPrintNativeData::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -14071,17 +14071,17 @@ impl wxPostScriptPrintNativeData {
 trait _wxPostScriptPrintNativeData : _wxObject {
 }
 
-struct wxPrintDialog(*u8);
+struct wxPrintDialog(*mut c_void);
 impl _wxPrintDialog for wxPrintDialog {}
 impl _wxDialog for wxPrintDialog {}
 impl _wxTopLevelWindow for wxPrintDialog {}
 impl _wxWindow for wxPrintDialog {}
 impl _wxEvtHandler for wxPrintDialog {}
-impl _wxObject for wxPrintDialog { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPrintDialog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPrintDialog {
-    pub fn from(handle: *u8) -> @wxPrintDialog { @wxPrintDialog(handle) }
-    pub fn null() -> @wxPrintDialog { wxPrintDialog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPrintDialog { @wxPrintDialog(handle) }
+    pub fn null() -> @wxPrintDialog { wxPrintDialog::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -14108,13 +14108,13 @@ trait _wxPrintDialog : _wxDialog {
     }
 }
 
-struct wxPrintDialogData(*u8);
+struct wxPrintDialogData(*mut c_void);
 impl _wxPrintDialogData for wxPrintDialogData {}
-impl _wxObject for wxPrintDialogData { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPrintDialogData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPrintDialogData {
-    pub fn from(handle: *u8) -> @wxPrintDialogData { @wxPrintDialogData(handle) }
-    pub fn null() -> @wxPrintDialogData { wxPrintDialogData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPrintDialogData { @wxPrintDialogData(handle) }
+    pub fn null() -> @wxPrintDialogData { wxPrintDialogData::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -14141,22 +14141,22 @@ trait _wxPrintDialogData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableHelp(&self, flag: bool) {
+    fn enableHelp(&self, flag: c_int) {
         unsafe { wxPrintDialogData_EnableHelp(self.handle(), flag) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enablePageNumbers(&self, flag: bool) {
+    fn enablePageNumbers(&self, flag: c_int) {
         unsafe { wxPrintDialogData_EnablePageNumbers(self.handle(), flag) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enablePrintToFile(&self, flag: bool) {
+    fn enablePrintToFile(&self, flag: c_int) {
         unsafe { wxPrintDialogData_EnablePrintToFile(self.handle(), flag) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableSelection(&self, flag: bool) {
+    fn enableSelection(&self, flag: c_int) {
         unsafe { wxPrintDialogData_EnableSelection(self.handle(), flag) }
     }
     #[fixed_stack_segment]
@@ -14166,27 +14166,27 @@ trait _wxPrintDialogData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getCollate(&self) -> bool {
+    fn getCollate(&self) -> c_int {
         unsafe { wxPrintDialogData_GetCollate(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEnableHelp(&self) -> bool {
+    fn getEnableHelp(&self) -> c_int {
         unsafe { wxPrintDialogData_GetEnableHelp(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEnablePageNumbers(&self) -> bool {
+    fn getEnablePageNumbers(&self) -> c_int {
         unsafe { wxPrintDialogData_GetEnablePageNumbers(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEnablePrintToFile(&self) -> bool {
+    fn getEnablePrintToFile(&self) -> c_int {
         unsafe { wxPrintDialogData_GetEnablePrintToFile(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEnableSelection(&self) -> bool {
+    fn getEnableSelection(&self) -> c_int {
         unsafe { wxPrintDialogData_GetEnableSelection(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -14216,12 +14216,12 @@ trait _wxPrintDialogData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPrintToFile(&self) -> bool {
+    fn getPrintToFile(&self) -> c_int {
         unsafe { wxPrintDialogData_GetPrintToFile(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSelection(&self) -> bool {
+    fn getSelection(&self) -> c_int {
         unsafe { wxPrintDialogData_GetSelection(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -14231,12 +14231,12 @@ trait _wxPrintDialogData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setAllPages(&self, flag: bool) {
+    fn setAllPages(&self, flag: c_int) {
         unsafe { wxPrintDialogData_SetAllPages(self.handle(), flag) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setCollate(&self, flag: bool) {
+    fn setCollate(&self, flag: c_int) {
         unsafe { wxPrintDialogData_SetCollate(self.handle(), flag) }
     }
     #[fixed_stack_segment]
@@ -14266,12 +14266,12 @@ trait _wxPrintDialogData : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setPrintToFile(&self, flag: bool) {
+    fn setPrintToFile(&self, flag: c_int) {
         unsafe { wxPrintDialogData_SetPrintToFile(self.handle(), flag) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setSelection(&self, flag: bool) {
+    fn setSelection(&self, flag: c_int) {
         unsafe { wxPrintDialogData_SetSelection(self.handle(), flag) }
     }
     #[fixed_stack_segment]
@@ -14281,13 +14281,13 @@ trait _wxPrintDialogData : _wxObject {
     }
 }
 
-struct wxPrintPreview(*u8);
+struct wxPrintPreview(*mut c_void);
 impl _wxPrintPreview for wxPrintPreview {}
-impl _wxObject for wxPrintPreview { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPrintPreview { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPrintPreview {
-    pub fn from(handle: *u8) -> @wxPrintPreview { @wxPrintPreview(handle) }
-    pub fn null() -> @wxPrintPreview { wxPrintPreview::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPrintPreview { @wxPrintPreview(handle) }
+    pub fn null() -> @wxPrintPreview { wxPrintPreview::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -14309,7 +14309,7 @@ trait _wxPrintPreview : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn drawBlankPage<T: _wxPreviewCanvas, U: _wxDC>(&self, canvas: &T, dc: &U) -> bool {
+    fn drawBlankPage<T: _wxPreviewCanvas, U: _wxDC>(&self, canvas: &T, dc: &U) -> c_int {
         unsafe { wxPrintPreview_DrawBlankPage(self.handle(), canvas.handle(), dc.handle()) }
     }
     #[fixed_stack_segment]
@@ -14359,22 +14359,22 @@ trait _wxPrintPreview : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxPrintPreview_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn paintPage<T: _wxPrintPreview, U: _wxDC>(&self, canvas: &T, dc: &U) -> bool {
+    fn paintPage<T: _wxPrintPreview, U: _wxDC>(&self, canvas: &T, dc: &U) -> c_int {
         unsafe { wxPrintPreview_PaintPage(self.handle(), canvas.handle(), dc.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn print(&self, interactive: bool) -> bool {
+    fn print(&self, interactive: c_int) -> c_int {
         unsafe { wxPrintPreview_Print(self.handle(), interactive) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn renderPage(&self, pageNum: c_int) -> bool {
+    fn renderPage(&self, pageNum: c_int) -> c_int {
         unsafe { wxPrintPreview_RenderPage(self.handle(), pageNum) }
     }
     #[fixed_stack_segment]
@@ -14384,7 +14384,7 @@ trait _wxPrintPreview : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setCurrentPage(&self, pageNum: c_int) -> bool {
+    fn setCurrentPage(&self, pageNum: c_int) -> c_int {
         unsafe { wxPrintPreview_SetCurrentPage(self.handle(), pageNum) }
     }
     #[fixed_stack_segment]
@@ -14394,7 +14394,7 @@ trait _wxPrintPreview : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOk(&self, ok: bool) {
+    fn setOk(&self, ok: c_int) {
         unsafe { wxPrintPreview_SetOk(self.handle(), ok) }
     }
     #[fixed_stack_segment]
@@ -14409,13 +14409,13 @@ trait _wxPrintPreview : _wxObject {
     }
 }
 
-struct wxPrinter(*u8);
+struct wxPrinter(*mut c_void);
 impl _wxPrinter for wxPrinter {}
-impl _wxObject for wxPrinter { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPrinter { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPrinter {
-    pub fn from(handle: *u8) -> @wxPrinter { @wxPrinter(handle) }
-    pub fn null() -> @wxPrinter { wxPrinter::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPrinter { @wxPrinter(handle) }
+    pub fn null() -> @wxPrinter { wxPrinter::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -14432,7 +14432,7 @@ trait _wxPrinter : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getAbort(&self) -> bool {
+    fn getAbort(&self) -> c_int {
         unsafe { wxPrinter_GetAbort(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -14447,7 +14447,7 @@ trait _wxPrinter : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn print<T: _wxWindow, U: _wxPrintout>(&self, parent: &T, printout: &U, prompt: bool) -> bool {
+    fn print<T: _wxWindow, U: _wxPrintout>(&self, parent: &T, printout: &U, prompt: c_int) -> c_int {
         unsafe { wxPrinter_Print(self.handle(), parent.handle(), printout.handle(), prompt) }
     }
     #[fixed_stack_segment]
@@ -14463,19 +14463,19 @@ trait _wxPrinter : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setup<T: _wxWindow>(&self, parent: &T) -> bool {
+    fn setup<T: _wxWindow>(&self, parent: &T) -> c_int {
         unsafe { wxPrinter_Setup(self.handle(), parent.handle()) }
     }
 }
 
-struct wxPrinterDC(*u8);
+struct wxPrinterDC(*mut c_void);
 impl _wxPrinterDC for wxPrinterDC {}
 impl _wxDC for wxPrinterDC {}
-impl _wxObject for wxPrinterDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPrinterDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPrinterDC {
-    pub fn from(handle: *u8) -> @wxPrinterDC { @wxPrinterDC(handle) }
-    pub fn null() -> @wxPrinterDC { wxPrinterDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPrinterDC { @wxPrinterDC(handle) }
+    pub fn null() -> @wxPrinterDC { wxPrinterDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -14492,13 +14492,13 @@ trait _wxPrinterDC : _wxDC {
     }
 }
 
-struct wxPrintout(*u8);
+struct wxPrintout(*mut c_void);
 impl _wxPrintout for wxPrintout {}
-impl _wxObject for wxPrintout { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPrintout { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPrintout {
-    pub fn from(handle: *u8) -> @wxPrintout { @wxPrintout(handle) }
-    pub fn null() -> @wxPrintout { wxPrintout::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPrintout { @wxPrintout(handle) }
+    pub fn null() -> @wxPrintout { wxPrintout::from(0 as *mut c_void) }
     
 }
 
@@ -14510,22 +14510,22 @@ trait _wxPrintout : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPPIPrinter(&self, _x: *c_int, _y: *c_int) {
+    fn getPPIPrinter(&self, _x: *mut c_void, _y: *mut c_void) {
         unsafe { wxPrintout_GetPPIPrinter(self.handle(), _x, _y) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPPIScreen(&self, _x: *c_int, _y: *c_int) {
+    fn getPPIScreen(&self, _x: *mut c_void, _y: *mut c_void) {
         unsafe { wxPrintout_GetPPIScreen(self.handle(), _x, _y) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPageSizeMM(&self, _w: *c_int, _h: *c_int) {
+    fn getPageSizeMM(&self, _w: *mut c_void, _h: *mut c_void) {
         unsafe { wxPrintout_GetPageSizeMM(self.handle(), _w, _h) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPageSizePixels(&self, _w: *c_int, _h: *c_int) {
+    fn getPageSizePixels(&self, _w: *mut c_void, _h: *mut c_void) {
         unsafe { wxPrintout_GetPageSizePixels(self.handle(), _w, _h) }
     }
     #[fixed_stack_segment]
@@ -14535,7 +14535,7 @@ trait _wxPrintout : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isPreview(&self) -> bool {
+    fn isPreview(&self) -> c_int {
         unsafe { wxPrintout_IsPreview(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -14565,27 +14565,27 @@ trait _wxPrintout : _wxObject {
     }
 }
 
-struct wxPrivateDropTarget(*u8);
+struct wxPrivateDropTarget(*mut c_void);
 impl _wxPrivateDropTarget for wxPrivateDropTarget {}
-impl _wxDropTarget for wxPrivateDropTarget { fn handle(&self) -> *u8 { **self } }
+impl _wxDropTarget for wxPrivateDropTarget { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPrivateDropTarget {
-    pub fn from(handle: *u8) -> @wxPrivateDropTarget { @wxPrivateDropTarget(handle) }
-    pub fn null() -> @wxPrivateDropTarget { wxPrivateDropTarget::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPrivateDropTarget { @wxPrivateDropTarget(handle) }
+    pub fn null() -> @wxPrivateDropTarget { wxPrivateDropTarget::from(0 as *mut c_void) }
     
 }
 
 trait _wxPrivateDropTarget : _wxDropTarget {
 }
 
-struct wxProcess(*u8);
+struct wxProcess(*mut c_void);
 impl _wxProcess for wxProcess {}
 impl _wxEvtHandler for wxProcess {}
-impl _wxObject for wxProcess { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxProcess { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxProcess {
-    pub fn from(handle: *u8) -> @wxProcess { @wxProcess(handle) }
-    pub fn null() -> @wxProcess { wxProcess::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxProcess { @wxProcess(handle) }
+    pub fn null() -> @wxProcess { wxProcess::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -14594,7 +14594,7 @@ impl wxProcess {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newRedirect<T: _wxWindow>(_prt: &T, _rdr: bool) -> @wxProcess {
+    pub fn newRedirect<T: _wxWindow>(_prt: &T, _rdr: c_int) -> @wxProcess {
         unsafe { @wxProcess(wxProcess_CreateRedirect(_prt.handle(), _rdr)) }
     }
     #[fixed_stack_segment]
@@ -14633,7 +14633,7 @@ trait _wxProcess : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isRedirected(&self) -> bool {
+    fn isRedirected(&self) -> c_int {
         unsafe { wxProcess_IsRedirected(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -14643,29 +14643,29 @@ trait _wxProcess : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isErrorAvailable(&self) -> bool {
+    fn isErrorAvailable(&self) -> c_int {
         unsafe { wxProcess_IsErrorAvailable(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isInputAvailable(&self) -> bool {
+    fn isInputAvailable(&self) -> c_int {
         unsafe { wxProcess_IsInputAvailable(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isInputOpened(&self) -> bool {
+    fn isInputOpened(&self) -> c_int {
         unsafe { wxProcess_IsInputOpened(self.handle()) }
     }
 }
 
-struct wxProcessEvent(*u8);
+struct wxProcessEvent(*mut c_void);
 impl _wxProcessEvent for wxProcessEvent {}
 impl _wxEvent for wxProcessEvent {}
-impl _wxObject for wxProcessEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxProcessEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxProcessEvent {
-    pub fn from(handle: *u8) -> @wxProcessEvent { @wxProcessEvent(handle) }
-    pub fn null() -> @wxProcessEvent { wxProcessEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxProcessEvent { @wxProcessEvent(handle) }
+    pub fn null() -> @wxProcessEvent { wxProcessEvent::from(0 as *mut c_void) }
     
 }
 
@@ -14682,17 +14682,17 @@ trait _wxProcessEvent : _wxEvent {
     }
 }
 
-struct wxProgressDialog(*u8);
+struct wxProgressDialog(*mut c_void);
 impl _wxProgressDialog for wxProgressDialog {}
 impl _wxFrame for wxProgressDialog {}
 impl _wxTopLevelWindow for wxProgressDialog {}
 impl _wxWindow for wxProgressDialog {}
 impl _wxEvtHandler for wxProgressDialog {}
-impl _wxObject for wxProgressDialog { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxProgressDialog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxProgressDialog {
-    pub fn from(handle: *u8) -> @wxProgressDialog { @wxProgressDialog(handle) }
-    pub fn null() -> @wxProgressDialog { wxProgressDialog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxProgressDialog { @wxProgressDialog(handle) }
+    pub fn null() -> @wxProgressDialog { wxProgressDialog::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -14706,12 +14706,12 @@ impl wxProgressDialog {
 trait _wxProgressDialog : _wxFrame {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn update(&self, value: c_int) -> bool {
+    fn update(&self, value: c_int) -> c_int {
         unsafe { wxProgressDialog_Update(self.handle(), value) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn updateWithMessage(&self, value: c_int, message: &str) -> bool {
+    fn updateWithMessage(&self, value: c_int, message: &str) -> c_int {
         let message = wxT(message);
         unsafe { wxProgressDialog_UpdateWithMessage(self.handle(), value, message.handle()) }
     }
@@ -14722,68 +14722,68 @@ trait _wxProgressDialog : _wxFrame {
     }
 }
 
-struct wxProtocol(*u8);
+struct wxProtocol(*mut c_void);
 impl _wxProtocol for wxProtocol {}
 impl _wxSocketClient for wxProtocol {}
 impl _wxSocketBase for wxProtocol {}
-impl _wxObject for wxProtocol { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxProtocol { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxProtocol {
-    pub fn from(handle: *u8) -> @wxProtocol { @wxProtocol(handle) }
-    pub fn null() -> @wxProtocol { wxProtocol::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxProtocol { @wxProtocol(handle) }
+    pub fn null() -> @wxProtocol { wxProtocol::from(0 as *mut c_void) }
     
 }
 
 trait _wxProtocol : _wxSocketClient {
 }
 
-struct wxQuantize(*u8);
+struct wxQuantize(*mut c_void);
 impl _wxQuantize for wxQuantize {}
-impl _wxObject for wxQuantize { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxQuantize { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxQuantize {
-    pub fn from(handle: *u8) -> @wxQuantize { @wxQuantize(handle) }
-    pub fn null() -> @wxQuantize { wxQuantize::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxQuantize { @wxQuantize(handle) }
+    pub fn null() -> @wxQuantize { wxQuantize::from(0 as *mut c_void) }
     
 }
 
 trait _wxQuantize : _wxObject {
 }
 
-struct wxQueryCol(*u8);
+struct wxQueryCol(*mut c_void);
 impl _wxQueryCol for wxQueryCol {}
-impl _wxObject for wxQueryCol { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxQueryCol { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxQueryCol {
-    pub fn from(handle: *u8) -> @wxQueryCol { @wxQueryCol(handle) }
-    pub fn null() -> @wxQueryCol { wxQueryCol::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxQueryCol { @wxQueryCol(handle) }
+    pub fn null() -> @wxQueryCol { wxQueryCol::from(0 as *mut c_void) }
     
 }
 
 trait _wxQueryCol : _wxObject {
 }
 
-struct wxQueryField(*u8);
+struct wxQueryField(*mut c_void);
 impl _wxQueryField for wxQueryField {}
-impl _wxObject for wxQueryField { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxQueryField { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxQueryField {
-    pub fn from(handle: *u8) -> @wxQueryField { @wxQueryField(handle) }
-    pub fn null() -> @wxQueryField { wxQueryField::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxQueryField { @wxQueryField(handle) }
+    pub fn null() -> @wxQueryField { wxQueryField::from(0 as *mut c_void) }
     
 }
 
 trait _wxQueryField : _wxObject {
 }
 
-struct wxQueryLayoutInfoEvent(*u8);
+struct wxQueryLayoutInfoEvent(*mut c_void);
 impl _wxQueryLayoutInfoEvent for wxQueryLayoutInfoEvent {}
 impl _wxEvent for wxQueryLayoutInfoEvent {}
-impl _wxObject for wxQueryLayoutInfoEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxQueryLayoutInfoEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxQueryLayoutInfoEvent {
-    pub fn from(handle: *u8) -> @wxQueryLayoutInfoEvent { @wxQueryLayoutInfoEvent(handle) }
-    pub fn null() -> @wxQueryLayoutInfoEvent { wxQueryLayoutInfoEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxQueryLayoutInfoEvent { @wxQueryLayoutInfoEvent(handle) }
+    pub fn null() -> @wxQueryLayoutInfoEvent { wxQueryLayoutInfoEvent::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -14845,44 +14845,44 @@ trait _wxQueryLayoutInfoEvent : _wxEvent {
     }
 }
 
-struct wxQueryNewPaletteEvent(*u8);
+struct wxQueryNewPaletteEvent(*mut c_void);
 impl _wxQueryNewPaletteEvent for wxQueryNewPaletteEvent {}
 impl _wxEvent for wxQueryNewPaletteEvent {}
-impl _wxObject for wxQueryNewPaletteEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxQueryNewPaletteEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxQueryNewPaletteEvent {
-    pub fn from(handle: *u8) -> @wxQueryNewPaletteEvent { @wxQueryNewPaletteEvent(handle) }
-    pub fn null() -> @wxQueryNewPaletteEvent { wxQueryNewPaletteEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxQueryNewPaletteEvent { @wxQueryNewPaletteEvent(handle) }
+    pub fn null() -> @wxQueryNewPaletteEvent { wxQueryNewPaletteEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxQueryNewPaletteEvent : _wxEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPaletteRealized(&self) -> bool {
+    fn getPaletteRealized(&self) -> c_int {
         unsafe { wxQueryNewPaletteEvent_GetPaletteRealized(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setPaletteRealized(&self, realized: bool) {
+    fn setPaletteRealized(&self, realized: c_int) {
         unsafe { wxQueryNewPaletteEvent_SetPaletteRealized(self.handle(), realized) }
     }
 }
 
-struct wxRadioBox(*u8);
+struct wxRadioBox(*mut c_void);
 impl _wxRadioBox for wxRadioBox {}
 impl _wxControl for wxRadioBox {}
 impl _wxWindow for wxRadioBox {}
 impl _wxEvtHandler for wxRadioBox {}
-impl _wxObject for wxRadioBox { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxRadioBox { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxRadioBox {
-    pub fn from(handle: *u8) -> @wxRadioBox { @wxRadioBox(handle) }
-    pub fn null() -> @wxRadioBox { wxRadioBox::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxRadioBox { @wxRadioBox(handle) }
+    pub fn null() -> @wxRadioBox { wxRadioBox::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, _str: *wchar_t, _dim: c_int, _stl: c_int) -> @wxRadioBox {
+    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, _str: *mut *mut c_char, _dim: c_int, _stl: c_int) -> @wxRadioBox {
         let _txt = wxT(_txt);
         unsafe { @wxRadioBox(wxRadioBox_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, n, _str, _dim, _stl)) }
     }
@@ -14891,7 +14891,7 @@ impl wxRadioBox {
 trait _wxRadioBox : _wxControl {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableItem(&self, item: c_int, enable: bool) {
+    fn enableItem(&self, item: c_int, enable: c_int) {
         unsafe { wxRadioBox_EnableItem(self.handle(), item, enable) }
     }
     #[fixed_stack_segment]
@@ -14954,21 +14954,21 @@ trait _wxRadioBox : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn showItem(&self, item: c_int, show: bool) {
+    fn showItem(&self, item: c_int, show: c_int) {
         unsafe { wxRadioBox_ShowItem(self.handle(), item, show) }
     }
 }
 
-struct wxRadioButton(*u8);
+struct wxRadioButton(*mut c_void);
 impl _wxRadioButton for wxRadioButton {}
 impl _wxControl for wxRadioButton {}
 impl _wxWindow for wxRadioButton {}
 impl _wxEvtHandler for wxRadioButton {}
-impl _wxObject for wxRadioButton { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxRadioButton { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxRadioButton {
-    pub fn from(handle: *u8) -> @wxRadioButton { @wxRadioButton(handle) }
-    pub fn null() -> @wxRadioButton { wxRadioButton::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxRadioButton { @wxRadioButton(handle) }
+    pub fn null() -> @wxRadioButton { wxRadioButton::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -14981,79 +14981,79 @@ impl wxRadioButton {
 trait _wxRadioButton : _wxControl {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getValue(&self) -> bool {
+    fn getValue(&self) -> c_int {
         unsafe { wxRadioButton_GetValue(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setValue(&self, value: bool) {
+    fn setValue(&self, value: c_int) {
         unsafe { wxRadioButton_SetValue(self.handle(), value) }
     }
 }
 
-struct wxRealPoint(*u8);
-impl _wxRealPoint for wxRealPoint { fn handle(&self) -> *u8 { **self } }
+struct wxRealPoint(*mut c_void);
+impl _wxRealPoint for wxRealPoint { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxRealPoint {
-    pub fn from(handle: *u8) -> @wxRealPoint { @wxRealPoint(handle) }
-    pub fn null() -> @wxRealPoint { wxRealPoint::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxRealPoint { @wxRealPoint(handle) }
+    pub fn null() -> @wxRealPoint { wxRealPoint::from(0 as *mut c_void) }
     
 }
 
 trait _wxRealPoint {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxRecordSet(*u8);
+struct wxRecordSet(*mut c_void);
 impl _wxRecordSet for wxRecordSet {}
-impl _wxObject for wxRecordSet { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxRecordSet { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxRecordSet {
-    pub fn from(handle: *u8) -> @wxRecordSet { @wxRecordSet(handle) }
-    pub fn null() -> @wxRecordSet { wxRecordSet::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxRecordSet { @wxRecordSet(handle) }
+    pub fn null() -> @wxRecordSet { wxRecordSet::from(0 as *mut c_void) }
     
 }
 
 trait _wxRecordSet : _wxObject {
 }
 
-struct wxRect(*u8);
-impl _wxRect for wxRect { fn handle(&self) -> *u8 { **self } }
+struct wxRect(*mut c_void);
+impl _wxRect for wxRect { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxRect {
-    pub fn from(handle: *u8) -> @wxRect { @wxRect(handle) }
-    pub fn null() -> @wxRect { wxRect::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxRect { @wxRect(handle) }
+    pub fn null() -> @wxRect { wxRect::from(0 as *mut c_void) }
     
 }
 
 trait _wxRect {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxRegEx(*u8);
-impl _wxRegEx for wxRegEx { fn handle(&self) -> *u8 { **self } }
+struct wxRegEx(*mut c_void);
+impl _wxRegEx for wxRegEx { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxRegEx {
-    pub fn from(handle: *u8) -> @wxRegEx { @wxRegEx(handle) }
-    pub fn null() -> @wxRegEx { wxRegEx::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxRegEx { @wxRegEx(handle) }
+    pub fn null() -> @wxRegEx { wxRegEx::from(0 as *mut c_void) }
     
 }
 
 trait _wxRegEx {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxRegion(*u8);
+struct wxRegion(*mut c_void);
 impl _wxRegion for wxRegion {}
 impl _wxGDIObject for wxRegion {}
-impl _wxObject for wxRegion { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxRegion { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxRegion {
-    pub fn from(handle: *u8) -> @wxRegion { @wxRegion(handle) }
-    pub fn null() -> @wxRegion { wxRegion::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxRegion { @wxRegion(handle) }
+    pub fn null() -> @wxRegion { wxRegion::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15080,73 +15080,73 @@ trait _wxRegion : _wxGDIObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn containsPoint(&self, x: c_int, y: c_int) -> bool {
+    fn containsPoint(&self, x: c_int, y: c_int) -> c_int {
         unsafe { wxRegion_ContainsPoint(self.handle(), x, y) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn containsRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> bool {
+    fn containsRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> c_int {
         unsafe { wxRegion_ContainsRect(self.handle(), x, y, width, height) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEmpty(&self) -> bool {
+    fn isEmpty(&self) -> c_int {
         unsafe { wxRegion_IsEmpty(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getBox(&self, _x: *c_int, _y: *c_int, _w: *c_int, _h: *c_int) {
+    fn getBox(&self, _x: *mut c_void, _y: *mut c_void, _w: *mut c_void, _h: *mut c_void) {
         unsafe { wxRegion_GetBox(self.handle(), _x, _y, _w, _h) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn intersectRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> bool {
+    fn intersectRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> c_int {
         unsafe { wxRegion_IntersectRect(self.handle(), x, y, width, height) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn intersectRegion<T: _wxRegion>(&self, region: &T) -> bool {
+    fn intersectRegion<T: _wxRegion>(&self, region: &T) -> c_int {
         unsafe { wxRegion_IntersectRegion(self.handle(), region.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn subtractRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> bool {
+    fn subtractRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> c_int {
         unsafe { wxRegion_SubtractRect(self.handle(), x, y, width, height) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn subtractRegion<T: _wxRegion>(&self, region: &T) -> bool {
+    fn subtractRegion<T: _wxRegion>(&self, region: &T) -> c_int {
         unsafe { wxRegion_SubtractRegion(self.handle(), region.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn unionRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> bool {
+    fn unionRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> c_int {
         unsafe { wxRegion_UnionRect(self.handle(), x, y, width, height) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn unionRegion<T: _wxRegion>(&self, region: &T) -> bool {
+    fn unionRegion<T: _wxRegion>(&self, region: &T) -> c_int {
         unsafe { wxRegion_UnionRegion(self.handle(), region.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn xorRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> bool {
+    fn xorRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> c_int {
         unsafe { wxRegion_XorRect(self.handle(), x, y, width, height) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn xorRegion<T: _wxRegion>(&self, region: &T) -> bool {
+    fn xorRegion<T: _wxRegion>(&self, region: &T) -> c_int {
         unsafe { wxRegion_XorRegion(self.handle(), region.handle()) }
     }
 }
 
-struct wxRegionIterator(*u8);
+struct wxRegionIterator(*mut c_void);
 impl _wxRegionIterator for wxRegionIterator {}
-impl _wxObject for wxRegionIterator { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxRegionIterator { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxRegionIterator {
-    pub fn from(handle: *u8) -> @wxRegionIterator { @wxRegionIterator(handle) }
-    pub fn null() -> @wxRegionIterator { wxRegionIterator::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxRegionIterator { @wxRegionIterator(handle) }
+    pub fn null() -> @wxRegionIterator { wxRegionIterator::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15183,7 +15183,7 @@ trait _wxRegionIterator : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn haveRects(&self) -> bool {
+    fn haveRects(&self) -> c_int {
         unsafe { wxRegionIterator_HaveRects(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -15203,31 +15203,31 @@ trait _wxRegionIterator : _wxObject {
     }
 }
 
-struct wxRemotelyScrolledTreeCtrl(*u8);
+struct wxRemotelyScrolledTreeCtrl(*mut c_void);
 impl _wxRemotelyScrolledTreeCtrl for wxRemotelyScrolledTreeCtrl {}
 impl _wxTreeCtrl for wxRemotelyScrolledTreeCtrl {}
 impl _wxControl for wxRemotelyScrolledTreeCtrl {}
 impl _wxWindow for wxRemotelyScrolledTreeCtrl {}
 impl _wxEvtHandler for wxRemotelyScrolledTreeCtrl {}
-impl _wxObject for wxRemotelyScrolledTreeCtrl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxRemotelyScrolledTreeCtrl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxRemotelyScrolledTreeCtrl {
-    pub fn from(handle: *u8) -> @wxRemotelyScrolledTreeCtrl { @wxRemotelyScrolledTreeCtrl(handle) }
-    pub fn null() -> @wxRemotelyScrolledTreeCtrl { wxRemotelyScrolledTreeCtrl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxRemotelyScrolledTreeCtrl { @wxRemotelyScrolledTreeCtrl(handle) }
+    pub fn null() -> @wxRemotelyScrolledTreeCtrl { wxRemotelyScrolledTreeCtrl::from(0 as *mut c_void) }
     
 }
 
 trait _wxRemotelyScrolledTreeCtrl : _wxTreeCtrl {
 }
 
-struct wxSVGFileDC(*u8);
+struct wxSVGFileDC(*mut c_void);
 impl _wxSVGFileDC for wxSVGFileDC {}
 impl _wxDC for wxSVGFileDC {}
-impl _wxObject for wxSVGFileDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSVGFileDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSVGFileDC {
-    pub fn from(handle: *u8) -> @wxSVGFileDC { @wxSVGFileDC(handle) }
-    pub fn null() -> @wxSVGFileDC { wxSVGFileDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSVGFileDC { @wxSVGFileDC(handle) }
+    pub fn null() -> @wxSVGFileDC { wxSVGFileDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15252,14 +15252,14 @@ impl wxSVGFileDC {
 trait _wxSVGFileDC : _wxDC {
 }
 
-struct wxSashEvent(*u8);
+struct wxSashEvent(*mut c_void);
 impl _wxSashEvent for wxSashEvent {}
 impl _wxEvent for wxSashEvent {}
-impl _wxObject for wxSashEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSashEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSashEvent {
-    pub fn from(handle: *u8) -> @wxSashEvent { @wxSashEvent(handle) }
-    pub fn null() -> @wxSashEvent { wxSashEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSashEvent { @wxSashEvent(handle) }
+    pub fn null() -> @wxSashEvent { wxSashEvent::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15301,16 +15301,16 @@ trait _wxSashEvent : _wxEvent {
     }
 }
 
-struct wxSashLayoutWindow(*u8);
+struct wxSashLayoutWindow(*mut c_void);
 impl _wxSashLayoutWindow for wxSashLayoutWindow {}
 impl _wxSashWindow for wxSashLayoutWindow {}
 impl _wxWindow for wxSashLayoutWindow {}
 impl _wxEvtHandler for wxSashLayoutWindow {}
-impl _wxObject for wxSashLayoutWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSashLayoutWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSashLayoutWindow {
-    pub fn from(handle: *u8) -> @wxSashLayoutWindow { @wxSashLayoutWindow(handle) }
-    pub fn null() -> @wxSashLayoutWindow { wxSashLayoutWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSashLayoutWindow { @wxSashLayoutWindow(handle) }
+    pub fn null() -> @wxSashLayoutWindow { wxSashLayoutWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15347,15 +15347,15 @@ trait _wxSashLayoutWindow : _wxSashWindow {
     }
 }
 
-struct wxSashWindow(*u8);
+struct wxSashWindow(*mut c_void);
 impl _wxSashWindow for wxSashWindow {}
 impl _wxWindow for wxSashWindow {}
 impl _wxEvtHandler for wxSashWindow {}
-impl _wxObject for wxSashWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSashWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSashWindow {
-    pub fn from(handle: *u8) -> @wxSashWindow { @wxSashWindow(handle) }
-    pub fn null() -> @wxSashWindow { wxSashWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSashWindow { @wxSashWindow(handle) }
+    pub fn null() -> @wxSashWindow { wxSashWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15402,12 +15402,12 @@ trait _wxSashWindow : _wxWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSashVisible(&self, edge: c_int) -> bool {
+    fn getSashVisible(&self, edge: c_int) -> c_int {
         unsafe { wxSashWindow_GetSashVisible(self.handle(), edge) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasBorder(&self, edge: c_int) -> bool {
+    fn hasBorder(&self, edge: c_int) -> c_int {
         unsafe { wxSashWindow_HasBorder(self.handle(), edge) }
     }
     #[fixed_stack_segment]
@@ -15442,52 +15442,52 @@ trait _wxSashWindow : _wxWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setSashBorder(&self, edge: c_int, border: bool) {
+    fn setSashBorder(&self, edge: c_int, border: c_int) {
         unsafe { wxSashWindow_SetSashBorder(self.handle(), edge, border) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setSashVisible(&self, edge: c_int, sash: bool) {
+    fn setSashVisible(&self, edge: c_int, sash: c_int) {
         unsafe { wxSashWindow_SetSashVisible(self.handle(), edge, sash) }
     }
 }
 
-struct wxScopedArray(*u8);
-impl _wxScopedArray for wxScopedArray { fn handle(&self) -> *u8 { **self } }
+struct wxScopedArray(*mut c_void);
+impl _wxScopedArray for wxScopedArray { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxScopedArray {
-    pub fn from(handle: *u8) -> @wxScopedArray { @wxScopedArray(handle) }
-    pub fn null() -> @wxScopedArray { wxScopedArray::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxScopedArray { @wxScopedArray(handle) }
+    pub fn null() -> @wxScopedArray { wxScopedArray::from(0 as *mut c_void) }
     
 }
 
 trait _wxScopedArray {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxScopedPtr(*u8);
-impl _wxScopedPtr for wxScopedPtr { fn handle(&self) -> *u8 { **self } }
+struct wxScopedPtr(*mut c_void);
+impl _wxScopedPtr for wxScopedPtr { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxScopedPtr {
-    pub fn from(handle: *u8) -> @wxScopedPtr { @wxScopedPtr(handle) }
-    pub fn null() -> @wxScopedPtr { wxScopedPtr::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxScopedPtr { @wxScopedPtr(handle) }
+    pub fn null() -> @wxScopedPtr { wxScopedPtr::from(0 as *mut c_void) }
     
 }
 
 trait _wxScopedPtr {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxScreenDC(*u8);
+struct wxScreenDC(*mut c_void);
 impl _wxScreenDC for wxScreenDC {}
 impl _wxDC for wxScreenDC {}
-impl _wxObject for wxScreenDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxScreenDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxScreenDC {
-    pub fn from(handle: *u8) -> @wxScreenDC { @wxScreenDC(handle) }
-    pub fn null() -> @wxScreenDC { wxScreenDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxScreenDC { @wxScreenDC(handle) }
+    pub fn null() -> @wxScreenDC { wxScreenDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15499,31 +15499,31 @@ impl wxScreenDC {
 trait _wxScreenDC : _wxDC {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn endDrawingOnTop(&self) -> bool {
+    fn endDrawingOnTop(&self) -> c_int {
         unsafe { wxScreenDC_EndDrawingOnTop(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn startDrawingOnTop(&self, x: c_int, y: c_int, w: c_int, h: c_int) -> bool {
+    fn startDrawingOnTop(&self, x: c_int, y: c_int, w: c_int, h: c_int) -> c_int {
         unsafe { wxScreenDC_StartDrawingOnTop(self.handle(), x, y, w, h) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn startDrawingOnTopOfWin<T: _wxWindow>(&self, win: &T) -> bool {
+    fn startDrawingOnTopOfWin<T: _wxWindow>(&self, win: &T) -> c_int {
         unsafe { wxScreenDC_StartDrawingOnTopOfWin(self.handle(), win.handle()) }
     }
 }
 
-struct wxScrollBar(*u8);
+struct wxScrollBar(*mut c_void);
 impl _wxScrollBar for wxScrollBar {}
 impl _wxControl for wxScrollBar {}
 impl _wxWindow for wxScrollBar {}
 impl _wxEvtHandler for wxScrollBar {}
-impl _wxObject for wxScrollBar { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxScrollBar { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxScrollBar {
-    pub fn from(handle: *u8) -> @wxScrollBar { @wxScrollBar(handle) }
-    pub fn null() -> @wxScrollBar { wxScrollBar::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxScrollBar { @wxScrollBar(handle) }
+    pub fn null() -> @wxScrollBar { wxScrollBar::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15560,14 +15560,14 @@ trait _wxScrollBar : _wxControl {
     }
 }
 
-struct wxScrollEvent(*u8);
+struct wxScrollEvent(*mut c_void);
 impl _wxScrollEvent for wxScrollEvent {}
 impl _wxEvent for wxScrollEvent {}
-impl _wxObject for wxScrollEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxScrollEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxScrollEvent {
-    pub fn from(handle: *u8) -> @wxScrollEvent { @wxScrollEvent(handle) }
-    pub fn null() -> @wxScrollEvent { wxScrollEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxScrollEvent { @wxScrollEvent(handle) }
+    pub fn null() -> @wxScrollEvent { wxScrollEvent::from(0 as *mut c_void) }
     
 }
 
@@ -15584,14 +15584,14 @@ trait _wxScrollEvent : _wxEvent {
     }
 }
 
-struct wxScrollWinEvent(*u8);
+struct wxScrollWinEvent(*mut c_void);
 impl _wxScrollWinEvent for wxScrollWinEvent {}
 impl _wxEvent for wxScrollWinEvent {}
-impl _wxObject for wxScrollWinEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxScrollWinEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxScrollWinEvent {
-    pub fn from(handle: *u8) -> @wxScrollWinEvent { @wxScrollWinEvent(handle) }
-    pub fn null() -> @wxScrollWinEvent { wxScrollWinEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxScrollWinEvent { @wxScrollWinEvent(handle) }
+    pub fn null() -> @wxScrollWinEvent { wxScrollWinEvent::from(0 as *mut c_void) }
     
 }
 
@@ -15618,16 +15618,16 @@ trait _wxScrollWinEvent : _wxEvent {
     }
 }
 
-struct wxScrolledWindow(*u8);
+struct wxScrolledWindow(*mut c_void);
 impl _wxScrolledWindow for wxScrolledWindow {}
 impl _wxPanel for wxScrolledWindow {}
 impl _wxWindow for wxScrolledWindow {}
 impl _wxEvtHandler for wxScrolledWindow {}
-impl _wxObject for wxScrolledWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxScrolledWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxScrolledWindow {
-    pub fn from(handle: *u8) -> @wxScrolledWindow { @wxScrolledWindow(handle) }
-    pub fn null() -> @wxScrolledWindow { wxScrolledWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxScrolledWindow { @wxScrolledWindow(handle) }
+    pub fn null() -> @wxScrolledWindow { wxScrolledWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15644,17 +15644,17 @@ trait _wxScrolledWindow : _wxPanel {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn calcScrolledPosition(&self, x: c_int, y: c_int, xx: *c_int, yy: *c_int) {
+    fn calcScrolledPosition(&self, x: c_int, y: c_int, xx: *mut c_void, yy: *mut c_void) {
         unsafe { wxScrolledWindow_CalcScrolledPosition(self.handle(), x, y, xx, yy) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn calcUnscrolledPosition(&self, x: c_int, y: c_int, xx: *c_int, yy: *c_int) {
+    fn calcUnscrolledPosition(&self, x: c_int, y: c_int, xx: *mut c_void, yy: *mut c_void) {
         unsafe { wxScrolledWindow_CalcUnscrolledPosition(self.handle(), x, y, xx, yy) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableScrolling(&self, x_scrolling: bool, y_scrolling: bool) {
+    fn enableScrolling(&self, x_scrolling: c_int, y_scrolling: c_int) {
         unsafe { wxScrolledWindow_EnableScrolling(self.handle(), x_scrolling, y_scrolling) }
     }
     #[fixed_stack_segment]
@@ -15674,7 +15674,7 @@ trait _wxScrolledWindow : _wxPanel {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getScrollPixelsPerUnit(&self, _x: *c_int, _y: *c_int) {
+    fn getScrollPixelsPerUnit(&self, _x: *mut c_void, _y: *mut c_void) {
         unsafe { wxScrolledWindow_GetScrollPixelsPerUnit(self.handle(), _x, _y) }
     }
     #[fixed_stack_segment]
@@ -15684,7 +15684,7 @@ trait _wxScrolledWindow : _wxPanel {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getViewStart(&self, _x: *c_int, _y: *c_int) {
+    fn getViewStart(&self, _x: *mut c_void, _y: *mut c_void) {
         unsafe { wxScrolledWindow_GetViewStart(self.handle(), _x, _y) }
     }
     #[fixed_stack_segment]
@@ -15709,7 +15709,7 @@ trait _wxScrolledWindow : _wxPanel {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setScrollbars(&self, pixelsPerUnitX: c_int, pixelsPerUnitY: c_int, noUnitsX: c_int, noUnitsY: c_int, xPos: c_int, yPos: c_int, noRefresh: bool) {
+    fn setScrollbars(&self, pixelsPerUnitX: c_int, pixelsPerUnitY: c_int, noUnitsX: c_int, noUnitsY: c_int, xPos: c_int, yPos: c_int, noRefresh: c_int) {
         unsafe { wxScrolledWindow_SetScrollbars(self.handle(), pixelsPerUnitX, pixelsPerUnitY, noUnitsX, noUnitsY, xPos, yPos, noRefresh) }
     }
     #[fixed_stack_segment]
@@ -15724,7 +15724,7 @@ trait _wxScrolledWindow : _wxPanel {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn viewStart(&self, _x: *c_int, _y: *c_int) {
+    fn viewStart(&self, _x: *mut c_void, _y: *mut c_void) {
         unsafe { wxScrolledWindow_ViewStart(self.handle(), _x, _y) }
     }
     #[fixed_stack_segment]
@@ -15734,55 +15734,55 @@ trait _wxScrolledWindow : _wxPanel {
     }
 }
 
-struct wxSemaphore(*u8);
-impl _wxSemaphore for wxSemaphore { fn handle(&self) -> *u8 { **self } }
+struct wxSemaphore(*mut c_void);
+impl _wxSemaphore for wxSemaphore { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSemaphore {
-    pub fn from(handle: *u8) -> @wxSemaphore { @wxSemaphore(handle) }
-    pub fn null() -> @wxSemaphore { wxSemaphore::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSemaphore { @wxSemaphore(handle) }
+    pub fn null() -> @wxSemaphore { wxSemaphore::from(0 as *mut c_void) }
     
 }
 
 trait _wxSemaphore {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxServer(*u8);
+struct wxServer(*mut c_void);
 impl _wxServer for wxServer {}
 impl _wxServerBase for wxServer {}
-impl _wxObject for wxServer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxServer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxServer {
-    pub fn from(handle: *u8) -> @wxServer { @wxServer(handle) }
-    pub fn null() -> @wxServer { wxServer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxServer { @wxServer(handle) }
+    pub fn null() -> @wxServer { wxServer::from(0 as *mut c_void) }
     
 }
 
 trait _wxServer : _wxServerBase {
 }
 
-struct wxServerBase(*u8);
+struct wxServerBase(*mut c_void);
 impl _wxServerBase for wxServerBase {}
-impl _wxObject for wxServerBase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxServerBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxServerBase {
-    pub fn from(handle: *u8) -> @wxServerBase { @wxServerBase(handle) }
-    pub fn null() -> @wxServerBase { wxServerBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxServerBase { @wxServerBase(handle) }
+    pub fn null() -> @wxServerBase { wxServerBase::from(0 as *mut c_void) }
     
 }
 
 trait _wxServerBase : _wxObject {
 }
 
-struct wxSetCursorEvent(*u8);
+struct wxSetCursorEvent(*mut c_void);
 impl _wxSetCursorEvent for wxSetCursorEvent {}
 impl _wxEvent for wxSetCursorEvent {}
-impl _wxObject for wxSetCursorEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSetCursorEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSetCursorEvent {
-    pub fn from(handle: *u8) -> @wxSetCursorEvent { @wxSetCursorEvent(handle) }
-    pub fn null() -> @wxSetCursorEvent { wxSetCursorEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSetCursorEvent { @wxSetCursorEvent(handle) }
+    pub fn null() -> @wxSetCursorEvent { wxSetCursorEvent::from(0 as *mut c_void) }
     
 }
 
@@ -15804,7 +15804,7 @@ trait _wxSetCursorEvent : _wxEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasCursor(&self) -> bool {
+    fn hasCursor(&self) -> c_int {
         unsafe { wxSetCursorEvent_HasCursor(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -15814,37 +15814,37 @@ trait _wxSetCursorEvent : _wxEvent {
     }
 }
 
-struct wxShowEvent(*u8);
+struct wxShowEvent(*mut c_void);
 impl _wxShowEvent for wxShowEvent {}
 impl _wxEvent for wxShowEvent {}
-impl _wxObject for wxShowEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxShowEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxShowEvent {
-    pub fn from(handle: *u8) -> @wxShowEvent { @wxShowEvent(handle) }
-    pub fn null() -> @wxShowEvent { wxShowEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxShowEvent { @wxShowEvent(handle) }
+    pub fn null() -> @wxShowEvent { wxShowEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxShowEvent : _wxEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isShown(&self) -> bool {
+    fn isShown(&self) -> c_int {
         unsafe { wxShowEvent_IsShown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setShow(&self, show: bool) {
+    fn setShow(&self, show: c_int) {
         unsafe { wxShowEvent_SetShow(self.handle(), show) }
     }
 }
 
-struct wxSimpleHelpProvider(*u8);
+struct wxSimpleHelpProvider(*mut c_void);
 impl _wxSimpleHelpProvider for wxSimpleHelpProvider {}
-impl _wxHelpProvider for wxSimpleHelpProvider { fn handle(&self) -> *u8 { **self } }
+impl _wxHelpProvider for wxSimpleHelpProvider { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSimpleHelpProvider {
-    pub fn from(handle: *u8) -> @wxSimpleHelpProvider { @wxSimpleHelpProvider(handle) }
-    pub fn null() -> @wxSimpleHelpProvider { wxSimpleHelpProvider::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSimpleHelpProvider { @wxSimpleHelpProvider(handle) }
+    pub fn null() -> @wxSimpleHelpProvider { wxSimpleHelpProvider::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15856,33 +15856,33 @@ impl wxSimpleHelpProvider {
 trait _wxSimpleHelpProvider : _wxHelpProvider {
 }
 
-struct wxSingleChoiceDialog(*u8);
+struct wxSingleChoiceDialog(*mut c_void);
 impl _wxSingleChoiceDialog for wxSingleChoiceDialog {}
 impl _wxDialog for wxSingleChoiceDialog {}
 impl _wxTopLevelWindow for wxSingleChoiceDialog {}
 impl _wxWindow for wxSingleChoiceDialog {}
 impl _wxEvtHandler for wxSingleChoiceDialog {}
-impl _wxObject for wxSingleChoiceDialog { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSingleChoiceDialog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSingleChoiceDialog {
-    pub fn from(handle: *u8) -> @wxSingleChoiceDialog { @wxSingleChoiceDialog(handle) }
-    pub fn null() -> @wxSingleChoiceDialog { wxSingleChoiceDialog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSingleChoiceDialog { @wxSingleChoiceDialog(handle) }
+    pub fn null() -> @wxSingleChoiceDialog { wxSingleChoiceDialog::from(0 as *mut c_void) }
     
 }
 
 trait _wxSingleChoiceDialog : _wxDialog {
 }
 
-struct wxSingleInstanceChecker(*u8);
-impl _wxSingleInstanceChecker for wxSingleInstanceChecker { fn handle(&self) -> *u8 { **self } }
+struct wxSingleInstanceChecker(*mut c_void);
+impl _wxSingleInstanceChecker for wxSingleInstanceChecker { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSingleInstanceChecker {
-    pub fn from(handle: *u8) -> @wxSingleInstanceChecker { @wxSingleInstanceChecker(handle) }
-    pub fn null() -> @wxSingleInstanceChecker { wxSingleInstanceChecker::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSingleInstanceChecker { @wxSingleInstanceChecker(handle) }
+    pub fn null() -> @wxSingleInstanceChecker { wxSingleInstanceChecker::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_obj: *u8, name: &str, path: &str) -> bool {
+    pub fn new(_obj: *mut c_void, name: &str, path: &str) -> c_int {
         let name = wxT(name);
         let path = wxT(path);
         unsafe { wxSingleInstanceChecker_Create(_obj, name.handle(), path.handle()) }
@@ -15895,7 +15895,7 @@ impl wxSingleInstanceChecker {
 }
 
 trait _wxSingleInstanceChecker {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15904,17 +15904,17 @@ trait _wxSingleInstanceChecker {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isAnotherRunning(&self) -> bool {
+    fn isAnotherRunning(&self) -> c_int {
         unsafe { wxSingleInstanceChecker_IsAnotherRunning(self.handle()) }
     }
 }
 
-struct wxSize(*u8);
-impl _wxSize for wxSize { fn handle(&self) -> *u8 { **self } }
+struct wxSize(*mut c_void);
+impl _wxSize for wxSize { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSize {
-    pub fn from(handle: *u8) -> @wxSize { @wxSize(handle) }
-    pub fn null() -> @wxSize { wxSize::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSize { @wxSize(handle) }
+    pub fn null() -> @wxSize { wxSize::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15924,7 +15924,7 @@ impl wxSize {
 }
 
 trait _wxSize {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -15948,14 +15948,14 @@ trait _wxSize {
     }
 }
 
-struct wxSizeEvent(*u8);
+struct wxSizeEvent(*mut c_void);
 impl _wxSizeEvent for wxSizeEvent {}
 impl _wxEvent for wxSizeEvent {}
-impl _wxObject for wxSizeEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSizeEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSizeEvent {
-    pub fn from(handle: *u8) -> @wxSizeEvent { @wxSizeEvent(handle) }
-    pub fn null() -> @wxSizeEvent { wxSizeEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSizeEvent { @wxSizeEvent(handle) }
+    pub fn null() -> @wxSizeEvent { wxSizeEvent::from(0 as *mut c_void) }
     
 }
 
@@ -15967,30 +15967,30 @@ trait _wxSizeEvent : _wxEvent {
     }
 }
 
-struct wxSizer(*u8);
+struct wxSizer(*mut c_void);
 impl _wxSizer for wxSizer {}
-impl _wxObject for wxSizer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSizer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSizer {
-    pub fn from(handle: *u8) -> @wxSizer { @wxSizer(handle) }
-    pub fn null() -> @wxSizer { wxSizer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSizer { @wxSizer(handle) }
+    pub fn null() -> @wxSizer { wxSizer::from(0 as *mut c_void) }
     
 }
 
 trait _wxSizer : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn add(&self, width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *u8) {
+    fn add(&self, width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_Add(self.handle(), width, height, option, flag, border, userData) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addSizer<T: _wxSizer>(&self, sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *u8) {
+    fn addSizer<T: _wxSizer>(&self, sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_AddSizer(self.handle(), sizer.handle(), option, flag, border, userData) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addWindow<T: _wxWindow>(&self, window: &T, option: c_int, flag: c_int, border: c_int, userData: *u8) {
+    fn addWindow<T: _wxWindow>(&self, window: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_AddWindow(self.handle(), window.handle(), option, flag, border, userData) }
     }
     #[fixed_stack_segment]
@@ -16005,7 +16005,7 @@ trait _wxSizer : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getChildren(&self, _res: *u8, _cnt: c_int) -> c_int {
+    fn getChildren(&self, _res: *mut c_void, _cnt: c_int) -> c_int {
         unsafe { wxSizer_GetChildren(self.handle(), _res, _cnt) }
     }
     #[fixed_stack_segment]
@@ -16025,17 +16025,17 @@ trait _wxSizer : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn insert(&self, before: c_int, width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *u8) {
+    fn insert(&self, before: c_int, width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_Insert(self.handle(), before, width, height, option, flag, border, userData) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn insertSizer<T: _wxSizer>(&self, before: c_int, sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *u8) {
+    fn insertSizer<T: _wxSizer>(&self, before: c_int, sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_InsertSizer(self.handle(), before, sizer.handle(), option, flag, border, userData) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn insertWindow<T: _wxWindow>(&self, before: c_int, window: &T, option: c_int, flag: c_int, border: c_int, userData: *u8) {
+    fn insertWindow<T: _wxWindow>(&self, before: c_int, window: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_InsertWindow(self.handle(), before, window.handle(), option, flag, border, userData) }
     }
     #[fixed_stack_segment]
@@ -16045,17 +16045,17 @@ trait _wxSizer : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn prepend(&self, width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *u8) {
+    fn prepend(&self, width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_Prepend(self.handle(), width, height, option, flag, border, userData) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn prependSizer<T: _wxSizer>(&self, sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *u8) {
+    fn prependSizer<T: _wxSizer>(&self, sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_PrependSizer(self.handle(), sizer.handle(), option, flag, border, userData) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn prependWindow<T: _wxWindow>(&self, window: &T, option: c_int, flag: c_int, border: c_int, userData: *u8) {
+    fn prependWindow<T: _wxWindow>(&self, window: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_PrependWindow(self.handle(), window.handle(), option, flag, border, userData) }
     }
     #[fixed_stack_segment]
@@ -16105,22 +16105,22 @@ trait _wxSizer : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn clear(&self, delete_windows: bool) {
+    fn clear(&self, delete_windows: c_int) {
         unsafe { wxSizer_Clear(self.handle(), delete_windows) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn detachWindow<T: _wxWindow>(&self, window: &T) -> bool {
+    fn detachWindow<T: _wxWindow>(&self, window: &T) -> c_int {
         unsafe { wxSizer_DetachWindow(self.handle(), window.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn detachSizer<T: _wxSizer>(&self, sizer: &T) -> bool {
+    fn detachSizer<T: _wxSizer>(&self, sizer: &T) -> c_int {
         unsafe { wxSizer_DetachSizer(self.handle(), sizer.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn detach(&self, index: c_int) -> bool {
+    fn detach(&self, index: c_int) -> c_int {
         unsafe { wxSizer_Detach(self.handle(), index) }
     }
     #[fixed_stack_segment]
@@ -16135,12 +16135,12 @@ trait _wxSizer : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getItemWindow<T: _wxWindow>(&self, window: &T, recursive: bool) -> @wxSizerItem {
+    fn getItemWindow<T: _wxWindow>(&self, window: &T, recursive: c_int) -> @wxSizerItem {
         unsafe { @wxSizerItem(wxSizer_GetItemWindow(self.handle(), window.handle(), recursive)) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getItemSizer<T: _wxSizer>(&self, window: &T, recursive: bool) -> @wxSizerItem {
+    fn getItemSizer<T: _wxSizer>(&self, window: &T, recursive: c_int) -> @wxSizerItem {
         unsafe { @wxSizerItem(wxSizer_GetItemSizer(self.handle(), window.handle(), recursive)) }
     }
     #[fixed_stack_segment]
@@ -16150,17 +16150,17 @@ trait _wxSizer : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hideWindow<T: _wxWindow>(&self, window: &T) -> bool {
+    fn hideWindow<T: _wxWindow>(&self, window: &T) -> c_int {
         unsafe { wxSizer_HideWindow(self.handle(), window.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hideSizer<T: _wxSizer>(&self, sizer: &T) -> bool {
+    fn hideSizer<T: _wxSizer>(&self, sizer: &T) -> c_int {
         unsafe { wxSizer_HideSizer(self.handle(), sizer.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hide(&self, index: c_int) -> bool {
+    fn hide(&self, index: c_int) -> c_int {
         unsafe { wxSizer_Hide(self.handle(), index) }
     }
     #[fixed_stack_segment]
@@ -16175,17 +16175,17 @@ trait _wxSizer : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isShownWindow(&self, window: *u8) -> bool {
+    fn isShownWindow(&self, window: *mut *mut c_void) -> c_int {
         unsafe { wxSizer_IsShownWindow(self.handle(), window) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isShownSizer(&self, sizer: *u8) -> bool {
+    fn isShownSizer(&self, sizer: *mut *mut c_void) -> c_int {
         unsafe { wxSizer_IsShownSizer(self.handle(), sizer) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isShown(&self, index: c_int) -> bool {
+    fn isShown(&self, index: c_int) -> c_int {
         unsafe { wxSizer_IsShown(self.handle(), index) }
     }
     #[fixed_stack_segment]
@@ -16200,17 +16200,17 @@ trait _wxSizer : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn replaceWindow<T: _wxWindow, U: _wxWindow>(&self, oldwin: &T, newwin: &U, recursive: bool) -> bool {
+    fn replaceWindow<T: _wxWindow, U: _wxWindow>(&self, oldwin: &T, newwin: &U, recursive: c_int) -> c_int {
         unsafe { wxSizer_ReplaceWindow(self.handle(), oldwin.handle(), newwin.handle(), recursive) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn replaceSizer<T: _wxSizer, U: _wxSizer>(&self, oldsz: &T, newsz: &U, recursive: bool) -> bool {
+    fn replaceSizer<T: _wxSizer, U: _wxSizer>(&self, oldsz: &T, newsz: &U, recursive: c_int) -> c_int {
         unsafe { wxSizer_ReplaceSizer(self.handle(), oldsz.handle(), newsz.handle(), recursive) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn replace<T: _wxSizerItem>(&self, oldindex: c_int, newitem: &T) -> bool {
+    fn replace<T: _wxSizerItem>(&self, oldindex: c_int, newitem: &T) -> c_int {
         unsafe { wxSizer_Replace(self.handle(), oldindex, newitem.handle()) }
     }
     #[fixed_stack_segment]
@@ -16220,42 +16220,42 @@ trait _wxSizer : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn showWindow<T: _wxWindow>(&self, window: &T, show: bool, recursive: bool) -> bool {
+    fn showWindow<T: _wxWindow>(&self, window: &T, show: c_int, recursive: c_int) -> c_int {
         unsafe { wxSizer_ShowWindow(self.handle(), window.handle(), show, recursive) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn showSizer<T: _wxSizer>(&self, sizer: &T, show: bool, recursive: bool) -> bool {
+    fn showSizer<T: _wxSizer>(&self, sizer: &T, show: c_int, recursive: c_int) -> c_int {
         unsafe { wxSizer_ShowSizer(self.handle(), sizer.handle(), show, recursive) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn show<T: _wxSizer>(&self, sizer: &T, index: c_int, show: bool) -> bool {
+    fn show<T: _wxSizer>(&self, sizer: &T, index: c_int, show: c_int) -> c_int {
         unsafe { wxSizer_Show(self.handle(), sizer.handle(), index, show) }
     }
 }
 
-struct wxSizerItem(*u8);
+struct wxSizerItem(*mut c_void);
 impl _wxSizerItem for wxSizerItem {}
-impl _wxObject for wxSizerItem { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSizerItem { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSizerItem {
-    pub fn from(handle: *u8) -> @wxSizerItem { @wxSizerItem(handle) }
-    pub fn null() -> @wxSizerItem { wxSizerItem::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSizerItem { @wxSizerItem(handle) }
+    pub fn null() -> @wxSizerItem { wxSizerItem::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *u8) -> @wxSizerItem {
+    pub fn new(width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) -> @wxSizerItem {
         unsafe { @wxSizerItem(wxSizerItem_Create(width, height, option, flag, border, userData)) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newInSizer<T: _wxSizer>(sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *u8) -> *u8 {
+    pub fn newInSizer<T: _wxSizer>(sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) -> *mut c_void {
         unsafe { wxSizerItem_CreateInSizer(sizer.handle(), option, flag, border, userData) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newInWindow<T: _wxWindow>(window: &T, option: c_int, flag: c_int, border: c_int, userData: *u8) -> *u8 {
+    pub fn newInWindow<T: _wxWindow>(window: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) -> *mut c_void {
         unsafe { wxSizerItem_CreateInWindow(window.handle(), option, flag, border, userData) }
     }
 }
@@ -16303,7 +16303,7 @@ trait _wxSizerItem : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getUserData(&self) -> *u8 {
+    fn getUserData(&self) -> *mut c_void {
         unsafe { wxSizerItem_GetUserData(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -16313,17 +16313,17 @@ trait _wxSizerItem : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSizer(&self) -> bool {
+    fn isSizer(&self) -> c_int {
         unsafe { wxSizerItem_IsSizer(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSpacer(&self) -> bool {
+    fn isSpacer(&self) -> c_int {
         unsafe { wxSizerItem_IsSpacer(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isWindow(&self) -> bool {
+    fn isWindow(&self) -> c_int {
         unsafe { wxSizerItem_IsWindow(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -16413,16 +16413,16 @@ trait _wxSizerItem : _wxObject {
     }
 }
 
-struct wxSlider(*u8);
+struct wxSlider(*mut c_void);
 impl _wxSlider for wxSlider {}
 impl _wxControl for wxSlider {}
 impl _wxWindow for wxSlider {}
 impl _wxEvtHandler for wxSlider {}
-impl _wxObject for wxSlider { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSlider { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSlider {
-    pub fn from(handle: *u8) -> @wxSlider { @wxSlider(handle) }
-    pub fn null() -> @wxSlider { wxSlider::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSlider { @wxSlider(handle) }
+    pub fn null() -> @wxSlider { wxSlider::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -16529,112 +16529,112 @@ trait _wxSlider : _wxControl {
     }
 }
 
-struct wxSockAddress(*u8);
+struct wxSockAddress(*mut c_void);
 impl _wxSockAddress for wxSockAddress {}
-impl _wxObject for wxSockAddress { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSockAddress { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSockAddress {
-    pub fn from(handle: *u8) -> @wxSockAddress { @wxSockAddress(handle) }
-    pub fn null() -> @wxSockAddress { wxSockAddress::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSockAddress { @wxSockAddress(handle) }
+    pub fn null() -> @wxSockAddress { wxSockAddress::from(0 as *mut c_void) }
     
 }
 
 trait _wxSockAddress : _wxObject {
 }
 
-struct wxSocketBase(*u8);
+struct wxSocketBase(*mut c_void);
 impl _wxSocketBase for wxSocketBase {}
-impl _wxObject for wxSocketBase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSocketBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSocketBase {
-    pub fn from(handle: *u8) -> @wxSocketBase { @wxSocketBase(handle) }
-    pub fn null() -> @wxSocketBase { wxSocketBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSocketBase { @wxSocketBase(handle) }
+    pub fn null() -> @wxSocketBase { wxSocketBase::from(0 as *mut c_void) }
     
 }
 
 trait _wxSocketBase : _wxObject {
 }
 
-struct wxSocketClient(*u8);
+struct wxSocketClient(*mut c_void);
 impl _wxSocketClient for wxSocketClient {}
 impl _wxSocketBase for wxSocketClient {}
-impl _wxObject for wxSocketClient { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSocketClient { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSocketClient {
-    pub fn from(handle: *u8) -> @wxSocketClient { @wxSocketClient(handle) }
-    pub fn null() -> @wxSocketClient { wxSocketClient::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSocketClient { @wxSocketClient(handle) }
+    pub fn null() -> @wxSocketClient { wxSocketClient::from(0 as *mut c_void) }
     
 }
 
 trait _wxSocketClient : _wxSocketBase {
 }
 
-struct wxSocketEvent(*u8);
+struct wxSocketEvent(*mut c_void);
 impl _wxSocketEvent for wxSocketEvent {}
 impl _wxEvent for wxSocketEvent {}
-impl _wxObject for wxSocketEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSocketEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSocketEvent {
-    pub fn from(handle: *u8) -> @wxSocketEvent { @wxSocketEvent(handle) }
-    pub fn null() -> @wxSocketEvent { wxSocketEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSocketEvent { @wxSocketEvent(handle) }
+    pub fn null() -> @wxSocketEvent { wxSocketEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxSocketEvent : _wxEvent {
 }
 
-struct wxSocketInputStream(*u8);
+struct wxSocketInputStream(*mut c_void);
 impl _wxSocketInputStream for wxSocketInputStream {}
 impl _wxInputStream for wxSocketInputStream {}
-impl _wxStreamBase for wxSocketInputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxSocketInputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSocketInputStream {
-    pub fn from(handle: *u8) -> @wxSocketInputStream { @wxSocketInputStream(handle) }
-    pub fn null() -> @wxSocketInputStream { wxSocketInputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSocketInputStream { @wxSocketInputStream(handle) }
+    pub fn null() -> @wxSocketInputStream { wxSocketInputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxSocketInputStream : _wxInputStream {
 }
 
-struct wxSocketOutputStream(*u8);
+struct wxSocketOutputStream(*mut c_void);
 impl _wxSocketOutputStream for wxSocketOutputStream {}
 impl _wxOutputStream for wxSocketOutputStream {}
-impl _wxStreamBase for wxSocketOutputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxSocketOutputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSocketOutputStream {
-    pub fn from(handle: *u8) -> @wxSocketOutputStream { @wxSocketOutputStream(handle) }
-    pub fn null() -> @wxSocketOutputStream { wxSocketOutputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSocketOutputStream { @wxSocketOutputStream(handle) }
+    pub fn null() -> @wxSocketOutputStream { wxSocketOutputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxSocketOutputStream : _wxOutputStream {
 }
 
-struct wxSocketServer(*u8);
+struct wxSocketServer(*mut c_void);
 impl _wxSocketServer for wxSocketServer {}
 impl _wxSocketBase for wxSocketServer {}
-impl _wxObject for wxSocketServer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSocketServer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSocketServer {
-    pub fn from(handle: *u8) -> @wxSocketServer { @wxSocketServer(handle) }
-    pub fn null() -> @wxSocketServer { wxSocketServer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSocketServer { @wxSocketServer(handle) }
+    pub fn null() -> @wxSocketServer { wxSocketServer::from(0 as *mut c_void) }
     
 }
 
 trait _wxSocketServer : _wxSocketBase {
 }
 
-struct wxSpinButton(*u8);
+struct wxSpinButton(*mut c_void);
 impl _wxSpinButton for wxSpinButton {}
 impl _wxControl for wxSpinButton {}
 impl _wxWindow for wxSpinButton {}
 impl _wxEvtHandler for wxSpinButton {}
-impl _wxObject for wxSpinButton { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSpinButton { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSpinButton {
-    pub fn from(handle: *u8) -> @wxSpinButton { @wxSpinButton(handle) }
-    pub fn null() -> @wxSpinButton { wxSpinButton::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSpinButton { @wxSpinButton(handle) }
+    pub fn null() -> @wxSpinButton { wxSpinButton::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -16671,16 +16671,16 @@ trait _wxSpinButton : _wxControl {
     }
 }
 
-struct wxSpinCtrl(*u8);
+struct wxSpinCtrl(*mut c_void);
 impl _wxSpinCtrl for wxSpinCtrl {}
 impl _wxControl for wxSpinCtrl {}
 impl _wxWindow for wxSpinCtrl {}
 impl _wxEvtHandler for wxSpinCtrl {}
-impl _wxObject for wxSpinCtrl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSpinCtrl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSpinCtrl {
-    pub fn from(handle: *u8) -> @wxSpinCtrl { @wxSpinCtrl(handle) }
-    pub fn null() -> @wxSpinCtrl { wxSpinCtrl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSpinCtrl { @wxSpinCtrl(handle) }
+    pub fn null() -> @wxSpinCtrl { wxSpinCtrl::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -16718,16 +16718,16 @@ trait _wxSpinCtrl : _wxControl {
     }
 }
 
-struct wxSpinEvent(*u8);
+struct wxSpinEvent(*mut c_void);
 impl _wxSpinEvent for wxSpinEvent {}
 impl _wxNotifyEvent for wxSpinEvent {}
 impl _wxCommandEvent for wxSpinEvent {}
 impl _wxEvent for wxSpinEvent {}
-impl _wxObject for wxSpinEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSpinEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSpinEvent {
-    pub fn from(handle: *u8) -> @wxSpinEvent { @wxSpinEvent(handle) }
-    pub fn null() -> @wxSpinEvent { wxSpinEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSpinEvent { @wxSpinEvent(handle) }
+    pub fn null() -> @wxSpinEvent { wxSpinEvent::from(0 as *mut c_void) }
     
 }
 
@@ -16744,65 +16744,65 @@ trait _wxSpinEvent : _wxNotifyEvent {
     }
 }
 
-struct wxSplashScreen(*u8);
+struct wxSplashScreen(*mut c_void);
 impl _wxSplashScreen for wxSplashScreen {}
 impl _wxFrame for wxSplashScreen {}
 impl _wxTopLevelWindow for wxSplashScreen {}
 impl _wxWindow for wxSplashScreen {}
 impl _wxEvtHandler for wxSplashScreen {}
-impl _wxObject for wxSplashScreen { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSplashScreen { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSplashScreen {
-    pub fn from(handle: *u8) -> @wxSplashScreen { @wxSplashScreen(handle) }
-    pub fn null() -> @wxSplashScreen { wxSplashScreen::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSplashScreen { @wxSplashScreen(handle) }
+    pub fn null() -> @wxSplashScreen { wxSplashScreen::from(0 as *mut c_void) }
     
 }
 
 trait _wxSplashScreen : _wxFrame {
 }
 
-struct wxSplitterEvent(*u8);
+struct wxSplitterEvent(*mut c_void);
 impl _wxSplitterEvent for wxSplitterEvent {}
 impl _wxNotifyEvent for wxSplitterEvent {}
 impl _wxCommandEvent for wxSplitterEvent {}
 impl _wxEvent for wxSplitterEvent {}
-impl _wxObject for wxSplitterEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSplitterEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSplitterEvent {
-    pub fn from(handle: *u8) -> @wxSplitterEvent { @wxSplitterEvent(handle) }
-    pub fn null() -> @wxSplitterEvent { wxSplitterEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSplitterEvent { @wxSplitterEvent(handle) }
+    pub fn null() -> @wxSplitterEvent { wxSplitterEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxSplitterEvent : _wxNotifyEvent {
 }
 
-struct wxSplitterScrolledWindow(*u8);
+struct wxSplitterScrolledWindow(*mut c_void);
 impl _wxSplitterScrolledWindow for wxSplitterScrolledWindow {}
 impl _wxScrolledWindow for wxSplitterScrolledWindow {}
 impl _wxPanel for wxSplitterScrolledWindow {}
 impl _wxWindow for wxSplitterScrolledWindow {}
 impl _wxEvtHandler for wxSplitterScrolledWindow {}
-impl _wxObject for wxSplitterScrolledWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSplitterScrolledWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSplitterScrolledWindow {
-    pub fn from(handle: *u8) -> @wxSplitterScrolledWindow { @wxSplitterScrolledWindow(handle) }
-    pub fn null() -> @wxSplitterScrolledWindow { wxSplitterScrolledWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSplitterScrolledWindow { @wxSplitterScrolledWindow(handle) }
+    pub fn null() -> @wxSplitterScrolledWindow { wxSplitterScrolledWindow::from(0 as *mut c_void) }
     
 }
 
 trait _wxSplitterScrolledWindow : _wxScrolledWindow {
 }
 
-struct wxSplitterWindow(*u8);
+struct wxSplitterWindow(*mut c_void);
 impl _wxSplitterWindow for wxSplitterWindow {}
 impl _wxWindow for wxSplitterWindow {}
 impl _wxEvtHandler for wxSplitterWindow {}
-impl _wxObject for wxSplitterWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSplitterWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSplitterWindow {
-    pub fn from(handle: *u8) -> @wxSplitterWindow { @wxSplitterWindow(handle) }
-    pub fn null() -> @wxSplitterWindow { wxSplitterWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSplitterWindow { @wxSplitterWindow(handle) }
+    pub fn null() -> @wxSplitterWindow { wxSplitterWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -16854,12 +16854,12 @@ trait _wxSplitterWindow : _wxWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSplit(&self) -> bool {
+    fn isSplit(&self) -> c_int {
         unsafe { wxSplitterWindow_IsSplit(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn replaceWindow<T: _wxWindow, U: _wxWindow>(&self, winOld: &T, winNew: &U) -> bool {
+    fn replaceWindow<T: _wxWindow, U: _wxWindow>(&self, winOld: &T, winNew: &U) -> c_int {
         unsafe { wxSplitterWindow_ReplaceWindow(self.handle(), winOld.handle(), winNew.handle()) }
     }
     #[fixed_stack_segment]
@@ -16874,7 +16874,7 @@ trait _wxSplitterWindow : _wxWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setSashPosition(&self, position: c_int, redraw: bool) {
+    fn setSashPosition(&self, position: c_int, redraw: c_int) {
         unsafe { wxSplitterWindow_SetSashPosition(self.handle(), position, redraw) }
     }
     #[fixed_stack_segment]
@@ -16889,17 +16889,17 @@ trait _wxSplitterWindow : _wxWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn splitHorizontally<T: _wxWindow, U: _wxWindow>(&self, window1: &T, window2: &U, sashPosition: c_int) -> bool {
+    fn splitHorizontally<T: _wxWindow, U: _wxWindow>(&self, window1: &T, window2: &U, sashPosition: c_int) -> c_int {
         unsafe { wxSplitterWindow_SplitHorizontally(self.handle(), window1.handle(), window2.handle(), sashPosition) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn splitVertically<T: _wxWindow, U: _wxWindow>(&self, window1: &T, window2: &U, sashPosition: c_int) -> bool {
+    fn splitVertically<T: _wxWindow, U: _wxWindow>(&self, window1: &T, window2: &U, sashPosition: c_int) -> c_int {
         unsafe { wxSplitterWindow_SplitVertically(self.handle(), window1.handle(), window2.handle(), sashPosition) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn unsplit<T: _wxWindow>(&self, toRemove: &T) -> bool {
+    fn unsplit<T: _wxWindow>(&self, toRemove: &T) -> c_int {
         unsafe { wxSplitterWindow_Unsplit(self.handle(), toRemove.handle()) }
     }
     #[fixed_stack_segment]
@@ -16914,16 +16914,16 @@ trait _wxSplitterWindow : _wxWindow {
     }
 }
 
-struct wxStaticBitmap(*u8);
+struct wxStaticBitmap(*mut c_void);
 impl _wxStaticBitmap for wxStaticBitmap {}
 impl _wxControl for wxStaticBitmap {}
 impl _wxWindow for wxStaticBitmap {}
 impl _wxEvtHandler for wxStaticBitmap {}
-impl _wxObject for wxStaticBitmap { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxStaticBitmap { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStaticBitmap {
-    pub fn from(handle: *u8) -> @wxStaticBitmap { @wxStaticBitmap(handle) }
-    pub fn null() -> @wxStaticBitmap { wxStaticBitmap::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStaticBitmap { @wxStaticBitmap(handle) }
+    pub fn null() -> @wxStaticBitmap { wxStaticBitmap::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -16955,16 +16955,16 @@ trait _wxStaticBitmap : _wxControl {
     }
 }
 
-struct wxStaticBox(*u8);
+struct wxStaticBox(*mut c_void);
 impl _wxStaticBox for wxStaticBox {}
 impl _wxControl for wxStaticBox {}
 impl _wxWindow for wxStaticBox {}
 impl _wxEvtHandler for wxStaticBox {}
-impl _wxObject for wxStaticBox { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxStaticBox { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStaticBox {
-    pub fn from(handle: *u8) -> @wxStaticBox { @wxStaticBox(handle) }
-    pub fn null() -> @wxStaticBox { wxStaticBox::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStaticBox { @wxStaticBox(handle) }
+    pub fn null() -> @wxStaticBox { wxStaticBox::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -16977,15 +16977,15 @@ impl wxStaticBox {
 trait _wxStaticBox : _wxControl {
 }
 
-struct wxStaticBoxSizer(*u8);
+struct wxStaticBoxSizer(*mut c_void);
 impl _wxStaticBoxSizer for wxStaticBoxSizer {}
 impl _wxBoxSizer for wxStaticBoxSizer {}
 impl _wxSizer for wxStaticBoxSizer {}
-impl _wxObject for wxStaticBoxSizer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxStaticBoxSizer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStaticBoxSizer {
-    pub fn from(handle: *u8) -> @wxStaticBoxSizer { @wxStaticBoxSizer(handle) }
-    pub fn null() -> @wxStaticBoxSizer { wxStaticBoxSizer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStaticBoxSizer { @wxStaticBoxSizer(handle) }
+    pub fn null() -> @wxStaticBoxSizer { wxStaticBoxSizer::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17002,16 +17002,16 @@ trait _wxStaticBoxSizer : _wxBoxSizer {
     }
 }
 
-struct wxStaticLine(*u8);
+struct wxStaticLine(*mut c_void);
 impl _wxStaticLine for wxStaticLine {}
 impl _wxControl for wxStaticLine {}
 impl _wxWindow for wxStaticLine {}
 impl _wxEvtHandler for wxStaticLine {}
-impl _wxObject for wxStaticLine { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxStaticLine { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStaticLine {
-    pub fn from(handle: *u8) -> @wxStaticLine { @wxStaticLine(handle) }
-    pub fn null() -> @wxStaticLine { wxStaticLine::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStaticLine { @wxStaticLine(handle) }
+    pub fn null() -> @wxStaticLine { wxStaticLine::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17028,21 +17028,21 @@ trait _wxStaticLine : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isVertical(&self) -> bool {
+    fn isVertical(&self) -> c_int {
         unsafe { wxStaticLine_IsVertical(self.handle()) }
     }
 }
 
-struct wxStaticText(*u8);
+struct wxStaticText(*mut c_void);
 impl _wxStaticText for wxStaticText {}
 impl _wxControl for wxStaticText {}
 impl _wxWindow for wxStaticText {}
 impl _wxEvtHandler for wxStaticText {}
-impl _wxObject for wxStaticText { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxStaticText { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStaticText {
-    pub fn from(handle: *u8) -> @wxStaticText { @wxStaticText(handle) }
-    pub fn null() -> @wxStaticText { wxStaticText::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStaticText { @wxStaticText(handle) }
+    pub fn null() -> @wxStaticText { wxStaticText::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17055,15 +17055,15 @@ impl wxStaticText {
 trait _wxStaticText : _wxControl {
 }
 
-struct wxStatusBar(*u8);
+struct wxStatusBar(*mut c_void);
 impl _wxStatusBar for wxStatusBar {}
 impl _wxWindow for wxStatusBar {}
 impl _wxEvtHandler for wxStatusBar {}
-impl _wxObject for wxStatusBar { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxStatusBar { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStatusBar {
-    pub fn from(handle: *u8) -> @wxStatusBar { @wxStatusBar(handle) }
-    pub fn null() -> @wxStatusBar { wxStatusBar::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStatusBar { @wxStatusBar(handle) }
+    pub fn null() -> @wxStatusBar { wxStatusBar::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17095,7 +17095,7 @@ trait _wxStatusBar : _wxWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setFieldsCount(&self, number: c_int, widths: *c_int) {
+    fn setFieldsCount(&self, number: c_int, widths: *mut c_int) {
         unsafe { wxStatusBar_SetFieldsCount(self.handle(), number, widths) }
     }
     #[fixed_stack_segment]
@@ -17111,17 +17111,17 @@ trait _wxStatusBar : _wxWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setStatusWidths(&self, n: c_int, widths: *c_int) {
+    fn setStatusWidths(&self, n: c_int, widths: *mut c_int) {
         unsafe { wxStatusBar_SetStatusWidths(self.handle(), n, widths) }
     }
 }
 
-struct wxStopWatch(*u8);
-impl _wxStopWatch for wxStopWatch { fn handle(&self) -> *u8 { **self } }
+struct wxStopWatch(*mut c_void);
+impl _wxStopWatch for wxStopWatch { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStopWatch {
-    pub fn from(handle: *u8) -> @wxStopWatch { @wxStopWatch(handle) }
-    pub fn null() -> @wxStopWatch { wxStopWatch::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStopWatch { @wxStopWatch(handle) }
+    pub fn null() -> @wxStopWatch { wxStopWatch::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17131,7 +17131,7 @@ impl wxStopWatch {
 }
 
 trait _wxStopWatch {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17160,17 +17160,17 @@ trait _wxStopWatch {
     }
 }
 
-struct wxStreamBase(*u8);
-impl _wxStreamBase for wxStreamBase { fn handle(&self) -> *u8 { **self } }
+struct wxStreamBase(*mut c_void);
+impl _wxStreamBase for wxStreamBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStreamBase {
-    pub fn from(handle: *u8) -> @wxStreamBase { @wxStreamBase(handle) }
-    pub fn null() -> @wxStreamBase { wxStreamBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStreamBase { @wxStreamBase(handle) }
+    pub fn null() -> @wxStreamBase { wxStreamBase::from(0 as *mut c_void) }
     
 }
 
 trait _wxStreamBase {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17184,7 +17184,7 @@ trait _wxStreamBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxStreamBase_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -17194,122 +17194,122 @@ trait _wxStreamBase {
     }
 }
 
-struct wxStreamBuffer(*u8);
-impl _wxStreamBuffer for wxStreamBuffer { fn handle(&self) -> *u8 { **self } }
+struct wxStreamBuffer(*mut c_void);
+impl _wxStreamBuffer for wxStreamBuffer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStreamBuffer {
-    pub fn from(handle: *u8) -> @wxStreamBuffer { @wxStreamBuffer(handle) }
-    pub fn null() -> @wxStreamBuffer { wxStreamBuffer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStreamBuffer { @wxStreamBuffer(handle) }
+    pub fn null() -> @wxStreamBuffer { wxStreamBuffer::from(0 as *mut c_void) }
     
 }
 
 trait _wxStreamBuffer {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxStreamToTextRedirector(*u8);
-impl _wxStreamToTextRedirector for wxStreamToTextRedirector { fn handle(&self) -> *u8 { **self } }
+struct wxStreamToTextRedirector(*mut c_void);
+impl _wxStreamToTextRedirector for wxStreamToTextRedirector { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStreamToTextRedirector {
-    pub fn from(handle: *u8) -> @wxStreamToTextRedirector { @wxStreamToTextRedirector(handle) }
-    pub fn null() -> @wxStreamToTextRedirector { wxStreamToTextRedirector::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStreamToTextRedirector { @wxStreamToTextRedirector(handle) }
+    pub fn null() -> @wxStreamToTextRedirector { wxStreamToTextRedirector::from(0 as *mut c_void) }
     
 }
 
 trait _wxStreamToTextRedirector {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxStringBuffer(*u8);
-impl _wxStringBuffer for wxStringBuffer { fn handle(&self) -> *u8 { **self } }
+struct wxStringBuffer(*mut c_void);
+impl _wxStringBuffer for wxStringBuffer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStringBuffer {
-    pub fn from(handle: *u8) -> @wxStringBuffer { @wxStringBuffer(handle) }
-    pub fn null() -> @wxStringBuffer { wxStringBuffer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStringBuffer { @wxStringBuffer(handle) }
+    pub fn null() -> @wxStringBuffer { wxStringBuffer::from(0 as *mut c_void) }
     
 }
 
 trait _wxStringBuffer {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxStringClientData(*u8);
+struct wxStringClientData(*mut c_void);
 impl _wxStringClientData for wxStringClientData {}
-impl _wxClientData for wxStringClientData { fn handle(&self) -> *u8 { **self } }
+impl _wxClientData for wxStringClientData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStringClientData {
-    pub fn from(handle: *u8) -> @wxStringClientData { @wxStringClientData(handle) }
-    pub fn null() -> @wxStringClientData { wxStringClientData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStringClientData { @wxStringClientData(handle) }
+    pub fn null() -> @wxStringClientData { wxStringClientData::from(0 as *mut c_void) }
     
 }
 
 trait _wxStringClientData : _wxClientData {
 }
 
-struct wxStringList(*u8);
+struct wxStringList(*mut c_void);
 impl _wxStringList for wxStringList {}
 impl _wxList for wxStringList {}
-impl _wxObject for wxStringList { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxStringList { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStringList {
-    pub fn from(handle: *u8) -> @wxStringList { @wxStringList(handle) }
-    pub fn null() -> @wxStringList { wxStringList::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStringList { @wxStringList(handle) }
+    pub fn null() -> @wxStringList { wxStringList::from(0 as *mut c_void) }
     
 }
 
 trait _wxStringList : _wxList {
 }
 
-struct wxStringTokenizer(*u8);
+struct wxStringTokenizer(*mut c_void);
 impl _wxStringTokenizer for wxStringTokenizer {}
-impl _wxObject for wxStringTokenizer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxStringTokenizer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStringTokenizer {
-    pub fn from(handle: *u8) -> @wxStringTokenizer { @wxStringTokenizer(handle) }
-    pub fn null() -> @wxStringTokenizer { wxStringTokenizer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStringTokenizer { @wxStringTokenizer(handle) }
+    pub fn null() -> @wxStringTokenizer { wxStringTokenizer::from(0 as *mut c_void) }
     
 }
 
 trait _wxStringTokenizer : _wxObject {
 }
 
-struct wxSysColourChangedEvent(*u8);
+struct wxSysColourChangedEvent(*mut c_void);
 impl _wxSysColourChangedEvent for wxSysColourChangedEvent {}
 impl _wxEvent for wxSysColourChangedEvent {}
-impl _wxObject for wxSysColourChangedEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSysColourChangedEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSysColourChangedEvent {
-    pub fn from(handle: *u8) -> @wxSysColourChangedEvent { @wxSysColourChangedEvent(handle) }
-    pub fn null() -> @wxSysColourChangedEvent { wxSysColourChangedEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSysColourChangedEvent { @wxSysColourChangedEvent(handle) }
+    pub fn null() -> @wxSysColourChangedEvent { wxSysColourChangedEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxSysColourChangedEvent : _wxEvent {
 }
 
-struct wxSystemOptions(*u8);
+struct wxSystemOptions(*mut c_void);
 impl _wxSystemOptions for wxSystemOptions {}
-impl _wxObject for wxSystemOptions { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSystemOptions { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSystemOptions {
-    pub fn from(handle: *u8) -> @wxSystemOptions { @wxSystemOptions(handle) }
-    pub fn null() -> @wxSystemOptions { wxSystemOptions::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSystemOptions { @wxSystemOptions(handle) }
+    pub fn null() -> @wxSystemOptions { wxSystemOptions::from(0 as *mut c_void) }
     
 }
 
 trait _wxSystemOptions : _wxObject {
 }
 
-struct wxSystemSettings(*u8);
+struct wxSystemSettings(*mut c_void);
 impl _wxSystemSettings for wxSystemSettings {}
-impl _wxObject for wxSystemSettings { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSystemSettings { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSystemSettings {
-    pub fn from(handle: *u8) -> @wxSystemSettings { @wxSystemSettings(handle) }
-    pub fn null() -> @wxSystemSettings { wxSystemSettings::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSystemSettings { @wxSystemSettings(handle) }
+    pub fn null() -> @wxSystemSettings { wxSystemSettings::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17336,58 +17336,58 @@ impl wxSystemSettings {
 trait _wxSystemSettings : _wxObject {
 }
 
-struct wxTabCtrl(*u8);
+struct wxTabCtrl(*mut c_void);
 impl _wxTabCtrl for wxTabCtrl {}
 impl _wxControl for wxTabCtrl {}
 impl _wxWindow for wxTabCtrl {}
 impl _wxEvtHandler for wxTabCtrl {}
-impl _wxObject for wxTabCtrl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTabCtrl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTabCtrl {
-    pub fn from(handle: *u8) -> @wxTabCtrl { @wxTabCtrl(handle) }
-    pub fn null() -> @wxTabCtrl { wxTabCtrl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTabCtrl { @wxTabCtrl(handle) }
+    pub fn null() -> @wxTabCtrl { wxTabCtrl::from(0 as *mut c_void) }
     
 }
 
 trait _wxTabCtrl : _wxControl {
 }
 
-struct wxTabEvent(*u8);
+struct wxTabEvent(*mut c_void);
 impl _wxTabEvent for wxTabEvent {}
 impl _wxCommandEvent for wxTabEvent {}
 impl _wxEvent for wxTabEvent {}
-impl _wxObject for wxTabEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTabEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTabEvent {
-    pub fn from(handle: *u8) -> @wxTabEvent { @wxTabEvent(handle) }
-    pub fn null() -> @wxTabEvent { wxTabEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTabEvent { @wxTabEvent(handle) }
+    pub fn null() -> @wxTabEvent { wxTabEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxTabEvent : _wxCommandEvent {
 }
 
-struct wxTablesInUse(*u8);
+struct wxTablesInUse(*mut c_void);
 impl _wxTablesInUse for wxTablesInUse {}
-impl _wxObject for wxTablesInUse { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTablesInUse { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTablesInUse {
-    pub fn from(handle: *u8) -> @wxTablesInUse { @wxTablesInUse(handle) }
-    pub fn null() -> @wxTablesInUse { wxTablesInUse::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTablesInUse { @wxTablesInUse(handle) }
+    pub fn null() -> @wxTablesInUse { wxTablesInUse::from(0 as *mut c_void) }
     
 }
 
 trait _wxTablesInUse : _wxObject {
 }
 
-struct wxTaskBarIcon(*u8);
+struct wxTaskBarIcon(*mut c_void);
 impl _wxTaskBarIcon for wxTaskBarIcon {}
 impl _wxEvtHandler for wxTaskBarIcon {}
-impl _wxObject for wxTaskBarIcon { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTaskBarIcon { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTaskBarIcon {
-    pub fn from(handle: *u8) -> @wxTaskBarIcon { @wxTaskBarIcon(handle) }
-    pub fn null() -> @wxTaskBarIcon { wxTaskBarIcon::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTaskBarIcon { @wxTaskBarIcon(handle) }
+    pub fn null() -> @wxTaskBarIcon { wxTaskBarIcon::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17399,52 +17399,52 @@ impl wxTaskBarIcon {
 trait _wxTaskBarIcon : _wxEvtHandler {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isIconInstalled(&self) -> bool {
+    fn isIconInstalled(&self) -> c_int {
         unsafe { wxTaskBarIcon_IsIconInstalled(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxTaskBarIcon_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn popupMenu<T: _wxMenu>(&self, menu: &T) -> bool {
+    fn popupMenu<T: _wxMenu>(&self, menu: &T) -> c_int {
         unsafe { wxTaskBarIcon_PopupMenu(self.handle(), menu.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn removeIcon(&self) -> bool {
+    fn removeIcon(&self) -> c_int {
         unsafe { wxTaskBarIcon_RemoveIcon(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setIcon<T: _wxIcon>(&self, icon: &T, text: &str) -> bool {
+    fn setIcon<T: _wxIcon>(&self, icon: &T, text: &str) -> c_int {
         let text = wxT(text);
         unsafe { wxTaskBarIcon_SetIcon(self.handle(), icon.handle(), text.handle()) }
     }
 }
 
-struct wxTempFile(*u8);
-impl _wxTempFile for wxTempFile { fn handle(&self) -> *u8 { **self } }
+struct wxTempFile(*mut c_void);
+impl _wxTempFile for wxTempFile { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTempFile {
-    pub fn from(handle: *u8) -> @wxTempFile { @wxTempFile(handle) }
-    pub fn null() -> @wxTempFile { wxTempFile::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTempFile { @wxTempFile(handle) }
+    pub fn null() -> @wxTempFile { wxTempFile::from(0 as *mut c_void) }
     
 }
 
 trait _wxTempFile {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxTextAttr(*u8);
-impl _wxTextAttr for wxTextAttr { fn handle(&self) -> *u8 { **self } }
+struct wxTextAttr(*mut c_void);
+impl _wxTextAttr for wxTextAttr { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTextAttr {
-    pub fn from(handle: *u8) -> @wxTextAttr { @wxTextAttr(handle) }
-    pub fn null() -> @wxTextAttr { wxTextAttr::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTextAttr { @wxTextAttr(handle) }
+    pub fn null() -> @wxTextAttr { wxTextAttr::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17459,7 +17459,7 @@ impl wxTextAttr {
 }
 
 trait _wxTextAttr {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17483,22 +17483,22 @@ trait _wxTextAttr {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasBackgroundColour(&self) -> bool {
+    fn hasBackgroundColour(&self) -> c_int {
         unsafe { wxTextAttr_HasBackgroundColour(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasFont(&self) -> bool {
+    fn hasFont(&self) -> c_int {
         unsafe { wxTextAttr_HasFont(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasTextColour(&self) -> bool {
+    fn hasTextColour(&self) -> c_int {
         unsafe { wxTextAttr_HasTextColour(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isDefault(&self) -> bool {
+    fn isDefault(&self) -> c_int {
         unsafe { wxTextAttr_IsDefault(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -17518,16 +17518,16 @@ trait _wxTextAttr {
     }
 }
 
-struct wxTextCtrl(*u8);
+struct wxTextCtrl(*mut c_void);
 impl _wxTextCtrl for wxTextCtrl {}
 impl _wxControl for wxTextCtrl {}
 impl _wxWindow for wxTextCtrl {}
 impl _wxEvtHandler for wxTextCtrl {}
-impl _wxObject for wxTextCtrl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTextCtrl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTextCtrl {
-    pub fn from(handle: *u8) -> @wxTextCtrl { @wxTextCtrl(handle) }
-    pub fn null() -> @wxTextCtrl { wxTextCtrl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTextCtrl { @wxTextCtrl(handle) }
+    pub fn null() -> @wxTextCtrl { wxTextCtrl::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17546,27 +17546,27 @@ trait _wxTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canCopy(&self) -> bool {
+    fn canCopy(&self) -> c_int {
         unsafe { wxTextCtrl_CanCopy(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canCut(&self) -> bool {
+    fn canCut(&self) -> c_int {
         unsafe { wxTextCtrl_CanCut(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canPaste(&self) -> bool {
+    fn canPaste(&self) -> c_int {
         unsafe { wxTextCtrl_CanPaste(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canRedo(&self) -> bool {
+    fn canRedo(&self) -> c_int {
         unsafe { wxTextCtrl_CanRedo(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canUndo(&self) -> bool {
+    fn canUndo(&self) -> c_int {
         unsafe { wxTextCtrl_CanUndo(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -17622,7 +17622,7 @@ trait _wxTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSelection(&self, from: *u8, to: *u8) {
+    fn getSelection(&self, from: *mut c_void, to: *mut c_void) {
         unsafe { wxTextCtrl_GetSelection(self.handle(), from, to) }
     }
     #[fixed_stack_segment]
@@ -17632,17 +17632,17 @@ trait _wxTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEditable(&self) -> bool {
+    fn isEditable(&self) -> c_int {
         unsafe { wxTextCtrl_IsEditable(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isModified(&self) -> bool {
+    fn isModified(&self) -> c_int {
         unsafe { wxTextCtrl_IsModified(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn loadFile(&self, file: &str) -> bool {
+    fn loadFile(&self, file: &str) -> c_int {
         let file = wxT(file);
         unsafe { wxTextCtrl_LoadFile(self.handle(), file.handle()) }
     }
@@ -17653,7 +17653,7 @@ trait _wxTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn positionToXY(&self, pos: c_long, x: *c_long, y: *c_long) -> c_int {
+    fn positionToXY(&self, pos: c_long, x: *mut c_long, y: *mut c_long) -> c_int {
         unsafe { wxTextCtrl_PositionToXY(self.handle(), pos, x, y) }
     }
     #[fixed_stack_segment]
@@ -17674,13 +17674,13 @@ trait _wxTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn saveFile(&self, file: &str) -> bool {
+    fn saveFile(&self, file: &str) -> c_int {
         let file = wxT(file);
         unsafe { wxTextCtrl_SaveFile(self.handle(), file.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setEditable(&self, editable: bool) {
+    fn setEditable(&self, editable: c_int) {
         unsafe { wxTextCtrl_SetEditable(self.handle(), editable) }
     }
     #[fixed_stack_segment]
@@ -17727,7 +17727,7 @@ trait _wxTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn emulateKeyPress<T: _wxKeyEvent>(&self, keyevent: &T) -> bool {
+    fn emulateKeyPress<T: _wxKeyEvent>(&self, keyevent: &T) -> c_int {
         unsafe { wxTextCtrl_EmulateKeyPress(self.handle(), keyevent.handle()) }
     }
     #[fixed_stack_segment]
@@ -17747,17 +17747,17 @@ trait _wxTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isMultiLine(&self) -> bool {
+    fn isMultiLine(&self) -> c_int {
         unsafe { wxTextCtrl_IsMultiLine(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSingleLine(&self) -> bool {
+    fn isSingleLine(&self) -> c_int {
         unsafe { wxTextCtrl_IsSingleLine(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setDefaultStyle<T: _wxTextAttr>(&self, style: &T) -> bool {
+    fn setDefaultStyle<T: _wxTextAttr>(&self, style: &T) -> c_int {
         unsafe { wxTextCtrl_SetDefaultStyle(self.handle(), style.handle()) }
     }
     #[fixed_stack_segment]
@@ -17767,75 +17767,75 @@ trait _wxTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setStyle<T: _wxTextAttr>(&self, start: c_long, end: c_long, style: &T) -> bool {
+    fn setStyle<T: _wxTextAttr>(&self, start: c_long, end: c_long, style: &T) -> c_int {
         unsafe { wxTextCtrl_SetStyle(self.handle(), start, end, style.handle()) }
     }
 }
 
-struct wxTextDataObject(*u8);
+struct wxTextDataObject(*mut c_void);
 impl _wxTextDataObject for wxTextDataObject {}
 impl _wxDataObjectSimple for wxTextDataObject {}
-impl _wxDataObject for wxTextDataObject { fn handle(&self) -> *u8 { **self } }
+impl _wxDataObject for wxTextDataObject { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTextDataObject {
-    pub fn from(handle: *u8) -> @wxTextDataObject { @wxTextDataObject(handle) }
-    pub fn null() -> @wxTextDataObject { wxTextDataObject::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTextDataObject { @wxTextDataObject(handle) }
+    pub fn null() -> @wxTextDataObject { wxTextDataObject::from(0 as *mut c_void) }
     
 }
 
 trait _wxTextDataObject : _wxDataObjectSimple {
 }
 
-struct wxTextDropTarget(*u8);
+struct wxTextDropTarget(*mut c_void);
 impl _wxTextDropTarget for wxTextDropTarget {}
-impl _wxDropTarget for wxTextDropTarget { fn handle(&self) -> *u8 { **self } }
+impl _wxDropTarget for wxTextDropTarget { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTextDropTarget {
-    pub fn from(handle: *u8) -> @wxTextDropTarget { @wxTextDropTarget(handle) }
-    pub fn null() -> @wxTextDropTarget { wxTextDropTarget::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTextDropTarget { @wxTextDropTarget(handle) }
+    pub fn null() -> @wxTextDropTarget { wxTextDropTarget::from(0 as *mut c_void) }
     
 }
 
 trait _wxTextDropTarget : _wxDropTarget {
 }
 
-struct wxTextEntryDialog(*u8);
+struct wxTextEntryDialog(*mut c_void);
 impl _wxTextEntryDialog for wxTextEntryDialog {}
 impl _wxDialog for wxTextEntryDialog {}
 impl _wxTopLevelWindow for wxTextEntryDialog {}
 impl _wxWindow for wxTextEntryDialog {}
 impl _wxEvtHandler for wxTextEntryDialog {}
-impl _wxObject for wxTextEntryDialog { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTextEntryDialog { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTextEntryDialog {
-    pub fn from(handle: *u8) -> @wxTextEntryDialog { @wxTextEntryDialog(handle) }
-    pub fn null() -> @wxTextEntryDialog { wxTextEntryDialog::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTextEntryDialog { @wxTextEntryDialog(handle) }
+    pub fn null() -> @wxTextEntryDialog { wxTextEntryDialog::from(0 as *mut c_void) }
     
 }
 
 trait _wxTextEntryDialog : _wxDialog {
 }
 
-struct wxTextFile(*u8);
-impl _wxTextFile for wxTextFile { fn handle(&self) -> *u8 { **self } }
+struct wxTextFile(*mut c_void);
+impl _wxTextFile for wxTextFile { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTextFile {
-    pub fn from(handle: *u8) -> @wxTextFile { @wxTextFile(handle) }
-    pub fn null() -> @wxTextFile { wxTextFile::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTextFile { @wxTextFile(handle) }
+    pub fn null() -> @wxTextFile { wxTextFile::from(0 as *mut c_void) }
     
 }
 
 trait _wxTextFile {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxTextInputStream(*u8);
-impl _wxTextInputStream for wxTextInputStream { fn handle(&self) -> *u8 { **self } }
+struct wxTextInputStream(*mut c_void);
+impl _wxTextInputStream for wxTextInputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTextInputStream {
-    pub fn from(handle: *u8) -> @wxTextInputStream { @wxTextInputStream(handle) }
-    pub fn null() -> @wxTextInputStream { wxTextInputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTextInputStream { @wxTextInputStream(handle) }
+    pub fn null() -> @wxTextInputStream { wxTextInputStream::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17846,7 +17846,7 @@ impl wxTextInputStream {
 }
 
 trait _wxTextInputStream {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17860,12 +17860,12 @@ trait _wxTextInputStream {
     }
 }
 
-struct wxTextOutputStream(*u8);
-impl _wxTextOutputStream for wxTextOutputStream { fn handle(&self) -> *u8 { **self } }
+struct wxTextOutputStream(*mut c_void);
+impl _wxTextOutputStream for wxTextOutputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTextOutputStream {
-    pub fn from(handle: *u8) -> @wxTextOutputStream { @wxTextOutputStream(handle) }
-    pub fn null() -> @wxTextOutputStream { wxTextOutputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTextOutputStream { @wxTextOutputStream(handle) }
+    pub fn null() -> @wxTextOutputStream { wxTextOutputStream::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17875,7 +17875,7 @@ impl wxTextOutputStream {
 }
 
 trait _wxTextOutputStream {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -17890,19 +17890,19 @@ trait _wxTextOutputStream {
     }
 }
 
-struct wxTextValidator(*u8);
+struct wxTextValidator(*mut c_void);
 impl _wxTextValidator for wxTextValidator {}
 impl _wxValidator for wxTextValidator {}
 impl _wxEvtHandler for wxTextValidator {}
-impl _wxObject for wxTextValidator { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTextValidator { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTextValidator {
-    pub fn from(handle: *u8) -> @wxTextValidator { @wxTextValidator(handle) }
-    pub fn null() -> @wxTextValidator { wxTextValidator::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTextValidator { @wxTextValidator(handle) }
+    pub fn null() -> @wxTextValidator { wxTextValidator::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(style: c_int, val: *u8) -> @wxTextValidator {
+    pub fn new(style: c_int, val: *mut c_void) -> @wxTextValidator {
         unsafe { @wxTextValidator(wxTextValidator_Create(style, val)) }
     }
 }
@@ -17910,22 +17910,22 @@ impl wxTextValidator {
 trait _wxTextValidator : _wxValidator {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getExcludes(&self, _ref: *wchar_t) -> c_int {
+    fn getExcludes(&self, _ref: *mut c_void) -> c_int {
         unsafe { wxTextValidator_GetExcludes(self.handle(), _ref) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getIncludes(&self, _ref: *wchar_t) -> c_int {
+    fn getIncludes(&self, _ref: *mut c_void) -> c_int {
         unsafe { wxTextValidator_GetIncludes(self.handle(), _ref) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setExcludes(&self, list: *wchar_t, count: c_int) {
+    fn setExcludes(&self, list: *mut c_void, count: c_int) {
         unsafe { wxTextValidator_SetExcludes(self.handle(), list, count) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setIncludes(&self, list: *wchar_t, count: c_int) {
+    fn setIncludes(&self, list: *mut c_void, count: c_int) {
         unsafe { wxTextValidator_SetIncludes(self.handle(), list, count) }
     }
     #[fixed_stack_segment]
@@ -17950,70 +17950,70 @@ trait _wxTextValidator : _wxValidator {
     }
 }
 
-struct wxThinSplitterWindow(*u8);
+struct wxThinSplitterWindow(*mut c_void);
 impl _wxThinSplitterWindow for wxThinSplitterWindow {}
 impl _wxSplitterWindow for wxThinSplitterWindow {}
 impl _wxWindow for wxThinSplitterWindow {}
 impl _wxEvtHandler for wxThinSplitterWindow {}
-impl _wxObject for wxThinSplitterWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxThinSplitterWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxThinSplitterWindow {
-    pub fn from(handle: *u8) -> @wxThinSplitterWindow { @wxThinSplitterWindow(handle) }
-    pub fn null() -> @wxThinSplitterWindow { wxThinSplitterWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxThinSplitterWindow { @wxThinSplitterWindow(handle) }
+    pub fn null() -> @wxThinSplitterWindow { wxThinSplitterWindow::from(0 as *mut c_void) }
     
 }
 
 trait _wxThinSplitterWindow : _wxSplitterWindow {
 }
 
-struct wxThread(*u8);
-impl _wxThread for wxThread { fn handle(&self) -> *u8 { **self } }
+struct wxThread(*mut c_void);
+impl _wxThread for wxThread { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxThread {
-    pub fn from(handle: *u8) -> @wxThread { @wxThread(handle) }
-    pub fn null() -> @wxThread { wxThread::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxThread { @wxThread(handle) }
+    pub fn null() -> @wxThread { wxThread::from(0 as *mut c_void) }
     
 }
 
 trait _wxThread {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxTime(*u8);
+struct wxTime(*mut c_void);
 impl _wxTime for wxTime {}
-impl _wxObject for wxTime { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTime { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTime {
-    pub fn from(handle: *u8) -> @wxTime { @wxTime(handle) }
-    pub fn null() -> @wxTime { wxTime::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTime { @wxTime(handle) }
+    pub fn null() -> @wxTime { wxTime::from(0 as *mut c_void) }
     
 }
 
 trait _wxTime : _wxObject {
 }
 
-struct wxTimeSpan(*u8);
-impl _wxTimeSpan for wxTimeSpan { fn handle(&self) -> *u8 { **self } }
+struct wxTimeSpan(*mut c_void);
+impl _wxTimeSpan for wxTimeSpan { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTimeSpan {
-    pub fn from(handle: *u8) -> @wxTimeSpan { @wxTimeSpan(handle) }
-    pub fn null() -> @wxTimeSpan { wxTimeSpan::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTimeSpan { @wxTimeSpan(handle) }
+    pub fn null() -> @wxTimeSpan { wxTimeSpan::from(0 as *mut c_void) }
     
 }
 
 trait _wxTimeSpan {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxTimer(*u8);
+struct wxTimer(*mut c_void);
 impl _wxTimer for wxTimer {}
-impl _wxObject for wxTimer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTimer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTimer {
-    pub fn from(handle: *u8) -> @wxTimer { @wxTimer(handle) }
-    pub fn null() -> @wxTimer { wxTimer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTimer { @wxTimer(handle) }
+    pub fn null() -> @wxTimer { wxTimer::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -18030,17 +18030,17 @@ trait _wxTimer : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOneShot(&self) -> bool {
+    fn isOneShot(&self) -> c_int {
         unsafe { wxTimer_IsOneShot(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isRuning(&self) -> bool {
+    fn isRuning(&self) -> c_int {
         unsafe { wxTimer_IsRuning(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn start(&self, _int: c_int, _one: bool) -> bool {
+    fn start(&self, _int: c_int, _one: c_int) -> c_int {
         unsafe { wxTimer_Start(self.handle(), _int, _one) }
     }
     #[fixed_stack_segment]
@@ -18050,27 +18050,27 @@ trait _wxTimer : _wxObject {
     }
 }
 
-struct wxTimerBase(*u8);
+struct wxTimerBase(*mut c_void);
 impl _wxTimerBase for wxTimerBase {}
-impl _wxObject for wxTimerBase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTimerBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTimerBase {
-    pub fn from(handle: *u8) -> @wxTimerBase { @wxTimerBase(handle) }
-    pub fn null() -> @wxTimerBase { wxTimerBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTimerBase { @wxTimerBase(handle) }
+    pub fn null() -> @wxTimerBase { wxTimerBase::from(0 as *mut c_void) }
     
 }
 
 trait _wxTimerBase : _wxObject {
 }
 
-struct wxTimerEvent(*u8);
+struct wxTimerEvent(*mut c_void);
 impl _wxTimerEvent for wxTimerEvent {}
 impl _wxEvent for wxTimerEvent {}
-impl _wxObject for wxTimerEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTimerEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTimerEvent {
-    pub fn from(handle: *u8) -> @wxTimerEvent { @wxTimerEvent(handle) }
-    pub fn null() -> @wxTimerEvent { wxTimerEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTimerEvent { @wxTimerEvent(handle) }
+    pub fn null() -> @wxTimerEvent { wxTimerEvent::from(0 as *mut c_void) }
     
 }
 
@@ -18082,14 +18082,14 @@ trait _wxTimerEvent : _wxEvent {
     }
 }
 
-struct wxTimerEx(*u8);
+struct wxTimerEx(*mut c_void);
 impl _wxTimerEx for wxTimerEx {}
 impl _wxTimer for wxTimerEx {}
-impl _wxObject for wxTimerEx { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTimerEx { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTimerEx {
-    pub fn from(handle: *u8) -> @wxTimerEx { @wxTimerEx(handle) }
-    pub fn null() -> @wxTimerEx { wxTimerEx::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTimerEx { @wxTimerEx(handle) }
+    pub fn null() -> @wxTimerEx { wxTimerEx::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -18111,45 +18111,45 @@ trait _wxTimerEx : _wxTimer {
     }
 }
 
-struct wxTimerRunner(*u8);
-impl _wxTimerRunner for wxTimerRunner { fn handle(&self) -> *u8 { **self } }
+struct wxTimerRunner(*mut c_void);
+impl _wxTimerRunner for wxTimerRunner { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTimerRunner {
-    pub fn from(handle: *u8) -> @wxTimerRunner { @wxTimerRunner(handle) }
-    pub fn null() -> @wxTimerRunner { wxTimerRunner::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTimerRunner { @wxTimerRunner(handle) }
+    pub fn null() -> @wxTimerRunner { wxTimerRunner::from(0 as *mut c_void) }
     
 }
 
 trait _wxTimerRunner {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxTipProvider(*u8);
-impl _wxTipProvider for wxTipProvider { fn handle(&self) -> *u8 { **self } }
+struct wxTipProvider(*mut c_void);
+impl _wxTipProvider for wxTipProvider { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTipProvider {
-    pub fn from(handle: *u8) -> @wxTipProvider { @wxTipProvider(handle) }
-    pub fn null() -> @wxTipProvider { wxTipProvider::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTipProvider { @wxTipProvider(handle) }
+    pub fn null() -> @wxTipProvider { wxTipProvider::from(0 as *mut c_void) }
     
 }
 
 trait _wxTipProvider {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxTipWindow(*u8);
+struct wxTipWindow(*mut c_void);
 impl _wxTipWindow for wxTipWindow {}
 impl _wxPopupTransientWindow for wxTipWindow {}
 impl _wxPopupWindow for wxTipWindow {}
 impl _wxWindow for wxTipWindow {}
 impl _wxEvtHandler for wxTipWindow {}
-impl _wxObject for wxTipWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTipWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTipWindow {
-    pub fn from(handle: *u8) -> @wxTipWindow { @wxTipWindow(handle) }
-    pub fn null() -> @wxTipWindow { wxTipWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTipWindow { @wxTipWindow(handle) }
+    pub fn null() -> @wxTipWindow { wxTipWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -18167,21 +18167,21 @@ trait _wxTipWindow : _wxPopupTransientWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setTipWindowPtr(&self, windowPtr: *u8) {
+    fn setTipWindowPtr(&self, windowPtr: *mut c_void) {
         unsafe { wxTipWindow_SetTipWindowPtr(self.handle(), windowPtr) }
     }
 }
 
-struct wxToggleButton(*u8);
+struct wxToggleButton(*mut c_void);
 impl _wxToggleButton for wxToggleButton {}
 impl _wxControl for wxToggleButton {}
 impl _wxWindow for wxToggleButton {}
 impl _wxEvtHandler for wxToggleButton {}
-impl _wxObject for wxToggleButton { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxToggleButton { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxToggleButton {
-    pub fn from(handle: *u8) -> @wxToggleButton { @wxToggleButton(handle) }
-    pub fn null() -> @wxToggleButton { wxToggleButton::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxToggleButton { @wxToggleButton(handle) }
+    pub fn null() -> @wxToggleButton { wxToggleButton::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -18194,27 +18194,27 @@ impl wxToggleButton {
 trait _wxToggleButton : _wxControl {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getValue(&self) -> bool {
+    fn getValue(&self) -> c_int {
         unsafe { wxToggleButton_GetValue(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setValue(&self, state: bool) {
+    fn setValue(&self, state: c_int) {
         unsafe { wxToggleButton_SetValue(self.handle(), state) }
     }
 }
 
-struct wxToolBar(*u8);
+struct wxToolBar(*mut c_void);
 impl _wxToolBar for wxToolBar {}
 impl _wxToolBarBase for wxToolBar {}
 impl _wxControl for wxToolBar {}
 impl _wxWindow for wxToolBar {}
 impl _wxEvtHandler for wxToolBar {}
-impl _wxObject for wxToolBar { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxToolBar { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxToolBar {
-    pub fn from(handle: *u8) -> @wxToolBar { @wxToolBar(handle) }
-    pub fn null() -> @wxToolBar { wxToolBar::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxToolBar { @wxToolBar(handle) }
+    pub fn null() -> @wxToolBar { wxToolBar::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -18226,7 +18226,7 @@ impl wxToolBar {
 trait _wxToolBar : _wxToolBarBase {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addControl<T: _wxControl>(&self, ctrl: &T) -> bool {
+    fn addControl<T: _wxControl>(&self, ctrl: &T) -> c_int {
         unsafe { wxToolBar_AddControl(self.handle(), ctrl.handle()) }
     }
     #[fixed_stack_segment]
@@ -18243,24 +18243,24 @@ trait _wxToolBar : _wxToolBarBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addToolEx<T: _wxBitmap, U: _wxBitmap, V: _wxObject>(&self, id: c_int, bmp1: &T, bmp2: &U, isToggle: bool, x: c_int, y: c_int, data: &V, shelp: &str, lhelp: &str) {
+    fn addToolEx<T: _wxBitmap, U: _wxBitmap, V: _wxObject>(&self, id: c_int, bmp1: &T, bmp2: &U, isToggle: c_int, x: c_int, y: c_int, data: &V, shelp: &str, lhelp: &str) {
         let shelp = wxT(shelp);
         let lhelp = wxT(lhelp);
         unsafe { wxToolBar_AddToolEx(self.handle(), id, bmp1.handle(), bmp2.handle(), isToggle, x, y, data.handle(), shelp.handle(), lhelp.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deleteTool(&self, id: c_int) -> bool {
+    fn deleteTool(&self, id: c_int) -> c_int {
         unsafe { wxToolBar_DeleteTool(self.handle(), id) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn deleteToolByPos(&self, pos: c_int) -> bool {
+    fn deleteToolByPos(&self, pos: c_int) -> c_int {
         unsafe { wxToolBar_DeleteToolByPos(self.handle(), pos) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableTool(&self, id: c_int, enable: bool) {
+    fn enableTool(&self, id: c_int, enable: c_int) {
         unsafe { wxToolBar_EnableTool(self.handle(), id, enable) }
     }
     #[fixed_stack_segment]
@@ -18280,7 +18280,7 @@ trait _wxToolBar : _wxToolBarBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getToolEnabled(&self, id: c_int) -> bool {
+    fn getToolEnabled(&self, id: c_int) -> c_int {
         unsafe { wxToolBar_GetToolEnabled(self.handle(), id) }
     }
     #[fixed_stack_segment]
@@ -18305,7 +18305,7 @@ trait _wxToolBar : _wxToolBarBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getToolState(&self, id: c_int) -> bool {
+    fn getToolState(&self, id: c_int) -> c_int {
         unsafe { wxToolBar_GetToolState(self.handle(), id) }
     }
     #[fixed_stack_segment]
@@ -18320,14 +18320,14 @@ trait _wxToolBar : _wxToolBarBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn insertTool<T: _wxBitmap, U: _wxBitmap, V: _wxObject>(&self, pos: c_int, id: c_int, bmp1: &T, bmp2: &U, isToggle: bool, data: &V, shelp: &str, lhelp: &str) {
+    fn insertTool<T: _wxBitmap, U: _wxBitmap, V: _wxObject>(&self, pos: c_int, id: c_int, bmp1: &T, bmp2: &U, isToggle: c_int, data: &V, shelp: &str, lhelp: &str) {
         let shelp = wxT(shelp);
         let lhelp = wxT(lhelp);
         unsafe { wxToolBar_InsertTool(self.handle(), pos, id, bmp1.handle(), bmp2.handle(), isToggle, data.handle(), shelp.handle(), lhelp.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn realize(&self) -> bool {
+    fn realize(&self) -> c_int {
         unsafe { wxToolBar_Realize(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -18374,7 +18374,7 @@ trait _wxToolBar : _wxToolBarBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn toggleTool(&self, id: c_int, toggle: bool) {
+    fn toggleTool(&self, id: c_int, toggle: c_int) {
         unsafe { wxToolBar_ToggleTool(self.handle(), id, toggle) }
     }
     #[fixed_stack_segment]
@@ -18387,81 +18387,81 @@ trait _wxToolBar : _wxToolBarBase {
     }
 }
 
-struct wxToolBarBase(*u8);
+struct wxToolBarBase(*mut c_void);
 impl _wxToolBarBase for wxToolBarBase {}
 impl _wxControl for wxToolBarBase {}
 impl _wxWindow for wxToolBarBase {}
 impl _wxEvtHandler for wxToolBarBase {}
-impl _wxObject for wxToolBarBase { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxToolBarBase { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxToolBarBase {
-    pub fn from(handle: *u8) -> @wxToolBarBase { @wxToolBarBase(handle) }
-    pub fn null() -> @wxToolBarBase { wxToolBarBase::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxToolBarBase { @wxToolBarBase(handle) }
+    pub fn null() -> @wxToolBarBase { wxToolBarBase::from(0 as *mut c_void) }
     
 }
 
 trait _wxToolBarBase : _wxControl {
 }
 
-struct wxToolLayoutItem(*u8);
+struct wxToolLayoutItem(*mut c_void);
 impl _wxToolLayoutItem for wxToolLayoutItem {}
-impl _wxObject for wxToolLayoutItem { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxToolLayoutItem { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxToolLayoutItem {
-    pub fn from(handle: *u8) -> @wxToolLayoutItem { @wxToolLayoutItem(handle) }
-    pub fn null() -> @wxToolLayoutItem { wxToolLayoutItem::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxToolLayoutItem { @wxToolLayoutItem(handle) }
+    pub fn null() -> @wxToolLayoutItem { wxToolLayoutItem::from(0 as *mut c_void) }
     
 }
 
 trait _wxToolLayoutItem : _wxObject {
 }
 
-struct wxToolTip(*u8);
+struct wxToolTip(*mut c_void);
 impl _wxToolTip for wxToolTip {}
-impl _wxObject for wxToolTip { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxToolTip { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxToolTip {
-    pub fn from(handle: *u8) -> @wxToolTip { @wxToolTip(handle) }
-    pub fn null() -> @wxToolTip { wxToolTip::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxToolTip { @wxToolTip(handle) }
+    pub fn null() -> @wxToolTip { wxToolTip::from(0 as *mut c_void) }
     
 }
 
 trait _wxToolTip : _wxObject {
 }
 
-struct wxToolWindow(*u8);
+struct wxToolWindow(*mut c_void);
 impl _wxToolWindow for wxToolWindow {}
 impl _wxFrame for wxToolWindow {}
 impl _wxTopLevelWindow for wxToolWindow {}
 impl _wxWindow for wxToolWindow {}
 impl _wxEvtHandler for wxToolWindow {}
-impl _wxObject for wxToolWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxToolWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxToolWindow {
-    pub fn from(handle: *u8) -> @wxToolWindow { @wxToolWindow(handle) }
-    pub fn null() -> @wxToolWindow { wxToolWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxToolWindow { @wxToolWindow(handle) }
+    pub fn null() -> @wxToolWindow { wxToolWindow::from(0 as *mut c_void) }
     
 }
 
 trait _wxToolWindow : _wxFrame {
 }
 
-struct wxTopLevelWindow(*u8);
+struct wxTopLevelWindow(*mut c_void);
 impl _wxTopLevelWindow for wxTopLevelWindow {}
 impl _wxWindow for wxTopLevelWindow {}
 impl _wxEvtHandler for wxTopLevelWindow {}
-impl _wxObject for wxTopLevelWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTopLevelWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTopLevelWindow {
-    pub fn from(handle: *u8) -> @wxTopLevelWindow { @wxTopLevelWindow(handle) }
-    pub fn null() -> @wxTopLevelWindow { wxTopLevelWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTopLevelWindow { @wxTopLevelWindow(handle) }
+    pub fn null() -> @wxTopLevelWindow { wxTopLevelWindow::from(0 as *mut c_void) }
     
 }
 
 trait _wxTopLevelWindow : _wxWindow {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enableCloseButton(&self, enable: bool) -> bool {
+    fn enableCloseButton(&self, enable: c_int) -> c_int {
         unsafe { wxTopLevelWindow_EnableCloseButton(self.handle(), enable) }
     }
     #[fixed_stack_segment]
@@ -18486,27 +18486,27 @@ trait _wxTopLevelWindow : _wxWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn iconize(&self, iconize: bool) -> bool {
+    fn iconize(&self, iconize: c_int) -> c_int {
         unsafe { wxTopLevelWindow_Iconize(self.handle(), iconize) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isActive(&self) -> bool {
+    fn isActive(&self) -> c_int {
         unsafe { wxTopLevelWindow_IsActive(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isIconized(&self) -> bool {
+    fn isIconized(&self) -> c_int {
         unsafe { wxTopLevelWindow_IsIconized(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isMaximized(&self) -> bool {
+    fn isMaximized(&self) -> c_int {
         unsafe { wxTopLevelWindow_IsMaximized(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn maximize(&self, maximize: bool) {
+    fn maximize(&self, maximize: c_int) {
         unsafe { wxTopLevelWindow_Maximize(self.handle(), maximize) }
     }
     #[fixed_stack_segment]
@@ -18531,7 +18531,7 @@ trait _wxTopLevelWindow : _wxWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setIcons(&self, _icons: *u8) {
+    fn setIcons(&self, _icons: *mut c_void) {
         unsafe { wxTopLevelWindow_SetIcons(self.handle(), _icons) }
     }
     #[fixed_stack_segment]
@@ -18552,35 +18552,35 @@ trait _wxTopLevelWindow : _wxWindow {
     }
 }
 
-struct wxTreeCompanionWindow(*u8);
+struct wxTreeCompanionWindow(*mut c_void);
 impl _wxTreeCompanionWindow for wxTreeCompanionWindow {}
 impl _wxWindow for wxTreeCompanionWindow {}
 impl _wxEvtHandler for wxTreeCompanionWindow {}
-impl _wxObject for wxTreeCompanionWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTreeCompanionWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTreeCompanionWindow {
-    pub fn from(handle: *u8) -> @wxTreeCompanionWindow { @wxTreeCompanionWindow(handle) }
-    pub fn null() -> @wxTreeCompanionWindow { wxTreeCompanionWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTreeCompanionWindow { @wxTreeCompanionWindow(handle) }
+    pub fn null() -> @wxTreeCompanionWindow { wxTreeCompanionWindow::from(0 as *mut c_void) }
     
 }
 
 trait _wxTreeCompanionWindow : _wxWindow {
 }
 
-struct wxTreeCtrl(*u8);
+struct wxTreeCtrl(*mut c_void);
 impl _wxTreeCtrl for wxTreeCtrl {}
 impl _wxControl for wxTreeCtrl {}
 impl _wxWindow for wxTreeCtrl {}
 impl _wxEvtHandler for wxTreeCtrl {}
-impl _wxObject for wxTreeCtrl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTreeCtrl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTreeCtrl {
-    pub fn from(handle: *u8) -> @wxTreeCtrl { @wxTreeCtrl(handle) }
-    pub fn null() -> @wxTreeCtrl { wxTreeCtrl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTreeCtrl { @wxTreeCtrl(handle) }
+    pub fn null() -> @wxTreeCtrl { wxTreeCtrl::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(_obj: *u8, _cmp: *u8, _prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxTreeCtrl {
+    pub fn new<T: _wxWindow>(_obj: *mut c_void, _cmp: *mut c_void, _prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxTreeCtrl {
         unsafe { @wxTreeCtrl(wxTreeCtrl_Create(_obj, _cmp, _prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) }
     }
     #[fixed_stack_segment]
@@ -18630,7 +18630,7 @@ trait _wxTreeCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn endEditLabel<T: _wxTreeItemId>(&self, item: &T, discardChanges: bool) {
+    fn endEditLabel<T: _wxTreeItemId>(&self, item: &T, discardChanges: c_int) {
         unsafe { wxTreeCtrl_EndEditLabel(self.handle(), item.handle(), discardChanges) }
     }
     #[fixed_stack_segment]
@@ -18645,12 +18645,12 @@ trait _wxTreeCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getBoundingRect<T: _wxTreeItemId>(&self, item: &T, textOnly: bool) -> @wxRect {
+    fn getBoundingRect<T: _wxTreeItemId>(&self, item: &T, textOnly: c_int) -> @wxRect {
         unsafe { @wxRect(wxTreeCtrl_GetBoundingRect(self.handle(), item.handle(), textOnly)) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getChildrenCount<T: _wxTreeItemId>(&self, item: &T, recursively: bool) -> c_int {
+    fn getChildrenCount<T: _wxTreeItemId>(&self, item: &T, recursively: c_int) -> c_int {
         unsafe { wxTreeCtrl_GetChildrenCount(self.handle(), item.handle(), recursively) }
     }
     #[fixed_stack_segment]
@@ -18665,7 +18665,7 @@ trait _wxTreeCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getFirstChild<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: &T, cookie: *c_int, _item: &U) {
+    fn getFirstChild<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: &T, cookie: *mut c_int, _item: &U) {
         unsafe { wxTreeCtrl_GetFirstChild(self.handle(), item.handle(), cookie, _item.handle()) }
     }
     #[fixed_stack_segment]
@@ -18685,7 +18685,7 @@ trait _wxTreeCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getItemData<T: _wxTreeItemId>(&self, item: &T) -> *u8 {
+    fn getItemData<T: _wxTreeItemId>(&self, item: &T) -> *mut c_void {
         unsafe { wxTreeCtrl_GetItemData(self.handle(), item.handle()) }
     }
     #[fixed_stack_segment]
@@ -18705,7 +18705,7 @@ trait _wxTreeCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getNextChild<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: &T, cookie: *c_int, _item: &U) {
+    fn getNextChild<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: &T, cookie: *mut c_int, _item: &U) {
         unsafe { wxTreeCtrl_GetNextChild(self.handle(), item.handle(), cookie, _item.handle()) }
     }
     #[fixed_stack_segment]
@@ -18740,7 +18740,7 @@ trait _wxTreeCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSelections(&self, selections: *intptr_t) -> c_int {
+    fn getSelections(&self, selections: *mut c_void) -> c_int {
         unsafe { wxTreeCtrl_GetSelections(self.handle(), selections) }
     }
     #[fixed_stack_segment]
@@ -18755,39 +18755,39 @@ trait _wxTreeCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hitTest<T: _wxTreeItemId>(&self, _x: c_int, _y: c_int, flags: *c_int, _item: &T) {
+    fn hitTest<T: _wxTreeItemId>(&self, _x: c_int, _y: c_int, flags: *mut c_int, _item: &T) {
         unsafe { wxTreeCtrl_HitTest(self.handle(), _x, _y, flags, _item.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn insertItem<T: _wxTreeItemId, U: _wxTreeItemId, V: _wxTreeItemId>(&self, parent: &T, idPrevious: &U, text: &str, image: c_int, selectedImage: c_int, data: *u8, _item: &V) {
+    fn insertItem<T: _wxTreeItemId, U: _wxTreeItemId, V: _wxTreeItemId>(&self, parent: &T, idPrevious: &U, text: &str, image: c_int, selectedImage: c_int, data: *mut c_void, _item: &V) {
         let text = wxT(text);
         unsafe { wxTreeCtrl_InsertItem(self.handle(), parent.handle(), idPrevious.handle(), text.handle(), image, selectedImage, data, _item.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn insertItemByIndex<T: _wxTreeItemId, U: _wxTreeItemId>(&self, parent: &T, index: c_int, text: &str, image: c_int, selectedImage: c_int, data: *u8, _item: &U) {
+    fn insertItemByIndex<T: _wxTreeItemId, U: _wxTreeItemId>(&self, parent: &T, index: c_int, text: &str, image: c_int, selectedImage: c_int, data: *mut c_void, _item: &U) {
         let text = wxT(text);
         unsafe { wxTreeCtrl_InsertItemByIndex(self.handle(), parent.handle(), index, text.handle(), image, selectedImage, data, _item.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isBold<T: _wxTreeItemId>(&self, item: &T) -> bool {
+    fn isBold<T: _wxTreeItemId>(&self, item: &T) -> c_int {
         unsafe { wxTreeCtrl_IsBold(self.handle(), item.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isExpanded<T: _wxTreeItemId>(&self, item: &T) -> bool {
+    fn isExpanded<T: _wxTreeItemId>(&self, item: &T) -> c_int {
         unsafe { wxTreeCtrl_IsExpanded(self.handle(), item.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isSelected<T: _wxTreeItemId>(&self, item: &T) -> bool {
+    fn isSelected<T: _wxTreeItemId>(&self, item: &T) -> c_int {
         unsafe { wxTreeCtrl_IsSelected(self.handle(), item.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isVisible<T: _wxTreeItemId>(&self, item: &T) -> bool {
+    fn isVisible<T: _wxTreeItemId>(&self, item: &T) -> c_int {
         unsafe { wxTreeCtrl_IsVisible(self.handle(), item.handle()) }
     }
     #[fixed_stack_segment]
@@ -18802,7 +18802,7 @@ trait _wxTreeCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn prependItem<T: _wxTreeItemId, U: _wxTreeItemId>(&self, parent: &T, text: &str, image: c_int, selectedImage: c_int, data: *u8, _item: &U) {
+    fn prependItem<T: _wxTreeItemId, U: _wxTreeItemId>(&self, parent: &T, text: &str, image: c_int, selectedImage: c_int, data: *mut c_void, _item: &U) {
         let text = wxT(text);
         unsafe { wxTreeCtrl_PrependItem(self.handle(), parent.handle(), text.handle(), image, selectedImage, data, _item.handle()) }
     }
@@ -18833,17 +18833,17 @@ trait _wxTreeCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setItemBold<T: _wxTreeItemId>(&self, item: &T, bold: bool) {
+    fn setItemBold<T: _wxTreeItemId>(&self, item: &T, bold: c_int) {
         unsafe { wxTreeCtrl_SetItemBold(self.handle(), item.handle(), bold) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setItemData<T: _wxTreeItemId>(&self, item: &T, data: *u8) {
+    fn setItemData<T: _wxTreeItemId>(&self, item: &T, data: *mut c_void) {
         unsafe { wxTreeCtrl_SetItemData(self.handle(), item.handle(), data) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setItemDropHighlight<T: _wxTreeItemId>(&self, item: &T, highlight: bool) {
+    fn setItemDropHighlight<T: _wxTreeItemId>(&self, item: &T, highlight: c_int) {
         unsafe { wxTreeCtrl_SetItemDropHighlight(self.handle(), item.handle(), highlight) }
     }
     #[fixed_stack_segment]
@@ -18853,7 +18853,7 @@ trait _wxTreeCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setItemHasChildren<T: _wxTreeItemId>(&self, item: &T, hasChildren: bool) {
+    fn setItemHasChildren<T: _wxTreeItemId>(&self, item: &T, hasChildren: c_int) {
         unsafe { wxTreeCtrl_SetItemHasChildren(self.handle(), item.handle(), hasChildren) }
     }
     #[fixed_stack_segment]
@@ -18936,16 +18936,16 @@ trait _wxTreeCtrl : _wxControl {
     }
 }
 
-struct wxTreeEvent(*u8);
+struct wxTreeEvent(*mut c_void);
 impl _wxTreeEvent for wxTreeEvent {}
 impl _wxNotifyEvent for wxTreeEvent {}
 impl _wxCommandEvent for wxTreeEvent {}
 impl _wxEvent for wxTreeEvent {}
-impl _wxObject for wxTreeEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTreeEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTreeEvent {
-    pub fn from(handle: *u8) -> @wxTreeEvent { @wxTreeEvent(handle) }
-    pub fn null() -> @wxTreeEvent { wxTreeEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTreeEvent { @wxTreeEvent(handle) }
+    pub fn null() -> @wxTreeEvent { wxTreeEvent::from(0 as *mut c_void) }
     
 }
 
@@ -18987,25 +18987,25 @@ trait _wxTreeEvent : _wxNotifyEvent {
     }
 }
 
-struct wxTreeItemData(*u8);
+struct wxTreeItemData(*mut c_void);
 impl _wxTreeItemData for wxTreeItemData {}
-impl _wxClientData for wxTreeItemData { fn handle(&self) -> *u8 { **self } }
+impl _wxClientData for wxTreeItemData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTreeItemData {
-    pub fn from(handle: *u8) -> @wxTreeItemData { @wxTreeItemData(handle) }
-    pub fn null() -> @wxTreeItemData { wxTreeItemData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTreeItemData { @wxTreeItemData(handle) }
+    pub fn null() -> @wxTreeItemData { wxTreeItemData::from(0 as *mut c_void) }
     
 }
 
 trait _wxTreeItemData : _wxClientData {
 }
 
-struct wxTreeItemId(*u8);
-impl _wxTreeItemId for wxTreeItemId { fn handle(&self) -> *u8 { **self } }
+struct wxTreeItemId(*mut c_void);
+impl _wxTreeItemId for wxTreeItemId { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTreeItemId {
-    pub fn from(handle: *u8) -> @wxTreeItemId { @wxTreeItemId(handle) }
-    pub fn null() -> @wxTreeItemId { wxTreeItemId::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTreeItemId { @wxTreeItemId(handle) }
+    pub fn null() -> @wxTreeItemId { wxTreeItemId::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -19020,7 +19020,7 @@ impl wxTreeItemId {
 }
 
 trait _wxTreeItemId {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -19029,7 +19029,7 @@ trait _wxTreeItemId {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxTreeItemId_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -19044,91 +19044,91 @@ trait _wxTreeItemId {
     }
 }
 
-struct wxTreeLayout(*u8);
+struct wxTreeLayout(*mut c_void);
 impl _wxTreeLayout for wxTreeLayout {}
-impl _wxObject for wxTreeLayout { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTreeLayout { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTreeLayout {
-    pub fn from(handle: *u8) -> @wxTreeLayout { @wxTreeLayout(handle) }
-    pub fn null() -> @wxTreeLayout { wxTreeLayout::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTreeLayout { @wxTreeLayout(handle) }
+    pub fn null() -> @wxTreeLayout { wxTreeLayout::from(0 as *mut c_void) }
     
 }
 
 trait _wxTreeLayout : _wxObject {
 }
 
-struct wxTreeLayoutStored(*u8);
+struct wxTreeLayoutStored(*mut c_void);
 impl _wxTreeLayoutStored for wxTreeLayoutStored {}
 impl _wxTreeLayout for wxTreeLayoutStored {}
-impl _wxObject for wxTreeLayoutStored { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxTreeLayoutStored { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxTreeLayoutStored {
-    pub fn from(handle: *u8) -> @wxTreeLayoutStored { @wxTreeLayoutStored(handle) }
-    pub fn null() -> @wxTreeLayoutStored { wxTreeLayoutStored::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxTreeLayoutStored { @wxTreeLayoutStored(handle) }
+    pub fn null() -> @wxTreeLayoutStored { wxTreeLayoutStored::from(0 as *mut c_void) }
     
 }
 
 trait _wxTreeLayoutStored : _wxTreeLayout {
 }
 
-struct wxURL(*u8);
+struct wxURL(*mut c_void);
 impl _wxURL for wxURL {}
-impl _wxObject for wxURL { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxURL { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxURL {
-    pub fn from(handle: *u8) -> @wxURL { @wxURL(handle) }
-    pub fn null() -> @wxURL { wxURL::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxURL { @wxURL(handle) }
+    pub fn null() -> @wxURL { wxURL::from(0 as *mut c_void) }
     
 }
 
 trait _wxURL : _wxObject {
 }
 
-struct wxUpdateUIEvent(*u8);
+struct wxUpdateUIEvent(*mut c_void);
 impl _wxUpdateUIEvent for wxUpdateUIEvent {}
 impl _wxEvent for wxUpdateUIEvent {}
-impl _wxObject for wxUpdateUIEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxUpdateUIEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxUpdateUIEvent {
-    pub fn from(handle: *u8) -> @wxUpdateUIEvent { @wxUpdateUIEvent(handle) }
-    pub fn null() -> @wxUpdateUIEvent { wxUpdateUIEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxUpdateUIEvent { @wxUpdateUIEvent(handle) }
+    pub fn null() -> @wxUpdateUIEvent { wxUpdateUIEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxUpdateUIEvent : _wxEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn check(&self, check: bool) {
+    fn check(&self, check: c_int) {
         unsafe { wxUpdateUIEvent_Check(self.handle(), check) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enable(&self, enable: bool) {
+    fn enable(&self, enable: c_int) {
         unsafe { wxUpdateUIEvent_Enable(self.handle(), enable) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getChecked(&self) -> bool {
+    fn getChecked(&self) -> c_int {
         unsafe { wxUpdateUIEvent_GetChecked(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEnabled(&self) -> bool {
+    fn getEnabled(&self) -> c_int {
         unsafe { wxUpdateUIEvent_GetEnabled(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSetChecked(&self) -> bool {
+    fn getSetChecked(&self) -> c_int {
         unsafe { wxUpdateUIEvent_GetSetChecked(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSetEnabled(&self) -> bool {
+    fn getSetEnabled(&self) -> c_int {
         unsafe { wxUpdateUIEvent_GetSetEnabled(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSetText(&self) -> bool {
+    fn getSetText(&self) -> c_int {
         unsafe { wxUpdateUIEvent_GetSetText(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -19144,14 +19144,14 @@ trait _wxUpdateUIEvent : _wxEvent {
     }
 }
 
-struct wxValidator(*u8);
+struct wxValidator(*mut c_void);
 impl _wxValidator for wxValidator {}
 impl _wxEvtHandler for wxValidator {}
-impl _wxObject for wxValidator { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxValidator { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxValidator {
-    pub fn from(handle: *u8) -> @wxValidator { @wxValidator(handle) }
-    pub fn null() -> @wxValidator { wxValidator::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxValidator { @wxValidator(handle) }
+    pub fn null() -> @wxValidator { wxValidator::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -19160,7 +19160,7 @@ impl wxValidator {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn setBellOnError(doIt: bool) {
+    pub fn setBellOnError(doIt: c_int) {
         unsafe { wxValidator_SetBellOnError(doIt) }
     }
 }
@@ -19178,73 +19178,73 @@ trait _wxValidator : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn transferFromWindow(&self) -> bool {
+    fn transferFromWindow(&self) -> c_int {
         unsafe { wxValidator_TransferFromWindow(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn transferToWindow(&self) -> bool {
+    fn transferToWindow(&self) -> c_int {
         unsafe { wxValidator_TransferToWindow(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn validate<T: _wxWindow>(&self, parent: &T) -> bool {
+    fn validate<T: _wxWindow>(&self, parent: &T) -> c_int {
         unsafe { wxValidator_Validate(self.handle(), parent.handle()) }
     }
 }
 
-struct wxVariant(*u8);
+struct wxVariant(*mut c_void);
 impl _wxVariant for wxVariant {}
-impl _wxObject for wxVariant { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxVariant { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxVariant {
-    pub fn from(handle: *u8) -> @wxVariant { @wxVariant(handle) }
-    pub fn null() -> @wxVariant { wxVariant::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxVariant { @wxVariant(handle) }
+    pub fn null() -> @wxVariant { wxVariant::from(0 as *mut c_void) }
     
 }
 
 trait _wxVariant : _wxObject {
 }
 
-struct wxVariantData(*u8);
+struct wxVariantData(*mut c_void);
 impl _wxVariantData for wxVariantData {}
-impl _wxObject for wxVariantData { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxVariantData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxVariantData {
-    pub fn from(handle: *u8) -> @wxVariantData { @wxVariantData(handle) }
-    pub fn null() -> @wxVariantData { wxVariantData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxVariantData { @wxVariantData(handle) }
+    pub fn null() -> @wxVariantData { wxVariantData::from(0 as *mut c_void) }
     
 }
 
 trait _wxVariantData : _wxObject {
 }
 
-struct wxView(*u8);
+struct wxView(*mut c_void);
 impl _wxView for wxView {}
 impl _wxEvtHandler for wxView {}
-impl _wxObject for wxView { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxView { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxView {
-    pub fn from(handle: *u8) -> @wxView { @wxView(handle) }
-    pub fn null() -> @wxView { wxView::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxView { @wxView(handle) }
+    pub fn null() -> @wxView { wxView::from(0 as *mut c_void) }
     
 }
 
 trait _wxView : _wxEvtHandler {
 }
 
-struct wxSound(*u8);
+struct wxSound(*mut c_void);
 impl _wxSound for wxSound {}
 impl _wxEvtHandler for wxSound {}
-impl _wxObject for wxSound { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSound { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSound {
-    pub fn from(handle: *u8) -> @wxSound { @wxSound(handle) }
-    pub fn null() -> @wxSound { wxSound::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSound { @wxSound(handle) }
+    pub fn null() -> @wxSound { wxSound::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(fileName: &str, isResource: bool) -> @wxSound {
+    pub fn new(fileName: &str, isResource: c_int) -> @wxSound {
         let fileName = wxT(fileName);
         unsafe { @wxSound(wxSound_Create(fileName.handle(), isResource)) }
     }
@@ -19253,12 +19253,12 @@ impl wxSound {
 trait _wxSound : _wxEvtHandler {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isOk(&self) -> bool {
+    fn isOk(&self) -> c_int {
         unsafe { wxSound_IsOk(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn play(&self, flag: c_int) -> bool {
+    fn play(&self, flag: c_int) -> c_int {
         unsafe { wxSound_Play(self.handle(), flag) }
     }
     #[fixed_stack_segment]
@@ -19268,14 +19268,14 @@ trait _wxSound : _wxEvtHandler {
     }
 }
 
-struct wxWindow(*u8);
+struct wxWindow(*mut c_void);
 impl _wxWindow for wxWindow {}
 impl _wxEvtHandler for wxWindow {}
-impl _wxObject for wxWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxWindow {
-    pub fn from(handle: *u8) -> @wxWindow { @wxWindow(handle) }
-    pub fn null() -> @wxWindow { wxWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxWindow { @wxWindow(handle) }
+    pub fn null() -> @wxWindow { wxWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -19322,7 +19322,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn close(&self, _force: bool) -> bool {
+    fn close(&self, _force: c_int) -> c_int {
         unsafe { wxWindow_Close(self.handle(), _force) }
     }
     #[fixed_stack_segment]
@@ -19342,17 +19342,17 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn destroy(&self) -> bool {
+    fn destroy(&self) -> c_int {
         unsafe { wxWindow_Destroy(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn destroyChildren(&self) -> bool {
+    fn destroyChildren(&self) -> c_int {
         unsafe { wxWindow_DestroyChildren(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn disable(&self) -> bool {
+    fn disable(&self) -> c_int {
         unsafe { wxWindow_Disable(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -19362,7 +19362,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn enable(&self) -> bool {
+    fn enable(&self) -> c_int {
         unsafe { wxWindow_Enable(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -19428,7 +19428,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getChildren(&self, _res: *u8, _cnt: c_int) -> c_int {
+    fn getChildren(&self, _res: *mut c_void, _cnt: c_int) -> c_int {
         unsafe { wxWindow_GetChildren(self.handle(), _res, _cnt) }
     }
     #[fixed_stack_segment]
@@ -19443,7 +19443,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getClientSizeConstraint(&self, _w: *c_int, _h: *c_int) {
+    fn getClientSizeConstraint(&self, _w: *mut c_int, _h: *mut c_int) {
         unsafe { wxWindow_GetClientSizeConstraint(self.handle(), _w, _h) }
     }
     #[fixed_stack_segment]
@@ -19453,7 +19453,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getConstraintsInvolvedIn(&self) -> *u8 {
+    fn getConstraintsInvolvedIn(&self) -> *mut c_void {
         unsafe { wxWindow_GetConstraintsInvolvedIn(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -19483,7 +19483,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getHandle(&self) -> *u8 {
+    fn getHandle(&self) -> *mut c_void {
         unsafe { wxWindow_GetHandle(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -19538,7 +19538,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPositionConstraint(&self, _x: *c_int, _y: *c_int) {
+    fn getPositionConstraint(&self, _x: *mut c_int, _y: *mut c_int) {
         unsafe { wxWindow_GetPositionConstraint(self.handle(), _x, _y) }
     }
     #[fixed_stack_segment]
@@ -19568,7 +19568,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSizeConstraint(&self, _w: *c_int, _h: *c_int) {
+    fn getSizeConstraint(&self, _w: *mut c_int, _h: *mut c_int) {
         unsafe { wxWindow_GetSizeConstraint(self.handle(), _w, _h) }
     }
     #[fixed_stack_segment]
@@ -19578,7 +19578,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getTextExtent<T: _wxFont>(&self, string: &str, x: *c_int, y: *c_int, descent: *c_int, externalLeading: *c_int, theFont: &T) {
+    fn getTextExtent<T: _wxFont>(&self, string: &str, x: *mut c_int, y: *mut c_int, descent: *mut c_int, externalLeading: *mut c_int, theFont: &T) {
         let string = wxT(string);
         unsafe { wxWindow_GetTextExtent(self.handle(), string.handle(), x, y, descent, externalLeading, theFont.handle()) }
     }
@@ -19609,12 +19609,12 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasFlag(&self, flag: c_int) -> bool {
+    fn hasFlag(&self, flag: c_int) -> c_int {
         unsafe { wxWindow_HasFlag(self.handle(), flag) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hide(&self) -> bool {
+    fn hide(&self) -> c_int {
         unsafe { wxWindow_Hide(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -19624,27 +19624,27 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isBeingDeleted(&self) -> bool {
+    fn isBeingDeleted(&self) -> c_int {
         unsafe { wxWindow_IsBeingDeleted(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEnabled(&self) -> bool {
+    fn isEnabled(&self) -> c_int {
         unsafe { wxWindow_IsEnabled(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isExposed(&self, x: c_int, y: c_int, w: c_int, h: c_int) -> bool {
+    fn isExposed(&self, x: c_int, y: c_int, w: c_int, h: c_int) -> c_int {
         unsafe { wxWindow_IsExposed(self.handle(), x, y, w, h) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isShown(&self) -> bool {
+    fn isShown(&self) -> c_int {
         unsafe { wxWindow_IsShown(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isTopLevel(&self) -> bool {
+    fn isTopLevel(&self) -> c_int {
         unsafe { wxWindow_IsTopLevel(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -19654,12 +19654,12 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn layoutPhase1(&self, noChanges: *c_int) -> c_int {
+    fn layoutPhase1(&self, noChanges: *mut c_int) -> c_int {
         unsafe { wxWindow_LayoutPhase1(self.handle(), noChanges) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn layoutPhase2(&self, noChanges: *c_int) -> c_int {
+    fn layoutPhase2(&self, noChanges: *mut c_int) -> c_int {
         unsafe { wxWindow_LayoutPhase2(self.handle(), noChanges) }
     }
     #[fixed_stack_segment]
@@ -19669,7 +19669,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn makeModal(&self, modal: bool) {
+    fn makeModal(&self, modal: c_int) {
         unsafe { wxWindow_MakeModal(self.handle(), modal) }
     }
     #[fixed_stack_segment]
@@ -19684,7 +19684,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn popEventHandler(&self, deleteHandler: bool) -> *u8 {
+    fn popEventHandler(&self, deleteHandler: c_int) -> *mut c_void {
         unsafe { wxWindow_PopEventHandler(self.handle(), deleteHandler) }
     }
     #[fixed_stack_segment]
@@ -19709,12 +19709,12 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn refresh(&self, eraseBackground: bool) {
+    fn refresh(&self, eraseBackground: c_int) {
         unsafe { wxWindow_Refresh(self.handle(), eraseBackground) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn refreshRect(&self, eraseBackground: bool, x: c_int, y: c_int, w: c_int, h: c_int) {
+    fn refreshRect(&self, eraseBackground: c_int, x: c_int, y: c_int, w: c_int, h: c_int) {
         unsafe { wxWindow_RefreshRect(self.handle(), eraseBackground, x, y, w, h) }
     }
     #[fixed_stack_segment]
@@ -19764,7 +19764,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setAutoLayout(&self, autoLayout: bool) {
+    fn setAutoLayout(&self, autoLayout: c_int) {
         unsafe { wxWindow_SetAutoLayout(self.handle(), autoLayout) }
     }
     #[fixed_stack_segment]
@@ -19851,12 +19851,12 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setScrollPos(&self, orient: c_int, pos: c_int, refresh: bool) {
+    fn setScrollPos(&self, orient: c_int, pos: c_int, refresh: c_int) {
         unsafe { wxWindow_SetScrollPos(self.handle(), orient, pos, refresh) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setScrollbar(&self, orient: c_int, pos: c_int, thumbVisible: c_int, range: c_int, refresh: bool) {
+    fn setScrollbar(&self, orient: c_int, pos: c_int, thumbVisible: c_int, range: c_int, refresh: c_int) {
         unsafe { wxWindow_SetScrollbar(self.handle(), orient, pos, thumbVisible, range, refresh) }
     }
     #[fixed_stack_segment]
@@ -19897,7 +19897,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn show(&self) -> bool {
+    fn show(&self) -> c_int {
         unsafe { wxWindow_Show(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -19907,17 +19907,17 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn transferDataFromWindow(&self) -> bool {
+    fn transferDataFromWindow(&self) -> c_int {
         unsafe { wxWindow_TransferDataFromWindow(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn transferDataToWindow(&self) -> bool {
+    fn transferDataToWindow(&self) -> c_int {
         unsafe { wxWindow_TransferDataToWindow(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn unsetConstraints(&self, c: *u8) {
+    fn unsetConstraints(&self, c: *mut c_void) {
         unsafe { wxWindow_UnsetConstraints(self.handle(), c) }
     }
     #[fixed_stack_segment]
@@ -19927,7 +19927,7 @@ trait _wxWindow : _wxEvtHandler {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn validate(&self) -> bool {
+    fn validate(&self) -> c_int {
         unsafe { wxWindow_Validate(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -19957,15 +19957,15 @@ trait _wxWindow : _wxEvtHandler {
     }
 }
 
-struct wxWindowCreateEvent(*u8);
+struct wxWindowCreateEvent(*mut c_void);
 impl _wxWindowCreateEvent for wxWindowCreateEvent {}
 impl _wxCommandEvent for wxWindowCreateEvent {}
 impl _wxEvent for wxWindowCreateEvent {}
-impl _wxObject for wxWindowCreateEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxWindowCreateEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxWindowCreateEvent {
-    pub fn from(handle: *u8) -> @wxWindowCreateEvent { @wxWindowCreateEvent(handle) }
-    pub fn null() -> @wxWindowCreateEvent { wxWindowCreateEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxWindowCreateEvent { @wxWindowCreateEvent(handle) }
+    pub fn null() -> @wxWindowCreateEvent { wxWindowCreateEvent::from(0 as *mut c_void) }
     
 }
 
@@ -19977,14 +19977,14 @@ trait _wxWindowCreateEvent : _wxCommandEvent {
     }
 }
 
-struct wxWindowDC(*u8);
+struct wxWindowDC(*mut c_void);
 impl _wxWindowDC for wxWindowDC {}
 impl _wxDC for wxWindowDC {}
-impl _wxObject for wxWindowDC { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxWindowDC { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxWindowDC {
-    pub fn from(handle: *u8) -> @wxWindowDC { @wxWindowDC(handle) }
-    pub fn null() -> @wxWindowDC { wxWindowDC::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxWindowDC { @wxWindowDC(handle) }
+    pub fn null() -> @wxWindowDC { wxWindowDC::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -19996,15 +19996,15 @@ impl wxWindowDC {
 trait _wxWindowDC : _wxDC {
 }
 
-struct wxWindowDestroyEvent(*u8);
+struct wxWindowDestroyEvent(*mut c_void);
 impl _wxWindowDestroyEvent for wxWindowDestroyEvent {}
 impl _wxCommandEvent for wxWindowDestroyEvent {}
 impl _wxEvent for wxWindowDestroyEvent {}
-impl _wxObject for wxWindowDestroyEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxWindowDestroyEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxWindowDestroyEvent {
-    pub fn from(handle: *u8) -> @wxWindowDestroyEvent { @wxWindowDestroyEvent(handle) }
-    pub fn null() -> @wxWindowDestroyEvent { wxWindowDestroyEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxWindowDestroyEvent { @wxWindowDestroyEvent(handle) }
+    pub fn null() -> @wxWindowDestroyEvent { wxWindowDestroyEvent::from(0 as *mut c_void) }
     
 }
 
@@ -20016,31 +20016,31 @@ trait _wxWindowDestroyEvent : _wxCommandEvent {
     }
 }
 
-struct wxWindowDisabler(*u8);
-impl _wxWindowDisabler for wxWindowDisabler { fn handle(&self) -> *u8 { **self } }
+struct wxWindowDisabler(*mut c_void);
+impl _wxWindowDisabler for wxWindowDisabler { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxWindowDisabler {
-    pub fn from(handle: *u8) -> @wxWindowDisabler { @wxWindowDisabler(handle) }
-    pub fn null() -> @wxWindowDisabler { wxWindowDisabler::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxWindowDisabler { @wxWindowDisabler(handle) }
+    pub fn null() -> @wxWindowDisabler { wxWindowDisabler::from(0 as *mut c_void) }
     
 }
 
 trait _wxWindowDisabler {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxWizard(*u8);
+struct wxWizard(*mut c_void);
 impl _wxWizard for wxWizard {}
 impl _wxDialog for wxWizard {}
 impl _wxTopLevelWindow for wxWizard {}
 impl _wxWindow for wxWizard {}
 impl _wxEvtHandler for wxWizard {}
-impl _wxObject for wxWizard { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxWizard { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxWizard {
-    pub fn from(handle: *u8) -> @wxWizard { @wxWizard(handle) }
-    pub fn null() -> @wxWizard { wxWizard::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxWizard { @wxWizard(handle) }
+    pub fn null() -> @wxWizard { wxWizard::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20078,16 +20078,16 @@ trait _wxWizard : _wxDialog {
     }
 }
 
-struct wxWizardEvent(*u8);
+struct wxWizardEvent(*mut c_void);
 impl _wxWizardEvent for wxWizardEvent {}
 impl _wxNotifyEvent for wxWizardEvent {}
 impl _wxCommandEvent for wxWizardEvent {}
 impl _wxEvent for wxWizardEvent {}
-impl _wxObject for wxWizardEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxWizardEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxWizardEvent {
-    pub fn from(handle: *u8) -> @wxWizardEvent { @wxWizardEvent(handle) }
-    pub fn null() -> @wxWizardEvent { wxWizardEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxWizardEvent { @wxWizardEvent(handle) }
+    pub fn null() -> @wxWizardEvent { wxWizardEvent::from(0 as *mut c_void) }
     
 }
 
@@ -20099,33 +20099,33 @@ trait _wxWizardEvent : _wxNotifyEvent {
     }
 }
 
-struct wxWizardPage(*u8);
+struct wxWizardPage(*mut c_void);
 impl _wxWizardPage for wxWizardPage {}
 impl _wxPanel for wxWizardPage {}
 impl _wxWindow for wxWizardPage {}
 impl _wxEvtHandler for wxWizardPage {}
-impl _wxObject for wxWizardPage { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxWizardPage { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxWizardPage {
-    pub fn from(handle: *u8) -> @wxWizardPage { @wxWizardPage(handle) }
-    pub fn null() -> @wxWizardPage { wxWizardPage::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxWizardPage { @wxWizardPage(handle) }
+    pub fn null() -> @wxWizardPage { wxWizardPage::from(0 as *mut c_void) }
     
 }
 
 trait _wxWizardPage : _wxPanel {
 }
 
-struct wxWizardPageSimple(*u8);
+struct wxWizardPageSimple(*mut c_void);
 impl _wxWizardPageSimple for wxWizardPageSimple {}
 impl _wxWizardPage for wxWizardPageSimple {}
 impl _wxPanel for wxWizardPageSimple {}
 impl _wxWindow for wxWizardPageSimple {}
 impl _wxEvtHandler for wxWizardPageSimple {}
-impl _wxObject for wxWizardPageSimple { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxWizardPageSimple { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxWizardPageSimple {
-    pub fn from(handle: *u8) -> @wxWizardPageSimple { @wxWizardPageSimple(handle) }
-    pub fn null() -> @wxWizardPageSimple { wxWizardPageSimple::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxWizardPageSimple { @wxWizardPageSimple(handle) }
+    pub fn null() -> @wxWizardPageSimple { wxWizardPageSimple::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20162,13 +20162,13 @@ trait _wxWizardPageSimple : _wxWizardPage {
     }
 }
 
-struct wxXmlResource(*u8);
+struct wxXmlResource(*mut c_void);
 impl _wxXmlResource for wxXmlResource {}
-impl _wxObject for wxXmlResource { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxXmlResource { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxXmlResource {
-    pub fn from(handle: *u8) -> @wxXmlResource { @wxXmlResource(handle) }
-    pub fn null() -> @wxXmlResource { wxXmlResource::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxXmlResource { @wxXmlResource(handle) }
+    pub fn null() -> @wxXmlResource { wxXmlResource::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20196,7 +20196,7 @@ trait _wxXmlResource : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addSubclassFactory(&self, factory: *u8) {
+    fn addSubclassFactory(&self, factory: *mut c_void) {
         unsafe { wxXmlResource_AddSubclassFactory(self.handle(), factory) }
     }
     #[fixed_stack_segment]
@@ -20247,7 +20247,7 @@ trait _wxXmlResource : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn load(&self, filemask: &str) -> bool {
+    fn load(&self, filemask: &str) -> c_int {
         let filemask = wxT(filemask);
         unsafe { wxXmlResource_Load(self.handle(), filemask.handle()) }
     }
@@ -20529,7 +20529,7 @@ trait _wxXmlResource : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn unload(&self, filemask: &str) -> bool {
+    fn unload(&self, filemask: &str) -> c_int {
         let filemask = wxT(filemask);
         unsafe { wxXmlResource_Unload(self.handle(), filemask.handle()) }
     }
@@ -20557,73 +20557,73 @@ trait _wxXmlResource : _wxObject {
     }
 }
 
-struct wxXmlResourceHandler(*u8);
+struct wxXmlResourceHandler(*mut c_void);
 impl _wxXmlResourceHandler for wxXmlResourceHandler {}
-impl _wxObject for wxXmlResourceHandler { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxXmlResourceHandler { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxXmlResourceHandler {
-    pub fn from(handle: *u8) -> @wxXmlResourceHandler { @wxXmlResourceHandler(handle) }
-    pub fn null() -> @wxXmlResourceHandler { wxXmlResourceHandler::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxXmlResourceHandler { @wxXmlResourceHandler(handle) }
+    pub fn null() -> @wxXmlResourceHandler { wxXmlResourceHandler::from(0 as *mut c_void) }
     
 }
 
 trait _wxXmlResourceHandler : _wxObject {
 }
 
-struct wxZipInputStream(*u8);
+struct wxZipInputStream(*mut c_void);
 impl _wxZipInputStream for wxZipInputStream {}
 impl _wxInputStream for wxZipInputStream {}
-impl _wxStreamBase for wxZipInputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxZipInputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxZipInputStream {
-    pub fn from(handle: *u8) -> @wxZipInputStream { @wxZipInputStream(handle) }
-    pub fn null() -> @wxZipInputStream { wxZipInputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxZipInputStream { @wxZipInputStream(handle) }
+    pub fn null() -> @wxZipInputStream { wxZipInputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxZipInputStream : _wxInputStream {
 }
 
-struct wxZlibInputStream(*u8);
+struct wxZlibInputStream(*mut c_void);
 impl _wxZlibInputStream for wxZlibInputStream {}
 impl _wxFilterInputStream for wxZlibInputStream {}
 impl _wxInputStream for wxZlibInputStream {}
-impl _wxStreamBase for wxZlibInputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxZlibInputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxZlibInputStream {
-    pub fn from(handle: *u8) -> @wxZlibInputStream { @wxZlibInputStream(handle) }
-    pub fn null() -> @wxZlibInputStream { wxZlibInputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxZlibInputStream { @wxZlibInputStream(handle) }
+    pub fn null() -> @wxZlibInputStream { wxZlibInputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxZlibInputStream : _wxFilterInputStream {
 }
 
-struct wxZlibOutputStream(*u8);
+struct wxZlibOutputStream(*mut c_void);
 impl _wxZlibOutputStream for wxZlibOutputStream {}
 impl _wxFilterOutputStream for wxZlibOutputStream {}
 impl _wxOutputStream for wxZlibOutputStream {}
-impl _wxStreamBase for wxZlibOutputStream { fn handle(&self) -> *u8 { **self } }
+impl _wxStreamBase for wxZlibOutputStream { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxZlibOutputStream {
-    pub fn from(handle: *u8) -> @wxZlibOutputStream { @wxZlibOutputStream(handle) }
-    pub fn null() -> @wxZlibOutputStream { wxZlibOutputStream::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxZlibOutputStream { @wxZlibOutputStream(handle) }
+    pub fn null() -> @wxZlibOutputStream { wxZlibOutputStream::from(0 as *mut c_void) }
     
 }
 
 trait _wxZlibOutputStream : _wxFilterOutputStream {
 }
 
-struct wxPropertyGrid(*u8);
+struct wxPropertyGrid(*mut c_void);
 impl _wxPropertyGrid for wxPropertyGrid {}
 impl _wxControl for wxPropertyGrid {}
 impl _wxWindow for wxPropertyGrid {}
 impl _wxEvtHandler for wxPropertyGrid {}
-impl _wxObject for wxPropertyGrid { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPropertyGrid { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPropertyGrid {
-    pub fn from(handle: *u8) -> @wxPropertyGrid { @wxPropertyGrid(handle) }
-    pub fn null() -> @wxPropertyGrid { wxPropertyGrid::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPropertyGrid { @wxPropertyGrid(handle) }
+    pub fn null() -> @wxPropertyGrid { wxPropertyGrid::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20640,29 +20640,29 @@ trait _wxPropertyGrid : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn disableProperty(&self, propName: &str) -> bool {
+    fn disableProperty(&self, propName: &str) -> c_int {
         let propName = wxT(propName);
         unsafe { wxPropertyGrid_DisableProperty(self.handle(), propName.handle()) }
     }
 }
 
-struct wxPropertyGridEvent(*u8);
+struct wxPropertyGridEvent(*mut c_void);
 impl _wxPropertyGridEvent for wxPropertyGridEvent {}
 impl _wxNotifyEvent for wxPropertyGridEvent {}
 impl _wxCommandEvent for wxPropertyGridEvent {}
 impl _wxEvent for wxPropertyGridEvent {}
-impl _wxObject for wxPropertyGridEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPropertyGridEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPropertyGridEvent {
-    pub fn from(handle: *u8) -> @wxPropertyGridEvent { @wxPropertyGridEvent(handle) }
-    pub fn null() -> @wxPropertyGridEvent { wxPropertyGridEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPropertyGridEvent { @wxPropertyGridEvent(handle) }
+    pub fn null() -> @wxPropertyGridEvent { wxPropertyGridEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxPropertyGridEvent : _wxNotifyEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hasProperty(&self) -> bool {
+    fn hasProperty(&self) -> c_int {
         unsafe { wxPropertyGridEvent_HasProperty(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -20672,13 +20672,13 @@ trait _wxPropertyGridEvent : _wxNotifyEvent {
     }
 }
 
-struct wxPGProperty(*u8);
+struct wxPGProperty(*mut c_void);
 impl _wxPGProperty for wxPGProperty {}
-impl _wxObject for wxPGProperty { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPGProperty { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPGProperty {
-    pub fn from(handle: *u8) -> @wxPGProperty { @wxPGProperty(handle) }
-    pub fn null() -> @wxPGProperty { wxPGProperty::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPGProperty { @wxPGProperty(handle) }
+    pub fn null() -> @wxPGProperty { wxPGProperty::from(0 as *mut c_void) }
     
 }
 
@@ -20711,14 +20711,14 @@ trait _wxPGProperty : _wxObject {
     }
 }
 
-struct wxStringProperty(*u8);
+struct wxStringProperty(*mut c_void);
 impl _wxStringProperty for wxStringProperty {}
 impl _wxPGProperty for wxStringProperty {}
-impl _wxObject for wxStringProperty { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxStringProperty { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStringProperty {
-    pub fn from(handle: *u8) -> @wxStringProperty { @wxStringProperty(handle) }
-    pub fn null() -> @wxStringProperty { wxStringProperty::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStringProperty { @wxStringProperty(handle) }
+    pub fn null() -> @wxStringProperty { wxStringProperty::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20733,14 +20733,14 @@ impl wxStringProperty {
 trait _wxStringProperty : _wxPGProperty {
 }
 
-struct wxIntProperty(*u8);
+struct wxIntProperty(*mut c_void);
 impl _wxIntProperty for wxIntProperty {}
 impl _wxPGProperty for wxIntProperty {}
-impl _wxObject for wxIntProperty { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxIntProperty { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxIntProperty {
-    pub fn from(handle: *u8) -> @wxIntProperty { @wxIntProperty(handle) }
-    pub fn null() -> @wxIntProperty { wxIntProperty::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxIntProperty { @wxIntProperty(handle) }
+    pub fn null() -> @wxIntProperty { wxIntProperty::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20754,18 +20754,18 @@ impl wxIntProperty {
 trait _wxIntProperty : _wxPGProperty {
 }
 
-struct wxBoolProperty(*u8);
+struct wxBoolProperty(*mut c_void);
 impl _wxBoolProperty for wxBoolProperty {}
 impl _wxPGProperty for wxBoolProperty {}
-impl _wxObject for wxBoolProperty { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxBoolProperty { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxBoolProperty {
-    pub fn from(handle: *u8) -> @wxBoolProperty { @wxBoolProperty(handle) }
-    pub fn null() -> @wxBoolProperty { wxBoolProperty::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxBoolProperty { @wxBoolProperty(handle) }
+    pub fn null() -> @wxBoolProperty { wxBoolProperty::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(label: &str, name: &str, value: bool) -> @wxBoolProperty {
+    pub fn new(label: &str, name: &str, value: c_int) -> @wxBoolProperty {
         let label = wxT(label);
         let name = wxT(name);
         unsafe { @wxBoolProperty(wxBoolProperty_Create(label.handle(), name.handle(), value)) }
@@ -20775,14 +20775,14 @@ impl wxBoolProperty {
 trait _wxBoolProperty : _wxPGProperty {
 }
 
-struct wxFloatProperty(*u8);
+struct wxFloatProperty(*mut c_void);
 impl _wxFloatProperty for wxFloatProperty {}
 impl _wxPGProperty for wxFloatProperty {}
-impl _wxObject for wxFloatProperty { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFloatProperty { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFloatProperty {
-    pub fn from(handle: *u8) -> @wxFloatProperty { @wxFloatProperty(handle) }
-    pub fn null() -> @wxFloatProperty { wxFloatProperty::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFloatProperty { @wxFloatProperty(handle) }
+    pub fn null() -> @wxFloatProperty { wxFloatProperty::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20796,14 +20796,14 @@ impl wxFloatProperty {
 trait _wxFloatProperty : _wxPGProperty {
 }
 
-struct wxDateProperty(*u8);
+struct wxDateProperty(*mut c_void);
 impl _wxDateProperty for wxDateProperty {}
 impl _wxPGProperty for wxDateProperty {}
-impl _wxObject for wxDateProperty { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxDateProperty { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxDateProperty {
-    pub fn from(handle: *u8) -> @wxDateProperty { @wxDateProperty(handle) }
-    pub fn null() -> @wxDateProperty { wxDateProperty::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxDateProperty { @wxDateProperty(handle) }
+    pub fn null() -> @wxDateProperty { wxDateProperty::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20817,14 +20817,14 @@ impl wxDateProperty {
 trait _wxDateProperty : _wxPGProperty {
 }
 
-struct wxFileProperty(*u8);
+struct wxFileProperty(*mut c_void);
 impl _wxFileProperty for wxFileProperty {}
 impl _wxPGProperty for wxFileProperty {}
-impl _wxObject for wxFileProperty { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxFileProperty { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFileProperty {
-    pub fn from(handle: *u8) -> @wxFileProperty { @wxFileProperty(handle) }
-    pub fn null() -> @wxFileProperty { wxFileProperty::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFileProperty { @wxFileProperty(handle) }
+    pub fn null() -> @wxFileProperty { wxFileProperty::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20839,14 +20839,14 @@ impl wxFileProperty {
 trait _wxFileProperty : _wxPGProperty {
 }
 
-struct wxPropertyCategory(*u8);
+struct wxPropertyCategory(*mut c_void);
 impl _wxPropertyCategory for wxPropertyCategory {}
 impl _wxPGProperty for wxPropertyCategory {}
-impl _wxObject for wxPropertyCategory { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxPropertyCategory { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxPropertyCategory {
-    pub fn from(handle: *u8) -> @wxPropertyCategory { @wxPropertyCategory(handle) }
-    pub fn null() -> @wxPropertyCategory { wxPropertyCategory::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxPropertyCategory { @wxPropertyCategory(handle) }
+    pub fn null() -> @wxPropertyCategory { wxPropertyCategory::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20859,14 +20859,14 @@ impl wxPropertyCategory {
 trait _wxPropertyCategory : _wxPGProperty {
 }
 
-struct wxGenericDragImage(*u8);
+struct wxGenericDragImage(*mut c_void);
 impl _wxGenericDragImage for wxGenericDragImage {}
 impl _wxDragImage for wxGenericDragImage {}
-impl _wxObject for wxGenericDragImage { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGenericDragImage { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGenericDragImage {
-    pub fn from(handle: *u8) -> @wxGenericDragImage { @wxGenericDragImage(handle) }
-    pub fn null() -> @wxGenericDragImage { wxGenericDragImage::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGenericDragImage { @wxGenericDragImage(handle) }
+    pub fn null() -> @wxGenericDragImage { wxGenericDragImage::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20878,7 +20878,7 @@ impl wxGenericDragImage {
 trait _wxGenericDragImage : _wxDragImage {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn doDrawImage<T: _wxDC>(&self, dc: &T, x: c_int, y: c_int) -> bool {
+    fn doDrawImage<T: _wxDC>(&self, dc: &T, x: c_int, y: c_int) -> c_int {
         unsafe { wxGenericDragImage_DoDrawImage(self.handle(), dc.handle(), x, y) }
     }
     #[fixed_stack_segment]
@@ -20888,18 +20888,18 @@ trait _wxGenericDragImage : _wxDragImage {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn updateBackingFromWindow<T: _wxDC, U: _wxMemoryDC>(&self, windowDC: &T, destDC: &U, x: c_int, y: c_int, w: c_int, h: c_int, xdest: c_int, ydest: c_int, width: c_int, height: c_int) -> bool {
+    fn updateBackingFromWindow<T: _wxDC, U: _wxMemoryDC>(&self, windowDC: &T, destDC: &U, x: c_int, y: c_int, w: c_int, h: c_int, xdest: c_int, ydest: c_int, width: c_int, height: c_int) -> c_int {
         unsafe { wxGenericDragImage_UpdateBackingFromWindow(self.handle(), windowDC.handle(), destDC.handle(), x, y, w, h, xdest, ydest, width, height) }
     }
 }
 
-struct wxGraphicsObject(*u8);
+struct wxGraphicsObject(*mut c_void);
 impl _wxGraphicsObject for wxGraphicsObject {}
-impl _wxObject for wxGraphicsObject { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGraphicsObject { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGraphicsObject {
-    pub fn from(handle: *u8) -> @wxGraphicsObject { @wxGraphicsObject(handle) }
-    pub fn null() -> @wxGraphicsObject { wxGraphicsObject::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGraphicsObject { @wxGraphicsObject(handle) }
+    pub fn null() -> @wxGraphicsObject { wxGraphicsObject::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20911,19 +20911,19 @@ impl wxGraphicsObject {
 trait _wxGraphicsObject : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isNull(&self) -> bool {
+    fn isNull(&self) -> c_int {
         unsafe { wxGraphicsObject_IsNull(self.handle()) }
     }
 }
 
-struct wxGraphicsBrush(*u8);
+struct wxGraphicsBrush(*mut c_void);
 impl _wxGraphicsBrush for wxGraphicsBrush {}
 impl _wxGraphicsObject for wxGraphicsBrush {}
-impl _wxObject for wxGraphicsBrush { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGraphicsBrush { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGraphicsBrush {
-    pub fn from(handle: *u8) -> @wxGraphicsBrush { @wxGraphicsBrush(handle) }
-    pub fn null() -> @wxGraphicsBrush { wxGraphicsBrush::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGraphicsBrush { @wxGraphicsBrush(handle) }
+    pub fn null() -> @wxGraphicsBrush { wxGraphicsBrush::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20935,14 +20935,14 @@ impl wxGraphicsBrush {
 trait _wxGraphicsBrush : _wxGraphicsObject {
 }
 
-struct wxGraphicsContext(*u8);
+struct wxGraphicsContext(*mut c_void);
 impl _wxGraphicsContext for wxGraphicsContext {}
 impl _wxGraphicsObject for wxGraphicsContext {}
-impl _wxObject for wxGraphicsContext { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGraphicsContext { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGraphicsContext {
-    pub fn from(handle: *u8) -> @wxGraphicsContext { @wxGraphicsContext(handle) }
-    pub fn null() -> @wxGraphicsContext { wxGraphicsContext::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGraphicsContext { @wxGraphicsContext(handle) }
+    pub fn null() -> @wxGraphicsContext { wxGraphicsContext::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -20956,12 +20956,12 @@ impl wxGraphicsContext {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromNative(context: *u8) -> @wxGraphicsContext {
+    pub fn newFromNative(context: *mut c_void) -> @wxGraphicsContext {
         unsafe { @wxGraphicsContext(wxGraphicsContext_CreateFromNative(context)) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromNativeWindow(window: *u8) -> @wxGraphicsContext {
+    pub fn newFromNativeWindow(window: *mut c_void) -> @wxGraphicsContext {
         unsafe { @wxGraphicsContext(wxGraphicsContext_CreateFromNativeWindow(window)) }
     }
 }
@@ -20999,7 +20999,7 @@ trait _wxGraphicsContext : _wxGraphicsObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn drawLines(&self, n: size_t, x: *u8, y: *u8, style: c_int) {
+    fn drawLines(&self, n: size_t, x: *mut c_void, y: *mut c_void, style: c_int) {
         unsafe { wxGraphicsContext_DrawLines(self.handle(), n, x, y, style) }
     }
     #[fixed_stack_segment]
@@ -21041,12 +21041,12 @@ trait _wxGraphicsContext : _wxGraphicsObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getNativeContext(&self) -> *u8 {
+    fn getNativeContext(&self) -> *mut c_void {
         unsafe { wxGraphicsContext_GetNativeContext(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getTextExtent(&self, text: &str, width: *c_double, height: *c_double, descent: *c_double, externalLeading: *c_double) {
+    fn getTextExtent(&self, text: &str, width: *mut c_double, height: *mut c_double, descent: *mut c_double, externalLeading: *mut c_double) {
         let text = wxT(text);
         unsafe { wxGraphicsContext_GetTextExtent(self.handle(), text.handle(), width, height, descent, externalLeading) }
     }
@@ -21112,19 +21112,19 @@ trait _wxGraphicsContext : _wxGraphicsObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn strokeLines(&self, n: size_t, x: *u8, y: *u8, style: c_int) {
+    fn strokeLines(&self, n: size_t, x: *mut c_void, y: *mut c_void, style: c_int) {
         unsafe { wxGraphicsContext_StrokeLines(self.handle(), n, x, y, style) }
     }
 }
 
-struct wxGraphicsFont(*u8);
+struct wxGraphicsFont(*mut c_void);
 impl _wxGraphicsFont for wxGraphicsFont {}
 impl _wxGraphicsObject for wxGraphicsFont {}
-impl _wxObject for wxGraphicsFont { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGraphicsFont { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGraphicsFont {
-    pub fn from(handle: *u8) -> @wxGraphicsFont { @wxGraphicsFont(handle) }
-    pub fn null() -> @wxGraphicsFont { wxGraphicsFont::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGraphicsFont { @wxGraphicsFont(handle) }
+    pub fn null() -> @wxGraphicsFont { wxGraphicsFont::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -21136,14 +21136,14 @@ impl wxGraphicsFont {
 trait _wxGraphicsFont : _wxGraphicsObject {
 }
 
-struct wxGraphicsMatrix(*u8);
+struct wxGraphicsMatrix(*mut c_void);
 impl _wxGraphicsMatrix for wxGraphicsMatrix {}
 impl _wxGraphicsObject for wxGraphicsMatrix {}
-impl _wxObject for wxGraphicsMatrix { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGraphicsMatrix { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGraphicsMatrix {
-    pub fn from(handle: *u8) -> @wxGraphicsMatrix { @wxGraphicsMatrix(handle) }
-    pub fn null() -> @wxGraphicsMatrix { wxGraphicsMatrix::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGraphicsMatrix { @wxGraphicsMatrix(handle) }
+    pub fn null() -> @wxGraphicsMatrix { wxGraphicsMatrix::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -21160,12 +21160,12 @@ trait _wxGraphicsMatrix : _wxGraphicsObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn get(&self, a: *c_double, b: *c_double, c: *c_double, d: *c_double, tx: *c_double, ty: *c_double) {
+    fn get(&self, a: *mut c_double, b: *mut c_double, c: *mut c_double, d: *mut c_double, tx: *mut c_double, ty: *mut c_double) {
         unsafe { wxGraphicsMatrix_Get(self.handle(), a, b, c, d, tx, ty) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getNativeMatrix(&self) -> *u8 {
+    fn getNativeMatrix(&self) -> *mut c_void {
         unsafe { wxGraphicsMatrix_GetNativeMatrix(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -21175,12 +21175,12 @@ trait _wxGraphicsMatrix : _wxGraphicsObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isEqual<T: _wxGraphicsMatrix>(&self, t: &T) -> bool {
+    fn isEqual<T: _wxGraphicsMatrix>(&self, t: &T) -> c_int {
         unsafe { wxGraphicsMatrix_IsEqual(self.handle(), t.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn isIdentity(&self) -> bool {
+    fn isIdentity(&self) -> c_int {
         unsafe { wxGraphicsMatrix_IsIdentity(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -21205,24 +21205,24 @@ trait _wxGraphicsMatrix : _wxGraphicsObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn transformPoint(&self, x: *c_double, y: *c_double) {
+    fn transformPoint(&self, x: *mut c_double, y: *mut c_double) {
         unsafe { wxGraphicsMatrix_TransformPoint(self.handle(), x, y) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn transformDistance(&self, dx: *c_double, dy: *c_double) {
+    fn transformDistance(&self, dx: *mut c_double, dy: *mut c_double) {
         unsafe { wxGraphicsMatrix_TransformDistance(self.handle(), dx, dy) }
     }
 }
 
-struct wxGraphicsPath(*u8);
+struct wxGraphicsPath(*mut c_void);
 impl _wxGraphicsPath for wxGraphicsPath {}
 impl _wxGraphicsObject for wxGraphicsPath {}
-impl _wxObject for wxGraphicsPath { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGraphicsPath { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGraphicsPath {
-    pub fn from(handle: *u8) -> @wxGraphicsPath { @wxGraphicsPath(handle) }
-    pub fn null() -> @wxGraphicsPath { wxGraphicsPath::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGraphicsPath { @wxGraphicsPath(handle) }
+    pub fn null() -> @wxGraphicsPath { wxGraphicsPath::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -21231,7 +21231,7 @@ impl wxGraphicsPath {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn unGetNativePath(p: *u8) {
+    pub fn unGetNativePath(p: *mut c_void) {
         unsafe { wxGraphicsPath_UnGetNativePath(p) }
     }
 }
@@ -21244,7 +21244,7 @@ trait _wxGraphicsPath : _wxGraphicsObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn addArc(&self, x: c_double, y: c_double, r: c_double, startAngle: c_double, endAngle: c_double, clockwise: bool) {
+    fn addArc(&self, x: c_double, y: c_double, r: c_double, startAngle: c_double, endAngle: c_double, clockwise: c_int) {
         unsafe { wxGraphicsPath_AddArc(self.handle(), x, y, r, startAngle, endAngle, clockwise) }
     }
     #[fixed_stack_segment]
@@ -21304,12 +21304,12 @@ trait _wxGraphicsPath : _wxGraphicsObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getBox(&self, x: *c_double, y: *c_double, w: *c_double, h: *c_double) {
+    fn getBox(&self, x: *mut c_double, y: *mut c_double, w: *mut c_double, h: *mut c_double) {
         unsafe { wxGraphicsPath_GetBox(self.handle(), x, y, w, h) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getCurrentPoint(&self, x: *c_double, y: *c_double) {
+    fn getCurrentPoint(&self, x: *mut c_double, y: *mut c_double) {
         unsafe { wxGraphicsPath_GetCurrentPoint(self.handle(), x, y) }
     }
     #[fixed_stack_segment]
@@ -21319,19 +21319,19 @@ trait _wxGraphicsPath : _wxGraphicsObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getNativePath(&self) -> *u8 {
+    fn getNativePath(&self) -> *mut c_void {
         unsafe { wxGraphicsPath_GetNativePath(self.handle()) }
     }
 }
 
-struct wxGraphicsPen(*u8);
+struct wxGraphicsPen(*mut c_void);
 impl _wxGraphicsPen for wxGraphicsPen {}
 impl _wxGraphicsObject for wxGraphicsPen {}
-impl _wxObject for wxGraphicsPen { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGraphicsPen { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGraphicsPen {
-    pub fn from(handle: *u8) -> @wxGraphicsPen { @wxGraphicsPen(handle) }
-    pub fn null() -> @wxGraphicsPen { wxGraphicsPen::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGraphicsPen { @wxGraphicsPen(handle) }
+    pub fn null() -> @wxGraphicsPen { wxGraphicsPen::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -21343,14 +21343,14 @@ impl wxGraphicsPen {
 trait _wxGraphicsPen : _wxGraphicsObject {
 }
 
-struct wxGraphicsRenderer(*u8);
+struct wxGraphicsRenderer(*mut c_void);
 impl _wxGraphicsRenderer for wxGraphicsRenderer {}
 impl _wxGraphicsObject for wxGraphicsRenderer {}
-impl _wxObject for wxGraphicsRenderer { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGraphicsRenderer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGraphicsRenderer {
-    pub fn from(handle: *u8) -> @wxGraphicsRenderer { @wxGraphicsRenderer(handle) }
-    pub fn null() -> @wxGraphicsRenderer { wxGraphicsRenderer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGraphicsRenderer { @wxGraphicsRenderer(handle) }
+    pub fn null() -> @wxGraphicsRenderer { wxGraphicsRenderer::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -21364,12 +21364,12 @@ impl wxGraphicsRenderer {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newContextFromNativeContext(context: *u8) -> @wxGraphicsContext {
+    pub fn newContextFromNativeContext(context: *mut c_void) -> @wxGraphicsContext {
         unsafe { @wxGraphicsContext(wxGraphicsRenderer_CreateContextFromNativeContext(context)) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newContextFromNativeWindow(window: *u8) -> @wxGraphicsContext {
+    pub fn newContextFromNativeWindow(window: *mut c_void) -> @wxGraphicsContext {
         unsafe { @wxGraphicsContext(wxGraphicsRenderer_CreateContextFromNativeWindow(window)) }
     }
 }
@@ -21382,13 +21382,13 @@ trait _wxGraphicsRenderer : _wxGraphicsObject {
     }
 }
 
-struct wxGLContext(*u8);
+struct wxGLContext(*mut c_void);
 impl _wxGLContext for wxGLContext {}
-impl _wxObject for wxGLContext { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGLContext { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGLContext {
-    pub fn from(handle: *u8) -> @wxGLContext { @wxGLContext(handle) }
-    pub fn null() -> @wxGLContext { wxGLContext::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGLContext { @wxGLContext(handle) }
+    pub fn null() -> @wxGLContext { wxGLContext::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -21405,21 +21405,21 @@ impl wxGLContext {
 trait _wxGLContext : _wxObject {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setCurrent<T: _wxGLCanvas>(&self, win: &T) -> bool {
+    fn setCurrent<T: _wxGLCanvas>(&self, win: &T) -> c_int {
         unsafe { wxGLContext_SetCurrent(self.handle(), win.handle()) }
     }
 }
 
-struct wxManagedPtr(*u8);
-impl _wxManagedPtr for wxManagedPtr { fn handle(&self) -> *u8 { **self } }
+struct wxManagedPtr(*mut c_void);
+impl _wxManagedPtr for wxManagedPtr { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxManagedPtr {
-    pub fn from(handle: *u8) -> @wxManagedPtr { @wxManagedPtr(handle) }
-    pub fn null() -> @wxManagedPtr { wxManagedPtr::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxManagedPtr { @wxManagedPtr(handle) }
+    pub fn null() -> @wxManagedPtr { wxManagedPtr::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn getDeleteFunction() -> *u8 {
+    pub fn getDeleteFunction() -> *mut c_void {
         unsafe { wxManagedPtr_GetDeleteFunction() }
     }
     #[fixed_stack_segment]
@@ -21475,11 +21475,11 @@ impl wxManagedPtr {
 }
 
 trait _wxManagedPtr {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPtr(&self) -> *u8 {
+    fn getPtr(&self) -> *mut c_void {
         unsafe { wxManagedPtr_GetPtr(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -21499,15 +21499,15 @@ trait _wxManagedPtr {
     }
 }
 
-struct wxMediaCtrl(*u8);
+struct wxMediaCtrl(*mut c_void);
 impl _wxMediaCtrl for wxMediaCtrl {}
 impl _wxWindow for wxMediaCtrl {}
 impl _wxEvtHandler for wxMediaCtrl {}
-impl _wxObject for wxMediaCtrl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMediaCtrl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMediaCtrl {
-    pub fn from(handle: *u8) -> @wxMediaCtrl { @wxMediaCtrl(handle) }
-    pub fn null() -> @wxMediaCtrl { wxMediaCtrl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMediaCtrl { @wxMediaCtrl(handle) }
+    pub fn null() -> @wxMediaCtrl { wxMediaCtrl::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -21542,31 +21542,31 @@ trait _wxMediaCtrl : _wxWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn load(&self, fileName: &str) -> bool {
+    fn load(&self, fileName: &str) -> c_int {
         let fileName = wxT(fileName);
         unsafe { wxMediaCtrl_Load(self.handle(), fileName.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn loadURI(&self, uri: &str) -> bool {
+    fn loadURI(&self, uri: &str) -> c_int {
         let uri = wxT(uri);
         unsafe { wxMediaCtrl_LoadURI(self.handle(), uri.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn loadURIWithProxy(&self, uri: &str, proxy: &str) -> bool {
+    fn loadURIWithProxy(&self, uri: &str, proxy: &str) -> c_int {
         let uri = wxT(uri);
         let proxy = wxT(proxy);
         unsafe { wxMediaCtrl_LoadURIWithProxy(self.handle(), uri.handle(), proxy.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn pause(&self) -> bool {
+    fn pause(&self) -> c_int {
         unsafe { wxMediaCtrl_Pause(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn play(&self) -> bool {
+    fn play(&self) -> c_int {
         unsafe { wxMediaCtrl_Play(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -21576,22 +21576,22 @@ trait _wxMediaCtrl : _wxWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setPlaybackRate(&self, dRate: c_double) -> bool {
+    fn setPlaybackRate(&self, dRate: c_double) -> c_int {
         unsafe { wxMediaCtrl_SetPlaybackRate(self.handle(), dRate) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setVolume(&self, dVolume: c_double) -> bool {
+    fn setVolume(&self, dVolume: c_double) -> c_int {
         unsafe { wxMediaCtrl_SetVolume(self.handle(), dVolume) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn showPlayerControls(&self, flags: c_int) -> bool {
+    fn showPlayerControls(&self, flags: c_int) -> c_int {
         unsafe { wxMediaCtrl_ShowPlayerControls(self.handle(), flags) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn stop(&self) -> bool {
+    fn stop(&self) -> c_int {
         unsafe { wxMediaCtrl_Stop(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -21601,30 +21601,30 @@ trait _wxMediaCtrl : _wxWindow {
     }
 }
 
-struct wxMediaEvent(*u8);
+struct wxMediaEvent(*mut c_void);
 impl _wxMediaEvent for wxMediaEvent {}
 impl _wxNotifyEvent for wxMediaEvent {}
 impl _wxCommandEvent for wxMediaEvent {}
 impl _wxEvent for wxMediaEvent {}
-impl _wxObject for wxMediaEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxMediaEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMediaEvent {
-    pub fn from(handle: *u8) -> @wxMediaEvent { @wxMediaEvent(handle) }
-    pub fn null() -> @wxMediaEvent { wxMediaEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMediaEvent { @wxMediaEvent(handle) }
+    pub fn null() -> @wxMediaEvent { wxMediaEvent::from(0 as *mut c_void) }
     
 }
 
 trait _wxMediaEvent : _wxNotifyEvent {
 }
 
-struct wxcPrintout(*u8);
+struct wxcPrintout(*mut c_void);
 impl _wxcPrintout for wxcPrintout {}
 impl _wxPrintout for wxcPrintout {}
-impl _wxObject for wxcPrintout { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxcPrintout { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxcPrintout {
-    pub fn from(handle: *u8) -> @wxcPrintout { @wxcPrintout(handle) }
-    pub fn null() -> @wxcPrintout { wxcPrintout::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxcPrintout { @wxcPrintout(handle) }
+    pub fn null() -> @wxcPrintout { wxcPrintout::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -21647,14 +21647,14 @@ trait _wxcPrintout : _wxPrintout {
     }
 }
 
-struct wxcPrintEvent(*u8);
+struct wxcPrintEvent(*mut c_void);
 impl _wxcPrintEvent for wxcPrintEvent {}
 impl _wxEvent for wxcPrintEvent {}
-impl _wxObject for wxcPrintEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxcPrintEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxcPrintEvent {
-    pub fn from(handle: *u8) -> @wxcPrintEvent { @wxcPrintEvent(handle) }
-    pub fn null() -> @wxcPrintEvent { wxcPrintEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxcPrintEvent { @wxcPrintEvent(handle) }
+    pub fn null() -> @wxcPrintEvent { wxcPrintEvent::from(0 as *mut c_void) }
     
 }
 
@@ -21676,12 +21676,12 @@ trait _wxcPrintEvent : _wxEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getContinue(&self) -> bool {
+    fn getContinue(&self) -> c_int {
         unsafe { wxcPrintEvent_GetContinue(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setContinue(&self, cont: bool) {
+    fn setContinue(&self, cont: c_int) {
         unsafe { wxcPrintEvent_SetContinue(self.handle(), cont) }
     }
     #[fixed_stack_segment]
@@ -21691,30 +21691,30 @@ trait _wxcPrintEvent : _wxEvent {
     }
 }
 
-struct wxcPrintoutHandler(*u8);
+struct wxcPrintoutHandler(*mut c_void);
 impl _wxcPrintoutHandler for wxcPrintoutHandler {}
 impl _wxEvtHandler for wxcPrintoutHandler {}
-impl _wxObject for wxcPrintoutHandler { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxcPrintoutHandler { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxcPrintoutHandler {
-    pub fn from(handle: *u8) -> @wxcPrintoutHandler { @wxcPrintoutHandler(handle) }
-    pub fn null() -> @wxcPrintoutHandler { wxcPrintoutHandler::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxcPrintoutHandler { @wxcPrintoutHandler(handle) }
+    pub fn null() -> @wxcPrintoutHandler { wxcPrintoutHandler::from(0 as *mut c_void) }
     
 }
 
 trait _wxcPrintoutHandler : _wxEvtHandler {
 }
 
-struct wxStyledTextCtrl(*u8);
+struct wxStyledTextCtrl(*mut c_void);
 impl _wxStyledTextCtrl for wxStyledTextCtrl {}
 impl _wxControl for wxStyledTextCtrl {}
 impl _wxWindow for wxStyledTextCtrl {}
 impl _wxEvtHandler for wxStyledTextCtrl {}
-impl _wxObject for wxStyledTextCtrl { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxStyledTextCtrl { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStyledTextCtrl {
-    pub fn from(handle: *u8) -> @wxStyledTextCtrl { @wxStyledTextCtrl(handle) }
-    pub fn null() -> @wxStyledTextCtrl { wxStyledTextCtrl::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStyledTextCtrl { @wxStyledTextCtrl(handle) }
+    pub fn null() -> @wxStyledTextCtrl { wxStyledTextCtrl::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -21784,7 +21784,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setUndoCollection(&self, collectUndo: bool) {
+    fn setUndoCollection(&self, collectUndo: c_int) {
         unsafe { wxStyledTextCtrl_SetUndoCollection(self.handle(), collectUndo) }
     }
     #[fixed_stack_segment]
@@ -21799,7 +21799,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canRedo(&self) -> bool {
+    fn canRedo(&self) -> c_int {
         unsafe { wxStyledTextCtrl_CanRedo(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -21814,7 +21814,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getUndoCollection(&self) -> bool {
+    fn getUndoCollection(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetUndoCollection(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -21884,12 +21884,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getBufferedDraw(&self) -> bool {
+    fn getBufferedDraw(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetBufferedDraw(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setBufferedDraw(&self, buffered: bool) {
+    fn setBufferedDraw(&self, buffered: c_int) {
         unsafe { wxStyledTextCtrl_SetBufferedDraw(self.handle(), buffered) }
     }
     #[fixed_stack_segment]
@@ -21989,12 +21989,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setMarginSensitive(&self, margin: c_int, sensitive: bool) {
+    fn setMarginSensitive(&self, margin: c_int, sensitive: c_int) {
         unsafe { wxStyledTextCtrl_SetMarginSensitive(self.handle(), margin, sensitive) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getMarginSensitive(&self, margin: c_int) -> bool {
+    fn getMarginSensitive(&self, margin: c_int) -> c_int {
         unsafe { wxStyledTextCtrl_GetMarginSensitive(self.handle(), margin) }
     }
     #[fixed_stack_segment]
@@ -22014,12 +22014,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn styleSetBold(&self, style: c_int, bold: bool) {
+    fn styleSetBold(&self, style: c_int, bold: c_int) {
         unsafe { wxStyledTextCtrl_StyleSetBold(self.handle(), style, bold) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn styleSetItalic(&self, style: c_int, italic: bool) {
+    fn styleSetItalic(&self, style: c_int, italic: c_int) {
         unsafe { wxStyledTextCtrl_StyleSetItalic(self.handle(), style, italic) }
     }
     #[fixed_stack_segment]
@@ -22035,7 +22035,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn styleSetEOLFilled(&self, style: c_int, filled: bool) {
+    fn styleSetEOLFilled(&self, style: c_int, filled: c_int) {
         unsafe { wxStyledTextCtrl_StyleSetEOLFilled(self.handle(), style, filled) }
     }
     #[fixed_stack_segment]
@@ -22045,7 +22045,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn styleSetUnderline(&self, style: c_int, underline: bool) {
+    fn styleSetUnderline(&self, style: c_int, underline: c_int) {
         unsafe { wxStyledTextCtrl_StyleSetUnderline(self.handle(), style, underline) }
     }
     #[fixed_stack_segment]
@@ -22060,17 +22060,17 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn styleSetHotSpot(&self, style: c_int, hotspot: bool) {
+    fn styleSetHotSpot(&self, style: c_int, hotspot: c_int) {
         unsafe { wxStyledTextCtrl_StyleSetHotSpot(self.handle(), style, hotspot) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setSelForeground(&self, useSetting: bool, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
+    fn setSelForeground(&self, useSetting: c_int, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
         unsafe { wxStyledTextCtrl_SetSelForeground(self.handle(), useSetting, fore_r, fore_g, fore_b) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setSelBackground(&self, useSetting: bool, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
+    fn setSelBackground(&self, useSetting: c_int, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
         unsafe { wxStyledTextCtrl_SetSelBackground(self.handle(), useSetting, back_r, back_g, back_b) }
     }
     #[fixed_stack_segment]
@@ -22095,12 +22095,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setStyleBytes(&self, length: c_int, styleBytes: *char) {
+    fn setStyleBytes(&self, length: c_int, styleBytes: *mut c_char) {
         unsafe { wxStyledTextCtrl_SetStyleBytes(self.handle(), length, styleBytes) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn styleSetVisible(&self, style: c_int, visible: bool) {
+    fn styleSetVisible(&self, style: c_int, visible: c_int) {
         unsafe { wxStyledTextCtrl_StyleSetVisible(self.handle(), style, visible) }
     }
     #[fixed_stack_segment]
@@ -22146,12 +22146,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setWhitespaceForeground(&self, useSetting: bool, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
+    fn setWhitespaceForeground(&self, useSetting: c_int, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
         unsafe { wxStyledTextCtrl_SetWhitespaceForeground(self.handle(), useSetting, fore_r, fore_g, fore_b) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setWhitespaceBackground(&self, useSetting: bool, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
+    fn setWhitespaceBackground(&self, useSetting: c_int, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
         unsafe { wxStyledTextCtrl_SetWhitespaceBackground(self.handle(), useSetting, back_r, back_g, back_b) }
     }
     #[fixed_stack_segment]
@@ -22181,17 +22181,17 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getCaretLineVisible(&self) -> bool {
+    fn getCaretLineVisible(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetCaretLineVisible(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setCaretLineVisible(&self, show: bool) {
+    fn setCaretLineVisible(&self, show: c_int) {
         unsafe { wxStyledTextCtrl_SetCaretLineVisible(self.handle(), show) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn styleSetChangeable(&self, style: c_int, changeable: bool) {
+    fn styleSetChangeable(&self, style: c_int, changeable: c_int) {
         unsafe { wxStyledTextCtrl_StyleSetChangeable(self.handle(), style, changeable) }
     }
     #[fixed_stack_segment]
@@ -22207,7 +22207,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn autoCompActive(&self) -> bool {
+    fn autoCompActive(&self) -> c_int {
         unsafe { wxStyledTextCtrl_AutoCompActive(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22244,12 +22244,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn autoCompSetCancelAtStart(&self, cancel: bool) {
+    fn autoCompSetCancelAtStart(&self, cancel: c_int) {
         unsafe { wxStyledTextCtrl_AutoCompSetCancelAtStart(self.handle(), cancel) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn autoCompGetCancelAtStart(&self) -> bool {
+    fn autoCompGetCancelAtStart(&self) -> c_int {
         unsafe { wxStyledTextCtrl_AutoCompGetCancelAtStart(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22260,22 +22260,22 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn autoCompSetChooseSingle(&self, chooseSingle: bool) {
+    fn autoCompSetChooseSingle(&self, chooseSingle: c_int) {
         unsafe { wxStyledTextCtrl_AutoCompSetChooseSingle(self.handle(), chooseSingle) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn autoCompGetChooseSingle(&self) -> bool {
+    fn autoCompGetChooseSingle(&self) -> c_int {
         unsafe { wxStyledTextCtrl_AutoCompGetChooseSingle(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn autoCompSetIgnoreCase(&self, ignoreCase: bool) {
+    fn autoCompSetIgnoreCase(&self, ignoreCase: c_int) {
         unsafe { wxStyledTextCtrl_AutoCompSetIgnoreCase(self.handle(), ignoreCase) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn autoCompGetIgnoreCase(&self) -> bool {
+    fn autoCompGetIgnoreCase(&self) -> c_int {
         unsafe { wxStyledTextCtrl_AutoCompGetIgnoreCase(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22286,22 +22286,22 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn autoCompSetAutoHide(&self, autoHide: bool) {
+    fn autoCompSetAutoHide(&self, autoHide: c_int) {
         unsafe { wxStyledTextCtrl_AutoCompSetAutoHide(self.handle(), autoHide) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn autoCompGetAutoHide(&self) -> bool {
+    fn autoCompGetAutoHide(&self) -> c_int {
         unsafe { wxStyledTextCtrl_AutoCompGetAutoHide(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn autoCompSetDropRestOfWord(&self, dropRestOfWord: bool) {
+    fn autoCompSetDropRestOfWord(&self, dropRestOfWord: c_int) {
         unsafe { wxStyledTextCtrl_AutoCompSetDropRestOfWord(self.handle(), dropRestOfWord) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn autoCompGetDropRestOfWord(&self) -> bool {
+    fn autoCompGetDropRestOfWord(&self) -> c_int {
         unsafe { wxStyledTextCtrl_AutoCompGetDropRestOfWord(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22336,12 +22336,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setUseTabs(&self, useTabs: bool) {
+    fn setUseTabs(&self, useTabs: c_int) {
         unsafe { wxStyledTextCtrl_SetUseTabs(self.handle(), useTabs) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getUseTabs(&self) -> bool {
+    fn getUseTabs(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetUseTabs(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22366,22 +22366,22 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setUseHorizontalScrollBar(&self, show: bool) {
+    fn setUseHorizontalScrollBar(&self, show: c_int) {
         unsafe { wxStyledTextCtrl_SetUseHorizontalScrollBar(self.handle(), show) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getUseHorizontalScrollBar(&self) -> bool {
+    fn getUseHorizontalScrollBar(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetUseHorizontalScrollBar(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setIndentationGuides(&self, show: bool) {
+    fn setIndentationGuides(&self, show: c_int) {
         unsafe { wxStyledTextCtrl_SetIndentationGuides(self.handle(), show) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getIndentationGuides(&self) -> bool {
+    fn getIndentationGuides(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetIndentationGuides(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22406,7 +22406,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getReadOnly(&self) -> bool {
+    fn getReadOnly(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetReadOnly(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22462,7 +22462,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn formatRange<T: _wxDC, U: _wxDC, V: _wxRect, W: _wxRect>(&self, doDraw: bool, startPos: c_int, endPos: c_int, draw: &T, target: &U, renderRect: &V, pageRect: &W) -> c_int {
+    fn formatRange<T: _wxDC, U: _wxDC, V: _wxRect, W: _wxRect>(&self, doDraw: c_int, startPos: c_int, endPos: c_int, draw: &T, target: &U, renderRect: &V, pageRect: &W) -> c_int {
         unsafe { wxStyledTextCtrl_FormatRange(self.handle(), doDraw, startPos, endPos, draw.handle(), target.handle(), renderRect.handle(), pageRect.handle()) }
     }
     #[fixed_stack_segment]
@@ -22497,7 +22497,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getModify(&self) -> bool {
+    fn getModify(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetModify(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22507,7 +22507,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn hideSelection(&self, normal: bool) {
+    fn hideSelection(&self, normal: c_int) {
         unsafe { wxStyledTextCtrl_HideSelection(self.handle(), normal) }
     }
     #[fixed_stack_segment]
@@ -22538,17 +22538,17 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setReadOnly(&self, readOnly: bool) {
+    fn setReadOnly(&self, readOnly: c_int) {
         unsafe { wxStyledTextCtrl_SetReadOnly(self.handle(), readOnly) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canPaste(&self) -> bool {
+    fn canPaste(&self) -> c_int {
         unsafe { wxStyledTextCtrl_CanPaste(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn canUndo(&self) -> bool {
+    fn canUndo(&self) -> c_int {
         unsafe { wxStyledTextCtrl_CanUndo(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22594,12 +22594,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setOvertype(&self, overtype: bool) {
+    fn setOvertype(&self, overtype: c_int) {
         unsafe { wxStyledTextCtrl_SetOvertype(self.handle(), overtype) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getOvertype(&self) -> bool {
+    fn getOvertype(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetOvertype(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22673,7 +22673,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn callTipActive(&self) -> bool {
+    fn callTipActive(&self) -> c_int {
         unsafe { wxStyledTextCtrl_CallTipActive(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22743,17 +22743,17 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getLineVisible(&self, line: c_int) -> bool {
+    fn getLineVisible(&self, line: c_int) -> c_int {
         unsafe { wxStyledTextCtrl_GetLineVisible(self.handle(), line) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setFoldExpanded(&self, line: c_int, expanded: bool) {
+    fn setFoldExpanded(&self, line: c_int, expanded: c_int) {
         unsafe { wxStyledTextCtrl_SetFoldExpanded(self.handle(), line, expanded) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getFoldExpanded(&self, line: c_int) -> bool {
+    fn getFoldExpanded(&self, line: c_int) -> c_int {
         unsafe { wxStyledTextCtrl_GetFoldExpanded(self.handle(), line) }
     }
     #[fixed_stack_segment]
@@ -22778,22 +22778,22 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setTabIndents(&self, tabIndents: bool) {
+    fn setTabIndents(&self, tabIndents: c_int) {
         unsafe { wxStyledTextCtrl_SetTabIndents(self.handle(), tabIndents) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getTabIndents(&self) -> bool {
+    fn getTabIndents(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetTabIndents(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setBackSpaceUnIndents(&self, bsUnIndents: bool) {
+    fn setBackSpaceUnIndents(&self, bsUnIndents: c_int) {
         unsafe { wxStyledTextCtrl_SetBackSpaceUnIndents(self.handle(), bsUnIndents) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getBackSpaceUnIndents(&self) -> bool {
+    fn getBackSpaceUnIndents(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetBackSpaceUnIndents(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22808,12 +22808,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn wordStartPosition(&self, pos: c_int, onlyWordCharacters: bool) -> c_int {
+    fn wordStartPosition(&self, pos: c_int, onlyWordCharacters: c_int) -> c_int {
         unsafe { wxStyledTextCtrl_WordStartPosition(self.handle(), pos, onlyWordCharacters) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn wordEndPosition(&self, pos: c_int, onlyWordCharacters: bool) -> c_int {
+    fn wordEndPosition(&self, pos: c_int, onlyWordCharacters: c_int) -> c_int {
         unsafe { wxStyledTextCtrl_WordEndPosition(self.handle(), pos, onlyWordCharacters) }
     }
     #[fixed_stack_segment]
@@ -22854,7 +22854,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setEndAtLastLine(&self, endAtLastLine: bool) {
+    fn setEndAtLastLine(&self, endAtLastLine: c_int) {
         unsafe { wxStyledTextCtrl_SetEndAtLastLine(self.handle(), endAtLastLine) }
     }
     #[fixed_stack_segment]
@@ -22869,12 +22869,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setUseVerticalScrollBar(&self, show: bool) {
+    fn setUseVerticalScrollBar(&self, show: c_int) {
         unsafe { wxStyledTextCtrl_SetUseVerticalScrollBar(self.handle(), show) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getUseVerticalScrollBar(&self) -> bool {
+    fn getUseVerticalScrollBar(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetUseVerticalScrollBar(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -22885,12 +22885,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getTwoPhaseDraw(&self) -> bool {
+    fn getTwoPhaseDraw(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetTwoPhaseDraw(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setTwoPhaseDraw(&self, twoPhase: bool) {
+    fn setTwoPhaseDraw(&self, twoPhase: c_int) {
         unsafe { wxStyledTextCtrl_SetTwoPhaseDraw(self.handle(), twoPhase) }
     }
     #[fixed_stack_segment]
@@ -22910,12 +22910,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setFoldMarginColour(&self, useSetting: bool, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
+    fn setFoldMarginColour(&self, useSetting: c_int, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
         unsafe { wxStyledTextCtrl_SetFoldMarginColour(self.handle(), useSetting, back_r, back_g, back_b) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setFoldMarginHiColour(&self, useSetting: bool, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
+    fn setFoldMarginHiColour(&self, useSetting: c_int, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
         unsafe { wxStyledTextCtrl_SetFoldMarginHiColour(self.handle(), useSetting, fore_r, fore_g, fore_b) }
     }
     #[fixed_stack_segment]
@@ -22975,12 +22975,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getViewEOL(&self) -> bool {
+    fn getViewEOL(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetViewEOL(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setViewEOL(&self, visible: bool) {
+    fn setViewEOL(&self, visible: c_int) {
         unsafe { wxStyledTextCtrl_SetViewEOL(self.handle(), visible) }
     }
     #[fixed_stack_segment]
@@ -23042,12 +23042,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn usePopUp(&self, allowPopUp: bool) {
+    fn usePopUp(&self, allowPopUp: c_int) {
         unsafe { wxStyledTextCtrl_UsePopUp(self.handle(), allowPopUp) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn selectionIsRectangle(&self) -> bool {
+    fn selectionIsRectangle(&self) -> c_int {
         unsafe { wxStyledTextCtrl_SelectionIsRectangle(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -23077,12 +23077,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setSTCFocus(&self, focus: bool) {
+    fn setSTCFocus(&self, focus: c_int) {
         unsafe { wxStyledTextCtrl_SetSTCFocus(self.handle(), focus) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSTCFocus(&self) -> bool {
+    fn getSTCFocus(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetSTCFocus(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -23097,12 +23097,12 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setMouseDownCaptures(&self, captures: bool) {
+    fn setMouseDownCaptures(&self, captures: c_int) {
         unsafe { wxStyledTextCtrl_SetMouseDownCaptures(self.handle(), captures) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getMouseDownCaptures(&self) -> bool {
+    fn getMouseDownCaptures(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetMouseDownCaptures(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -23197,17 +23197,17 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setHotspotActiveForeground(&self, useSetting: bool, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
+    fn setHotspotActiveForeground(&self, useSetting: c_int, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
         unsafe { wxStyledTextCtrl_SetHotspotActiveForeground(self.handle(), useSetting, fore_r, fore_g, fore_b) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setHotspotActiveBackground(&self, useSetting: bool, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
+    fn setHotspotActiveBackground(&self, useSetting: c_int, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
         unsafe { wxStyledTextCtrl_SetHotspotActiveBackground(self.handle(), useSetting, back_r, back_g, back_b) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setHotspotActiveUnderline(&self, underline: bool) {
+    fn setHotspotActiveUnderline(&self, underline: c_int) {
         unsafe { wxStyledTextCtrl_SetHotspotActiveUnderline(self.handle(), underline) }
     }
     #[fixed_stack_segment]
@@ -23293,7 +23293,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn styleSetFontAttr(&self, styleNum: c_int, size: c_int, faceName: &str, bold: bool, italic: bool, underline: bool) {
+    fn styleSetFontAttr(&self, styleNum: c_int, size: c_int, faceName: &str, bold: c_int, italic: c_int, underline: c_int) {
         let faceName = wxT(faceName);
         unsafe { wxStyledTextCtrl_StyleSetFontAttr(self.handle(), styleNum, size, faceName.handle(), bold, italic, underline) }
     }
@@ -23309,7 +23309,7 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSelection(&self, startPos: *c_int, endPos: *c_int) {
+    fn getSelection(&self, startPos: *mut c_int, endPos: *mut c_int) {
         unsafe { wxStyledTextCtrl_GetSelection(self.handle(), startPos, endPos) }
     }
     #[fixed_stack_segment]
@@ -23334,23 +23334,23 @@ trait _wxStyledTextCtrl : _wxControl {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getLastKeydownProcessed(&self) -> bool {
+    fn getLastKeydownProcessed(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetLastKeydownProcessed(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setLastKeydownProcessed(&self, val: bool) {
+    fn setLastKeydownProcessed(&self, val: c_int) {
         unsafe { wxStyledTextCtrl_SetLastKeydownProcessed(self.handle(), val) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn saveFile(&self, filename: &str) -> bool {
+    fn saveFile(&self, filename: &str) -> c_int {
         let filename = wxT(filename);
         unsafe { wxStyledTextCtrl_SaveFile(self.handle(), filename.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn loadFile(&self, filename: &str) -> bool {
+    fn loadFile(&self, filename: &str) -> c_int {
         let filename = wxT(filename);
         unsafe { wxStyledTextCtrl_LoadFile(self.handle(), filename.handle()) }
     }
@@ -23416,43 +23416,43 @@ trait _wxStyledTextCtrl : _wxControl {
     }
 }
 
-struct wxSTCDoc(*u8);
-impl _wxSTCDoc for wxSTCDoc { fn handle(&self) -> *u8 { **self } }
+struct wxSTCDoc(*mut c_void);
+impl _wxSTCDoc for wxSTCDoc { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSTCDoc {
-    pub fn from(handle: *u8) -> @wxSTCDoc { @wxSTCDoc(handle) }
-    pub fn null() -> @wxSTCDoc { wxSTCDoc::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSTCDoc { @wxSTCDoc(handle) }
+    pub fn null() -> @wxSTCDoc { wxSTCDoc::from(0 as *mut c_void) }
     
 }
 
 trait _wxSTCDoc {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxMemoryBuffer(*u8);
-impl _wxMemoryBuffer for wxMemoryBuffer { fn handle(&self) -> *u8 { **self } }
+struct wxMemoryBuffer(*mut c_void);
+impl _wxMemoryBuffer for wxMemoryBuffer { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxMemoryBuffer {
-    pub fn from(handle: *u8) -> @wxMemoryBuffer { @wxMemoryBuffer(handle) }
-    pub fn null() -> @wxMemoryBuffer { wxMemoryBuffer::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxMemoryBuffer { @wxMemoryBuffer(handle) }
+    pub fn null() -> @wxMemoryBuffer { wxMemoryBuffer::from(0 as *mut c_void) }
     
 }
 
 trait _wxMemoryBuffer {
-    fn handle(&self) -> *u8;
+    fn handle(&self) -> *mut c_void;
     
 }
 
-struct wxStyledTextEvent(*u8);
+struct wxStyledTextEvent(*mut c_void);
 impl _wxStyledTextEvent for wxStyledTextEvent {}
 impl _wxCommandEvent for wxStyledTextEvent {}
 impl _wxEvent for wxStyledTextEvent {}
-impl _wxObject for wxStyledTextEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxStyledTextEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxStyledTextEvent {
-    pub fn from(handle: *u8) -> @wxStyledTextEvent { @wxStyledTextEvent(handle) }
-    pub fn null() -> @wxStyledTextEvent { wxStyledTextEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxStyledTextEvent { @wxStyledTextEvent(handle) }
+    pub fn null() -> @wxStyledTextEvent { wxStyledTextEvent::from(0 as *mut c_void) }
     
 }
 
@@ -23544,7 +23544,7 @@ trait _wxStyledTextEvent : _wxCommandEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDragAllowMove(&self) -> bool {
+    fn getDragAllowMove(&self) -> c_int {
         unsafe { wxStyledTextEvent_GetDragAllowMove(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -23554,17 +23554,17 @@ trait _wxStyledTextEvent : _wxCommandEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getShift(&self) -> bool {
+    fn getShift(&self) -> c_int {
         unsafe { wxStyledTextEvent_GetShift(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getControl(&self) -> bool {
+    fn getControl(&self) -> c_int {
         unsafe { wxStyledTextEvent_GetControl(self.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getAlt(&self) -> bool {
+    fn getAlt(&self) -> c_int {
         unsafe { wxStyledTextEvent_GetAlt(self.handle()) }
     }
     #[fixed_stack_segment]
@@ -23671,7 +23671,7 @@ trait _wxStyledTextEvent : _wxCommandEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn setDragAllowMove(&self, val: bool) {
+    fn setDragAllowMove(&self, val: c_int) {
         unsafe { wxStyledTextEvent_SetDragAllowMove(self.handle(), val) }
     }
     #[fixed_stack_segment]
@@ -23681,82 +23681,82 @@ trait _wxStyledTextEvent : _wxCommandEvent {
     }
 }
 
-struct wxGauge95(*u8);
+struct wxGauge95(*mut c_void);
 impl _wxGauge95 for wxGauge95 {}
 impl _wxGauge for wxGauge95 {}
 impl _wxControl for wxGauge95 {}
 impl _wxWindow for wxGauge95 {}
 impl _wxEvtHandler for wxGauge95 {}
-impl _wxObject for wxGauge95 { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGauge95 { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGauge95 {
-    pub fn from(handle: *u8) -> @wxGauge95 { @wxGauge95(handle) }
-    pub fn null() -> @wxGauge95 { wxGauge95::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGauge95 { @wxGauge95(handle) }
+    pub fn null() -> @wxGauge95 { wxGauge95::from(0 as *mut c_void) }
     
 }
 
 trait _wxGauge95 : _wxGauge {
 }
 
-struct wxGaugeMSW(*u8);
+struct wxGaugeMSW(*mut c_void);
 impl _wxGaugeMSW for wxGaugeMSW {}
 impl _wxGauge for wxGaugeMSW {}
 impl _wxControl for wxGaugeMSW {}
 impl _wxWindow for wxGaugeMSW {}
 impl _wxEvtHandler for wxGaugeMSW {}
-impl _wxObject for wxGaugeMSW { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxGaugeMSW { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGaugeMSW {
-    pub fn from(handle: *u8) -> @wxGaugeMSW { @wxGaugeMSW(handle) }
-    pub fn null() -> @wxGaugeMSW { wxGaugeMSW::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGaugeMSW { @wxGaugeMSW(handle) }
+    pub fn null() -> @wxGaugeMSW { wxGaugeMSW::from(0 as *mut c_void) }
     
 }
 
 trait _wxGaugeMSW : _wxGauge {
 }
 
-struct wxSlider95(*u8);
+struct wxSlider95(*mut c_void);
 impl _wxSlider95 for wxSlider95 {}
 impl _wxSlider for wxSlider95 {}
 impl _wxControl for wxSlider95 {}
 impl _wxWindow for wxSlider95 {}
 impl _wxEvtHandler for wxSlider95 {}
-impl _wxObject for wxSlider95 { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSlider95 { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSlider95 {
-    pub fn from(handle: *u8) -> @wxSlider95 { @wxSlider95(handle) }
-    pub fn null() -> @wxSlider95 { wxSlider95::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSlider95 { @wxSlider95(handle) }
+    pub fn null() -> @wxSlider95 { wxSlider95::from(0 as *mut c_void) }
     
 }
 
 trait _wxSlider95 : _wxSlider {
 }
 
-struct wxSliderMSW(*u8);
+struct wxSliderMSW(*mut c_void);
 impl _wxSliderMSW for wxSliderMSW {}
 impl _wxSlider for wxSliderMSW {}
 impl _wxControl for wxSliderMSW {}
 impl _wxWindow for wxSliderMSW {}
 impl _wxEvtHandler for wxSliderMSW {}
-impl _wxObject for wxSliderMSW { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxSliderMSW { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxSliderMSW {
-    pub fn from(handle: *u8) -> @wxSliderMSW { @wxSliderMSW(handle) }
-    pub fn null() -> @wxSliderMSW { wxSliderMSW::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxSliderMSW { @wxSliderMSW(handle) }
+    pub fn null() -> @wxSliderMSW { wxSliderMSW::from(0 as *mut c_void) }
     
 }
 
 trait _wxSliderMSW : _wxSlider {
 }
 
-struct wxcTreeItemData(*u8);
+struct wxcTreeItemData(*mut c_void);
 impl _wxcTreeItemData for wxcTreeItemData {}
 impl _wxTreeItemData for wxcTreeItemData {}
-impl _wxClientData for wxcTreeItemData { fn handle(&self) -> *u8 { **self } }
+impl _wxClientData for wxcTreeItemData { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxcTreeItemData {
-    pub fn from(handle: *u8) -> @wxcTreeItemData { @wxcTreeItemData(handle) }
-    pub fn null() -> @wxcTreeItemData { wxcTreeItemData::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxcTreeItemData { @wxcTreeItemData(handle) }
+    pub fn null() -> @wxcTreeItemData { wxcTreeItemData::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -23778,13 +23778,13 @@ trait _wxcTreeItemData : _wxTreeItemData {
     }
 }
 
-struct wxInputSink(*u8);
+struct wxInputSink(*mut c_void);
 impl _wxInputSink for wxInputSink {}
-impl _wxThread for wxInputSink { fn handle(&self) -> *u8 { **self } }
+impl _wxThread for wxInputSink { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxInputSink {
-    pub fn from(handle: *u8) -> @wxInputSink { @wxInputSink(handle) }
-    pub fn null() -> @wxInputSink { wxInputSink::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxInputSink { @wxInputSink(handle) }
+    pub fn null() -> @wxInputSink { wxInputSink::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -23806,14 +23806,14 @@ trait _wxInputSink : _wxThread {
     }
 }
 
-struct wxInputSinkEvent(*u8);
+struct wxInputSinkEvent(*mut c_void);
 impl _wxInputSinkEvent for wxInputSinkEvent {}
 impl _wxEvent for wxInputSinkEvent {}
-impl _wxObject for wxInputSinkEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxInputSinkEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxInputSinkEvent {
-    pub fn from(handle: *u8) -> @wxInputSinkEvent { @wxInputSinkEvent(handle) }
-    pub fn null() -> @wxInputSinkEvent { wxInputSinkEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxInputSinkEvent { @wxInputSinkEvent(handle) }
+    pub fn null() -> @wxInputSinkEvent { wxInputSinkEvent::from(0 as *mut c_void) }
     
 }
 
@@ -23830,20 +23830,20 @@ trait _wxInputSinkEvent : _wxEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn lastInput(&self) -> *char {
+    fn lastInput(&self) -> *mut c_char {
         unsafe { wxInputSinkEvent_LastInput(self.handle()) }
     }
 }
 
-struct wxcHtmlEvent(*u8);
+struct wxcHtmlEvent(*mut c_void);
 impl _wxcHtmlEvent for wxcHtmlEvent {}
 impl _wxCommandEvent for wxcHtmlEvent {}
 impl _wxEvent for wxcHtmlEvent {}
-impl _wxObject for wxcHtmlEvent { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxcHtmlEvent { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxcHtmlEvent {
-    pub fn from(handle: *u8) -> @wxcHtmlEvent { @wxcHtmlEvent(handle) }
-    pub fn null() -> @wxcHtmlEvent { wxcHtmlEvent::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxcHtmlEvent { @wxcHtmlEvent(handle) }
+    pub fn null() -> @wxcHtmlEvent { wxcHtmlEvent::from(0 as *mut c_void) }
     
 }
 
@@ -23880,18 +23880,18 @@ trait _wxcHtmlEvent : _wxCommandEvent {
     }
 }
 
-struct wxcHtmlWindow(*u8);
+struct wxcHtmlWindow(*mut c_void);
 impl _wxcHtmlWindow for wxcHtmlWindow {}
 impl _wxHtmlWindow for wxcHtmlWindow {}
 impl _wxScrolledWindow for wxcHtmlWindow {}
 impl _wxPanel for wxcHtmlWindow {}
 impl _wxWindow for wxcHtmlWindow {}
 impl _wxEvtHandler for wxcHtmlWindow {}
-impl _wxObject for wxcHtmlWindow { fn handle(&self) -> *u8 { **self } }
+impl _wxObject for wxcHtmlWindow { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxcHtmlWindow {
-    pub fn from(handle: *u8) -> @wxcHtmlWindow { @wxcHtmlWindow(handle) }
-    pub fn null() -> @wxcHtmlWindow { wxcHtmlWindow::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxcHtmlWindow { @wxcHtmlWindow(handle) }
+    pub fn null() -> @wxcHtmlWindow { wxcHtmlWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -23904,15 +23904,15 @@ impl wxcHtmlWindow {
 trait _wxcHtmlWindow : _wxHtmlWindow {
 }
 
-struct wxGridCellTextEnterEditor(*u8);
+struct wxGridCellTextEnterEditor(*mut c_void);
 impl _wxGridCellTextEnterEditor for wxGridCellTextEnterEditor {}
 impl _wxGridCellTextEditor for wxGridCellTextEnterEditor {}
 impl _wxGridCellEditor for wxGridCellTextEnterEditor {}
-impl _wxGridCellWorker for wxGridCellTextEnterEditor { fn handle(&self) -> *u8 { **self } }
+impl _wxGridCellWorker for wxGridCellTextEnterEditor { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxGridCellTextEnterEditor {
-    pub fn from(handle: *u8) -> @wxGridCellTextEnterEditor { @wxGridCellTextEnterEditor(handle) }
-    pub fn null() -> @wxGridCellTextEnterEditor { wxGridCellTextEnterEditor::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxGridCellTextEnterEditor { @wxGridCellTextEnterEditor(handle) }
+    pub fn null() -> @wxGridCellTextEnterEditor { wxGridCellTextEnterEditor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -23924,13 +23924,13 @@ impl wxGridCellTextEnterEditor {
 trait _wxGridCellTextEnterEditor : _wxGridCellTextEditor {
 }
 
-struct wxFileConfig(*u8);
+struct wxFileConfig(*mut c_void);
 impl _wxFileConfig for wxFileConfig {}
-impl _wxConfigBase for wxFileConfig { fn handle(&self) -> *u8 { **self } }
+impl _wxConfigBase for wxFileConfig { fn handle(&self) -> *mut c_void { **self } }
 
 impl wxFileConfig {
-    pub fn from(handle: *u8) -> @wxFileConfig { @wxFileConfig(handle) }
-    pub fn null() -> @wxFileConfig { wxFileConfig::from(0 as *u8) }
+    pub fn from(handle: *mut c_void) -> @wxFileConfig { @wxFileConfig(handle) }
+    pub fn null() -> @wxFileConfig { wxFileConfig::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]

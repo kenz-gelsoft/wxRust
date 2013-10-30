@@ -23,10 +23,10 @@ use native::*;
 
 #[link_args="-lwxc"]
 extern {
-    fn wxString_CreateUTF8(buffer: *u8) -> *u8;
-    fn wxString_GetUtf8(wxs: *u8) -> *u8;
-    fn wxCharBuffer_DataUtf8(wxcb: *u8) -> *c_char;
-    fn wxCharBuffer_Delete(wxcb: *u8);
+    fn wxString_CreateUTF8(buffer: *mut c_void) -> *mut c_void;
+    fn wxString_GetUtf8(wxs: *mut c_void) -> *mut c_void;
+    fn wxCharBuffer_DataUtf8(wxcb: *mut c_void) -> *c_char;
+    fn wxCharBuffer_Delete(wxcb: *mut c_void);
 }
 
 #[fixed_stack_segment]
@@ -34,19 +34,19 @@ extern {
 fn wxT(s: &str) -> wxString {
     unsafe {
         do s.to_c_str().with_ref |c_str| {
-            wxString { handle: wxString_CreateUTF8(c_str as *u8) }
+            wxString { handle: wxString_CreateUTF8(c_str as *mut c_void) }
         }
     }
 }
 
-struct wxString { handle: *u8 }
+struct wxString { handle: *mut c_void }
 impl Drop for wxString {
     fn drop(&self) {
         unsafe { wxString_Delete(self.handle); }
     }
 }
 impl wxString {
-    fn handle(&self) -> *u8 { self.handle }
+    fn handle(&self) -> *mut c_void { self.handle }
     fn to_str(&self) -> ~str {
         unsafe {
             let charBuffer = wxString_GetUtf8(self.handle);
@@ -62,19 +62,19 @@ impl wxString {
 
     def _print_class(self, clazz):
         struct_name = '%s' % clazz.struct_name
-        self.println('struct %s(*u8);' % struct_name)
+        self.println('struct %s(*mut c_void);' % struct_name)
         for trait in clazz.inheritance:
             body = ''
             if trait in self.__parser.root_classes:
-                body = ' fn handle(&self) -> *u8 { **self } '
+                body = ' fn handle(&self) -> *mut c_void { **self } '
             self.println('impl %s for %s {%s}' % (trait_name(trait), struct_name, body))
         self.println()
     
         # static methods go to struct impl
         self.println('impl %s {' % struct_name)
         with self.indent():
-            self.println('pub fn from(handle: *u8) -> @%s { @%s(handle) }' % (struct_name, struct_name))
-            self.println('pub fn null() -> @%s { %s::from(0 as *u8) }' % (struct_name, struct_name))
+            self.println('pub fn from(handle: *mut c_void) -> @%s { @%s(handle) }' % (struct_name, struct_name))
+            self.println('pub fn null() -> @%s { %s::from(0 as *mut c_void) }' % (struct_name, struct_name))
             self.println()
             for method in clazz.static_methods:
                 method.trait_fn(self, clazz.name)
@@ -86,7 +86,7 @@ impl wxString {
         self.println('trait %s%s {' % (clazz.trait_name, base))
         with self.indent():
             if clazz.name in self.__parser.root_classes:
-                self.println('fn handle(&self) -> *u8;')
+                self.println('fn handle(&self) -> *mut c_void;')
                 self.println()
             for method in clazz.methods:
                 method.trait_fn(self, clazz.name)
@@ -283,9 +283,12 @@ class LineParser(object):
 # Function style arg macros
 def TArrayString(args):
     return [['int', args[0]],
-            [['*', 'wchar_t'], args[1]]]
+            [['*', ['*', 'char']], args[1]]]
 def TByteString(args):
-    return [[['*', 'char'], args[0]],
+    return [[['*', ['*', 'char']], args[0]],
+            ['int', args[1]]]
+def TByteStringLazy(args):
+    return [[['*', ['*', 'char']], args[0]],
             ['int', args[1]]]
 TByteStringLazy = TByteString
 def TColorRGB(args):
@@ -304,7 +307,7 @@ def TPointOut(args):
 def TPointOutDouble(args):
     return TPoint(args, T=['*', 'double'])
 def TPointOutVoid(args):
-    return TPoint(args, T=['*', 'int'])
+    return TPoint(args, T=['*', 'void'])
 def TRect(args, T='int'):
     return [[T, args[0]],
             [T, args[1]],
@@ -315,7 +318,7 @@ def TRectDouble(args):
 def TRectOutDouble(args):
     return TRect(args, T=['*', 'double'])
 def TRectOutVoid(args):
-    return TRect(args, T=['*', 'int'])
+    return TRect(args, T=['*', 'void'])
 TSize = TPoint
 def TSizeDouble(args):
     return TSize(args, T='double')
@@ -324,7 +327,7 @@ def TSizeOut(args):
 def TSizeOutDouble(args):
     return TSize(args, T=['*', 'double'])
 def TSizeOutVoid(args):
-    return TSize(args, T=['*', 'int'])
+    return TSize(args, T=['*', 'void'])
 TVector = TPoint
 
 
@@ -561,7 +564,7 @@ class Arg(object):
 
 # Function style type macros
 def TArrayObjectOutVoid(args):
-    return '*u8'#'~[@%s]' % args # it would be **c_void ?
+    return '*mut c_void'#'~[@%s]' % args # it would be **c_void ?
 
 
 class Type(object):
@@ -624,11 +627,11 @@ class Type(object):
         if self._is_ptr:
             t = Type(self._inner)
             if t.is_class:
-                return '*u8'
+                return '*mut *mut c_void'
             # work around native.rs bug
             if t._is_ptr and t._inner == 'TChar':
-                return '*wchar_t'
-            return '*%s' % t
+                return '*mut *mut c_char'
+            return '*mut %s' % t
         s = str(self.__node)
         if s in type_mapping:
             return type_mapping[s]
@@ -638,31 +641,31 @@ class Type(object):
 # Other type mappings
 type_mapping = {
     # header type          # rust type
-    'TArrayIntOutVoid':    '*intptr_t',
-    'TArrayIntPtrOutVoid': '*intptr_t',
+    'TArrayIntOutVoid':    '*mut c_void',
+    'TArrayIntPtrOutVoid': '*mut c_void',
     'TArrayLen':           'c_int',
-    'TArrayStringOutVoid': '*wchar_t',#'**wchar_t',
-    'TBool':               'bool',
+    'TArrayStringOutVoid': '*mut c_void',
+    'TBool':               'c_int',
     'TBoolInt':            'c_int',
-    'TByteStringLazyOut':  '*char',#'*c_char',
+    'TByteStringLazyOut':  '*mut c_char',
     'TByteStringLen':      'c_int',
-    'TByteStringOut':      '*char',#'*c_char',
-    'TChar':               'wchar_t',
-    'TClosureFun':         '*u8',#'*c_void',
+    'TByteStringOut':      '*mut c_char',
+    'TChar':               'int8_t',
+    'TClosureFun':         '*mut c_void',#'*c_void',
     'TInt64':              'i64',
     'TIntPtr':             'intptr_t',
-    'TString':             '*wchar_t',
+    'TString':             '*mut int8_t',
     'TStringLen':          'c_int',
     'TStringOut':          '*wchar_t',#'**wchar_t',
-    'TStringVoid':         '*wchar_t',
+    'TStringVoid':         '*mut c_void',
     'TUInt':               'uint32_t',
     'TUInt8':              'uint8_t',
-    #    'char':                'c_char',
+    'char':                'c_char',
     'double':              'c_double',
     'float':               'c_float',
     'int':                 'c_int',
     'long':                'c_long',
-    'void':                'u8',#'c_void',
+    'void':                'c_void',
 }
 
 
