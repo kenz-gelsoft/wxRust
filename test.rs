@@ -10,7 +10,7 @@ use wx::native::*;
 use wx::wrapper::*;
 
 
-static nullptr: *u8 = 0 as *u8;
+static nullptr: *mut c_void = 0 as *mut c_void;
 static idAny: c_int = -1;
 
 
@@ -22,9 +22,9 @@ fn start(argc: int, argv: **u8, crate_map: *u8) -> int {
 #[fixed_stack_segment]
 #[inline(never)]
 fn on_main() {
-    let closure = wxClosure::new(wx_main as *u8, nullptr);
+    let closure = wxClosure::new(wx_main as *mut c_void, nullptr);
     let args: ~[*i32] = ~[];
-    ELJApp::initializeC(closure, args.len() as i32, vec::raw::to_ptr(args) as *i32);
+    ELJApp::initializeC(closure, args.len() as i32, vec::raw::to_ptr(args) as *mut *mut i8);
 }
 
 extern "C"
@@ -76,7 +76,7 @@ impl MyButton {
     #[inline(never)]
     fn new<T: _wxWindow>(parent: &T) -> MyButton {
         let button = wxButton::new(parent, idAny, "Push me!", 10, 10, 50, 30, 0);
-        let closure = wxClosure::new(MyButton::clicked as *u8, parent.handle());
+        let closure = wxClosure::new(MyButton::clicked as *mut c_void, parent.handle());
         unsafe {
             button.connect(idAny, idAny, expEVT_COMMAND_BUTTON_CLICKED(), closure.handle());
         }
@@ -85,7 +85,7 @@ impl MyButton {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn clicked(fun: *u8, data: *u8, evt: *u8) {
+    fn clicked(fun: *mut c_void, data: *mut c_void, evt: *mut c_void) {
         println("hello!");
         let parent = wxWindow::from(data);
         let msgDlg = wxMessageDialog::new(parent, "Pushed!!", "The Button", 0);

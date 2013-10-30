@@ -10,6 +10,29 @@ set(GENSRCS
     ${GENSRC}/wxc.h
 )
 
+add_rust_crate(bindgen
+    rust-bindgen/bindgen.rs
+    rust-bindgen/clang.rs
+    rust-bindgen/clangll.rs
+    rust-bindgen/gen.rs
+    rust-bindgen/main.rs
+    rust-bindgen/types.rs
+)
+
+add_custom_command(
+    OUTPUT  ${CMAKE_SOURCE_DIR}/native.rs
+    COMMAND ${CMAKE_BINARY_DIR}/bindgen
+        -x c++
+        `wx-config --cppflags`
+        --include stdint.h
+        --include time.h
+        ${GENSRCS}
+        > native.rs
+    COMMAND patch -p0 < native.rs.patch
+    DEPENDS bindgen.dummy ${GENSRCS}
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
 add_custom_command(
     OUTPUT  ${CMAKE_SOURCE_DIR}/wrapper.rs
     COMMAND python codegen.py ${GENSRCS} > wrapper.rs

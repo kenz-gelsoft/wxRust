@@ -1,0 +1,24 @@
+--- native.rs.orig	2013-10-30 03:30:21.000000000 +0900
++++ native.rs	2013-10-30 03:30:43.000000000 +0900
+@@ -12,21 +12,8 @@
+ pub type __darwin_intptr_t = c_long;
+ pub type __darwin_natural_t = c_uint;
+ pub type __darwin_ct_rune_t = c_int;
+-pub struct __mbstate_t {
+-    data: [c_uchar, ..128u],
+-}
+-impl __mbstate_t {
+-    pub fn __mbstate8(&mut self) -> *mut [c_schar, ..128u] {
+-        unsafe { std::cast::transmute(std::ptr::to_mut_unsafe_ptr(self)) }
+-    }
+-    pub fn _mbstateL(&mut self) -> *mut c_longlong {
+-        unsafe { std::cast::transmute(std::ptr::to_mut_unsafe_ptr(self)) }
+-    }
+-}
+-pub type __darwin_mbstate_t = __mbstate_t;
+ pub type __darwin_ptrdiff_t = c_long;
+ pub type __darwin_size_t = c_ulong;
+-pub type __darwin_va_list = __builtin_va_list;
+ pub type __darwin_wchar_t = c_int;
+ pub type __darwin_rune_t = __darwin_wchar_t;
+ pub type __darwin_wint_t = c_int;
