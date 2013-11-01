@@ -15,8 +15,8 @@ static idAny: c_int = -1;
 
 
 #[start]
-fn start(argc: int, argv: **u8) -> int {
-    start_on_main_thread(argc, argv, on_main)
+fn start(argc: int, argv: **u8, crate_map: *u8) -> int {
+    start_on_main_thread(argc, argv, crate_map, on_main)
 }
 
 #[fixed_stack_segment]
