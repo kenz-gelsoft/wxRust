@@ -41,7 +41,7 @@ fn wxT(s: &str) -> wxString {
 
 struct wxString { handle: *mut c_void }
 impl Drop for wxString {
-    fn drop(&self) {
+    fn drop(&mut self) {
         unsafe { wxString_Delete(self.handle); }
     }
 }
@@ -62,7 +62,7 @@ impl wxString {
 
     def _print_class(self, clazz):
         struct_name = '%s' % clazz.struct_name
-        self.println('struct %s(*mut c_void);' % struct_name)
+        self.println('pub struct %s(*mut c_void);' % struct_name)
         for trait in clazz.inheritance:
             body = ''
             if trait in self.__parser.root_classes:
@@ -83,7 +83,7 @@ impl wxString {
         # instance methods go to trait's default impl
         base = clazz.has_base and ' : %s' % trait_name(clazz.base) or ''
         self.println()
-        self.println('trait %s%s {' % (clazz.trait_name, base))
+        self.println('pub trait %s%s {' % (clazz.trait_name, base))
         with self.indent():
             if clazz.name in self.__parser.root_classes:
                 self.println('fn handle(&self) -> *mut c_void;')
