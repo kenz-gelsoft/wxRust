@@ -28,6 +28,7 @@ add_custom_command(
         --include time.h
         ${GENSRCS}
         > native.rs
+    COMMAND cat native.rs
     COMMAND patch -p0 < native.rs.patch
     DEPENDS bindgen.dummy ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
