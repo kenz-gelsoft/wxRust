@@ -6,7 +6,7 @@ add_subdirectory(wxc)
 
 if(APPLE)
     set(PLATFORMFLAGS)
-    set(PATCH_NATIVE_RS patch -p0 < native.rs.patch)
+    set(PATCH_NATIVE_RS patch -p0 < src/native.rs.patch)
 else(APPLE)
     set(PLATFORMFLAGS -L /usr/lib/llvm-3.3/lib)
     set(PATCH_NATIVE_RS)
@@ -28,31 +28,31 @@ add_rust_crate(bindgen
 )
 
 add_custom_command(
-    OUTPUT  ${CMAKE_SOURCE_DIR}/native.rs
+    OUTPUT  ${CMAKE_SOURCE_DIR}/src/native.rs
     COMMAND ${CMAKE_BINARY_DIR}/bindgen
         -x c++
         `wx-config --cppflags`
         --include stdint.h
         --include time.h
         ${GENSRCS}
-        > native.rs
+        > src/native.rs
     COMMAND ${PATCH_NATIVE_RS}
     DEPENDS bindgen.dummy ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
 add_custom_command(
-    OUTPUT  ${CMAKE_SOURCE_DIR}/wrapper.rs
-    COMMAND python codegen.py ${GENSRCS} > wrapper.rs
-    DEPENDS codegen.py ${GENSRCS}
+    OUTPUT  ${CMAKE_SOURCE_DIR}/src/wrapper.rs
+    COMMAND python src/codegen.py ${GENSRCS} > src/wrapper.rs
+    DEPENDS src/codegen.py ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
 add_rust_crate(wxrust
-    wx.rc
-    defs.rs
-    native.rs
-    wrapper.rs
+    src/wx.rc
+    src/defs.rs
+    src/native.rs
+    src/wrapper.rs
     wxc
 )
 
