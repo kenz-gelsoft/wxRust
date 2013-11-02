@@ -1,4 +1,4 @@
-set(RUSTCFLAGS -A cstack -L ${CMAKE_BINARY_DIR} --out-dir ${CMAKE_BINARY_DIR})
+set(RUSTCFLAGS -L ${CMAKE_BINARY_DIR} --out-dir ${CMAKE_BINARY_DIR})
 
 if(WIN32)
     set(RUST_MACRO_TOUCH type nul >)

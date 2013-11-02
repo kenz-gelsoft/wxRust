@@ -22,12 +22,16 @@ fn wxT(s: &str) -> wxString {
 
 struct wxString { handle: *mut c_void }
 impl Drop for wxString {
+    #[fixed_stack_segment]
+    #[inline(never)]
     fn drop(&mut self) {
         unsafe { wxString_Delete(self.handle); }
     }
 }
 impl wxString {
     fn handle(&self) -> *mut c_void { self.handle }
+    #[fixed_stack_segment]
+    #[inline(never)]
     fn to_str(&self) -> ~str {
         unsafe {
             let charBuffer = wxString_GetUtf8(self.handle);
