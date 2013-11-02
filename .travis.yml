@@ -8,4 +8,4 @@ install:
   - sudo apt-get install libclang-3.3-dev
   - sudo apt-get install libwxgtk2.9-dev
 script:
-  - ./build.sh -L /usr/lib/llvm-3.3/lib
+  - ./build.sh
