@@ -1,0 +1,12 @@
+diff --git a/main.rs b/main.rs
+index 10522c3..3a875b2 100644
+--- a/main.rs
++++ b/main.rs
+@@ -360,6 +360,7 @@ fn visit_struct(cursor: &Cursor,
+         // If we encounter a bitfield, and fail_on_bitfield is set, throw an
+         // error and exit entirely.
+         if (bit != None && ctx.fail_on_bitfield) {
++            return CXChildVisit_Continue;
+             fail!("Cannot handle bitfield `{}` in struct `{}`",
+                   name, parent.spelling());
+         }
