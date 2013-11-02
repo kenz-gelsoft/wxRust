@@ -20,30 +20,30 @@ add_rust_crate(bindgen
 )
 
 add_custom_command(
-    OUTPUT  ${CMAKE_SOURCE_DIR}/native.rs
+    OUTPUT  ${CMAKE_SOURCE_DIR}/src/native.rs
     COMMAND ${CMAKE_BINARY_DIR}/bindgen
         -x c++
         `wx-config --cppflags`
         --include stdint.h
         --include time.h
         ${GENSRCS}
-        > native.rs
-    COMMAND patch -p0 < native.rs.patch
+        > src/native.rs
+    COMMAND patch -p0 < src/native.rs.patch
     DEPENDS bindgen.dummy ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
 add_custom_command(
-    OUTPUT  ${CMAKE_SOURCE_DIR}/wrapper.rs
-    COMMAND python codegen.py ${GENSRCS} > wrapper.rs
+    OUTPUT  ${CMAKE_SOURCE_DIR}/src/wrapper.rs
+    COMMAND python codegen.py ${GENSRCS} > src/wrapper.rs
     DEPENDS codegen.py ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
 add_rust_crate(wxrust
-    wx.rc
-    native.rs
-    wrapper.rs
+    src/wx.rc
+    src/native.rs
+    src/wrapper.rs
     wxc
 )
 

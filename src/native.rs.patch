@@ -1,5 +1,5 @@
---- native.rs.orig	2013-10-30 03:30:21.000000000 +0900
-+++ native.rs	2013-10-30 03:30:43.000000000 +0900
+--- src/native.rs.orig	2013-10-30 03:30:21.000000000 +0900
++++ src/native.rs	2013-10-30 03:30:43.000000000 +0900
 @@ -12,21 +12,8 @@
  pub type __darwin_intptr_t = c_long;
  pub type __darwin_natural_t = c_uint;
