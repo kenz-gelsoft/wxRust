@@ -2,5 +2,6 @@
 
 #[feature(globs)];
 
+pub mod defs;
 pub mod native;
 pub mod wrapper;
