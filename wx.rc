@@ -1,6 +1,7 @@
 #[ crate_type = "lib" ];
 
 #[feature(globs)];
+#[feature(managed_boxes)];
 
 pub mod defs;
 pub mod native;

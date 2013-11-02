@@ -1,4 +1,5 @@
 #[feature(globs)];
+#[feature(managed_boxes)]
 
 extern mod wx;
 
