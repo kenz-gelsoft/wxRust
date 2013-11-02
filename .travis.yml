@@ -4,6 +4,6 @@ before_install:
   - yes | sudo apt-add-repository 'deb http://repos.codelite.org/wx2.9/ubuntu/ raring universe'
   - sudo apt-get update
 install:
-  - sudo apt-get install rust-nightly libclang-3.3-dev libwxgtk2.9-dev
+  - sudo apt-get install rust-nightly libclang-3.3-dev libwxgtk2.9-0-unofficial libwxgtk2.9-dev
 script:
   - ./build.sh
