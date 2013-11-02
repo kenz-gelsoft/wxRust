@@ -1,3 +1,4 @@
+from __future__ import print_function
 from subprocess import PIPE, Popen
 
 import re
@@ -8,6 +9,7 @@ def main():
     parser = Parser()
     parser.parse_files(sys.argv[1:])
     WrapperGenerator(parser).generate()
+    print('\nDone.', file=sys.stderr)
 
 
 class WrapperGenerator(object):
@@ -16,6 +18,7 @@ class WrapperGenerator(object):
         self._indent = 0
 
     def generate(self):
+        print('\nGenerating code', file=sys.stderr, end='')
         self.println('''\
 use std::libc::*;
 use std::str;
@@ -58,6 +61,7 @@ impl wxString {
 }
 ''')
         for clazz in self.__parser.classes:
+            print('.', file=sys.stderr, end='')
             self._print_class(clazz)
 
     def _print_class(self, clazz):
@@ -97,7 +101,7 @@ impl wxString {
         lines = text.split('\n')
         for line in lines:
             line = '%s%s' % (''+(' ' * 4 * self._indent), line)
-            print line
+            print(line)
 
     def indent(self):
         class Indent:
@@ -121,16 +125,22 @@ class Parser(object):
         self.__root_classes = set()
     
     def parse_files(self, files):
+        print('Parsing files', file=sys.stderr, end='')
         for file in files:
+            print('.', file=sys.stderr, end='')
             for line in Preprocessor().preprocess(file):
                 self._parse_line(line.strip())
+        print('\nConstructing class information', file=sys.stderr, end='')
         for clazz in self.__classes:
+            print('.', file=sys.stderr, end='')
             self.__root_classes.add(clazz.inheritance[-1])
             for f in self.__functions:
                 if f.name in missing_functions:
                     continue
                 clazz.add_if_member(f)
+        print('\nRemoving duplicated methods', file=sys.stderr, end='')
         for clazz in self.__classes:
+            print('.', file=sys.stderr, end='')
             clazz.remove_methods_in_base()
     
     @property
