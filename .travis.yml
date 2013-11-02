@@ -1,6 +1,7 @@
 before_install:
   - yes | sudo add-apt-repository ppa:hansjorg/rust
   - yes | sudo add-apt-repository ppa:xorg-edgers/ppa
+  - yes | sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
   - yes | sudo apt-add-repository 'deb http://repos.codelite.org/wx2.9/ubuntu/ precise universe'
   - sudo apt-get update
 install:
