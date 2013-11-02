@@ -42,6 +42,7 @@ add_custom_command(
 
 add_rust_crate(wxrust
     src/wx.rc
+    src/defs.rs
     src/native.rs
     src/wrapper.rs
     wxc
