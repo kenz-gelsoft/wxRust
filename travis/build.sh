@@ -1,5 +1,5 @@
 cd rust-bindgen
-patch -p1 < ../rust-bindgen-workaround.patch
+patch -p1 < ../travis/rust-bindgen-workaround.patch
 cd ..
 
 mkdir -p build
