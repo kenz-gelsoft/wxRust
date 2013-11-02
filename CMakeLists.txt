@@ -4,17 +4,19 @@ include(rust.cmake)
 
 add_subdirectory(wxc)
 
-set(RUSTCFLAGS ${RUSTCFLAGS} -L wxc)
+if(APPLE)
+    set(PLATFORMFLAGS)
+    set(PATCH_NATIVE_RS patch -p0 < native.rs.patch)
+else(APPLE)
+    set(PLATFORMFLAGS -L /usr/lib/llvm-3.3/lib)
+    set(PATCH_NATIVE_RS)
+endif(APPLE)
+
+set(RUSTCFLAGS ${RUSTCFLAGS} ${PLATFORMFLAGS} -L wxc)
 set(GENSRC wxHaskell/wxc/src/include)
 set(GENSRCS
     ${GENSRC}/wxc.h
 )
-
-if(APPLE)
-    set(PATCH_NATIVE_RS patch -p0 < native.rs.patch)
-else(APPLE)
-    set(PATCH_NATIVE_RS)
-endif(APPLE)
 
 add_rust_crate(bindgen
     rust-bindgen/bindgen.rs
