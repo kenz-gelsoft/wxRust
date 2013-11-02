@@ -1,4 +1,4 @@
-# wxRust
+# wxRust [![Build Status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=master)](https://travis-ci.org/kenz-gelsoft/wxRust)
 
 This is an attempt creating wxWidgets binding for the Rust programming language.
 
