@@ -1,7 +1,7 @@
 before_install:
   - yes | sudo add-apt-repository ppa:hansjorg/rust
   - yes | sudo add-apt-repository ppa:xorg-edgers/ppa
-  - yes | sudo add-apt-repository ppa:sven-eckelmann/ppa-wxwidgets2.9
+  - yes | sudo apt-add-repository 'deb http://repos.codelite.org/wx2.9/ubuntu/ raring universe'
   - sudo apt-get update
 install:
   - sudo apt-get install rust-nightly libclang-3.3-dev libwxgtk2.9-dev
