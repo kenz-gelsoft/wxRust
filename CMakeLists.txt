@@ -35,8 +35,8 @@ add_custom_command(
 
 add_custom_command(
     OUTPUT  ${CMAKE_SOURCE_DIR}/src/wrapper.rs
-    COMMAND python codegen.py ${GENSRCS} > src/wrapper.rs
-    DEPENDS codegen.py ${GENSRCS}
+    COMMAND python src/codegen.py ${GENSRCS} > src/wrapper.rs
+    DEPENDS src/codegen.py ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
