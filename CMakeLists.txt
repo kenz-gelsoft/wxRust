@@ -4,7 +4,7 @@ include(rust.cmake)
 
 add_subdirectory(wxc)
 
-set(RUSTCFLAGS ${RUSTCFLAGS} -L wxc)
+set(RUSTCFLAGS ${RUSTCFLAGS} -L /usr/lib/llvm-3.3/lib -L wxc)
 set(GENSRC wxHaskell/wxc/src/include)
 set(GENSRCS
     ${GENSRC}/wxc.h
