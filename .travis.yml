@@ -1,7 +1,9 @@
 before_install:
   - yes | sudo add-apt-repository ppa:hansjorg/rust
+  - yes | sudo add-apt-repository ppa:sven-eckelmann/ppa-wxwidgets2.9
   - sudo apt-get update
 install:
   - sudo apt-get install rust-nightly
+  - sudo apt-get install libwxgtk2.9-dev
 script:
   - ./build.sh
