@@ -1,6 +1,3 @@
-before_install:
-  - /bin/true
-install:
-  - /bin/true
-script:
-  - /bin/true
+branches:
+  only:
+    - master
