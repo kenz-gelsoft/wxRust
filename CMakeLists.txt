@@ -48,7 +48,7 @@ add_rust_crate(wxrust
 )
 
 add_rust_crate(test
-    test.rs
+    tests/test.rs
     wxrust.dummy
 )
 
@@ -58,9 +58,9 @@ if(APPLE)
         OUTPUT Test.app.dummy
         COMMAND mkdir -p Test.app/Contents/MacOS
         COMMAND cp test  Test.app/Contents/MacOS/
-        COMMAND cp ${CMAKE_SOURCE_DIR}/Info.plist Test.app/Contents/
+        COMMAND cp ${CMAKE_SOURCE_DIR}/tests/Info.plist Test.app/Contents/
         COMMAND touch Test.app.dummy
-        DEPENDS Info.plist test.dummy
+        DEPENDS tests/Info.plist test.dummy
     )
     add_custom_target(Test.app ALL DEPENDS Test.app.dummy)
 endif(APPLE)
