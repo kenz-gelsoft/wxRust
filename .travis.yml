@@ -6,6 +6,6 @@ before_install:
   - sudo apt-get update
 install:
   - sudo apt-get install rust-nightly libclang-3.3-dev libwxgtk2.9-0-unofficial libwxgtk2.9-dev
-  - sudo /sbin/ldconfig
 script:
+  - export LD_LIBRARY_PATH=/usr/lib/llvm-3.3/lib
   - ./build.sh
