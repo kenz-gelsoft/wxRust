@@ -58,6 +58,7 @@ add_rust_crate(wxrust
 
 add_rust_crate(test
     tests/test.rs
+    tests/macros.rs
     wxrust.dummy
 )
 
