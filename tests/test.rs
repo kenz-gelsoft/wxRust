@@ -1,6 +1,8 @@
 #[feature(globs)];
 #[feature(macro_rules)];
 
+#[link_args="-lwxc"];
+
 extern mod wx;
 
 use std::libc::*;
