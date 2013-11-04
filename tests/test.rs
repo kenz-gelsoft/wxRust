@@ -2,6 +2,8 @@
 #[feature(macro_rules)];
 #[feature(managed_boxes)];
 
+#[link_args="-lwxc"];
+
 extern mod wx;
 
 use std::libc::*;
