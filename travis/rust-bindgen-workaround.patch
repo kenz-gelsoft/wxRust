@@ -1,5 +1,47 @@
+diff --git a/README.txt b/README.txt
+index 42c6bb4..0b32afb 100644
+--- a/README.txt
++++ b/README.txt
+@@ -48,4 +48,3 @@ TODO
+ * bit field
+ * union type
+ * global variable
+-* variadic function
+diff --git a/gen.rs b/gen.rs
+index 46cf9e9..0919af5 100644
+--- a/gen.rs
++++ b/gen.rs
+@@ -492,7 +492,8 @@ fn cunion_to_rs(ctx: &mut GenCtx, name: ~str, fields: ~[@FieldInfo]) -> ~[@ast::
+             decl: ast::fn_decl {
+                 inputs: ~[],
+                 output: ret_ty,
+-                cf: ast::return_val
++                cf: ast::return_val,
++                variadic: false
+             },
+             body: body,
+             id: ast::DUMMY_NODE_ID,
+@@ -579,7 +580,7 @@ fn cvar_to_rs(ctx: &mut GenCtx, name: ~str,
+ 
+ fn cfuncty_to_rs(ctx: &mut GenCtx, rty: @Type,
+                                     aty: ~[(~str, @Type)],
+-                                    _var: bool) -> ast::fn_decl {
++                                    var: bool) -> ast::fn_decl {
+ 
+     let ret = match *rty {
+         TVoid => ast::Ty {
+@@ -631,7 +632,8 @@ fn cfuncty_to_rs(ctx: &mut GenCtx, rty: @Type,
+     return ast::fn_decl {
+         inputs: args,
+         output: ret,
+-        cf: ast::return_val
++        cf: ast::return_val,
++        variadic: var
+     };
+ }
+ 
 diff --git a/main.rs b/main.rs
-index 10522c3..3a875b2 100644
+index bb76ca6..ceb0bba 100644
 --- a/main.rs
 +++ b/main.rs
 @@ -360,6 +360,7 @@ fn visit_struct(cursor: &Cursor,
