@@ -1,4 +1,5 @@
-#[ crate_type = "lib" ];
+#[crate_type="lib"];
+#[link(name="wx")];
 
 #[feature(globs)];
 
