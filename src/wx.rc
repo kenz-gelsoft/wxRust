@@ -3,6 +3,16 @@
 
 #[feature(globs)];
 
+pub mod base;
+pub mod core;
 pub mod defs;
+pub mod deprecated;
+pub mod gl;
+pub mod html;
+pub mod net;
+pub mod advanced;
+pub mod odbc;
+pub mod propertygrid;
+pub mod media;
 pub mod native;
 pub mod wrapper;
