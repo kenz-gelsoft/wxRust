@@ -11,8 +11,9 @@ use std::rt::start_on_main_thread;
 use std::vec;
 
 use wx::defs::*;
+use wx::base::*;
+use wx::core::*;
 use wx::native::*;
-use wx::wrapper::*;
 
 mod macros;
 

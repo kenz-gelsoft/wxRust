@@ -42,8 +42,9 @@ add_custom_command(
 )
 
 add_custom_command(
-    OUTPUT  ${CMAKE_SOURCE_DIR}/src/wrapper.rs
-    COMMAND python src/codegen.py ${GENSRCS} > src/wrapper.rs
+    OUTPUT  ${CMAKE_SOURCE_DIR}/src/generated.dummy
+    COMMAND python src/codegen.py ${GENSRCS}
+    COMMAND touch  src/generated.dummy
     DEPENDS src/codegen.py ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
@@ -52,7 +53,7 @@ add_rust_crate(wxrust
     src/wx.rc
     src/defs.rs
     src/native.rs
-    src/wrapper.rs
+    src/generated.dummy
     wxc
 )
 
