@@ -13,7 +13,6 @@ use wx::defs::*;
 use wx::base::*;
 use wx::core::*;
 use wx::native::*;
-use wx::wrapper::*;
 
 mod macros;
 

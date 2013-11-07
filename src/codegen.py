@@ -5,453 +5,621 @@ import re
 import sys
 
 
-baseClasses = [
-               'wxArray',
-               'wxArrayString',
-               'wxBufferedInputStream',
-               'wxBufferedOutputStream',
-               'wxCSConv',
-               'wxClassInfo',
-               'wxClientBase',
-               'wxClientData',
-               'wxClientDataContainer',
-               'wxClosure',
-               'wxCommandLineParser',
-               'wxCondition',
-               'wxConfigBase',
-               'wxConnection',
-               'wxConnectionBase',
-               'wxCountingOutputStream',
-               'wxCriticalSection',
-               'wxCriticalSectionLocker',
-               'wxDDEClient',
-               'wxDDEConnection',
-               'wxDDEServer',
-               'wxDllLoader',
-               'wxDataInputStream',
-               'wxDataOutputStream',
-               'wxDateTime',
-               'wxDebugContext',
-               'wxDirTraverser',
-               'wxDynamicLibrary',
-               'wxEncodingConverter',
-               'wxFFile',
-               'wxFFileInputStream',
-               'wxFFileOutputStream',
-               'wxFSFile',
-               'wxFileConfig',
-               'wxFileInputStream',
-               'wxFileName',
-               'wxFileOutputStream',
-               'wxFileSystem',
-               'wxFileSystemHandler',
-               'wxFilterInputStream',
-               'wxFilterOutputStream',
-               'wxInputStream',
-               'wxList',
-               'wxLocale',
-               'wxLongLong',
-               'wxMBConv',
-               'wxMBConvUTF7',
-               'wxMBConvUTF8',
-               'wxMemoryBuffer',
-               'wxMemoryFSHandler',
-               'wxMemoryInputStream',
-               'wxMemoryOutputStream',
-               'wxModule',
-               'wxMutex',
-               'wxMutexLocker',
-               'wxNodeBase',
-               'wxObject',
-               'wxObjectRefData',
-               'wxOutputStream',
-               'wxPathList',
-               'wxRegEx',
-               'wxServerBase',
-               'wxStopWatch',
-               'wxStreamBase',
-               'wxStreamBuffer',
-               'wxString',
-               'wxStringClientData',
-               'wxStringList',
-               'wxStringTokenizer',
-               'wxSystemOptions',
-               'wxTempFile',
-               'wxTextFile',
-               'wxTextInputStream',
-               'wxTextOutputStream',
-               'wxThread',
-               'wxTime',
-               'wxTimeSpan',
-               'wxVariant',
-               'wxZipInputStream',
-               'wxZlibInputStream',
-               'wxZlibOutputStream',
-               ]
+modules = {
+    'base': {
+        'depends': ['native'],
+        'classes': [
+                    'ELJClient',
+                    'ELJConnection',
+                    'ELJLocale',
+                    'ELJServer',
+                    'wxArray',
+                    'wxArrayString',
+                    'wxBufferedInputStream',
+                    'wxBufferedOutputStream',
+                    'wxCSConv',
+                    'wxClassInfo',
+                    'wxClient',
+                    'wxClientBase',
+                    'wxClientData',
+                    'wxClientDataContainer',
+                    'wxClosure',
+                    'wxCommandLineParser',
+                    'wxCondition',
+                    'wxConfigBase',
+                    'wxConnection',
+                    'wxConnectionBase',
+                    'wxCountingOutputStream',
+                    'wxCriticalSection',
+                    'wxCriticalSectionLocker',
+                    'wxDDEClient',
+                    'wxDDEConnection',
+                    'wxDDEServer',
+                    'wxDllLoader',
+                    'wxDataInputStream',
+                    'wxDataOutputStream',
+                    'wxDateTime',
+                    'wxDebugContext',
+                    'wxDirTraverser',
+                    'wxDynamicLibrary',
+                    'wxEncodingConverter',
+                    'wxFFile',
+                    'wxFFileInputStream',
+                    'wxFFileOutputStream',
+                    'wxFSFile',
+                    'wxFileConfig',
+                    'wxFileInputStream',
+                    'wxFileName',
+                    'wxFileOutputStream',
+                    'wxFileSystem',
+                    'wxFileSystemHandler',
+                    'wxFilterInputStream',
+                    'wxFilterOutputStream',
+                    'wxInputStream',
+                    'wxList',
+                    'wxLocale',
+                    'wxLongLong',
+                    'wxMBConv',
+                    'wxMBConvUTF7',
+                    'wxMBConvUTF8',
+                    'wxMemoryBuffer',
+                    'wxMemoryFSHandler',
+                    'wxMemoryInputStream',
+                    'wxMemoryOutputStream',
+                    'wxModule',
+                    'wxMutex',
+                    'wxMutexLocker',
+                    'wxNodeBase',
+                    'wxObject',
+                    'wxObjectRefData',
+                    'wxOutputStream',
+                    'wxPathList',
+                    'wxRegEx',
+                    'wxScopedArray',
+                    'wxScopedPtr',
+                    'wxSemaphore',
+                    'wxServer',
+                    'wxServerBase',
+                    'wxSingleInstanceChecker',
+                    'wxStopWatch',
+                    'wxStreamBase',
+                    'wxStreamBuffer',
+                    'wxString',
+                    'wxStringBuffer',
+                    'wxStringClientData',
+                    'wxStringList',
+                    'wxStringTokenizer',
+                    'wxSystemOptions',
+                    'wxTempFile',
+                    'wxTextFile',
+                    'wxTextInputStream',
+                    'wxTextOutputStream',
+                    'wxThread',
+                    'wxTime',
+                    'wxTimeSpan',
+                    'wxVariant',
+                    'wxVariantData',
+                    'wxZipInputStream',
+                    'wxZlibInputStream',
+                    'wxZlibOutputStream',
+                    ]
+    },
+    'core': {
+        'depends': ['native', 'base'],
+        'classes': [
+                    'ELJApp',
+                    'ELJArtProv',
+                    'ELJCommand',
+                    'ELJDragDataObject',
+                    'ELJDropTarget',
+                    'ELJFileDropTarget',
+                    'ELJLog',
+                    'ELJPreviewControlBar',
+                    'ELJPreviewFrame',
+                    'ELJTextDropTarget',
+                    'ELJTextValidator',
+                    'wxAcceleratorEntry',
+                    'wxAcceleratorTable',
+                    'wxActivateEvent',
+                    'wxApp',
+                    'wxArtProvider',
+                    'wxAutoBufferedPaintDC',
+                    'wxAutomationObject',
+                    'wxBitmap',
+                    'wxBitmapButton',
+                    'wxBitmapDataObject',
+                    'wxBitmapHandler',
+                    'wxBitmapToggleButton',
+                    'wxBoxSizer',
+                    'wxBrush',
+                    'wxBrushList',
+                    'wxBufferedDC',
+                    'wxBufferedPaintDC',
+                    'wxBusyCursor',
+                    'wxBusyInfo',
+                    'wxButton',
+                    'wxCaret',
+                    'wxCheckBox',
+                    'wxCheckListBox',
+                    'wxChoice',
+                    'wxClientDC',
+                    'wxClipboard',
+                    'wxCloseEvent',
+                    'wxColour',
+                    'wxColourData',
+                    'wxColourDatabase',
+                    'wxColourDialog',
+                    'wxComboBox',
+                    'wxCommand',
+                    'wxCommandEvent',
+                    'wxCommandProcessor',
+                    'wxContextHelp',
+                    'wxContextHelpButton',
+                    'wxControl',
+                    'wxCursor',
+                    'wxCustomDataObject',
+                    'wxDC',
+                    'wxDCClipper',
+                    'wxDataFormat',
+                    'wxDataObject',
+                    'wxDataObjectComposite',
+                    'wxDataObjectSimple',
+                    'wxDialUpEvent',
+                    'wxDialUpManager',
+                    'wxDialog',
+                    'wxDirDialog',
+                    'wxDocChildFrame',
+                    'wxDocParentFrame',
+                    'wxDocMDIChildFrame',
+                    'wxDocMDIParentFrame',
+                    'wxDocManager',
+                    'wxDocTemplate',
+                    'wxDocument',
+                    'wxDragImage',
+                    'wxDrawControl',
+                    'wxDrawWindow',
+                    'wxDropFilesEvent',
+                    'wxDropSource',
+                    'wxDropTarget',
+                    'wxEraseEvent',
+                    'wxEvent',
+                    'wxEvtHandler',
+                    'wxFileDataObject',
+                    'wxFileDialog',
+                    'wxFileDropTarget',
+                    'wxFileHistory',
+                    'wxFileType',
+                    'wxFindDialogEvent',
+                    'wxFindReplaceData',
+                    'wxFindReplaceDialog',
+                    'wxFlexGridSizer',
+                    'wxFocusEvent',
+                    'wxFont',
+                    'wxFontData',
+                    'wxFontDialog',
+                    'wxFontEnumerator',
+                    'wxFontList',
+                    'wxFontMapper',
+                    'wxFrame',
+                    'wxGDIObject',
+                    'wxGauge',
+                    'wxGenericDirCtrl',
+                    'wxGenericDragImage',
+                    'wxGenericValidator',
+                    'wxGraphicsBrush',
+                    'wxGraphicsContext',
+                    'wxGraphicsFont',
+                    'wxGraphicsMatrix',
+                    'wxGraphicsObject',
+                    'wxGraphicsPath',
+                    'wxGraphicsPen',
+                    'wxGraphicsRenderer',
+                    'wxGridSizer',
+                    'wxHelpController',
+                    'wxHelpControllerBase',
+                    'wxHelpControllerHelpProvider',
+                    'wxHelpEvent',
+                    'wxHelpProvider',
+                    'wxIcon',
+                    'wxIconBundle',
+                    'wxIconizeEvent',
+                    'wxIdleEvent',
+                    'wxImage',
+                    'wxImageHandler',
+                    'wxImageList',
+                    'wxIndividualLayoutConstraint',
+                    'wxInitDialogEvent',
+                    'wxInputSink',
+                    'wxInputSinkEvent',
+                    'wxJoystickEvent',
+                    'wxKeyEvent',
+                    'wxLayoutConstraints',
+                    'wxListBox',
+                    'wxListCtrl',
+                    'wxListEvent',
+                    'wxListItem',
+                    'wxLog',
+                    'wxLogChain',
+                    'wxLogGUI',
+                    'wxLogNull',
+                    'wxLogPassThrough',
+                    'wxLogStderr',
+                    'wxLogStream',
+                    'wxLogTextCtrl',
+                    'wxLogWindow',
+                    'wxMDIChildFrame',
+                    'wxMDIClientWindow',
+                    'wxMDIParentFrame',
+                    'wxMask',
+                    'wxMaximizeEvent',
+                    'wxMemoryDC',
+                    'wxMenu',
+                    'wxMenuBar',
+                    'wxMenuEvent',
+                    'wxMenuItem',
+                    'wxMessageDialog',
+                    'wxMetafile',
+                    'wxMetafileDC',
+                    'wxMimeTypesManager',
+                    'wxMiniFrame',
+                    'wxMirrorDC',
+                    'wxMouseCaptureChangedEvent',
+                    'wxMouseEvent',
+                    'wxMoveEvent',
+                    'wxNavigationKeyEvent',
+                    'wxNotebook',
+                    'wxNotebookEvent',
+                    'wxNotifyEvent',
+                    'wxPageSetupDialog',
+                    'wxPageSetupDialogData',
+                    'wxPaintDC',
+                    'wxPaintEvent',
+                    'wxPalette',
+                    'wxPaletteChangedEvent',
+                    'wxPanel',
+                    'wxPen',
+                    'wxPenList',
+                    'wxPoint',
+                    'wxPopupTransientWindow',
+                    'wxPopupWindow',
+                    'wxPostScriptDC',
+                    'wxPostScriptPrintNativeData',
+                    'wxPreviewCanvas',
+                    'wxPreviewControlBar',
+                    'wxPreviewFrame',
+                    'wxPrintData',
+                    'wxPrintDialog',
+                    'wxPrintDialogData',
+                    'wxPrintPreview',
+                    'wxPrinter',
+                    'wxPrinterDC',
+                    'wxPrintout',
+                    'wxPrivateDropTarget',
+                    'wxProcess',
+                    'wxProcessEvent',
+                    'wxProgressDialog',
+                    'wxQuantize',
+                    'wxQueryNewPaletteEvent',
+                    'wxRadioBox',
+                    'wxRadioButton',
+                    'wxRealPoint',
+                    'wxRect',
+                    'wxRegion',
+                    'wxRegionIterator',
+                    'wxSVGFileDC',
+                    'wxScreenDC',
+                    'wxScrollBar',
+                    'wxScrollEvent',
+                    'wxScrollWinEvent',
+                    'wxScrolledWindow',
+                    'wxSetCursorEvent',
+                    'wxShowEvent',
+                    'wxSimpleHelpProvider',
+                    'wxSingleChoiceDialog',
+                    'wxSize',
+                    'wxSizeEvent',
+                    'wxSizer',
+                    'wxSizerItem',
+                    'wxSlider',
+                    'wxSound',
+                    'wxSpinButton',
+                    'wxSpinCtrl',
+                    'wxSpinEvent',
+                    'wxSplitterEvent',
+                    'wxSplitterWindow',
+                    'wxStaticBitmap',
+                    'wxStaticBox',
+                    'wxStaticBoxSizer',
+                    'wxStaticLine',
+                    'wxStaticText',
+                    'wxStatusBar',
+                    'wxSysColourChangedEvent',
+                    'wxSystemSettings',
+                    'wxTextAttr',
+                    'wxTextCtrl',
+                    'wxTextDataObject',
+                    'wxTextDropTarget',
+                    'wxTextEntryDialog',
+                    'wxTextValidator',
+                    'wxTimer',
+                    'wxTimerEvent',
+                    'wxTimerEx',
+                    'wxTimerRunner',
+                    'wxTipWindow',
+                    'wxToggleButton',
+                    'wxToolBar',
+                    'wxToolBarBase',
+                    'wxToolTip',
+                    'wxTopLevelWindow',
+                    'wxTreeCtrl',
+                    'wxTreeEvent',
+                    'wxTreeItemData',
+                    'wxTreeItemId',
+                    'wxUpdateUIEvent',
+                    'wxValidator',
+                    'wxView',
+                    'wxWindow',
+                    'wxWindowCreateEvent',
+                    'wxWindowDestroyEvent',
+                    'wxWindowDC',
+                    'wxWindowDisabler',
+                    'wxXmlResourceHandler',
+                    'wxcPrintEvent',
+                    'wxcPrintout',
+                    'wxcPrintoutHandler',
+                    'wxcTreeItemData',
+                    ]
+    },
+    'advanced': {
+        'depends': ['native', 'base', 'core'],
+        'classes': [
+                    'ELJGridTable',
+                    'wxCalculateLayoutEvent',
+                    'wxCalendarCtrl',
+                    'wxCalendarDateAttr',
+                    'wxCalendarEvent',
+                    'wxEditableListBox',
+                    'wxGrid',
+                    'wxGridCellAttr',
+                    'wxGridCellAutoWrapStringRenderer',
+                    'wxGridCellBoolEditor',
+                    'wxGridCellBoolRenderer',
+                    'wxGridCellChoiceEditor',
+                    'wxGridCellCoordsArray',
+                    'wxGridCellEditor',
+                    'wxGridCellFloatEditor',
+                    'wxGridCellFloatRenderer',
+                    'wxGridCellNumberEditor',
+                    'wxGridCellNumberRenderer',
+                    'wxGridCellRenderer',
+                    'wxGridCellStringRenderer',
+                    'wxGridCellTextEditor',
+                    'wxGridCellTextEnterEditor',
+                    'wxGridCellWorker',
+                    'wxGridEditorCreatedEvent',
+                    'wxGridEvent',
+                    'wxGridRangeSelectEvent',
+                    'wxGridSizeEvent',
+                    'wxGridTableBase',
+                    'wxJoystick',
+                    'wxLayoutAlgorithm',
+                    'wxManagedPtr',
+                    'wxQueryLayoutInfoEvent',
+                    'wxSashEvent',
+                    'wxSashLayoutWindow',
+                    'wxSashWindow',
+                    'wxSplashScreen',
+                    'wxTaskBarIcon',
+                    'wxTipProvider',
+                    'wxWizard',
+                    'wxWizardEvent',
+                    'wxWizardPage',
+                    'wxWizardPageSimple',
+                    ]
+    },
+    'cb': {
+        'depends': ['native', 'base', 'core', 'deprecated'],
+        'classes': [
+                    'cbAntiflickerPlugin',
+                    'cbBarDragPlugin',
+                    'cbBarHintsPlugin',
+                    'cbBarInfo',
+                    'cbBarSpy',
+                    'cbCloseBox',
+                    'cbCollapseBox',
+                    'cbCommonPaneProperties',
+                    'cbCustomizeBarEvent',
+                    'cbCustomizeLayoutEvent',
+                    'cbDimHandlerBase',
+                    'cbDimInfo',
+                    'cbDockBox',
+                    'cbDockPane',
+                    'cbDrawBarDecorEvent',
+                    'cbDrawBarHandlesEvent',
+                    'cbDrawHintRectEvent',
+                    'cbDrawPaneBkGroundEvent',
+                    'cbDrawPaneDecorEvent',
+                    'cbDrawRowBkGroundEvent',
+                    'cbDrawRowDecorEvent',
+                    'cbDrawRowHandlesEvent',
+                    'cbDynToolBarDimHandler',
+                    'cbFinishDrawInAreaEvent',
+                    'cbFloatedBarWindow',
+                    'cbGCUpdatesMgr',
+                    'cbHintAnimationPlugin',
+                    'cbInsertBarEvent',
+                    'cbLayoutRowEvent',
+                    'cbLeftDClickEvent',
+                    'cbLeftDownEvent',
+                    'cbLeftUpEvent',
+                    'cbMiniButton',
+                    'cbMotionEvent',
+                    'cbPaneDrawPlugin',
+                    'cbPluginBase',
+                    'cbPluginEvent',
+                    'cbRemoveBarEvent',
+                    'cbResizeBarEvent',
+                    'cbResizeRowEvent',
+                    'cbRightDownEvent',
+                    'cbRightUpEvent',
+                    'cbRowDragPlugin',
+                    'cbRowInfo',
+                    'cbRowLayoutPlugin',
+                    'cbSimpleCustomizationPlugin',
+                    'cbSimpleUpdatesMgr',
+                    'cbSizeBarWndEvent',
+                    'cbStartBarDraggingEvent',
+                    'cbStartDrawInAreaEvent',
+                    'cbUpdatesManagerBase',
+                    ]
+    },
+    'gl': {
+        'depends': ['native', 'base', 'core', 'advanced'],
+        'classes': [
+                    'wxGLCanvas',
+                    'wxGLContext',
+                    ]
+    },
+    'html': {
+        'depends': ['native', 'base', 'core'],
+        'classes': [
+                    'wxHtmlCell',
+                    'wxHtmlContainerCell',
+                    'wxHtmlColourCell',
+                    'wxHtmlDCRenderer',
+                    'wxHtmlEasyPrinting',
+                    'wxHtmlFilter',
+                    'wxHtmlHelpController',
+                    'wxHtmlHelpData',
+                    'wxHtmlHelpFrame',
+                    'wxHtmlLinkInfo',
+                    'wxHtmlParser',
+                    'wxHtmlPrintout',
+                    'wxHtmlTag',
+                    'wxHtmlTagHandler',
+                    'wxHtmlTagsModule',
+                    'wxHtmlWidgetCell',
+                    'wxHtmlWinParser',
+                    'wxHtmlWinTagHandler',
+                    'wxHtmlWindow',
+                    'wxcHtmlEvent',
+                    'wxcHtmlWindow',
+        ]
+    },
+    'media': {
+        'depends': ['native', 'base', 'core'],
+        'classes': [
+                    'wxMediaCtrl',
+                    'wxMediaEvent',
+                    ]
+    },
+    'net': {
+        'depends': ['base', 'core'],
+        'classes': [
+                    'wxFTP',
+                    'wxHTTP',
+                    'wxIPV4address',
+                    'wxProtocol',
+                    'wxSockAddress',
+                    'wxSocketBase',
+                    'wxSocketClient',
+                    'wxSocketEvent',
+                    'wxSocketInputStream',
+                    'wxSocketOutputStream',
+                    'wxSocketServer',
+                    'wxURL',
+                    ]
+    },
+    'odbc': {
+        'depends': ['base'],
+        'classes': [
+                    'wxDatabase',
+                    'wxDb',
+                    'wxDbColDef',
+                    'wxDbColFor',
+                    'wxDbColInf',
+                    'wxDbConnectInf',
+                    'wxDbInf',
+                    'wxDbSqlTypeInfo',
+                    'wxDbTable',
+                    'wxDbTableInfo',
+                    'wxQueryCol',
+                    'wxQueryField',
+                    'wxRecordSet',
+                    'wxTablesInUse',
+                    ]
+    },
+    'propertygrid' : {
+        'depends': ['native', 'base', 'core', 'advanced'],
+        'classes': [
+                    'wxBoolProperty',
+                    'wxDateProperty',
+                    'wxFileProperty',
+                    'wxFloatProperty',
+                    'wxIntProperty',
+                    'wxPGProperty',
+                    'wxPropertyCategory',
+                    'wxPropertyGrid',
+                    'wxPropertyGridEvent',
+                    'wxStringProperty',
+                    ]
+    },
+    'stc': {
+        'depends': ['native', 'base', 'core', 'advanced'],
+        'classes': [
+                    'wxSTCDoc',
+                    'wxStyledTextCtrl',
+                    'wxStyledTextEvent',
+                    ]
+    },
+    'xrc': {
+        'depends': ['native', 'base', 'core', 'advanced', 'html', 'stc'],
+        'classes': [
+                    'wxXmlResource',
+                    ]
+    },
+    'deprecated': {
+        'depends': ['base', 'core'],
+        'classes': [
+                    'ELJMessageParameters',
+                    'ELJPlotCurve',
+                    'wxDynToolInfo',
+                    'wxDynamicSashWindow',
+                    'wxDynamicToolBar',
+                    'wxExpr',
+                    'wxExprDatabase',
+                    'wxFrameLayout',
+                    'wxGauge95',
+                    'wxGaugeMSW',
+                    'wxHashMap',
+                    'wxLEDNumberCtrl',
+                    'wxMBConvFile',
+                    'wxMultiCellCanvas',
+                    'wxMultiCellItemHandle',
+                    'wxMultiCellSizer',
+                    'wxNewBitmapButton',
+                    'wxPlotCurve',
+                    'wxPlotEvent',
+                    'wxPlotOnOffCurve',
+                    'wxPlotWindow',
+                    'wxRemotelyScrolledTreeCtrl',
+                    'wxSlider95',
+                    'wxSliderMSW',
+                    'wxSplitterScrolledWindow',
+                    'wxStreamToTextRedirector',
+                    'wxTabCtrl',
+                    'wxTabEvent',
+                    'wxThinSplitterWindow',
+                    'wxTimerBase',
+                    'wxToolLayoutItem',
+                    'wxToolWindow',
+                    'wxTreeCompanionWindow',
+                    'wxTreeLayout',
+                    'wxTreeLayoutStored',
+                    ]
+    },
+}
 
-coreClasses = [
-               'ELJApp',
-               'ELJLog',
-               'wxAcceleratorEntry',
-               'wxAcceleratorTable',
-               'wxActivateEvent',
-               'wxApp',
-               'wxArtProvider',
-               'wxAutoBufferedPaintDC',
-               'wxAutomationObject',
-               'wxBitmap',
-               'wxBitmapButton',
-               'wxBitmapDataObject',
-               'wxBitmapHandler',
-               'wxBitmapToggleButton',
-               'wxBoxSizer',
-               'wxBrush',
-               'wxBrushList',
-               'wxBufferedDC',
-               'wxBufferedPaintDC',
-               'wxBusyCursor',
-               'wxBusyInfo',
-               'wxButton',
-               'wxCaret',
-               'wxCheckBox',
-               'wxCheckListBox',
-               'wxChoice',
-               'wxClient',
-               'wxClientDC',
-               'wxClipboard',
-               'wxCloseEvent',
-               'wxColour',
-               'wxColourData',
-               'wxColourDatabase',
-               'wxColourDialog',
-               'wxComboBox',
-               'wxCommand',
-               'wxCommandEvent',
-               'wxCommandProcessor',
-               'wxContextHelp',
-               'wxContextHelpButton',
-               'wxControl',
-               'wxCursor',
-               'wxCustomDataObject',
-               'wxDC',
-               'wxDCClipper',
-               'wxDataFormat',
-               'wxDataObject',
-               'wxDataObjectComposite',
-               'wxDataObjectSimple',
-               'wxDialUpEvent',
-               'wxDialUpManager',
-               'wxDialog',
-               'wxDirDialog',
-               'wxDocChildFrame',
-               'wxDocParentFrame',
-               'wxDocMDIChildFrame',
-               'wxDocMDIParentFrame',
-               'wxDocManager',
-               'wxDocTemplate',
-               'wxDocument',
-               'wxDragImage',
-               'wxDrawControl',
-               'wxDrawWindow',
-               'wxDropFilesEvent',
-               'wxDropSource',
-               'wxDropTarget',
-               'wxEraseEvent',
-               'wxEvent',
-               'wxEvtHandler',
-               'wxFileDataObject',
-               'wxFileDialog',
-               'wxFileDropTarget',
-               'wxFileHistory',
-               'wxFileType',
-               'wxFindDialogEvent',
-               'wxFindReplaceData',
-               'wxFindReplaceDialog',
-               'wxFlexGridSizer',
-               'wxFocusEvent',
-               'wxFont',
-               'wxFontData',
-               'wxFontDialog',
-               'wxFontEnumerator',
-               'wxFontList',
-               'wxFontMapper',
-               'wxFrame',
-               'wxGDIObject',
-               'wxGauge',
-               'wxGenericDirCtrl',
-               'wxGenericDragImage',
-               'wxGenericValidator',
-               'wxGraphicsBrush',
-               'wxGraphicsContext',
-               'wxGraphicsFont',
-               'wxGraphicsMatrix',
-               'wxGraphicsObject',
-               'wxGraphicsPath',
-               'wxGraphicsPen',
-               'wxGraphicsRenderer',
-               'wxGridSizer',
-               'wxHelpController',
-               'wxHelpControllerBase',
-               'wxHelpControllerHelpProvider',
-               'wxHelpEvent',
-               'wxHelpProvider',
-               'wxIcon',
-               'wxIconBundle',
-               'wxIconizeEvent',
-               'wxIdleEvent',
-               'wxImage',
-               'wxImageHandler',
-               'wxImageList',
-               'wxIndividualLayoutConstraint',
-               'wxInitDialogEvent',
-               'wxInputSink',
-               'wxInputSinkEvent',
-               'wxJoystickEvent',
-               'wxKeyEvent',
-               'wxLayoutConstraints',
-               'wxListBox',
-               'wxListCtrl',
-               'wxListEvent',
-               'wxListItem',
-               'wxLog',
-               'wxLogChain',
-               'wxLogGUI',
-               'wxLogNull',
-               'wxLogPassThrough',
-               'wxLogStderr',
-               'wxLogStream',
-               'wxLogTextCtrl',
-               'wxLogWindow',
-               'wxMDIChildFrame',
-               'wxMDIClientWindow',
-               'wxMDIParentFrame',
-               'wxMask',
-               'wxMaximizeEvent',
-               'wxMemoryDC',
-               'wxMenu',
-               'wxMenuBar',
-               'wxMenuEvent',
-               'wxMenuItem',
-               'wxMessageDialog',
-               'wxMetafile',
-               'wxMetafileDC',
-               'wxMimeTypesManager',
-               'wxMiniFrame',
-               'wxMirrorDC',
-               'wxMouseCaptureChangedEvent',
-               'wxMouseEvent',
-               'wxMoveEvent',
-               'wxNavigationKeyEvent',
-               'wxNotebook',
-               'wxNotebookEvent',
-               'wxNotifyEvent',
-               'wxPageSetupDialog',
-               'wxPageSetupDialogData',
-               'wxPaintDC',
-               'wxPaintEvent',
-               'wxPalette',
-               'wxPaletteChangedEvent',
-               'wxPanel',
-               'wxPen',
-               'wxPenList',
-               'wxPoint',
-               'wxPopupTransientWindow',
-               'wxPopupWindow',
-               'wxPostScriptDC',
-               'wxPostScriptPrintNativeData',
-               'wxPreviewCanvas',
-               'wxPreviewControlBar',
-               'wxPreviewFrame',
-               'wxPrintData',
-               'wxPrintDialog',
-               'wxPrintDialogData',
-               'wxPrintPreview',
-               'wxPrinter',
-               'wxPrinterDC',
-               'wxPrintout',
-               'wxProcess',
-               'wxQuantize',
-               'wxRadioButton',
-               'wxRealPoint',
-               'wxRect',
-               'wxRegion',
-               'wxSVGFileDC',
-               'wxScreenDC',
-               'wxScrollBar',
-               'wxScrollEvent',
-               'wxScrolledWindow',
-               'wxSimpleHelpProvider',
-               'wxSingleChoiceDialog',
-               'wxSize',
-               'wxSizer',
-               'wxSizerItem',
-               'wxSlider',
-               'wxSpinButton',
-               'wxSpinCtrl',
-               'wxStaticBox',
-               'wxStaticBoxSizer',
-               'wxStaticLine',
-               'wxStaticText',
-               'wxStatusBar',
-               'wxSystemSettings',
-               'wxTextAttr',
-               'wxTextCtrl',
-               'wxTextDataObject',
-               'wxTextDropTarget',
-               'wxTextValidator',
-               'wxTimer',
-               'wxToggleButton',
-               'wxToolBar',
-               'wxToolBarBase',
-               'wxTopLevelWindow',
-               'wxTreeCtrl',
-               'wxTreeEvent',
-               'wxTreeItemData',
-               'wxTreeItemId',
-               'wxUpdateUIEvent',
-               'wxValidator',
-               'wxView',
-               'wxWindow',
-               'wxWindowCreateEvent',
-               'wxWindowDestroyEvent',
-               'wxWindowDC',
-               'wxWindowDisabler',
-               ]
-
-netClasses = [
-              'wxFTP',
-              'wxHTTP',
-              'wxIPV4address',
-              'wxProtocol',
-              'wxSockAddress',
-              'wxSocketBase',
-              'wxSocketClient',
-              'wxSocketInputStream',
-              'wxSocketOutputStream',
-              'wxSocketServer',
-              'wxURL',
-              ]
-
-htmlClasses = [
-               'wxHtmlCell',
-               'wxHtmlContainerCell',
-               'wxHtmlColourCell',
-               'wxHtmlDCRenderer',
-               'wxHtmlEasyPrinting',
-               'wxHtmlFilter',
-               'wxHtmlHelpController',
-               'wxHtmlHelpData',
-               'wxHtmlHelpFrame',
-               'wxHtmlLinkInfo',
-               'wxHtmlParser',
-               'wxHtmlPrintout',
-               'wxHtmlTag',
-               'wxHtmlTagHandler',
-               'wxHtmlTagsModule',
-               'wxHtmlWidgetCell',
-               'wxHtmlWinParser',
-               'wxHtmlWinTagHandler',
-               'wxHtmlWindow',
-               'wxcHtmlWindow',
-               ]
-
-advancedClasses = [
-                   'ELJGridTable',
-                   'wxCalculateLayoutEvent',
-                   'wxCalendarCtrl',
-                   'wxCalendarDateAttr',
-                   'wxCalendarEvent',
-                   'wxEditableListBox',
-                   'wxGrid',
-                   'wxGridCellAttr',
-                   'wxGridCellAutoWrapStringRenderer',
-                   'wxGridCellBoolEditor',
-                   'wxGridCellBoolRenderer',
-                   'wxGridCellChoiceEditor',
-                   'wxGridCellCoordsArray',
-                   'wxGridCellEditor',
-                   'wxGridCellFloatEditor',
-                   'wxGridCellFloatRenderer',
-                   'wxGridCellNumberEditor',
-                   'wxGridCellNumberRenderer',
-                   'wxGridCellRenderer',
-                   'wxGridCellStringRenderer',
-                   'wxGridCellTextEditor',
-                   'wxGridCellTextEnterEditor',
-                   'wxGridCellWorker',
-                   'wxGridEditorCreatedEvent',
-                   'wxGridEvent',
-                   'wxGridRangeSelectEvent',
-                   'wxGridSizeEvent',
-                   'wxGridTableBase',
-                   'wxJoystick',
-                   'wxLayoutAlgorithm',
-                   'wxSashLayoutWindow',
-                   'wxSashWindow',
-                   'wxSplashScreen',
-                   'wxWizard',
-                   'wxWizardPage',
-                   'wxWizardPageSimple',
-                   ]
-
-glClasses = [
-             'wxGLCanvas',
-             'wxGLContext',
-             ]
-
-mediaClasses = [
-                'wxMediaCtrl',
-                'wxMediaEvent',
-                ]
-
-propertygridClasses = [
-                       'wxBoolProperty',
-                       'wxDateProperty',
-                       'wxFileProperty',
-                       'wxFloatProperty',
-                       'wxIntProperty',
-                       'wxPGProperty',
-                       'wxPropertyCategory',
-                       'wxPropertyGrid',
-                       'wxPropertyGridEvent',
-                       'wxStringProperty',
-                       ]
-
-odbcClasses = [
-               'wxDatabase',
-               'wxDb',
-               'wxDbColDef',
-               'wxDbColFor',
-               'wxDbColInf',
-               'wxDbConnectInf',
-               'wxDbInf',
-               'wxDbSqlTypeInfo',
-               'wxDbTable',
-               'wxDbTableInfo',
-               ]
-
-deprecatedClasses = [
-                     'wxDynToolInfo',
-                     'wxDynamicSashWindow',
-                     'wxDynamicToolBar',
-                     'wxExpr',
-                     'wxExprDatabase',
-                     'wxFrameLayout',
-                     'wxGauge95',
-                     'wxGaugeMSW',
-                     'wxHashMap',
-                     'wxLEDNumberCtrl',
-                     'wxMBConvFile',
-                     'wxMultiCellCanvas',
-                     'wxMultiCellItemHandle',
-                     'wxMultiCellSizer',
-                     'wxNewBitmapButton',
-                     'wxPlotCurve',
-                     'wxPlotEvent',
-                     'wxPlotOnOffCurve',
-                     'wxPlotWindow',
-                     'wxToolLayoutItem',
-                     ]
 
 def main():
     parser = Parser()
@@ -469,13 +637,18 @@ class WrapperGenerator(object):
     def generate(self):
         print('\nGenerating code', file=sys.stderr, end='')
         classes = list(self.__parser.classes)
-        with open('src/base.rs', 'w') as f:
-            self.__file = f
-            self.println('''\
-use std::libc::*;
-use std::str;
-use native::*;
-
+        
+        for name, module in modules.iteritems():
+            with open('src/%s.rs' % name, 'w') as f:
+                self.__file = f
+                self.println('use std::libc::*;')
+                if name == 'base':
+                    self.println('use std::str;')
+                for m in module['depends']:
+                    self.println('use %s::*;' % m)
+                self.println()
+                if name == 'base':
+                    self.println('''\
 #[link_args="-lwxc"]
 extern {
     fn wxString_CreateUTF8(buffer: *mut c_void) -> *mut c_void;
@@ -516,192 +689,17 @@ impl wxString {
     }
 }
 ''')
-            for clazz in self.__parser.classes:
-                if clazz.name not in baseClasses:
-                    continue
-                print('.', file=sys.stderr, end='')
-                self._print_class(clazz)
-                classes.remove(clazz)
+                tmpClasses = list(classes)
+                for clazz in classes:
+                    if clazz.name not in module['classes']:
+                        continue
+                    print('.', file=sys.stderr, end='')
+                    self._print_class(clazz)
+                    tmpClasses.remove(clazz)
+                classes = tmpClasses
 
-        tmpClasses = list(classes)
-        with open('src/core.rs', 'w') as f:
-            self.__file = f
-            self.println('''\
-use std::libc::*;
-use base::*;
-use native::*;
-
-''')
-            for clazz in classes:
-                if clazz.name not in coreClasses:
-                    continue
-                print('.', file=sys.stderr, end='')
-                self._print_class(clazz)
-                tmpClasses.remove(clazz)
-        classes = tmpClasses
-
-        tmpClasses = list(classes)
-        with open('src/net.rs', 'w') as f:
-            self.__file = f
-            self.println('''\
-use std::libc::*;
-use base::*;
-use native::*;
-
-''')
-            for clazz in classes:
-                if clazz.name not in netClasses:
-                    continue
-                print('.', file=sys.stderr, end='')
-                self._print_class(clazz)
-                tmpClasses.remove(clazz)
-        classes = tmpClasses
-
-        tmpClasses = list(classes)
-        with open('src/html.rs', 'w') as f:
-            self.__file = f
-            self.println('''\
-use std::libc::*;
-use base::*;
-use core::*;
-use native::*;
-
-''')
-            for clazz in classes:
-                if clazz.name not in htmlClasses:
-                    continue
-                print('.', file=sys.stderr, end='')
-                self._print_class(clazz)
-                tmpClasses.remove(clazz)
-        classes = tmpClasses
-
-        tmpClasses = list(classes)
-        with open('src/advanced.rs', 'w') as f:
-            self.__file = f
-            self.println('''\
-use std::libc::*;
-use base::*;
-use core::*;
-use native::*;
-
-''')
-            for clazz in classes:
-                if clazz.name not in advancedClasses:
-                    continue
-                print('.', file=sys.stderr, end='')
-                self._print_class(clazz)
-                tmpClasses.remove(clazz)
-        classes = tmpClasses
+        assert(len(classes) == 0)
     
-        tmpClasses = list(classes)
-        with open('src/media.rs', 'w') as f:
-            self.__file = f
-            self.println('''\
-use std::libc::*;
-use base::*;
-use core::*;
-use native::*;
-
-''')
-            for clazz in classes:
-                if clazz.name not in mediaClasses:
-                    continue
-                print('.', file=sys.stderr, end='')
-                self._print_class(clazz)
-                tmpClasses.remove(clazz)
-        classes = tmpClasses
-    
-        tmpClasses = list(classes)
-        with open('src/propertygrid.rs', 'w') as f:
-            self.__file = f
-            self.println('''\
-use std::libc::*;
-use base::*;
-use core::*;
-use advanced::*;
-use native::*;
-
-''')
-            for clazz in classes:
-                if clazz.name not in propertygridClasses:
-                    continue
-                print('.', file=sys.stderr, end='')
-                self._print_class(clazz)
-                tmpClasses.remove(clazz)
-        classes = tmpClasses
-
-        tmpClasses = list(classes)
-        with open('src/odbc.rs', 'w') as f:
-            self.__file = f
-            self.println('''\
-use std::libc::*;
-use base::*;
-use core::*;
-use advanced::*;
-use native::*;
-
-''')
-            for clazz in classes:
-                if clazz.name not in odbcClasses:
-                    continue
-                print('.', file=sys.stderr, end='')
-                self._print_class(clazz)
-                tmpClasses.remove(clazz)
-        classes = tmpClasses
-
-        tmpClasses = list(classes)
-        with open('src/deprecated.rs', 'w') as f:
-            self.__file = f
-            self.println('''\
-use std::libc::*;
-use base::*;
-use core::*;
-use advanced::*;
-use native::*;
-
-''')
-            for clazz in classes:
-                if clazz.name not in deprecatedClasses:
-                    continue
-                print('.', file=sys.stderr, end='')
-                self._print_class(clazz)
-                tmpClasses.remove(clazz)
-        classes = tmpClasses
-
-        tmpClasses = list(classes)
-        with open('src/gl.rs', 'w') as f:
-            self.__file = f
-            self.println('''\
-use std::libc::*;
-use base::*;
-use core::*;
-use advanced::*;
-use native::*;
-
-''')
-            for clazz in classes:
-                if clazz.name not in glClasses:
-                    continue
-                print('.', file=sys.stderr, end='')
-                self._print_class(clazz)
-                tmpClasses.remove(clazz)
-        classes = tmpClasses
-
-        self.__file = sys.stdout
-        self.println('''\
-use std::libc::*;
-use base::*;
-use core::*;
-use html::*;
-use net::*;
-use advanced::*;
-use native::*;
-
-''')
-        for clazz in classes:
-            print('.', file=sys.stderr, end='')
-            self._print_class(clazz)
-
     def _print_class(self, clazz):
         struct_name = '%s' % clazz.struct_name
         self.println('pub struct %s(*mut c_void);' % struct_name)
