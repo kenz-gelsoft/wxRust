@@ -1,9 +1,5 @@
 use std::libc::*;
 use base::*;
-use core::*;
-use advanced::*;
-use native::*;
-
 
 pub struct wxDatabase(*mut c_void);
 impl _wxDatabase for wxDatabase {}
@@ -142,5 +138,57 @@ impl wxDbTableInfo {
 pub trait _wxDbTableInfo {
     fn handle(&self) -> *mut c_void;
     
+}
+
+pub struct wxQueryCol(*mut c_void);
+impl _wxQueryCol for wxQueryCol {}
+impl _wxObject for wxQueryCol { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxQueryCol {
+    pub fn from(handle: *mut c_void) -> @wxQueryCol { @wxQueryCol(handle) }
+    pub fn null() -> @wxQueryCol { wxQueryCol::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxQueryCol : _wxObject {
+}
+
+pub struct wxQueryField(*mut c_void);
+impl _wxQueryField for wxQueryField {}
+impl _wxObject for wxQueryField { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxQueryField {
+    pub fn from(handle: *mut c_void) -> @wxQueryField { @wxQueryField(handle) }
+    pub fn null() -> @wxQueryField { wxQueryField::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxQueryField : _wxObject {
+}
+
+pub struct wxRecordSet(*mut c_void);
+impl _wxRecordSet for wxRecordSet {}
+impl _wxObject for wxRecordSet { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxRecordSet {
+    pub fn from(handle: *mut c_void) -> @wxRecordSet { @wxRecordSet(handle) }
+    pub fn null() -> @wxRecordSet { wxRecordSet::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxRecordSet : _wxObject {
+}
+
+pub struct wxTablesInUse(*mut c_void);
+impl _wxTablesInUse for wxTablesInUse {}
+impl _wxObject for wxTablesInUse { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxTablesInUse {
+    pub fn from(handle: *mut c_void) -> @wxTablesInUse { @wxTablesInUse(handle) }
+    pub fn null() -> @wxTablesInUse { wxTablesInUse::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxTablesInUse : _wxObject {
 }
 

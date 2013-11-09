@@ -1,8 +1,7 @@
 use std::libc::*;
+use native::*;
 use base::*;
 use core::*;
-use native::*;
-
 
 pub struct wxHtmlCell(*mut c_void);
 impl _wxHtmlCell for wxHtmlCell {}
@@ -492,6 +491,51 @@ pub trait _wxHtmlWindow : _wxScrolledWindow {
     fn writeCustomization<T: _wxConfigBase>(&self, cfg: &T, path: &str) {
         let path = wxT(path);
         unsafe { wxHtmlWindow_WriteCustomization(self.handle(), cfg.handle(), path.handle()) }
+    }
+}
+
+pub struct wxcHtmlEvent(*mut c_void);
+impl _wxcHtmlEvent for wxcHtmlEvent {}
+impl _wxCommandEvent for wxcHtmlEvent {}
+impl _wxEvent for wxcHtmlEvent {}
+impl _wxObject for wxcHtmlEvent { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxcHtmlEvent {
+    pub fn from(handle: *mut c_void) -> @wxcHtmlEvent { @wxcHtmlEvent(handle) }
+    pub fn null() -> @wxcHtmlEvent { wxcHtmlEvent::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxcHtmlEvent : _wxCommandEvent {
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getMouseEvent(&self) -> @wxMouseEvent {
+        unsafe { @wxMouseEvent(wxcHtmlEvent_GetMouseEvent(self.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getHtmlCell(&self) -> @wxHtmlCell {
+        unsafe { @wxHtmlCell(wxcHtmlEvent_GetHtmlCell(self.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getHtmlCellId(&self) -> ~str {
+        unsafe { wxString { handle: wxcHtmlEvent_GetHtmlCellId(self.handle()) }.to_str() }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getHref(&self) -> ~str {
+        unsafe { wxString { handle: wxcHtmlEvent_GetHref(self.handle()) }.to_str() }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getTarget(&self) -> ~str {
+        unsafe { wxString { handle: wxcHtmlEvent_GetTarget(self.handle()) }.to_str() }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getLogicalPosition(&self) -> @wxPoint {
+        unsafe { @wxPoint(wxcHtmlEvent_GetLogicalPosition(self.handle())) }
     }
 }
 
