@@ -40,3 +40,11 @@ On Mac, Run as below:
 
     make Test.app
     open ./Test.app # or open in Finder
+
+### Generate Documentation
+
+At the CMake binary directory:
+
+    make docs
+
+Generates a rustdoc documentation under docs directory.
