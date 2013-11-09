@@ -57,6 +57,12 @@ add_rust_crate(wxrust
     wxc
 )
 
+add_custom_target(docs
+    COMMAND rustdoc -o docs/ src/wx.rc
+    DEPENDS src/generated.dummy
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
 add_rust_crate(test
     tests/test.rs
     tests/macros.rs
