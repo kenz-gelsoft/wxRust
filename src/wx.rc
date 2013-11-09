@@ -3,15 +3,15 @@
 
 #[feature(globs)];
 
+pub mod _unavailable;
+pub mod _unsafe;
 pub mod advanced;
 pub mod base;
 pub mod core;
 pub mod defs;
-pub mod deprecated;
 pub mod gl;
 pub mod html;
 pub mod media;
-pub mod native;
 pub mod net;
 pub mod odbc;
 pub mod propertygrid;
