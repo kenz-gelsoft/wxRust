@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>wx::advanced::_wxCalendarCtrl - Rust</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Oswald:700|Inconsolata:400'
+          rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../wx/main.css">
+
+    
+</head>
+<body>
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things
+    </div>
+    <![endif]-->
+
+    <section class="sidebar">
+        
+
+        <p class='location'><a href='../index.html'>wx</a>&#8203;::<a href='index.html'>advanced</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.ELJGridTable.html'>ELJGridTable</a><br/><a class='struct ' href='struct.wxCalculateLayoutEvent.html'>wxCalculateLayoutEvent</a><br/><a class='struct ' href='struct.wxCalendarCtrl.html'>wxCalendarCtrl</a><br/><a class='struct ' href='struct.wxCalendarDateAttr.html'>wxCalendarDateAttr</a><br/><a class='struct ' href='struct.wxCalendarEvent.html'>wxCalendarEvent</a><br/><a class='struct ' href='struct.wxEditableListBox.html'>wxEditableListBox</a><br/><a class='struct ' href='struct.wxGrid.html'>wxGrid</a><br/><a class='struct ' href='struct.wxGridCellAttr.html'>wxGridCellAttr</a><br/><a class='struct ' href='struct.wxGridCellAutoWrapStringRenderer.html'>wxGridCellAutoWrapStringRenderer</a><br/><a class='struct ' href='struct.wxGridCellBoolEditor.html'>wxGridCellBoolEditor</a><br/><a class='struct ' href='struct.wxGridCellBoolRenderer.html'>wxGridCellBoolRenderer</a><br/><a class='struct ' href='struct.wxGridCellChoiceEditor.html'>wxGridCellChoiceEditor</a><br/><a class='struct ' href='struct.wxGridCellCoordsArray.html'>wxGridCellCoordsArray</a><br/><a class='struct ' href='struct.wxGridCellEditor.html'>wxGridCellEditor</a><br/><a class='struct ' href='struct.wxGridCellFloatEditor.html'>wxGridCellFloatEditor</a><br/><a class='struct ' href='struct.wxGridCellFloatRenderer.html'>wxGridCellFloatRenderer</a><br/><a class='struct ' href='struct.wxGridCellNumberEditor.html'>wxGridCellNumberEditor</a><br/><a class='struct ' href='struct.wxGridCellNumberRenderer.html'>wxGridCellNumberRenderer</a><br/><a class='struct ' href='struct.wxGridCellRenderer.html'>wxGridCellRenderer</a><br/><a class='struct ' href='struct.wxGridCellStringRenderer.html'>wxGridCellStringRenderer</a><br/><a class='struct ' href='struct.wxGridCellTextEditor.html'>wxGridCellTextEditor</a><br/><a class='struct ' href='struct.wxGridCellTextEnterEditor.html'>wxGridCellTextEnterEditor</a><br/><a class='struct ' href='struct.wxGridCellWorker.html'>wxGridCellWorker</a><br/><a class='struct ' href='struct.wxGridEditorCreatedEvent.html'>wxGridEditorCreatedEvent</a><br/><a class='struct ' href='struct.wxGridEvent.html'>wxGridEvent</a><br/><a class='struct ' href='struct.wxGridRangeSelectEvent.html'>wxGridRangeSelectEvent</a><br/><a class='struct ' href='struct.wxGridSizeEvent.html'>wxGridSizeEvent</a><br/><a class='struct ' href='struct.wxGridTableBase.html'>wxGridTableBase</a><br/><a class='struct ' href='struct.wxJoystick.html'>wxJoystick</a><br/><a class='struct ' href='struct.wxLayoutAlgorithm.html'>wxLayoutAlgorithm</a><br/><a class='struct ' href='struct.wxManagedPtr.html'>wxManagedPtr</a><br/><a class='struct ' href='struct.wxQueryLayoutInfoEvent.html'>wxQueryLayoutInfoEvent</a><br/><a class='struct ' href='struct.wxSashEvent.html'>wxSashEvent</a><br/><a class='struct ' href='struct.wxSashLayoutWindow.html'>wxSashLayoutWindow</a><br/><a class='struct ' href='struct.wxSashWindow.html'>wxSashWindow</a><br/><a class='struct ' href='struct.wxSplashScreen.html'>wxSplashScreen</a><br/><a class='struct ' href='struct.wxTaskBarIcon.html'>wxTaskBarIcon</a><br/><a class='struct ' href='struct.wxTipProvider.html'>wxTipProvider</a><br/><a class='struct ' href='struct.wxWizard.html'>wxWizard</a><br/><a class='struct ' href='struct.wxWizardEvent.html'>wxWizardEvent</a><br/><a class='struct ' href='struct.wxWizardPage.html'>wxWizardPage</a><br/><a class='struct ' href='struct.wxWizardPageSimple.html'>wxWizardPageSimple</a><br/></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait._ELJGridTable.html'>_ELJGridTable</a><br/><a class='trait ' href='trait._wxCalculateLayoutEvent.html'>_wxCalculateLayoutEvent</a><br/><a class='trait current' href='trait._wxCalendarCtrl.html'>_wxCalendarCtrl</a><br/><a class='trait ' href='trait._wxCalendarDateAttr.html'>_wxCalendarDateAttr</a><br/><a class='trait ' href='trait._wxCalendarEvent.html'>_wxCalendarEvent</a><br/><a class='trait ' href='trait._wxEditableListBox.html'>_wxEditableListBox</a><br/><a class='trait ' href='trait._wxGrid.html'>_wxGrid</a><br/><a class='trait ' href='trait._wxGridCellAttr.html'>_wxGridCellAttr</a><br/><a class='trait ' href='trait._wxGridCellAutoWrapStringRenderer.html'>_wxGridCellAutoWrapStringRenderer</a><br/><a class='trait ' href='trait._wxGridCellBoolEditor.html'>_wxGridCellBoolEditor</a><br/><a class='trait ' href='trait._wxGridCellBoolRenderer.html'>_wxGridCellBoolRenderer</a><br/><a class='trait ' href='trait._wxGridCellChoiceEditor.html'>_wxGridCellChoiceEditor</a><br/><a class='trait ' href='trait._wxGridCellCoordsArray.html'>_wxGridCellCoordsArray</a><br/><a class='trait ' href='trait._wxGridCellEditor.html'>_wxGridCellEditor</a><br/><a class='trait ' href='trait._wxGridCellFloatEditor.html'>_wxGridCellFloatEditor</a><br/><a class='trait ' href='trait._wxGridCellFloatRenderer.html'>_wxGridCellFloatRenderer</a><br/><a class='trait ' href='trait._wxGridCellNumberEditor.html'>_wxGridCellNumberEditor</a><br/><a class='trait ' href='trait._wxGridCellNumberRenderer.html'>_wxGridCellNumberRenderer</a><br/><a class='trait ' href='trait._wxGridCellRenderer.html'>_wxGridCellRenderer</a><br/><a class='trait ' href='trait._wxGridCellStringRenderer.html'>_wxGridCellStringRenderer</a><br/><a class='trait ' href='trait._wxGridCellTextEditor.html'>_wxGridCellTextEditor</a><br/><a class='trait ' href='trait._wxGridCellTextEnterEditor.html'>_wxGridCellTextEnterEditor</a><br/><a class='trait ' href='trait._wxGridCellWorker.html'>_wxGridCellWorker</a><br/><a class='trait ' href='trait._wxGridEditorCreatedEvent.html'>_wxGridEditorCreatedEvent</a><br/><a class='trait ' href='trait._wxGridEvent.html'>_wxGridEvent</a><br/><a class='trait ' href='trait._wxGridRangeSelectEvent.html'>_wxGridRangeSelectEvent</a><br/><a class='trait ' href='trait._wxGridSizeEvent.html'>_wxGridSizeEvent</a><br/><a class='trait ' href='trait._wxGridTableBase.html'>_wxGridTableBase</a><br/><a class='trait ' href='trait._wxJoystick.html'>_wxJoystick</a><br/><a class='trait ' href='trait._wxLayoutAlgorithm.html'>_wxLayoutAlgorithm</a><br/><a class='trait ' href='trait._wxManagedPtr.html'>_wxManagedPtr</a><br/><a class='trait ' href='trait._wxQueryLayoutInfoEvent.html'>_wxQueryLayoutInfoEvent</a><br/><a class='trait ' href='trait._wxSashEvent.html'>_wxSashEvent</a><br/><a class='trait ' href='trait._wxSashLayoutWindow.html'>_wxSashLayoutWindow</a><br/><a class='trait ' href='trait._wxSashWindow.html'>_wxSashWindow</a><br/><a class='trait ' href='trait._wxSplashScreen.html'>_wxSplashScreen</a><br/><a class='trait ' href='trait._wxTaskBarIcon.html'>_wxTaskBarIcon</a><br/><a class='trait ' href='trait._wxTipProvider.html'>_wxTipProvider</a><br/><a class='trait ' href='trait._wxWizard.html'>_wxWizard</a><br/><a class='trait ' href='trait._wxWizardEvent.html'>_wxWizardEvent</a><br/><a class='trait ' href='trait._wxWizardPage.html'>_wxWizardPage</a><br/><a class='trait ' href='trait._wxWizardPageSimple.html'>_wxWizardPageSimple</a><br/></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <input class="search-input" name="search"
+                   autocomplete="off" />
+            <button class="do-search">Search</button>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait"><a class='source'
+                       href='../../src/wx/src/advanced.rs.html#92-183'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>advanced</a>::<a class='trait' href=''>_wxCalendarCtrl</a></h1><pre class='trait'>pub trait _wxCalendarCtrl: <a class='trait' href='../../wx/core/trait._wxControl.html' title='wx::core::_wxControl'>_wxControl</a> {
+    fn <a href='#method.enableHolidayDisplay'
+                                    class='fnname'>enableHolidayDisplay</a>(&amp;self, display: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) { ... }
+    fn <a href='#method.enableMonthChange'
+                                    class='fnname'>enableMonthChange</a>(&amp;self, enable: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) { ... }
+    fn <a href='#method.getAttr'
+                                    class='fnname'>getAttr</a>(&amp;self, day: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a> { ... }
+    fn <a href='#method.getDate'
+                                    class='fnname'>getDate</a>(&amp;self, date: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) { ... }
+    fn <a href='#method.getHeaderColourBg'
+                                    class='fnname'>getHeaderColourBg</a>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T) { ... }
+    fn <a href='#method.getHeaderColourFg'
+                                    class='fnname'>getHeaderColourFg</a>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T) { ... }
+    fn <a href='#method.getHighlightColourBg'
+                                    class='fnname'>getHighlightColourBg</a>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T) { ... }
+    fn <a href='#method.getHighlightColourFg'
+                                    class='fnname'>getHighlightColourFg</a>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T) { ... }
+    fn <a href='#method.getHolidayColourBg'
+                                    class='fnname'>getHolidayColourBg</a>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T) { ... }
+    fn <a href='#method.getHolidayColourFg'
+                                    class='fnname'>getHolidayColourFg</a>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T) { ... }
+    fn <a href='#method.hitTest'
+                                    class='fnname'>hitTest</a>(&amp;self, x: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, y: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, date: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, wd: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.resetAttr'
+                                    class='fnname'>resetAttr</a>(&amp;self, day: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) { ... }
+    fn <a href='#method.setAttr'
+                                    class='fnname'>setAttr</a>(&amp;self, day: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, attr: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) { ... }
+    fn <a href='#method.setDate'
+                                    class='fnname'>setDate</a>(&amp;self, date: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) { ... }
+    fn <a href='#method.setHeaderColours'
+                                    class='fnname'>setHeaderColours</a>(&amp;self, colFg: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, colBg: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) { ... }
+    fn <a href='#method.setHighlightColours'
+                                    class='fnname'>setHighlightColours</a>(&amp;self, colFg: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, colBg: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) { ... }
+    fn <a href='#method.setHoliday'
+                                    class='fnname'>setHoliday</a>(&amp;self, day: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) { ... }
+    fn <a href='#method.setHolidayColours'
+                                    class='fnname'>setHolidayColours</a>(&amp;self, colFg: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, colBg: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) { ... }
+}</pre>
+            <h2 id='provided-methods'>Provided Methods</h2>
+            <div class='methods'>
+        <h3 id='method.enableHolidayDisplay' class='method'><code>fn <span class='fnname'>enableHolidayDisplay</span>(&amp;self, display: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.enableMonthChange' class='method'><code>fn <span class='fnname'>enableMonthChange</span>(&amp;self, enable: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.getAttr' class='method'><code>fn <span class='fnname'>getAttr</span>(&amp;self, day: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h3><h3 id='method.getDate' class='method'><code>fn <span class='fnname'>getDate</span>(&amp;self, date: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3><h3 id='method.getHeaderColourBg' class='method'><code>fn <span class='fnname'>getHeaderColourBg</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T)</code></h3><h3 id='method.getHeaderColourFg' class='method'><code>fn <span class='fnname'>getHeaderColourFg</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T)</code></h3><h3 id='method.getHighlightColourBg' class='method'><code>fn <span class='fnname'>getHighlightColourBg</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T)</code></h3><h3 id='method.getHighlightColourFg' class='method'><code>fn <span class='fnname'>getHighlightColourFg</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T)</code></h3><h3 id='method.getHolidayColourBg' class='method'><code>fn <span class='fnname'>getHolidayColourBg</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T)</code></h3><h3 id='method.getHolidayColourFg' class='method'><code>fn <span class='fnname'>getHolidayColourFg</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T)</code></h3><h3 id='method.hitTest' class='method'><code>fn <span class='fnname'>hitTest</span>(&amp;self, x: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, y: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, date: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, wd: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.resetAttr' class='method'><code>fn <span class='fnname'>resetAttr</span>(&amp;self, day: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.setAttr' class='method'><code>fn <span class='fnname'>setAttr</span>(&amp;self, day: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, attr: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3><h3 id='method.setDate' class='method'><code>fn <span class='fnname'>setDate</span>(&amp;self, date: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3><h3 id='method.setHeaderColours' class='method'><code>fn <span class='fnname'>setHeaderColours</span>(&amp;self, colFg: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, colBg: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3><h3 id='method.setHighlightColours' class='method'><code>fn <span class='fnname'>setHighlightColours</span>(&amp;self, colFg: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, colBg: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3><h3 id='method.setHoliday' class='method'><code>fn <span class='fnname'>setHoliday</span>(&amp;self, day: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.setHolidayColours' class='method'><code>fn <span class='fnname'>setHolidayColours</span>(&amp;self, colFg: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, colBg: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3></div>
+                        <h2 id='implementors'>Implementors</h2>
+                        <ul class='item-list'>
+                    <li><code><a class='struct' href='../../wx/advanced/struct.wxCalendarCtrl.html' title='wx::advanced::wxCalendarCtrl'>wxCalendarCtrl</a></code></li></ul></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <script>
+        var rootPath = "../../";
+    </script>
+    <script src="../../wx/jquery.js"></script>
+    <script src="../../wx/search-index.js"></script>
+    <script src="../../wx/main.js"></script>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&uarr;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&darr;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+</body>
+</html>
