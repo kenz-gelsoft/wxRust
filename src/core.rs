@@ -1,5 +1,5 @@
 use std::libc::*;
-use native::*;
+use _unsafe::*;
 use base::*;
 
 pub struct ELJApp(*mut c_void);

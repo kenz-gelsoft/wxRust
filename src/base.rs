@@ -1,6 +1,6 @@
 use std::libc::*;
 use std::str;
-use native::*;
+use _unsafe::*;
 
 #[link_args="-lwxc"]
 extern {

@@ -1,8 +1,8 @@
 use std::libc::*;
-use native::*;
+use _unsafe::*;
 use base::*;
 use core::*;
-use deprecated::*;
+use _unavailable::*;
 
 pub struct cbAntiflickerPlugin(*mut c_void);
 impl _cbAntiflickerPlugin for cbAntiflickerPlugin {}

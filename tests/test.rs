@@ -9,10 +9,10 @@ use std::libc::*;
 use std::rt::start_on_main_thread;
 use std::vec;
 
+use wx::_unsafe::*;
 use wx::defs::*;
 use wx::base::*;
 use wx::core::*;
-use wx::native::*;
 
 mod macros;
 
