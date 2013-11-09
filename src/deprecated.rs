@@ -1,9 +1,34 @@
 use std::libc::*;
 use base::*;
 use core::*;
-use advanced::*;
-use native::*;
 
+pub struct ELJMessageParameters(*mut c_void);
+impl _ELJMessageParameters for ELJMessageParameters { fn handle(&self) -> *mut c_void { **self } }
+
+impl ELJMessageParameters {
+    pub fn from(handle: *mut c_void) -> @ELJMessageParameters { @ELJMessageParameters(handle) }
+    pub fn null() -> @ELJMessageParameters { ELJMessageParameters::from(0 as *mut c_void) }
+    
+}
+
+pub trait _ELJMessageParameters {
+    fn handle(&self) -> *mut c_void;
+    
+}
+
+pub struct ELJPlotCurve(*mut c_void);
+impl _ELJPlotCurve for ELJPlotCurve {}
+impl _wxPlotCurve for ELJPlotCurve {}
+impl _wxObject for ELJPlotCurve { fn handle(&self) -> *mut c_void { **self } }
+
+impl ELJPlotCurve {
+    pub fn from(handle: *mut c_void) -> @ELJPlotCurve { @ELJPlotCurve(handle) }
+    pub fn null() -> @ELJPlotCurve { ELJPlotCurve::from(0 as *mut c_void) }
+    
+}
+
+pub trait _ELJPlotCurve : _wxPlotCurve {
+}
 
 pub struct wxDynToolInfo(*mut c_void);
 impl _wxDynToolInfo for wxDynToolInfo {}
@@ -195,6 +220,173 @@ impl wxNewBitmapButton {
 pub trait _wxNewBitmapButton : _wxPanel {
 }
 
+pub struct wxPlotCurve(*mut c_void);
+impl _wxPlotCurve for wxPlotCurve {}
+impl _wxObject for wxPlotCurve { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxPlotCurve {
+    pub fn from(handle: *mut c_void) -> @wxPlotCurve { @wxPlotCurve(handle) }
+    pub fn null() -> @wxPlotCurve { wxPlotCurve::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxPlotCurve : _wxObject {
+}
+
+pub struct wxPlotEvent(*mut c_void);
+impl _wxPlotEvent for wxPlotEvent {}
+impl _wxNotifyEvent for wxPlotEvent {}
+impl _wxCommandEvent for wxPlotEvent {}
+impl _wxEvent for wxPlotEvent {}
+impl _wxObject for wxPlotEvent { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxPlotEvent {
+    pub fn from(handle: *mut c_void) -> @wxPlotEvent { @wxPlotEvent(handle) }
+    pub fn null() -> @wxPlotEvent { wxPlotEvent::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxPlotEvent : _wxNotifyEvent {
+}
+
+pub struct wxPlotOnOffCurve(*mut c_void);
+impl _wxPlotOnOffCurve for wxPlotOnOffCurve {}
+impl _wxObject for wxPlotOnOffCurve { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxPlotOnOffCurve {
+    pub fn from(handle: *mut c_void) -> @wxPlotOnOffCurve { @wxPlotOnOffCurve(handle) }
+    pub fn null() -> @wxPlotOnOffCurve { wxPlotOnOffCurve::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxPlotOnOffCurve : _wxObject {
+}
+
+pub struct wxPlotWindow(*mut c_void);
+impl _wxPlotWindow for wxPlotWindow {}
+impl _wxScrolledWindow for wxPlotWindow {}
+impl _wxPanel for wxPlotWindow {}
+impl _wxWindow for wxPlotWindow {}
+impl _wxEvtHandler for wxPlotWindow {}
+impl _wxObject for wxPlotWindow { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxPlotWindow {
+    pub fn from(handle: *mut c_void) -> @wxPlotWindow { @wxPlotWindow(handle) }
+    pub fn null() -> @wxPlotWindow { wxPlotWindow::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxPlotWindow : _wxScrolledWindow {
+}
+
+pub struct wxRemotelyScrolledTreeCtrl(*mut c_void);
+impl _wxRemotelyScrolledTreeCtrl for wxRemotelyScrolledTreeCtrl {}
+impl _wxTreeCtrl for wxRemotelyScrolledTreeCtrl {}
+impl _wxControl for wxRemotelyScrolledTreeCtrl {}
+impl _wxWindow for wxRemotelyScrolledTreeCtrl {}
+impl _wxEvtHandler for wxRemotelyScrolledTreeCtrl {}
+impl _wxObject for wxRemotelyScrolledTreeCtrl { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxRemotelyScrolledTreeCtrl {
+    pub fn from(handle: *mut c_void) -> @wxRemotelyScrolledTreeCtrl { @wxRemotelyScrolledTreeCtrl(handle) }
+    pub fn null() -> @wxRemotelyScrolledTreeCtrl { wxRemotelyScrolledTreeCtrl::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxRemotelyScrolledTreeCtrl : _wxTreeCtrl {
+}
+
+pub struct wxSplitterScrolledWindow(*mut c_void);
+impl _wxSplitterScrolledWindow for wxSplitterScrolledWindow {}
+impl _wxScrolledWindow for wxSplitterScrolledWindow {}
+impl _wxPanel for wxSplitterScrolledWindow {}
+impl _wxWindow for wxSplitterScrolledWindow {}
+impl _wxEvtHandler for wxSplitterScrolledWindow {}
+impl _wxObject for wxSplitterScrolledWindow { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxSplitterScrolledWindow {
+    pub fn from(handle: *mut c_void) -> @wxSplitterScrolledWindow { @wxSplitterScrolledWindow(handle) }
+    pub fn null() -> @wxSplitterScrolledWindow { wxSplitterScrolledWindow::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxSplitterScrolledWindow : _wxScrolledWindow {
+}
+
+pub struct wxStreamToTextRedirector(*mut c_void);
+impl _wxStreamToTextRedirector for wxStreamToTextRedirector { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxStreamToTextRedirector {
+    pub fn from(handle: *mut c_void) -> @wxStreamToTextRedirector { @wxStreamToTextRedirector(handle) }
+    pub fn null() -> @wxStreamToTextRedirector { wxStreamToTextRedirector::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxStreamToTextRedirector {
+    fn handle(&self) -> *mut c_void;
+    
+}
+
+pub struct wxTabCtrl(*mut c_void);
+impl _wxTabCtrl for wxTabCtrl {}
+impl _wxControl for wxTabCtrl {}
+impl _wxWindow for wxTabCtrl {}
+impl _wxEvtHandler for wxTabCtrl {}
+impl _wxObject for wxTabCtrl { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxTabCtrl {
+    pub fn from(handle: *mut c_void) -> @wxTabCtrl { @wxTabCtrl(handle) }
+    pub fn null() -> @wxTabCtrl { wxTabCtrl::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxTabCtrl : _wxControl {
+}
+
+pub struct wxTabEvent(*mut c_void);
+impl _wxTabEvent for wxTabEvent {}
+impl _wxCommandEvent for wxTabEvent {}
+impl _wxEvent for wxTabEvent {}
+impl _wxObject for wxTabEvent { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxTabEvent {
+    pub fn from(handle: *mut c_void) -> @wxTabEvent { @wxTabEvent(handle) }
+    pub fn null() -> @wxTabEvent { wxTabEvent::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxTabEvent : _wxCommandEvent {
+}
+
+pub struct wxThinSplitterWindow(*mut c_void);
+impl _wxThinSplitterWindow for wxThinSplitterWindow {}
+impl _wxSplitterWindow for wxThinSplitterWindow {}
+impl _wxWindow for wxThinSplitterWindow {}
+impl _wxEvtHandler for wxThinSplitterWindow {}
+impl _wxObject for wxThinSplitterWindow { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxThinSplitterWindow {
+    pub fn from(handle: *mut c_void) -> @wxThinSplitterWindow { @wxThinSplitterWindow(handle) }
+    pub fn null() -> @wxThinSplitterWindow { wxThinSplitterWindow::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxThinSplitterWindow : _wxSplitterWindow {
+}
+
+pub struct wxTimerBase(*mut c_void);
+impl _wxTimerBase for wxTimerBase {}
+impl _wxObject for wxTimerBase { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxTimerBase {
+    pub fn from(handle: *mut c_void) -> @wxTimerBase { @wxTimerBase(handle) }
+    pub fn null() -> @wxTimerBase { wxTimerBase::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxTimerBase : _wxObject {
+}
+
 pub struct wxToolLayoutItem(*mut c_void);
 impl _wxToolLayoutItem for wxToolLayoutItem {}
 impl _wxObject for wxToolLayoutItem { fn handle(&self) -> *mut c_void { **self } }
@@ -206,6 +398,65 @@ impl wxToolLayoutItem {
 }
 
 pub trait _wxToolLayoutItem : _wxObject {
+}
+
+pub struct wxToolWindow(*mut c_void);
+impl _wxToolWindow for wxToolWindow {}
+impl _wxFrame for wxToolWindow {}
+impl _wxTopLevelWindow for wxToolWindow {}
+impl _wxWindow for wxToolWindow {}
+impl _wxEvtHandler for wxToolWindow {}
+impl _wxObject for wxToolWindow { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxToolWindow {
+    pub fn from(handle: *mut c_void) -> @wxToolWindow { @wxToolWindow(handle) }
+    pub fn null() -> @wxToolWindow { wxToolWindow::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxToolWindow : _wxFrame {
+}
+
+pub struct wxTreeCompanionWindow(*mut c_void);
+impl _wxTreeCompanionWindow for wxTreeCompanionWindow {}
+impl _wxWindow for wxTreeCompanionWindow {}
+impl _wxEvtHandler for wxTreeCompanionWindow {}
+impl _wxObject for wxTreeCompanionWindow { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxTreeCompanionWindow {
+    pub fn from(handle: *mut c_void) -> @wxTreeCompanionWindow { @wxTreeCompanionWindow(handle) }
+    pub fn null() -> @wxTreeCompanionWindow { wxTreeCompanionWindow::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxTreeCompanionWindow : _wxWindow {
+}
+
+pub struct wxTreeLayout(*mut c_void);
+impl _wxTreeLayout for wxTreeLayout {}
+impl _wxObject for wxTreeLayout { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxTreeLayout {
+    pub fn from(handle: *mut c_void) -> @wxTreeLayout { @wxTreeLayout(handle) }
+    pub fn null() -> @wxTreeLayout { wxTreeLayout::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxTreeLayout : _wxObject {
+}
+
+pub struct wxTreeLayoutStored(*mut c_void);
+impl _wxTreeLayoutStored for wxTreeLayoutStored {}
+impl _wxTreeLayout for wxTreeLayoutStored {}
+impl _wxObject for wxTreeLayoutStored { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxTreeLayoutStored {
+    pub fn from(handle: *mut c_void) -> @wxTreeLayoutStored { @wxTreeLayoutStored(handle) }
+    pub fn null() -> @wxTreeLayoutStored { wxTreeLayoutStored::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxTreeLayoutStored : _wxTreeLayout {
 }
 
 pub struct wxGauge95(*mut c_void);
@@ -240,5 +491,39 @@ impl wxGaugeMSW {
 }
 
 pub trait _wxGaugeMSW : _wxGauge {
+}
+
+pub struct wxSlider95(*mut c_void);
+impl _wxSlider95 for wxSlider95 {}
+impl _wxSlider for wxSlider95 {}
+impl _wxControl for wxSlider95 {}
+impl _wxWindow for wxSlider95 {}
+impl _wxEvtHandler for wxSlider95 {}
+impl _wxObject for wxSlider95 { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxSlider95 {
+    pub fn from(handle: *mut c_void) -> @wxSlider95 { @wxSlider95(handle) }
+    pub fn null() -> @wxSlider95 { wxSlider95::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxSlider95 : _wxSlider {
+}
+
+pub struct wxSliderMSW(*mut c_void);
+impl _wxSliderMSW for wxSliderMSW {}
+impl _wxSlider for wxSliderMSW {}
+impl _wxControl for wxSliderMSW {}
+impl _wxWindow for wxSliderMSW {}
+impl _wxEvtHandler for wxSliderMSW {}
+impl _wxObject for wxSliderMSW { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxSliderMSW {
+    pub fn from(handle: *mut c_void) -> @wxSliderMSW { @wxSliderMSW(handle) }
+    pub fn null() -> @wxSliderMSW { wxSliderMSW::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxSliderMSW : _wxSlider {
 }
 

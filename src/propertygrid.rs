@@ -1,9 +1,8 @@
 use std::libc::*;
+use native::*;
 use base::*;
 use core::*;
 use advanced::*;
-use native::*;
-
 
 pub struct wxPropertyGrid(*mut c_void);
 impl _wxPropertyGrid for wxPropertyGrid {}

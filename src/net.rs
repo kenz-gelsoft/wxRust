@@ -1,7 +1,6 @@
 use std::libc::*;
 use base::*;
-use native::*;
-
+use core::*;
 
 pub struct wxFTP(*mut c_void);
 impl _wxFTP for wxFTP {}
@@ -102,6 +101,20 @@ impl wxSocketClient {
 }
 
 pub trait _wxSocketClient : _wxSocketBase {
+}
+
+pub struct wxSocketEvent(*mut c_void);
+impl _wxSocketEvent for wxSocketEvent {}
+impl _wxEvent for wxSocketEvent {}
+impl _wxObject for wxSocketEvent { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxSocketEvent {
+    pub fn from(handle: *mut c_void) -> @wxSocketEvent { @wxSocketEvent(handle) }
+    pub fn null() -> @wxSocketEvent { wxSocketEvent::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxSocketEvent : _wxEvent {
 }
 
 pub struct wxSocketInputStream(*mut c_void);

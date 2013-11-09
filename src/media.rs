@@ -1,8 +1,7 @@
 use std::libc::*;
+use native::*;
 use base::*;
 use core::*;
-use native::*;
-
 
 pub struct wxMediaCtrl(*mut c_void);
 impl _wxMediaCtrl for wxMediaCtrl {}

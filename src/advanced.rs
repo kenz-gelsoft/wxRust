@@ -1,8 +1,7 @@
 use std::libc::*;
+use native::*;
 use base::*;
 use core::*;
-use native::*;
-
 
 pub struct ELJGridTable(*mut c_void);
 impl _ELJGridTable for ELJGridTable {}
@@ -1967,6 +1966,124 @@ pub trait _wxLayoutAlgorithm : _wxObject {
     }
 }
 
+pub struct wxQueryLayoutInfoEvent(*mut c_void);
+impl _wxQueryLayoutInfoEvent for wxQueryLayoutInfoEvent {}
+impl _wxEvent for wxQueryLayoutInfoEvent {}
+impl _wxObject for wxQueryLayoutInfoEvent { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxQueryLayoutInfoEvent {
+    pub fn from(handle: *mut c_void) -> @wxQueryLayoutInfoEvent { @wxQueryLayoutInfoEvent(handle) }
+    pub fn null() -> @wxQueryLayoutInfoEvent { wxQueryLayoutInfoEvent::from(0 as *mut c_void) }
+    
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn new(id: c_int) -> @wxQueryLayoutInfoEvent {
+        unsafe { @wxQueryLayoutInfoEvent(wxQueryLayoutInfoEvent_Create(id)) }
+    }
+}
+
+pub trait _wxQueryLayoutInfoEvent : _wxEvent {
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getAlignment(&self) -> c_int {
+        unsafe { wxQueryLayoutInfoEvent_GetAlignment(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getFlags(&self) -> c_int {
+        unsafe { wxQueryLayoutInfoEvent_GetFlags(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getOrientation(&self) -> c_int {
+        unsafe { wxQueryLayoutInfoEvent_GetOrientation(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getRequestedLength(&self) -> c_int {
+        unsafe { wxQueryLayoutInfoEvent_GetRequestedLength(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getSize(&self) -> @wxSize {
+        unsafe { @wxSize(wxQueryLayoutInfoEvent_GetSize(self.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn setAlignment(&self, align: c_int) {
+        unsafe { wxQueryLayoutInfoEvent_SetAlignment(self.handle(), align) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn setFlags(&self, flags: c_int) {
+        unsafe { wxQueryLayoutInfoEvent_SetFlags(self.handle(), flags) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn setOrientation(&self, orient: c_int) {
+        unsafe { wxQueryLayoutInfoEvent_SetOrientation(self.handle(), orient) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn setRequestedLength(&self, length: c_int) {
+        unsafe { wxQueryLayoutInfoEvent_SetRequestedLength(self.handle(), length) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn setSize(&self, w: c_int, h: c_int) {
+        unsafe { wxQueryLayoutInfoEvent_SetSize(self.handle(), w, h) }
+    }
+}
+
+pub struct wxSashEvent(*mut c_void);
+impl _wxSashEvent for wxSashEvent {}
+impl _wxEvent for wxSashEvent {}
+impl _wxObject for wxSashEvent { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxSashEvent {
+    pub fn from(handle: *mut c_void) -> @wxSashEvent { @wxSashEvent(handle) }
+    pub fn null() -> @wxSashEvent { wxSashEvent::from(0 as *mut c_void) }
+    
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn new(id: c_int, edge: c_int) -> @wxSashEvent {
+        unsafe { @wxSashEvent(wxSashEvent_Create(id, edge)) }
+    }
+}
+
+pub trait _wxSashEvent : _wxEvent {
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getDragRect(&self) -> @wxRect {
+        unsafe { @wxRect(wxSashEvent_GetDragRect(self.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getDragStatus(&self) -> c_int {
+        unsafe { wxSashEvent_GetDragStatus(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getEdge(&self) -> c_int {
+        unsafe { wxSashEvent_GetEdge(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn setDragRect(&self, x: c_int, y: c_int, w: c_int, h: c_int) {
+        unsafe { wxSashEvent_SetDragRect(self.handle(), x, y, w, h) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn setDragStatus(&self, status: c_int) {
+        unsafe { wxSashEvent_SetDragStatus(self.handle(), status) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn setEdge(&self, edge: c_int) {
+        unsafe { wxSashEvent_SetEdge(self.handle(), edge) }
+    }
+}
+
 pub struct wxSashLayoutWindow(*mut c_void);
 impl _wxSashLayoutWindow for wxSashLayoutWindow {}
 impl _wxSashWindow for wxSashLayoutWindow {}
@@ -2135,6 +2252,65 @@ impl wxSplashScreen {
 pub trait _wxSplashScreen : _wxFrame {
 }
 
+pub struct wxTaskBarIcon(*mut c_void);
+impl _wxTaskBarIcon for wxTaskBarIcon {}
+impl _wxEvtHandler for wxTaskBarIcon {}
+impl _wxObject for wxTaskBarIcon { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxTaskBarIcon {
+    pub fn from(handle: *mut c_void) -> @wxTaskBarIcon { @wxTaskBarIcon(handle) }
+    pub fn null() -> @wxTaskBarIcon { wxTaskBarIcon::from(0 as *mut c_void) }
+    
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn new() -> @wxTaskBarIcon {
+        unsafe { @wxTaskBarIcon(wxTaskBarIcon_Create()) }
+    }
+}
+
+pub trait _wxTaskBarIcon : _wxEvtHandler {
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn isIconInstalled(&self) -> c_int {
+        unsafe { wxTaskBarIcon_IsIconInstalled(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn isOk(&self) -> c_int {
+        unsafe { wxTaskBarIcon_IsOk(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn popupMenu<T: _wxMenu>(&self, menu: &T) -> c_int {
+        unsafe { wxTaskBarIcon_PopupMenu(self.handle(), menu.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn removeIcon(&self) -> c_int {
+        unsafe { wxTaskBarIcon_RemoveIcon(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn setIcon<T: _wxIcon>(&self, icon: &T, text: &str) -> c_int {
+        let text = wxT(text);
+        unsafe { wxTaskBarIcon_SetIcon(self.handle(), icon.handle(), text.handle()) }
+    }
+}
+
+pub struct wxTipProvider(*mut c_void);
+impl _wxTipProvider for wxTipProvider { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxTipProvider {
+    pub fn from(handle: *mut c_void) -> @wxTipProvider { @wxTipProvider(handle) }
+    pub fn null() -> @wxTipProvider { wxTipProvider::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxTipProvider {
+    fn handle(&self) -> *mut c_void;
+    
+}
+
 pub struct wxWizard(*mut c_void);
 impl _wxWizard for wxWizard {}
 impl _wxDialog for wxWizard {}
@@ -2180,6 +2356,27 @@ pub trait _wxWizard : _wxDialog {
     #[inline(never)]
     fn setPageSize(&self, w: c_int, h: c_int) {
         unsafe { wxWizard_SetPageSize(self.handle(), w, h) }
+    }
+}
+
+pub struct wxWizardEvent(*mut c_void);
+impl _wxWizardEvent for wxWizardEvent {}
+impl _wxNotifyEvent for wxWizardEvent {}
+impl _wxCommandEvent for wxWizardEvent {}
+impl _wxEvent for wxWizardEvent {}
+impl _wxObject for wxWizardEvent { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxWizardEvent {
+    pub fn from(handle: *mut c_void) -> @wxWizardEvent { @wxWizardEvent(handle) }
+    pub fn null() -> @wxWizardEvent { wxWizardEvent::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxWizardEvent : _wxNotifyEvent {
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getDirection(&self) -> c_int {
+        unsafe { wxWizardEvent_GetDirection(self.handle()) }
     }
 }
 
@@ -2243,6 +2440,95 @@ pub trait _wxWizardPageSimple : _wxWizardPage {
     #[inline(never)]
     fn setPrev<T: _wxWizardPageSimple>(&self, prev: &T) {
         unsafe { wxWizardPageSimple_SetPrev(self.handle(), prev.handle()) }
+    }
+}
+
+pub struct wxManagedPtr(*mut c_void);
+impl _wxManagedPtr for wxManagedPtr { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxManagedPtr {
+    pub fn from(handle: *mut c_void) -> @wxManagedPtr { @wxManagedPtr(handle) }
+    pub fn null() -> @wxManagedPtr { wxManagedPtr::from(0 as *mut c_void) }
+    
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn getDeleteFunction() -> *mut c_void {
+        unsafe { wxManagedPtr_GetDeleteFunction() }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn newFromObject<T: _wxObject>(obj: &T) -> @wxManagedPtr {
+        unsafe { @wxManagedPtr(wxManagedPtr_CreateFromObject(obj.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn newFromDateTime<T: _wxDateTime>(obj: &T) -> @wxManagedPtr {
+        unsafe { @wxManagedPtr(wxManagedPtr_CreateFromDateTime(obj.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn newFromGridCellCoordsArray<T: _wxGridCellCoordsArray>(obj: &T) -> @wxManagedPtr {
+        unsafe { @wxManagedPtr(wxManagedPtr_CreateFromGridCellCoordsArray(obj.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn newFromBitmap<T: _wxBitmap>(obj: &T) -> @wxManagedPtr {
+        unsafe { @wxManagedPtr(wxManagedPtr_CreateFromBitmap(obj.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn newFromIcon<T: _wxIcon>(obj: &T) -> @wxManagedPtr {
+        unsafe { @wxManagedPtr(wxManagedPtr_CreateFromIcon(obj.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn newFromBrush<T: _wxBrush>(obj: &T) -> @wxManagedPtr {
+        unsafe { @wxManagedPtr(wxManagedPtr_CreateFromBrush(obj.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn newFromColour<T: _wxColour>(obj: &T) -> @wxManagedPtr {
+        unsafe { @wxManagedPtr(wxManagedPtr_CreateFromColour(obj.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn newFromCursor<T: _wxCursor>(obj: &T) -> @wxManagedPtr {
+        unsafe { @wxManagedPtr(wxManagedPtr_CreateFromCursor(obj.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn newFromFont<T: _wxFont>(obj: &T) -> @wxManagedPtr {
+        unsafe { @wxManagedPtr(wxManagedPtr_CreateFromFont(obj.handle())) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn newFromPen<T: _wxPen>(obj: &T) -> @wxManagedPtr {
+        unsafe { @wxManagedPtr(wxManagedPtr_CreateFromPen(obj.handle())) }
+    }
+}
+
+pub trait _wxManagedPtr {
+    fn handle(&self) -> *mut c_void;
+    
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn getPtr(&self) -> *mut c_void {
+        unsafe { wxManagedPtr_GetPtr(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn noFinalize(&self) {
+        unsafe { wxManagedPtr_NoFinalize(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn finalize(&self) {
+        unsafe { wxManagedPtr_Finalize(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn delete(&self) {
+        unsafe { wxManagedPtr_Delete(self.handle()) }
     }
 }
 

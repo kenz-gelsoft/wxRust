@@ -42,6 +42,64 @@ impl wxString {
     }
 }
 
+pub struct ELJClient(*mut c_void);
+impl _ELJClient for ELJClient {}
+impl _wxClient for ELJClient {}
+impl _wxClientBase for ELJClient {}
+impl _wxObject for ELJClient { fn handle(&self) -> *mut c_void { **self } }
+
+impl ELJClient {
+    pub fn from(handle: *mut c_void) -> @ELJClient { @ELJClient(handle) }
+    pub fn null() -> @ELJClient { ELJClient::from(0 as *mut c_void) }
+    
+}
+
+pub trait _ELJClient : _wxClient {
+}
+
+pub struct ELJConnection(*mut c_void);
+impl _ELJConnection for ELJConnection {}
+impl _wxConnection for ELJConnection {}
+impl _wxConnectionBase for ELJConnection {}
+impl _wxObject for ELJConnection { fn handle(&self) -> *mut c_void { **self } }
+
+impl ELJConnection {
+    pub fn from(handle: *mut c_void) -> @ELJConnection { @ELJConnection(handle) }
+    pub fn null() -> @ELJConnection { ELJConnection::from(0 as *mut c_void) }
+    
+}
+
+pub trait _ELJConnection : _wxConnection {
+}
+
+pub struct ELJLocale(*mut c_void);
+impl _ELJLocale for ELJLocale {}
+impl _wxLocale for ELJLocale { fn handle(&self) -> *mut c_void { **self } }
+
+impl ELJLocale {
+    pub fn from(handle: *mut c_void) -> @ELJLocale { @ELJLocale(handle) }
+    pub fn null() -> @ELJLocale { ELJLocale::from(0 as *mut c_void) }
+    
+}
+
+pub trait _ELJLocale : _wxLocale {
+}
+
+pub struct ELJServer(*mut c_void);
+impl _ELJServer for ELJServer {}
+impl _wxServer for ELJServer {}
+impl _wxServerBase for ELJServer {}
+impl _wxObject for ELJServer { fn handle(&self) -> *mut c_void { **self } }
+
+impl ELJServer {
+    pub fn from(handle: *mut c_void) -> @ELJServer { @ELJServer(handle) }
+    pub fn null() -> @ELJServer { ELJServer::from(0 as *mut c_void) }
+    
+}
+
+pub trait _ELJServer : _wxServer {
+}
+
 pub struct wxArray(*mut c_void);
 impl _wxArray for wxArray { fn handle(&self) -> *mut c_void { **self } }
 
@@ -171,6 +229,20 @@ pub trait _wxClassInfo {
     fn isKindOfEx<T: _wxClassInfo>(&self, classInfo: &T) -> c_int {
         unsafe { wxClassInfo_IsKindOfEx(self.handle(), classInfo.handle()) }
     }
+}
+
+pub struct wxClient(*mut c_void);
+impl _wxClient for wxClient {}
+impl _wxClientBase for wxClient {}
+impl _wxObject for wxClient { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxClient {
+    pub fn from(handle: *mut c_void) -> @wxClient { @wxClient(handle) }
+    pub fn null() -> @wxClient { wxClient::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxClient : _wxClientBase {
 }
 
 pub struct wxClientBase(*mut c_void);
@@ -1787,6 +1859,62 @@ pub trait _wxRegEx {
     
 }
 
+pub struct wxScopedArray(*mut c_void);
+impl _wxScopedArray for wxScopedArray { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxScopedArray {
+    pub fn from(handle: *mut c_void) -> @wxScopedArray { @wxScopedArray(handle) }
+    pub fn null() -> @wxScopedArray { wxScopedArray::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxScopedArray {
+    fn handle(&self) -> *mut c_void;
+    
+}
+
+pub struct wxScopedPtr(*mut c_void);
+impl _wxScopedPtr for wxScopedPtr { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxScopedPtr {
+    pub fn from(handle: *mut c_void) -> @wxScopedPtr { @wxScopedPtr(handle) }
+    pub fn null() -> @wxScopedPtr { wxScopedPtr::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxScopedPtr {
+    fn handle(&self) -> *mut c_void;
+    
+}
+
+pub struct wxSemaphore(*mut c_void);
+impl _wxSemaphore for wxSemaphore { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxSemaphore {
+    pub fn from(handle: *mut c_void) -> @wxSemaphore { @wxSemaphore(handle) }
+    pub fn null() -> @wxSemaphore { wxSemaphore::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxSemaphore {
+    fn handle(&self) -> *mut c_void;
+    
+}
+
+pub struct wxServer(*mut c_void);
+impl _wxServer for wxServer {}
+impl _wxServerBase for wxServer {}
+impl _wxObject for wxServer { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxServer {
+    pub fn from(handle: *mut c_void) -> @wxServer { @wxServer(handle) }
+    pub fn null() -> @wxServer { wxServer::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxServer : _wxServerBase {
+}
+
 pub struct wxServerBase(*mut c_void);
 impl _wxServerBase for wxServerBase {}
 impl _wxObject for wxServerBase { fn handle(&self) -> *mut c_void { **self } }
@@ -1798,6 +1926,42 @@ impl wxServerBase {
 }
 
 pub trait _wxServerBase : _wxObject {
+}
+
+pub struct wxSingleInstanceChecker(*mut c_void);
+impl _wxSingleInstanceChecker for wxSingleInstanceChecker { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxSingleInstanceChecker {
+    pub fn from(handle: *mut c_void) -> @wxSingleInstanceChecker { @wxSingleInstanceChecker(handle) }
+    pub fn null() -> @wxSingleInstanceChecker { wxSingleInstanceChecker::from(0 as *mut c_void) }
+    
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn new(_obj: *mut c_void, name: &str, path: &str) -> c_int {
+        let name = wxT(name);
+        let path = wxT(path);
+        unsafe { wxSingleInstanceChecker_Create(_obj, name.handle(), path.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    pub fn newDefault() -> @wxSingleInstanceChecker {
+        unsafe { @wxSingleInstanceChecker(wxSingleInstanceChecker_CreateDefault()) }
+    }
+}
+
+pub trait _wxSingleInstanceChecker {
+    fn handle(&self) -> *mut c_void;
+    
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn delete(&self) {
+        unsafe { wxSingleInstanceChecker_Delete(self.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
+    fn isAnotherRunning(&self) -> c_int {
+        unsafe { wxSingleInstanceChecker_IsAnotherRunning(self.handle()) }
+    }
 }
 
 pub struct wxStopWatch(*mut c_void);
@@ -1888,6 +2052,20 @@ impl wxStreamBuffer {
 }
 
 pub trait _wxStreamBuffer {
+    fn handle(&self) -> *mut c_void;
+    
+}
+
+pub struct wxStringBuffer(*mut c_void);
+impl _wxStringBuffer for wxStringBuffer { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxStringBuffer {
+    pub fn from(handle: *mut c_void) -> @wxStringBuffer { @wxStringBuffer(handle) }
+    pub fn null() -> @wxStringBuffer { wxStringBuffer::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxStringBuffer {
     fn handle(&self) -> *mut c_void;
     
 }
@@ -2085,6 +2263,19 @@ impl wxVariant {
 }
 
 pub trait _wxVariant : _wxObject {
+}
+
+pub struct wxVariantData(*mut c_void);
+impl _wxVariantData for wxVariantData {}
+impl _wxObject for wxVariantData { fn handle(&self) -> *mut c_void { **self } }
+
+impl wxVariantData {
+    pub fn from(handle: *mut c_void) -> @wxVariantData { @wxVariantData(handle) }
+    pub fn null() -> @wxVariantData { wxVariantData::from(0 as *mut c_void) }
+    
+}
+
+pub trait _wxVariantData : _wxObject {
 }
 
 pub struct wxZipInputStream(*mut c_void);

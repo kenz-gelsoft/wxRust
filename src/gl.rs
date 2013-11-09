@@ -1,9 +1,8 @@
 use std::libc::*;
+use native::*;
 use base::*;
 use core::*;
 use advanced::*;
-use native::*;
-
 
 pub struct wxGLCanvas(*mut c_void);
 impl _wxGLCanvas for wxGLCanvas {}
