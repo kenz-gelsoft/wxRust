@@ -7,7 +7,7 @@ import sys
 
 modules = {
     'base': {
-        'depends': ['native'],
+        'depends': ['_unsafe'],
         'classes': [
                     'ELJClient',
                     'ELJConnection',
@@ -105,7 +105,7 @@ modules = {
                     ]
     },
     'core': {
-        'depends': ['native', 'base'],
+        'depends': ['_unsafe', 'base'],
         'classes': [
                     'ELJApp',
                     'ELJArtProv',
@@ -371,7 +371,7 @@ modules = {
                     ]
     },
     'advanced': {
-        'depends': ['native', 'base', 'core'],
+        'depends': ['_unsafe', 'base', 'core'],
         'classes': [
                     'ELJGridTable',
                     'wxCalculateLayoutEvent',
@@ -418,7 +418,7 @@ modules = {
                     ]
     },
     'cb': {
-        'depends': ['native', 'base', 'core', 'deprecated'],
+        'depends': ['_unsafe', 'base', 'core', '_unavailable'],
         'classes': [
                     'cbAntiflickerPlugin',
                     'cbBarDragPlugin',
@@ -474,14 +474,14 @@ modules = {
                     ]
     },
     'gl': {
-        'depends': ['native', 'base', 'core', 'advanced'],
+        'depends': ['_unsafe', 'base', 'core', 'advanced'],
         'classes': [
                     'wxGLCanvas',
                     'wxGLContext',
                     ]
     },
     'html': {
-        'depends': ['native', 'base', 'core'],
+        'depends': ['_unsafe', 'base', 'core'],
         'classes': [
                     'wxHtmlCell',
                     'wxHtmlContainerCell',
@@ -507,7 +507,7 @@ modules = {
         ]
     },
     'media': {
-        'depends': ['native', 'base', 'core'],
+        'depends': ['_unsafe', 'base', 'core'],
         'classes': [
                     'wxMediaCtrl',
                     'wxMediaEvent',
@@ -550,7 +550,7 @@ modules = {
                     ]
     },
     'propertygrid' : {
-        'depends': ['native', 'base', 'core', 'advanced'],
+        'depends': ['_unsafe', 'base', 'core', 'advanced'],
         'classes': [
                     'wxBoolProperty',
                     'wxDateProperty',
@@ -565,7 +565,7 @@ modules = {
                     ]
     },
     'stc': {
-        'depends': ['native', 'base', 'core', 'advanced'],
+        'depends': ['_unsafe', 'base', 'core', 'advanced'],
         'classes': [
                     'wxSTCDoc',
                     'wxStyledTextCtrl',
@@ -573,12 +573,12 @@ modules = {
                     ]
     },
     'xrc': {
-        'depends': ['native', 'base', 'core', 'advanced', 'html', 'stc'],
+        'depends': ['_unsafe', 'base', 'core', 'advanced', 'html', 'stc'],
         'classes': [
                     'wxXmlResource',
                     ]
     },
-    'deprecated': {
+    '_unavailable': {
         'depends': ['base', 'core'],
         'classes': [
                     'ELJMessageParameters',
@@ -1275,7 +1275,7 @@ class Type(object):
             t = Type(self._inner)
             if t.is_class:
                 return '*mut *mut c_void'
-            # work around native.rs bug
+            # work around _unsafe.rs bug
             if t._is_ptr and t._inner == 'TChar':
                 return '*mut *mut c_char'
             return '*mut %s' % t

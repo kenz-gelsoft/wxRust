@@ -6,10 +6,10 @@ add_subdirectory(wxc)
 
 if(APPLE)
     set(PLATFORMFLAGS)
-    set(PATCH_NATIVE_RS patch -p0 < src/native.rs.patch)
+    set(PATCH_UNSAFE_RS patch -p0 < src/_unsafe.rs.patch)
 else(APPLE)
     set(PLATFORMFLAGS -L /usr/lib/llvm-3.3/lib)
-    set(PATCH_NATIVE_RS)
+    set(PATCH_UNSAFE_RS)
 endif(APPLE)
 
 set(RUSTCFLAGS ${RUSTCFLAGS} ${PLATFORMFLAGS} -L wxc)
@@ -28,15 +28,15 @@ add_rust_crate(bindgen
 )
 
 add_custom_command(
-    OUTPUT  ${CMAKE_SOURCE_DIR}/src/native.rs
+    OUTPUT  ${CMAKE_SOURCE_DIR}/src/_unsafe.rs
     COMMAND ${CMAKE_BINARY_DIR}/bindgen
         -x c++
         `wx-config --cppflags`
         --include stdint.h
         --include time.h
         ${GENSRCS}
-        > src/native.rs
-    COMMAND ${PATCH_NATIVE_RS}
+        > src/_unsafe.rs
+    COMMAND ${PATCH_UNSAFE_RS}
     DEPENDS bindgen.dummy ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
@@ -52,7 +52,7 @@ add_custom_command(
 add_rust_crate(wxrust
     src/wx.rc
     src/defs.rs
-    src/native.rs
+    src/_unsafe.rs
     src/generated.dummy
     wxc
 )
