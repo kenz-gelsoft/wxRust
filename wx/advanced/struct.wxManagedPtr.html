@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +14,7 @@
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
-        things
+        things.
     </div>
     <![endif]-->
 
@@ -34,7 +33,24 @@
     </nav>
 
     <section id='main' class="content struct"><a class='source'
-                       href='../../src/wx/src/advanced.rs.html#2446'>[src]</a><h1 class='fqn'>Struct <a href='../index.html'>wx</a>::<a href='index.html'>advanced</a>::<a class='struct' href=''>wxManagedPtr</a></h1><pre class='struct'>pub struct wxManagedPtr();</pre><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../wx/advanced/trait._wxManagedPtr.html' title='wx::advanced::_wxManagedPtr'>_wxManagedPtr</a> for <a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h3><div class='methods'><h4 id='method.handle' class='method'><code>fn <span class='fnname'>handle</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h4>
+                       href='../../src/wx/src/advanced.rs.html#2446'>[src]</a><h1 class='fqn'>Struct <a href='../index.html'>wx</a>::<a href='index.html'>advanced</a>::<a class='struct' href=''>wxManagedPtr</a></h1><pre class='struct'>pub struct wxManagedPtr(*mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>);</pre><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h3><div class='methods'><h4 id='method.from' class='method'><code>fn <span class='fnname'>from</span>(handle: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; @<a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h4>
+<h4 id='method.null' class='method'><code>fn <span class='fnname'>null</span>() -&gt; @<a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h4>
+<h4 id='method.getDeleteFunction' class='method'><code>fn <span class='fnname'>getDeleteFunction</span>() -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h4>
+<h4 id='method.newFromObject' class='method'><code>fn <span class='fnname'>newFromObject</span>&lt;T: <a class='trait' href='../../wx/base/trait._wxObject.html' title='wx::base::_wxObject'>_wxObject</a>&gt;(obj: &amp;T) -&gt; @<a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h4>
+<h4 id='method.newFromDateTime' class='method'><code>fn <span class='fnname'>newFromDateTime</span>&lt;T: <a class='trait' href='../../wx/base/trait._wxDateTime.html' title='wx::base::_wxDateTime'>_wxDateTime</a>&gt;(obj: &amp;T) -&gt; @<a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h4>
+<h4 id='method.newFromGridCellCoordsArray' class='method'><code>fn <span class='fnname'>newFromGridCellCoordsArray</span>&lt;T: <a class='trait' href='../../wx/advanced/trait._wxGridCellCoordsArray.html' title='wx::advanced::_wxGridCellCoordsArray'>_wxGridCellCoordsArray</a>&gt;(obj: &amp;T) -&gt; @<a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h4>
+<h4 id='method.newFromBitmap' class='method'><code>fn <span class='fnname'>newFromBitmap</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxBitmap.html' title='wx::core::_wxBitmap'>_wxBitmap</a>&gt;(obj: &amp;T) -&gt; @<a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h4>
+<h4 id='method.newFromIcon' class='method'><code>fn <span class='fnname'>newFromIcon</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxIcon.html' title='wx::core::_wxIcon'>_wxIcon</a>&gt;(obj: &amp;T) -&gt; @<a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h4>
+<h4 id='method.newFromBrush' class='method'><code>fn <span class='fnname'>newFromBrush</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxBrush.html' title='wx::core::_wxBrush'>_wxBrush</a>&gt;(obj: &amp;T) -&gt; @<a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h4>
+<h4 id='method.newFromColour' class='method'><code>fn <span class='fnname'>newFromColour</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(obj: &amp;T) -&gt; @<a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h4>
+<h4 id='method.newFromCursor' class='method'><code>fn <span class='fnname'>newFromCursor</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxCursor.html' title='wx::core::_wxCursor'>_wxCursor</a>&gt;(obj: &amp;T) -&gt; @<a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h4>
+<h4 id='method.newFromFont' class='method'><code>fn <span class='fnname'>newFromFont</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxFont.html' title='wx::core::_wxFont'>_wxFont</a>&gt;(obj: &amp;T) -&gt; @<a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h4>
+<h4 id='method.newFromPen' class='method'><code>fn <span class='fnname'>newFromPen</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxPen.html' title='wx::core::_wxPen'>_wxPen</a>&gt;(obj: &amp;T) -&gt; @<a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../wx/advanced/trait._wxManagedPtr.html' title='wx::advanced::_wxManagedPtr'>_wxManagedPtr</a> for <a class='struct' href='../../wx/advanced/struct.wxManagedPtr.html' title='wx::advanced::wxManagedPtr'>wxManagedPtr</a></code></h3><div class='methods'><h4 id='method.handle' class='method'><code>fn <span class='fnname'>handle</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h4>
+<h4 id='method.getPtr' class='method'><code>fn <span class='fnname'>getPtr</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h4>
+<h4 id='method.noFinalize' class='method'><code>fn <span class='fnname'>noFinalize</span>(&amp;self)</code></h4>
+<h4 id='method.finalize' class='method'><code>fn <span class='fnname'>finalize</span>(&amp;self)</code></h4>
+<h4 id='method.delete' class='method'><code>fn <span class='fnname'>delete</span>(&amp;self)</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
