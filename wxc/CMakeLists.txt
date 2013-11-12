@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-find_package(wxWidgets REQUIRED gl)
+find_package(wxWidgets COMPONENTS gl core base REQUIRED)
 include(${wxWidgets_USE_FILE})
 
 set(WXCROOT ../wxHaskell/wxc/src/)
