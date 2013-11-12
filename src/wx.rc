@@ -2,6 +2,7 @@
 #[link(name="wx")];
 
 #[feature(globs)];
+#[feature(managed_boxes)];
 
 pub mod _unavailable;
 pub mod _unsafe;
