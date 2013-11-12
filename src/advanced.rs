@@ -1493,8 +1493,8 @@ pub trait _wxGridCellEditor : _wxGridCellWorker {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn paintBackground<T: _wxGridCellAttr>(&self, x: c_int, y: c_int, w: c_int, h: c_int, attr: &T) {
-        unsafe { wxGridCellEditor_PaintBackground(self.handle(), x, y, w, h, attr.handle()) }
+    fn paintBackground<T: _wxDC, U: _wxGridCellAttr>(&self, dc: &T, x: c_int, y: c_int, w: c_int, h: c_int, attr: &U) {
+        unsafe { wxGridCellEditor_PaintBackground(self.handle(), dc.handle(), x, y, w, h, attr.handle()) }
     }
     #[fixed_stack_segment]
     #[inline(never)]
