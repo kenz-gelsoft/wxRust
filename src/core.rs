@@ -2491,6 +2491,11 @@ pub trait _wxDC : _wxObject {
     }
     #[fixed_stack_segment]
     #[inline(never)]
+    fn setDeviceClippingRegion<T: _wxRegion>(&self, region: &T) {
+        unsafe { wxDC_SetDeviceClippingRegion(self.handle(), region.handle()) }
+    }
+    #[fixed_stack_segment]
+    #[inline(never)]
     fn setDeviceOrigin(&self, x: c_int, y: c_int) {
         unsafe { wxDC_SetDeviceOrigin(self.handle(), x, y) }
     }

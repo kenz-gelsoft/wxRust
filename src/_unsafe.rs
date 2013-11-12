@@ -1726,6 +1726,8 @@ extern "C" {
                                   width: c_int, height: c_int);
     pub fn wxDC_SetClippingRegionFromRegion(_obj: *mut c_void,
                                             region: *mut c_void);
+    pub fn wxDC_SetDeviceClippingRegion(_obj: *mut c_void,
+                                        region: *mut c_void);
     pub fn wxDC_SetDeviceOrigin(_obj: *mut c_void, x: c_int, y: c_int);
     pub fn wxDC_SetFont(_obj: *mut c_void, font: *mut c_void);
     pub fn wxDC_SetLogicalFunction(_obj: *mut c_void, function: c_int);
@@ -2702,7 +2704,8 @@ extern "C" {
     pub fn wxGridCellEditor_IsAcceptedKey(_obj: *mut c_void,
                                           event: *mut c_void) -> c_int;
     pub fn wxGridCellEditor_IsCreated(_obj: *mut c_void) -> c_int;
-    pub fn wxGridCellEditor_PaintBackground(_obj: *mut c_void, x: c_int,
+    pub fn wxGridCellEditor_PaintBackground(_obj: *mut c_void,
+                                            dc: *mut c_void, x: c_int,
                                             y: c_int, w: c_int, h: c_int,
                                             attr: *mut c_void);
     pub fn wxGridCellEditor_Reset(_obj: *mut c_void);

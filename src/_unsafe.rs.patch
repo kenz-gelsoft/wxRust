@@ -1,6 +1,6 @@
---- src/native.rs.orig	2013-10-30 03:30:21.000000000 +0900
-+++ src/native.rs	2013-10-30 03:30:43.000000000 +0900
-@@ -12,21 +12,8 @@
+--- src/_unsafe.rs.orig	2013-11-13 01:20:22.000000000 +0900
++++ src/_unsafe.rs	2013-11-13 01:21:35.000000000 +0900
+@@ -40,21 +40,8 @@
  pub type __darwin_intptr_t = c_long;
  pub type __darwin_natural_t = c_uint;
  pub type __darwin_ct_rune_t = c_int;
