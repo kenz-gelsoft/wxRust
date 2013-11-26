@@ -4,6 +4,16 @@ pub macro_rules! wxApp(
     ($f: ident) => (
         fn start(argc: int, argv: **u8) -> int {
             #[start];
+
+            use std::libc::c_void;
+            use std::rt::start_on_main_thread;
+            use std::vec;
+
+            use wx::base::wxClosure;
+            use wx::core::ELJApp;
+
+            static nullptr: *mut c_void = 0 as *mut c_void;
+
             fn on_main() {
                 #[fixed_stack_segment];
                 #[inline(never)];
