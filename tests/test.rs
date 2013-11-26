@@ -6,9 +6,7 @@
 
 extern mod wx;
 
-use std::libc::*;
-use std::rt::start_on_main_thread;
-use std::vec;
+use std::libc::c_void;
 
 use wx::_unsafe::*;
 use wx::defs::*;
@@ -17,8 +15,6 @@ use wx::core::*;
 
 mod macros;
 
-
-static nullptr: *mut c_void = 0 as *mut c_void;
 
 wxApp!(wx_main)
 
