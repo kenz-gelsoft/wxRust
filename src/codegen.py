@@ -661,9 +661,9 @@ extern {
 #[inline(never)]
 pub fn wxT(s: &str) -> wxString {
     unsafe {
-        do s.to_c_str().with_ref |c_str| {
+        s.to_c_str().with_ref(|c_str| {
             wxString { handle: wxString_CreateUTF8(c_str as *mut c_void) }
-        }
+        })
     }
 }
 
