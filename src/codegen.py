@@ -649,7 +649,7 @@ class WrapperGenerator(object):
                 self.println()
                 if name == 'base':
                     self.println('''\
-#[link_args="-lwxc"]
+#[link(name="wxc")]
 extern {
     fn wxString_CreateUTF8(buffer: *mut c_void) -> *mut c_void;
     fn wxString_GetUtf8(wxs: *mut c_void) -> *mut c_void;
