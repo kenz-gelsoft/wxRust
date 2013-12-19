@@ -10857,8 +10857,8 @@ impl wxStaticBoxSizer {
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxStaticBox>(box: &T, orient: c_int) -> @wxStaticBoxSizer {
-        unsafe { @wxStaticBoxSizer(wxStaticBoxSizer_Create(box.handle(), orient)) }
+    pub fn new<T: _wxStaticBox>(box_: &T, orient: c_int) -> @wxStaticBoxSizer {
+        unsafe { @wxStaticBoxSizer(wxStaticBoxSizer_Create(box_.handle(), orient)) }
     }
 }
 
