@@ -1177,7 +1177,7 @@ class Arg(object):
             if self._is_self:
                 return 'self'
             _name = self.__node[1]
-            if _name in ['fn', 'ref', 'self', 'type', 'use']:
+            if _name in ['box', 'fn', 'ref', 'self', 'type', 'use']:
                 _name += '_'
             return _name
 
