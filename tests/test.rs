@@ -4,6 +4,7 @@
 
 #[link_args="-lwxc"];
 
+extern mod native;
 extern mod wx;
 
 use std::libc::c_void;
