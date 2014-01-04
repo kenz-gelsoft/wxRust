@@ -1,3 +1,4 @@
 branches:
   only:
     - master
+    - rust-0.8
