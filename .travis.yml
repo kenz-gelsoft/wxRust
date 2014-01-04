@@ -5,15 +5,13 @@ branches:
 
 before_install:
   - yes | sudo add-apt-repository ppa:hansjorg/rust
-  - yes | sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu/ precise-proposed main restricted universe multiverse"
   - yes | sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
   - yes | sudo apt-add-repository 'deb http://repos.codelite.org/wx2.9/ubuntu/ precise universe'
   - sudo apt-get update
 install:
   - sudo apt-get install rust-0.8 libwxgtk2.9-0-unofficial libwxgtk2.9-dev
-  - sudo apt-get install libclang-3.3-dev/precise-proposed
+  - sudo apt-get install libclang-dev
 script:
-  - export LD_LIBRARY_PATH=/usr/lib/llvm-3.3/lib
   - mkdir -p build
   - cd build
   - cmake ..
