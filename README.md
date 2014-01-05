@@ -1,6 +1,9 @@
 # wxRust 
 
-<span style="vertical-align: middle">master: [![master build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=master)](https://travis-ci.org/kenz-gelsoft/wxRust) / rust-0.8: [![rust 0.8 build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=rust-0.8)](https://travis-ci.org/kenz-gelsoft/wxRust)</span>
+<table>
+<tr><td>master:</td><td>[![master build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=master)](https://travis-ci.org/kenz-gelsoft/wxRust)</td></tr>
+<tr><td>rust-0.8:</td><td>[![rust 0.8 build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=rust-0.8)](https://travis-ci.org/kenz-gelsoft/wxRust)</td></tr>
+</table>
 
 This is a [Rust](http://www.rust-lang.org/) binding for the [wxWidgets cross platform toolkit](http://www.wxwidgets.org/).
 
