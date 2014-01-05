@@ -1,8 +1,9 @@
 # wxRust
 
-master: [![master build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=master)](https://travis-ci.org/kenz-gelsoft/wxRust) | rust-0.8: [![rust 0.8 build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=rust-0.8)](https://travis-ci.org/kenz-gelsoft/wxRust)
-
 This is a [Rust](http://www.rust-lang.org/) binding for the [wxWidgets cross platform toolkit](http://www.wxwidgets.org/).
+
+ * [![master   build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=master)](https://travis-ci.org/kenz-gelsoft/wxRust)   - master
+ * [![rust 0.8 build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=rust-0.8)](https://travis-ci.org/kenz-gelsoft/wxRust) - rust-0.8
 
 ## API
 
@@ -34,6 +35,11 @@ Install the wxWidgets 2.9 (or later) and CMake as below:
     brew install cmake
 
 ### Build the library
+
+Checkout git submodules:
+
+    git submodule init # for the first time.
+    git submodule update
 
 At the project root directory:
 
