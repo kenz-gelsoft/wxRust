@@ -990,7 +990,6 @@ class Preprocessor(object):
 
     def _call_cpp(self, file):
         cppflags = Popen(['wx-config', '--cppflags'], stdout=PIPE).communicate()[0].split()
-        cppflags.remove('-D__WXMAC__')
         cmdline = ['cpp', '-DWXC_TYPES_H'] + cppflags + ['-I/Users/kenz/src/wxRust/wxHaskell/wxc/src/include', file]
         return Popen(cmdline, stdout=PIPE).communicate()[0]
 
