@@ -2452,11 +2452,6 @@ impl wxManagedPtr {
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn getDeleteFunction() -> *mut c_void {
-        unsafe { wxManagedPtr_GetDeleteFunction() }
-    }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn newFromObject<T: _wxObject>(obj: &T) -> @wxManagedPtr {
         unsafe { @wxManagedPtr(wxManagedPtr_CreateFromObject(obj.handle())) }
     }
