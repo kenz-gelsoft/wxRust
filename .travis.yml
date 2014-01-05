@@ -13,6 +13,7 @@ install:
   - sudo apt-get install rust-0.8 libwxgtk2.9-0-unofficial libwxgtk2.9-dev
   - sudo apt-get install libclang-3.3-dev/precise-proposed
 script:
+  - export LD_LIBRARY_PATH=/usr/lib/llvm-3.3/lib
   - mkdir -p build
   - cd build
   - cmake -DRUSTCFLAGS="-L;/usr/lib/llvm-3.3/lib" ..
