@@ -30,6 +30,7 @@ add_rust_crate(bindgen
 add_custom_command(
     OUTPUT  ${CMAKE_SOURCE_DIR}/src/_unsafe.rs
     COMMAND ${CMAKE_BINARY_DIR}/bindgen
+        -allow-bitfields
         -x c++
         `wx-config --cppflags`
         --include stdint.h
