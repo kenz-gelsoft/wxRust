@@ -5,14 +5,12 @@ include(rust.cmake)
 add_subdirectory(wxc)
 
 if(APPLE)
-    set(PLATFORMFLAGS)
     set(PATCH_UNSAFE_RS patch -p0 < src/_unsafe.rs.patch)
 else(APPLE)
-    set(PLATFORMFLAGS -L /usr/lib/llvm-3.3/lib)
     set(PATCH_UNSAFE_RS)
 endif(APPLE)
 
-set(RUSTCFLAGS ${RUSTCFLAGS} ${PLATFORMFLAGS} -L wxc)
+set(RUSTCFLAGS ${RUSTCFLAGS} -L wxc)
 set(GENSRC wxHaskell/wxc/src/include)
 set(GENSRCS
     ${GENSRC}/wxc.h
