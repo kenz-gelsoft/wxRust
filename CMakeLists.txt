@@ -10,6 +10,12 @@ set(GENSRCS
     ${GENSRC}/wxc.h
 )
 
+if(APPLE)
+    set(PATCH_UNSAFE_RS patch -p0 < native.rs.patch)
+else(APPLE)
+    set(PATCH_UNSAFE_RS)
+endif(APPLE)
+
 add_rust_crate(bindgen
     rust-bindgen/bindgen.rs
     rust-bindgen/clang.rs
@@ -29,7 +35,7 @@ add_custom_command(
         --include time.h
         ${GENSRCS}
         > src/_unsafe.rs
-    COMMAND patch -p0 < src/_unsafe.rs.patch
+    COMMAND ${PATCH_UNSAFE_RS}
     DEPENDS bindgen.dummy ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
