@@ -59,25 +59,25 @@ impl MyMenuBar {
     }
 }
 
+extern "C"
+fn MyButton_clicked(fun: *mut c_void, data: *mut c_void, evt: *mut c_void) {
+    println("hello!");
+    let parent = wxWindow::from(data);
+    let msgDlg = wxMessageDialog::new(parent, "Pushed!!", "The Button", 0);
+    msgDlg.showModal();
+}
+
 struct MyButton(@wxButton);
 impl MyButton {
     #[fixed_stack_segment]
     #[inline(never)]
     fn new<T: _wxWindow>(parent: &T) -> MyButton {
         let button = wxButton::new(parent, wxID_ANY, "Push me!", 10, 10, 50, 30, 0);
-        let closure = wxClosure::new(MyButton::clicked as *mut c_void, parent.handle());
+        let closure = wxClosure::new(MyButton_clicked as *mut c_void, parent.handle());
         unsafe {
             button.connect(wxID_ANY, wxID_ANY, expEVT_COMMAND_BUTTON_CLICKED(), closure.handle());
         }
 
         MyButton(button)
-    }
-    #[fixed_stack_segment]
-    #[inline(never)]
-    fn clicked(fun: *mut c_void, data: *mut c_void, evt: *mut c_void) {
-        println("hello!");
-        let parent = wxWindow::from(data);
-        let msgDlg = wxMessageDialog::new(parent, "Pushed!!", "The Button", 0);
-        msgDlg.showModal();
     }
 }
