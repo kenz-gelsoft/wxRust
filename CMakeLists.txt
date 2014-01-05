@@ -11,7 +11,7 @@ set(GENSRCS
 )
 
 if(APPLE)
-    set(PATCH_UNSAFE_RS patch -p0 < native.rs.patch)
+    set(PATCH_UNSAFE_RS patch -p0 < src/_unsafe.rs.patch)
 else(APPLE)
     set(PATCH_UNSAFE_RS)
 endif(APPLE)
