@@ -14,7 +14,7 @@ The wxRust library is heavily based on the [wxHaskell](http://www.haskell.org/ha
 
 The [wxc](https://github.com/wxHaskell/wxHaskell/tree/master/wxc) is a C language binding for the C++ wxWidgets toolkit.
 
-We utilize the [rust-bindgen](https://github.com/crabtw/rust-bindgen) automatic rust binding generator for its [_unsafe](http://kenz-gelsoft.github.io/wxRust/src/wx/src/_unsafe.rs.html) low-level binding.
+We utilize the [rust-bindgen](https://github.com/crabtw/rust-bindgen) [![rust-bindgen build status](https://api.travis-ci.org/crabtw/rust-bindgen.png?branch=master)](https://travis-ci.org/crabtw/rust-bindgen) automatic rust binding generator for its [_unsafe](http://kenz-gelsoft.github.io/wxRust/src/wx/src/_unsafe.rs.html) low-level binding.
 
 And we generate an OOP-style high-level binding (other modules than _unsafe) by [codegen.py code generator](https://github.com/kenz-gelsoft/wxRust/blob/rust-servo/src/codegen.py).
 
