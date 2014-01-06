@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 
-find_package(wxWidgets REQUIRED std gl)
+if(APPLE)
+    find_package(wxWidgets REQUIRED gl)
+else(APPLE)
+    find_package(wxWidgets REQUIRED all)
+endif(APPLE)
 include(${wxWidgets_USE_FILE})
 
 set(WXCROOT ../wxHaskell/wxc/src/)
