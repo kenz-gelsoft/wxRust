@@ -28,10 +28,12 @@ For Linux build instructions, see [INSTALL.linux.md](INSTALL.linux.md)
 
 We're using the Rust compiler version bundled with the [Servo master](https://github.com/mozilla/servo/).
 
-Install the wxWidgets 2.9 (or later) and CMake as below:
+Install the wxWidgets 2.9.5 (or later) and CMake as below:
 
     brew install wxmac --devel
     brew install cmake
+
+With some tweak you may be able to compile wxRust with a bit older versions (2.9.0 < x < 2.9.4) of wxWidgets. See [Issue 21](https://github.com/kenz-gelsoft/wxRust/issues/21#issuecomment-31661394).
 
 ### Build the library
 
