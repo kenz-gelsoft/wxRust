@@ -702,18 +702,18 @@ impl wxString {
     
     def _print_class(self, clazz):
         struct_name = '%s' % clazz.struct_name
-        self.println('pub struct %s(*mut c_void);' % struct_name)
+        self.println('pub struct %s { handle: *mut c_void }' % struct_name)
         for trait in clazz.inheritance:
             body = ''
             if trait in self.__parser.root_classes:
-                body = ' fn handle(&self) -> *mut c_void { **self } '
+                body = ' fn handle(&self) -> *mut c_void { self.handle } '
             self.println('impl %s for %s {%s}' % (trait_name(trait), struct_name, body))
         self.println()
     
         # static methods go to struct impl
         self.println('impl %s {' % struct_name)
         with self.indent():
-            self.println('pub fn from(handle: *mut c_void) -> @%s { @%s(handle) }' % (struct_name, struct_name))
+            self.println('pub fn from(handle: *mut c_void) -> @%s { @%s { handle: handle } }' % (struct_name, struct_name))
             self.println('pub fn null() -> @%s { %s::from(0 as *mut c_void) }' % (struct_name, struct_name))
             self.println()
             for method in clazz.static_methods:
@@ -1114,7 +1114,7 @@ class Function(object):
             if self.__return_type.is_string:
                 body = 'wxString { handle: %s }.to_str()' % (body)
             if self.__return_type.is_self or self.__return_type.is_class:
-                body = '@%s(%s)' % (self.__return_type.struct_name, body)
+                body = '@%s { handle: %s }' % (self.__return_type.struct_name, body)
             gen.println('%sunsafe { %s }' % (self._strings, body))
         gen.println('}')
 
