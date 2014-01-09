@@ -3,14 +3,14 @@ use _unsafe::*;
 use base::*;
 use core::*;
 
-pub struct wxMediaCtrl(*mut c_void);
+pub struct wxMediaCtrl { handle: *mut c_void }
 impl _wxMediaCtrl for wxMediaCtrl {}
 impl _wxWindow for wxMediaCtrl {}
 impl _wxEvtHandler for wxMediaCtrl {}
-impl _wxObject for wxMediaCtrl { fn handle(&self) -> *mut c_void { **self } }
+impl _wxObject for wxMediaCtrl { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxMediaCtrl {
-    pub fn from(handle: *mut c_void) -> @wxMediaCtrl { @wxMediaCtrl(handle) }
+    pub fn from(handle: *mut c_void) -> @wxMediaCtrl { @wxMediaCtrl { handle: handle } }
     pub fn null() -> @wxMediaCtrl { wxMediaCtrl::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
@@ -19,7 +19,7 @@ impl wxMediaCtrl {
         let fileName = wxT(fileName);
         let szBackend = wxT(szBackend);
         let name = wxT(name);
-        unsafe { @wxMediaCtrl(wxMediaCtrl_Create(parent.handle(), windowID, fileName.handle(), x, y, w, h, style, szBackend.handle(), name.handle())) }
+        unsafe { @wxMediaCtrl { handle: wxMediaCtrl_Create(parent.handle(), windowID, fileName.handle(), x, y, w, h, style, szBackend.handle(), name.handle()) } }
     }
 }
 
@@ -105,15 +105,15 @@ pub trait _wxMediaCtrl : _wxWindow {
     }
 }
 
-pub struct wxMediaEvent(*mut c_void);
+pub struct wxMediaEvent { handle: *mut c_void }
 impl _wxMediaEvent for wxMediaEvent {}
 impl _wxNotifyEvent for wxMediaEvent {}
 impl _wxCommandEvent for wxMediaEvent {}
 impl _wxEvent for wxMediaEvent {}
-impl _wxObject for wxMediaEvent { fn handle(&self) -> *mut c_void { **self } }
+impl _wxObject for wxMediaEvent { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxMediaEvent {
-    pub fn from(handle: *mut c_void) -> @wxMediaEvent { @wxMediaEvent(handle) }
+    pub fn from(handle: *mut c_void) -> @wxMediaEvent { @wxMediaEvent { handle: handle } }
     pub fn null() -> @wxMediaEvent { wxMediaEvent::from(0 as *mut c_void) }
     
 }

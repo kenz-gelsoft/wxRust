@@ -4,23 +4,23 @@ use base::*;
 use core::*;
 use advanced::*;
 
-pub struct wxGLCanvas(*mut c_void);
+pub struct wxGLCanvas { handle: *mut c_void }
 impl _wxGLCanvas for wxGLCanvas {}
 impl _wxScrolledWindow for wxGLCanvas {}
 impl _wxPanel for wxGLCanvas {}
 impl _wxWindow for wxGLCanvas {}
 impl _wxEvtHandler for wxGLCanvas {}
-impl _wxObject for wxGLCanvas { fn handle(&self) -> *mut c_void { **self } }
+impl _wxObject for wxGLCanvas { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGLCanvas {
-    pub fn from(handle: *mut c_void) -> @wxGLCanvas { @wxGLCanvas(handle) }
+    pub fn from(handle: *mut c_void) -> @wxGLCanvas { @wxGLCanvas { handle: handle } }
     pub fn null() -> @wxGLCanvas { wxGLCanvas::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
     pub fn new<T: _wxWindow, U: _wxPalette>(parent: &T, windowID: c_int, attributes: *mut c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int, title: &str, palette: &U) -> @wxGLCanvas {
         let title = wxT(title);
-        unsafe { @wxGLCanvas(wxGLCanvas_Create(parent.handle(), windowID, attributes, x, y, w, h, style, title.handle(), palette.handle())) }
+        unsafe { @wxGLCanvas { handle: wxGLCanvas_Create(parent.handle(), windowID, attributes, x, y, w, h, style, title.handle(), palette.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -53,23 +53,23 @@ pub trait _wxGLCanvas : _wxScrolledWindow {
     }
 }
 
-pub struct wxGLContext(*mut c_void);
+pub struct wxGLContext { handle: *mut c_void }
 impl _wxGLContext for wxGLContext {}
-impl _wxObject for wxGLContext { fn handle(&self) -> *mut c_void { **self } }
+impl _wxObject for wxGLContext { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGLContext {
-    pub fn from(handle: *mut c_void) -> @wxGLContext { @wxGLContext(handle) }
+    pub fn from(handle: *mut c_void) -> @wxGLContext { @wxGLContext { handle: handle } }
     pub fn null() -> @wxGLContext { wxGLContext::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
     pub fn new<T: _wxGLCanvas, U: _wxGLContext>(win: &T, other: &U) -> @wxGLContext {
-        unsafe { @wxGLContext(wxGLContext_Create(win.handle(), other.handle())) }
+        unsafe { @wxGLContext { handle: wxGLContext_Create(win.handle(), other.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
     pub fn newFromNull<T: _wxGLCanvas>(win: &T) -> @wxGLContext {
-        unsafe { @wxGLContext(wxGLContext_CreateFromNull(win.handle())) }
+        unsafe { @wxGLContext { handle: wxGLContext_CreateFromNull(win.handle()) } }
     }
 }
 
