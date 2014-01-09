@@ -40,7 +40,7 @@ impl MyFrame {
     }
 }
 
-struct MyMenuBar(@wxMenuBar);
+struct MyMenuBar { handle: @wxMenuBar }
 impl MyMenuBar {
     #[fixed_stack_segment]
     #[inline(never)]
@@ -52,10 +52,10 @@ impl MyMenuBar {
         fileMenu.appendItem(fileNew);
 
         menubar.append(fileMenu, "File");
-        MyMenuBar(menubar)
+        MyMenuBar { handle: menubar }
     }
     fn asMenuBar(&self) -> @wxMenuBar {
-        return **self;
+        return self.handle;
     }
 }
 
