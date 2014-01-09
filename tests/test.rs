@@ -21,11 +21,11 @@ wxApp!(wx_main)
 extern "C"
 fn wx_main() {
     let frame = MyFrame::new();
-    frame.show();
-    frame.raise();
+    frame.asFrame().show();
+    frame.asFrame().raise();
 }
 
-struct MyFrame(@wxFrame);
+struct MyFrame { base: @wxFrame }
 impl MyFrame {
     #[fixed_stack_segment]
     #[inline(never)]
@@ -36,11 +36,14 @@ impl MyFrame {
         
         MyButton::new(frame);
 
-        MyFrame(frame)
+        MyFrame { base: frame }
+    }
+    fn asFrame(&self) -> @wxFrame {
+        return self.base;
     }
 }
 
-struct MyMenuBar { handle: @wxMenuBar }
+struct MyMenuBar { base: @wxMenuBar }
 impl MyMenuBar {
     #[fixed_stack_segment]
     #[inline(never)]
@@ -52,10 +55,10 @@ impl MyMenuBar {
         fileMenu.appendItem(fileNew);
 
         menubar.append(fileMenu, "File");
-        MyMenuBar { handle: menubar }
+        MyMenuBar { base: menubar }
     }
     fn asMenuBar(&self) -> @wxMenuBar {
-        return self.handle;
+        return self.base;
     }
 }
 
