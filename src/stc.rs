@@ -4,22 +4,22 @@ use base::*;
 use core::*;
 use advanced::*;
 
-pub struct wxStyledTextCtrl(*mut c_void);
+pub struct wxStyledTextCtrl { handle: *mut c_void }
 impl _wxStyledTextCtrl for wxStyledTextCtrl {}
 impl _wxControl for wxStyledTextCtrl {}
 impl _wxWindow for wxStyledTextCtrl {}
 impl _wxEvtHandler for wxStyledTextCtrl {}
-impl _wxObject for wxStyledTextCtrl { fn handle(&self) -> *mut c_void { **self } }
+impl _wxObject for wxStyledTextCtrl { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxStyledTextCtrl {
-    pub fn from(handle: *mut c_void) -> @wxStyledTextCtrl { @wxStyledTextCtrl(handle) }
+    pub fn from(handle: *mut c_void) -> @wxStyledTextCtrl { @wxStyledTextCtrl { handle: handle } }
     pub fn null() -> @wxStyledTextCtrl { wxStyledTextCtrl::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
     pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, style: c_int) -> @wxStyledTextCtrl {
         let _txt = wxT(_txt);
-        unsafe { @wxStyledTextCtrl(wxStyledTextCtrl_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, style)) }
+        unsafe { @wxStyledTextCtrl { handle: wxStyledTextCtrl_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, style) } }
     }
 }
 
@@ -1656,12 +1656,12 @@ pub trait _wxStyledTextCtrl : _wxControl {
     #[fixed_stack_segment]
     #[inline(never)]
     fn indicatorGetForeground(&self, indic: c_int) -> @wxColour {
-        unsafe { @wxColour(wxStyledTextCtrl_IndicatorGetForeground(self.handle(), indic)) }
+        unsafe { @wxColour { handle: wxStyledTextCtrl_IndicatorGetForeground(self.handle(), indic) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
     fn getCaretLineBackground(&self) -> @wxColour {
-        unsafe { @wxColour(wxStyledTextCtrl_GetCaretLineBackground(self.handle())) }
+        unsafe { @wxColour { handle: wxStyledTextCtrl_GetCaretLineBackground(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1671,7 +1671,7 @@ pub trait _wxStyledTextCtrl : _wxControl {
     #[fixed_stack_segment]
     #[inline(never)]
     fn getCaretForeground(&self) -> @wxColour {
-        unsafe { @wxColour(wxStyledTextCtrl_GetCaretForeground(self.handle())) }
+        unsafe { @wxColour { handle: wxStyledTextCtrl_GetCaretForeground(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1696,30 +1696,30 @@ pub trait _wxStyledTextCtrl : _wxControl {
     #[fixed_stack_segment]
     #[inline(never)]
     fn newDocument(&self) -> @wxSTCDoc {
-        unsafe { @wxSTCDoc(wxStyledTextCtrl_CreateDocument(self.handle())) }
+        unsafe { @wxSTCDoc { handle: wxStyledTextCtrl_CreateDocument(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
     fn getEdgeColour(&self) -> @wxColour {
-        unsafe { @wxColour(wxStyledTextCtrl_GetEdgeColour(self.handle())) }
+        unsafe { @wxColour { handle: wxStyledTextCtrl_GetEdgeColour(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
     fn getDocPointer(&self) -> @wxSTCDoc {
-        unsafe { @wxSTCDoc(wxStyledTextCtrl_GetDocPointer(self.handle())) }
+        unsafe { @wxSTCDoc { handle: wxStyledTextCtrl_GetDocPointer(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
     fn pointFromPosition(&self) -> @wxPoint {
-        unsafe { @wxPoint(wxStyledTextCtrl_PointFromPosition(self.handle())) }
+        unsafe { @wxPoint { handle: wxStyledTextCtrl_PointFromPosition(self.handle()) } }
     }
 }
 
-pub struct wxSTCDoc(*mut c_void);
-impl _wxSTCDoc for wxSTCDoc { fn handle(&self) -> *mut c_void { **self } }
+pub struct wxSTCDoc { handle: *mut c_void }
+impl _wxSTCDoc for wxSTCDoc { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxSTCDoc {
-    pub fn from(handle: *mut c_void) -> @wxSTCDoc { @wxSTCDoc(handle) }
+    pub fn from(handle: *mut c_void) -> @wxSTCDoc { @wxSTCDoc { handle: handle } }
     pub fn null() -> @wxSTCDoc { wxSTCDoc::from(0 as *mut c_void) }
     
 }
@@ -1729,14 +1729,14 @@ pub trait _wxSTCDoc {
     
 }
 
-pub struct wxStyledTextEvent(*mut c_void);
+pub struct wxStyledTextEvent { handle: *mut c_void }
 impl _wxStyledTextEvent for wxStyledTextEvent {}
 impl _wxCommandEvent for wxStyledTextEvent {}
 impl _wxEvent for wxStyledTextEvent {}
-impl _wxObject for wxStyledTextEvent { fn handle(&self) -> *mut c_void { **self } }
+impl _wxObject for wxStyledTextEvent { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxStyledTextEvent {
-    pub fn from(handle: *mut c_void) -> @wxStyledTextEvent { @wxStyledTextEvent(handle) }
+    pub fn from(handle: *mut c_void) -> @wxStyledTextEvent { @wxStyledTextEvent { handle: handle } }
     pub fn null() -> @wxStyledTextEvent { wxStyledTextEvent::from(0 as *mut c_void) }
     
 }
@@ -1860,7 +1860,7 @@ pub trait _wxStyledTextEvent : _wxCommandEvent {
     #[fixed_stack_segment]
     #[inline(never)]
     fn clone(&self) -> @wxStyledTextEvent {
-        unsafe { @wxStyledTextEvent(wxStyledTextEvent_Clone(self.handle())) }
+        unsafe { @wxStyledTextEvent { handle: wxStyledTextEvent_Clone(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
