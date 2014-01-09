@@ -39,7 +39,7 @@ impl MyFrame {
     }
 }
 
-struct MyMenuBar(@wxMenuBar);
+struct MyMenuBar { handle: @wxMenuBar }
 impl MyMenuBar {
     fn new() -> MyMenuBar {
         let menubar = wxMenuBar::new(0);
@@ -49,10 +49,10 @@ impl MyMenuBar {
         fileMenu.appendItem(fileNew);
 
         menubar.append(fileMenu, "File");
-        MyMenuBar(menubar)
+        MyMenuBar { handle: menubar }
     }
     fn asMenuBar(&self) -> @wxMenuBar {
-        return **self;
+        return self.handle;
     }
 }
 
