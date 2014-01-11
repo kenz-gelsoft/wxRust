@@ -40,7 +40,8 @@ Use following Rust compiler version for your wxRust branch. We're using Servo ma
 <tr><td>rust-0.8  </td><td><a href="https://github.com/mozilla/rust/releases/tag/0.8">0.8</a>          </td></tr>
 </table>
 
-Install the wxWidgets 2.9.5 (or later) and CMake as below:
+Install the wxWidgets 2.9.5 (or later) and CMake as below
+(in the case of [Homebrew](http://brew.sh/)):
 
     brew install wxmac --devel
     brew install cmake
@@ -61,6 +62,11 @@ At the project root directory:
     cd build
     cmake ..
     make
+
+If you use wxmac installed by [MacPorts](http://www.macports.org/),
+add "-DUSE_MACPORTS" option to above cmake command line:
+
+    cmake -DUSE_MACPORTS ..
 
 ### Compile and Run the Test program
 
