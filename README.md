@@ -31,15 +31,11 @@ For Linux build instructions, see [INSTALL.linux.md](INSTALL.linux.md)
 Use following Rust compiler version for your wxRust branche. We're using Servo master's one for main development.
 
 <table>
-<thead>
-<tr><td>wxRust branch</td><td>Supported Rust compiler version</td></tr>
-</thead>
-<tbody>
-<tr><td>master</td><td>[master](https://github.com/mozilla/rust)</td></tr>
-<tr><td>rust-0.9</td><td>[0.9](https://github.com/mozilla/rust/releases/tag/0.9)</td></tr>
-<tr><td>rust-servo</td><td>[Servo master](https://github.com/mozilla/servo/) bundled version</td></tr>
-<tr><td>rust-0.8</td><td>[0.8](https://github.com/mozilla/rust/releases/tag/0.8)</td></tr>
-</tbody>
+<tr><td><strong>wxRust branch</strong></td><td><strong>Supported Rust compiler version</strong></td></tr>
+<tr><td>master</td><td><a href="https://github.com/mozilla/rust">master</a></td></tr>
+<tr><td>rust-0.9</td><td><a href="https://github.com/mozilla/rust/releases/tag/0.9">0.9</a></td></tr>
+<tr><td>rust-servo</td><td><a href="https://github.com/mozilla/servo/">Servo master</a> bundled version</td></tr>
+<tr><td>rust-0.8</td><td><a href="https://github.com/mozilla/rust/releases/tag/0.8">0.8</a></td></tr>
 </table>
 
 Install the wxWidgets 2.9.5 (or later) and CMake as below:
