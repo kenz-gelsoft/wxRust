@@ -2,6 +2,7 @@ branches:
   only:
     - master
     - rust-0.8
+    - rust-0.9
 
 before_install:
   - yes | sudo add-apt-repository ppa:hansjorg/rust
