@@ -66,7 +66,7 @@ fn MyButton_clicked(fun: *mut c_void, data: *mut c_void, evt: *mut c_void) {
         return;
     }
 
-    println("hello!");
+    println!("hello!");
     let parent = wxWindow::from(data);
     let msgDlg = wxMessageDialog::new(parent, "Pushed!!", "The Button", wxOK);
     msgDlg.showModal();
