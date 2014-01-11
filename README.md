@@ -28,7 +28,19 @@ For Linux build instructions, see [INSTALL.linux.md](INSTALL.linux.md)
 
 ### Build Prerequisite
 
-We're using the Rust compiler version bundled with the [Servo master](https://github.com/mozilla/servo/).
+Use following Rust compiler version for your wxRust branche. We're using Servo master's one for main development.
+
+<table>
+<thead>
+<tr><td>wxRust branch</td><td>Supported Rust compiler version</td></tr>
+</thead>
+<tbody>
+<tr><td>master</td><td>[master](https://github.com/mozilla/rust)</td></tr>
+<tr><td>rust-0.9</td><td>[0.9](https://github.com/mozilla/rust/releases/tag/0.9)</td></tr>
+<tr><td>rust-servo</td><td>[Servo master](https://github.com/mozilla/servo/) bundled version</td></tr>
+<tr><td>rust-0.8</td><td>[0.8](https://github.com/mozilla/rust/releases/tag/0.8)</td></tr>
+</tbody>
+</table>
 
 Install the wxWidgets 2.9.5 (or later) and CMake as below:
 
