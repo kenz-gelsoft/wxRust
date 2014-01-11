@@ -10,8 +10,7 @@ before_install:
   - yes | sudo apt-add-repository 'deb http://repos.codelite.org/wx2.9/ubuntu/ precise universe'
   - sudo apt-get update
 install:
-  - sudo apt-get install rust-nightly libwxgtk2.9-0-unofficial libwxgtk2.9-dev
-  - sudo apt-get install libclang-3.3-dev
+  - sudo apt-get install rust-0.9 libclang-3.3-dev libwxgtk2.9-0-unofficial libwxgtk2.9-dev
 script:
   - export LD_LIBRARY_PATH=/usr/lib/llvm-3.3/lib
   - mkdir -p build
