@@ -16,7 +16,8 @@ The wxRust library is heavily based on the [wxHaskell](http://www.haskell.org/ha
 
 The [wxc](https://github.com/wxHaskell/wxHaskell/tree/master/wxc) is a C language binding for the C++ wxWidgets toolkit.
 
-We utilize the [rust-bindgen](https://github.com/crabtw/rust-bindgen) [![rust-bindgen build status](https://api.travis-ci.org/crabtw/rust-bindgen.png?branch=master)](https://travis-ci.org/crabtw/rust-bindgen) 
+We utilize the [rust-bindgen](https://github.com/crabtw/rust-bindgen)
+[![rust-bindgen build status](https://api.travis-ci.org/crabtw/rust-bindgen.png?branch=master)](https://travis-ci.org/crabtw/rust-bindgen) 
 automatic rust binding generator for its [_unsafe](http://kenz-gelsoft.github.io/wxRust/src/wx/src/_unsafe.rs.html) low-level binding.
 
 And we generate an OOP-style high-level binding (other modules than _unsafe)
@@ -47,16 +48,18 @@ Install the wxWidgets 2.9.5 (or later) and CMake as below
     brew install cmake
 
 With some tweak you may be able to compile wxRust with a bit older versions (2.9.0 < x < 2.9.4) of wxWidgets.
-See [Issue 21](https://github.com/kenz-gelsoft/wxRust/issues/21#issuecomment-31661394).
+See issue #21 comments for details.
 
 ### Build the library
+
+At the project root directory,
 
 Checkout git submodules:
 
     git submodule init # for the first time.
     git submodule update
 
-At the project root directory:
+And generate Makefiles and make:
 
     mkdir build
     cd build
@@ -64,9 +67,9 @@ At the project root directory:
     make
 
 If you use wxmac installed by [MacPorts](http://www.macports.org/),
-add "-DUSE_MACPORTS" option to above cmake command line:
+add "-DUSE_MACPORTS=ON" option to above cmake command line:
 
-    cmake -DUSE_MACPORTS ..
+    cmake -DUSE_MACPORTS=ON ..
 
 ### Compile and Run the Test program
 
