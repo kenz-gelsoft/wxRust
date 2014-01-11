@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 
 include(rust.cmake)
 
+option(USE_MACPORTS "Use wxMac installed by MacPorts" OFF)
+
 add_subdirectory(wxc)
 
 if(APPLE)
