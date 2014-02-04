@@ -17,7 +17,7 @@ pub macro_rules! wxApp(
                 let closure = wxClosure::new($f as *mut c_void, nullptr);
                 let args: ~[*i32] = ~[];
                 ELJApp::initializeC(closure, args.len() as i32, args.as_ptr() as *mut *mut i8);
-            });
+            })
         }
     )
 )
