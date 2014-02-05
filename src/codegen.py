@@ -707,8 +707,8 @@ impl wxString {
         # static methods go to struct impl
         self.println('impl %s {' % struct_name)
         with self.indent():
-            self.println('pub fn from(handle: *mut c_void) -> @%s { @%s { handle: handle } }' % (struct_name, struct_name))
-            self.println('pub fn null() -> @%s { %s::from(0 as *mut c_void) }' % (struct_name, struct_name))
+            self.println('pub fn from(handle: *mut c_void) -> %s { %s { handle: handle } }' % (struct_name, struct_name))
+            self.println('pub fn null() -> %s { %s::from(0 as *mut c_void) }' % (struct_name, struct_name))
             self.println()
             for method in clazz.static_methods:
                 method.trait_fn(self, clazz.name)
@@ -1106,7 +1106,7 @@ class Function(object):
             if self.__return_type.is_string:
                 body = 'wxString { handle: %s }.to_str()' % (body)
             if self.__return_type.is_self or self.__return_type.is_class:
-                body = '@%s { handle: %s }' % (self.__return_type.struct_name, body)
+                body = '%s { handle: %s }' % (self.__return_type.struct_name, body)
             gen.println('%sunsafe { %s }' % (self._strings, body))
         gen.println('}')
 
@@ -1142,7 +1142,7 @@ class Function(object):
         if self.__return_type.is_string:
             return ' -> ~str'
         if self.__return_type.is_class:
-            return ' -> @%s' % self.__return_type.struct_name
+            return ' -> %s' % self.__return_type.struct_name
         return ' -> %s' % self.__return_type
 
 
@@ -1201,7 +1201,7 @@ class Arg(object):
 
 # Function style type macros
 def TArrayObjectOutVoid(args):
-    return '*mut c_void'#'~[@%s]' % args # it would be **c_void ?
+    return '*mut c_void'#'~[%s]' % args # it would be **c_void ?
 
 
 class Type(object):

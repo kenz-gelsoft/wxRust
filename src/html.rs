@@ -8,8 +8,8 @@ impl _wxHtmlCell for wxHtmlCell {}
 impl _wxObject for wxHtmlCell { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlCell {
-    pub fn from(handle: *mut c_void) -> @wxHtmlCell { @wxHtmlCell { handle: handle } }
-    pub fn null() -> @wxHtmlCell { wxHtmlCell::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlCell { wxHtmlCell { handle: handle } }
+    pub fn null() -> wxHtmlCell { wxHtmlCell::from(0 as *mut c_void) }
     
 }
 
@@ -22,8 +22,8 @@ impl _wxHtmlCell for wxHtmlColourCell {}
 impl _wxObject for wxHtmlColourCell { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlColourCell {
-    pub fn from(handle: *mut c_void) -> @wxHtmlColourCell { @wxHtmlColourCell { handle: handle } }
-    pub fn null() -> @wxHtmlColourCell { wxHtmlColourCell::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlColourCell { wxHtmlColourCell { handle: handle } }
+    pub fn null() -> wxHtmlColourCell { wxHtmlColourCell::from(0 as *mut c_void) }
     
 }
 
@@ -36,8 +36,8 @@ impl _wxHtmlCell for wxHtmlContainerCell {}
 impl _wxObject for wxHtmlContainerCell { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlContainerCell {
-    pub fn from(handle: *mut c_void) -> @wxHtmlContainerCell { @wxHtmlContainerCell { handle: handle } }
-    pub fn null() -> @wxHtmlContainerCell { wxHtmlContainerCell::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlContainerCell { wxHtmlContainerCell { handle: handle } }
+    pub fn null() -> wxHtmlContainerCell { wxHtmlContainerCell::from(0 as *mut c_void) }
     
 }
 
@@ -49,8 +49,8 @@ impl _wxHtmlDCRenderer for wxHtmlDCRenderer {}
 impl _wxObject for wxHtmlDCRenderer { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlDCRenderer {
-    pub fn from(handle: *mut c_void) -> @wxHtmlDCRenderer { @wxHtmlDCRenderer { handle: handle } }
-    pub fn null() -> @wxHtmlDCRenderer { wxHtmlDCRenderer::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlDCRenderer { wxHtmlDCRenderer { handle: handle } }
+    pub fn null() -> wxHtmlDCRenderer { wxHtmlDCRenderer::from(0 as *mut c_void) }
     
 }
 
@@ -62,8 +62,8 @@ impl _wxHtmlEasyPrinting for wxHtmlEasyPrinting {}
 impl _wxObject for wxHtmlEasyPrinting { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlEasyPrinting {
-    pub fn from(handle: *mut c_void) -> @wxHtmlEasyPrinting { @wxHtmlEasyPrinting { handle: handle } }
-    pub fn null() -> @wxHtmlEasyPrinting { wxHtmlEasyPrinting::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlEasyPrinting { wxHtmlEasyPrinting { handle: handle } }
+    pub fn null() -> wxHtmlEasyPrinting { wxHtmlEasyPrinting::from(0 as *mut c_void) }
     
 }
 
@@ -75,8 +75,8 @@ impl _wxHtmlFilter for wxHtmlFilter {}
 impl _wxObject for wxHtmlFilter { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlFilter {
-    pub fn from(handle: *mut c_void) -> @wxHtmlFilter { @wxHtmlFilter { handle: handle } }
-    pub fn null() -> @wxHtmlFilter { wxHtmlFilter::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlFilter { wxHtmlFilter { handle: handle } }
+    pub fn null() -> wxHtmlFilter { wxHtmlFilter::from(0 as *mut c_void) }
     
 }
 
@@ -89,13 +89,13 @@ impl _wxHelpControllerBase for wxHtmlHelpController {}
 impl _wxObject for wxHtmlHelpController { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlHelpController {
-    pub fn from(handle: *mut c_void) -> @wxHtmlHelpController { @wxHtmlHelpController { handle: handle } }
-    pub fn null() -> @wxHtmlHelpController { wxHtmlHelpController::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlHelpController { wxHtmlHelpController { handle: handle } }
+    pub fn null() -> wxHtmlHelpController { wxHtmlHelpController::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_style: c_int) -> @wxHtmlHelpController {
-        unsafe { @wxHtmlHelpController { handle: wxHtmlHelpController_Create(_style) } }
+    pub fn new(_style: c_int) -> wxHtmlHelpController {
+        unsafe { wxHtmlHelpController { handle: wxHtmlHelpController_Create(_style) } }
     }
 }
 
@@ -143,8 +143,8 @@ pub trait _wxHtmlHelpController : _wxHelpControllerBase {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getFrame(&self) -> @wxFrame {
-        unsafe { @wxFrame { handle: wxHtmlHelpController_GetFrame(self.handle()) } }
+    fn getFrame(&self) -> wxFrame {
+        unsafe { wxFrame { handle: wxHtmlHelpController_GetFrame(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -221,8 +221,8 @@ impl _wxHtmlHelpData for wxHtmlHelpData {}
 impl _wxObject for wxHtmlHelpData { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlHelpData {
-    pub fn from(handle: *mut c_void) -> @wxHtmlHelpData { @wxHtmlHelpData { handle: handle } }
-    pub fn null() -> @wxHtmlHelpData { wxHtmlHelpData::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlHelpData { wxHtmlHelpData { handle: handle } }
+    pub fn null() -> wxHtmlHelpData { wxHtmlHelpData::from(0 as *mut c_void) }
     
 }
 
@@ -238,8 +238,8 @@ impl _wxEvtHandler for wxHtmlHelpFrame {}
 impl _wxObject for wxHtmlHelpFrame { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlHelpFrame {
-    pub fn from(handle: *mut c_void) -> @wxHtmlHelpFrame { @wxHtmlHelpFrame { handle: handle } }
-    pub fn null() -> @wxHtmlHelpFrame { wxHtmlHelpFrame::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlHelpFrame { wxHtmlHelpFrame { handle: handle } }
+    pub fn null() -> wxHtmlHelpFrame { wxHtmlHelpFrame::from(0 as *mut c_void) }
     
 }
 
@@ -251,8 +251,8 @@ impl _wxHtmlLinkInfo for wxHtmlLinkInfo {}
 impl _wxObject for wxHtmlLinkInfo { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlLinkInfo {
-    pub fn from(handle: *mut c_void) -> @wxHtmlLinkInfo { @wxHtmlLinkInfo { handle: handle } }
-    pub fn null() -> @wxHtmlLinkInfo { wxHtmlLinkInfo::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlLinkInfo { wxHtmlLinkInfo { handle: handle } }
+    pub fn null() -> wxHtmlLinkInfo { wxHtmlLinkInfo::from(0 as *mut c_void) }
     
 }
 
@@ -264,8 +264,8 @@ impl _wxHtmlParser for wxHtmlParser {}
 impl _wxObject for wxHtmlParser { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlParser {
-    pub fn from(handle: *mut c_void) -> @wxHtmlParser { @wxHtmlParser { handle: handle } }
-    pub fn null() -> @wxHtmlParser { wxHtmlParser::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlParser { wxHtmlParser { handle: handle } }
+    pub fn null() -> wxHtmlParser { wxHtmlParser::from(0 as *mut c_void) }
     
 }
 
@@ -278,8 +278,8 @@ impl _wxPrintout for wxHtmlPrintout {}
 impl _wxObject for wxHtmlPrintout { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlPrintout {
-    pub fn from(handle: *mut c_void) -> @wxHtmlPrintout { @wxHtmlPrintout { handle: handle } }
-    pub fn null() -> @wxHtmlPrintout { wxHtmlPrintout::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlPrintout { wxHtmlPrintout { handle: handle } }
+    pub fn null() -> wxHtmlPrintout { wxHtmlPrintout::from(0 as *mut c_void) }
     
 }
 
@@ -291,8 +291,8 @@ impl _wxHtmlTag for wxHtmlTag {}
 impl _wxObject for wxHtmlTag { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlTag {
-    pub fn from(handle: *mut c_void) -> @wxHtmlTag { @wxHtmlTag { handle: handle } }
-    pub fn null() -> @wxHtmlTag { wxHtmlTag::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlTag { wxHtmlTag { handle: handle } }
+    pub fn null() -> wxHtmlTag { wxHtmlTag::from(0 as *mut c_void) }
     
 }
 
@@ -304,8 +304,8 @@ impl _wxHtmlTagHandler for wxHtmlTagHandler {}
 impl _wxObject for wxHtmlTagHandler { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlTagHandler {
-    pub fn from(handle: *mut c_void) -> @wxHtmlTagHandler { @wxHtmlTagHandler { handle: handle } }
-    pub fn null() -> @wxHtmlTagHandler { wxHtmlTagHandler::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlTagHandler { wxHtmlTagHandler { handle: handle } }
+    pub fn null() -> wxHtmlTagHandler { wxHtmlTagHandler::from(0 as *mut c_void) }
     
 }
 
@@ -318,8 +318,8 @@ impl _wxModule for wxHtmlTagsModule {}
 impl _wxObject for wxHtmlTagsModule { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlTagsModule {
-    pub fn from(handle: *mut c_void) -> @wxHtmlTagsModule { @wxHtmlTagsModule { handle: handle } }
-    pub fn null() -> @wxHtmlTagsModule { wxHtmlTagsModule::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlTagsModule { wxHtmlTagsModule { handle: handle } }
+    pub fn null() -> wxHtmlTagsModule { wxHtmlTagsModule::from(0 as *mut c_void) }
     
 }
 
@@ -332,8 +332,8 @@ impl _wxHtmlCell for wxHtmlWidgetCell {}
 impl _wxObject for wxHtmlWidgetCell { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlWidgetCell {
-    pub fn from(handle: *mut c_void) -> @wxHtmlWidgetCell { @wxHtmlWidgetCell { handle: handle } }
-    pub fn null() -> @wxHtmlWidgetCell { wxHtmlWidgetCell::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlWidgetCell { wxHtmlWidgetCell { handle: handle } }
+    pub fn null() -> wxHtmlWidgetCell { wxHtmlWidgetCell::from(0 as *mut c_void) }
     
 }
 
@@ -346,8 +346,8 @@ impl _wxHtmlParser for wxHtmlWinParser {}
 impl _wxObject for wxHtmlWinParser { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlWinParser {
-    pub fn from(handle: *mut c_void) -> @wxHtmlWinParser { @wxHtmlWinParser { handle: handle } }
-    pub fn null() -> @wxHtmlWinParser { wxHtmlWinParser::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlWinParser { wxHtmlWinParser { handle: handle } }
+    pub fn null() -> wxHtmlWinParser { wxHtmlWinParser::from(0 as *mut c_void) }
     
 }
 
@@ -360,8 +360,8 @@ impl _wxHtmlTagHandler for wxHtmlWinTagHandler {}
 impl _wxObject for wxHtmlWinTagHandler { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlWinTagHandler {
-    pub fn from(handle: *mut c_void) -> @wxHtmlWinTagHandler { @wxHtmlWinTagHandler { handle: handle } }
-    pub fn null() -> @wxHtmlWinTagHandler { wxHtmlWinTagHandler::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlWinTagHandler { wxHtmlWinTagHandler { handle: handle } }
+    pub fn null() -> wxHtmlWinTagHandler { wxHtmlWinTagHandler::from(0 as *mut c_void) }
     
 }
 
@@ -377,14 +377,14 @@ impl _wxEvtHandler for wxHtmlWindow {}
 impl _wxObject for wxHtmlWindow { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxHtmlWindow {
-    pub fn from(handle: *mut c_void) -> @wxHtmlWindow { @wxHtmlWindow { handle: handle } }
-    pub fn null() -> @wxHtmlWindow { wxHtmlWindow::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxHtmlWindow { wxHtmlWindow { handle: handle } }
+    pub fn null() -> wxHtmlWindow { wxHtmlWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> @wxHtmlWindow {
+    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> wxHtmlWindow {
         let _txt = wxT(_txt);
-        unsafe { @wxHtmlWindow { handle: wxHtmlWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.handle()) } }
+        unsafe { wxHtmlWindow { handle: wxHtmlWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.handle()) } }
     }
 }
 
@@ -397,8 +397,8 @@ pub trait _wxHtmlWindow : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getInternalRepresentation(&self) -> @wxHtmlContainerCell {
-        unsafe { @wxHtmlContainerCell { handle: wxHtmlWindow_GetInternalRepresentation(self.handle()) } }
+    fn getInternalRepresentation(&self) -> wxHtmlContainerCell {
+        unsafe { wxHtmlContainerCell { handle: wxHtmlWindow_GetInternalRepresentation(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -417,8 +417,8 @@ pub trait _wxHtmlWindow : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getRelatedFrame(&self) -> @wxFrame {
-        unsafe { @wxFrame { handle: wxHtmlWindow_GetRelatedFrame(self.handle()) } }
+    fn getRelatedFrame(&self) -> wxFrame {
+        unsafe { wxFrame { handle: wxHtmlWindow_GetRelatedFrame(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -501,21 +501,21 @@ impl _wxEvent for wxcHtmlEvent {}
 impl _wxObject for wxcHtmlEvent { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxcHtmlEvent {
-    pub fn from(handle: *mut c_void) -> @wxcHtmlEvent { @wxcHtmlEvent { handle: handle } }
-    pub fn null() -> @wxcHtmlEvent { wxcHtmlEvent::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxcHtmlEvent { wxcHtmlEvent { handle: handle } }
+    pub fn null() -> wxcHtmlEvent { wxcHtmlEvent::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxcHtmlEvent : _wxCommandEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getMouseEvent(&self) -> @wxMouseEvent {
-        unsafe { @wxMouseEvent { handle: wxcHtmlEvent_GetMouseEvent(self.handle()) } }
+    fn getMouseEvent(&self) -> wxMouseEvent {
+        unsafe { wxMouseEvent { handle: wxcHtmlEvent_GetMouseEvent(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getHtmlCell(&self) -> @wxHtmlCell {
-        unsafe { @wxHtmlCell { handle: wxcHtmlEvent_GetHtmlCell(self.handle()) } }
+    fn getHtmlCell(&self) -> wxHtmlCell {
+        unsafe { wxHtmlCell { handle: wxcHtmlEvent_GetHtmlCell(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -534,8 +534,8 @@ pub trait _wxcHtmlEvent : _wxCommandEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getLogicalPosition(&self) -> @wxPoint {
-        unsafe { @wxPoint { handle: wxcHtmlEvent_GetLogicalPosition(self.handle()) } }
+    fn getLogicalPosition(&self) -> wxPoint {
+        unsafe { wxPoint { handle: wxcHtmlEvent_GetLogicalPosition(self.handle()) } }
     }
 }
 
@@ -549,14 +549,14 @@ impl _wxEvtHandler for wxcHtmlWindow {}
 impl _wxObject for wxcHtmlWindow { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxcHtmlWindow {
-    pub fn from(handle: *mut c_void) -> @wxcHtmlWindow { @wxcHtmlWindow { handle: handle } }
-    pub fn null() -> @wxcHtmlWindow { wxcHtmlWindow::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxcHtmlWindow { wxcHtmlWindow { handle: handle } }
+    pub fn null() -> wxcHtmlWindow { wxcHtmlWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> @wxcHtmlWindow {
+    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> wxcHtmlWindow {
         let _txt = wxT(_txt);
-        unsafe { @wxcHtmlWindow { handle: wxcHtmlWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.handle()) } }
+        unsafe { wxcHtmlWindow { handle: wxcHtmlWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.handle()) } }
     }
 }
 

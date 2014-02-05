@@ -1,6 +1,5 @@
 #[feature(globs)];
 #[feature(macro_rules)];
-#[feature(managed_boxes)];
 
 #[link_args="-lwxc"];
 
@@ -26,35 +25,35 @@ fn wx_main() {
     frame.asFrame().raise();
 }
 
-struct MyFrame { base: @wxFrame }
+struct MyFrame { base: wxFrame }
 impl MyFrame {
     fn new() -> MyFrame {
-        let frame = wxFrame::new(wxWindow::null(), wxID_ANY, "Hello, wxRust!", -1, -1, -1, -1, wxDEFAULT_FRAME_STYLE);
+        let frame = wxFrame::new(&wxWindow::null(), wxID_ANY, "Hello, wxRust!", -1, -1, -1, -1, wxDEFAULT_FRAME_STYLE);
         let menubar = MyMenuBar::new();
-        frame.setMenuBar(menubar.asMenuBar());
+        frame.setMenuBar(&menubar.asMenuBar());
         
-        MyButton::new(frame);
+        MyButton::new(&frame);
 
         MyFrame { base: frame }
     }
-    fn asFrame(&self) -> @wxFrame {
+    fn asFrame(&self) -> wxFrame {
         return self.base;
     }
 }
 
-struct MyMenuBar { base: @wxMenuBar }
+struct MyMenuBar { base: wxMenuBar }
 impl MyMenuBar {
     fn new() -> MyMenuBar {
         let menubar = wxMenuBar::new(0);
         
         let fileMenu = wxMenu::new("", 0);
-        let fileNew = wxMenuItem::newEx(wxID_ANY, "New", "Create a new file.", 0, wxMenu::null());
-        fileMenu.appendItem(fileNew);
+        let fileNew = wxMenuItem::newEx(wxID_ANY, "New", "Create a new file.", 0, &wxMenu::null());
+        fileMenu.appendItem(&fileNew);
 
-        menubar.append(fileMenu, "File");
+        menubar.append(&fileMenu, "File");
         MyMenuBar { base: menubar }
     }
-    fn asMenuBar(&self) -> @wxMenuBar {
+    fn asMenuBar(&self) -> wxMenuBar {
         return self.base;
     }
 }
@@ -68,11 +67,11 @@ fn MyButton_clicked(fun: *mut c_void, data: *mut c_void, evt: *mut c_void) {
 
     println!("hello!");
     let parent = wxWindow::from(data);
-    let msgDlg = wxMessageDialog::new(parent, "Pushed!!", "The Button", wxOK);
+    let msgDlg = wxMessageDialog::new(&parent, "Pushed!!", "The Button", wxOK);
     msgDlg.showModal();
 }
 
-struct MyButton(@wxButton);
+struct MyButton(wxButton);
 impl MyButton {
     fn new<T: _wxWindow>(parent: &T) -> MyButton {
         let button = wxButton::new(parent, wxID_ANY, "Push me!", 10, 10, 50, 30, 0);
