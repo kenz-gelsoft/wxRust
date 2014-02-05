@@ -9,21 +9,21 @@ impl _wxGridTableBase for ELJGridTable {}
 impl _wxObject for ELJGridTable { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl ELJGridTable {
-    pub fn from(handle: *mut c_void) -> @ELJGridTable { @ELJGridTable { handle: handle } }
-    pub fn null() -> @ELJGridTable { ELJGridTable::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> ELJGridTable { ELJGridTable { handle: handle } }
+    pub fn null() -> ELJGridTable { ELJGridTable::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_obj: *mut c_void, _EifGetNumberRows: *mut c_void, _EifGetNumberCols: *mut c_void, _EifGetValue: *mut c_void, _EifSetValue: *mut c_void, _EifIsEmptyCell: *mut c_void, _EifClear: *mut c_void, _EifInsertRows: *mut c_void, _EifAppendRows: *mut c_void, _EifDeleteRows: *mut c_void, _EifInsertCols: *mut c_void, _EifAppendCols: *mut c_void, _EifDeleteCols: *mut c_void, _EifSetRowLabelValue: *mut c_void, _EifSetColLabelValue: *mut c_void, _EifGetRowLabelValue: *mut c_void, _EifGetColLabelValue: *mut c_void) -> @ELJGridTable {
-        unsafe { @ELJGridTable { handle: ELJGridTable_Create(_obj, _EifGetNumberRows, _EifGetNumberCols, _EifGetValue, _EifSetValue, _EifIsEmptyCell, _EifClear, _EifInsertRows, _EifAppendRows, _EifDeleteRows, _EifInsertCols, _EifAppendCols, _EifDeleteCols, _EifSetRowLabelValue, _EifSetColLabelValue, _EifGetRowLabelValue, _EifGetColLabelValue) } }
+    pub fn new(_obj: *mut c_void, _EifGetNumberRows: *mut c_void, _EifGetNumberCols: *mut c_void, _EifGetValue: *mut c_void, _EifSetValue: *mut c_void, _EifIsEmptyCell: *mut c_void, _EifClear: *mut c_void, _EifInsertRows: *mut c_void, _EifAppendRows: *mut c_void, _EifDeleteRows: *mut c_void, _EifInsertCols: *mut c_void, _EifAppendCols: *mut c_void, _EifDeleteCols: *mut c_void, _EifSetRowLabelValue: *mut c_void, _EifSetColLabelValue: *mut c_void, _EifGetRowLabelValue: *mut c_void, _EifGetColLabelValue: *mut c_void) -> ELJGridTable {
+        unsafe { ELJGridTable { handle: ELJGridTable_Create(_obj, _EifGetNumberRows, _EifGetNumberCols, _EifGetValue, _EifSetValue, _EifIsEmptyCell, _EifClear, _EifInsertRows, _EifAppendRows, _EifDeleteRows, _EifInsertCols, _EifAppendCols, _EifDeleteCols, _EifSetRowLabelValue, _EifSetColLabelValue, _EifGetRowLabelValue, _EifGetColLabelValue) } }
     }
 }
 
 pub trait _ELJGridTable : _wxGridTableBase {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getView(&self) -> @wxView {
-        unsafe { @wxView { handle: ELJGridTable_GetView(self.handle()) } }
+    fn getView(&self) -> wxView {
+        unsafe { wxView { handle: ELJGridTable_GetView(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -38,13 +38,13 @@ impl _wxEvent for wxCalculateLayoutEvent {}
 impl _wxObject for wxCalculateLayoutEvent { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxCalculateLayoutEvent {
-    pub fn from(handle: *mut c_void) -> @wxCalculateLayoutEvent { @wxCalculateLayoutEvent { handle: handle } }
-    pub fn null() -> @wxCalculateLayoutEvent { wxCalculateLayoutEvent::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxCalculateLayoutEvent { wxCalculateLayoutEvent { handle: handle } }
+    pub fn null() -> wxCalculateLayoutEvent { wxCalculateLayoutEvent::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(id: c_int) -> @wxCalculateLayoutEvent {
-        unsafe { @wxCalculateLayoutEvent { handle: wxCalculateLayoutEvent_Create(id) } }
+    pub fn new(id: c_int) -> wxCalculateLayoutEvent {
+        unsafe { wxCalculateLayoutEvent { handle: wxCalculateLayoutEvent_Create(id) } }
     }
 }
 
@@ -56,8 +56,8 @@ pub trait _wxCalculateLayoutEvent : _wxEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getRect(&self) -> @wxRect {
-        unsafe { @wxRect { handle: wxCalculateLayoutEvent_GetRect(self.handle()) } }
+    fn getRect(&self) -> wxRect {
+        unsafe { wxRect { handle: wxCalculateLayoutEvent_GetRect(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -79,13 +79,13 @@ impl _wxEvtHandler for wxCalendarCtrl {}
 impl _wxObject for wxCalendarCtrl { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxCalendarCtrl {
-    pub fn from(handle: *mut c_void) -> @wxCalendarCtrl { @wxCalendarCtrl { handle: handle } }
-    pub fn null() -> @wxCalendarCtrl { wxCalendarCtrl::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxCalendarCtrl { wxCalendarCtrl { handle: handle } }
+    pub fn null() -> wxCalendarCtrl { wxCalendarCtrl::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow, U: _wxDateTime>(_prt: &T, _id: c_int, _dat: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxCalendarCtrl {
-        unsafe { @wxCalendarCtrl { handle: wxCalendarCtrl_Create(_prt.handle(), _id, _dat.handle(), _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: _wxWindow, U: _wxDateTime>(_prt: &T, _id: c_int, _dat: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxCalendarCtrl {
+        unsafe { wxCalendarCtrl { handle: wxCalendarCtrl_Create(_prt.handle(), _id, _dat.handle(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
@@ -186,18 +186,18 @@ pub struct wxCalendarDateAttr { handle: *mut c_void }
 impl _wxCalendarDateAttr for wxCalendarDateAttr { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxCalendarDateAttr {
-    pub fn from(handle: *mut c_void) -> @wxCalendarDateAttr { @wxCalendarDateAttr { handle: handle } }
-    pub fn null() -> @wxCalendarDateAttr { wxCalendarDateAttr::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxCalendarDateAttr { wxCalendarDateAttr { handle: handle } }
+    pub fn null() -> wxCalendarDateAttr { wxCalendarDateAttr::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_ctxt: *mut c_void, _cbck: *mut c_void, _cbrd: *mut c_void, _fnt: *mut c_void, _brd: c_int) -> @wxCalendarDateAttr {
-        unsafe { @wxCalendarDateAttr { handle: wxCalendarDateAttr_Create(_ctxt, _cbck, _cbrd, _fnt, _brd) } }
+    pub fn new(_ctxt: *mut c_void, _cbck: *mut c_void, _cbrd: *mut c_void, _fnt: *mut c_void, _brd: c_int) -> wxCalendarDateAttr {
+        unsafe { wxCalendarDateAttr { handle: wxCalendarDateAttr_Create(_ctxt, _cbck, _cbrd, _fnt, _brd) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newDefault() -> @wxCalendarDateAttr {
-        unsafe { @wxCalendarDateAttr { handle: wxCalendarDateAttr_CreateDefault() } }
+    pub fn newDefault() -> wxCalendarDateAttr {
+        unsafe { wxCalendarDateAttr { handle: wxCalendarDateAttr_CreateDefault() } }
     }
 }
 
@@ -303,8 +303,8 @@ impl _wxEvent for wxCalendarEvent {}
 impl _wxObject for wxCalendarEvent { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxCalendarEvent {
-    pub fn from(handle: *mut c_void) -> @wxCalendarEvent { @wxCalendarEvent { handle: handle } }
-    pub fn null() -> @wxCalendarEvent { wxCalendarEvent::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxCalendarEvent { wxCalendarEvent { handle: handle } }
+    pub fn null() -> wxCalendarEvent { wxCalendarEvent::from(0 as *mut c_void) }
     
 }
 
@@ -329,8 +329,8 @@ impl _wxEvtHandler for wxEditableListBox {}
 impl _wxObject for wxEditableListBox { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxEditableListBox {
-    pub fn from(handle: *mut c_void) -> @wxEditableListBox { @wxEditableListBox { handle: handle } }
-    pub fn null() -> @wxEditableListBox { wxEditableListBox::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxEditableListBox { wxEditableListBox { handle: handle } }
+    pub fn null() -> wxEditableListBox { wxEditableListBox::from(0 as *mut c_void) }
     
 }
 
@@ -346,13 +346,13 @@ impl _wxEvtHandler for wxGrid {}
 impl _wxObject for wxGrid { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGrid {
-    pub fn from(handle: *mut c_void) -> @wxGrid { @wxGrid { handle: handle } }
-    pub fn null() -> @wxGrid { wxGrid::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGrid { wxGrid { handle: handle } }
+    pub fn null() -> wxGrid { wxGrid::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> @wxGrid {
-        unsafe { @wxGrid { handle: wxGrid_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxGrid {
+        unsafe { wxGrid { handle: wxGrid_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
@@ -399,8 +399,8 @@ pub trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn blockToDeviceRect(&self, top: c_int, left: c_int, bottom: c_int, right: c_int) -> @wxRect {
-        unsafe { @wxRect { handle: wxGrid_BlockToDeviceRect(self.handle(), top, left, bottom, right) } }
+    fn blockToDeviceRect(&self, top: c_int, left: c_int, bottom: c_int, right: c_int) -> wxRect {
+        unsafe { wxRect { handle: wxGrid_BlockToDeviceRect(self.handle(), top, left, bottom, right) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -424,8 +424,8 @@ pub trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn cellToRect(&self, row: c_int, col: c_int) -> @wxRect {
-        unsafe { @wxRect { handle: wxGrid_CellToRect(self.handle(), row, col) } }
+    fn cellToRect(&self, row: c_int, col: c_int) -> wxRect {
+        unsafe { wxRect { handle: wxGrid_CellToRect(self.handle(), row, col) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -575,8 +575,8 @@ pub trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getCellEditor(&self, row: c_int, col: c_int) -> @wxGridCellEditor {
-        unsafe { @wxGridCellEditor { handle: wxGrid_GetCellEditor(self.handle(), row, col) } }
+    fn getCellEditor(&self, row: c_int, col: c_int) -> wxGridCellEditor {
+        unsafe { wxGridCellEditor { handle: wxGrid_GetCellEditor(self.handle(), row, col) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -590,8 +590,8 @@ pub trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getCellRenderer(&self, row: c_int, col: c_int) -> @wxGridCellRenderer {
-        unsafe { @wxGridCellRenderer { handle: wxGrid_GetCellRenderer(self.handle(), row, col) } }
+    fn getCellRenderer(&self, row: c_int, col: c_int) -> wxGridCellRenderer {
+        unsafe { wxGridCellRenderer { handle: wxGrid_GetCellRenderer(self.handle(), row, col) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -655,35 +655,35 @@ pub trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDefaultEditor(&self) -> @wxGridCellEditor {
-        unsafe { @wxGridCellEditor { handle: wxGrid_GetDefaultEditor(self.handle()) } }
+    fn getDefaultEditor(&self) -> wxGridCellEditor {
+        unsafe { wxGridCellEditor { handle: wxGrid_GetDefaultEditor(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDefaultEditorForCell(&self, row: c_int, col: c_int) -> @wxGridCellEditor {
-        unsafe { @wxGridCellEditor { handle: wxGrid_GetDefaultEditorForCell(self.handle(), row, col) } }
+    fn getDefaultEditorForCell(&self, row: c_int, col: c_int) -> wxGridCellEditor {
+        unsafe { wxGridCellEditor { handle: wxGrid_GetDefaultEditorForCell(self.handle(), row, col) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDefaultEditorForType(&self, typeName: &str) -> @wxGridCellEditor {
+    fn getDefaultEditorForType(&self, typeName: &str) -> wxGridCellEditor {
         let typeName = wxT(typeName);
-        unsafe { @wxGridCellEditor { handle: wxGrid_GetDefaultEditorForType(self.handle(), typeName.handle()) } }
+        unsafe { wxGridCellEditor { handle: wxGrid_GetDefaultEditorForType(self.handle(), typeName.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDefaultRenderer(&self) -> @wxGridCellRenderer {
-        unsafe { @wxGridCellRenderer { handle: wxGrid_GetDefaultRenderer(self.handle()) } }
+    fn getDefaultRenderer(&self) -> wxGridCellRenderer {
+        unsafe { wxGridCellRenderer { handle: wxGrid_GetDefaultRenderer(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDefaultRendererForCell(&self, row: c_int, col: c_int) -> @wxGridCellRenderer {
-        unsafe { @wxGridCellRenderer { handle: wxGrid_GetDefaultRendererForCell(self.handle(), row, col) } }
+    fn getDefaultRendererForCell(&self, row: c_int, col: c_int) -> wxGridCellRenderer {
+        unsafe { wxGridCellRenderer { handle: wxGrid_GetDefaultRendererForCell(self.handle(), row, col) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDefaultRendererForType(&self, typeName: &str) -> @wxGridCellRenderer {
+    fn getDefaultRendererForType(&self, typeName: &str) -> wxGridCellRenderer {
         let typeName = wxT(typeName);
-        unsafe { @wxGridCellRenderer { handle: wxGrid_GetDefaultRendererForType(self.handle(), typeName.handle()) } }
+        unsafe { wxGridCellRenderer { handle: wxGrid_GetDefaultRendererForType(self.handle(), typeName.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -767,8 +767,8 @@ pub trait _wxGrid : _wxScrolledWindow {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getTable(&self) -> @wxGridTableBase {
-        unsafe { @wxGridTableBase { handle: wxGrid_GetTable(self.handle()) } }
+    fn getTable(&self) -> wxGridTableBase {
+        unsafe { wxGridTableBase { handle: wxGrid_GetTable(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1222,13 +1222,13 @@ pub struct wxGridCellAttr { handle: *mut c_void }
 impl _wxGridCellAttr for wxGridCellAttr { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellAttr {
-    pub fn from(handle: *mut c_void) -> @wxGridCellAttr { @wxGridCellAttr { handle: handle } }
-    pub fn null() -> @wxGridCellAttr { wxGridCellAttr::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellAttr { wxGridCellAttr { handle: handle } }
+    pub fn null() -> wxGridCellAttr { wxGridCellAttr::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn ctor() -> @wxGridCellAttr {
-        unsafe { @wxGridCellAttr { handle: wxGridCellAttr_Ctor() } }
+    pub fn ctor() -> wxGridCellAttr {
+        unsafe { wxGridCellAttr { handle: wxGridCellAttr_Ctor() } }
     }
 }
 
@@ -1252,8 +1252,8 @@ pub trait _wxGridCellAttr {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getEditor<T: _wxGrid>(&self, grid: &T, row: c_int, col: c_int) -> @wxGridCellEditor {
-        unsafe { @wxGridCellEditor { handle: wxGridCellAttr_GetEditor(self.handle(), grid.handle(), row, col) } }
+    fn getEditor<T: _wxGrid>(&self, grid: &T, row: c_int, col: c_int) -> wxGridCellEditor {
+        unsafe { wxGridCellEditor { handle: wxGridCellAttr_GetEditor(self.handle(), grid.handle(), row, col) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1262,8 +1262,8 @@ pub trait _wxGridCellAttr {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getRenderer<T: _wxGrid>(&self, grid: &T, row: c_int, col: c_int) -> @wxGridCellRenderer {
-        unsafe { @wxGridCellRenderer { handle: wxGridCellAttr_GetRenderer(self.handle(), grid.handle(), row, col) } }
+    fn getRenderer<T: _wxGrid>(&self, grid: &T, row: c_int, col: c_int) -> wxGridCellRenderer {
+        unsafe { wxGridCellRenderer { handle: wxGridCellAttr_GetRenderer(self.handle(), grid.handle(), row, col) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1358,13 +1358,13 @@ impl _wxGridCellEditor for wxGridCellBoolEditor {}
 impl _wxGridCellWorker for wxGridCellBoolEditor { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellBoolEditor {
-    pub fn from(handle: *mut c_void) -> @wxGridCellBoolEditor { @wxGridCellBoolEditor { handle: handle } }
-    pub fn null() -> @wxGridCellBoolEditor { wxGridCellBoolEditor::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellBoolEditor { wxGridCellBoolEditor { handle: handle } }
+    pub fn null() -> wxGridCellBoolEditor { wxGridCellBoolEditor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn ctor() -> @wxGridCellBoolEditor {
-        unsafe { @wxGridCellBoolEditor { handle: wxGridCellBoolEditor_Ctor() } }
+    pub fn ctor() -> wxGridCellBoolEditor {
+        unsafe { wxGridCellBoolEditor { handle: wxGridCellBoolEditor_Ctor() } }
     }
 }
 
@@ -1377,8 +1377,8 @@ impl _wxGridCellRenderer for wxGridCellBoolRenderer {}
 impl _wxGridCellWorker for wxGridCellBoolRenderer { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellBoolRenderer {
-    pub fn from(handle: *mut c_void) -> @wxGridCellBoolRenderer { @wxGridCellBoolRenderer { handle: handle } }
-    pub fn null() -> @wxGridCellBoolRenderer { wxGridCellBoolRenderer::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellBoolRenderer { wxGridCellBoolRenderer { handle: handle } }
+    pub fn null() -> wxGridCellBoolRenderer { wxGridCellBoolRenderer::from(0 as *mut c_void) }
     
 }
 
@@ -1391,13 +1391,13 @@ impl _wxGridCellEditor for wxGridCellChoiceEditor {}
 impl _wxGridCellWorker for wxGridCellChoiceEditor { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellChoiceEditor {
-    pub fn from(handle: *mut c_void) -> @wxGridCellChoiceEditor { @wxGridCellChoiceEditor { handle: handle } }
-    pub fn null() -> @wxGridCellChoiceEditor { wxGridCellChoiceEditor::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellChoiceEditor { wxGridCellChoiceEditor { handle: handle } }
+    pub fn null() -> wxGridCellChoiceEditor { wxGridCellChoiceEditor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn ctor(count: c_int, choices: *mut *mut c_char, allowOthers: c_int) -> @wxGridCellChoiceEditor {
-        unsafe { @wxGridCellChoiceEditor { handle: wxGridCellChoiceEditor_Ctor(count, choices, allowOthers) } }
+    pub fn ctor(count: c_int, choices: *mut *mut c_char, allowOthers: c_int) -> wxGridCellChoiceEditor {
+        unsafe { wxGridCellChoiceEditor { handle: wxGridCellChoiceEditor_Ctor(count, choices, allowOthers) } }
     }
 }
 
@@ -1408,13 +1408,13 @@ pub struct wxGridCellCoordsArray { handle: *mut c_void }
 impl _wxGridCellCoordsArray for wxGridCellCoordsArray { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellCoordsArray {
-    pub fn from(handle: *mut c_void) -> @wxGridCellCoordsArray { @wxGridCellCoordsArray { handle: handle } }
-    pub fn null() -> @wxGridCellCoordsArray { wxGridCellCoordsArray::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellCoordsArray { wxGridCellCoordsArray { handle: handle } }
+    pub fn null() -> wxGridCellCoordsArray { wxGridCellCoordsArray::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new() -> @wxGridCellCoordsArray {
-        unsafe { @wxGridCellCoordsArray { handle: wxGridCellCoordsArray_Create() } }
+    pub fn new() -> wxGridCellCoordsArray {
+        unsafe { wxGridCellCoordsArray { handle: wxGridCellCoordsArray_Create() } }
     }
 }
 
@@ -1443,8 +1443,8 @@ impl _wxGridCellEditor for wxGridCellEditor {}
 impl _wxGridCellWorker for wxGridCellEditor { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellEditor {
-    pub fn from(handle: *mut c_void) -> @wxGridCellEditor { @wxGridCellEditor { handle: handle } }
-    pub fn null() -> @wxGridCellEditor { wxGridCellEditor::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellEditor { wxGridCellEditor { handle: handle } }
+    pub fn null() -> wxGridCellEditor { wxGridCellEditor::from(0 as *mut c_void) }
     
 }
 
@@ -1473,8 +1473,8 @@ pub trait _wxGridCellEditor : _wxGridCellWorker {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getControl(&self) -> @wxControl {
-        unsafe { @wxControl { handle: wxGridCellEditor_GetControl(self.handle()) } }
+    fn getControl(&self) -> wxControl {
+        unsafe { wxControl { handle: wxGridCellEditor_GetControl(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1541,13 +1541,13 @@ impl _wxGridCellEditor for wxGridCellFloatEditor {}
 impl _wxGridCellWorker for wxGridCellFloatEditor { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellFloatEditor {
-    pub fn from(handle: *mut c_void) -> @wxGridCellFloatEditor { @wxGridCellFloatEditor { handle: handle } }
-    pub fn null() -> @wxGridCellFloatEditor { wxGridCellFloatEditor::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellFloatEditor { wxGridCellFloatEditor { handle: handle } }
+    pub fn null() -> wxGridCellFloatEditor { wxGridCellFloatEditor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn ctor(width: c_int, precision: c_int) -> @wxGridCellFloatEditor {
-        unsafe { @wxGridCellFloatEditor { handle: wxGridCellFloatEditor_Ctor(width, precision) } }
+    pub fn ctor(width: c_int, precision: c_int) -> wxGridCellFloatEditor {
+        unsafe { wxGridCellFloatEditor { handle: wxGridCellFloatEditor_Ctor(width, precision) } }
     }
 }
 
@@ -1561,8 +1561,8 @@ impl _wxGridCellRenderer for wxGridCellFloatRenderer {}
 impl _wxGridCellWorker for wxGridCellFloatRenderer { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellFloatRenderer {
-    pub fn from(handle: *mut c_void) -> @wxGridCellFloatRenderer { @wxGridCellFloatRenderer { handle: handle } }
-    pub fn null() -> @wxGridCellFloatRenderer { wxGridCellFloatRenderer::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellFloatRenderer { wxGridCellFloatRenderer { handle: handle } }
+    pub fn null() -> wxGridCellFloatRenderer { wxGridCellFloatRenderer::from(0 as *mut c_void) }
     
 }
 
@@ -1576,13 +1576,13 @@ impl _wxGridCellEditor for wxGridCellNumberEditor {}
 impl _wxGridCellWorker for wxGridCellNumberEditor { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellNumberEditor {
-    pub fn from(handle: *mut c_void) -> @wxGridCellNumberEditor { @wxGridCellNumberEditor { handle: handle } }
-    pub fn null() -> @wxGridCellNumberEditor { wxGridCellNumberEditor::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellNumberEditor { wxGridCellNumberEditor { handle: handle } }
+    pub fn null() -> wxGridCellNumberEditor { wxGridCellNumberEditor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn ctor(min: c_int, max: c_int) -> @wxGridCellNumberEditor {
-        unsafe { @wxGridCellNumberEditor { handle: wxGridCellNumberEditor_Ctor(min, max) } }
+    pub fn ctor(min: c_int, max: c_int) -> wxGridCellNumberEditor {
+        unsafe { wxGridCellNumberEditor { handle: wxGridCellNumberEditor_Ctor(min, max) } }
     }
 }
 
@@ -1596,13 +1596,13 @@ impl _wxGridCellRenderer for wxGridCellNumberRenderer {}
 impl _wxGridCellWorker for wxGridCellNumberRenderer { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellNumberRenderer {
-    pub fn from(handle: *mut c_void) -> @wxGridCellNumberRenderer { @wxGridCellNumberRenderer { handle: handle } }
-    pub fn null() -> @wxGridCellNumberRenderer { wxGridCellNumberRenderer::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellNumberRenderer { wxGridCellNumberRenderer { handle: handle } }
+    pub fn null() -> wxGridCellNumberRenderer { wxGridCellNumberRenderer::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn ctor() -> @wxGridCellNumberRenderer {
-        unsafe { @wxGridCellNumberRenderer { handle: wxGridCellNumberRenderer_Ctor() } }
+    pub fn ctor() -> wxGridCellNumberRenderer {
+        unsafe { wxGridCellNumberRenderer { handle: wxGridCellNumberRenderer_Ctor() } }
     }
 }
 
@@ -1616,13 +1616,13 @@ impl _wxGridCellRenderer for wxGridCellAutoWrapStringRenderer {}
 impl _wxGridCellWorker for wxGridCellAutoWrapStringRenderer { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellAutoWrapStringRenderer {
-    pub fn from(handle: *mut c_void) -> @wxGridCellAutoWrapStringRenderer { @wxGridCellAutoWrapStringRenderer { handle: handle } }
-    pub fn null() -> @wxGridCellAutoWrapStringRenderer { wxGridCellAutoWrapStringRenderer::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellAutoWrapStringRenderer { wxGridCellAutoWrapStringRenderer { handle: handle } }
+    pub fn null() -> wxGridCellAutoWrapStringRenderer { wxGridCellAutoWrapStringRenderer::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn ctor() -> @wxGridCellAutoWrapStringRenderer {
-        unsafe { @wxGridCellAutoWrapStringRenderer { handle: wxGridCellAutoWrapStringRenderer_Ctor() } }
+    pub fn ctor() -> wxGridCellAutoWrapStringRenderer {
+        unsafe { wxGridCellAutoWrapStringRenderer { handle: wxGridCellAutoWrapStringRenderer_Ctor() } }
     }
 }
 
@@ -1634,8 +1634,8 @@ impl _wxGridCellRenderer for wxGridCellRenderer {}
 impl _wxGridCellWorker for wxGridCellRenderer { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellRenderer {
-    pub fn from(handle: *mut c_void) -> @wxGridCellRenderer { @wxGridCellRenderer { handle: handle } }
-    pub fn null() -> @wxGridCellRenderer { wxGridCellRenderer::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellRenderer { wxGridCellRenderer { handle: handle } }
+    pub fn null() -> wxGridCellRenderer { wxGridCellRenderer::from(0 as *mut c_void) }
     
 }
 
@@ -1648,8 +1648,8 @@ impl _wxGridCellRenderer for wxGridCellStringRenderer {}
 impl _wxGridCellWorker for wxGridCellStringRenderer { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellStringRenderer {
-    pub fn from(handle: *mut c_void) -> @wxGridCellStringRenderer { @wxGridCellStringRenderer { handle: handle } }
-    pub fn null() -> @wxGridCellStringRenderer { wxGridCellStringRenderer::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellStringRenderer { wxGridCellStringRenderer { handle: handle } }
+    pub fn null() -> wxGridCellStringRenderer { wxGridCellStringRenderer::from(0 as *mut c_void) }
     
 }
 
@@ -1662,13 +1662,13 @@ impl _wxGridCellEditor for wxGridCellTextEditor {}
 impl _wxGridCellWorker for wxGridCellTextEditor { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellTextEditor {
-    pub fn from(handle: *mut c_void) -> @wxGridCellTextEditor { @wxGridCellTextEditor { handle: handle } }
-    pub fn null() -> @wxGridCellTextEditor { wxGridCellTextEditor::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellTextEditor { wxGridCellTextEditor { handle: handle } }
+    pub fn null() -> wxGridCellTextEditor { wxGridCellTextEditor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn ctor() -> @wxGridCellTextEditor {
-        unsafe { @wxGridCellTextEditor { handle: wxGridCellTextEditor_Ctor() } }
+    pub fn ctor() -> wxGridCellTextEditor {
+        unsafe { wxGridCellTextEditor { handle: wxGridCellTextEditor_Ctor() } }
     }
 }
 
@@ -1679,8 +1679,8 @@ pub struct wxGridCellWorker { handle: *mut c_void }
 impl _wxGridCellWorker for wxGridCellWorker { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellWorker {
-    pub fn from(handle: *mut c_void) -> @wxGridCellWorker { @wxGridCellWorker { handle: handle } }
-    pub fn null() -> @wxGridCellWorker { wxGridCellWorker::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellWorker { wxGridCellWorker { handle: handle } }
+    pub fn null() -> wxGridCellWorker { wxGridCellWorker::from(0 as *mut c_void) }
     
 }
 
@@ -1696,8 +1696,8 @@ impl _wxEvent for wxGridEditorCreatedEvent {}
 impl _wxObject for wxGridEditorCreatedEvent { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridEditorCreatedEvent {
-    pub fn from(handle: *mut c_void) -> @wxGridEditorCreatedEvent { @wxGridEditorCreatedEvent { handle: handle } }
-    pub fn null() -> @wxGridEditorCreatedEvent { wxGridEditorCreatedEvent::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridEditorCreatedEvent { wxGridEditorCreatedEvent { handle: handle } }
+    pub fn null() -> wxGridEditorCreatedEvent { wxGridEditorCreatedEvent::from(0 as *mut c_void) }
     
 }
 
@@ -1709,8 +1709,8 @@ pub trait _wxGridEditorCreatedEvent : _wxCommandEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getControl(&self) -> @wxControl {
-        unsafe { @wxControl { handle: wxGridEditorCreatedEvent_GetControl(self.handle()) } }
+    fn getControl(&self) -> wxControl {
+        unsafe { wxControl { handle: wxGridEditorCreatedEvent_GetControl(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1742,8 +1742,8 @@ impl _wxEvent for wxGridEvent {}
 impl _wxObject for wxGridEvent { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridEvent {
-    pub fn from(handle: *mut c_void) -> @wxGridEvent { @wxGridEvent { handle: handle } }
-    pub fn null() -> @wxGridEvent { wxGridEvent::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridEvent { wxGridEvent { handle: handle } }
+    pub fn null() -> wxGridEvent { wxGridEvent::from(0 as *mut c_void) }
     
 }
 
@@ -1765,8 +1765,8 @@ pub trait _wxGridEvent : _wxNotifyEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPosition(&self) -> @wxPoint {
-        unsafe { @wxPoint { handle: wxGridEvent_GetPosition(self.handle()) } }
+    fn getPosition(&self) -> wxPoint {
+        unsafe { wxPoint { handle: wxGridEvent_GetPosition(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1798,8 +1798,8 @@ impl _wxEvent for wxGridRangeSelectEvent {}
 impl _wxObject for wxGridRangeSelectEvent { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridRangeSelectEvent {
-    pub fn from(handle: *mut c_void) -> @wxGridRangeSelectEvent { @wxGridRangeSelectEvent { handle: handle } }
-    pub fn null() -> @wxGridRangeSelectEvent { wxGridRangeSelectEvent::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridRangeSelectEvent { wxGridRangeSelectEvent { handle: handle } }
+    pub fn null() -> wxGridRangeSelectEvent { wxGridRangeSelectEvent::from(0 as *mut c_void) }
     
 }
 
@@ -1869,8 +1869,8 @@ impl _wxEvent for wxGridSizeEvent {}
 impl _wxObject for wxGridSizeEvent { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridSizeEvent {
-    pub fn from(handle: *mut c_void) -> @wxGridSizeEvent { @wxGridSizeEvent { handle: handle } }
-    pub fn null() -> @wxGridSizeEvent { wxGridSizeEvent::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridSizeEvent { wxGridSizeEvent { handle: handle } }
+    pub fn null() -> wxGridSizeEvent { wxGridSizeEvent::from(0 as *mut c_void) }
     
 }
 
@@ -1882,8 +1882,8 @@ pub trait _wxGridSizeEvent : _wxNotifyEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPosition(&self) -> @wxPoint {
-        unsafe { @wxPoint { handle: wxGridSizeEvent_GetPosition(self.handle()) } }
+    fn getPosition(&self) -> wxPoint {
+        unsafe { wxPoint { handle: wxGridSizeEvent_GetPosition(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -1912,8 +1912,8 @@ impl _wxGridTableBase for wxGridTableBase {}
 impl _wxObject for wxGridTableBase { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridTableBase {
-    pub fn from(handle: *mut c_void) -> @wxGridTableBase { @wxGridTableBase { handle: handle } }
-    pub fn null() -> @wxGridTableBase { wxGridTableBase::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridTableBase { wxGridTableBase { handle: handle } }
+    pub fn null() -> wxGridTableBase { wxGridTableBase::from(0 as *mut c_void) }
     
 }
 
@@ -1925,8 +1925,8 @@ impl _wxJoystick for wxJoystick {}
 impl _wxObject for wxJoystick { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxJoystick {
-    pub fn from(handle: *mut c_void) -> @wxJoystick { @wxJoystick { handle: handle } }
-    pub fn null() -> @wxJoystick { wxJoystick::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxJoystick { wxJoystick { handle: handle } }
+    pub fn null() -> wxJoystick { wxJoystick::from(0 as *mut c_void) }
     
 }
 
@@ -1938,13 +1938,13 @@ impl _wxLayoutAlgorithm for wxLayoutAlgorithm {}
 impl _wxObject for wxLayoutAlgorithm { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxLayoutAlgorithm {
-    pub fn from(handle: *mut c_void) -> @wxLayoutAlgorithm { @wxLayoutAlgorithm { handle: handle } }
-    pub fn null() -> @wxLayoutAlgorithm { wxLayoutAlgorithm::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxLayoutAlgorithm { wxLayoutAlgorithm { handle: handle } }
+    pub fn null() -> wxLayoutAlgorithm { wxLayoutAlgorithm::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new() -> @wxLayoutAlgorithm {
-        unsafe { @wxLayoutAlgorithm { handle: wxLayoutAlgorithm_Create() } }
+    pub fn new() -> wxLayoutAlgorithm {
+        unsafe { wxLayoutAlgorithm { handle: wxLayoutAlgorithm_Create() } }
     }
 }
 
@@ -1972,13 +1972,13 @@ impl _wxEvent for wxQueryLayoutInfoEvent {}
 impl _wxObject for wxQueryLayoutInfoEvent { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxQueryLayoutInfoEvent {
-    pub fn from(handle: *mut c_void) -> @wxQueryLayoutInfoEvent { @wxQueryLayoutInfoEvent { handle: handle } }
-    pub fn null() -> @wxQueryLayoutInfoEvent { wxQueryLayoutInfoEvent::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxQueryLayoutInfoEvent { wxQueryLayoutInfoEvent { handle: handle } }
+    pub fn null() -> wxQueryLayoutInfoEvent { wxQueryLayoutInfoEvent::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(id: c_int) -> @wxQueryLayoutInfoEvent {
-        unsafe { @wxQueryLayoutInfoEvent { handle: wxQueryLayoutInfoEvent_Create(id) } }
+    pub fn new(id: c_int) -> wxQueryLayoutInfoEvent {
+        unsafe { wxQueryLayoutInfoEvent { handle: wxQueryLayoutInfoEvent_Create(id) } }
     }
 }
 
@@ -2005,8 +2005,8 @@ pub trait _wxQueryLayoutInfoEvent : _wxEvent {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getSize(&self) -> @wxSize {
-        unsafe { @wxSize { handle: wxQueryLayoutInfoEvent_GetSize(self.handle()) } }
+    fn getSize(&self) -> wxSize {
+        unsafe { wxSize { handle: wxQueryLayoutInfoEvent_GetSize(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2041,21 +2041,21 @@ impl _wxEvent for wxSashEvent {}
 impl _wxObject for wxSashEvent { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxSashEvent {
-    pub fn from(handle: *mut c_void) -> @wxSashEvent { @wxSashEvent { handle: handle } }
-    pub fn null() -> @wxSashEvent { wxSashEvent::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxSashEvent { wxSashEvent { handle: handle } }
+    pub fn null() -> wxSashEvent { wxSashEvent::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(id: c_int, edge: c_int) -> @wxSashEvent {
-        unsafe { @wxSashEvent { handle: wxSashEvent_Create(id, edge) } }
+    pub fn new(id: c_int, edge: c_int) -> wxSashEvent {
+        unsafe { wxSashEvent { handle: wxSashEvent_Create(id, edge) } }
     }
 }
 
 pub trait _wxSashEvent : _wxEvent {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getDragRect(&self) -> @wxRect {
-        unsafe { @wxRect { handle: wxSashEvent_GetDragRect(self.handle()) } }
+    fn getDragRect(&self) -> wxRect {
+        unsafe { wxRect { handle: wxSashEvent_GetDragRect(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2092,13 +2092,13 @@ impl _wxEvtHandler for wxSashLayoutWindow {}
 impl _wxObject for wxSashLayoutWindow { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxSashLayoutWindow {
-    pub fn from(handle: *mut c_void) -> @wxSashLayoutWindow { @wxSashLayoutWindow { handle: handle } }
-    pub fn null() -> @wxSashLayoutWindow { wxSashLayoutWindow::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxSashLayoutWindow { wxSashLayoutWindow { handle: handle } }
+    pub fn null() -> wxSashLayoutWindow { wxSashLayoutWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(_par: &T, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> @wxSashLayoutWindow {
-        unsafe { @wxSashLayoutWindow { handle: wxSashLayoutWindow_Create(_par.handle(), _id, _x, _y, _w, _h, _stl) } }
+    pub fn new<T: _wxWindow>(_par: &T, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> wxSashLayoutWindow {
+        unsafe { wxSashLayoutWindow { handle: wxSashLayoutWindow_Create(_par.handle(), _id, _x, _y, _w, _h, _stl) } }
     }
 }
 
@@ -2137,13 +2137,13 @@ impl _wxEvtHandler for wxSashWindow {}
 impl _wxObject for wxSashWindow { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxSashWindow {
-    pub fn from(handle: *mut c_void) -> @wxSashWindow { @wxSashWindow { handle: handle } }
-    pub fn null() -> @wxSashWindow { wxSashWindow::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxSashWindow { wxSashWindow { handle: handle } }
+    pub fn null() -> wxSashWindow { wxSashWindow::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow>(_par: &T, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> @wxSashWindow {
-        unsafe { @wxSashWindow { handle: wxSashWindow_Create(_par.handle(), _id, _x, _y, _w, _h, _stl) } }
+    pub fn new<T: _wxWindow>(_par: &T, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> wxSashWindow {
+        unsafe { wxSashWindow { handle: wxSashWindow_Create(_par.handle(), _id, _x, _y, _w, _h, _stl) } }
     }
 }
 
@@ -2244,8 +2244,8 @@ impl _wxEvtHandler for wxSplashScreen {}
 impl _wxObject for wxSplashScreen { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxSplashScreen {
-    pub fn from(handle: *mut c_void) -> @wxSplashScreen { @wxSplashScreen { handle: handle } }
-    pub fn null() -> @wxSplashScreen { wxSplashScreen::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxSplashScreen { wxSplashScreen { handle: handle } }
+    pub fn null() -> wxSplashScreen { wxSplashScreen::from(0 as *mut c_void) }
     
 }
 
@@ -2258,13 +2258,13 @@ impl _wxEvtHandler for wxTaskBarIcon {}
 impl _wxObject for wxTaskBarIcon { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxTaskBarIcon {
-    pub fn from(handle: *mut c_void) -> @wxTaskBarIcon { @wxTaskBarIcon { handle: handle } }
-    pub fn null() -> @wxTaskBarIcon { wxTaskBarIcon::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxTaskBarIcon { wxTaskBarIcon { handle: handle } }
+    pub fn null() -> wxTaskBarIcon { wxTaskBarIcon::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new() -> @wxTaskBarIcon {
-        unsafe { @wxTaskBarIcon { handle: wxTaskBarIcon_Create() } }
+    pub fn new() -> wxTaskBarIcon {
+        unsafe { wxTaskBarIcon { handle: wxTaskBarIcon_Create() } }
     }
 }
 
@@ -2301,8 +2301,8 @@ pub struct wxTipProvider { handle: *mut c_void }
 impl _wxTipProvider for wxTipProvider { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxTipProvider {
-    pub fn from(handle: *mut c_void) -> @wxTipProvider { @wxTipProvider { handle: handle } }
-    pub fn null() -> @wxTipProvider { wxTipProvider::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxTipProvider { wxTipProvider { handle: handle } }
+    pub fn null() -> wxTipProvider { wxTipProvider::from(0 as *mut c_void) }
     
 }
 
@@ -2320,8 +2320,8 @@ impl _wxEvtHandler for wxWizard {}
 impl _wxObject for wxWizard { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxWizard {
-    pub fn from(handle: *mut c_void) -> @wxWizard { @wxWizard { handle: handle } }
-    pub fn null() -> @wxWizard { wxWizard::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxWizard { wxWizard { handle: handle } }
+    pub fn null() -> wxWizard { wxWizard::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2330,22 +2330,22 @@ impl wxWizard {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWindow, U: _wxBitmap>(_prt: &T, _id: c_int, _txt: &str, _bmp: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int) -> @wxWizard {
+    pub fn new<T: _wxWindow, U: _wxBitmap>(_prt: &T, _id: c_int, _txt: &str, _bmp: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int) -> wxWizard {
         let _txt = wxT(_txt);
-        unsafe { @wxWizard { handle: wxWizard_Create(_prt.handle(), _id, _txt.handle(), _bmp.handle(), _lft, _top, _wdt, _hgt) } }
+        unsafe { wxWizard { handle: wxWizard_Create(_prt.handle(), _id, _txt.handle(), _bmp.handle(), _lft, _top, _wdt, _hgt) } }
     }
 }
 
 pub trait _wxWizard : _wxDialog {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getCurrentPage(&self) -> @wxWizardPage {
-        unsafe { @wxWizardPage { handle: wxWizard_GetCurrentPage(self.handle()) } }
+    fn getCurrentPage(&self) -> wxWizardPage {
+        unsafe { wxWizardPage { handle: wxWizard_GetCurrentPage(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPageSize(&self) -> @wxSize {
-        unsafe { @wxSize { handle: wxWizard_GetPageSize(self.handle()) } }
+    fn getPageSize(&self) -> wxSize {
+        unsafe { wxSize { handle: wxWizard_GetPageSize(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2367,8 +2367,8 @@ impl _wxEvent for wxWizardEvent {}
 impl _wxObject for wxWizardEvent { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxWizardEvent {
-    pub fn from(handle: *mut c_void) -> @wxWizardEvent { @wxWizardEvent { handle: handle } }
-    pub fn null() -> @wxWizardEvent { wxWizardEvent::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxWizardEvent { wxWizardEvent { handle: handle } }
+    pub fn null() -> wxWizardEvent { wxWizardEvent::from(0 as *mut c_void) }
     
 }
 
@@ -2388,8 +2388,8 @@ impl _wxEvtHandler for wxWizardPage {}
 impl _wxObject for wxWizardPage { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxWizardPage {
-    pub fn from(handle: *mut c_void) -> @wxWizardPage { @wxWizardPage { handle: handle } }
-    pub fn null() -> @wxWizardPage { wxWizardPage::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxWizardPage { wxWizardPage { handle: handle } }
+    pub fn null() -> wxWizardPage { wxWizardPage::from(0 as *mut c_void) }
     
 }
 
@@ -2405,13 +2405,13 @@ impl _wxEvtHandler for wxWizardPageSimple {}
 impl _wxObject for wxWizardPageSimple { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxWizardPageSimple {
-    pub fn from(handle: *mut c_void) -> @wxWizardPageSimple { @wxWizardPageSimple { handle: handle } }
-    pub fn null() -> @wxWizardPageSimple { wxWizardPageSimple::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxWizardPageSimple { wxWizardPageSimple { handle: handle } }
+    pub fn null() -> wxWizardPageSimple { wxWizardPageSimple::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new<T: _wxWizard>(_prt: &T) -> @wxWizardPageSimple {
-        unsafe { @wxWizardPageSimple { handle: wxWizardPageSimple_Create(_prt.handle()) } }
+    pub fn new<T: _wxWizard>(_prt: &T) -> wxWizardPageSimple {
+        unsafe { wxWizardPageSimple { handle: wxWizardPageSimple_Create(_prt.handle()) } }
     }
 }
 
@@ -2423,13 +2423,13 @@ pub trait _wxWizardPageSimple : _wxWizardPage {
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getNext(&self) -> @wxWizardPageSimple {
-        unsafe { @wxWizardPageSimple { handle: wxWizardPageSimple_GetNext(self.handle()) } }
+    fn getNext(&self) -> wxWizardPageSimple {
+        unsafe { wxWizardPageSimple { handle: wxWizardPageSimple_GetNext(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    fn getPrev(&self) -> @wxWizardPageSimple {
-        unsafe { @wxWizardPageSimple { handle: wxWizardPageSimple_GetPrev(self.handle()) } }
+    fn getPrev(&self) -> wxWizardPageSimple {
+        unsafe { wxWizardPageSimple { handle: wxWizardPageSimple_GetPrev(self.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
@@ -2447,58 +2447,58 @@ pub struct wxManagedPtr { handle: *mut c_void }
 impl _wxManagedPtr for wxManagedPtr { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxManagedPtr {
-    pub fn from(handle: *mut c_void) -> @wxManagedPtr { @wxManagedPtr { handle: handle } }
-    pub fn null() -> @wxManagedPtr { wxManagedPtr::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxManagedPtr { wxManagedPtr { handle: handle } }
+    pub fn null() -> wxManagedPtr { wxManagedPtr::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromObject<T: _wxObject>(obj: &T) -> @wxManagedPtr {
-        unsafe { @wxManagedPtr { handle: wxManagedPtr_CreateFromObject(obj.handle()) } }
+    pub fn newFromObject<T: _wxObject>(obj: &T) -> wxManagedPtr {
+        unsafe { wxManagedPtr { handle: wxManagedPtr_CreateFromObject(obj.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromDateTime<T: _wxDateTime>(obj: &T) -> @wxManagedPtr {
-        unsafe { @wxManagedPtr { handle: wxManagedPtr_CreateFromDateTime(obj.handle()) } }
+    pub fn newFromDateTime<T: _wxDateTime>(obj: &T) -> wxManagedPtr {
+        unsafe { wxManagedPtr { handle: wxManagedPtr_CreateFromDateTime(obj.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromGridCellCoordsArray<T: _wxGridCellCoordsArray>(obj: &T) -> @wxManagedPtr {
-        unsafe { @wxManagedPtr { handle: wxManagedPtr_CreateFromGridCellCoordsArray(obj.handle()) } }
+    pub fn newFromGridCellCoordsArray<T: _wxGridCellCoordsArray>(obj: &T) -> wxManagedPtr {
+        unsafe { wxManagedPtr { handle: wxManagedPtr_CreateFromGridCellCoordsArray(obj.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromBitmap<T: _wxBitmap>(obj: &T) -> @wxManagedPtr {
-        unsafe { @wxManagedPtr { handle: wxManagedPtr_CreateFromBitmap(obj.handle()) } }
+    pub fn newFromBitmap<T: _wxBitmap>(obj: &T) -> wxManagedPtr {
+        unsafe { wxManagedPtr { handle: wxManagedPtr_CreateFromBitmap(obj.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromIcon<T: _wxIcon>(obj: &T) -> @wxManagedPtr {
-        unsafe { @wxManagedPtr { handle: wxManagedPtr_CreateFromIcon(obj.handle()) } }
+    pub fn newFromIcon<T: _wxIcon>(obj: &T) -> wxManagedPtr {
+        unsafe { wxManagedPtr { handle: wxManagedPtr_CreateFromIcon(obj.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromBrush<T: _wxBrush>(obj: &T) -> @wxManagedPtr {
-        unsafe { @wxManagedPtr { handle: wxManagedPtr_CreateFromBrush(obj.handle()) } }
+    pub fn newFromBrush<T: _wxBrush>(obj: &T) -> wxManagedPtr {
+        unsafe { wxManagedPtr { handle: wxManagedPtr_CreateFromBrush(obj.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromColour<T: _wxColour>(obj: &T) -> @wxManagedPtr {
-        unsafe { @wxManagedPtr { handle: wxManagedPtr_CreateFromColour(obj.handle()) } }
+    pub fn newFromColour<T: _wxColour>(obj: &T) -> wxManagedPtr {
+        unsafe { wxManagedPtr { handle: wxManagedPtr_CreateFromColour(obj.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromCursor<T: _wxCursor>(obj: &T) -> @wxManagedPtr {
-        unsafe { @wxManagedPtr { handle: wxManagedPtr_CreateFromCursor(obj.handle()) } }
+    pub fn newFromCursor<T: _wxCursor>(obj: &T) -> wxManagedPtr {
+        unsafe { wxManagedPtr { handle: wxManagedPtr_CreateFromCursor(obj.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromFont<T: _wxFont>(obj: &T) -> @wxManagedPtr {
-        unsafe { @wxManagedPtr { handle: wxManagedPtr_CreateFromFont(obj.handle()) } }
+    pub fn newFromFont<T: _wxFont>(obj: &T) -> wxManagedPtr {
+        unsafe { wxManagedPtr { handle: wxManagedPtr_CreateFromFont(obj.handle()) } }
     }
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn newFromPen<T: _wxPen>(obj: &T) -> @wxManagedPtr {
-        unsafe { @wxManagedPtr { handle: wxManagedPtr_CreateFromPen(obj.handle()) } }
+    pub fn newFromPen<T: _wxPen>(obj: &T) -> wxManagedPtr {
+        unsafe { wxManagedPtr { handle: wxManagedPtr_CreateFromPen(obj.handle()) } }
     }
 }
 
@@ -2534,13 +2534,13 @@ impl _wxGridCellEditor for wxGridCellTextEnterEditor {}
 impl _wxGridCellWorker for wxGridCellTextEnterEditor { fn handle(&self) -> *mut c_void { self.handle } }
 
 impl wxGridCellTextEnterEditor {
-    pub fn from(handle: *mut c_void) -> @wxGridCellTextEnterEditor { @wxGridCellTextEnterEditor { handle: handle } }
-    pub fn null() -> @wxGridCellTextEnterEditor { wxGridCellTextEnterEditor::from(0 as *mut c_void) }
+    pub fn from(handle: *mut c_void) -> wxGridCellTextEnterEditor { wxGridCellTextEnterEditor { handle: handle } }
+    pub fn null() -> wxGridCellTextEnterEditor { wxGridCellTextEnterEditor::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn ctor() -> @wxGridCellTextEnterEditor {
-        unsafe { @wxGridCellTextEnterEditor { handle: wxGridCellTextEnterEditor_Ctor() } }
+    pub fn ctor() -> wxGridCellTextEnterEditor {
+        unsafe { wxGridCellTextEnterEditor { handle: wxGridCellTextEnterEditor_Ctor() } }
     }
 }
 
