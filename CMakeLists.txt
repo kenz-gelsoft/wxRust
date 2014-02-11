@@ -6,17 +6,17 @@ option(USE_MACPORTS "Use wxMac installed by MacPorts" OFF)
 
 add_subdirectory(wxc)
 
-set(RUSTCFLAGS ${RUSTCFLAGS} -L wxc)
-set(GENSRC wxHaskell/wxc/src/include)
-set(GENSRCS
-    ${GENSRC}/wxc.h
-)
-
 if(APPLE)
     set(PATCH_UNSAFE_RS patch -p0 < src/_unsafe.rs.patch)
 else(APPLE)
     set(PATCH_UNSAFE_RS)
 endif(APPLE)
+
+set(RUSTCFLAGS ${RUSTCFLAGS} -L wxc)
+set(GENSRC wxHaskell/wxc/src/include)
+set(GENSRCS
+    ${GENSRC}/wxc.h
+)
 
 add_rust_crate(bindgen
     rust-bindgen/bindgen.rs
