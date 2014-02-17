@@ -3,6 +3,7 @@
 
 #[link_args="-lwxc"];
 
+extern mod native;
 extern mod wx;
 
 use std::libc::c_void;
@@ -26,8 +27,6 @@ fn wx_main() {
 
 struct MyFrame { base: wxFrame }
 impl MyFrame {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn new() -> MyFrame {
         let frame = wxFrame::new(&wxWindow::null(), wxID_ANY, "Hello, wxRust!", -1, -1, -1, -1, wxDEFAULT_FRAME_STYLE);
         let menubar = MyMenuBar::new();
@@ -44,8 +43,6 @@ impl MyFrame {
 
 struct MyMenuBar { base: wxMenuBar }
 impl MyMenuBar {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn new() -> MyMenuBar {
         let menubar = wxMenuBar::new(0);
         
@@ -76,8 +73,6 @@ fn MyButton_clicked(fun: *mut c_void, data: *mut c_void, evt: *mut c_void) {
 
 struct MyButton(wxButton);
 impl MyButton {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn new<T: _wxWindow>(parent: &T) -> MyButton {
         let button = wxButton::new(parent, wxID_ANY, "Push me!", 10, 10, 50, 30, 0);
         let closure = wxClosure::new(MyButton_clicked as *mut c_void, parent.handle());
