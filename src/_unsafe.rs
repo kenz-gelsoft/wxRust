@@ -4587,7 +4587,7 @@ extern "C" {
                               _wdt: c_int, _hgt: c_int, _stl: c_int) ->
      *mut c_void;
     pub fn wxStaticBoxSizer_CalcMin(_obj: *mut c_void) -> *mut c_void;
-    pub fn wxStaticBoxSizer_Create(_box: *mut c_void, orient: c_int) ->
+    pub fn wxStaticBoxSizer_Create(box: *mut c_void, orient: c_int) ->
      *mut c_void;
     pub fn wxStaticBoxSizer_GetStaticBox(_obj: *mut c_void) -> *mut c_void;
     pub fn wxStaticBoxSizer_RecalcSizes(_obj: *mut c_void);

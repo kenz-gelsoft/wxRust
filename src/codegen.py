@@ -649,7 +649,7 @@ class WrapperGenerator(object):
                 self.println()
                 if name == 'base':
                     self.println('''\
-#[link(name="wxc")]
+#[link_args="-lwxc"]
 extern {
     fn wxString_CreateUTF8(buffer: *mut c_void) -> *mut c_void;
     fn wxString_GetUtf8(wxs: *mut c_void) -> *mut c_void;
@@ -657,6 +657,8 @@ extern {
     fn wxCharBuffer_Delete(wxcb: *mut c_void);
 }
 
+#[fixed_stack_segment]
+#[inline(never)]
 pub fn wxT(s: &str) -> wxString {
     unsafe {
         s.to_c_str().with_ref(|c_str| {
@@ -667,12 +669,16 @@ pub fn wxT(s: &str) -> wxString {
 
 pub struct wxString { handle: *mut c_void }
 impl Drop for wxString {
+    #[fixed_stack_segment]
+    #[inline(never)]
     fn drop(&mut self) {
         unsafe { wxString_Delete(self.handle); }
     }
 }
 impl wxString {
     pub fn handle(&self) -> *mut c_void { self.handle }
+    #[fixed_stack_segment]
+    #[inline(never)]
     pub fn to_str(&self) -> ~str {
         unsafe {
             let charBuffer = wxString_GetUtf8(self.handle);
@@ -1096,6 +1102,8 @@ class Function(object):
 
     def trait_fn(self, gen, classname):
         modifier = self.is_static and 'pub ' or ''
+        gen.println('#[fixed_stack_segment]')
+        gen.println('#[inline(never)]')
         gen.println('%sfn %s%s(%s)%s {' % (modifier,
                                          self.method_name(classname),
                                          self._type_params,
