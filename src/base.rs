@@ -2,7 +2,7 @@ use std::libc::*;
 use std::str;
 use _unsafe::*;
 
-#[link_args="-lwxc"]
+#[link(name="wxc")]
 extern {
     fn wxString_CreateUTF8(buffer: *mut c_void) -> *mut c_void;
     fn wxString_GetUtf8(wxs: *mut c_void) -> *mut c_void;
@@ -10,8 +10,6 @@ extern {
     fn wxCharBuffer_Delete(wxcb: *mut c_void);
 }
 
-#[fixed_stack_segment]
-#[inline(never)]
 pub fn wxT(s: &str) -> wxString {
     unsafe {
         s.to_c_str().with_ref(|c_str| {
@@ -22,16 +20,12 @@ pub fn wxT(s: &str) -> wxString {
 
 pub struct wxString { handle: *mut c_void }
 impl Drop for wxString {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn drop(&mut self) {
         unsafe { wxString_Delete(self.handle); }
     }
 }
 impl wxString {
     pub fn handle(&self) -> *mut c_void { self.handle }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn to_str(&self) -> ~str {
         unsafe {
             let charBuffer = wxString_GetUtf8(self.handle);
@@ -177,8 +171,6 @@ impl wxClassInfo {
     pub fn from(handle: *mut c_void) -> wxClassInfo { wxClassInfo { handle: handle } }
     pub fn null() -> wxClassInfo { wxClassInfo::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn findClass(_txt: &str) -> wxClassInfo {
         let _txt = wxT(_txt);
         unsafe { wxClassInfo { handle: wxClassInfo_FindClass(_txt.handle()) } }
@@ -188,44 +180,28 @@ impl wxClassInfo {
 pub trait _wxClassInfo {
     fn handle(&self) -> *mut c_void;
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn newClassByName(&self) -> *mut c_void {
         unsafe { wxClassInfo_CreateClassByName(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getClassName(&self) -> *mut c_void {
         unsafe { wxClassInfo_GetClassName(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isKindOf(&self, _name: &str) -> c_int {
         let _name = wxT(_name);
         unsafe { wxClassInfo_IsKindOf(self.handle(), _name.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getBaseClassName1(&self) -> ~str {
         unsafe { wxString { handle: wxClassInfo_GetBaseClassName1(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getBaseClassName2(&self) -> ~str {
         unsafe { wxString { handle: wxClassInfo_GetBaseClassName2(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getClassNameEx(&self) -> ~str {
         unsafe { wxString { handle: wxClassInfo_GetClassNameEx(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getSize(&self) -> c_int {
         unsafe { wxClassInfo_GetSize(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isKindOfEx<T: _wxClassInfo>(&self, classInfo: &T) -> c_int {
         unsafe { wxClassInfo_IsKindOfEx(self.handle(), classInfo.handle()) }
     }
@@ -294,16 +270,12 @@ impl wxClosure {
     pub fn from(handle: *mut c_void) -> wxClosure { wxClosure { handle: handle } }
     pub fn null() -> wxClosure { wxClosure::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new(_fun_CEvent: *mut c_void, _data: *mut c_void) -> wxClosure {
         unsafe { wxClosure { handle: wxClosure_Create(_fun_CEvent, _data) } }
     }
 }
 
 pub trait _wxClosure : _wxObject {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getData(&self) -> *mut c_void {
         unsafe { wxClosure_GetData(self.handle()) }
     }
@@ -344,18 +316,12 @@ impl wxConfigBase {
     pub fn from(handle: *mut c_void) -> wxConfigBase { wxConfigBase { handle: handle } }
     pub fn null() -> wxConfigBase { wxConfigBase::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new() -> wxConfigBase {
         unsafe { wxConfigBase { handle: wxConfigBase_Create() } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn get() -> wxConfigBase {
         unsafe { wxConfigBase { handle: wxConfigBase_Get() } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn set<T: _wxConfigBase>(self_: &T) {
         unsafe { wxConfigBase_Set(self_.handle()) }
     }
@@ -364,221 +330,143 @@ impl wxConfigBase {
 pub trait _wxConfigBase {
     fn handle(&self) -> *mut c_void;
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn delete(&self) {
         unsafe { wxConfigBase_Delete(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn deleteAll(&self) -> c_int {
         unsafe { wxConfigBase_DeleteAll(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn deleteEntry(&self, key: &str, bDeleteGroupIfEmpty: c_int) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_DeleteEntry(self.handle(), key.handle(), bDeleteGroupIfEmpty) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn deleteGroup(&self, key: &str) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_DeleteGroup(self.handle(), key.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn exists(&self, strName: &str) -> c_int {
         let strName = wxT(strName);
         unsafe { wxConfigBase_Exists(self.handle(), strName.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn expandEnvVars(&self, str: &str) -> ~str {
         let str = wxT(str);
         unsafe { wxString { handle: wxConfigBase_ExpandEnvVars(self.handle(), str.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn flush(&self, bCurrentOnly: c_int) -> c_int {
         unsafe { wxConfigBase_Flush(self.handle(), bCurrentOnly) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getAppName(&self) -> ~str {
         unsafe { wxString { handle: wxConfigBase_GetAppName(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getEntryType(&self, name: &str) -> c_int {
         let name = wxT(name);
         unsafe { wxConfigBase_GetEntryType(self.handle(), name.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getFirstEntry(&self, lIndex: *mut c_void) -> ~str {
         unsafe { wxString { handle: wxConfigBase_GetFirstEntry(self.handle(), lIndex) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getFirstGroup(&self, lIndex: *mut c_void) -> ~str {
         unsafe { wxString { handle: wxConfigBase_GetFirstGroup(self.handle(), lIndex) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getNextEntry(&self, lIndex: *mut c_void) -> ~str {
         unsafe { wxString { handle: wxConfigBase_GetNextEntry(self.handle(), lIndex) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getNextGroup(&self, lIndex: *mut c_void) -> ~str {
         unsafe { wxString { handle: wxConfigBase_GetNextGroup(self.handle(), lIndex) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getNumberOfEntries(&self, bRecursive: c_int) -> c_int {
         unsafe { wxConfigBase_GetNumberOfEntries(self.handle(), bRecursive) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getNumberOfGroups(&self, bRecursive: c_int) -> c_int {
         unsafe { wxConfigBase_GetNumberOfGroups(self.handle(), bRecursive) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getPath(&self) -> ~str {
         unsafe { wxString { handle: wxConfigBase_GetPath(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getStyle(&self) -> c_int {
         unsafe { wxConfigBase_GetStyle(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getVendorName(&self) -> ~str {
         unsafe { wxString { handle: wxConfigBase_GetVendorName(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn hasEntry(&self, strName: &str) -> c_int {
         let strName = wxT(strName);
         unsafe { wxConfigBase_HasEntry(self.handle(), strName.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn hasGroup(&self, strName: &str) -> c_int {
         let strName = wxT(strName);
         unsafe { wxConfigBase_HasGroup(self.handle(), strName.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isExpandingEnvVars(&self) -> c_int {
         unsafe { wxConfigBase_IsExpandingEnvVars(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isRecordingDefaults(&self) -> c_int {
         unsafe { wxConfigBase_IsRecordingDefaults(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn readBool(&self, key: &str, defVal: c_int) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_ReadBool(self.handle(), key.handle(), defVal) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn readDouble(&self, key: &str, defVal: c_double) -> c_double {
         let key = wxT(key);
         unsafe { wxConfigBase_ReadDouble(self.handle(), key.handle(), defVal) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn readInteger(&self, key: &str, defVal: c_int) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_ReadInteger(self.handle(), key.handle(), defVal) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn readString(&self, key: &str, defVal: &str) -> ~str {
         let key = wxT(key);
         let defVal = wxT(defVal);
         unsafe { wxString { handle: wxConfigBase_ReadString(self.handle(), key.handle(), defVal.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn renameEntry(&self, oldName: &str, newName: &str) -> c_int {
         let oldName = wxT(oldName);
         let newName = wxT(newName);
         unsafe { wxConfigBase_RenameEntry(self.handle(), oldName.handle(), newName.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn renameGroup(&self, oldName: &str, newName: &str) -> c_int {
         let oldName = wxT(oldName);
         let newName = wxT(newName);
         unsafe { wxConfigBase_RenameGroup(self.handle(), oldName.handle(), newName.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setAppName(&self, appName: &str) {
         let appName = wxT(appName);
         unsafe { wxConfigBase_SetAppName(self.handle(), appName.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setExpandEnvVars(&self, bDoIt: c_int) {
         unsafe { wxConfigBase_SetExpandEnvVars(self.handle(), bDoIt) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setPath(&self, strPath: &str) {
         let strPath = wxT(strPath);
         unsafe { wxConfigBase_SetPath(self.handle(), strPath.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setRecordDefaults(&self, bDoIt: c_int) {
         unsafe { wxConfigBase_SetRecordDefaults(self.handle(), bDoIt) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setStyle(&self, style: c_int) {
         unsafe { wxConfigBase_SetStyle(self.handle(), style) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setVendorName(&self, vendorName: &str) {
         let vendorName = wxT(vendorName);
         unsafe { wxConfigBase_SetVendorName(self.handle(), vendorName.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn writeBool(&self, key: &str, value: c_int) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_WriteBool(self.handle(), key.handle(), value) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn writeDouble(&self, key: &str, value: c_double) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_WriteDouble(self.handle(), key.handle(), value) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn writeInteger(&self, key: &str, value: c_int) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_WriteInteger(self.handle(), key.handle(), value) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn writeLong(&self, key: &str, value: c_long) -> c_int {
         let key = wxT(key);
         unsafe { wxConfigBase_WriteLong(self.handle(), key.handle(), value) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn writeString(&self, key: &str, value: &str) -> c_int {
         let key = wxT(key);
         let value = wxT(value);
@@ -732,103 +620,63 @@ impl wxDateTime {
     pub fn from(handle: *mut c_void) -> wxDateTime { wxDateTime { handle: handle } }
     pub fn null() -> wxDateTime { wxDateTime::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn convertYearToBC(year: c_int) -> c_int {
         unsafe { wxDateTime_ConvertYearToBC(year) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new() -> wxDateTime {
         unsafe { wxDateTime { handle: wxDateTime_Create() } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getAmString() -> ~str {
         unsafe { wxString { handle: wxDateTime_GetAmString() }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getBeginDST<T: _wxDateTime>(year: c_int, country: c_int, dt: &T) {
         unsafe { wxDateTime_GetBeginDST(year, country, dt.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getCentury(year: c_int) -> c_int {
         unsafe { wxDateTime_GetCentury(year) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getCountry() -> c_int {
         unsafe { wxDateTime_GetCountry() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getCurrentMonth(cal: c_int) -> c_int {
         unsafe { wxDateTime_GetCurrentMonth(cal) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getCurrentYear(cal: c_int) -> c_int {
         unsafe { wxDateTime_GetCurrentYear(cal) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getEndDST<T: _wxDateTime>(year: c_int, country: c_int, dt: &T) {
         unsafe { wxDateTime_GetEndDST(year, country, dt.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getMonthName(month: c_int, flags: c_int) -> ~str {
         unsafe { wxString { handle: wxDateTime_GetMonthName(month, flags) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getNumberOfDays(year: c_int, cal: c_int) -> c_int {
         unsafe { wxDateTime_GetNumberOfDays(year, cal) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getNumberOfDaysMonth(month: c_int, year: c_int, cal: c_int) -> c_int {
         unsafe { wxDateTime_GetNumberOfDaysMonth(month, year, cal) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getPmString() -> ~str {
         unsafe { wxString { handle: wxDateTime_GetPmString() }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getTimeNow() -> c_int {
         unsafe { wxDateTime_GetTimeNow() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn getWeekDayName(weekday: c_int, flags: c_int) -> ~str {
         unsafe { wxString { handle: wxDateTime_GetWeekDayName(weekday, flags) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn isDSTApplicable(year: c_int, country: c_int) -> c_int {
         unsafe { wxDateTime_IsDSTApplicable(year, country) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn isLeapYear(year: c_int, cal: c_int) -> c_int {
         unsafe { wxDateTime_IsLeapYear(year, cal) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn isWestEuropeanCountry(country: c_int) -> c_int {
         unsafe { wxDateTime_IsWestEuropeanCountry(country) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn setCountry(country: c_int) {
         unsafe { wxDateTime_SetCountry(country) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn wxDateTime(hi_long: c_int, lo_long: c_int) -> *mut c_void {
         unsafe { wxDateTime_wxDateTime(hi_long, lo_long) }
     }
@@ -837,358 +685,216 @@ impl wxDateTime {
 pub trait _wxDateTime {
     fn handle(&self) -> *mut c_void;
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn addDate<T: _wxDateTime>(&self, diff: *mut c_void, _ref: &T) {
         unsafe { wxDateTime_AddDate(self.handle(), diff, _ref.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn addDateValues(&self, _yrs: c_int, _mnt: c_int, _wek: c_int, _day: c_int) {
         unsafe { wxDateTime_AddDateValues(self.handle(), _yrs, _mnt, _wek, _day) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn addTime<T: _wxDateTime>(&self, diff: *mut c_void, _ref: &T) {
         unsafe { wxDateTime_AddTime(self.handle(), diff, _ref.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn addTimeValues(&self, _hrs: c_int, _min: c_int, _sec: c_int, _mls: c_int) {
         unsafe { wxDateTime_AddTimeValues(self.handle(), _hrs, _min, _sec, _mls) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn format(&self, format: *mut c_void, tz: c_int) -> ~str {
         unsafe { wxString { handle: wxDateTime_Format(self.handle(), format, tz) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn formatDate(&self) -> ~str {
         unsafe { wxString { handle: wxDateTime_FormatDate(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn formatISODate(&self) -> ~str {
         unsafe { wxString { handle: wxDateTime_FormatISODate(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn formatISOTime(&self) -> ~str {
         unsafe { wxString { handle: wxDateTime_FormatISOTime(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn formatTime(&self) -> ~str {
         unsafe { wxString { handle: wxDateTime_FormatTime(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getDay(&self, tz: c_int) -> c_int {
         unsafe { wxDateTime_GetDay(self.handle(), tz) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getDayOfYear(&self, tz: c_int) -> c_int {
         unsafe { wxDateTime_GetDayOfYear(self.handle(), tz) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getHour(&self, tz: c_int) -> c_int {
         unsafe { wxDateTime_GetHour(self.handle(), tz) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getLastMonthDay<T: _wxDateTime>(&self, month: c_int, year: c_int, _ref: &T) {
         unsafe { wxDateTime_GetLastMonthDay(self.handle(), month, year, _ref.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getLastWeekDay<T: _wxDateTime>(&self, weekday: c_int, month: c_int, year: c_int, _ref: &T) {
         unsafe { wxDateTime_GetLastWeekDay(self.handle(), weekday, month, year, _ref.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getMillisecond(&self, tz: c_int) -> c_int {
         unsafe { wxDateTime_GetMillisecond(self.handle(), tz) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getMinute(&self, tz: c_int) -> c_int {
         unsafe { wxDateTime_GetMinute(self.handle(), tz) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getMonth(&self, tz: c_int) -> c_int {
         unsafe { wxDateTime_GetMonth(self.handle(), tz) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getNextWeekDay<T: _wxDateTime>(&self, weekday: c_int, _ref: &T) {
         unsafe { wxDateTime_GetNextWeekDay(self.handle(), weekday, _ref.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getPrevWeekDay<T: _wxDateTime>(&self, weekday: c_int, _ref: &T) {
         unsafe { wxDateTime_GetPrevWeekDay(self.handle(), weekday, _ref.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getSecond(&self, tz: c_int) -> c_int {
         unsafe { wxDateTime_GetSecond(self.handle(), tz) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getTicks(&self) -> time_t {
         unsafe { wxDateTime_GetTicks(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getValue(&self, hi_long: *mut c_void, lo_long: *mut c_void) {
         unsafe { wxDateTime_GetValue(self.handle(), hi_long, lo_long) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getWeekDay<T: _wxDateTime>(&self, weekday: c_int, n: c_int, month: c_int, year: c_int, _ref: &T) {
         unsafe { wxDateTime_GetWeekDay(self.handle(), weekday, n, month, year, _ref.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getWeekDayInSameWeek<T: _wxDateTime>(&self, weekday: c_int, _ref: &T) {
         unsafe { wxDateTime_GetWeekDayInSameWeek(self.handle(), weekday, _ref.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getWeekDayTZ(&self, tz: c_int) -> c_int {
         unsafe { wxDateTime_GetWeekDayTZ(self.handle(), tz) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getWeekOfMonth(&self, flags: c_int, tz: c_int) -> c_int {
         unsafe { wxDateTime_GetWeekOfMonth(self.handle(), flags, tz) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getWeekOfYear(&self, flags: c_int, tz: c_int) -> c_int {
         unsafe { wxDateTime_GetWeekOfYear(self.handle(), flags, tz) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getYear(&self, tz: c_int) -> c_int {
         unsafe { wxDateTime_GetYear(self.handle(), tz) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isBetween<T: _wxDateTime, U: _wxDateTime>(&self, t1: &T, t2: &U) -> c_int {
         unsafe { wxDateTime_IsBetween(self.handle(), t1.handle(), t2.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isDST(&self, country: c_int) -> c_int {
         unsafe { wxDateTime_IsDST(self.handle(), country) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isEarlierThan(&self, datetime: *mut c_void) -> c_int {
         unsafe { wxDateTime_IsEarlierThan(self.handle(), datetime) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isEqualTo(&self, datetime: *mut c_void) -> c_int {
         unsafe { wxDateTime_IsEqualTo(self.handle(), datetime) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isEqualUpTo<T: _wxDateTime>(&self, dt: &T, ts: *mut c_void) -> c_int {
         unsafe { wxDateTime_IsEqualUpTo(self.handle(), dt.handle(), ts) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isLaterThan(&self, datetime: *mut c_void) -> c_int {
         unsafe { wxDateTime_IsLaterThan(self.handle(), datetime) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isSameDate<T: _wxDateTime>(&self, dt: &T) -> c_int {
         unsafe { wxDateTime_IsSameDate(self.handle(), dt.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isSameTime<T: _wxDateTime>(&self, dt: &T) -> c_int {
         unsafe { wxDateTime_IsSameTime(self.handle(), dt.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isStrictlyBetween<T: _wxDateTime, U: _wxDateTime>(&self, t1: &T, t2: &U) -> c_int {
         unsafe { wxDateTime_IsStrictlyBetween(self.handle(), t1.handle(), t2.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isValid(&self) -> c_int {
         unsafe { wxDateTime_IsValid(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isWorkDay(&self, country: c_int) -> c_int {
         unsafe { wxDateTime_IsWorkDay(self.handle(), country) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn makeGMT(&self, noDST: c_int) {
         unsafe { wxDateTime_MakeGMT(self.handle(), noDST) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn makeTimezone(&self, tz: c_int, noDST: c_int) {
         unsafe { wxDateTime_MakeTimezone(self.handle(), tz, noDST) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn now(&self) {
         unsafe { wxDateTime_Now(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn parseDate(&self, date: *mut c_void) -> *mut c_void {
         unsafe { wxDateTime_ParseDate(self.handle(), date) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn parseDateTime(&self, datetime: *mut c_void) -> *mut c_void {
         unsafe { wxDateTime_ParseDateTime(self.handle(), datetime) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn parseFormat(&self, date: *mut c_void, format: *mut c_void, dateDef: *mut c_void) -> *mut c_void {
         unsafe { wxDateTime_ParseFormat(self.handle(), date, format, dateDef) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn parseRfc822Date(&self, date: *mut c_void) -> *mut c_void {
         unsafe { wxDateTime_ParseRfc822Date(self.handle(), date) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn parseTime<T: _wxTime>(&self, time: &T) -> *mut c_void {
         unsafe { wxDateTime_ParseTime(self.handle(), time.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn resetTime(&self) {
         unsafe { wxDateTime_ResetTime(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn set(&self, day: c_int, month: c_int, year: c_int, hour: c_int, minute: c_int, second: c_int, millisec: c_int) {
         unsafe { wxDateTime_Set(self.handle(), day, month, year, hour, minute, second, millisec) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setDay(&self, day: c_int) {
         unsafe { wxDateTime_SetDay(self.handle(), day) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setHour(&self, hour: c_int) {
         unsafe { wxDateTime_SetHour(self.handle(), hour) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setMillisecond(&self, millisecond: c_int) {
         unsafe { wxDateTime_SetMillisecond(self.handle(), millisecond) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setMinute(&self, minute: c_int) {
         unsafe { wxDateTime_SetMinute(self.handle(), minute) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setMonth(&self, month: c_int) {
         unsafe { wxDateTime_SetMonth(self.handle(), month) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setSecond(&self, second: c_int) {
         unsafe { wxDateTime_SetSecond(self.handle(), second) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setTime(&self, hour: c_int, minute: c_int, second: c_int, millisec: c_int) {
         unsafe { wxDateTime_SetTime(self.handle(), hour, minute, second, millisec) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setToCurrent(&self) {
         unsafe { wxDateTime_SetToCurrent(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setToLastMonthDay(&self, month: c_int, year: c_int) {
         unsafe { wxDateTime_SetToLastMonthDay(self.handle(), month, year) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setToLastWeekDay(&self, weekday: c_int, month: c_int, year: c_int) -> c_int {
         unsafe { wxDateTime_SetToLastWeekDay(self.handle(), weekday, month, year) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setToNextWeekDay(&self, weekday: c_int) {
         unsafe { wxDateTime_SetToNextWeekDay(self.handle(), weekday) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setToPrevWeekDay(&self, weekday: c_int) {
         unsafe { wxDateTime_SetToPrevWeekDay(self.handle(), weekday) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setToWeekDay(&self, weekday: c_int, n: c_int, month: c_int, year: c_int) -> c_int {
         unsafe { wxDateTime_SetToWeekDay(self.handle(), weekday, n, month, year) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setToWeekDayInSameWeek(&self, weekday: c_int) {
         unsafe { wxDateTime_SetToWeekDayInSameWeek(self.handle(), weekday) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setYear(&self, year: c_int) {
         unsafe { wxDateTime_SetYear(self.handle(), year) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn subtractDate<T: _wxDateTime>(&self, diff: *mut c_void, _ref: &T) {
         unsafe { wxDateTime_SubtractDate(self.handle(), diff, _ref.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn subtractTime<T: _wxDateTime>(&self, diff: *mut c_void, _ref: &T) {
         unsafe { wxDateTime_SubtractTime(self.handle(), diff, _ref.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn toGMT(&self, noDST: c_int) {
         unsafe { wxDateTime_ToGMT(self.handle(), noDST) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn toTimezone(&self, tz: c_int, noDST: c_int) {
         unsafe { wxDateTime_ToTimezone(self.handle(), tz, noDST) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn today(&self) {
         unsafe { wxDateTime_Today(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn uNow(&self) {
         unsafe { wxDateTime_UNow(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn delete(&self) {
         unsafe { wxDateTime_Delete(self.handle()) }
     }
@@ -1258,31 +964,21 @@ impl wxEncodingConverter {
     pub fn from(handle: *mut c_void) -> wxEncodingConverter { wxEncodingConverter { handle: handle } }
     pub fn null() -> wxEncodingConverter { wxEncodingConverter::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new() -> wxEncodingConverter {
         unsafe { wxEncodingConverter { handle: wxEncodingConverter_Create() } }
     }
 }
 
 pub trait _wxEncodingConverter : _wxObject {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn convert(&self, input: *mut c_void, output: *mut c_void) {
         unsafe { wxEncodingConverter_Convert(self.handle(), input, output) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getAllEquivalents<T: _wxList>(&self, enc: c_int, _lst: &T) -> c_int {
         unsafe { wxEncodingConverter_GetAllEquivalents(self.handle(), enc, _lst.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getPlatformEquivalents<T: _wxList>(&self, enc: c_int, platform: c_int, _lst: &T) -> c_int {
         unsafe { wxEncodingConverter_GetPlatformEquivalents(self.handle(), enc, platform, _lst.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn init(&self, input_enc: c_int, output_enc: c_int, method: c_int) -> c_int {
         unsafe { wxEncodingConverter_Init(self.handle(), input_enc, output_enc, method) }
     }
@@ -1450,53 +1146,33 @@ impl wxInputStream {
 }
 
 pub trait _wxInputStream : _wxStreamBase {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn eof(&self) -> c_int {
         unsafe { wxInputStream_Eof(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getC(&self) -> int8_t {
         unsafe { wxInputStream_GetC(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn lastRead(&self) -> c_int {
         unsafe { wxInputStream_LastRead(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn peek(&self) -> int8_t {
         unsafe { wxInputStream_Peek(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn read(&self, buffer: *mut c_void, size: c_int) {
         unsafe { wxInputStream_Read(self.handle(), buffer, size) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn seekI(&self, pos: c_int, mode: c_int) -> c_int {
         unsafe { wxInputStream_SeekI(self.handle(), pos, mode) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn tell(&self) -> c_int {
         unsafe { wxInputStream_Tell(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn ungetBuffer(&self, buffer: *mut c_void, size: c_int) -> c_int {
         unsafe { wxInputStream_UngetBuffer(self.handle(), buffer, size) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn ungetch(&self, c: int8_t) -> c_int {
         unsafe { wxInputStream_Ungetch(self.handle(), c) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn canRead(&self) -> c_int {
         unsafe { wxInputStream_CanRead(self.handle()) }
     }
@@ -1522,8 +1198,6 @@ impl wxLocale {
     pub fn from(handle: *mut c_void) -> wxLocale { wxLocale { handle: handle } }
     pub fn null() -> wxLocale { wxLocale::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new(_name: c_int, _flags: c_int) -> wxLocale {
         unsafe { wxLocale { handle: wxLocale_Create(_name, _flags) } }
     }
@@ -1532,43 +1206,27 @@ impl wxLocale {
 pub trait _wxLocale {
     fn handle(&self) -> *mut c_void;
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn addCatalog(&self, szDomain: *mut c_void) -> c_int {
         unsafe { wxLocale_AddCatalog(self.handle(), szDomain) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn addCatalogLookupPathPrefix(&self, prefix: *mut c_void) {
         unsafe { wxLocale_AddCatalogLookupPathPrefix(self.handle(), prefix) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn delete(&self) {
         unsafe { wxLocale_Delete(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getLocale(&self) -> wxLocale {
         unsafe { wxLocale { handle: wxLocale_GetLocale(self.handle()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getName(&self) -> ~str {
         unsafe { wxString { handle: wxLocale_GetName(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getString(&self, szOrigString: *mut c_void, szDomain: *mut c_void) -> *mut int8_t {
         unsafe { wxLocale_GetString(self.handle(), szOrigString, szDomain) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isLoaded(&self, szDomain: *mut c_void) -> c_int {
         unsafe { wxLocale_IsLoaded(self.handle(), szDomain) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isOk(&self) -> c_int {
         unsafe { wxLocale_IsOk(self.handle()) }
     }
@@ -1737,38 +1395,24 @@ impl wxObject {
 pub trait _wxObject {
     fn handle(&self) -> *mut c_void;
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn safeDelete(&self) {
         unsafe { wxObject_SafeDelete(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getClientClosure(&self) -> wxClosure {
         unsafe { wxClosure { handle: wxObject_GetClientClosure(self.handle()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setClientClosure<T: _wxClosure>(&self, closure: &T) {
         unsafe { wxObject_SetClientClosure(self.handle(), closure.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn delete(&self) {
         unsafe { wxObject_Delete(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getClassInfo(&self) -> wxClassInfo {
         unsafe { wxClassInfo { handle: wxObject_GetClassInfo(self.handle()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isKindOf<T: _wxClassInfo>(&self, classInfo: &T) -> c_int {
         unsafe { wxObject_IsKindOf(self.handle(), classInfo.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isScrolledWindow(&self) -> c_int {
         unsafe { wxObject_IsScrolledWindow(self.handle()) }
     }
@@ -1799,33 +1443,21 @@ impl wxOutputStream {
 }
 
 pub trait _wxOutputStream : _wxStreamBase {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn lastWrite(&self) -> c_int {
         unsafe { wxOutputStream_LastWrite(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn putC(&self, c: int8_t) {
         unsafe { wxOutputStream_PutC(self.handle(), c) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn seek(&self, pos: c_int, mode: c_int) -> c_int {
         unsafe { wxOutputStream_Seek(self.handle(), pos, mode) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn sync(&self) {
         unsafe { wxOutputStream_Sync(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn tell(&self) -> c_int {
         unsafe { wxOutputStream_Tell(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn write(&self, buffer: *mut c_void, size: c_int) {
         unsafe { wxOutputStream_Write(self.handle(), buffer, size) }
     }
@@ -1935,15 +1567,11 @@ impl wxSingleInstanceChecker {
     pub fn from(handle: *mut c_void) -> wxSingleInstanceChecker { wxSingleInstanceChecker { handle: handle } }
     pub fn null() -> wxSingleInstanceChecker { wxSingleInstanceChecker::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new(_obj: *mut c_void, name: &str, path: &str) -> c_int {
         let name = wxT(name);
         let path = wxT(path);
         unsafe { wxSingleInstanceChecker_Create(_obj, name.handle(), path.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn newDefault() -> wxSingleInstanceChecker {
         unsafe { wxSingleInstanceChecker { handle: wxSingleInstanceChecker_CreateDefault() } }
     }
@@ -1952,13 +1580,9 @@ impl wxSingleInstanceChecker {
 pub trait _wxSingleInstanceChecker {
     fn handle(&self) -> *mut c_void;
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn delete(&self) {
         unsafe { wxSingleInstanceChecker_Delete(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isAnotherRunning(&self) -> c_int {
         unsafe { wxSingleInstanceChecker_IsAnotherRunning(self.handle()) }
     }
@@ -1971,8 +1595,6 @@ impl wxStopWatch {
     pub fn from(handle: *mut c_void) -> wxStopWatch { wxStopWatch { handle: handle } }
     pub fn null() -> wxStopWatch { wxStopWatch::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new() -> wxStopWatch {
         unsafe { wxStopWatch { handle: wxStopWatch_Create() } }
     }
@@ -1981,28 +1603,18 @@ impl wxStopWatch {
 pub trait _wxStopWatch {
     fn handle(&self) -> *mut c_void;
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn delete(&self) {
         unsafe { wxStopWatch_Delete(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn start(&self, msec: c_int) {
         unsafe { wxStopWatch_Start(self.handle(), msec) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn pause(&self) {
         unsafe { wxStopWatch_Pause(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn resume(&self) {
         unsafe { wxStopWatch_Resume(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn time(&self) -> c_int {
         unsafe { wxStopWatch_Time(self.handle()) }
     }
@@ -2020,23 +1632,15 @@ impl wxStreamBase {
 pub trait _wxStreamBase {
     fn handle(&self) -> *mut c_void;
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getLastError(&self) -> c_int {
         unsafe { wxStreamBase_GetLastError(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getSize(&self) -> c_int {
         unsafe { wxStreamBase_GetSize(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn isOk(&self) -> c_int {
         unsafe { wxStreamBase_IsOk(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn delete(&self) {
         unsafe { wxStreamBase_Delete(self.handle()) }
     }
@@ -2158,8 +1762,6 @@ impl wxTextInputStream {
     pub fn from(handle: *mut c_void) -> wxTextInputStream { wxTextInputStream { handle: handle } }
     pub fn null() -> wxTextInputStream { wxTextInputStream::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new<T: _wxInputStream>(inputStream: &T, sep: &str) -> wxTextInputStream {
         let sep = wxT(sep);
         unsafe { wxTextInputStream { handle: wxTextInputStream_Create(inputStream.handle(), sep.handle()) } }
@@ -2169,13 +1771,9 @@ impl wxTextInputStream {
 pub trait _wxTextInputStream {
     fn handle(&self) -> *mut c_void;
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn delete(&self) {
         unsafe { wxTextInputStream_Delete(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn readLine(&self) -> ~str {
         unsafe { wxString { handle: wxTextInputStream_ReadLine(self.handle()) }.to_str() }
     }
@@ -2188,8 +1786,6 @@ impl wxTextOutputStream {
     pub fn from(handle: *mut c_void) -> wxTextOutputStream { wxTextOutputStream { handle: handle } }
     pub fn null() -> wxTextOutputStream { wxTextOutputStream::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new<T: _wxOutputStream>(outputStream: &T, mode: c_int) -> wxTextOutputStream {
         unsafe { wxTextOutputStream { handle: wxTextOutputStream_Create(outputStream.handle(), mode) } }
     }
@@ -2198,13 +1794,9 @@ impl wxTextOutputStream {
 pub trait _wxTextOutputStream {
     fn handle(&self) -> *mut c_void;
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn delete(&self) {
         unsafe { wxTextOutputStream_Delete(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn writeString(&self, txt: &str) {
         let txt = wxT(txt);
         unsafe { wxTextOutputStream_WriteString(self.handle(), txt.handle()) }
@@ -2344,8 +1936,6 @@ impl wxFileConfig {
     pub fn from(handle: *mut c_void) -> wxFileConfig { wxFileConfig { handle: handle } }
     pub fn null() -> wxFileConfig { wxFileConfig::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new<T: _wxInputStream>(inp: &T) -> wxFileConfig {
         unsafe { wxFileConfig { handle: wxFileConfig_Create(inp.handle()) } }
     }
