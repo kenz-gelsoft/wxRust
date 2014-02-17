@@ -3,8 +3,8 @@
 
 #[link_args="-lwxc"];
 
-extern mod native;
-extern mod wx;
+extern crate native;
+extern crate wx;
 
 use std::libc::c_void;
 
