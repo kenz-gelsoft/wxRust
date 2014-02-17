@@ -92,124 +92,80 @@ impl wxHtmlHelpController {
     pub fn from(handle: *mut c_void) -> wxHtmlHelpController { wxHtmlHelpController { handle: handle } }
     pub fn null() -> wxHtmlHelpController { wxHtmlHelpController::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new(_style: c_int) -> wxHtmlHelpController {
         unsafe { wxHtmlHelpController { handle: wxHtmlHelpController_Create(_style) } }
     }
 }
 
 pub trait _wxHtmlHelpController : _wxHelpControllerBase {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn addBook(&self, book: *mut c_void, show_wait_msg: c_int) -> c_int {
         unsafe { wxHtmlHelpController_AddBook(self.handle(), book, show_wait_msg) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn display(&self, x: *mut c_void) -> c_int {
         unsafe { wxHtmlHelpController_Display(self.handle(), x) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn displayBlock(&self, blockNo: c_int) -> c_int {
         unsafe { wxHtmlHelpController_DisplayBlock(self.handle(), blockNo) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn displayContents(&self) -> c_int {
         unsafe { wxHtmlHelpController_DisplayContents(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn displayIndex(&self) -> c_int {
         unsafe { wxHtmlHelpController_DisplayIndex(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn displayNumber(&self, id: c_int) -> c_int {
         unsafe { wxHtmlHelpController_DisplayNumber(self.handle(), id) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn displaySection(&self, section: &str) -> c_int {
         let section = wxT(section);
         unsafe { wxHtmlHelpController_DisplaySection(self.handle(), section.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn displaySectionNumber(&self, sectionNo: c_int) -> c_int {
         unsafe { wxHtmlHelpController_DisplaySectionNumber(self.handle(), sectionNo) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getFrame(&self) -> wxFrame {
         unsafe { wxFrame { handle: wxHtmlHelpController_GetFrame(self.handle()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getFrameParameters(&self, title: *mut c_void, width: *mut c_int, height: *mut c_int, pos_x: *mut c_int, pos_y: *mut c_int, newFrameEachTime: *mut c_int) -> *mut c_void {
         unsafe { wxHtmlHelpController_GetFrameParameters(self.handle(), title, width, height, pos_x, pos_y, newFrameEachTime) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn initialize(&self, file: &str) -> c_int {
         let file = wxT(file);
         unsafe { wxHtmlHelpController_Initialize(self.handle(), file.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn keywordSearch(&self, keyword: &str) -> c_int {
         let keyword = wxT(keyword);
         unsafe { wxHtmlHelpController_KeywordSearch(self.handle(), keyword.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn loadFile(&self, file: &str) -> c_int {
         let file = wxT(file);
         unsafe { wxHtmlHelpController_LoadFile(self.handle(), file.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn quit(&self) -> c_int {
         unsafe { wxHtmlHelpController_Quit(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn readCustomization<T: _wxConfigBase>(&self, cfg: &T, path: &str) {
         let path = wxT(path);
         unsafe { wxHtmlHelpController_ReadCustomization(self.handle(), cfg.handle(), path.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setFrameParameters(&self, title: *mut c_void, width: c_int, height: c_int, pos_x: c_int, pos_y: c_int, newFrameEachTime: c_int) {
         unsafe { wxHtmlHelpController_SetFrameParameters(self.handle(), title, width, height, pos_x, pos_y, newFrameEachTime) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setTempDir(&self, path: &str) {
         let path = wxT(path);
         unsafe { wxHtmlHelpController_SetTempDir(self.handle(), path.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setTitleFormat(&self, format: *mut c_void) {
         unsafe { wxHtmlHelpController_SetTitleFormat(self.handle(), format) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setViewer(&self, viewer: &str, flags: c_int) {
         let viewer = wxT(viewer);
         unsafe { wxHtmlHelpController_SetViewer(self.handle(), viewer.handle(), flags) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn useConfig<T: _wxConfigBase>(&self, config: &T, rootpath: &str) {
         let rootpath = wxT(rootpath);
         unsafe { wxHtmlHelpController_UseConfig(self.handle(), config.handle(), rootpath.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn writeCustomization<T: _wxConfigBase>(&self, cfg: &T, path: &str) {
         let path = wxT(path);
         unsafe { wxHtmlHelpController_WriteCustomization(self.handle(), cfg.handle(), path.handle()) }
@@ -380,8 +336,6 @@ impl wxHtmlWindow {
     pub fn from(handle: *mut c_void) -> wxHtmlWindow { wxHtmlWindow { handle: handle } }
     pub fn null() -> wxHtmlWindow { wxHtmlWindow::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> wxHtmlWindow {
         let _txt = wxT(_txt);
         unsafe { wxHtmlWindow { handle: wxHtmlWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.handle()) } }
@@ -389,105 +343,67 @@ impl wxHtmlWindow {
 }
 
 pub trait _wxHtmlWindow : _wxScrolledWindow {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn appendToPage(&self, source: &str) -> c_int {
         let source = wxT(source);
         unsafe { wxHtmlWindow_AppendToPage(self.handle(), source.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getInternalRepresentation(&self) -> wxHtmlContainerCell {
         unsafe { wxHtmlContainerCell { handle: wxHtmlWindow_GetInternalRepresentation(self.handle()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getOpenedAnchor(&self) -> ~str {
         unsafe { wxString { handle: wxHtmlWindow_GetOpenedAnchor(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getOpenedPage(&self) -> ~str {
         unsafe { wxString { handle: wxHtmlWindow_GetOpenedPage(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getOpenedPageTitle(&self) -> ~str {
         unsafe { wxString { handle: wxHtmlWindow_GetOpenedPageTitle(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getRelatedFrame(&self) -> wxFrame {
         unsafe { wxFrame { handle: wxHtmlWindow_GetRelatedFrame(self.handle()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn historyBack(&self) -> c_int {
         unsafe { wxHtmlWindow_HistoryBack(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn historyCanBack(&self) -> c_int {
         unsafe { wxHtmlWindow_HistoryCanBack(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn historyCanForward(&self) -> c_int {
         unsafe { wxHtmlWindow_HistoryCanForward(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn historyClear(&self) {
         unsafe { wxHtmlWindow_HistoryClear(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn historyForward(&self) -> c_int {
         unsafe { wxHtmlWindow_HistoryForward(self.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn loadPage(&self, location: &str) -> c_int {
         let location = wxT(location);
         unsafe { wxHtmlWindow_LoadPage(self.handle(), location.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn readCustomization<T: _wxConfigBase>(&self, cfg: &T, path: &str) {
         let path = wxT(path);
         unsafe { wxHtmlWindow_ReadCustomization(self.handle(), cfg.handle(), path.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setBorders(&self, b: c_int) {
         unsafe { wxHtmlWindow_SetBorders(self.handle(), b) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setFonts(&self, normal_face: &str, fixed_face: &str, sizes: *mut c_int) {
         let normal_face = wxT(normal_face);
         let fixed_face = wxT(fixed_face);
         unsafe { wxHtmlWindow_SetFonts(self.handle(), normal_face.handle(), fixed_face.handle(), sizes) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setPage(&self, source: &str) {
         let source = wxT(source);
         unsafe { wxHtmlWindow_SetPage(self.handle(), source.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setRelatedFrame<T: _wxFrame>(&self, frame: &T, format: &str) {
         let format = wxT(format);
         unsafe { wxHtmlWindow_SetRelatedFrame(self.handle(), frame.handle(), format.handle()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setRelatedStatusBar(&self, bar: c_int) {
         unsafe { wxHtmlWindow_SetRelatedStatusBar(self.handle(), bar) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn writeCustomization<T: _wxConfigBase>(&self, cfg: &T, path: &str) {
         let path = wxT(path);
         unsafe { wxHtmlWindow_WriteCustomization(self.handle(), cfg.handle(), path.handle()) }
@@ -507,33 +423,21 @@ impl wxcHtmlEvent {
 }
 
 pub trait _wxcHtmlEvent : _wxCommandEvent {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getMouseEvent(&self) -> wxMouseEvent {
         unsafe { wxMouseEvent { handle: wxcHtmlEvent_GetMouseEvent(self.handle()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getHtmlCell(&self) -> wxHtmlCell {
         unsafe { wxHtmlCell { handle: wxcHtmlEvent_GetHtmlCell(self.handle()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getHtmlCellId(&self) -> ~str {
         unsafe { wxString { handle: wxcHtmlEvent_GetHtmlCellId(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getHref(&self) -> ~str {
         unsafe { wxString { handle: wxcHtmlEvent_GetHref(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getTarget(&self) -> ~str {
         unsafe { wxString { handle: wxcHtmlEvent_GetTarget(self.handle()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getLogicalPosition(&self) -> wxPoint {
         unsafe { wxPoint { handle: wxcHtmlEvent_GetLogicalPosition(self.handle()) } }
     }
@@ -552,8 +456,6 @@ impl wxcHtmlWindow {
     pub fn from(handle: *mut c_void) -> wxcHtmlWindow { wxcHtmlWindow { handle: handle } }
     pub fn null() -> wxcHtmlWindow { wxcHtmlWindow::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> wxcHtmlWindow {
         let _txt = wxT(_txt);
         unsafe { wxcHtmlWindow { handle: wxcHtmlWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.handle()) } }
