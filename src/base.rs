@@ -13,22 +13,22 @@ extern {
 pub fn wxT(s: &str) -> wxString {
     unsafe {
         s.to_c_str().with_ref(|c_str| {
-            wxString { handle: wxString_CreateUTF8(c_str as *mut c_void) }
+            wxString { ptr: wxString_CreateUTF8(c_str as *mut c_void) }
         })
     }
 }
 
-pub struct wxString { handle: *mut c_void }
+pub struct wxString { ptr: *mut c_void }
 impl Drop for wxString {
     fn drop(&mut self) {
-        unsafe { wxString_Delete(self.handle); }
+        unsafe { wxString_Delete(self.ptr); }
     }
 }
 impl wxString {
-    pub fn handle(&self) -> *mut c_void { self.handle }
+    pub fn ptr(&self) -> *mut c_void { self.ptr }
     pub fn to_str(&self) -> ~str {
         unsafe {
-            let charBuffer = wxString_GetUtf8(self.handle);
+            let charBuffer = wxString_GetUtf8(self.ptr);
             let utf8 = wxCharBuffer_DataUtf8(charBuffer);
             wxCharBuffer_Delete(charBuffer);
             str::raw::from_c_str(utf8)
@@ -36,14 +36,14 @@ impl wxString {
     }
 }
 
-pub struct ELJClient { handle: *mut c_void }
+pub struct ELJClient { ptr: *mut c_void }
 impl _ELJClient for ELJClient {}
 impl _wxClient for ELJClient {}
 impl _wxClientBase for ELJClient {}
-impl _wxObject for ELJClient { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for ELJClient { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl ELJClient {
-    pub fn from(handle: *mut c_void) -> ELJClient { ELJClient { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> ELJClient { ELJClient { ptr: ptr } }
     pub fn null() -> ELJClient { ELJClient::from(0 as *mut c_void) }
     
 }
@@ -51,14 +51,14 @@ impl ELJClient {
 pub trait _ELJClient : _wxClient {
 }
 
-pub struct ELJConnection { handle: *mut c_void }
+pub struct ELJConnection { ptr: *mut c_void }
 impl _ELJConnection for ELJConnection {}
 impl _wxConnection for ELJConnection {}
 impl _wxConnectionBase for ELJConnection {}
-impl _wxObject for ELJConnection { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for ELJConnection { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl ELJConnection {
-    pub fn from(handle: *mut c_void) -> ELJConnection { ELJConnection { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> ELJConnection { ELJConnection { ptr: ptr } }
     pub fn null() -> ELJConnection { ELJConnection::from(0 as *mut c_void) }
     
 }
@@ -66,12 +66,12 @@ impl ELJConnection {
 pub trait _ELJConnection : _wxConnection {
 }
 
-pub struct ELJLocale { handle: *mut c_void }
+pub struct ELJLocale { ptr: *mut c_void }
 impl _ELJLocale for ELJLocale {}
-impl _wxLocale for ELJLocale { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxLocale for ELJLocale { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl ELJLocale {
-    pub fn from(handle: *mut c_void) -> ELJLocale { ELJLocale { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> ELJLocale { ELJLocale { ptr: ptr } }
     pub fn null() -> ELJLocale { ELJLocale::from(0 as *mut c_void) }
     
 }
@@ -79,14 +79,14 @@ impl ELJLocale {
 pub trait _ELJLocale : _wxLocale {
 }
 
-pub struct ELJServer { handle: *mut c_void }
+pub struct ELJServer { ptr: *mut c_void }
 impl _ELJServer for ELJServer {}
 impl _wxServer for ELJServer {}
 impl _wxServerBase for ELJServer {}
-impl _wxObject for ELJServer { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for ELJServer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl ELJServer {
-    pub fn from(handle: *mut c_void) -> ELJServer { ELJServer { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> ELJServer { ELJServer { ptr: ptr } }
     pub fn null() -> ELJServer { ELJServer::from(0 as *mut c_void) }
     
 }
@@ -94,26 +94,26 @@ impl ELJServer {
 pub trait _ELJServer : _wxServer {
 }
 
-pub struct wxArray { handle: *mut c_void }
-impl _wxArray for wxArray { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxArray { ptr: *mut c_void }
+impl _wxArray for wxArray { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxArray {
-    pub fn from(handle: *mut c_void) -> wxArray { wxArray { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxArray { wxArray { ptr: ptr } }
     pub fn null() -> wxArray { wxArray::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxArray {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxArrayString { handle: *mut c_void }
+pub struct wxArrayString { ptr: *mut c_void }
 impl _wxArrayString for wxArrayString {}
-impl _wxArray for wxArrayString { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxArray for wxArrayString { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxArrayString {
-    pub fn from(handle: *mut c_void) -> wxArrayString { wxArrayString { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxArrayString { wxArrayString { ptr: ptr } }
     pub fn null() -> wxArrayString { wxArrayString::from(0 as *mut c_void) }
     
 }
@@ -121,14 +121,14 @@ impl wxArrayString {
 pub trait _wxArrayString : _wxArray {
 }
 
-pub struct wxBufferedInputStream { handle: *mut c_void }
+pub struct wxBufferedInputStream { ptr: *mut c_void }
 impl _wxBufferedInputStream for wxBufferedInputStream {}
 impl _wxFilterInputStream for wxBufferedInputStream {}
 impl _wxInputStream for wxBufferedInputStream {}
-impl _wxStreamBase for wxBufferedInputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxBufferedInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxBufferedInputStream {
-    pub fn from(handle: *mut c_void) -> wxBufferedInputStream { wxBufferedInputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxBufferedInputStream { wxBufferedInputStream { ptr: ptr } }
     pub fn null() -> wxBufferedInputStream { wxBufferedInputStream::from(0 as *mut c_void) }
     
 }
@@ -136,14 +136,14 @@ impl wxBufferedInputStream {
 pub trait _wxBufferedInputStream : _wxFilterInputStream {
 }
 
-pub struct wxBufferedOutputStream { handle: *mut c_void }
+pub struct wxBufferedOutputStream { ptr: *mut c_void }
 impl _wxBufferedOutputStream for wxBufferedOutputStream {}
 impl _wxFilterOutputStream for wxBufferedOutputStream {}
 impl _wxOutputStream for wxBufferedOutputStream {}
-impl _wxStreamBase for wxBufferedOutputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxBufferedOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxBufferedOutputStream {
-    pub fn from(handle: *mut c_void) -> wxBufferedOutputStream { wxBufferedOutputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxBufferedOutputStream { wxBufferedOutputStream { ptr: ptr } }
     pub fn null() -> wxBufferedOutputStream { wxBufferedOutputStream::from(0 as *mut c_void) }
     
 }
@@ -151,12 +151,12 @@ impl wxBufferedOutputStream {
 pub trait _wxBufferedOutputStream : _wxFilterOutputStream {
 }
 
-pub struct wxCSConv { handle: *mut c_void }
+pub struct wxCSConv { ptr: *mut c_void }
 impl _wxCSConv for wxCSConv {}
-impl _wxMBConv for wxCSConv { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxMBConv for wxCSConv { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxCSConv {
-    pub fn from(handle: *mut c_void) -> wxCSConv { wxCSConv { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxCSConv { wxCSConv { ptr: ptr } }
     pub fn null() -> wxCSConv { wxCSConv::from(0 as *mut c_void) }
     
 }
@@ -164,56 +164,56 @@ impl wxCSConv {
 pub trait _wxCSConv : _wxMBConv {
 }
 
-pub struct wxClassInfo { handle: *mut c_void }
-impl _wxClassInfo for wxClassInfo { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxClassInfo { ptr: *mut c_void }
+impl _wxClassInfo for wxClassInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxClassInfo {
-    pub fn from(handle: *mut c_void) -> wxClassInfo { wxClassInfo { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxClassInfo { wxClassInfo { ptr: ptr } }
     pub fn null() -> wxClassInfo { wxClassInfo::from(0 as *mut c_void) }
     
     pub fn findClass(_txt: &str) -> wxClassInfo {
         let _txt = wxT(_txt);
-        unsafe { wxClassInfo { handle: wxClassInfo_FindClass(_txt.handle()) } }
+        unsafe { wxClassInfo { ptr: wxClassInfo_FindClass(_txt.ptr()) } }
     }
 }
 
 pub trait _wxClassInfo {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
     fn newClassByName(&self) -> *mut c_void {
-        unsafe { wxClassInfo_CreateClassByName(self.handle()) }
+        unsafe { wxClassInfo_CreateClassByName(self.ptr()) }
     }
     fn getClassName(&self) -> *mut c_void {
-        unsafe { wxClassInfo_GetClassName(self.handle()) }
+        unsafe { wxClassInfo_GetClassName(self.ptr()) }
     }
     fn isKindOf(&self, _name: &str) -> c_int {
         let _name = wxT(_name);
-        unsafe { wxClassInfo_IsKindOf(self.handle(), _name.handle()) }
+        unsafe { wxClassInfo_IsKindOf(self.ptr(), _name.ptr()) }
     }
     fn getBaseClassName1(&self) -> ~str {
-        unsafe { wxString { handle: wxClassInfo_GetBaseClassName1(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxClassInfo_GetBaseClassName1(self.ptr()) }.to_str() }
     }
     fn getBaseClassName2(&self) -> ~str {
-        unsafe { wxString { handle: wxClassInfo_GetBaseClassName2(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxClassInfo_GetBaseClassName2(self.ptr()) }.to_str() }
     }
     fn getClassNameEx(&self) -> ~str {
-        unsafe { wxString { handle: wxClassInfo_GetClassNameEx(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxClassInfo_GetClassNameEx(self.ptr()) }.to_str() }
     }
     fn getSize(&self) -> c_int {
-        unsafe { wxClassInfo_GetSize(self.handle()) }
+        unsafe { wxClassInfo_GetSize(self.ptr()) }
     }
     fn isKindOfEx<T: _wxClassInfo>(&self, classInfo: &T) -> c_int {
-        unsafe { wxClassInfo_IsKindOfEx(self.handle(), classInfo.handle()) }
+        unsafe { wxClassInfo_IsKindOfEx(self.ptr(), classInfo.ptr()) }
     }
 }
 
-pub struct wxClient { handle: *mut c_void }
+pub struct wxClient { ptr: *mut c_void }
 impl _wxClient for wxClient {}
 impl _wxClientBase for wxClient {}
-impl _wxObject for wxClient { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxClient { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxClient {
-    pub fn from(handle: *mut c_void) -> wxClient { wxClient { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxClient { wxClient { ptr: ptr } }
     pub fn null() -> wxClient { wxClient::from(0 as *mut c_void) }
     
 }
@@ -221,12 +221,12 @@ impl wxClient {
 pub trait _wxClient : _wxClientBase {
 }
 
-pub struct wxClientBase { handle: *mut c_void }
+pub struct wxClientBase { ptr: *mut c_void }
 impl _wxClientBase for wxClientBase {}
-impl _wxObject for wxClientBase { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxClientBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxClientBase {
-    pub fn from(handle: *mut c_void) -> wxClientBase { wxClientBase { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxClientBase { wxClientBase { ptr: ptr } }
     pub fn null() -> wxClientBase { wxClientBase::from(0 as *mut c_void) }
     
 }
@@ -234,253 +234,253 @@ impl wxClientBase {
 pub trait _wxClientBase : _wxObject {
 }
 
-pub struct wxClientData { handle: *mut c_void }
-impl _wxClientData for wxClientData { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxClientData { ptr: *mut c_void }
+impl _wxClientData for wxClientData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxClientData {
-    pub fn from(handle: *mut c_void) -> wxClientData { wxClientData { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxClientData { wxClientData { ptr: ptr } }
     pub fn null() -> wxClientData { wxClientData::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxClientData {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxClientDataContainer { handle: *mut c_void }
-impl _wxClientDataContainer for wxClientDataContainer { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxClientDataContainer { ptr: *mut c_void }
+impl _wxClientDataContainer for wxClientDataContainer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxClientDataContainer {
-    pub fn from(handle: *mut c_void) -> wxClientDataContainer { wxClientDataContainer { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxClientDataContainer { wxClientDataContainer { ptr: ptr } }
     pub fn null() -> wxClientDataContainer { wxClientDataContainer::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxClientDataContainer {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxClosure { handle: *mut c_void }
+pub struct wxClosure { ptr: *mut c_void }
 impl _wxClosure for wxClosure {}
-impl _wxObject for wxClosure { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxClosure { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxClosure {
-    pub fn from(handle: *mut c_void) -> wxClosure { wxClosure { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxClosure { wxClosure { ptr: ptr } }
     pub fn null() -> wxClosure { wxClosure::from(0 as *mut c_void) }
     
     pub fn new(_fun_CEvent: *mut c_void, _data: *mut c_void) -> wxClosure {
-        unsafe { wxClosure { handle: wxClosure_Create(_fun_CEvent, _data) } }
+        unsafe { wxClosure { ptr: wxClosure_Create(_fun_CEvent, _data) } }
     }
 }
 
 pub trait _wxClosure : _wxObject {
     fn getData(&self) -> *mut c_void {
-        unsafe { wxClosure_GetData(self.handle()) }
+        unsafe { wxClosure_GetData(self.ptr()) }
     }
 }
 
-pub struct wxCommandLineParser { handle: *mut c_void }
-impl _wxCommandLineParser for wxCommandLineParser { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxCommandLineParser { ptr: *mut c_void }
+impl _wxCommandLineParser for wxCommandLineParser { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxCommandLineParser {
-    pub fn from(handle: *mut c_void) -> wxCommandLineParser { wxCommandLineParser { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxCommandLineParser { wxCommandLineParser { ptr: ptr } }
     pub fn null() -> wxCommandLineParser { wxCommandLineParser::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxCommandLineParser {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxCondition { handle: *mut c_void }
-impl _wxCondition for wxCondition { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxCondition { ptr: *mut c_void }
+impl _wxCondition for wxCondition { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxCondition {
-    pub fn from(handle: *mut c_void) -> wxCondition { wxCondition { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxCondition { wxCondition { ptr: ptr } }
     pub fn null() -> wxCondition { wxCondition::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxCondition {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxConfigBase { handle: *mut c_void }
-impl _wxConfigBase for wxConfigBase { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxConfigBase { ptr: *mut c_void }
+impl _wxConfigBase for wxConfigBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxConfigBase {
-    pub fn from(handle: *mut c_void) -> wxConfigBase { wxConfigBase { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxConfigBase { wxConfigBase { ptr: ptr } }
     pub fn null() -> wxConfigBase { wxConfigBase::from(0 as *mut c_void) }
     
     pub fn new() -> wxConfigBase {
-        unsafe { wxConfigBase { handle: wxConfigBase_Create() } }
+        unsafe { wxConfigBase { ptr: wxConfigBase_Create() } }
     }
     pub fn get() -> wxConfigBase {
-        unsafe { wxConfigBase { handle: wxConfigBase_Get() } }
+        unsafe { wxConfigBase { ptr: wxConfigBase_Get() } }
     }
     pub fn set<T: _wxConfigBase>(self_: &T) {
-        unsafe { wxConfigBase_Set(self_.handle()) }
+        unsafe { wxConfigBase_Set(self_.ptr()) }
     }
 }
 
 pub trait _wxConfigBase {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
-        unsafe { wxConfigBase_Delete(self.handle()) }
+        unsafe { wxConfigBase_Delete(self.ptr()) }
     }
     fn deleteAll(&self) -> c_int {
-        unsafe { wxConfigBase_DeleteAll(self.handle()) }
+        unsafe { wxConfigBase_DeleteAll(self.ptr()) }
     }
     fn deleteEntry(&self, key: &str, bDeleteGroupIfEmpty: c_int) -> c_int {
         let key = wxT(key);
-        unsafe { wxConfigBase_DeleteEntry(self.handle(), key.handle(), bDeleteGroupIfEmpty) }
+        unsafe { wxConfigBase_DeleteEntry(self.ptr(), key.ptr(), bDeleteGroupIfEmpty) }
     }
     fn deleteGroup(&self, key: &str) -> c_int {
         let key = wxT(key);
-        unsafe { wxConfigBase_DeleteGroup(self.handle(), key.handle()) }
+        unsafe { wxConfigBase_DeleteGroup(self.ptr(), key.ptr()) }
     }
     fn exists(&self, strName: &str) -> c_int {
         let strName = wxT(strName);
-        unsafe { wxConfigBase_Exists(self.handle(), strName.handle()) }
+        unsafe { wxConfigBase_Exists(self.ptr(), strName.ptr()) }
     }
     fn expandEnvVars(&self, str: &str) -> ~str {
         let str = wxT(str);
-        unsafe { wxString { handle: wxConfigBase_ExpandEnvVars(self.handle(), str.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxConfigBase_ExpandEnvVars(self.ptr(), str.ptr()) }.to_str() }
     }
     fn flush(&self, bCurrentOnly: c_int) -> c_int {
-        unsafe { wxConfigBase_Flush(self.handle(), bCurrentOnly) }
+        unsafe { wxConfigBase_Flush(self.ptr(), bCurrentOnly) }
     }
     fn getAppName(&self) -> ~str {
-        unsafe { wxString { handle: wxConfigBase_GetAppName(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxConfigBase_GetAppName(self.ptr()) }.to_str() }
     }
     fn getEntryType(&self, name: &str) -> c_int {
         let name = wxT(name);
-        unsafe { wxConfigBase_GetEntryType(self.handle(), name.handle()) }
+        unsafe { wxConfigBase_GetEntryType(self.ptr(), name.ptr()) }
     }
     fn getFirstEntry(&self, lIndex: *mut c_void) -> ~str {
-        unsafe { wxString { handle: wxConfigBase_GetFirstEntry(self.handle(), lIndex) }.to_str() }
+        unsafe { wxString { ptr: wxConfigBase_GetFirstEntry(self.ptr(), lIndex) }.to_str() }
     }
     fn getFirstGroup(&self, lIndex: *mut c_void) -> ~str {
-        unsafe { wxString { handle: wxConfigBase_GetFirstGroup(self.handle(), lIndex) }.to_str() }
+        unsafe { wxString { ptr: wxConfigBase_GetFirstGroup(self.ptr(), lIndex) }.to_str() }
     }
     fn getNextEntry(&self, lIndex: *mut c_void) -> ~str {
-        unsafe { wxString { handle: wxConfigBase_GetNextEntry(self.handle(), lIndex) }.to_str() }
+        unsafe { wxString { ptr: wxConfigBase_GetNextEntry(self.ptr(), lIndex) }.to_str() }
     }
     fn getNextGroup(&self, lIndex: *mut c_void) -> ~str {
-        unsafe { wxString { handle: wxConfigBase_GetNextGroup(self.handle(), lIndex) }.to_str() }
+        unsafe { wxString { ptr: wxConfigBase_GetNextGroup(self.ptr(), lIndex) }.to_str() }
     }
     fn getNumberOfEntries(&self, bRecursive: c_int) -> c_int {
-        unsafe { wxConfigBase_GetNumberOfEntries(self.handle(), bRecursive) }
+        unsafe { wxConfigBase_GetNumberOfEntries(self.ptr(), bRecursive) }
     }
     fn getNumberOfGroups(&self, bRecursive: c_int) -> c_int {
-        unsafe { wxConfigBase_GetNumberOfGroups(self.handle(), bRecursive) }
+        unsafe { wxConfigBase_GetNumberOfGroups(self.ptr(), bRecursive) }
     }
     fn getPath(&self) -> ~str {
-        unsafe { wxString { handle: wxConfigBase_GetPath(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxConfigBase_GetPath(self.ptr()) }.to_str() }
     }
     fn getStyle(&self) -> c_int {
-        unsafe { wxConfigBase_GetStyle(self.handle()) }
+        unsafe { wxConfigBase_GetStyle(self.ptr()) }
     }
     fn getVendorName(&self) -> ~str {
-        unsafe { wxString { handle: wxConfigBase_GetVendorName(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxConfigBase_GetVendorName(self.ptr()) }.to_str() }
     }
     fn hasEntry(&self, strName: &str) -> c_int {
         let strName = wxT(strName);
-        unsafe { wxConfigBase_HasEntry(self.handle(), strName.handle()) }
+        unsafe { wxConfigBase_HasEntry(self.ptr(), strName.ptr()) }
     }
     fn hasGroup(&self, strName: &str) -> c_int {
         let strName = wxT(strName);
-        unsafe { wxConfigBase_HasGroup(self.handle(), strName.handle()) }
+        unsafe { wxConfigBase_HasGroup(self.ptr(), strName.ptr()) }
     }
     fn isExpandingEnvVars(&self) -> c_int {
-        unsafe { wxConfigBase_IsExpandingEnvVars(self.handle()) }
+        unsafe { wxConfigBase_IsExpandingEnvVars(self.ptr()) }
     }
     fn isRecordingDefaults(&self) -> c_int {
-        unsafe { wxConfigBase_IsRecordingDefaults(self.handle()) }
+        unsafe { wxConfigBase_IsRecordingDefaults(self.ptr()) }
     }
     fn readBool(&self, key: &str, defVal: c_int) -> c_int {
         let key = wxT(key);
-        unsafe { wxConfigBase_ReadBool(self.handle(), key.handle(), defVal) }
+        unsafe { wxConfigBase_ReadBool(self.ptr(), key.ptr(), defVal) }
     }
     fn readDouble(&self, key: &str, defVal: c_double) -> c_double {
         let key = wxT(key);
-        unsafe { wxConfigBase_ReadDouble(self.handle(), key.handle(), defVal) }
+        unsafe { wxConfigBase_ReadDouble(self.ptr(), key.ptr(), defVal) }
     }
     fn readInteger(&self, key: &str, defVal: c_int) -> c_int {
         let key = wxT(key);
-        unsafe { wxConfigBase_ReadInteger(self.handle(), key.handle(), defVal) }
+        unsafe { wxConfigBase_ReadInteger(self.ptr(), key.ptr(), defVal) }
     }
     fn readString(&self, key: &str, defVal: &str) -> ~str {
         let key = wxT(key);
         let defVal = wxT(defVal);
-        unsafe { wxString { handle: wxConfigBase_ReadString(self.handle(), key.handle(), defVal.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxConfigBase_ReadString(self.ptr(), key.ptr(), defVal.ptr()) }.to_str() }
     }
     fn renameEntry(&self, oldName: &str, newName: &str) -> c_int {
         let oldName = wxT(oldName);
         let newName = wxT(newName);
-        unsafe { wxConfigBase_RenameEntry(self.handle(), oldName.handle(), newName.handle()) }
+        unsafe { wxConfigBase_RenameEntry(self.ptr(), oldName.ptr(), newName.ptr()) }
     }
     fn renameGroup(&self, oldName: &str, newName: &str) -> c_int {
         let oldName = wxT(oldName);
         let newName = wxT(newName);
-        unsafe { wxConfigBase_RenameGroup(self.handle(), oldName.handle(), newName.handle()) }
+        unsafe { wxConfigBase_RenameGroup(self.ptr(), oldName.ptr(), newName.ptr()) }
     }
     fn setAppName(&self, appName: &str) {
         let appName = wxT(appName);
-        unsafe { wxConfigBase_SetAppName(self.handle(), appName.handle()) }
+        unsafe { wxConfigBase_SetAppName(self.ptr(), appName.ptr()) }
     }
     fn setExpandEnvVars(&self, bDoIt: c_int) {
-        unsafe { wxConfigBase_SetExpandEnvVars(self.handle(), bDoIt) }
+        unsafe { wxConfigBase_SetExpandEnvVars(self.ptr(), bDoIt) }
     }
     fn setPath(&self, strPath: &str) {
         let strPath = wxT(strPath);
-        unsafe { wxConfigBase_SetPath(self.handle(), strPath.handle()) }
+        unsafe { wxConfigBase_SetPath(self.ptr(), strPath.ptr()) }
     }
     fn setRecordDefaults(&self, bDoIt: c_int) {
-        unsafe { wxConfigBase_SetRecordDefaults(self.handle(), bDoIt) }
+        unsafe { wxConfigBase_SetRecordDefaults(self.ptr(), bDoIt) }
     }
     fn setStyle(&self, style: c_int) {
-        unsafe { wxConfigBase_SetStyle(self.handle(), style) }
+        unsafe { wxConfigBase_SetStyle(self.ptr(), style) }
     }
     fn setVendorName(&self, vendorName: &str) {
         let vendorName = wxT(vendorName);
-        unsafe { wxConfigBase_SetVendorName(self.handle(), vendorName.handle()) }
+        unsafe { wxConfigBase_SetVendorName(self.ptr(), vendorName.ptr()) }
     }
     fn writeBool(&self, key: &str, value: c_int) -> c_int {
         let key = wxT(key);
-        unsafe { wxConfigBase_WriteBool(self.handle(), key.handle(), value) }
+        unsafe { wxConfigBase_WriteBool(self.ptr(), key.ptr(), value) }
     }
     fn writeDouble(&self, key: &str, value: c_double) -> c_int {
         let key = wxT(key);
-        unsafe { wxConfigBase_WriteDouble(self.handle(), key.handle(), value) }
+        unsafe { wxConfigBase_WriteDouble(self.ptr(), key.ptr(), value) }
     }
     fn writeInteger(&self, key: &str, value: c_int) -> c_int {
         let key = wxT(key);
-        unsafe { wxConfigBase_WriteInteger(self.handle(), key.handle(), value) }
+        unsafe { wxConfigBase_WriteInteger(self.ptr(), key.ptr(), value) }
     }
     fn writeLong(&self, key: &str, value: c_long) -> c_int {
         let key = wxT(key);
-        unsafe { wxConfigBase_WriteLong(self.handle(), key.handle(), value) }
+        unsafe { wxConfigBase_WriteLong(self.ptr(), key.ptr(), value) }
     }
     fn writeString(&self, key: &str, value: &str) -> c_int {
         let key = wxT(key);
         let value = wxT(value);
-        unsafe { wxConfigBase_WriteString(self.handle(), key.handle(), value.handle()) }
+        unsafe { wxConfigBase_WriteString(self.ptr(), key.ptr(), value.ptr()) }
     }
 }
 
-pub struct wxConnection { handle: *mut c_void }
+pub struct wxConnection { ptr: *mut c_void }
 impl _wxConnection for wxConnection {}
 impl _wxConnectionBase for wxConnection {}
-impl _wxObject for wxConnection { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxConnection { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxConnection {
-    pub fn from(handle: *mut c_void) -> wxConnection { wxConnection { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxConnection { wxConnection { ptr: ptr } }
     pub fn null() -> wxConnection { wxConnection::from(0 as *mut c_void) }
     
 }
@@ -488,12 +488,12 @@ impl wxConnection {
 pub trait _wxConnection : _wxConnectionBase {
 }
 
-pub struct wxConnectionBase { handle: *mut c_void }
+pub struct wxConnectionBase { ptr: *mut c_void }
 impl _wxConnectionBase for wxConnectionBase {}
-impl _wxObject for wxConnectionBase { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxConnectionBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxConnectionBase {
-    pub fn from(handle: *mut c_void) -> wxConnectionBase { wxConnectionBase { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxConnectionBase { wxConnectionBase { ptr: ptr } }
     pub fn null() -> wxConnectionBase { wxConnectionBase::from(0 as *mut c_void) }
     
 }
@@ -501,13 +501,13 @@ impl wxConnectionBase {
 pub trait _wxConnectionBase : _wxObject {
 }
 
-pub struct wxCountingOutputStream { handle: *mut c_void }
+pub struct wxCountingOutputStream { ptr: *mut c_void }
 impl _wxCountingOutputStream for wxCountingOutputStream {}
 impl _wxOutputStream for wxCountingOutputStream {}
-impl _wxStreamBase for wxCountingOutputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxCountingOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxCountingOutputStream {
-    pub fn from(handle: *mut c_void) -> wxCountingOutputStream { wxCountingOutputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxCountingOutputStream { wxCountingOutputStream { ptr: ptr } }
     pub fn null() -> wxCountingOutputStream { wxCountingOutputStream::from(0 as *mut c_void) }
     
 }
@@ -515,41 +515,41 @@ impl wxCountingOutputStream {
 pub trait _wxCountingOutputStream : _wxOutputStream {
 }
 
-pub struct wxCriticalSection { handle: *mut c_void }
-impl _wxCriticalSection for wxCriticalSection { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxCriticalSection { ptr: *mut c_void }
+impl _wxCriticalSection for wxCriticalSection { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxCriticalSection {
-    pub fn from(handle: *mut c_void) -> wxCriticalSection { wxCriticalSection { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxCriticalSection { wxCriticalSection { ptr: ptr } }
     pub fn null() -> wxCriticalSection { wxCriticalSection::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxCriticalSection {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxCriticalSectionLocker { handle: *mut c_void }
-impl _wxCriticalSectionLocker for wxCriticalSectionLocker { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxCriticalSectionLocker { ptr: *mut c_void }
+impl _wxCriticalSectionLocker for wxCriticalSectionLocker { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxCriticalSectionLocker {
-    pub fn from(handle: *mut c_void) -> wxCriticalSectionLocker { wxCriticalSectionLocker { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxCriticalSectionLocker { wxCriticalSectionLocker { ptr: ptr } }
     pub fn null() -> wxCriticalSectionLocker { wxCriticalSectionLocker::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxCriticalSectionLocker {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDDEClient { handle: *mut c_void }
+pub struct wxDDEClient { ptr: *mut c_void }
 impl _wxDDEClient for wxDDEClient {}
 impl _wxClientBase for wxDDEClient {}
-impl _wxObject for wxDDEClient { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxDDEClient { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxDDEClient {
-    pub fn from(handle: *mut c_void) -> wxDDEClient { wxDDEClient { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxDDEClient { wxDDEClient { ptr: ptr } }
     pub fn null() -> wxDDEClient { wxDDEClient::from(0 as *mut c_void) }
     
 }
@@ -557,13 +557,13 @@ impl wxDDEClient {
 pub trait _wxDDEClient : _wxClientBase {
 }
 
-pub struct wxDDEConnection { handle: *mut c_void }
+pub struct wxDDEConnection { ptr: *mut c_void }
 impl _wxDDEConnection for wxDDEConnection {}
 impl _wxConnectionBase for wxDDEConnection {}
-impl _wxObject for wxDDEConnection { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxDDEConnection { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxDDEConnection {
-    pub fn from(handle: *mut c_void) -> wxDDEConnection { wxDDEConnection { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxDDEConnection { wxDDEConnection { ptr: ptr } }
     pub fn null() -> wxDDEConnection { wxDDEConnection::from(0 as *mut c_void) }
     
 }
@@ -571,13 +571,13 @@ impl wxDDEConnection {
 pub trait _wxDDEConnection : _wxConnectionBase {
 }
 
-pub struct wxDDEServer { handle: *mut c_void }
+pub struct wxDDEServer { ptr: *mut c_void }
 impl _wxDDEServer for wxDDEServer {}
 impl _wxServerBase for wxDDEServer {}
-impl _wxObject for wxDDEServer { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxDDEServer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxDDEServer {
-    pub fn from(handle: *mut c_void) -> wxDDEServer { wxDDEServer { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxDDEServer { wxDDEServer { ptr: ptr } }
     pub fn null() -> wxDDEServer { wxDDEServer::from(0 as *mut c_void) }
     
 }
@@ -585,52 +585,52 @@ impl wxDDEServer {
 pub trait _wxDDEServer : _wxServerBase {
 }
 
-pub struct wxDataInputStream { handle: *mut c_void }
-impl _wxDataInputStream for wxDataInputStream { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxDataInputStream { ptr: *mut c_void }
+impl _wxDataInputStream for wxDataInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxDataInputStream {
-    pub fn from(handle: *mut c_void) -> wxDataInputStream { wxDataInputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxDataInputStream { wxDataInputStream { ptr: ptr } }
     pub fn null() -> wxDataInputStream { wxDataInputStream::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxDataInputStream {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDataOutputStream { handle: *mut c_void }
-impl _wxDataOutputStream for wxDataOutputStream { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxDataOutputStream { ptr: *mut c_void }
+impl _wxDataOutputStream for wxDataOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxDataOutputStream {
-    pub fn from(handle: *mut c_void) -> wxDataOutputStream { wxDataOutputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxDataOutputStream { wxDataOutputStream { ptr: ptr } }
     pub fn null() -> wxDataOutputStream { wxDataOutputStream::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxDataOutputStream {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDateTime { handle: *mut c_void }
-impl _wxDateTime for wxDateTime { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxDateTime { ptr: *mut c_void }
+impl _wxDateTime for wxDateTime { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxDateTime {
-    pub fn from(handle: *mut c_void) -> wxDateTime { wxDateTime { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxDateTime { wxDateTime { ptr: ptr } }
     pub fn null() -> wxDateTime { wxDateTime::from(0 as *mut c_void) }
     
     pub fn convertYearToBC(year: c_int) -> c_int {
         unsafe { wxDateTime_ConvertYearToBC(year) }
     }
     pub fn new() -> wxDateTime {
-        unsafe { wxDateTime { handle: wxDateTime_Create() } }
+        unsafe { wxDateTime { ptr: wxDateTime_Create() } }
     }
     pub fn getAmString() -> ~str {
-        unsafe { wxString { handle: wxDateTime_GetAmString() }.to_str() }
+        unsafe { wxString { ptr: wxDateTime_GetAmString() }.to_str() }
     }
     pub fn getBeginDST<T: _wxDateTime>(year: c_int, country: c_int, dt: &T) {
-        unsafe { wxDateTime_GetBeginDST(year, country, dt.handle()) }
+        unsafe { wxDateTime_GetBeginDST(year, country, dt.ptr()) }
     }
     pub fn getCentury(year: c_int) -> c_int {
         unsafe { wxDateTime_GetCentury(year) }
@@ -645,10 +645,10 @@ impl wxDateTime {
         unsafe { wxDateTime_GetCurrentYear(cal) }
     }
     pub fn getEndDST<T: _wxDateTime>(year: c_int, country: c_int, dt: &T) {
-        unsafe { wxDateTime_GetEndDST(year, country, dt.handle()) }
+        unsafe { wxDateTime_GetEndDST(year, country, dt.ptr()) }
     }
     pub fn getMonthName(month: c_int, flags: c_int) -> ~str {
-        unsafe { wxString { handle: wxDateTime_GetMonthName(month, flags) }.to_str() }
+        unsafe { wxString { ptr: wxDateTime_GetMonthName(month, flags) }.to_str() }
     }
     pub fn getNumberOfDays(year: c_int, cal: c_int) -> c_int {
         unsafe { wxDateTime_GetNumberOfDays(year, cal) }
@@ -657,13 +657,13 @@ impl wxDateTime {
         unsafe { wxDateTime_GetNumberOfDaysMonth(month, year, cal) }
     }
     pub fn getPmString() -> ~str {
-        unsafe { wxString { handle: wxDateTime_GetPmString() }.to_str() }
+        unsafe { wxString { ptr: wxDateTime_GetPmString() }.to_str() }
     }
     pub fn getTimeNow() -> c_int {
         unsafe { wxDateTime_GetTimeNow() }
     }
     pub fn getWeekDayName(weekday: c_int, flags: c_int) -> ~str {
-        unsafe { wxString { handle: wxDateTime_GetWeekDayName(weekday, flags) }.to_str() }
+        unsafe { wxString { ptr: wxDateTime_GetWeekDayName(weekday, flags) }.to_str() }
     }
     pub fn isDSTApplicable(year: c_int, country: c_int) -> c_int {
         unsafe { wxDateTime_IsDSTApplicable(year, country) }
@@ -683,328 +683,328 @@ impl wxDateTime {
 }
 
 pub trait _wxDateTime {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
     fn addDate<T: _wxDateTime>(&self, diff: *mut c_void, _ref: &T) {
-        unsafe { wxDateTime_AddDate(self.handle(), diff, _ref.handle()) }
+        unsafe { wxDateTime_AddDate(self.ptr(), diff, _ref.ptr()) }
     }
     fn addDateValues(&self, _yrs: c_int, _mnt: c_int, _wek: c_int, _day: c_int) {
-        unsafe { wxDateTime_AddDateValues(self.handle(), _yrs, _mnt, _wek, _day) }
+        unsafe { wxDateTime_AddDateValues(self.ptr(), _yrs, _mnt, _wek, _day) }
     }
     fn addTime<T: _wxDateTime>(&self, diff: *mut c_void, _ref: &T) {
-        unsafe { wxDateTime_AddTime(self.handle(), diff, _ref.handle()) }
+        unsafe { wxDateTime_AddTime(self.ptr(), diff, _ref.ptr()) }
     }
     fn addTimeValues(&self, _hrs: c_int, _min: c_int, _sec: c_int, _mls: c_int) {
-        unsafe { wxDateTime_AddTimeValues(self.handle(), _hrs, _min, _sec, _mls) }
+        unsafe { wxDateTime_AddTimeValues(self.ptr(), _hrs, _min, _sec, _mls) }
     }
     fn format(&self, format: *mut c_void, tz: c_int) -> ~str {
-        unsafe { wxString { handle: wxDateTime_Format(self.handle(), format, tz) }.to_str() }
+        unsafe { wxString { ptr: wxDateTime_Format(self.ptr(), format, tz) }.to_str() }
     }
     fn formatDate(&self) -> ~str {
-        unsafe { wxString { handle: wxDateTime_FormatDate(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxDateTime_FormatDate(self.ptr()) }.to_str() }
     }
     fn formatISODate(&self) -> ~str {
-        unsafe { wxString { handle: wxDateTime_FormatISODate(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxDateTime_FormatISODate(self.ptr()) }.to_str() }
     }
     fn formatISOTime(&self) -> ~str {
-        unsafe { wxString { handle: wxDateTime_FormatISOTime(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxDateTime_FormatISOTime(self.ptr()) }.to_str() }
     }
     fn formatTime(&self) -> ~str {
-        unsafe { wxString { handle: wxDateTime_FormatTime(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxDateTime_FormatTime(self.ptr()) }.to_str() }
     }
     fn getDay(&self, tz: c_int) -> c_int {
-        unsafe { wxDateTime_GetDay(self.handle(), tz) }
+        unsafe { wxDateTime_GetDay(self.ptr(), tz) }
     }
     fn getDayOfYear(&self, tz: c_int) -> c_int {
-        unsafe { wxDateTime_GetDayOfYear(self.handle(), tz) }
+        unsafe { wxDateTime_GetDayOfYear(self.ptr(), tz) }
     }
     fn getHour(&self, tz: c_int) -> c_int {
-        unsafe { wxDateTime_GetHour(self.handle(), tz) }
+        unsafe { wxDateTime_GetHour(self.ptr(), tz) }
     }
     fn getLastMonthDay<T: _wxDateTime>(&self, month: c_int, year: c_int, _ref: &T) {
-        unsafe { wxDateTime_GetLastMonthDay(self.handle(), month, year, _ref.handle()) }
+        unsafe { wxDateTime_GetLastMonthDay(self.ptr(), month, year, _ref.ptr()) }
     }
     fn getLastWeekDay<T: _wxDateTime>(&self, weekday: c_int, month: c_int, year: c_int, _ref: &T) {
-        unsafe { wxDateTime_GetLastWeekDay(self.handle(), weekday, month, year, _ref.handle()) }
+        unsafe { wxDateTime_GetLastWeekDay(self.ptr(), weekday, month, year, _ref.ptr()) }
     }
     fn getMillisecond(&self, tz: c_int) -> c_int {
-        unsafe { wxDateTime_GetMillisecond(self.handle(), tz) }
+        unsafe { wxDateTime_GetMillisecond(self.ptr(), tz) }
     }
     fn getMinute(&self, tz: c_int) -> c_int {
-        unsafe { wxDateTime_GetMinute(self.handle(), tz) }
+        unsafe { wxDateTime_GetMinute(self.ptr(), tz) }
     }
     fn getMonth(&self, tz: c_int) -> c_int {
-        unsafe { wxDateTime_GetMonth(self.handle(), tz) }
+        unsafe { wxDateTime_GetMonth(self.ptr(), tz) }
     }
     fn getNextWeekDay<T: _wxDateTime>(&self, weekday: c_int, _ref: &T) {
-        unsafe { wxDateTime_GetNextWeekDay(self.handle(), weekday, _ref.handle()) }
+        unsafe { wxDateTime_GetNextWeekDay(self.ptr(), weekday, _ref.ptr()) }
     }
     fn getPrevWeekDay<T: _wxDateTime>(&self, weekday: c_int, _ref: &T) {
-        unsafe { wxDateTime_GetPrevWeekDay(self.handle(), weekday, _ref.handle()) }
+        unsafe { wxDateTime_GetPrevWeekDay(self.ptr(), weekday, _ref.ptr()) }
     }
     fn getSecond(&self, tz: c_int) -> c_int {
-        unsafe { wxDateTime_GetSecond(self.handle(), tz) }
+        unsafe { wxDateTime_GetSecond(self.ptr(), tz) }
     }
     fn getTicks(&self) -> time_t {
-        unsafe { wxDateTime_GetTicks(self.handle()) }
+        unsafe { wxDateTime_GetTicks(self.ptr()) }
     }
     fn getValue(&self, hi_long: *mut c_void, lo_long: *mut c_void) {
-        unsafe { wxDateTime_GetValue(self.handle(), hi_long, lo_long) }
+        unsafe { wxDateTime_GetValue(self.ptr(), hi_long, lo_long) }
     }
     fn getWeekDay<T: _wxDateTime>(&self, weekday: c_int, n: c_int, month: c_int, year: c_int, _ref: &T) {
-        unsafe { wxDateTime_GetWeekDay(self.handle(), weekday, n, month, year, _ref.handle()) }
+        unsafe { wxDateTime_GetWeekDay(self.ptr(), weekday, n, month, year, _ref.ptr()) }
     }
     fn getWeekDayInSameWeek<T: _wxDateTime>(&self, weekday: c_int, _ref: &T) {
-        unsafe { wxDateTime_GetWeekDayInSameWeek(self.handle(), weekday, _ref.handle()) }
+        unsafe { wxDateTime_GetWeekDayInSameWeek(self.ptr(), weekday, _ref.ptr()) }
     }
     fn getWeekDayTZ(&self, tz: c_int) -> c_int {
-        unsafe { wxDateTime_GetWeekDayTZ(self.handle(), tz) }
+        unsafe { wxDateTime_GetWeekDayTZ(self.ptr(), tz) }
     }
     fn getWeekOfMonth(&self, flags: c_int, tz: c_int) -> c_int {
-        unsafe { wxDateTime_GetWeekOfMonth(self.handle(), flags, tz) }
+        unsafe { wxDateTime_GetWeekOfMonth(self.ptr(), flags, tz) }
     }
     fn getWeekOfYear(&self, flags: c_int, tz: c_int) -> c_int {
-        unsafe { wxDateTime_GetWeekOfYear(self.handle(), flags, tz) }
+        unsafe { wxDateTime_GetWeekOfYear(self.ptr(), flags, tz) }
     }
     fn getYear(&self, tz: c_int) -> c_int {
-        unsafe { wxDateTime_GetYear(self.handle(), tz) }
+        unsafe { wxDateTime_GetYear(self.ptr(), tz) }
     }
     fn isBetween<T: _wxDateTime, U: _wxDateTime>(&self, t1: &T, t2: &U) -> c_int {
-        unsafe { wxDateTime_IsBetween(self.handle(), t1.handle(), t2.handle()) }
+        unsafe { wxDateTime_IsBetween(self.ptr(), t1.ptr(), t2.ptr()) }
     }
     fn isDST(&self, country: c_int) -> c_int {
-        unsafe { wxDateTime_IsDST(self.handle(), country) }
+        unsafe { wxDateTime_IsDST(self.ptr(), country) }
     }
     fn isEarlierThan(&self, datetime: *mut c_void) -> c_int {
-        unsafe { wxDateTime_IsEarlierThan(self.handle(), datetime) }
+        unsafe { wxDateTime_IsEarlierThan(self.ptr(), datetime) }
     }
     fn isEqualTo(&self, datetime: *mut c_void) -> c_int {
-        unsafe { wxDateTime_IsEqualTo(self.handle(), datetime) }
+        unsafe { wxDateTime_IsEqualTo(self.ptr(), datetime) }
     }
     fn isEqualUpTo<T: _wxDateTime>(&self, dt: &T, ts: *mut c_void) -> c_int {
-        unsafe { wxDateTime_IsEqualUpTo(self.handle(), dt.handle(), ts) }
+        unsafe { wxDateTime_IsEqualUpTo(self.ptr(), dt.ptr(), ts) }
     }
     fn isLaterThan(&self, datetime: *mut c_void) -> c_int {
-        unsafe { wxDateTime_IsLaterThan(self.handle(), datetime) }
+        unsafe { wxDateTime_IsLaterThan(self.ptr(), datetime) }
     }
     fn isSameDate<T: _wxDateTime>(&self, dt: &T) -> c_int {
-        unsafe { wxDateTime_IsSameDate(self.handle(), dt.handle()) }
+        unsafe { wxDateTime_IsSameDate(self.ptr(), dt.ptr()) }
     }
     fn isSameTime<T: _wxDateTime>(&self, dt: &T) -> c_int {
-        unsafe { wxDateTime_IsSameTime(self.handle(), dt.handle()) }
+        unsafe { wxDateTime_IsSameTime(self.ptr(), dt.ptr()) }
     }
     fn isStrictlyBetween<T: _wxDateTime, U: _wxDateTime>(&self, t1: &T, t2: &U) -> c_int {
-        unsafe { wxDateTime_IsStrictlyBetween(self.handle(), t1.handle(), t2.handle()) }
+        unsafe { wxDateTime_IsStrictlyBetween(self.ptr(), t1.ptr(), t2.ptr()) }
     }
     fn isValid(&self) -> c_int {
-        unsafe { wxDateTime_IsValid(self.handle()) }
+        unsafe { wxDateTime_IsValid(self.ptr()) }
     }
     fn isWorkDay(&self, country: c_int) -> c_int {
-        unsafe { wxDateTime_IsWorkDay(self.handle(), country) }
+        unsafe { wxDateTime_IsWorkDay(self.ptr(), country) }
     }
     fn makeGMT(&self, noDST: c_int) {
-        unsafe { wxDateTime_MakeGMT(self.handle(), noDST) }
+        unsafe { wxDateTime_MakeGMT(self.ptr(), noDST) }
     }
     fn makeTimezone(&self, tz: c_int, noDST: c_int) {
-        unsafe { wxDateTime_MakeTimezone(self.handle(), tz, noDST) }
+        unsafe { wxDateTime_MakeTimezone(self.ptr(), tz, noDST) }
     }
     fn now(&self) {
-        unsafe { wxDateTime_Now(self.handle()) }
+        unsafe { wxDateTime_Now(self.ptr()) }
     }
     fn parseDate(&self, date: *mut c_void) -> *mut c_void {
-        unsafe { wxDateTime_ParseDate(self.handle(), date) }
+        unsafe { wxDateTime_ParseDate(self.ptr(), date) }
     }
     fn parseDateTime(&self, datetime: *mut c_void) -> *mut c_void {
-        unsafe { wxDateTime_ParseDateTime(self.handle(), datetime) }
+        unsafe { wxDateTime_ParseDateTime(self.ptr(), datetime) }
     }
     fn parseFormat(&self, date: *mut c_void, format: *mut c_void, dateDef: *mut c_void) -> *mut c_void {
-        unsafe { wxDateTime_ParseFormat(self.handle(), date, format, dateDef) }
+        unsafe { wxDateTime_ParseFormat(self.ptr(), date, format, dateDef) }
     }
     fn parseRfc822Date(&self, date: *mut c_void) -> *mut c_void {
-        unsafe { wxDateTime_ParseRfc822Date(self.handle(), date) }
+        unsafe { wxDateTime_ParseRfc822Date(self.ptr(), date) }
     }
     fn parseTime<T: _wxTime>(&self, time: &T) -> *mut c_void {
-        unsafe { wxDateTime_ParseTime(self.handle(), time.handle()) }
+        unsafe { wxDateTime_ParseTime(self.ptr(), time.ptr()) }
     }
     fn resetTime(&self) {
-        unsafe { wxDateTime_ResetTime(self.handle()) }
+        unsafe { wxDateTime_ResetTime(self.ptr()) }
     }
     fn set(&self, day: c_int, month: c_int, year: c_int, hour: c_int, minute: c_int, second: c_int, millisec: c_int) {
-        unsafe { wxDateTime_Set(self.handle(), day, month, year, hour, minute, second, millisec) }
+        unsafe { wxDateTime_Set(self.ptr(), day, month, year, hour, minute, second, millisec) }
     }
     fn setDay(&self, day: c_int) {
-        unsafe { wxDateTime_SetDay(self.handle(), day) }
+        unsafe { wxDateTime_SetDay(self.ptr(), day) }
     }
     fn setHour(&self, hour: c_int) {
-        unsafe { wxDateTime_SetHour(self.handle(), hour) }
+        unsafe { wxDateTime_SetHour(self.ptr(), hour) }
     }
     fn setMillisecond(&self, millisecond: c_int) {
-        unsafe { wxDateTime_SetMillisecond(self.handle(), millisecond) }
+        unsafe { wxDateTime_SetMillisecond(self.ptr(), millisecond) }
     }
     fn setMinute(&self, minute: c_int) {
-        unsafe { wxDateTime_SetMinute(self.handle(), minute) }
+        unsafe { wxDateTime_SetMinute(self.ptr(), minute) }
     }
     fn setMonth(&self, month: c_int) {
-        unsafe { wxDateTime_SetMonth(self.handle(), month) }
+        unsafe { wxDateTime_SetMonth(self.ptr(), month) }
     }
     fn setSecond(&self, second: c_int) {
-        unsafe { wxDateTime_SetSecond(self.handle(), second) }
+        unsafe { wxDateTime_SetSecond(self.ptr(), second) }
     }
     fn setTime(&self, hour: c_int, minute: c_int, second: c_int, millisec: c_int) {
-        unsafe { wxDateTime_SetTime(self.handle(), hour, minute, second, millisec) }
+        unsafe { wxDateTime_SetTime(self.ptr(), hour, minute, second, millisec) }
     }
     fn setToCurrent(&self) {
-        unsafe { wxDateTime_SetToCurrent(self.handle()) }
+        unsafe { wxDateTime_SetToCurrent(self.ptr()) }
     }
     fn setToLastMonthDay(&self, month: c_int, year: c_int) {
-        unsafe { wxDateTime_SetToLastMonthDay(self.handle(), month, year) }
+        unsafe { wxDateTime_SetToLastMonthDay(self.ptr(), month, year) }
     }
     fn setToLastWeekDay(&self, weekday: c_int, month: c_int, year: c_int) -> c_int {
-        unsafe { wxDateTime_SetToLastWeekDay(self.handle(), weekday, month, year) }
+        unsafe { wxDateTime_SetToLastWeekDay(self.ptr(), weekday, month, year) }
     }
     fn setToNextWeekDay(&self, weekday: c_int) {
-        unsafe { wxDateTime_SetToNextWeekDay(self.handle(), weekday) }
+        unsafe { wxDateTime_SetToNextWeekDay(self.ptr(), weekday) }
     }
     fn setToPrevWeekDay(&self, weekday: c_int) {
-        unsafe { wxDateTime_SetToPrevWeekDay(self.handle(), weekday) }
+        unsafe { wxDateTime_SetToPrevWeekDay(self.ptr(), weekday) }
     }
     fn setToWeekDay(&self, weekday: c_int, n: c_int, month: c_int, year: c_int) -> c_int {
-        unsafe { wxDateTime_SetToWeekDay(self.handle(), weekday, n, month, year) }
+        unsafe { wxDateTime_SetToWeekDay(self.ptr(), weekday, n, month, year) }
     }
     fn setToWeekDayInSameWeek(&self, weekday: c_int) {
-        unsafe { wxDateTime_SetToWeekDayInSameWeek(self.handle(), weekday) }
+        unsafe { wxDateTime_SetToWeekDayInSameWeek(self.ptr(), weekday) }
     }
     fn setYear(&self, year: c_int) {
-        unsafe { wxDateTime_SetYear(self.handle(), year) }
+        unsafe { wxDateTime_SetYear(self.ptr(), year) }
     }
     fn subtractDate<T: _wxDateTime>(&self, diff: *mut c_void, _ref: &T) {
-        unsafe { wxDateTime_SubtractDate(self.handle(), diff, _ref.handle()) }
+        unsafe { wxDateTime_SubtractDate(self.ptr(), diff, _ref.ptr()) }
     }
     fn subtractTime<T: _wxDateTime>(&self, diff: *mut c_void, _ref: &T) {
-        unsafe { wxDateTime_SubtractTime(self.handle(), diff, _ref.handle()) }
+        unsafe { wxDateTime_SubtractTime(self.ptr(), diff, _ref.ptr()) }
     }
     fn toGMT(&self, noDST: c_int) {
-        unsafe { wxDateTime_ToGMT(self.handle(), noDST) }
+        unsafe { wxDateTime_ToGMT(self.ptr(), noDST) }
     }
     fn toTimezone(&self, tz: c_int, noDST: c_int) {
-        unsafe { wxDateTime_ToTimezone(self.handle(), tz, noDST) }
+        unsafe { wxDateTime_ToTimezone(self.ptr(), tz, noDST) }
     }
     fn today(&self) {
-        unsafe { wxDateTime_Today(self.handle()) }
+        unsafe { wxDateTime_Today(self.ptr()) }
     }
     fn uNow(&self) {
-        unsafe { wxDateTime_UNow(self.handle()) }
+        unsafe { wxDateTime_UNow(self.ptr()) }
     }
     fn delete(&self) {
-        unsafe { wxDateTime_Delete(self.handle()) }
+        unsafe { wxDateTime_Delete(self.ptr()) }
     }
 }
 
-pub struct wxDebugContext { handle: *mut c_void }
-impl _wxDebugContext for wxDebugContext { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxDebugContext { ptr: *mut c_void }
+impl _wxDebugContext for wxDebugContext { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxDebugContext {
-    pub fn from(handle: *mut c_void) -> wxDebugContext { wxDebugContext { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxDebugContext { wxDebugContext { ptr: ptr } }
     pub fn null() -> wxDebugContext { wxDebugContext::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxDebugContext {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDirTraverser { handle: *mut c_void }
-impl _wxDirTraverser for wxDirTraverser { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxDirTraverser { ptr: *mut c_void }
+impl _wxDirTraverser for wxDirTraverser { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxDirTraverser {
-    pub fn from(handle: *mut c_void) -> wxDirTraverser { wxDirTraverser { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxDirTraverser { wxDirTraverser { ptr: ptr } }
     pub fn null() -> wxDirTraverser { wxDirTraverser::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxDirTraverser {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDllLoader { handle: *mut c_void }
-impl _wxDllLoader for wxDllLoader { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxDllLoader { ptr: *mut c_void }
+impl _wxDllLoader for wxDllLoader { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxDllLoader {
-    pub fn from(handle: *mut c_void) -> wxDllLoader { wxDllLoader { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxDllLoader { wxDllLoader { ptr: ptr } }
     pub fn null() -> wxDllLoader { wxDllLoader::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxDllLoader {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDynamicLibrary { handle: *mut c_void }
-impl _wxDynamicLibrary for wxDynamicLibrary { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxDynamicLibrary { ptr: *mut c_void }
+impl _wxDynamicLibrary for wxDynamicLibrary { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxDynamicLibrary {
-    pub fn from(handle: *mut c_void) -> wxDynamicLibrary { wxDynamicLibrary { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxDynamicLibrary { wxDynamicLibrary { ptr: ptr } }
     pub fn null() -> wxDynamicLibrary { wxDynamicLibrary::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxDynamicLibrary {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxEncodingConverter { handle: *mut c_void }
+pub struct wxEncodingConverter { ptr: *mut c_void }
 impl _wxEncodingConverter for wxEncodingConverter {}
-impl _wxObject for wxEncodingConverter { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxEncodingConverter { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxEncodingConverter {
-    pub fn from(handle: *mut c_void) -> wxEncodingConverter { wxEncodingConverter { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxEncodingConverter { wxEncodingConverter { ptr: ptr } }
     pub fn null() -> wxEncodingConverter { wxEncodingConverter::from(0 as *mut c_void) }
     
     pub fn new() -> wxEncodingConverter {
-        unsafe { wxEncodingConverter { handle: wxEncodingConverter_Create() } }
+        unsafe { wxEncodingConverter { ptr: wxEncodingConverter_Create() } }
     }
 }
 
 pub trait _wxEncodingConverter : _wxObject {
     fn convert(&self, input: *mut c_void, output: *mut c_void) {
-        unsafe { wxEncodingConverter_Convert(self.handle(), input, output) }
+        unsafe { wxEncodingConverter_Convert(self.ptr(), input, output) }
     }
     fn getAllEquivalents<T: _wxList>(&self, enc: c_int, _lst: &T) -> c_int {
-        unsafe { wxEncodingConverter_GetAllEquivalents(self.handle(), enc, _lst.handle()) }
+        unsafe { wxEncodingConverter_GetAllEquivalents(self.ptr(), enc, _lst.ptr()) }
     }
     fn getPlatformEquivalents<T: _wxList>(&self, enc: c_int, platform: c_int, _lst: &T) -> c_int {
-        unsafe { wxEncodingConverter_GetPlatformEquivalents(self.handle(), enc, platform, _lst.handle()) }
+        unsafe { wxEncodingConverter_GetPlatformEquivalents(self.ptr(), enc, platform, _lst.ptr()) }
     }
     fn init(&self, input_enc: c_int, output_enc: c_int, method: c_int) -> c_int {
-        unsafe { wxEncodingConverter_Init(self.handle(), input_enc, output_enc, method) }
+        unsafe { wxEncodingConverter_Init(self.ptr(), input_enc, output_enc, method) }
     }
 }
 
-pub struct wxFFile { handle: *mut c_void }
-impl _wxFFile for wxFFile { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxFFile { ptr: *mut c_void }
+impl _wxFFile for wxFFile { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxFFile {
-    pub fn from(handle: *mut c_void) -> wxFFile { wxFFile { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxFFile { wxFFile { ptr: ptr } }
     pub fn null() -> wxFFile { wxFFile::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxFFile {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxFFileInputStream { handle: *mut c_void }
+pub struct wxFFileInputStream { ptr: *mut c_void }
 impl _wxFFileInputStream for wxFFileInputStream {}
 impl _wxInputStream for wxFFileInputStream {}
-impl _wxStreamBase for wxFFileInputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxFFileInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxFFileInputStream {
-    pub fn from(handle: *mut c_void) -> wxFFileInputStream { wxFFileInputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxFFileInputStream { wxFFileInputStream { ptr: ptr } }
     pub fn null() -> wxFFileInputStream { wxFFileInputStream::from(0 as *mut c_void) }
     
 }
@@ -1012,13 +1012,13 @@ impl wxFFileInputStream {
 pub trait _wxFFileInputStream : _wxInputStream {
 }
 
-pub struct wxFFileOutputStream { handle: *mut c_void }
+pub struct wxFFileOutputStream { ptr: *mut c_void }
 impl _wxFFileOutputStream for wxFFileOutputStream {}
 impl _wxOutputStream for wxFFileOutputStream {}
-impl _wxStreamBase for wxFFileOutputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxFFileOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxFFileOutputStream {
-    pub fn from(handle: *mut c_void) -> wxFFileOutputStream { wxFFileOutputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxFFileOutputStream { wxFFileOutputStream { ptr: ptr } }
     pub fn null() -> wxFFileOutputStream { wxFFileOutputStream::from(0 as *mut c_void) }
     
 }
@@ -1026,12 +1026,12 @@ impl wxFFileOutputStream {
 pub trait _wxFFileOutputStream : _wxOutputStream {
 }
 
-pub struct wxFSFile { handle: *mut c_void }
+pub struct wxFSFile { ptr: *mut c_void }
 impl _wxFSFile for wxFSFile {}
-impl _wxObject for wxFSFile { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxFSFile { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxFSFile {
-    pub fn from(handle: *mut c_void) -> wxFSFile { wxFSFile { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxFSFile { wxFSFile { ptr: ptr } }
     pub fn null() -> wxFSFile { wxFSFile::from(0 as *mut c_void) }
     
 }
@@ -1039,13 +1039,13 @@ impl wxFSFile {
 pub trait _wxFSFile : _wxObject {
 }
 
-pub struct wxFileInputStream { handle: *mut c_void }
+pub struct wxFileInputStream { ptr: *mut c_void }
 impl _wxFileInputStream for wxFileInputStream {}
 impl _wxInputStream for wxFileInputStream {}
-impl _wxStreamBase for wxFileInputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxFileInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxFileInputStream {
-    pub fn from(handle: *mut c_void) -> wxFileInputStream { wxFileInputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxFileInputStream { wxFileInputStream { ptr: ptr } }
     pub fn null() -> wxFileInputStream { wxFileInputStream::from(0 as *mut c_void) }
     
 }
@@ -1053,27 +1053,27 @@ impl wxFileInputStream {
 pub trait _wxFileInputStream : _wxInputStream {
 }
 
-pub struct wxFileName { handle: *mut c_void }
-impl _wxFileName for wxFileName { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxFileName { ptr: *mut c_void }
+impl _wxFileName for wxFileName { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxFileName {
-    pub fn from(handle: *mut c_void) -> wxFileName { wxFileName { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxFileName { wxFileName { ptr: ptr } }
     pub fn null() -> wxFileName { wxFileName::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxFileName {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxFileOutputStream { handle: *mut c_void }
+pub struct wxFileOutputStream { ptr: *mut c_void }
 impl _wxFileOutputStream for wxFileOutputStream {}
 impl _wxOutputStream for wxFileOutputStream {}
-impl _wxStreamBase for wxFileOutputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxFileOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxFileOutputStream {
-    pub fn from(handle: *mut c_void) -> wxFileOutputStream { wxFileOutputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxFileOutputStream { wxFileOutputStream { ptr: ptr } }
     pub fn null() -> wxFileOutputStream { wxFileOutputStream::from(0 as *mut c_void) }
     
 }
@@ -1081,12 +1081,12 @@ impl wxFileOutputStream {
 pub trait _wxFileOutputStream : _wxOutputStream {
 }
 
-pub struct wxFileSystem { handle: *mut c_void }
+pub struct wxFileSystem { ptr: *mut c_void }
 impl _wxFileSystem for wxFileSystem {}
-impl _wxObject for wxFileSystem { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxFileSystem { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxFileSystem {
-    pub fn from(handle: *mut c_void) -> wxFileSystem { wxFileSystem { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxFileSystem { wxFileSystem { ptr: ptr } }
     pub fn null() -> wxFileSystem { wxFileSystem::from(0 as *mut c_void) }
     
 }
@@ -1094,12 +1094,12 @@ impl wxFileSystem {
 pub trait _wxFileSystem : _wxObject {
 }
 
-pub struct wxFileSystemHandler { handle: *mut c_void }
+pub struct wxFileSystemHandler { ptr: *mut c_void }
 impl _wxFileSystemHandler for wxFileSystemHandler {}
-impl _wxObject for wxFileSystemHandler { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxFileSystemHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxFileSystemHandler {
-    pub fn from(handle: *mut c_void) -> wxFileSystemHandler { wxFileSystemHandler { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxFileSystemHandler { wxFileSystemHandler { ptr: ptr } }
     pub fn null() -> wxFileSystemHandler { wxFileSystemHandler::from(0 as *mut c_void) }
     
 }
@@ -1107,13 +1107,13 @@ impl wxFileSystemHandler {
 pub trait _wxFileSystemHandler : _wxObject {
 }
 
-pub struct wxFilterInputStream { handle: *mut c_void }
+pub struct wxFilterInputStream { ptr: *mut c_void }
 impl _wxFilterInputStream for wxFilterInputStream {}
 impl _wxInputStream for wxFilterInputStream {}
-impl _wxStreamBase for wxFilterInputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxFilterInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxFilterInputStream {
-    pub fn from(handle: *mut c_void) -> wxFilterInputStream { wxFilterInputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxFilterInputStream { wxFilterInputStream { ptr: ptr } }
     pub fn null() -> wxFilterInputStream { wxFilterInputStream::from(0 as *mut c_void) }
     
 }
@@ -1121,13 +1121,13 @@ impl wxFilterInputStream {
 pub trait _wxFilterInputStream : _wxInputStream {
 }
 
-pub struct wxFilterOutputStream { handle: *mut c_void }
+pub struct wxFilterOutputStream { ptr: *mut c_void }
 impl _wxFilterOutputStream for wxFilterOutputStream {}
 impl _wxOutputStream for wxFilterOutputStream {}
-impl _wxStreamBase for wxFilterOutputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxFilterOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxFilterOutputStream {
-    pub fn from(handle: *mut c_void) -> wxFilterOutputStream { wxFilterOutputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxFilterOutputStream { wxFilterOutputStream { ptr: ptr } }
     pub fn null() -> wxFilterOutputStream { wxFilterOutputStream::from(0 as *mut c_void) }
     
 }
@@ -1135,55 +1135,55 @@ impl wxFilterOutputStream {
 pub trait _wxFilterOutputStream : _wxOutputStream {
 }
 
-pub struct wxInputStream { handle: *mut c_void }
+pub struct wxInputStream { ptr: *mut c_void }
 impl _wxInputStream for wxInputStream {}
-impl _wxStreamBase for wxInputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxInputStream {
-    pub fn from(handle: *mut c_void) -> wxInputStream { wxInputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxInputStream { wxInputStream { ptr: ptr } }
     pub fn null() -> wxInputStream { wxInputStream::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxInputStream : _wxStreamBase {
     fn eof(&self) -> c_int {
-        unsafe { wxInputStream_Eof(self.handle()) }
+        unsafe { wxInputStream_Eof(self.ptr()) }
     }
     fn getC(&self) -> int8_t {
-        unsafe { wxInputStream_GetC(self.handle()) }
+        unsafe { wxInputStream_GetC(self.ptr()) }
     }
     fn lastRead(&self) -> c_int {
-        unsafe { wxInputStream_LastRead(self.handle()) }
+        unsafe { wxInputStream_LastRead(self.ptr()) }
     }
     fn peek(&self) -> int8_t {
-        unsafe { wxInputStream_Peek(self.handle()) }
+        unsafe { wxInputStream_Peek(self.ptr()) }
     }
     fn read(&self, buffer: *mut c_void, size: c_int) {
-        unsafe { wxInputStream_Read(self.handle(), buffer, size) }
+        unsafe { wxInputStream_Read(self.ptr(), buffer, size) }
     }
     fn seekI(&self, pos: c_int, mode: c_int) -> c_int {
-        unsafe { wxInputStream_SeekI(self.handle(), pos, mode) }
+        unsafe { wxInputStream_SeekI(self.ptr(), pos, mode) }
     }
     fn tell(&self) -> c_int {
-        unsafe { wxInputStream_Tell(self.handle()) }
+        unsafe { wxInputStream_Tell(self.ptr()) }
     }
     fn ungetBuffer(&self, buffer: *mut c_void, size: c_int) -> c_int {
-        unsafe { wxInputStream_UngetBuffer(self.handle(), buffer, size) }
+        unsafe { wxInputStream_UngetBuffer(self.ptr(), buffer, size) }
     }
     fn ungetch(&self, c: int8_t) -> c_int {
-        unsafe { wxInputStream_Ungetch(self.handle(), c) }
+        unsafe { wxInputStream_Ungetch(self.ptr(), c) }
     }
     fn canRead(&self) -> c_int {
-        unsafe { wxInputStream_CanRead(self.handle()) }
+        unsafe { wxInputStream_CanRead(self.ptr()) }
     }
 }
 
-pub struct wxList { handle: *mut c_void }
+pub struct wxList { ptr: *mut c_void }
 impl _wxList for wxList {}
-impl _wxObject for wxList { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxList { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxList {
-    pub fn from(handle: *mut c_void) -> wxList { wxList { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxList { wxList { ptr: ptr } }
     pub fn null() -> wxList { wxList::from(0 as *mut c_void) }
     
 }
@@ -1191,81 +1191,81 @@ impl wxList {
 pub trait _wxList : _wxObject {
 }
 
-pub struct wxLocale { handle: *mut c_void }
-impl _wxLocale for wxLocale { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxLocale { ptr: *mut c_void }
+impl _wxLocale for wxLocale { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxLocale {
-    pub fn from(handle: *mut c_void) -> wxLocale { wxLocale { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxLocale { wxLocale { ptr: ptr } }
     pub fn null() -> wxLocale { wxLocale::from(0 as *mut c_void) }
     
     pub fn new(_name: c_int, _flags: c_int) -> wxLocale {
-        unsafe { wxLocale { handle: wxLocale_Create(_name, _flags) } }
+        unsafe { wxLocale { ptr: wxLocale_Create(_name, _flags) } }
     }
 }
 
 pub trait _wxLocale {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
     fn addCatalog(&self, szDomain: *mut c_void) -> c_int {
-        unsafe { wxLocale_AddCatalog(self.handle(), szDomain) }
+        unsafe { wxLocale_AddCatalog(self.ptr(), szDomain) }
     }
     fn addCatalogLookupPathPrefix(&self, prefix: *mut c_void) {
-        unsafe { wxLocale_AddCatalogLookupPathPrefix(self.handle(), prefix) }
+        unsafe { wxLocale_AddCatalogLookupPathPrefix(self.ptr(), prefix) }
     }
     fn delete(&self) {
-        unsafe { wxLocale_Delete(self.handle()) }
+        unsafe { wxLocale_Delete(self.ptr()) }
     }
     fn getLocale(&self) -> wxLocale {
-        unsafe { wxLocale { handle: wxLocale_GetLocale(self.handle()) } }
+        unsafe { wxLocale { ptr: wxLocale_GetLocale(self.ptr()) } }
     }
     fn getName(&self) -> ~str {
-        unsafe { wxString { handle: wxLocale_GetName(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxLocale_GetName(self.ptr()) }.to_str() }
     }
     fn getString(&self, szOrigString: *mut c_void, szDomain: *mut c_void) -> *mut int8_t {
-        unsafe { wxLocale_GetString(self.handle(), szOrigString, szDomain) }
+        unsafe { wxLocale_GetString(self.ptr(), szOrigString, szDomain) }
     }
     fn isLoaded(&self, szDomain: *mut c_void) -> c_int {
-        unsafe { wxLocale_IsLoaded(self.handle(), szDomain) }
+        unsafe { wxLocale_IsLoaded(self.ptr(), szDomain) }
     }
     fn isOk(&self) -> c_int {
-        unsafe { wxLocale_IsOk(self.handle()) }
+        unsafe { wxLocale_IsOk(self.ptr()) }
     }
 }
 
-pub struct wxLongLong { handle: *mut c_void }
-impl _wxLongLong for wxLongLong { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxLongLong { ptr: *mut c_void }
+impl _wxLongLong for wxLongLong { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxLongLong {
-    pub fn from(handle: *mut c_void) -> wxLongLong { wxLongLong { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxLongLong { wxLongLong { ptr: ptr } }
     pub fn null() -> wxLongLong { wxLongLong::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxLongLong {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxMBConv { handle: *mut c_void }
-impl _wxMBConv for wxMBConv { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxMBConv { ptr: *mut c_void }
+impl _wxMBConv for wxMBConv { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxMBConv {
-    pub fn from(handle: *mut c_void) -> wxMBConv { wxMBConv { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxMBConv { wxMBConv { ptr: ptr } }
     pub fn null() -> wxMBConv { wxMBConv::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxMBConv {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxMBConvUTF7 { handle: *mut c_void }
+pub struct wxMBConvUTF7 { ptr: *mut c_void }
 impl _wxMBConvUTF7 for wxMBConvUTF7 {}
-impl _wxMBConv for wxMBConvUTF7 { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxMBConv for wxMBConvUTF7 { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxMBConvUTF7 {
-    pub fn from(handle: *mut c_void) -> wxMBConvUTF7 { wxMBConvUTF7 { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxMBConvUTF7 { wxMBConvUTF7 { ptr: ptr } }
     pub fn null() -> wxMBConvUTF7 { wxMBConvUTF7::from(0 as *mut c_void) }
     
 }
@@ -1273,12 +1273,12 @@ impl wxMBConvUTF7 {
 pub trait _wxMBConvUTF7 : _wxMBConv {
 }
 
-pub struct wxMBConvUTF8 { handle: *mut c_void }
+pub struct wxMBConvUTF8 { ptr: *mut c_void }
 impl _wxMBConvUTF8 for wxMBConvUTF8 {}
-impl _wxMBConv for wxMBConvUTF8 { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxMBConv for wxMBConvUTF8 { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxMBConvUTF8 {
-    pub fn from(handle: *mut c_void) -> wxMBConvUTF8 { wxMBConvUTF8 { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxMBConvUTF8 { wxMBConvUTF8 { ptr: ptr } }
     pub fn null() -> wxMBConvUTF8 { wxMBConvUTF8::from(0 as *mut c_void) }
     
 }
@@ -1286,13 +1286,13 @@ impl wxMBConvUTF8 {
 pub trait _wxMBConvUTF8 : _wxMBConv {
 }
 
-pub struct wxMemoryFSHandler { handle: *mut c_void }
+pub struct wxMemoryFSHandler { ptr: *mut c_void }
 impl _wxMemoryFSHandler for wxMemoryFSHandler {}
 impl _wxFileSystemHandler for wxMemoryFSHandler {}
-impl _wxObject for wxMemoryFSHandler { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxMemoryFSHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxMemoryFSHandler {
-    pub fn from(handle: *mut c_void) -> wxMemoryFSHandler { wxMemoryFSHandler { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxMemoryFSHandler { wxMemoryFSHandler { ptr: ptr } }
     pub fn null() -> wxMemoryFSHandler { wxMemoryFSHandler::from(0 as *mut c_void) }
     
 }
@@ -1300,13 +1300,13 @@ impl wxMemoryFSHandler {
 pub trait _wxMemoryFSHandler : _wxFileSystemHandler {
 }
 
-pub struct wxMemoryInputStream { handle: *mut c_void }
+pub struct wxMemoryInputStream { ptr: *mut c_void }
 impl _wxMemoryInputStream for wxMemoryInputStream {}
 impl _wxInputStream for wxMemoryInputStream {}
-impl _wxStreamBase for wxMemoryInputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxMemoryInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxMemoryInputStream {
-    pub fn from(handle: *mut c_void) -> wxMemoryInputStream { wxMemoryInputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxMemoryInputStream { wxMemoryInputStream { ptr: ptr } }
     pub fn null() -> wxMemoryInputStream { wxMemoryInputStream::from(0 as *mut c_void) }
     
 }
@@ -1314,13 +1314,13 @@ impl wxMemoryInputStream {
 pub trait _wxMemoryInputStream : _wxInputStream {
 }
 
-pub struct wxMemoryOutputStream { handle: *mut c_void }
+pub struct wxMemoryOutputStream { ptr: *mut c_void }
 impl _wxMemoryOutputStream for wxMemoryOutputStream {}
 impl _wxOutputStream for wxMemoryOutputStream {}
-impl _wxStreamBase for wxMemoryOutputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxMemoryOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxMemoryOutputStream {
-    pub fn from(handle: *mut c_void) -> wxMemoryOutputStream { wxMemoryOutputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxMemoryOutputStream { wxMemoryOutputStream { ptr: ptr } }
     pub fn null() -> wxMemoryOutputStream { wxMemoryOutputStream::from(0 as *mut c_void) }
     
 }
@@ -1328,12 +1328,12 @@ impl wxMemoryOutputStream {
 pub trait _wxMemoryOutputStream : _wxOutputStream {
 }
 
-pub struct wxModule { handle: *mut c_void }
+pub struct wxModule { ptr: *mut c_void }
 impl _wxModule for wxModule {}
-impl _wxObject for wxModule { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxModule { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxModule {
-    pub fn from(handle: *mut c_void) -> wxModule { wxModule { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxModule { wxModule { ptr: ptr } }
     pub fn null() -> wxModule { wxModule::from(0 as *mut c_void) }
     
 }
@@ -1341,135 +1341,135 @@ impl wxModule {
 pub trait _wxModule : _wxObject {
 }
 
-pub struct wxMutex { handle: *mut c_void }
-impl _wxMutex for wxMutex { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxMutex { ptr: *mut c_void }
+impl _wxMutex for wxMutex { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxMutex {
-    pub fn from(handle: *mut c_void) -> wxMutex { wxMutex { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxMutex { wxMutex { ptr: ptr } }
     pub fn null() -> wxMutex { wxMutex::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxMutex {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxMutexLocker { handle: *mut c_void }
-impl _wxMutexLocker for wxMutexLocker { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxMutexLocker { ptr: *mut c_void }
+impl _wxMutexLocker for wxMutexLocker { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxMutexLocker {
-    pub fn from(handle: *mut c_void) -> wxMutexLocker { wxMutexLocker { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxMutexLocker { wxMutexLocker { ptr: ptr } }
     pub fn null() -> wxMutexLocker { wxMutexLocker::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxMutexLocker {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxNodeBase { handle: *mut c_void }
-impl _wxNodeBase for wxNodeBase { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxNodeBase { ptr: *mut c_void }
+impl _wxNodeBase for wxNodeBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxNodeBase {
-    pub fn from(handle: *mut c_void) -> wxNodeBase { wxNodeBase { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxNodeBase { wxNodeBase { ptr: ptr } }
     pub fn null() -> wxNodeBase { wxNodeBase::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxNodeBase {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxObject { handle: *mut c_void }
-impl _wxObject for wxObject { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxObject { ptr: *mut c_void }
+impl _wxObject for wxObject { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxObject {
-    pub fn from(handle: *mut c_void) -> wxObject { wxObject { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxObject { wxObject { ptr: ptr } }
     pub fn null() -> wxObject { wxObject::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxObject {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
     fn safeDelete(&self) {
-        unsafe { wxObject_SafeDelete(self.handle()) }
+        unsafe { wxObject_SafeDelete(self.ptr()) }
     }
     fn getClientClosure(&self) -> wxClosure {
-        unsafe { wxClosure { handle: wxObject_GetClientClosure(self.handle()) } }
+        unsafe { wxClosure { ptr: wxObject_GetClientClosure(self.ptr()) } }
     }
     fn setClientClosure<T: _wxClosure>(&self, closure: &T) {
-        unsafe { wxObject_SetClientClosure(self.handle(), closure.handle()) }
+        unsafe { wxObject_SetClientClosure(self.ptr(), closure.ptr()) }
     }
     fn delete(&self) {
-        unsafe { wxObject_Delete(self.handle()) }
+        unsafe { wxObject_Delete(self.ptr()) }
     }
     fn getClassInfo(&self) -> wxClassInfo {
-        unsafe { wxClassInfo { handle: wxObject_GetClassInfo(self.handle()) } }
+        unsafe { wxClassInfo { ptr: wxObject_GetClassInfo(self.ptr()) } }
     }
     fn isKindOf<T: _wxClassInfo>(&self, classInfo: &T) -> c_int {
-        unsafe { wxObject_IsKindOf(self.handle(), classInfo.handle()) }
+        unsafe { wxObject_IsKindOf(self.ptr(), classInfo.ptr()) }
     }
     fn isScrolledWindow(&self) -> c_int {
-        unsafe { wxObject_IsScrolledWindow(self.handle()) }
+        unsafe { wxObject_IsScrolledWindow(self.ptr()) }
     }
 }
 
-pub struct wxObjectRefData { handle: *mut c_void }
-impl _wxObjectRefData for wxObjectRefData { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxObjectRefData { ptr: *mut c_void }
+impl _wxObjectRefData for wxObjectRefData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxObjectRefData {
-    pub fn from(handle: *mut c_void) -> wxObjectRefData { wxObjectRefData { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxObjectRefData { wxObjectRefData { ptr: ptr } }
     pub fn null() -> wxObjectRefData { wxObjectRefData::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxObjectRefData {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxOutputStream { handle: *mut c_void }
+pub struct wxOutputStream { ptr: *mut c_void }
 impl _wxOutputStream for wxOutputStream {}
-impl _wxStreamBase for wxOutputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxOutputStream {
-    pub fn from(handle: *mut c_void) -> wxOutputStream { wxOutputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxOutputStream { wxOutputStream { ptr: ptr } }
     pub fn null() -> wxOutputStream { wxOutputStream::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxOutputStream : _wxStreamBase {
     fn lastWrite(&self) -> c_int {
-        unsafe { wxOutputStream_LastWrite(self.handle()) }
+        unsafe { wxOutputStream_LastWrite(self.ptr()) }
     }
     fn putC(&self, c: int8_t) {
-        unsafe { wxOutputStream_PutC(self.handle(), c) }
+        unsafe { wxOutputStream_PutC(self.ptr(), c) }
     }
     fn seek(&self, pos: c_int, mode: c_int) -> c_int {
-        unsafe { wxOutputStream_Seek(self.handle(), pos, mode) }
+        unsafe { wxOutputStream_Seek(self.ptr(), pos, mode) }
     }
     fn sync(&self) {
-        unsafe { wxOutputStream_Sync(self.handle()) }
+        unsafe { wxOutputStream_Sync(self.ptr()) }
     }
     fn tell(&self) -> c_int {
-        unsafe { wxOutputStream_Tell(self.handle()) }
+        unsafe { wxOutputStream_Tell(self.ptr()) }
     }
     fn write(&self, buffer: *mut c_void, size: c_int) {
-        unsafe { wxOutputStream_Write(self.handle(), buffer, size) }
+        unsafe { wxOutputStream_Write(self.ptr(), buffer, size) }
     }
 }
 
-pub struct wxPathList { handle: *mut c_void }
+pub struct wxPathList { ptr: *mut c_void }
 impl _wxPathList for wxPathList {}
 impl _wxList for wxPathList {}
-impl _wxObject for wxPathList { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxPathList { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxPathList {
-    pub fn from(handle: *mut c_void) -> wxPathList { wxPathList { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxPathList { wxPathList { ptr: ptr } }
     pub fn null() -> wxPathList { wxPathList::from(0 as *mut c_void) }
     
 }
@@ -1477,69 +1477,69 @@ impl wxPathList {
 pub trait _wxPathList : _wxList {
 }
 
-pub struct wxRegEx { handle: *mut c_void }
-impl _wxRegEx for wxRegEx { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxRegEx { ptr: *mut c_void }
+impl _wxRegEx for wxRegEx { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxRegEx {
-    pub fn from(handle: *mut c_void) -> wxRegEx { wxRegEx { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxRegEx { wxRegEx { ptr: ptr } }
     pub fn null() -> wxRegEx { wxRegEx::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxRegEx {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxScopedArray { handle: *mut c_void }
-impl _wxScopedArray for wxScopedArray { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxScopedArray { ptr: *mut c_void }
+impl _wxScopedArray for wxScopedArray { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxScopedArray {
-    pub fn from(handle: *mut c_void) -> wxScopedArray { wxScopedArray { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxScopedArray { wxScopedArray { ptr: ptr } }
     pub fn null() -> wxScopedArray { wxScopedArray::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxScopedArray {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxScopedPtr { handle: *mut c_void }
-impl _wxScopedPtr for wxScopedPtr { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxScopedPtr { ptr: *mut c_void }
+impl _wxScopedPtr for wxScopedPtr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxScopedPtr {
-    pub fn from(handle: *mut c_void) -> wxScopedPtr { wxScopedPtr { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxScopedPtr { wxScopedPtr { ptr: ptr } }
     pub fn null() -> wxScopedPtr { wxScopedPtr::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxScopedPtr {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxSemaphore { handle: *mut c_void }
-impl _wxSemaphore for wxSemaphore { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxSemaphore { ptr: *mut c_void }
+impl _wxSemaphore for wxSemaphore { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxSemaphore {
-    pub fn from(handle: *mut c_void) -> wxSemaphore { wxSemaphore { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxSemaphore { wxSemaphore { ptr: ptr } }
     pub fn null() -> wxSemaphore { wxSemaphore::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxSemaphore {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxServer { handle: *mut c_void }
+pub struct wxServer { ptr: *mut c_void }
 impl _wxServer for wxServer {}
 impl _wxServerBase for wxServer {}
-impl _wxObject for wxServer { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxServer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxServer {
-    pub fn from(handle: *mut c_void) -> wxServer { wxServer { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxServer { wxServer { ptr: ptr } }
     pub fn null() -> wxServer { wxServer::from(0 as *mut c_void) }
     
 }
@@ -1547,12 +1547,12 @@ impl wxServer {
 pub trait _wxServer : _wxServerBase {
 }
 
-pub struct wxServerBase { handle: *mut c_void }
+pub struct wxServerBase { ptr: *mut c_void }
 impl _wxServerBase for wxServerBase {}
-impl _wxObject for wxServerBase { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxServerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxServerBase {
-    pub fn from(handle: *mut c_void) -> wxServerBase { wxServerBase { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxServerBase { wxServerBase { ptr: ptr } }
     pub fn null() -> wxServerBase { wxServerBase::from(0 as *mut c_void) }
     
 }
@@ -1560,126 +1560,126 @@ impl wxServerBase {
 pub trait _wxServerBase : _wxObject {
 }
 
-pub struct wxSingleInstanceChecker { handle: *mut c_void }
-impl _wxSingleInstanceChecker for wxSingleInstanceChecker { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxSingleInstanceChecker { ptr: *mut c_void }
+impl _wxSingleInstanceChecker for wxSingleInstanceChecker { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxSingleInstanceChecker {
-    pub fn from(handle: *mut c_void) -> wxSingleInstanceChecker { wxSingleInstanceChecker { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxSingleInstanceChecker { wxSingleInstanceChecker { ptr: ptr } }
     pub fn null() -> wxSingleInstanceChecker { wxSingleInstanceChecker::from(0 as *mut c_void) }
     
     pub fn new(_obj: *mut c_void, name: &str, path: &str) -> c_int {
         let name = wxT(name);
         let path = wxT(path);
-        unsafe { wxSingleInstanceChecker_Create(_obj, name.handle(), path.handle()) }
+        unsafe { wxSingleInstanceChecker_Create(_obj, name.ptr(), path.ptr()) }
     }
     pub fn newDefault() -> wxSingleInstanceChecker {
-        unsafe { wxSingleInstanceChecker { handle: wxSingleInstanceChecker_CreateDefault() } }
+        unsafe { wxSingleInstanceChecker { ptr: wxSingleInstanceChecker_CreateDefault() } }
     }
 }
 
 pub trait _wxSingleInstanceChecker {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
-        unsafe { wxSingleInstanceChecker_Delete(self.handle()) }
+        unsafe { wxSingleInstanceChecker_Delete(self.ptr()) }
     }
     fn isAnotherRunning(&self) -> c_int {
-        unsafe { wxSingleInstanceChecker_IsAnotherRunning(self.handle()) }
+        unsafe { wxSingleInstanceChecker_IsAnotherRunning(self.ptr()) }
     }
 }
 
-pub struct wxStopWatch { handle: *mut c_void }
-impl _wxStopWatch for wxStopWatch { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxStopWatch { ptr: *mut c_void }
+impl _wxStopWatch for wxStopWatch { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxStopWatch {
-    pub fn from(handle: *mut c_void) -> wxStopWatch { wxStopWatch { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxStopWatch { wxStopWatch { ptr: ptr } }
     pub fn null() -> wxStopWatch { wxStopWatch::from(0 as *mut c_void) }
     
     pub fn new() -> wxStopWatch {
-        unsafe { wxStopWatch { handle: wxStopWatch_Create() } }
+        unsafe { wxStopWatch { ptr: wxStopWatch_Create() } }
     }
 }
 
 pub trait _wxStopWatch {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
-        unsafe { wxStopWatch_Delete(self.handle()) }
+        unsafe { wxStopWatch_Delete(self.ptr()) }
     }
     fn start(&self, msec: c_int) {
-        unsafe { wxStopWatch_Start(self.handle(), msec) }
+        unsafe { wxStopWatch_Start(self.ptr(), msec) }
     }
     fn pause(&self) {
-        unsafe { wxStopWatch_Pause(self.handle()) }
+        unsafe { wxStopWatch_Pause(self.ptr()) }
     }
     fn resume(&self) {
-        unsafe { wxStopWatch_Resume(self.handle()) }
+        unsafe { wxStopWatch_Resume(self.ptr()) }
     }
     fn time(&self) -> c_int {
-        unsafe { wxStopWatch_Time(self.handle()) }
+        unsafe { wxStopWatch_Time(self.ptr()) }
     }
 }
 
-pub struct wxStreamBase { handle: *mut c_void }
-impl _wxStreamBase for wxStreamBase { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxStreamBase { ptr: *mut c_void }
+impl _wxStreamBase for wxStreamBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxStreamBase {
-    pub fn from(handle: *mut c_void) -> wxStreamBase { wxStreamBase { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxStreamBase { wxStreamBase { ptr: ptr } }
     pub fn null() -> wxStreamBase { wxStreamBase::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxStreamBase {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
     fn getLastError(&self) -> c_int {
-        unsafe { wxStreamBase_GetLastError(self.handle()) }
+        unsafe { wxStreamBase_GetLastError(self.ptr()) }
     }
     fn getSize(&self) -> c_int {
-        unsafe { wxStreamBase_GetSize(self.handle()) }
+        unsafe { wxStreamBase_GetSize(self.ptr()) }
     }
     fn isOk(&self) -> c_int {
-        unsafe { wxStreamBase_IsOk(self.handle()) }
+        unsafe { wxStreamBase_IsOk(self.ptr()) }
     }
     fn delete(&self) {
-        unsafe { wxStreamBase_Delete(self.handle()) }
+        unsafe { wxStreamBase_Delete(self.ptr()) }
     }
 }
 
-pub struct wxStreamBuffer { handle: *mut c_void }
-impl _wxStreamBuffer for wxStreamBuffer { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxStreamBuffer { ptr: *mut c_void }
+impl _wxStreamBuffer for wxStreamBuffer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxStreamBuffer {
-    pub fn from(handle: *mut c_void) -> wxStreamBuffer { wxStreamBuffer { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxStreamBuffer { wxStreamBuffer { ptr: ptr } }
     pub fn null() -> wxStreamBuffer { wxStreamBuffer::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxStreamBuffer {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxStringBuffer { handle: *mut c_void }
-impl _wxStringBuffer for wxStringBuffer { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxStringBuffer { ptr: *mut c_void }
+impl _wxStringBuffer for wxStringBuffer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxStringBuffer {
-    pub fn from(handle: *mut c_void) -> wxStringBuffer { wxStringBuffer { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxStringBuffer { wxStringBuffer { ptr: ptr } }
     pub fn null() -> wxStringBuffer { wxStringBuffer::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxStringBuffer {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxStringClientData { handle: *mut c_void }
+pub struct wxStringClientData { ptr: *mut c_void }
 impl _wxStringClientData for wxStringClientData {}
-impl _wxClientData for wxStringClientData { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxClientData for wxStringClientData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxStringClientData {
-    pub fn from(handle: *mut c_void) -> wxStringClientData { wxStringClientData { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxStringClientData { wxStringClientData { ptr: ptr } }
     pub fn null() -> wxStringClientData { wxStringClientData::from(0 as *mut c_void) }
     
 }
@@ -1687,13 +1687,13 @@ impl wxStringClientData {
 pub trait _wxStringClientData : _wxClientData {
 }
 
-pub struct wxStringList { handle: *mut c_void }
+pub struct wxStringList { ptr: *mut c_void }
 impl _wxStringList for wxStringList {}
 impl _wxList for wxStringList {}
-impl _wxObject for wxStringList { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxStringList { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxStringList {
-    pub fn from(handle: *mut c_void) -> wxStringList { wxStringList { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxStringList { wxStringList { ptr: ptr } }
     pub fn null() -> wxStringList { wxStringList::from(0 as *mut c_void) }
     
 }
@@ -1701,12 +1701,12 @@ impl wxStringList {
 pub trait _wxStringList : _wxList {
 }
 
-pub struct wxStringTokenizer { handle: *mut c_void }
+pub struct wxStringTokenizer { ptr: *mut c_void }
 impl _wxStringTokenizer for wxStringTokenizer {}
-impl _wxObject for wxStringTokenizer { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxStringTokenizer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxStringTokenizer {
-    pub fn from(handle: *mut c_void) -> wxStringTokenizer { wxStringTokenizer { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxStringTokenizer { wxStringTokenizer { ptr: ptr } }
     pub fn null() -> wxStringTokenizer { wxStringTokenizer::from(0 as *mut c_void) }
     
 }
@@ -1714,12 +1714,12 @@ impl wxStringTokenizer {
 pub trait _wxStringTokenizer : _wxObject {
 }
 
-pub struct wxSystemOptions { handle: *mut c_void }
+pub struct wxSystemOptions { ptr: *mut c_void }
 impl _wxSystemOptions for wxSystemOptions {}
-impl _wxObject for wxSystemOptions { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxSystemOptions { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxSystemOptions {
-    pub fn from(handle: *mut c_void) -> wxSystemOptions { wxSystemOptions { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxSystemOptions { wxSystemOptions { ptr: ptr } }
     pub fn null() -> wxSystemOptions { wxSystemOptions::from(0 as *mut c_void) }
     
 }
@@ -1727,102 +1727,102 @@ impl wxSystemOptions {
 pub trait _wxSystemOptions : _wxObject {
 }
 
-pub struct wxTempFile { handle: *mut c_void }
-impl _wxTempFile for wxTempFile { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxTempFile { ptr: *mut c_void }
+impl _wxTempFile for wxTempFile { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxTempFile {
-    pub fn from(handle: *mut c_void) -> wxTempFile { wxTempFile { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxTempFile { wxTempFile { ptr: ptr } }
     pub fn null() -> wxTempFile { wxTempFile::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxTempFile {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxTextFile { handle: *mut c_void }
-impl _wxTextFile for wxTextFile { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxTextFile { ptr: *mut c_void }
+impl _wxTextFile for wxTextFile { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxTextFile {
-    pub fn from(handle: *mut c_void) -> wxTextFile { wxTextFile { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxTextFile { wxTextFile { ptr: ptr } }
     pub fn null() -> wxTextFile { wxTextFile::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxTextFile {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxTextInputStream { handle: *mut c_void }
-impl _wxTextInputStream for wxTextInputStream { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxTextInputStream { ptr: *mut c_void }
+impl _wxTextInputStream for wxTextInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxTextInputStream {
-    pub fn from(handle: *mut c_void) -> wxTextInputStream { wxTextInputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxTextInputStream { wxTextInputStream { ptr: ptr } }
     pub fn null() -> wxTextInputStream { wxTextInputStream::from(0 as *mut c_void) }
     
     pub fn new<T: _wxInputStream>(inputStream: &T, sep: &str) -> wxTextInputStream {
         let sep = wxT(sep);
-        unsafe { wxTextInputStream { handle: wxTextInputStream_Create(inputStream.handle(), sep.handle()) } }
+        unsafe { wxTextInputStream { ptr: wxTextInputStream_Create(inputStream.ptr(), sep.ptr()) } }
     }
 }
 
 pub trait _wxTextInputStream {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
-        unsafe { wxTextInputStream_Delete(self.handle()) }
+        unsafe { wxTextInputStream_Delete(self.ptr()) }
     }
     fn readLine(&self) -> ~str {
-        unsafe { wxString { handle: wxTextInputStream_ReadLine(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxTextInputStream_ReadLine(self.ptr()) }.to_str() }
     }
 }
 
-pub struct wxTextOutputStream { handle: *mut c_void }
-impl _wxTextOutputStream for wxTextOutputStream { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxTextOutputStream { ptr: *mut c_void }
+impl _wxTextOutputStream for wxTextOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxTextOutputStream {
-    pub fn from(handle: *mut c_void) -> wxTextOutputStream { wxTextOutputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxTextOutputStream { wxTextOutputStream { ptr: ptr } }
     pub fn null() -> wxTextOutputStream { wxTextOutputStream::from(0 as *mut c_void) }
     
     pub fn new<T: _wxOutputStream>(outputStream: &T, mode: c_int) -> wxTextOutputStream {
-        unsafe { wxTextOutputStream { handle: wxTextOutputStream_Create(outputStream.handle(), mode) } }
+        unsafe { wxTextOutputStream { ptr: wxTextOutputStream_Create(outputStream.ptr(), mode) } }
     }
 }
 
 pub trait _wxTextOutputStream {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
-        unsafe { wxTextOutputStream_Delete(self.handle()) }
+        unsafe { wxTextOutputStream_Delete(self.ptr()) }
     }
     fn writeString(&self, txt: &str) {
         let txt = wxT(txt);
-        unsafe { wxTextOutputStream_WriteString(self.handle(), txt.handle()) }
+        unsafe { wxTextOutputStream_WriteString(self.ptr(), txt.ptr()) }
     }
 }
 
-pub struct wxThread { handle: *mut c_void }
-impl _wxThread for wxThread { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxThread { ptr: *mut c_void }
+impl _wxThread for wxThread { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxThread {
-    pub fn from(handle: *mut c_void) -> wxThread { wxThread { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxThread { wxThread { ptr: ptr } }
     pub fn null() -> wxThread { wxThread::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxThread {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxTime { handle: *mut c_void }
+pub struct wxTime { ptr: *mut c_void }
 impl _wxTime for wxTime {}
-impl _wxObject for wxTime { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxTime { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxTime {
-    pub fn from(handle: *mut c_void) -> wxTime { wxTime { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxTime { wxTime { ptr: ptr } }
     pub fn null() -> wxTime { wxTime::from(0 as *mut c_void) }
     
 }
@@ -1830,26 +1830,26 @@ impl wxTime {
 pub trait _wxTime : _wxObject {
 }
 
-pub struct wxTimeSpan { handle: *mut c_void }
-impl _wxTimeSpan for wxTimeSpan { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxTimeSpan { ptr: *mut c_void }
+impl _wxTimeSpan for wxTimeSpan { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxTimeSpan {
-    pub fn from(handle: *mut c_void) -> wxTimeSpan { wxTimeSpan { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxTimeSpan { wxTimeSpan { ptr: ptr } }
     pub fn null() -> wxTimeSpan { wxTimeSpan::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxTimeSpan {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxVariant { handle: *mut c_void }
+pub struct wxVariant { ptr: *mut c_void }
 impl _wxVariant for wxVariant {}
-impl _wxObject for wxVariant { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxVariant { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxVariant {
-    pub fn from(handle: *mut c_void) -> wxVariant { wxVariant { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxVariant { wxVariant { ptr: ptr } }
     pub fn null() -> wxVariant { wxVariant::from(0 as *mut c_void) }
     
 }
@@ -1857,12 +1857,12 @@ impl wxVariant {
 pub trait _wxVariant : _wxObject {
 }
 
-pub struct wxVariantData { handle: *mut c_void }
+pub struct wxVariantData { ptr: *mut c_void }
 impl _wxVariantData for wxVariantData {}
-impl _wxObject for wxVariantData { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxVariantData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxVariantData {
-    pub fn from(handle: *mut c_void) -> wxVariantData { wxVariantData { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxVariantData { wxVariantData { ptr: ptr } }
     pub fn null() -> wxVariantData { wxVariantData::from(0 as *mut c_void) }
     
 }
@@ -1870,13 +1870,13 @@ impl wxVariantData {
 pub trait _wxVariantData : _wxObject {
 }
 
-pub struct wxZipInputStream { handle: *mut c_void }
+pub struct wxZipInputStream { ptr: *mut c_void }
 impl _wxZipInputStream for wxZipInputStream {}
 impl _wxInputStream for wxZipInputStream {}
-impl _wxStreamBase for wxZipInputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxZipInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxZipInputStream {
-    pub fn from(handle: *mut c_void) -> wxZipInputStream { wxZipInputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxZipInputStream { wxZipInputStream { ptr: ptr } }
     pub fn null() -> wxZipInputStream { wxZipInputStream::from(0 as *mut c_void) }
     
 }
@@ -1884,14 +1884,14 @@ impl wxZipInputStream {
 pub trait _wxZipInputStream : _wxInputStream {
 }
 
-pub struct wxZlibInputStream { handle: *mut c_void }
+pub struct wxZlibInputStream { ptr: *mut c_void }
 impl _wxZlibInputStream for wxZlibInputStream {}
 impl _wxFilterInputStream for wxZlibInputStream {}
 impl _wxInputStream for wxZlibInputStream {}
-impl _wxStreamBase for wxZlibInputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxZlibInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxZlibInputStream {
-    pub fn from(handle: *mut c_void) -> wxZlibInputStream { wxZlibInputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxZlibInputStream { wxZlibInputStream { ptr: ptr } }
     pub fn null() -> wxZlibInputStream { wxZlibInputStream::from(0 as *mut c_void) }
     
 }
@@ -1899,14 +1899,14 @@ impl wxZlibInputStream {
 pub trait _wxZlibInputStream : _wxFilterInputStream {
 }
 
-pub struct wxZlibOutputStream { handle: *mut c_void }
+pub struct wxZlibOutputStream { ptr: *mut c_void }
 impl _wxZlibOutputStream for wxZlibOutputStream {}
 impl _wxFilterOutputStream for wxZlibOutputStream {}
 impl _wxOutputStream for wxZlibOutputStream {}
-impl _wxStreamBase for wxZlibOutputStream { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxStreamBase for wxZlibOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxZlibOutputStream {
-    pub fn from(handle: *mut c_void) -> wxZlibOutputStream { wxZlibOutputStream { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxZlibOutputStream { wxZlibOutputStream { ptr: ptr } }
     pub fn null() -> wxZlibOutputStream { wxZlibOutputStream::from(0 as *mut c_void) }
     
 }
@@ -1914,30 +1914,30 @@ impl wxZlibOutputStream {
 pub trait _wxZlibOutputStream : _wxFilterOutputStream {
 }
 
-pub struct wxMemoryBuffer { handle: *mut c_void }
-impl _wxMemoryBuffer for wxMemoryBuffer { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxMemoryBuffer { ptr: *mut c_void }
+impl _wxMemoryBuffer for wxMemoryBuffer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxMemoryBuffer {
-    pub fn from(handle: *mut c_void) -> wxMemoryBuffer { wxMemoryBuffer { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxMemoryBuffer { wxMemoryBuffer { ptr: ptr } }
     pub fn null() -> wxMemoryBuffer { wxMemoryBuffer::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxMemoryBuffer {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxFileConfig { handle: *mut c_void }
+pub struct wxFileConfig { ptr: *mut c_void }
 impl _wxFileConfig for wxFileConfig {}
-impl _wxConfigBase for wxFileConfig { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxConfigBase for wxFileConfig { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxFileConfig {
-    pub fn from(handle: *mut c_void) -> wxFileConfig { wxFileConfig { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxFileConfig { wxFileConfig { ptr: ptr } }
     pub fn null() -> wxFileConfig { wxFileConfig::from(0 as *mut c_void) }
     
     pub fn new<T: _wxInputStream>(inp: &T) -> wxFileConfig {
-        unsafe { wxFileConfig { handle: wxFileConfig_Create(inp.handle()) } }
+        unsafe { wxFileConfig { ptr: wxFileConfig_Create(inp.ptr()) } }
     }
 }
 
