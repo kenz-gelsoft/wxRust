@@ -75,9 +75,9 @@ struct MyButton(wxButton);
 impl MyButton {
     fn new<T: _wxWindow>(parent: &T) -> MyButton {
         let button = wxButton::new(parent, wxID_ANY, "Push me!", 10, 10, 50, 30, 0);
-        let closure = wxClosure::new(MyButton_clicked as *mut c_void, parent.handle());
+        let closure = wxClosure::new(MyButton_clicked as *mut c_void, parent.ptr());
         unsafe {
-            button.connect(wxID_ANY, wxID_ANY, expEVT_COMMAND_BUTTON_CLICKED(), closure.handle());
+            button.connect(wxID_ANY, wxID_ANY, expEVT_COMMAND_BUTTON_CLICKED(), closure.ptr());
         }
 
         MyButton(button)

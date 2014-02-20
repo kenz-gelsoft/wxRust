@@ -4,1211 +4,1211 @@ use base::*;
 use core::*;
 use advanced::*;
 
-pub struct wxStyledTextCtrl { handle: *mut c_void }
+pub struct wxStyledTextCtrl { ptr: *mut c_void }
 impl _wxStyledTextCtrl for wxStyledTextCtrl {}
 impl _wxControl for wxStyledTextCtrl {}
 impl _wxWindow for wxStyledTextCtrl {}
 impl _wxEvtHandler for wxStyledTextCtrl {}
-impl _wxObject for wxStyledTextCtrl { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxStyledTextCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxStyledTextCtrl {
-    pub fn from(handle: *mut c_void) -> wxStyledTextCtrl { wxStyledTextCtrl { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxStyledTextCtrl { wxStyledTextCtrl { ptr: ptr } }
     pub fn null() -> wxStyledTextCtrl { wxStyledTextCtrl::from(0 as *mut c_void) }
     
     pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, style: c_int) -> wxStyledTextCtrl {
         let _txt = wxT(_txt);
-        unsafe { wxStyledTextCtrl { handle: wxStyledTextCtrl_Create(_prt.handle(), _id, _txt.handle(), _lft, _top, _wdt, _hgt, style) } }
+        unsafe { wxStyledTextCtrl { ptr: wxStyledTextCtrl_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, style) } }
     }
 }
 
 pub trait _wxStyledTextCtrl : _wxControl {
     fn addText(&self, text: &str) {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_AddText(self.handle(), text.handle()) }
+        unsafe { wxStyledTextCtrl_AddText(self.ptr(), text.ptr()) }
     }
     fn addStyledText<T: _wxMemoryBuffer>(&self, data: &T) {
-        unsafe { wxStyledTextCtrl_AddStyledText(self.handle(), data.handle()) }
+        unsafe { wxStyledTextCtrl_AddStyledText(self.ptr(), data.ptr()) }
     }
     fn insertText(&self, pos: c_int, text: &str) {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_InsertText(self.handle(), pos, text.handle()) }
+        unsafe { wxStyledTextCtrl_InsertText(self.ptr(), pos, text.ptr()) }
     }
     fn clearAll(&self) {
-        unsafe { wxStyledTextCtrl_ClearAll(self.handle()) }
+        unsafe { wxStyledTextCtrl_ClearAll(self.ptr()) }
     }
     fn clearDocumentStyle(&self) {
-        unsafe { wxStyledTextCtrl_ClearDocumentStyle(self.handle()) }
+        unsafe { wxStyledTextCtrl_ClearDocumentStyle(self.ptr()) }
     }
     fn getLength(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetLength(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetLength(self.ptr()) }
     }
     fn getCharAt(&self, pos: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetCharAt(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_GetCharAt(self.ptr(), pos) }
     }
     fn getCurrentPos(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetCurrentPos(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetCurrentPos(self.ptr()) }
     }
     fn getAnchor(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetAnchor(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetAnchor(self.ptr()) }
     }
     fn getStyleAt(&self, pos: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetStyleAt(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_GetStyleAt(self.ptr(), pos) }
     }
     fn redo(&self) {
-        unsafe { wxStyledTextCtrl_Redo(self.handle()) }
+        unsafe { wxStyledTextCtrl_Redo(self.ptr()) }
     }
     fn setUndoCollection(&self, collectUndo: c_int) {
-        unsafe { wxStyledTextCtrl_SetUndoCollection(self.handle(), collectUndo) }
+        unsafe { wxStyledTextCtrl_SetUndoCollection(self.ptr(), collectUndo) }
     }
     fn selectAll(&self) {
-        unsafe { wxStyledTextCtrl_SelectAll(self.handle()) }
+        unsafe { wxStyledTextCtrl_SelectAll(self.ptr()) }
     }
     fn setSavePoint(&self) {
-        unsafe { wxStyledTextCtrl_SetSavePoint(self.handle()) }
+        unsafe { wxStyledTextCtrl_SetSavePoint(self.ptr()) }
     }
     fn canRedo(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_CanRedo(self.handle()) }
+        unsafe { wxStyledTextCtrl_CanRedo(self.ptr()) }
     }
     fn markerLineFromHandle(&self, handle: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_MarkerLineFromHandle(self.handle(), handle) }
+        unsafe { wxStyledTextCtrl_MarkerLineFromHandle(self.ptr(), handle) }
     }
     fn markerDeleteHandle(&self, handle: c_int) {
-        unsafe { wxStyledTextCtrl_MarkerDeleteHandle(self.handle(), handle) }
+        unsafe { wxStyledTextCtrl_MarkerDeleteHandle(self.ptr(), handle) }
     }
     fn getUndoCollection(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetUndoCollection(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetUndoCollection(self.ptr()) }
     }
     fn getViewWhiteSpace(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetViewWhiteSpace(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetViewWhiteSpace(self.ptr()) }
     }
     fn setViewWhiteSpace(&self, viewWS: c_int) {
-        unsafe { wxStyledTextCtrl_SetViewWhiteSpace(self.handle(), viewWS) }
+        unsafe { wxStyledTextCtrl_SetViewWhiteSpace(self.ptr(), viewWS) }
     }
     fn positionFromPoint(&self, pt_x: c_int, pt_y: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_PositionFromPoint(self.handle(), pt_x, pt_y) }
+        unsafe { wxStyledTextCtrl_PositionFromPoint(self.ptr(), pt_x, pt_y) }
     }
     fn positionFromPointClose(&self, x: c_int, y: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_PositionFromPointClose(self.handle(), x, y) }
+        unsafe { wxStyledTextCtrl_PositionFromPointClose(self.ptr(), x, y) }
     }
     fn gotoLine(&self, line: c_int) {
-        unsafe { wxStyledTextCtrl_GotoLine(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_GotoLine(self.ptr(), line) }
     }
     fn gotoPos(&self, pos: c_int) {
-        unsafe { wxStyledTextCtrl_GotoPos(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_GotoPos(self.ptr(), pos) }
     }
     fn setAnchor(&self, posAnchor: c_int) {
-        unsafe { wxStyledTextCtrl_SetAnchor(self.handle(), posAnchor) }
+        unsafe { wxStyledTextCtrl_SetAnchor(self.ptr(), posAnchor) }
     }
     fn getEndStyled(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetEndStyled(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetEndStyled(self.ptr()) }
     }
     fn convertEOLs(&self, eolMode: c_int) {
-        unsafe { wxStyledTextCtrl_ConvertEOLs(self.handle(), eolMode) }
+        unsafe { wxStyledTextCtrl_ConvertEOLs(self.ptr(), eolMode) }
     }
     fn getEOLMode(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetEOLMode(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetEOLMode(self.ptr()) }
     }
     fn setEOLMode(&self, eolMode: c_int) {
-        unsafe { wxStyledTextCtrl_SetEOLMode(self.handle(), eolMode) }
+        unsafe { wxStyledTextCtrl_SetEOLMode(self.ptr(), eolMode) }
     }
     fn startStyling(&self, pos: c_int, mask: c_int) {
-        unsafe { wxStyledTextCtrl_StartStyling(self.handle(), pos, mask) }
+        unsafe { wxStyledTextCtrl_StartStyling(self.ptr(), pos, mask) }
     }
     fn setStyling(&self, length: c_int, style: c_int) {
-        unsafe { wxStyledTextCtrl_SetStyling(self.handle(), length, style) }
+        unsafe { wxStyledTextCtrl_SetStyling(self.ptr(), length, style) }
     }
     fn getBufferedDraw(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetBufferedDraw(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetBufferedDraw(self.ptr()) }
     }
     fn setBufferedDraw(&self, buffered: c_int) {
-        unsafe { wxStyledTextCtrl_SetBufferedDraw(self.handle(), buffered) }
+        unsafe { wxStyledTextCtrl_SetBufferedDraw(self.ptr(), buffered) }
     }
     fn setTabWidth(&self, tabWidth: c_int) {
-        unsafe { wxStyledTextCtrl_SetTabWidth(self.handle(), tabWidth) }
+        unsafe { wxStyledTextCtrl_SetTabWidth(self.ptr(), tabWidth) }
     }
     fn getTabWidth(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetTabWidth(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetTabWidth(self.ptr()) }
     }
     fn setCodePage(&self, codePage: c_int) {
-        unsafe { wxStyledTextCtrl_SetCodePage(self.handle(), codePage) }
+        unsafe { wxStyledTextCtrl_SetCodePage(self.ptr(), codePage) }
     }
     fn markerDefine(&self, markerNumber: c_int, markerSymbol: c_int, foreground_r: uint8_t, foreground_g: uint8_t, foreground_b: uint8_t, background_r: uint8_t, background_g: uint8_t, background_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_MarkerDefine(self.handle(), markerNumber, markerSymbol, foreground_r, foreground_g, foreground_b, background_r, background_g, background_b) }
+        unsafe { wxStyledTextCtrl_MarkerDefine(self.ptr(), markerNumber, markerSymbol, foreground_r, foreground_g, foreground_b, background_r, background_g, background_b) }
     }
     fn markerSetForeground(&self, markerNumber: c_int, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_MarkerSetForeground(self.handle(), markerNumber, fore_r, fore_g, fore_b) }
+        unsafe { wxStyledTextCtrl_MarkerSetForeground(self.ptr(), markerNumber, fore_r, fore_g, fore_b) }
     }
     fn markerSetBackground(&self, markerNumber: c_int, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_MarkerSetBackground(self.handle(), markerNumber, back_r, back_g, back_b) }
+        unsafe { wxStyledTextCtrl_MarkerSetBackground(self.ptr(), markerNumber, back_r, back_g, back_b) }
     }
     fn markerAdd(&self, line: c_int, markerNumber: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_MarkerAdd(self.handle(), line, markerNumber) }
+        unsafe { wxStyledTextCtrl_MarkerAdd(self.ptr(), line, markerNumber) }
     }
     fn markerDelete(&self, line: c_int, markerNumber: c_int) {
-        unsafe { wxStyledTextCtrl_MarkerDelete(self.handle(), line, markerNumber) }
+        unsafe { wxStyledTextCtrl_MarkerDelete(self.ptr(), line, markerNumber) }
     }
     fn markerDeleteAll(&self, markerNumber: c_int) {
-        unsafe { wxStyledTextCtrl_MarkerDeleteAll(self.handle(), markerNumber) }
+        unsafe { wxStyledTextCtrl_MarkerDeleteAll(self.ptr(), markerNumber) }
     }
     fn markerGet(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_MarkerGet(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_MarkerGet(self.ptr(), line) }
     }
     fn markerNext(&self, lineStart: c_int, markerMask: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_MarkerNext(self.handle(), lineStart, markerMask) }
+        unsafe { wxStyledTextCtrl_MarkerNext(self.ptr(), lineStart, markerMask) }
     }
     fn markerPrevious(&self, lineStart: c_int, markerMask: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_MarkerPrevious(self.handle(), lineStart, markerMask) }
+        unsafe { wxStyledTextCtrl_MarkerPrevious(self.ptr(), lineStart, markerMask) }
     }
     fn markerDefineBitmap<T: _wxBitmap>(&self, markerNumber: c_int, bmp: &T) {
-        unsafe { wxStyledTextCtrl_MarkerDefineBitmap(self.handle(), markerNumber, bmp.handle()) }
+        unsafe { wxStyledTextCtrl_MarkerDefineBitmap(self.ptr(), markerNumber, bmp.ptr()) }
     }
     fn setMarginType(&self, margin: c_int, marginType: c_int) {
-        unsafe { wxStyledTextCtrl_SetMarginType(self.handle(), margin, marginType) }
+        unsafe { wxStyledTextCtrl_SetMarginType(self.ptr(), margin, marginType) }
     }
     fn getMarginType(&self, margin: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetMarginType(self.handle(), margin) }
+        unsafe { wxStyledTextCtrl_GetMarginType(self.ptr(), margin) }
     }
     fn setMarginWidth(&self, margin: c_int, pixelWidth: c_int) {
-        unsafe { wxStyledTextCtrl_SetMarginWidth(self.handle(), margin, pixelWidth) }
+        unsafe { wxStyledTextCtrl_SetMarginWidth(self.ptr(), margin, pixelWidth) }
     }
     fn getMarginWidth(&self, margin: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetMarginWidth(self.handle(), margin) }
+        unsafe { wxStyledTextCtrl_GetMarginWidth(self.ptr(), margin) }
     }
     fn setMarginMask(&self, margin: c_int, mask: c_int) {
-        unsafe { wxStyledTextCtrl_SetMarginMask(self.handle(), margin, mask) }
+        unsafe { wxStyledTextCtrl_SetMarginMask(self.ptr(), margin, mask) }
     }
     fn getMarginMask(&self, margin: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetMarginMask(self.handle(), margin) }
+        unsafe { wxStyledTextCtrl_GetMarginMask(self.ptr(), margin) }
     }
     fn setMarginSensitive(&self, margin: c_int, sensitive: c_int) {
-        unsafe { wxStyledTextCtrl_SetMarginSensitive(self.handle(), margin, sensitive) }
+        unsafe { wxStyledTextCtrl_SetMarginSensitive(self.ptr(), margin, sensitive) }
     }
     fn getMarginSensitive(&self, margin: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetMarginSensitive(self.handle(), margin) }
+        unsafe { wxStyledTextCtrl_GetMarginSensitive(self.ptr(), margin) }
     }
     fn styleClearAll(&self) {
-        unsafe { wxStyledTextCtrl_StyleClearAll(self.handle()) }
+        unsafe { wxStyledTextCtrl_StyleClearAll(self.ptr()) }
     }
     fn styleSetForeground(&self, style: c_int, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_StyleSetForeground(self.handle(), style, fore_r, fore_g, fore_b) }
+        unsafe { wxStyledTextCtrl_StyleSetForeground(self.ptr(), style, fore_r, fore_g, fore_b) }
     }
     fn styleSetBackground(&self, style: c_int, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_StyleSetBackground(self.handle(), style, back_r, back_g, back_b) }
+        unsafe { wxStyledTextCtrl_StyleSetBackground(self.ptr(), style, back_r, back_g, back_b) }
     }
     fn styleSetBold(&self, style: c_int, bold: c_int) {
-        unsafe { wxStyledTextCtrl_StyleSetBold(self.handle(), style, bold) }
+        unsafe { wxStyledTextCtrl_StyleSetBold(self.ptr(), style, bold) }
     }
     fn styleSetItalic(&self, style: c_int, italic: c_int) {
-        unsafe { wxStyledTextCtrl_StyleSetItalic(self.handle(), style, italic) }
+        unsafe { wxStyledTextCtrl_StyleSetItalic(self.ptr(), style, italic) }
     }
     fn styleSetSize(&self, style: c_int, sizePoints: c_int) {
-        unsafe { wxStyledTextCtrl_StyleSetSize(self.handle(), style, sizePoints) }
+        unsafe { wxStyledTextCtrl_StyleSetSize(self.ptr(), style, sizePoints) }
     }
     fn styleSetFaceName(&self, style: c_int, fontName: &str) {
         let fontName = wxT(fontName);
-        unsafe { wxStyledTextCtrl_StyleSetFaceName(self.handle(), style, fontName.handle()) }
+        unsafe { wxStyledTextCtrl_StyleSetFaceName(self.ptr(), style, fontName.ptr()) }
     }
     fn styleSetEOLFilled(&self, style: c_int, filled: c_int) {
-        unsafe { wxStyledTextCtrl_StyleSetEOLFilled(self.handle(), style, filled) }
+        unsafe { wxStyledTextCtrl_StyleSetEOLFilled(self.ptr(), style, filled) }
     }
     fn styleResetDefault(&self) {
-        unsafe { wxStyledTextCtrl_StyleResetDefault(self.handle()) }
+        unsafe { wxStyledTextCtrl_StyleResetDefault(self.ptr()) }
     }
     fn styleSetUnderline(&self, style: c_int, underline: c_int) {
-        unsafe { wxStyledTextCtrl_StyleSetUnderline(self.handle(), style, underline) }
+        unsafe { wxStyledTextCtrl_StyleSetUnderline(self.ptr(), style, underline) }
     }
     fn styleSetCase(&self, style: c_int, caseForce: c_int) {
-        unsafe { wxStyledTextCtrl_StyleSetCase(self.handle(), style, caseForce) }
+        unsafe { wxStyledTextCtrl_StyleSetCase(self.ptr(), style, caseForce) }
     }
     fn styleSetCharacterSet(&self, style: c_int, characterSet: c_int) {
-        unsafe { wxStyledTextCtrl_StyleSetCharacterSet(self.handle(), style, characterSet) }
+        unsafe { wxStyledTextCtrl_StyleSetCharacterSet(self.ptr(), style, characterSet) }
     }
     fn styleSetHotSpot(&self, style: c_int, hotspot: c_int) {
-        unsafe { wxStyledTextCtrl_StyleSetHotSpot(self.handle(), style, hotspot) }
+        unsafe { wxStyledTextCtrl_StyleSetHotSpot(self.ptr(), style, hotspot) }
     }
     fn setSelForeground(&self, useSetting: c_int, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_SetSelForeground(self.handle(), useSetting, fore_r, fore_g, fore_b) }
+        unsafe { wxStyledTextCtrl_SetSelForeground(self.ptr(), useSetting, fore_r, fore_g, fore_b) }
     }
     fn setSelBackground(&self, useSetting: c_int, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_SetSelBackground(self.handle(), useSetting, back_r, back_g, back_b) }
+        unsafe { wxStyledTextCtrl_SetSelBackground(self.ptr(), useSetting, back_r, back_g, back_b) }
     }
     fn setCaretForeground(&self, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_SetCaretForeground(self.handle(), fore_r, fore_g, fore_b) }
+        unsafe { wxStyledTextCtrl_SetCaretForeground(self.ptr(), fore_r, fore_g, fore_b) }
     }
     fn cmdKeyAssign(&self, key: c_int, modifiers: c_int, cmd: c_int) {
-        unsafe { wxStyledTextCtrl_CmdKeyAssign(self.handle(), key, modifiers, cmd) }
+        unsafe { wxStyledTextCtrl_CmdKeyAssign(self.ptr(), key, modifiers, cmd) }
     }
     fn cmdKeyClear(&self, key: c_int, modifiers: c_int) {
-        unsafe { wxStyledTextCtrl_CmdKeyClear(self.handle(), key, modifiers) }
+        unsafe { wxStyledTextCtrl_CmdKeyClear(self.ptr(), key, modifiers) }
     }
     fn cmdKeyClearAll(&self) {
-        unsafe { wxStyledTextCtrl_CmdKeyClearAll(self.handle()) }
+        unsafe { wxStyledTextCtrl_CmdKeyClearAll(self.ptr()) }
     }
     fn setStyleBytes(&self, length: c_int, styleBytes: *mut c_char) {
-        unsafe { wxStyledTextCtrl_SetStyleBytes(self.handle(), length, styleBytes) }
+        unsafe { wxStyledTextCtrl_SetStyleBytes(self.ptr(), length, styleBytes) }
     }
     fn styleSetVisible(&self, style: c_int, visible: c_int) {
-        unsafe { wxStyledTextCtrl_StyleSetVisible(self.handle(), style, visible) }
+        unsafe { wxStyledTextCtrl_StyleSetVisible(self.ptr(), style, visible) }
     }
     fn getCaretPeriod(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetCaretPeriod(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetCaretPeriod(self.ptr()) }
     }
     fn setCaretPeriod(&self, periodMilliseconds: c_int) {
-        unsafe { wxStyledTextCtrl_SetCaretPeriod(self.handle(), periodMilliseconds) }
+        unsafe { wxStyledTextCtrl_SetCaretPeriod(self.ptr(), periodMilliseconds) }
     }
     fn setWordChars(&self, characters: &str) {
         let characters = wxT(characters);
-        unsafe { wxStyledTextCtrl_SetWordChars(self.handle(), characters.handle()) }
+        unsafe { wxStyledTextCtrl_SetWordChars(self.ptr(), characters.ptr()) }
     }
     fn beginUndoAction(&self) {
-        unsafe { wxStyledTextCtrl_BeginUndoAction(self.handle()) }
+        unsafe { wxStyledTextCtrl_BeginUndoAction(self.ptr()) }
     }
     fn endUndoAction(&self) {
-        unsafe { wxStyledTextCtrl_EndUndoAction(self.handle()) }
+        unsafe { wxStyledTextCtrl_EndUndoAction(self.ptr()) }
     }
     fn indicatorSetStyle(&self, indic: c_int, style: c_int) {
-        unsafe { wxStyledTextCtrl_IndicatorSetStyle(self.handle(), indic, style) }
+        unsafe { wxStyledTextCtrl_IndicatorSetStyle(self.ptr(), indic, style) }
     }
     fn indicatorGetStyle(&self, indic: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_IndicatorGetStyle(self.handle(), indic) }
+        unsafe { wxStyledTextCtrl_IndicatorGetStyle(self.ptr(), indic) }
     }
     fn indicatorSetForeground(&self, indic: c_int, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_IndicatorSetForeground(self.handle(), indic, fore_r, fore_g, fore_b) }
+        unsafe { wxStyledTextCtrl_IndicatorSetForeground(self.ptr(), indic, fore_r, fore_g, fore_b) }
     }
     fn setWhitespaceForeground(&self, useSetting: c_int, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_SetWhitespaceForeground(self.handle(), useSetting, fore_r, fore_g, fore_b) }
+        unsafe { wxStyledTextCtrl_SetWhitespaceForeground(self.ptr(), useSetting, fore_r, fore_g, fore_b) }
     }
     fn setWhitespaceBackground(&self, useSetting: c_int, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_SetWhitespaceBackground(self.handle(), useSetting, back_r, back_g, back_b) }
+        unsafe { wxStyledTextCtrl_SetWhitespaceBackground(self.ptr(), useSetting, back_r, back_g, back_b) }
     }
     fn setStyleBits(&self, bits: c_int) {
-        unsafe { wxStyledTextCtrl_SetStyleBits(self.handle(), bits) }
+        unsafe { wxStyledTextCtrl_SetStyleBits(self.ptr(), bits) }
     }
     fn getStyleBits(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetStyleBits(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetStyleBits(self.ptr()) }
     }
     fn setLineState(&self, line: c_int, state: c_int) {
-        unsafe { wxStyledTextCtrl_SetLineState(self.handle(), line, state) }
+        unsafe { wxStyledTextCtrl_SetLineState(self.ptr(), line, state) }
     }
     fn getLineState(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetLineState(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_GetLineState(self.ptr(), line) }
     }
     fn getMaxLineState(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetMaxLineState(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetMaxLineState(self.ptr()) }
     }
     fn getCaretLineVisible(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetCaretLineVisible(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetCaretLineVisible(self.ptr()) }
     }
     fn setCaretLineVisible(&self, show: c_int) {
-        unsafe { wxStyledTextCtrl_SetCaretLineVisible(self.handle(), show) }
+        unsafe { wxStyledTextCtrl_SetCaretLineVisible(self.ptr(), show) }
     }
     fn styleSetChangeable(&self, style: c_int, changeable: c_int) {
-        unsafe { wxStyledTextCtrl_StyleSetChangeable(self.handle(), style, changeable) }
+        unsafe { wxStyledTextCtrl_StyleSetChangeable(self.ptr(), style, changeable) }
     }
     fn autoCompShow(&self, lenEntered: c_int, itemList: &str) {
         let itemList = wxT(itemList);
-        unsafe { wxStyledTextCtrl_AutoCompShow(self.handle(), lenEntered, itemList.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompShow(self.ptr(), lenEntered, itemList.ptr()) }
     }
     fn autoCompCancel(&self) {
-        unsafe { wxStyledTextCtrl_AutoCompCancel(self.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompCancel(self.ptr()) }
     }
     fn autoCompActive(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_AutoCompActive(self.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompActive(self.ptr()) }
     }
     fn autoCompPosStart(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_AutoCompPosStart(self.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompPosStart(self.ptr()) }
     }
     fn autoCompComplete(&self) {
-        unsafe { wxStyledTextCtrl_AutoCompComplete(self.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompComplete(self.ptr()) }
     }
     fn autoCompStops(&self, characterSet: &str) {
         let characterSet = wxT(characterSet);
-        unsafe { wxStyledTextCtrl_AutoCompStops(self.handle(), characterSet.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompStops(self.ptr(), characterSet.ptr()) }
     }
     fn autoCompSetSeparator(&self, separatorCharacter: c_int) {
-        unsafe { wxStyledTextCtrl_AutoCompSetSeparator(self.handle(), separatorCharacter) }
+        unsafe { wxStyledTextCtrl_AutoCompSetSeparator(self.ptr(), separatorCharacter) }
     }
     fn autoCompGetSeparator(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_AutoCompGetSeparator(self.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompGetSeparator(self.ptr()) }
     }
     fn autoCompSelect(&self, text: &str) {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_AutoCompSelect(self.handle(), text.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompSelect(self.ptr(), text.ptr()) }
     }
     fn autoCompSetCancelAtStart(&self, cancel: c_int) {
-        unsafe { wxStyledTextCtrl_AutoCompSetCancelAtStart(self.handle(), cancel) }
+        unsafe { wxStyledTextCtrl_AutoCompSetCancelAtStart(self.ptr(), cancel) }
     }
     fn autoCompGetCancelAtStart(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_AutoCompGetCancelAtStart(self.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompGetCancelAtStart(self.ptr()) }
     }
     fn autoCompSetFillUps(&self, characterSet: &str) {
         let characterSet = wxT(characterSet);
-        unsafe { wxStyledTextCtrl_AutoCompSetFillUps(self.handle(), characterSet.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompSetFillUps(self.ptr(), characterSet.ptr()) }
     }
     fn autoCompSetChooseSingle(&self, chooseSingle: c_int) {
-        unsafe { wxStyledTextCtrl_AutoCompSetChooseSingle(self.handle(), chooseSingle) }
+        unsafe { wxStyledTextCtrl_AutoCompSetChooseSingle(self.ptr(), chooseSingle) }
     }
     fn autoCompGetChooseSingle(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_AutoCompGetChooseSingle(self.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompGetChooseSingle(self.ptr()) }
     }
     fn autoCompSetIgnoreCase(&self, ignoreCase: c_int) {
-        unsafe { wxStyledTextCtrl_AutoCompSetIgnoreCase(self.handle(), ignoreCase) }
+        unsafe { wxStyledTextCtrl_AutoCompSetIgnoreCase(self.ptr(), ignoreCase) }
     }
     fn autoCompGetIgnoreCase(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_AutoCompGetIgnoreCase(self.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompGetIgnoreCase(self.ptr()) }
     }
     fn userListShow(&self, listType: c_int, itemList: &str) {
         let itemList = wxT(itemList);
-        unsafe { wxStyledTextCtrl_UserListShow(self.handle(), listType, itemList.handle()) }
+        unsafe { wxStyledTextCtrl_UserListShow(self.ptr(), listType, itemList.ptr()) }
     }
     fn autoCompSetAutoHide(&self, autoHide: c_int) {
-        unsafe { wxStyledTextCtrl_AutoCompSetAutoHide(self.handle(), autoHide) }
+        unsafe { wxStyledTextCtrl_AutoCompSetAutoHide(self.ptr(), autoHide) }
     }
     fn autoCompGetAutoHide(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_AutoCompGetAutoHide(self.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompGetAutoHide(self.ptr()) }
     }
     fn autoCompSetDropRestOfWord(&self, dropRestOfWord: c_int) {
-        unsafe { wxStyledTextCtrl_AutoCompSetDropRestOfWord(self.handle(), dropRestOfWord) }
+        unsafe { wxStyledTextCtrl_AutoCompSetDropRestOfWord(self.ptr(), dropRestOfWord) }
     }
     fn autoCompGetDropRestOfWord(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_AutoCompGetDropRestOfWord(self.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompGetDropRestOfWord(self.ptr()) }
     }
     fn registerImage<T: _wxBitmap>(&self, type_: c_int, bmp: &T) {
-        unsafe { wxStyledTextCtrl_RegisterImage(self.handle(), type_, bmp.handle()) }
+        unsafe { wxStyledTextCtrl_RegisterImage(self.ptr(), type_, bmp.ptr()) }
     }
     fn clearRegisteredImages(&self) {
-        unsafe { wxStyledTextCtrl_ClearRegisteredImages(self.handle()) }
+        unsafe { wxStyledTextCtrl_ClearRegisteredImages(self.ptr()) }
     }
     fn autoCompGetTypeSeparator(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_AutoCompGetTypeSeparator(self.handle()) }
+        unsafe { wxStyledTextCtrl_AutoCompGetTypeSeparator(self.ptr()) }
     }
     fn autoCompSetTypeSeparator(&self, separatorCharacter: c_int) {
-        unsafe { wxStyledTextCtrl_AutoCompSetTypeSeparator(self.handle(), separatorCharacter) }
+        unsafe { wxStyledTextCtrl_AutoCompSetTypeSeparator(self.ptr(), separatorCharacter) }
     }
     fn setIndent(&self, indentSize: c_int) {
-        unsafe { wxStyledTextCtrl_SetIndent(self.handle(), indentSize) }
+        unsafe { wxStyledTextCtrl_SetIndent(self.ptr(), indentSize) }
     }
     fn getIndent(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetIndent(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetIndent(self.ptr()) }
     }
     fn setUseTabs(&self, useTabs: c_int) {
-        unsafe { wxStyledTextCtrl_SetUseTabs(self.handle(), useTabs) }
+        unsafe { wxStyledTextCtrl_SetUseTabs(self.ptr(), useTabs) }
     }
     fn getUseTabs(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetUseTabs(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetUseTabs(self.ptr()) }
     }
     fn setLineIndentation(&self, line: c_int, indentSize: c_int) {
-        unsafe { wxStyledTextCtrl_SetLineIndentation(self.handle(), line, indentSize) }
+        unsafe { wxStyledTextCtrl_SetLineIndentation(self.ptr(), line, indentSize) }
     }
     fn getLineIndentation(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetLineIndentation(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_GetLineIndentation(self.ptr(), line) }
     }
     fn getLineIndentPosition(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetLineIndentPosition(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_GetLineIndentPosition(self.ptr(), line) }
     }
     fn getColumn(&self, pos: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetColumn(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_GetColumn(self.ptr(), pos) }
     }
     fn setUseHorizontalScrollBar(&self, show: c_int) {
-        unsafe { wxStyledTextCtrl_SetUseHorizontalScrollBar(self.handle(), show) }
+        unsafe { wxStyledTextCtrl_SetUseHorizontalScrollBar(self.ptr(), show) }
     }
     fn getUseHorizontalScrollBar(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetUseHorizontalScrollBar(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetUseHorizontalScrollBar(self.ptr()) }
     }
     fn setIndentationGuides(&self, show: c_int) {
-        unsafe { wxStyledTextCtrl_SetIndentationGuides(self.handle(), show) }
+        unsafe { wxStyledTextCtrl_SetIndentationGuides(self.ptr(), show) }
     }
     fn getIndentationGuides(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetIndentationGuides(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetIndentationGuides(self.ptr()) }
     }
     fn setHighlightGuide(&self, column: c_int) {
-        unsafe { wxStyledTextCtrl_SetHighlightGuide(self.handle(), column) }
+        unsafe { wxStyledTextCtrl_SetHighlightGuide(self.ptr(), column) }
     }
     fn getHighlightGuide(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetHighlightGuide(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetHighlightGuide(self.ptr()) }
     }
     fn getLineEndPosition(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetLineEndPosition(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_GetLineEndPosition(self.ptr(), line) }
     }
     fn getCodePage(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetCodePage(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetCodePage(self.ptr()) }
     }
     fn getReadOnly(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetReadOnly(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetReadOnly(self.ptr()) }
     }
     fn setCurrentPos(&self, pos: c_int) {
-        unsafe { wxStyledTextCtrl_SetCurrentPos(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_SetCurrentPos(self.ptr(), pos) }
     }
     fn setSelectionStart(&self, pos: c_int) {
-        unsafe { wxStyledTextCtrl_SetSelectionStart(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_SetSelectionStart(self.ptr(), pos) }
     }
     fn getSelectionStart(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetSelectionStart(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetSelectionStart(self.ptr()) }
     }
     fn setSelectionEnd(&self, pos: c_int) {
-        unsafe { wxStyledTextCtrl_SetSelectionEnd(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_SetSelectionEnd(self.ptr(), pos) }
     }
     fn getSelectionEnd(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetSelectionEnd(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetSelectionEnd(self.ptr()) }
     }
     fn setPrintMagnification(&self, magnification: c_int) {
-        unsafe { wxStyledTextCtrl_SetPrintMagnification(self.handle(), magnification) }
+        unsafe { wxStyledTextCtrl_SetPrintMagnification(self.ptr(), magnification) }
     }
     fn getPrintMagnification(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetPrintMagnification(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetPrintMagnification(self.ptr()) }
     }
     fn setPrintColourMode(&self, mode: c_int) {
-        unsafe { wxStyledTextCtrl_SetPrintColourMode(self.handle(), mode) }
+        unsafe { wxStyledTextCtrl_SetPrintColourMode(self.ptr(), mode) }
     }
     fn getPrintColourMode(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetPrintColourMode(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetPrintColourMode(self.ptr()) }
     }
     fn findText(&self, minPos: c_int, maxPos: c_int, text: &str, flags: c_int) -> c_int {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_FindText(self.handle(), minPos, maxPos, text.handle(), flags) }
+        unsafe { wxStyledTextCtrl_FindText(self.ptr(), minPos, maxPos, text.ptr(), flags) }
     }
     fn formatRange<T: _wxDC, U: _wxDC, V: _wxRect, W: _wxRect>(&self, doDraw: c_int, startPos: c_int, endPos: c_int, draw: &T, target: &U, renderRect: &V, pageRect: &W) -> c_int {
-        unsafe { wxStyledTextCtrl_FormatRange(self.handle(), doDraw, startPos, endPos, draw.handle(), target.handle(), renderRect.handle(), pageRect.handle()) }
+        unsafe { wxStyledTextCtrl_FormatRange(self.ptr(), doDraw, startPos, endPos, draw.ptr(), target.ptr(), renderRect.ptr(), pageRect.ptr()) }
     }
     fn getFirstVisibleLine(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetFirstVisibleLine(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetFirstVisibleLine(self.ptr()) }
     }
     fn getLineCount(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetLineCount(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetLineCount(self.ptr()) }
     }
     fn setMarginLeft(&self, pixelWidth: c_int) {
-        unsafe { wxStyledTextCtrl_SetMarginLeft(self.handle(), pixelWidth) }
+        unsafe { wxStyledTextCtrl_SetMarginLeft(self.ptr(), pixelWidth) }
     }
     fn getMarginLeft(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetMarginLeft(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetMarginLeft(self.ptr()) }
     }
     fn setMarginRight(&self, pixelWidth: c_int) {
-        unsafe { wxStyledTextCtrl_SetMarginRight(self.handle(), pixelWidth) }
+        unsafe { wxStyledTextCtrl_SetMarginRight(self.ptr(), pixelWidth) }
     }
     fn getMarginRight(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetMarginRight(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetMarginRight(self.ptr()) }
     }
     fn getModify(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetModify(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetModify(self.ptr()) }
     }
     fn setSelection(&self, start: c_int, end: c_int) {
-        unsafe { wxStyledTextCtrl_SetSelection(self.handle(), start, end) }
+        unsafe { wxStyledTextCtrl_SetSelection(self.ptr(), start, end) }
     }
     fn hideSelection(&self, normal: c_int) {
-        unsafe { wxStyledTextCtrl_HideSelection(self.handle(), normal) }
+        unsafe { wxStyledTextCtrl_HideSelection(self.ptr(), normal) }
     }
     fn lineFromPosition(&self, pos: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_LineFromPosition(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_LineFromPosition(self.ptr(), pos) }
     }
     fn positionFromLine(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_PositionFromLine(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_PositionFromLine(self.ptr(), line) }
     }
     fn lineScroll(&self, columns: c_int, lines: c_int) {
-        unsafe { wxStyledTextCtrl_LineScroll(self.handle(), columns, lines) }
+        unsafe { wxStyledTextCtrl_LineScroll(self.ptr(), columns, lines) }
     }
     fn ensureCaretVisible(&self) {
-        unsafe { wxStyledTextCtrl_EnsureCaretVisible(self.handle()) }
+        unsafe { wxStyledTextCtrl_EnsureCaretVisible(self.ptr()) }
     }
     fn replaceSelection(&self, text: &str) {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_ReplaceSelection(self.handle(), text.handle()) }
+        unsafe { wxStyledTextCtrl_ReplaceSelection(self.ptr(), text.ptr()) }
     }
     fn setReadOnly(&self, readOnly: c_int) {
-        unsafe { wxStyledTextCtrl_SetReadOnly(self.handle(), readOnly) }
+        unsafe { wxStyledTextCtrl_SetReadOnly(self.ptr(), readOnly) }
     }
     fn canPaste(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_CanPaste(self.handle()) }
+        unsafe { wxStyledTextCtrl_CanPaste(self.ptr()) }
     }
     fn canUndo(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_CanUndo(self.handle()) }
+        unsafe { wxStyledTextCtrl_CanUndo(self.ptr()) }
     }
     fn emptyUndoBuffer(&self) {
-        unsafe { wxStyledTextCtrl_EmptyUndoBuffer(self.handle()) }
+        unsafe { wxStyledTextCtrl_EmptyUndoBuffer(self.ptr()) }
     }
     fn undo(&self) {
-        unsafe { wxStyledTextCtrl_Undo(self.handle()) }
+        unsafe { wxStyledTextCtrl_Undo(self.ptr()) }
     }
     fn cut(&self) {
-        unsafe { wxStyledTextCtrl_Cut(self.handle()) }
+        unsafe { wxStyledTextCtrl_Cut(self.ptr()) }
     }
     fn copy(&self) {
-        unsafe { wxStyledTextCtrl_Copy(self.handle()) }
+        unsafe { wxStyledTextCtrl_Copy(self.ptr()) }
     }
     fn paste(&self) {
-        unsafe { wxStyledTextCtrl_Paste(self.handle()) }
+        unsafe { wxStyledTextCtrl_Paste(self.ptr()) }
     }
     fn clear(&self) {
-        unsafe { wxStyledTextCtrl_Clear(self.handle()) }
+        unsafe { wxStyledTextCtrl_Clear(self.ptr()) }
     }
     fn setText(&self, text: &str) {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_SetText(self.handle(), text.handle()) }
+        unsafe { wxStyledTextCtrl_SetText(self.ptr(), text.ptr()) }
     }
     fn getTextLength(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetTextLength(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetTextLength(self.ptr()) }
     }
     fn setOvertype(&self, overtype: c_int) {
-        unsafe { wxStyledTextCtrl_SetOvertype(self.handle(), overtype) }
+        unsafe { wxStyledTextCtrl_SetOvertype(self.ptr(), overtype) }
     }
     fn getOvertype(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetOvertype(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetOvertype(self.ptr()) }
     }
     fn setCaretWidth(&self, pixelWidth: c_int) {
-        unsafe { wxStyledTextCtrl_SetCaretWidth(self.handle(), pixelWidth) }
+        unsafe { wxStyledTextCtrl_SetCaretWidth(self.ptr(), pixelWidth) }
     }
     fn getCaretWidth(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetCaretWidth(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetCaretWidth(self.ptr()) }
     }
     fn setTargetStart(&self, pos: c_int) {
-        unsafe { wxStyledTextCtrl_SetTargetStart(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_SetTargetStart(self.ptr(), pos) }
     }
     fn getTargetStart(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetTargetStart(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetTargetStart(self.ptr()) }
     }
     fn setTargetEnd(&self, pos: c_int) {
-        unsafe { wxStyledTextCtrl_SetTargetEnd(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_SetTargetEnd(self.ptr(), pos) }
     }
     fn getTargetEnd(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetTargetEnd(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetTargetEnd(self.ptr()) }
     }
     fn replaceTarget(&self, text: &str) -> c_int {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_ReplaceTarget(self.handle(), text.handle()) }
+        unsafe { wxStyledTextCtrl_ReplaceTarget(self.ptr(), text.ptr()) }
     }
     fn replaceTargetRE(&self, text: &str) -> c_int {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_ReplaceTargetRE(self.handle(), text.handle()) }
+        unsafe { wxStyledTextCtrl_ReplaceTargetRE(self.ptr(), text.ptr()) }
     }
     fn searchInTarget(&self, text: &str) -> c_int {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_SearchInTarget(self.handle(), text.handle()) }
+        unsafe { wxStyledTextCtrl_SearchInTarget(self.ptr(), text.ptr()) }
     }
     fn setSearchFlags(&self, flags: c_int) {
-        unsafe { wxStyledTextCtrl_SetSearchFlags(self.handle(), flags) }
+        unsafe { wxStyledTextCtrl_SetSearchFlags(self.ptr(), flags) }
     }
     fn getSearchFlags(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetSearchFlags(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetSearchFlags(self.ptr()) }
     }
     fn callTipShow(&self, pos: c_int, definition: &str) {
         let definition = wxT(definition);
-        unsafe { wxStyledTextCtrl_CallTipShow(self.handle(), pos, definition.handle()) }
+        unsafe { wxStyledTextCtrl_CallTipShow(self.ptr(), pos, definition.ptr()) }
     }
     fn callTipCancel(&self) {
-        unsafe { wxStyledTextCtrl_CallTipCancel(self.handle()) }
+        unsafe { wxStyledTextCtrl_CallTipCancel(self.ptr()) }
     }
     fn callTipActive(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_CallTipActive(self.handle()) }
+        unsafe { wxStyledTextCtrl_CallTipActive(self.ptr()) }
     }
     fn callTipPosAtStart(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_CallTipPosAtStart(self.handle()) }
+        unsafe { wxStyledTextCtrl_CallTipPosAtStart(self.ptr()) }
     }
     fn callTipSetHighlight(&self, start: c_int, end: c_int) {
-        unsafe { wxStyledTextCtrl_CallTipSetHighlight(self.handle(), start, end) }
+        unsafe { wxStyledTextCtrl_CallTipSetHighlight(self.ptr(), start, end) }
     }
     fn callTipSetBackground(&self, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_CallTipSetBackground(self.handle(), back_r, back_g, back_b) }
+        unsafe { wxStyledTextCtrl_CallTipSetBackground(self.ptr(), back_r, back_g, back_b) }
     }
     fn callTipSetForeground(&self, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_CallTipSetForeground(self.handle(), fore_r, fore_g, fore_b) }
+        unsafe { wxStyledTextCtrl_CallTipSetForeground(self.ptr(), fore_r, fore_g, fore_b) }
     }
     fn callTipSetForegroundHighlight(&self, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_CallTipSetForegroundHighlight(self.handle(), fore_r, fore_g, fore_b) }
+        unsafe { wxStyledTextCtrl_CallTipSetForegroundHighlight(self.ptr(), fore_r, fore_g, fore_b) }
     }
     fn visibleFromDocLine(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_VisibleFromDocLine(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_VisibleFromDocLine(self.ptr(), line) }
     }
     fn docLineFromVisible(&self, lineDisplay: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_DocLineFromVisible(self.handle(), lineDisplay) }
+        unsafe { wxStyledTextCtrl_DocLineFromVisible(self.ptr(), lineDisplay) }
     }
     fn setFoldLevel(&self, line: c_int, level: c_int) {
-        unsafe { wxStyledTextCtrl_SetFoldLevel(self.handle(), line, level) }
+        unsafe { wxStyledTextCtrl_SetFoldLevel(self.ptr(), line, level) }
     }
     fn getFoldLevel(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetFoldLevel(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_GetFoldLevel(self.ptr(), line) }
     }
     fn getLastChild(&self, line: c_int, level: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetLastChild(self.handle(), line, level) }
+        unsafe { wxStyledTextCtrl_GetLastChild(self.ptr(), line, level) }
     }
     fn getFoldParent(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetFoldParent(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_GetFoldParent(self.ptr(), line) }
     }
     fn showLines(&self, lineStart: c_int, lineEnd: c_int) {
-        unsafe { wxStyledTextCtrl_ShowLines(self.handle(), lineStart, lineEnd) }
+        unsafe { wxStyledTextCtrl_ShowLines(self.ptr(), lineStart, lineEnd) }
     }
     fn hideLines(&self, lineStart: c_int, lineEnd: c_int) {
-        unsafe { wxStyledTextCtrl_HideLines(self.handle(), lineStart, lineEnd) }
+        unsafe { wxStyledTextCtrl_HideLines(self.ptr(), lineStart, lineEnd) }
     }
     fn getLineVisible(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetLineVisible(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_GetLineVisible(self.ptr(), line) }
     }
     fn setFoldExpanded(&self, line: c_int, expanded: c_int) {
-        unsafe { wxStyledTextCtrl_SetFoldExpanded(self.handle(), line, expanded) }
+        unsafe { wxStyledTextCtrl_SetFoldExpanded(self.ptr(), line, expanded) }
     }
     fn getFoldExpanded(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_GetFoldExpanded(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_GetFoldExpanded(self.ptr(), line) }
     }
     fn toggleFold(&self, line: c_int) {
-        unsafe { wxStyledTextCtrl_ToggleFold(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_ToggleFold(self.ptr(), line) }
     }
     fn ensureVisible(&self, line: c_int) {
-        unsafe { wxStyledTextCtrl_EnsureVisible(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_EnsureVisible(self.ptr(), line) }
     }
     fn setFoldFlags(&self, flags: c_int) {
-        unsafe { wxStyledTextCtrl_SetFoldFlags(self.handle(), flags) }
+        unsafe { wxStyledTextCtrl_SetFoldFlags(self.ptr(), flags) }
     }
     fn ensureVisibleEnforcePolicy(&self, line: c_int) {
-        unsafe { wxStyledTextCtrl_EnsureVisibleEnforcePolicy(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_EnsureVisibleEnforcePolicy(self.ptr(), line) }
     }
     fn setTabIndents(&self, tabIndents: c_int) {
-        unsafe { wxStyledTextCtrl_SetTabIndents(self.handle(), tabIndents) }
+        unsafe { wxStyledTextCtrl_SetTabIndents(self.ptr(), tabIndents) }
     }
     fn getTabIndents(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetTabIndents(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetTabIndents(self.ptr()) }
     }
     fn setBackSpaceUnIndents(&self, bsUnIndents: c_int) {
-        unsafe { wxStyledTextCtrl_SetBackSpaceUnIndents(self.handle(), bsUnIndents) }
+        unsafe { wxStyledTextCtrl_SetBackSpaceUnIndents(self.ptr(), bsUnIndents) }
     }
     fn getBackSpaceUnIndents(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetBackSpaceUnIndents(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetBackSpaceUnIndents(self.ptr()) }
     }
     fn setMouseDwellTime(&self, periodMilliseconds: c_int) {
-        unsafe { wxStyledTextCtrl_SetMouseDwellTime(self.handle(), periodMilliseconds) }
+        unsafe { wxStyledTextCtrl_SetMouseDwellTime(self.ptr(), periodMilliseconds) }
     }
     fn getMouseDwellTime(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetMouseDwellTime(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetMouseDwellTime(self.ptr()) }
     }
     fn wordStartPosition(&self, pos: c_int, onlyWordCharacters: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_WordStartPosition(self.handle(), pos, onlyWordCharacters) }
+        unsafe { wxStyledTextCtrl_WordStartPosition(self.ptr(), pos, onlyWordCharacters) }
     }
     fn wordEndPosition(&self, pos: c_int, onlyWordCharacters: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_WordEndPosition(self.handle(), pos, onlyWordCharacters) }
+        unsafe { wxStyledTextCtrl_WordEndPosition(self.ptr(), pos, onlyWordCharacters) }
     }
     fn setWrapMode(&self, mode: c_int) {
-        unsafe { wxStyledTextCtrl_SetWrapMode(self.handle(), mode) }
+        unsafe { wxStyledTextCtrl_SetWrapMode(self.ptr(), mode) }
     }
     fn getWrapMode(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetWrapMode(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetWrapMode(self.ptr()) }
     }
     fn setLayoutCache(&self, mode: c_int) {
-        unsafe { wxStyledTextCtrl_SetLayoutCache(self.handle(), mode) }
+        unsafe { wxStyledTextCtrl_SetLayoutCache(self.ptr(), mode) }
     }
     fn getLayoutCache(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetLayoutCache(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetLayoutCache(self.ptr()) }
     }
     fn setScrollWidth(&self, pixelWidth: c_int) {
-        unsafe { wxStyledTextCtrl_SetScrollWidth(self.handle(), pixelWidth) }
+        unsafe { wxStyledTextCtrl_SetScrollWidth(self.ptr(), pixelWidth) }
     }
     fn getScrollWidth(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetScrollWidth(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetScrollWidth(self.ptr()) }
     }
     fn textWidth(&self, style: c_int, text: &str) -> c_int {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_TextWidth(self.handle(), style, text.handle()) }
+        unsafe { wxStyledTextCtrl_TextWidth(self.ptr(), style, text.ptr()) }
     }
     fn setEndAtLastLine(&self, endAtLastLine: c_int) {
-        unsafe { wxStyledTextCtrl_SetEndAtLastLine(self.handle(), endAtLastLine) }
+        unsafe { wxStyledTextCtrl_SetEndAtLastLine(self.ptr(), endAtLastLine) }
     }
     fn getEndAtLastLine(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetEndAtLastLine(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetEndAtLastLine(self.ptr()) }
     }
     fn textHeight(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_TextHeight(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_TextHeight(self.ptr(), line) }
     }
     fn setUseVerticalScrollBar(&self, show: c_int) {
-        unsafe { wxStyledTextCtrl_SetUseVerticalScrollBar(self.handle(), show) }
+        unsafe { wxStyledTextCtrl_SetUseVerticalScrollBar(self.ptr(), show) }
     }
     fn getUseVerticalScrollBar(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetUseVerticalScrollBar(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetUseVerticalScrollBar(self.ptr()) }
     }
     fn appendText(&self, text: &str) {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_AppendText(self.handle(), text.handle()) }
+        unsafe { wxStyledTextCtrl_AppendText(self.ptr(), text.ptr()) }
     }
     fn getTwoPhaseDraw(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetTwoPhaseDraw(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetTwoPhaseDraw(self.ptr()) }
     }
     fn setTwoPhaseDraw(&self, twoPhase: c_int) {
-        unsafe { wxStyledTextCtrl_SetTwoPhaseDraw(self.handle(), twoPhase) }
+        unsafe { wxStyledTextCtrl_SetTwoPhaseDraw(self.ptr(), twoPhase) }
     }
     fn targetFromSelection(&self) {
-        unsafe { wxStyledTextCtrl_TargetFromSelection(self.handle()) }
+        unsafe { wxStyledTextCtrl_TargetFromSelection(self.ptr()) }
     }
     fn linesJoin(&self) {
-        unsafe { wxStyledTextCtrl_LinesJoin(self.handle()) }
+        unsafe { wxStyledTextCtrl_LinesJoin(self.ptr()) }
     }
     fn linesSplit(&self, pixelWidth: c_int) {
-        unsafe { wxStyledTextCtrl_LinesSplit(self.handle(), pixelWidth) }
+        unsafe { wxStyledTextCtrl_LinesSplit(self.ptr(), pixelWidth) }
     }
     fn setFoldMarginColour(&self, useSetting: c_int, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_SetFoldMarginColour(self.handle(), useSetting, back_r, back_g, back_b) }
+        unsafe { wxStyledTextCtrl_SetFoldMarginColour(self.ptr(), useSetting, back_r, back_g, back_b) }
     }
     fn setFoldMarginHiColour(&self, useSetting: c_int, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_SetFoldMarginHiColour(self.handle(), useSetting, fore_r, fore_g, fore_b) }
+        unsafe { wxStyledTextCtrl_SetFoldMarginHiColour(self.ptr(), useSetting, fore_r, fore_g, fore_b) }
     }
     fn lineDuplicate(&self) {
-        unsafe { wxStyledTextCtrl_LineDuplicate(self.handle()) }
+        unsafe { wxStyledTextCtrl_LineDuplicate(self.ptr()) }
     }
     fn homeDisplay(&self) {
-        unsafe { wxStyledTextCtrl_HomeDisplay(self.handle()) }
+        unsafe { wxStyledTextCtrl_HomeDisplay(self.ptr()) }
     }
     fn homeDisplayExtend(&self) {
-        unsafe { wxStyledTextCtrl_HomeDisplayExtend(self.handle()) }
+        unsafe { wxStyledTextCtrl_HomeDisplayExtend(self.ptr()) }
     }
     fn lineEndDisplay(&self) {
-        unsafe { wxStyledTextCtrl_LineEndDisplay(self.handle()) }
+        unsafe { wxStyledTextCtrl_LineEndDisplay(self.ptr()) }
     }
     fn lineEndDisplayExtend(&self) {
-        unsafe { wxStyledTextCtrl_LineEndDisplayExtend(self.handle()) }
+        unsafe { wxStyledTextCtrl_LineEndDisplayExtend(self.ptr()) }
     }
     fn lineCopy(&self) {
-        unsafe { wxStyledTextCtrl_LineCopy(self.handle()) }
+        unsafe { wxStyledTextCtrl_LineCopy(self.ptr()) }
     }
     fn moveCaretInsideView(&self) {
-        unsafe { wxStyledTextCtrl_MoveCaretInsideView(self.handle()) }
+        unsafe { wxStyledTextCtrl_MoveCaretInsideView(self.ptr()) }
     }
     fn lineLength(&self, line: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_LineLength(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_LineLength(self.ptr(), line) }
     }
     fn braceHighlight(&self, pos1: c_int, pos2: c_int) {
-        unsafe { wxStyledTextCtrl_BraceHighlight(self.handle(), pos1, pos2) }
+        unsafe { wxStyledTextCtrl_BraceHighlight(self.ptr(), pos1, pos2) }
     }
     fn braceBadLight(&self, pos: c_int) {
-        unsafe { wxStyledTextCtrl_BraceBadLight(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_BraceBadLight(self.ptr(), pos) }
     }
     fn braceMatch(&self, pos: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_BraceMatch(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_BraceMatch(self.ptr(), pos) }
     }
     fn getViewEOL(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetViewEOL(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetViewEOL(self.ptr()) }
     }
     fn setViewEOL(&self, visible: c_int) {
-        unsafe { wxStyledTextCtrl_SetViewEOL(self.handle(), visible) }
+        unsafe { wxStyledTextCtrl_SetViewEOL(self.ptr(), visible) }
     }
     fn setDocPointer<T: _wxSTCDoc>(&self, docPointer: &T) {
-        unsafe { wxStyledTextCtrl_SetDocPointer(self.handle(), docPointer.handle()) }
+        unsafe { wxStyledTextCtrl_SetDocPointer(self.ptr(), docPointer.ptr()) }
     }
     fn setModEventMask(&self, mask: c_int) {
-        unsafe { wxStyledTextCtrl_SetModEventMask(self.handle(), mask) }
+        unsafe { wxStyledTextCtrl_SetModEventMask(self.ptr(), mask) }
     }
     fn getEdgeColumn(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetEdgeColumn(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetEdgeColumn(self.ptr()) }
     }
     fn setEdgeColumn(&self, column: c_int) {
-        unsafe { wxStyledTextCtrl_SetEdgeColumn(self.handle(), column) }
+        unsafe { wxStyledTextCtrl_SetEdgeColumn(self.ptr(), column) }
     }
     fn getEdgeMode(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetEdgeMode(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetEdgeMode(self.ptr()) }
     }
     fn setEdgeMode(&self, mode: c_int) {
-        unsafe { wxStyledTextCtrl_SetEdgeMode(self.handle(), mode) }
+        unsafe { wxStyledTextCtrl_SetEdgeMode(self.ptr(), mode) }
     }
     fn setEdgeColour(&self, edgeColour_r: uint8_t, edgeColour_g: uint8_t, edgeColour_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_SetEdgeColour(self.handle(), edgeColour_r, edgeColour_g, edgeColour_b) }
+        unsafe { wxStyledTextCtrl_SetEdgeColour(self.ptr(), edgeColour_r, edgeColour_g, edgeColour_b) }
     }
     fn searchAnchor(&self) {
-        unsafe { wxStyledTextCtrl_SearchAnchor(self.handle()) }
+        unsafe { wxStyledTextCtrl_SearchAnchor(self.ptr()) }
     }
     fn searchNext(&self, flags: c_int, text: &str) -> c_int {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_SearchNext(self.handle(), flags, text.handle()) }
+        unsafe { wxStyledTextCtrl_SearchNext(self.ptr(), flags, text.ptr()) }
     }
     fn searchPrev(&self, flags: c_int, text: &str) -> c_int {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_SearchPrev(self.handle(), flags, text.handle()) }
+        unsafe { wxStyledTextCtrl_SearchPrev(self.ptr(), flags, text.ptr()) }
     }
     fn linesOnScreen(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_LinesOnScreen(self.handle()) }
+        unsafe { wxStyledTextCtrl_LinesOnScreen(self.ptr()) }
     }
     fn usePopUp(&self, allowPopUp: c_int) {
-        unsafe { wxStyledTextCtrl_UsePopUp(self.handle(), allowPopUp) }
+        unsafe { wxStyledTextCtrl_UsePopUp(self.ptr(), allowPopUp) }
     }
     fn selectionIsRectangle(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_SelectionIsRectangle(self.handle()) }
+        unsafe { wxStyledTextCtrl_SelectionIsRectangle(self.ptr()) }
     }
     fn setZoom(&self, zoom: c_int) {
-        unsafe { wxStyledTextCtrl_SetZoom(self.handle(), zoom) }
+        unsafe { wxStyledTextCtrl_SetZoom(self.ptr(), zoom) }
     }
     fn getZoom(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetZoom(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetZoom(self.ptr()) }
     }
     fn addRefDocument<T: _wxSTCDoc>(&self, docPointer: &T) {
-        unsafe { wxStyledTextCtrl_AddRefDocument(self.handle(), docPointer.handle()) }
+        unsafe { wxStyledTextCtrl_AddRefDocument(self.ptr(), docPointer.ptr()) }
     }
     fn releaseDocument<T: _wxSTCDoc>(&self, docPointer: &T) {
-        unsafe { wxStyledTextCtrl_ReleaseDocument(self.handle(), docPointer.handle()) }
+        unsafe { wxStyledTextCtrl_ReleaseDocument(self.ptr(), docPointer.ptr()) }
     }
     fn getModEventMask(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetModEventMask(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetModEventMask(self.ptr()) }
     }
     fn setSTCFocus(&self, focus: c_int) {
-        unsafe { wxStyledTextCtrl_SetSTCFocus(self.handle(), focus) }
+        unsafe { wxStyledTextCtrl_SetSTCFocus(self.ptr(), focus) }
     }
     fn getSTCFocus(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetSTCFocus(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetSTCFocus(self.ptr()) }
     }
     fn setStatus(&self, statusCode: c_int) {
-        unsafe { wxStyledTextCtrl_SetStatus(self.handle(), statusCode) }
+        unsafe { wxStyledTextCtrl_SetStatus(self.ptr(), statusCode) }
     }
     fn getStatus(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetStatus(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetStatus(self.ptr()) }
     }
     fn setMouseDownCaptures(&self, captures: c_int) {
-        unsafe { wxStyledTextCtrl_SetMouseDownCaptures(self.handle(), captures) }
+        unsafe { wxStyledTextCtrl_SetMouseDownCaptures(self.ptr(), captures) }
     }
     fn getMouseDownCaptures(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetMouseDownCaptures(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetMouseDownCaptures(self.ptr()) }
     }
     fn setSTCCursor(&self, cursorType: c_int) {
-        unsafe { wxStyledTextCtrl_SetSTCCursor(self.handle(), cursorType) }
+        unsafe { wxStyledTextCtrl_SetSTCCursor(self.ptr(), cursorType) }
     }
     fn getSTCCursor(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetSTCCursor(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetSTCCursor(self.ptr()) }
     }
     fn setControlCharSymbol(&self, symbol: c_int) {
-        unsafe { wxStyledTextCtrl_SetControlCharSymbol(self.handle(), symbol) }
+        unsafe { wxStyledTextCtrl_SetControlCharSymbol(self.ptr(), symbol) }
     }
     fn getControlCharSymbol(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetControlCharSymbol(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetControlCharSymbol(self.ptr()) }
     }
     fn wordPartLeft(&self) {
-        unsafe { wxStyledTextCtrl_WordPartLeft(self.handle()) }
+        unsafe { wxStyledTextCtrl_WordPartLeft(self.ptr()) }
     }
     fn wordPartLeftExtend(&self) {
-        unsafe { wxStyledTextCtrl_WordPartLeftExtend(self.handle()) }
+        unsafe { wxStyledTextCtrl_WordPartLeftExtend(self.ptr()) }
     }
     fn wordPartRight(&self) {
-        unsafe { wxStyledTextCtrl_WordPartRight(self.handle()) }
+        unsafe { wxStyledTextCtrl_WordPartRight(self.ptr()) }
     }
     fn wordPartRightExtend(&self) {
-        unsafe { wxStyledTextCtrl_WordPartRightExtend(self.handle()) }
+        unsafe { wxStyledTextCtrl_WordPartRightExtend(self.ptr()) }
     }
     fn setVisiblePolicy(&self, visiblePolicy: c_int, visibleSlop: c_int) {
-        unsafe { wxStyledTextCtrl_SetVisiblePolicy(self.handle(), visiblePolicy, visibleSlop) }
+        unsafe { wxStyledTextCtrl_SetVisiblePolicy(self.ptr(), visiblePolicy, visibleSlop) }
     }
     fn delLineLeft(&self) {
-        unsafe { wxStyledTextCtrl_DelLineLeft(self.handle()) }
+        unsafe { wxStyledTextCtrl_DelLineLeft(self.ptr()) }
     }
     fn delLineRight(&self) {
-        unsafe { wxStyledTextCtrl_DelLineRight(self.handle()) }
+        unsafe { wxStyledTextCtrl_DelLineRight(self.ptr()) }
     }
     fn setXOffset(&self, newOffset: c_int) {
-        unsafe { wxStyledTextCtrl_SetXOffset(self.handle(), newOffset) }
+        unsafe { wxStyledTextCtrl_SetXOffset(self.ptr(), newOffset) }
     }
     fn getXOffset(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetXOffset(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetXOffset(self.ptr()) }
     }
     fn chooseCaretX(&self) {
-        unsafe { wxStyledTextCtrl_ChooseCaretX(self.handle()) }
+        unsafe { wxStyledTextCtrl_ChooseCaretX(self.ptr()) }
     }
     fn setXCaretPolicy(&self, caretPolicy: c_int, caretSlop: c_int) {
-        unsafe { wxStyledTextCtrl_SetXCaretPolicy(self.handle(), caretPolicy, caretSlop) }
+        unsafe { wxStyledTextCtrl_SetXCaretPolicy(self.ptr(), caretPolicy, caretSlop) }
     }
     fn setYCaretPolicy(&self, caretPolicy: c_int, caretSlop: c_int) {
-        unsafe { wxStyledTextCtrl_SetYCaretPolicy(self.handle(), caretPolicy, caretSlop) }
+        unsafe { wxStyledTextCtrl_SetYCaretPolicy(self.ptr(), caretPolicy, caretSlop) }
     }
     fn setPrintWrapMode(&self, mode: c_int) {
-        unsafe { wxStyledTextCtrl_SetPrintWrapMode(self.handle(), mode) }
+        unsafe { wxStyledTextCtrl_SetPrintWrapMode(self.ptr(), mode) }
     }
     fn getPrintWrapMode(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetPrintWrapMode(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetPrintWrapMode(self.ptr()) }
     }
     fn setHotspotActiveForeground(&self, useSetting: c_int, fore_r: uint8_t, fore_g: uint8_t, fore_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_SetHotspotActiveForeground(self.handle(), useSetting, fore_r, fore_g, fore_b) }
+        unsafe { wxStyledTextCtrl_SetHotspotActiveForeground(self.ptr(), useSetting, fore_r, fore_g, fore_b) }
     }
     fn setHotspotActiveBackground(&self, useSetting: c_int, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_SetHotspotActiveBackground(self.handle(), useSetting, back_r, back_g, back_b) }
+        unsafe { wxStyledTextCtrl_SetHotspotActiveBackground(self.ptr(), useSetting, back_r, back_g, back_b) }
     }
     fn setHotspotActiveUnderline(&self, underline: c_int) {
-        unsafe { wxStyledTextCtrl_SetHotspotActiveUnderline(self.handle(), underline) }
+        unsafe { wxStyledTextCtrl_SetHotspotActiveUnderline(self.ptr(), underline) }
     }
     fn positionBefore(&self, pos: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_PositionBefore(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_PositionBefore(self.ptr(), pos) }
     }
     fn positionAfter(&self, pos: c_int) -> c_int {
-        unsafe { wxStyledTextCtrl_PositionAfter(self.handle(), pos) }
+        unsafe { wxStyledTextCtrl_PositionAfter(self.ptr(), pos) }
     }
     fn copyRange(&self, start: c_int, end: c_int) {
-        unsafe { wxStyledTextCtrl_CopyRange(self.handle(), start, end) }
+        unsafe { wxStyledTextCtrl_CopyRange(self.ptr(), start, end) }
     }
     fn copyText(&self, length: c_int, text: &str) {
         let text = wxT(text);
-        unsafe { wxStyledTextCtrl_CopyText(self.handle(), length, text.handle()) }
+        unsafe { wxStyledTextCtrl_CopyText(self.ptr(), length, text.ptr()) }
     }
     fn startRecord(&self) {
-        unsafe { wxStyledTextCtrl_StartRecord(self.handle()) }
+        unsafe { wxStyledTextCtrl_StartRecord(self.ptr()) }
     }
     fn stopRecord(&self) {
-        unsafe { wxStyledTextCtrl_StopRecord(self.handle()) }
+        unsafe { wxStyledTextCtrl_StopRecord(self.ptr()) }
     }
     fn setLexer(&self, lexer: c_int) {
-        unsafe { wxStyledTextCtrl_SetLexer(self.handle(), lexer) }
+        unsafe { wxStyledTextCtrl_SetLexer(self.ptr(), lexer) }
     }
     fn getLexer(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetLexer(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetLexer(self.ptr()) }
     }
     fn colourise(&self, start: c_int, end: c_int) {
-        unsafe { wxStyledTextCtrl_Colourise(self.handle(), start, end) }
+        unsafe { wxStyledTextCtrl_Colourise(self.ptr(), start, end) }
     }
     fn setProperty(&self, key: &str, value: &str) {
         let key = wxT(key);
         let value = wxT(value);
-        unsafe { wxStyledTextCtrl_SetProperty(self.handle(), key.handle(), value.handle()) }
+        unsafe { wxStyledTextCtrl_SetProperty(self.ptr(), key.ptr(), value.ptr()) }
     }
     fn setKeyWords(&self, keywordSet: c_int, keyWords: &str) {
         let keyWords = wxT(keyWords);
-        unsafe { wxStyledTextCtrl_SetKeyWords(self.handle(), keywordSet, keyWords.handle()) }
+        unsafe { wxStyledTextCtrl_SetKeyWords(self.ptr(), keywordSet, keyWords.ptr()) }
     }
     fn setLexerLanguage(&self, language: &str) {
         let language = wxT(language);
-        unsafe { wxStyledTextCtrl_SetLexerLanguage(self.handle(), language.handle()) }
+        unsafe { wxStyledTextCtrl_SetLexerLanguage(self.ptr(), language.ptr()) }
     }
     fn getCurrentLine(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetCurrentLine(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetCurrentLine(self.ptr()) }
     }
     fn styleSetSpec(&self, styleNum: c_int, spec: &str) {
         let spec = wxT(spec);
-        unsafe { wxStyledTextCtrl_StyleSetSpec(self.handle(), styleNum, spec.handle()) }
+        unsafe { wxStyledTextCtrl_StyleSetSpec(self.ptr(), styleNum, spec.ptr()) }
     }
     fn styleSetFont<T: _wxFont>(&self, styleNum: c_int, font: &T) {
-        unsafe { wxStyledTextCtrl_StyleSetFont(self.handle(), styleNum, font.handle()) }
+        unsafe { wxStyledTextCtrl_StyleSetFont(self.ptr(), styleNum, font.ptr()) }
     }
     fn styleSetFontAttr(&self, styleNum: c_int, size: c_int, faceName: &str, bold: c_int, italic: c_int, underline: c_int) {
         let faceName = wxT(faceName);
-        unsafe { wxStyledTextCtrl_StyleSetFontAttr(self.handle(), styleNum, size, faceName.handle(), bold, italic, underline) }
+        unsafe { wxStyledTextCtrl_StyleSetFontAttr(self.ptr(), styleNum, size, faceName.ptr(), bold, italic, underline) }
     }
     fn cmdKeyExecute(&self, cmd: c_int) {
-        unsafe { wxStyledTextCtrl_CmdKeyExecute(self.handle(), cmd) }
+        unsafe { wxStyledTextCtrl_CmdKeyExecute(self.ptr(), cmd) }
     }
     fn setMargins(&self, left: c_int, right: c_int) {
-        unsafe { wxStyledTextCtrl_SetMargins(self.handle(), left, right) }
+        unsafe { wxStyledTextCtrl_SetMargins(self.ptr(), left, right) }
     }
     fn getSelection(&self, startPos: *mut c_int, endPos: *mut c_int) {
-        unsafe { wxStyledTextCtrl_GetSelection(self.handle(), startPos, endPos) }
+        unsafe { wxStyledTextCtrl_GetSelection(self.ptr(), startPos, endPos) }
     }
     fn scrollToLine(&self, line: c_int) {
-        unsafe { wxStyledTextCtrl_ScrollToLine(self.handle(), line) }
+        unsafe { wxStyledTextCtrl_ScrollToLine(self.ptr(), line) }
     }
     fn scrollToColumn(&self, column: c_int) {
-        unsafe { wxStyledTextCtrl_ScrollToColumn(self.handle(), column) }
+        unsafe { wxStyledTextCtrl_ScrollToColumn(self.ptr(), column) }
     }
     fn setVScrollBar<T: _wxScrollBar>(&self, bar: &T) {
-        unsafe { wxStyledTextCtrl_SetVScrollBar(self.handle(), bar.handle()) }
+        unsafe { wxStyledTextCtrl_SetVScrollBar(self.ptr(), bar.ptr()) }
     }
     fn setHScrollBar<T: _wxScrollBar>(&self, bar: &T) {
-        unsafe { wxStyledTextCtrl_SetHScrollBar(self.handle(), bar.handle()) }
+        unsafe { wxStyledTextCtrl_SetHScrollBar(self.ptr(), bar.ptr()) }
     }
     fn getLastKeydownProcessed(&self) -> c_int {
-        unsafe { wxStyledTextCtrl_GetLastKeydownProcessed(self.handle()) }
+        unsafe { wxStyledTextCtrl_GetLastKeydownProcessed(self.ptr()) }
     }
     fn setLastKeydownProcessed(&self, val: c_int) {
-        unsafe { wxStyledTextCtrl_SetLastKeydownProcessed(self.handle(), val) }
+        unsafe { wxStyledTextCtrl_SetLastKeydownProcessed(self.ptr(), val) }
     }
     fn saveFile(&self, filename: &str) -> c_int {
         let filename = wxT(filename);
-        unsafe { wxStyledTextCtrl_SaveFile(self.handle(), filename.handle()) }
+        unsafe { wxStyledTextCtrl_SaveFile(self.ptr(), filename.ptr()) }
     }
     fn loadFile(&self, filename: &str) -> c_int {
         let filename = wxT(filename);
-        unsafe { wxStyledTextCtrl_LoadFile(self.handle(), filename.handle()) }
+        unsafe { wxStyledTextCtrl_LoadFile(self.ptr(), filename.ptr()) }
     }
     fn indicatorGetForeground(&self, indic: c_int) -> wxColour {
-        unsafe { wxColour { handle: wxStyledTextCtrl_IndicatorGetForeground(self.handle(), indic) } }
+        unsafe { wxColour { ptr: wxStyledTextCtrl_IndicatorGetForeground(self.ptr(), indic) } }
     }
     fn getCaretLineBackground(&self) -> wxColour {
-        unsafe { wxColour { handle: wxStyledTextCtrl_GetCaretLineBackground(self.handle()) } }
+        unsafe { wxColour { ptr: wxStyledTextCtrl_GetCaretLineBackground(self.ptr()) } }
     }
     fn setCaretLineBackground(&self, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
-        unsafe { wxStyledTextCtrl_SetCaretLineBackground(self.handle(), back_r, back_g, back_b) }
+        unsafe { wxStyledTextCtrl_SetCaretLineBackground(self.ptr(), back_r, back_g, back_b) }
     }
     fn getCaretForeground(&self) -> wxColour {
-        unsafe { wxColour { handle: wxStyledTextCtrl_GetCaretForeground(self.handle()) } }
+        unsafe { wxColour { ptr: wxStyledTextCtrl_GetCaretForeground(self.ptr()) } }
     }
     fn getLine(&self, line: c_int) -> ~str {
-        unsafe { wxString { handle: wxStyledTextCtrl_GetLine(self.handle(), line) }.to_str() }
+        unsafe { wxString { ptr: wxStyledTextCtrl_GetLine(self.ptr(), line) }.to_str() }
     }
     fn getText(&self) -> ~str {
-        unsafe { wxString { handle: wxStyledTextCtrl_GetText(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxStyledTextCtrl_GetText(self.ptr()) }.to_str() }
     }
     fn getTextRange(&self, startPos: c_int, endPos: c_int) -> ~str {
-        unsafe { wxString { handle: wxStyledTextCtrl_GetTextRange(self.handle(), startPos, endPos) }.to_str() }
+        unsafe { wxString { ptr: wxStyledTextCtrl_GetTextRange(self.ptr(), startPos, endPos) }.to_str() }
     }
     fn getSelectedText(&self) -> ~str {
-        unsafe { wxString { handle: wxStyledTextCtrl_GetSelectedText(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxStyledTextCtrl_GetSelectedText(self.ptr()) }.to_str() }
     }
     fn newDocument(&self) -> wxSTCDoc {
-        unsafe { wxSTCDoc { handle: wxStyledTextCtrl_CreateDocument(self.handle()) } }
+        unsafe { wxSTCDoc { ptr: wxStyledTextCtrl_CreateDocument(self.ptr()) } }
     }
     fn getEdgeColour(&self) -> wxColour {
-        unsafe { wxColour { handle: wxStyledTextCtrl_GetEdgeColour(self.handle()) } }
+        unsafe { wxColour { ptr: wxStyledTextCtrl_GetEdgeColour(self.ptr()) } }
     }
     fn getDocPointer(&self) -> wxSTCDoc {
-        unsafe { wxSTCDoc { handle: wxStyledTextCtrl_GetDocPointer(self.handle()) } }
+        unsafe { wxSTCDoc { ptr: wxStyledTextCtrl_GetDocPointer(self.ptr()) } }
     }
     fn pointFromPosition(&self) -> wxPoint {
-        unsafe { wxPoint { handle: wxStyledTextCtrl_PointFromPosition(self.handle()) } }
+        unsafe { wxPoint { ptr: wxStyledTextCtrl_PointFromPosition(self.ptr()) } }
     }
 }
 
-pub struct wxSTCDoc { handle: *mut c_void }
-impl _wxSTCDoc for wxSTCDoc { fn handle(&self) -> *mut c_void { self.handle } }
+pub struct wxSTCDoc { ptr: *mut c_void }
+impl _wxSTCDoc for wxSTCDoc { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxSTCDoc {
-    pub fn from(handle: *mut c_void) -> wxSTCDoc { wxSTCDoc { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxSTCDoc { wxSTCDoc { ptr: ptr } }
     pub fn null() -> wxSTCDoc { wxSTCDoc::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxSTCDoc {
-    fn handle(&self) -> *mut c_void;
+    fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxStyledTextEvent { handle: *mut c_void }
+pub struct wxStyledTextEvent { ptr: *mut c_void }
 impl _wxStyledTextEvent for wxStyledTextEvent {}
 impl _wxCommandEvent for wxStyledTextEvent {}
 impl _wxEvent for wxStyledTextEvent {}
-impl _wxObject for wxStyledTextEvent { fn handle(&self) -> *mut c_void { self.handle } }
+impl _wxObject for wxStyledTextEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl wxStyledTextEvent {
-    pub fn from(handle: *mut c_void) -> wxStyledTextEvent { wxStyledTextEvent { handle: handle } }
+    pub fn from(ptr: *mut c_void) -> wxStyledTextEvent { wxStyledTextEvent { ptr: ptr } }
     pub fn null() -> wxStyledTextEvent { wxStyledTextEvent::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxStyledTextEvent : _wxCommandEvent {
     fn getPosition(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetPosition(self.handle()) }
+        unsafe { wxStyledTextEvent_GetPosition(self.ptr()) }
     }
     fn getKey(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetKey(self.handle()) }
+        unsafe { wxStyledTextEvent_GetKey(self.ptr()) }
     }
     fn getModifiers(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetModifiers(self.handle()) }
+        unsafe { wxStyledTextEvent_GetModifiers(self.ptr()) }
     }
     fn getModificationType(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetModificationType(self.handle()) }
+        unsafe { wxStyledTextEvent_GetModificationType(self.ptr()) }
     }
     fn getLength(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetLength(self.handle()) }
+        unsafe { wxStyledTextEvent_GetLength(self.ptr()) }
     }
     fn getLinesAdded(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetLinesAdded(self.handle()) }
+        unsafe { wxStyledTextEvent_GetLinesAdded(self.ptr()) }
     }
     fn getLine(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetLine(self.handle()) }
+        unsafe { wxStyledTextEvent_GetLine(self.ptr()) }
     }
     fn getFoldLevelNow(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetFoldLevelNow(self.handle()) }
+        unsafe { wxStyledTextEvent_GetFoldLevelNow(self.ptr()) }
     }
     fn getFoldLevelPrev(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetFoldLevelPrev(self.handle()) }
+        unsafe { wxStyledTextEvent_GetFoldLevelPrev(self.ptr()) }
     }
     fn getMargin(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetMargin(self.handle()) }
+        unsafe { wxStyledTextEvent_GetMargin(self.ptr()) }
     }
     fn getMessage(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetMessage(self.handle()) }
+        unsafe { wxStyledTextEvent_GetMessage(self.ptr()) }
     }
     fn getWParam(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetWParam(self.handle()) }
+        unsafe { wxStyledTextEvent_GetWParam(self.ptr()) }
     }
     fn getLParam(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetLParam(self.handle()) }
+        unsafe { wxStyledTextEvent_GetLParam(self.ptr()) }
     }
     fn getListType(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetListType(self.handle()) }
+        unsafe { wxStyledTextEvent_GetListType(self.ptr()) }
     }
     fn getX(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetX(self.handle()) }
+        unsafe { wxStyledTextEvent_GetX(self.ptr()) }
     }
     fn getY(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetY(self.handle()) }
+        unsafe { wxStyledTextEvent_GetY(self.ptr()) }
     }
     fn getDragText(&self) -> ~str {
-        unsafe { wxString { handle: wxStyledTextEvent_GetDragText(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxStyledTextEvent_GetDragText(self.ptr()) }.to_str() }
     }
     fn getDragAllowMove(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetDragAllowMove(self.handle()) }
+        unsafe { wxStyledTextEvent_GetDragAllowMove(self.ptr()) }
     }
     fn getDragResult(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetDragResult(self.handle()) }
+        unsafe { wxStyledTextEvent_GetDragResult(self.ptr()) }
     }
     fn getShift(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetShift(self.handle()) }
+        unsafe { wxStyledTextEvent_GetShift(self.ptr()) }
     }
     fn getControl(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetControl(self.handle()) }
+        unsafe { wxStyledTextEvent_GetControl(self.ptr()) }
     }
     fn getAlt(&self) -> c_int {
-        unsafe { wxStyledTextEvent_GetAlt(self.handle()) }
+        unsafe { wxStyledTextEvent_GetAlt(self.ptr()) }
     }
     fn getText(&self) -> ~str {
-        unsafe { wxString { handle: wxStyledTextEvent_GetText(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxStyledTextEvent_GetText(self.ptr()) }.to_str() }
     }
     fn clone(&self) -> wxStyledTextEvent {
-        unsafe { wxStyledTextEvent { handle: wxStyledTextEvent_Clone(self.handle()) } }
+        unsafe { wxStyledTextEvent { ptr: wxStyledTextEvent_Clone(self.ptr()) } }
     }
     fn setPosition(&self, pos: c_int) {
-        unsafe { wxStyledTextEvent_SetPosition(self.handle(), pos) }
+        unsafe { wxStyledTextEvent_SetPosition(self.ptr(), pos) }
     }
     fn setKey(&self, k: c_int) {
-        unsafe { wxStyledTextEvent_SetKey(self.handle(), k) }
+        unsafe { wxStyledTextEvent_SetKey(self.ptr(), k) }
     }
     fn setModifiers(&self, m: c_int) {
-        unsafe { wxStyledTextEvent_SetModifiers(self.handle(), m) }
+        unsafe { wxStyledTextEvent_SetModifiers(self.ptr(), m) }
     }
     fn setModificationType(&self, t: c_int) {
-        unsafe { wxStyledTextEvent_SetModificationType(self.handle(), t) }
+        unsafe { wxStyledTextEvent_SetModificationType(self.ptr(), t) }
     }
     fn setText(&self, t: &str) {
         let t = wxT(t);
-        unsafe { wxStyledTextEvent_SetText(self.handle(), t.handle()) }
+        unsafe { wxStyledTextEvent_SetText(self.ptr(), t.ptr()) }
     }
     fn setLength(&self, len: c_int) {
-        unsafe { wxStyledTextEvent_SetLength(self.handle(), len) }
+        unsafe { wxStyledTextEvent_SetLength(self.ptr(), len) }
     }
     fn setLinesAdded(&self, num: c_int) {
-        unsafe { wxStyledTextEvent_SetLinesAdded(self.handle(), num) }
+        unsafe { wxStyledTextEvent_SetLinesAdded(self.ptr(), num) }
     }
     fn setLine(&self, val: c_int) {
-        unsafe { wxStyledTextEvent_SetLine(self.handle(), val) }
+        unsafe { wxStyledTextEvent_SetLine(self.ptr(), val) }
     }
     fn setFoldLevelNow(&self, val: c_int) {
-        unsafe { wxStyledTextEvent_SetFoldLevelNow(self.handle(), val) }
+        unsafe { wxStyledTextEvent_SetFoldLevelNow(self.ptr(), val) }
     }
     fn setFoldLevelPrev(&self, val: c_int) {
-        unsafe { wxStyledTextEvent_SetFoldLevelPrev(self.handle(), val) }
+        unsafe { wxStyledTextEvent_SetFoldLevelPrev(self.ptr(), val) }
     }
     fn setMargin(&self, val: c_int) {
-        unsafe { wxStyledTextEvent_SetMargin(self.handle(), val) }
+        unsafe { wxStyledTextEvent_SetMargin(self.ptr(), val) }
     }
     fn setMessage(&self, val: c_int) {
-        unsafe { wxStyledTextEvent_SetMessage(self.handle(), val) }
+        unsafe { wxStyledTextEvent_SetMessage(self.ptr(), val) }
     }
     fn setWParam(&self, val: c_int) {
-        unsafe { wxStyledTextEvent_SetWParam(self.handle(), val) }
+        unsafe { wxStyledTextEvent_SetWParam(self.ptr(), val) }
     }
     fn setLParam(&self, val: c_int) {
-        unsafe { wxStyledTextEvent_SetLParam(self.handle(), val) }
+        unsafe { wxStyledTextEvent_SetLParam(self.ptr(), val) }
     }
     fn setListType(&self, val: c_int) {
-        unsafe { wxStyledTextEvent_SetListType(self.handle(), val) }
+        unsafe { wxStyledTextEvent_SetListType(self.ptr(), val) }
     }
     fn setX(&self, val: c_int) {
-        unsafe { wxStyledTextEvent_SetX(self.handle(), val) }
+        unsafe { wxStyledTextEvent_SetX(self.ptr(), val) }
     }
     fn setY(&self, val: c_int) {
-        unsafe { wxStyledTextEvent_SetY(self.handle(), val) }
+        unsafe { wxStyledTextEvent_SetY(self.ptr(), val) }
     }
     fn setDragText(&self, val: &str) {
         let val = wxT(val);
-        unsafe { wxStyledTextEvent_SetDragText(self.handle(), val.handle()) }
+        unsafe { wxStyledTextEvent_SetDragText(self.ptr(), val.ptr()) }
     }
     fn setDragAllowMove(&self, val: c_int) {
-        unsafe { wxStyledTextEvent_SetDragAllowMove(self.handle(), val) }
+        unsafe { wxStyledTextEvent_SetDragAllowMove(self.ptr(), val) }
     }
     fn setDragResult(&self, val: c_int) {
-        unsafe { wxStyledTextEvent_SetDragResult(self.handle(), val) }
+        unsafe { wxStyledTextEvent_SetDragResult(self.ptr(), val) }
     }
 }
 
