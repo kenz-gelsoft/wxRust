@@ -662,26 +662,26 @@ extern {
 pub fn wxT(s: &str) -> wxString {
     unsafe {
         s.to_c_str().with_ref(|c_str| {
-            wxString { handle: wxString_CreateUTF8(c_str as *mut c_void) }
+            wxString { ptr: wxString_CreateUTF8(c_str as *mut c_void) }
         })
     }
 }
 
-pub struct wxString { handle: *mut c_void }
+pub struct wxString { ptr: *mut c_void }
 impl Drop for wxString {
     #[fixed_stack_segment]
     #[inline(never)]
     fn drop(&mut self) {
-        unsafe { wxString_Delete(self.handle); }
+        unsafe { wxString_Delete(self.ptr); }
     }
 }
 impl wxString {
-    pub fn handle(&self) -> *mut c_void { self.handle }
+    pub fn ptr(&self) -> *mut c_void { self.ptr }
     #[fixed_stack_segment]
     #[inline(never)]
     pub fn to_str(&self) -> ~str {
         unsafe {
-            let charBuffer = wxString_GetUtf8(self.handle);
+            let charBuffer = wxString_GetUtf8(self.ptr);
             let utf8 = wxCharBuffer_DataUtf8(charBuffer);
             wxCharBuffer_Delete(charBuffer);
             str::raw::from_c_str(utf8)
@@ -702,18 +702,18 @@ impl wxString {
     
     def _print_class(self, clazz):
         struct_name = '%s' % clazz.struct_name
-        self.println('pub struct %s { handle: *mut c_void }' % struct_name)
+        self.println('pub struct %s { ptr: *mut c_void }' % struct_name)
         for trait in clazz.inheritance:
             body = ''
             if trait in self.__parser.root_classes:
-                body = ' fn handle(&self) -> *mut c_void { self.handle } '
+                body = ' fn ptr(&self) -> *mut c_void { self.ptr } '
             self.println('impl %s for %s {%s}' % (trait_name(trait), struct_name, body))
         self.println()
     
         # static methods go to struct impl
         self.println('impl %s {' % struct_name)
         with self.indent():
-            self.println('pub fn from(handle: *mut c_void) -> %s { %s { handle: handle } }' % (struct_name, struct_name))
+            self.println('pub fn from(ptr: *mut c_void) -> %s { %s { ptr: ptr } }' % (struct_name, struct_name))
             self.println('pub fn null() -> %s { %s::from(0 as *mut c_void) }' % (struct_name, struct_name))
             self.println()
             for method in clazz.static_methods:
@@ -726,7 +726,7 @@ impl wxString {
         self.println('pub trait %s%s {' % (clazz.trait_name, base))
         with self.indent():
             if clazz.name in self.__parser.root_classes:
-                self.println('fn handle(&self) -> *mut c_void;')
+                self.println('fn ptr(&self) -> *mut c_void;')
                 self.println()
             for method in clazz.methods:
                 method.trait_fn(self, clazz.name)
@@ -1112,9 +1112,9 @@ class Function(object):
         with gen.indent():
             body = '%s(%s)' % (self.name, self._calling_args)
             if self.__return_type.is_string:
-                body = 'wxString { handle: %s }.to_str()' % (body)
+                body = 'wxString { ptr: %s }.to_str()' % (body)
             if self.__return_type.is_self or self.__return_type.is_class:
-                body = '%s { handle: %s }' % (self.__return_type.struct_name, body)
+                body = '%s { ptr: %s }' % (self.__return_type.struct_name, body)
             gen.println('%sunsafe { %s }' % (self._strings, body))
         gen.println('}')
 
@@ -1186,11 +1186,11 @@ class Arg(object):
     @property
     def calling_arg(self):
         if self._is_self:
-            return 'self.handle()'
+            return 'self.ptr()'
         if self.type.is_string:
-            return '%s.handle()' % self.name
+            return '%s.ptr()' % self.name
         elif self.type.is_class:
-            return '%s.handle()' % self.name
+            return '%s.ptr()' % self.name
         else:
             return self.name
 
