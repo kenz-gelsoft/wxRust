@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/base.rs.html#1268-1289'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>base</a>::<a class='trait' href=''>_wxEncodingConverter</a></h1><pre class='trait'>pub trait _wxEncodingConverter: <a class='trait' href='../../wx/base/trait._wxObject.html' title='wx::base::_wxObject'>_wxObject</a> {
+                       href='../../src/wx/src/base.rs.html#972-985'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>base</a>::<a class='trait' href=''>_wxEncodingConverter</a></h1><pre class='trait'>pub trait _wxEncodingConverter: <a class='trait' href='../../wx/base/trait._wxObject.html' title='wx::base::_wxObject'>_wxObject</a> {
     fn <a href='#method.convert'
                                     class='fnname'>convert</a>(&amp;self, input: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, output: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) { ... }
     fn <a href='#method.getAllEquivalents'
@@ -46,9 +50,9 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.convert' class='method'><code>fn <span class='fnname'>convert</span>(&amp;self, input: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, output: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3><h3 id='method.getAllEquivalents' class='method'><code>fn <span class='fnname'>getAllEquivalents</span>&lt;T: <a class='trait' href='../../wx/base/trait._wxList.html' title='wx::base::_wxList'>_wxList</a>&gt;(&amp;self, enc: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, _lst: &amp;T) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getPlatformEquivalents' class='method'><code>fn <span class='fnname'>getPlatformEquivalents</span>&lt;T: <a class='trait' href='../../wx/base/trait._wxList.html' title='wx::base::_wxList'>_wxList</a>&gt;(&amp;self, enc: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, platform: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, _lst: &amp;T) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.init' class='method'><code>fn <span class='fnname'>init</span>(&amp;self, input_enc: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, output_enc: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, method: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/base/struct.wxEncodingConverter.html' title='wx::base::wxEncodingConverter'>wxEncodingConverter</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/base/struct.wxEncodingConverter.html' title='wx::base::wxEncodingConverter'>wxEncodingConverter</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

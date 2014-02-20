@@ -26,16 +26,20 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#3067-3080'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxDropTarget</a></h1><pre class='trait'>pub trait _wxDropTarget {
-    fn <a href='#tymethod.handle'
-                                    class='fnname'>handle</a>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>;
+                       href='../../src/wx/src/core.rs.html#2290-2299'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxDropTarget</a></h1><pre class='trait'>pub trait _wxDropTarget {
+    fn <a href='#tymethod.ptr'
+                                    class='fnname'>ptr</a>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>;
 
     fn <a href='#method.getData'
                                     class='fnname'>getData</a>(&amp;self) { ... }
@@ -44,13 +48,13 @@
 }</pre>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.handle' class='method'><code>fn <span class='fnname'>handle</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h3></div>
+        <h3 id='tymethod.ptr' class='method'><code>fn <span class='fnname'>ptr</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h3></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.getData' class='method'><code>fn <span class='fnname'>getData</span>(&amp;self)</code></h3><h3 id='method.setDataObject' class='method'><code>fn <span class='fnname'>setDataObject</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxDataObject.html' title='wx::core::_wxDataObject'>_wxDataObject</a>&gt;(&amp;self, _dat: &amp;T)</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxTextDropTarget.html' title='wx::core::wxTextDropTarget'>wxTextDropTarget</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxPrivateDropTarget.html' title='wx::core::wxPrivateDropTarget'>wxPrivateDropTarget</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxFileDropTarget.html' title='wx::core::wxFileDropTarget'>wxFileDropTarget</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxDropTarget.html' title='wx::core::wxDropTarget'>wxDropTarget</a></code></li><li><code><a class='struct' href='../../wx/core/struct.ELJTextDropTarget.html' title='wx::core::ELJTextDropTarget'>ELJTextDropTarget</a></code></li><li><code><a class='struct' href='../../wx/core/struct.ELJFileDropTarget.html' title='wx::core::ELJFileDropTarget'>ELJFileDropTarget</a></code></li><li><code><a class='struct' href='../../wx/core/struct.ELJDropTarget.html' title='wx::core::ELJDropTarget'>ELJDropTarget</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxTextDropTarget.html' title='wx::core::wxTextDropTarget'>wxTextDropTarget</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxPrivateDropTarget.html' title='wx::core::wxPrivateDropTarget'>wxPrivateDropTarget</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxFileDropTarget.html' title='wx::core::wxFileDropTarget'>wxFileDropTarget</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxDropTarget.html' title='wx::core::wxDropTarget'>wxDropTarget</a></code></li><li><code><a class='struct' href='../../wx/core/struct.ELJTextDropTarget.html' title='wx::core::ELJTextDropTarget'>ELJTextDropTarget</a></code></li><li><code><a class='struct' href='../../wx/core/struct.ELJFileDropTarget.html' title='wx::core::ELJFileDropTarget'>ELJFileDropTarget</a></code></li><li><code><a class='struct' href='../../wx/core/struct.ELJDropTarget.html' title='wx::core::ELJDropTarget'>ELJDropTarget</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

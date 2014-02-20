@@ -26,17 +26,21 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content struct"><a class='source'
-                       href='../../src/wx/src/base.rs.html#23'>[src]</a><h1 class='fqn'>Struct <a href='../index.html'>wx</a>::<a href='index.html'>base</a>::<a class='struct' href=''>wxString</a></h1><pre class='struct'>pub struct wxString {
-    handle: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>,
+                       href='../../src/wx/src/base.rs.html#21'>[src]</a><h1 class='fqn'>Struct <a href='../index.html'>wx</a>::<a href='index.html'>base</a>::<a class='struct' href=''>wxString</a></h1><pre class='struct'>pub struct wxString {
+    ptr: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>,
 }</pre><h2 class='fields'>Fields</h2>
-<table><tr><td id='structfield.handle'><code>handle</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../wx/base/struct.wxString.html' title='wx::base::wxString'>wxString</a></code></h3><div class='methods'><h4 id='method.handle' class='method'><code>fn <span class='fnname'>handle</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h4>
+<table><tr><td id='structfield.ptr'><code>ptr</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../wx/base/struct.wxString.html' title='wx::base::wxString'>wxString</a></code></h3><div class='methods'><h4 id='method.ptr' class='method'><code>fn <span class='fnname'>ptr</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h4>
 <h4 id='method.to_str' class='method'><code>fn <span class='fnname'>to_str</span>(&amp;self) -&gt; ~str</code></h4>
 </div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='http://static.rust-lang.org/doc/master/std/ops/trait.Drop.html' title='std::ops::Drop'>Drop</a> for <a class='struct' href='../../wx/base/struct.wxString.html' title='wx::base::wxString'>wxString</a></code></h3><div class='methods'><h4 id='method.drop' class='method'><code>fn <span class='fnname'>drop</span>(&amp;mut self)</code></h4>
 </div></section>

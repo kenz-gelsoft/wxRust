@@ -26,16 +26,23 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content struct"><a class='source'
-                       href='../../src/wx/src/core.rs.html#9020'>[src]</a><h1 class='fqn'>Struct <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='struct' href=''>wxPrivateDropTarget</a></h1><pre class='struct'>pub struct wxPrivateDropTarget(*mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>);</pre><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../wx/core/struct.wxPrivateDropTarget.html' title='wx::core::wxPrivateDropTarget'>wxPrivateDropTarget</a></code></h3><div class='methods'><h4 id='method.from' class='method'><code>fn <span class='fnname'>from</span>(handle: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; @<a class='struct' href='../../wx/core/struct.wxPrivateDropTarget.html' title='wx::core::wxPrivateDropTarget'>wxPrivateDropTarget</a></code></h4>
-<h4 id='method.null' class='method'><code>fn <span class='fnname'>null</span>() -&gt; @<a class='struct' href='../../wx/core/struct.wxPrivateDropTarget.html' title='wx::core::wxPrivateDropTarget'>wxPrivateDropTarget</a></code></h4>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../wx/core/trait._wxPrivateDropTarget.html' title='wx::core::_wxPrivateDropTarget'>_wxPrivateDropTarget</a> for <a class='struct' href='../../wx/core/struct.wxPrivateDropTarget.html' title='wx::core::wxPrivateDropTarget'>wxPrivateDropTarget</a></code></h3><div class='methods'></div><h3 class='impl'><code>impl <a class='trait' href='../../wx/core/trait._wxDropTarget.html' title='wx::core::_wxDropTarget'>_wxDropTarget</a> for <a class='struct' href='../../wx/core/struct.wxPrivateDropTarget.html' title='wx::core::wxPrivateDropTarget'>wxPrivateDropTarget</a></code></h3><div class='methods'><h4 id='method.handle' class='method'><code>fn <span class='fnname'>handle</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h4>
+                       href='../../src/wx/src/core.rs.html#6491'>[src]</a><h1 class='fqn'>Struct <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='struct' href=''>wxPrivateDropTarget</a></h1><pre class='struct'>pub struct wxPrivateDropTarget {
+    ptr: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>,
+}</pre><h2 class='fields'>Fields</h2>
+<table><tr><td id='structfield.ptr'><code>ptr</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../wx/core/struct.wxPrivateDropTarget.html' title='wx::core::wxPrivateDropTarget'>wxPrivateDropTarget</a></code></h3><div class='methods'><h4 id='method.from' class='method'><code>fn <span class='fnname'>from</span>(ptr: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; <a class='struct' href='../../wx/core/struct.wxPrivateDropTarget.html' title='wx::core::wxPrivateDropTarget'>wxPrivateDropTarget</a></code></h4>
+<h4 id='method.null' class='method'><code>fn <span class='fnname'>null</span>() -&gt; <a class='struct' href='../../wx/core/struct.wxPrivateDropTarget.html' title='wx::core::wxPrivateDropTarget'>wxPrivateDropTarget</a></code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../wx/core/trait._wxPrivateDropTarget.html' title='wx::core::_wxPrivateDropTarget'>_wxPrivateDropTarget</a> for <a class='struct' href='../../wx/core/struct.wxPrivateDropTarget.html' title='wx::core::wxPrivateDropTarget'>wxPrivateDropTarget</a></code></h3><div class='methods'></div><h3 class='impl'><code>impl <a class='trait' href='../../wx/core/trait._wxDropTarget.html' title='wx::core::_wxDropTarget'>_wxDropTarget</a> for <a class='struct' href='../../wx/core/struct.wxPrivateDropTarget.html' title='wx::core::wxPrivateDropTarget'>wxPrivateDropTarget</a></code></h3><div class='methods'><h4 id='method.ptr' class='method'><code>fn <span class='fnname'>ptr</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h4>
 <h4 id='method.getData' class='method'><code>fn <span class='fnname'>getData</span>(&amp;self)</code></h4>
 <h4 id='method.setDataObject' class='method'><code>fn <span class='fnname'>setDataObject</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxDataObject.html' title='wx::core::_wxDataObject'>_wxDataObject</a>&gt;(&amp;self, _dat: &amp;T)</code></h4>
 </div></section>

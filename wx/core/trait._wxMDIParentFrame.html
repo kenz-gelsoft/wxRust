@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#6344-6395'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxMDIParentFrame</a></h1><pre class='trait'>pub trait _wxMDIParentFrame: <a class='trait' href='../../wx/core/trait._wxFrame.html' title='wx::core::_wxFrame'>_wxFrame</a> {
+                       href='../../src/wx/src/core.rs.html#4609-4640'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxMDIParentFrame</a></h1><pre class='trait'>pub trait _wxMDIParentFrame: <a class='trait' href='../../wx/core/trait._wxFrame.html' title='wx::core::_wxFrame'>_wxFrame</a> {
     fn <a href='#method.activateNext'
                                     class='fnname'>activateNext</a>(&amp;self) { ... }
     fn <a href='#method.activatePrevious'
@@ -43,13 +47,13 @@
     fn <a href='#method.cascade'
                                     class='fnname'>cascade</a>(&amp;self) { ... }
     fn <a href='#method.getActiveChild'
-                                    class='fnname'>getActiveChild</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxMDIChildFrame.html' title='wx::core::wxMDIChildFrame'>wxMDIChildFrame</a> { ... }
+                                    class='fnname'>getActiveChild</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxMDIChildFrame.html' title='wx::core::wxMDIChildFrame'>wxMDIChildFrame</a> { ... }
     fn <a href='#method.getClientWindow'
-                                    class='fnname'>getClientWindow</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxMDIClientWindow.html' title='wx::core::wxMDIClientWindow'>wxMDIClientWindow</a> { ... }
+                                    class='fnname'>getClientWindow</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxMDIClientWindow.html' title='wx::core::wxMDIClientWindow'>wxMDIClientWindow</a> { ... }
     fn <a href='#method.getWindowMenu'
-                                    class='fnname'>getWindowMenu</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxMenu.html' title='wx::core::wxMenu'>wxMenu</a> { ... }
+                                    class='fnname'>getWindowMenu</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxMenu.html' title='wx::core::wxMenu'>wxMenu</a> { ... }
     fn <a href='#method.onCreateClient'
-                                    class='fnname'>onCreateClient</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxMDIClientWindow.html' title='wx::core::wxMDIClientWindow'>wxMDIClientWindow</a> { ... }
+                                    class='fnname'>onCreateClient</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxMDIClientWindow.html' title='wx::core::wxMDIClientWindow'>wxMDIClientWindow</a> { ... }
     fn <a href='#method.setWindowMenu'
                                     class='fnname'>setWindowMenu</a>&lt;T: <a class='trait' href='../../wx/core/trait._wxMenu.html' title='wx::core::_wxMenu'>_wxMenu</a>&gt;(&amp;self, menu: &amp;T) { ... }
     fn <a href='#method.tile'
@@ -57,10 +61,10 @@
 }</pre>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.activateNext' class='method'><code>fn <span class='fnname'>activateNext</span>(&amp;self)</code></h3><h3 id='method.activatePrevious' class='method'><code>fn <span class='fnname'>activatePrevious</span>(&amp;self)</code></h3><h3 id='method.arrangeIcons' class='method'><code>fn <span class='fnname'>arrangeIcons</span>(&amp;self)</code></h3><h3 id='method.cascade' class='method'><code>fn <span class='fnname'>cascade</span>(&amp;self)</code></h3><h3 id='method.getActiveChild' class='method'><code>fn <span class='fnname'>getActiveChild</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxMDIChildFrame.html' title='wx::core::wxMDIChildFrame'>wxMDIChildFrame</a></code></h3><h3 id='method.getClientWindow' class='method'><code>fn <span class='fnname'>getClientWindow</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxMDIClientWindow.html' title='wx::core::wxMDIClientWindow'>wxMDIClientWindow</a></code></h3><h3 id='method.getWindowMenu' class='method'><code>fn <span class='fnname'>getWindowMenu</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxMenu.html' title='wx::core::wxMenu'>wxMenu</a></code></h3><h3 id='method.onCreateClient' class='method'><code>fn <span class='fnname'>onCreateClient</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxMDIClientWindow.html' title='wx::core::wxMDIClientWindow'>wxMDIClientWindow</a></code></h3><h3 id='method.setWindowMenu' class='method'><code>fn <span class='fnname'>setWindowMenu</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxMenu.html' title='wx::core::_wxMenu'>_wxMenu</a>&gt;(&amp;self, menu: &amp;T)</code></h3><h3 id='method.tile' class='method'><code>fn <span class='fnname'>tile</span>(&amp;self)</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxMDIParentFrame.html' title='wx::core::wxMDIParentFrame'>wxMDIParentFrame</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxDocMDIParentFrame.html' title='wx::core::wxDocMDIParentFrame'>wxDocMDIParentFrame</a></code></li></ul></section>
+        <h3 id='method.activateNext' class='method'><code>fn <span class='fnname'>activateNext</span>(&amp;self)</code></h3><h3 id='method.activatePrevious' class='method'><code>fn <span class='fnname'>activatePrevious</span>(&amp;self)</code></h3><h3 id='method.arrangeIcons' class='method'><code>fn <span class='fnname'>arrangeIcons</span>(&amp;self)</code></h3><h3 id='method.cascade' class='method'><code>fn <span class='fnname'>cascade</span>(&amp;self)</code></h3><h3 id='method.getActiveChild' class='method'><code>fn <span class='fnname'>getActiveChild</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxMDIChildFrame.html' title='wx::core::wxMDIChildFrame'>wxMDIChildFrame</a></code></h3><h3 id='method.getClientWindow' class='method'><code>fn <span class='fnname'>getClientWindow</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxMDIClientWindow.html' title='wx::core::wxMDIClientWindow'>wxMDIClientWindow</a></code></h3><h3 id='method.getWindowMenu' class='method'><code>fn <span class='fnname'>getWindowMenu</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxMenu.html' title='wx::core::wxMenu'>wxMenu</a></code></h3><h3 id='method.onCreateClient' class='method'><code>fn <span class='fnname'>onCreateClient</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxMDIClientWindow.html' title='wx::core::wxMDIClientWindow'>wxMDIClientWindow</a></code></h3><h3 id='method.setWindowMenu' class='method'><code>fn <span class='fnname'>setWindowMenu</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxMenu.html' title='wx::core::_wxMenu'>_wxMenu</a>&gt;(&amp;self, menu: &amp;T)</code></h3><h3 id='method.tile' class='method'><code>fn <span class='fnname'>tile</span>(&amp;self)</code></h3></div>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxMDIParentFrame.html' title='wx::core::wxMDIParentFrame'>wxMDIParentFrame</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxDocMDIParentFrame.html' title='wx::core::wxDocMDIParentFrame'>wxDocMDIParentFrame</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

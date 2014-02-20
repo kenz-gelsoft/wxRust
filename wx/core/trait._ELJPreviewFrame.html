@@ -26,20 +26,24 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#486-517'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_ELJPreviewFrame</a></h1><pre class='trait'>pub trait _ELJPreviewFrame: <a class='trait' href='../../wx/core/trait._wxPreviewFrame.html' title='wx::core::_wxPreviewFrame'>_wxPreviewFrame</a> {
+                       href='../../src/wx/src/core.rs.html#348-367'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_ELJPreviewFrame</a></h1><pre class='trait'>pub trait _ELJPreviewFrame: <a class='trait' href='../../wx/core/trait._wxPreviewFrame.html' title='wx::core::_wxPreviewFrame'>_wxPreviewFrame</a> {
     fn <a href='#method.getControlBar'
                                     class='fnname'>getControlBar</a>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a> { ... }
     fn <a href='#method.getPreviewCanvas'
-                                    class='fnname'>getPreviewCanvas</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxPreviewCanvas.html' title='wx::core::wxPreviewCanvas'>wxPreviewCanvas</a> { ... }
+                                    class='fnname'>getPreviewCanvas</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxPreviewCanvas.html' title='wx::core::wxPreviewCanvas'>wxPreviewCanvas</a> { ... }
     fn <a href='#method.getPrintPreview'
-                                    class='fnname'>getPrintPreview</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxPrintPreview.html' title='wx::core::wxPrintPreview'>wxPrintPreview</a> { ... }
+                                    class='fnname'>getPrintPreview</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxPrintPreview.html' title='wx::core::wxPrintPreview'>wxPrintPreview</a> { ... }
     fn <a href='#method.setControlBar'
                                     class='fnname'>setControlBar</a>(&amp;self, obj: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) { ... }
     fn <a href='#method.setPreviewCanvas'
@@ -49,10 +53,10 @@
 }</pre>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.getControlBar' class='method'><code>fn <span class='fnname'>getControlBar</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h3><h3 id='method.getPreviewCanvas' class='method'><code>fn <span class='fnname'>getPreviewCanvas</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxPreviewCanvas.html' title='wx::core::wxPreviewCanvas'>wxPreviewCanvas</a></code></h3><h3 id='method.getPrintPreview' class='method'><code>fn <span class='fnname'>getPrintPreview</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxPrintPreview.html' title='wx::core::wxPrintPreview'>wxPrintPreview</a></code></h3><h3 id='method.setControlBar' class='method'><code>fn <span class='fnname'>setControlBar</span>(&amp;self, obj: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3><h3 id='method.setPreviewCanvas' class='method'><code>fn <span class='fnname'>setPreviewCanvas</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxPreviewCanvas.html' title='wx::core::_wxPreviewCanvas'>_wxPreviewCanvas</a>&gt;(&amp;self, obj: &amp;T)</code></h3><h3 id='method.setPrintPreview' class='method'><code>fn <span class='fnname'>setPrintPreview</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxPrintPreview.html' title='wx::core::_wxPrintPreview'>_wxPrintPreview</a>&gt;(&amp;self, obj: &amp;T)</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.ELJPreviewFrame.html' title='wx::core::ELJPreviewFrame'>ELJPreviewFrame</a></code></li></ul></section>
+        <h3 id='method.getControlBar' class='method'><code>fn <span class='fnname'>getControlBar</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h3><h3 id='method.getPreviewCanvas' class='method'><code>fn <span class='fnname'>getPreviewCanvas</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxPreviewCanvas.html' title='wx::core::wxPreviewCanvas'>wxPreviewCanvas</a></code></h3><h3 id='method.getPrintPreview' class='method'><code>fn <span class='fnname'>getPrintPreview</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxPrintPreview.html' title='wx::core::wxPrintPreview'>wxPrintPreview</a></code></h3><h3 id='method.setControlBar' class='method'><code>fn <span class='fnname'>setControlBar</span>(&amp;self, obj: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3><h3 id='method.setPreviewCanvas' class='method'><code>fn <span class='fnname'>setPreviewCanvas</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxPreviewCanvas.html' title='wx::core::_wxPreviewCanvas'>_wxPreviewCanvas</a>&gt;(&amp;self, obj: &amp;T)</code></h3><h3 id='method.setPrintPreview' class='method'><code>fn <span class='fnname'>setPrintPreview</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxPrintPreview.html' title='wx::core::_wxPrintPreview'>_wxPrintPreview</a>&gt;(&amp;self, obj: &amp;T)</code></h3></div>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.ELJPreviewFrame.html' title='wx::core::ELJPreviewFrame'>ELJPreviewFrame</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

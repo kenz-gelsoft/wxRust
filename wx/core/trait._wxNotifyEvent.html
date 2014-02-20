@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#7612-7628'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxNotifyEvent</a></h1><pre class='trait'>pub trait _wxNotifyEvent: <a class='trait' href='../../wx/core/trait._wxCommandEvent.html' title='wx::core::_wxCommandEvent'>_wxCommandEvent</a> {
+                       href='../../src/wx/src/core.rs.html#5503-5513'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxNotifyEvent</a></h1><pre class='trait'>pub trait _wxNotifyEvent: <a class='trait' href='../../wx/core/trait._wxCommandEvent.html' title='wx::core::_wxCommandEvent'>_wxCommandEvent</a> {
     fn <a href='#method.allow'
                                     class='fnname'>allow</a>(&amp;self) { ... }
     fn <a href='#method.isAllowed'
@@ -44,9 +48,9 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.allow' class='method'><code>fn <span class='fnname'>allow</span>(&amp;self)</code></h3><h3 id='method.isAllowed' class='method'><code>fn <span class='fnname'>isAllowed</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.veto' class='method'><code>fn <span class='fnname'>veto</span>(&amp;self)</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/propertygrid/struct.wxPropertyGridEvent.html' title='wx::propertygrid::wxPropertyGridEvent'>wxPropertyGridEvent</a></code></li><li><code><a class='struct' href='../../wx/media/struct.wxMediaEvent.html' title='wx::media::wxMediaEvent'>wxMediaEvent</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxTreeEvent.html' title='wx::core::wxTreeEvent'>wxTreeEvent</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxSplitterEvent.html' title='wx::core::wxSplitterEvent'>wxSplitterEvent</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxSpinEvent.html' title='wx::core::wxSpinEvent'>wxSpinEvent</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxNotifyEvent.html' title='wx::core::wxNotifyEvent'>wxNotifyEvent</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxNotebookEvent.html' title='wx::core::wxNotebookEvent'>wxNotebookEvent</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxListEvent.html' title='wx::core::wxListEvent'>wxListEvent</a></code></li><li><code><a class='struct' href='../../wx/advanced/struct.wxWizardEvent.html' title='wx::advanced::wxWizardEvent'>wxWizardEvent</a></code></li><li><code><a class='struct' href='../../wx/advanced/struct.wxGridSizeEvent.html' title='wx::advanced::wxGridSizeEvent'>wxGridSizeEvent</a></code></li><li><code><a class='struct' href='../../wx/advanced/struct.wxGridRangeSelectEvent.html' title='wx::advanced::wxGridRangeSelectEvent'>wxGridRangeSelectEvent</a></code></li><li><code><a class='struct' href='../../wx/advanced/struct.wxGridEvent.html' title='wx::advanced::wxGridEvent'>wxGridEvent</a></code></li><li><code><a class='struct' href='../../wx/_unavailable/struct.wxPlotEvent.html' title='wx::_unavailable::wxPlotEvent'>wxPlotEvent</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/propertygrid/struct.wxPropertyGridEvent.html' title='wx::propertygrid::wxPropertyGridEvent'>wxPropertyGridEvent</a></code></li><li><code><a class='struct' href='../../wx/media/struct.wxMediaEvent.html' title='wx::media::wxMediaEvent'>wxMediaEvent</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxTreeEvent.html' title='wx::core::wxTreeEvent'>wxTreeEvent</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxSplitterEvent.html' title='wx::core::wxSplitterEvent'>wxSplitterEvent</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxSpinEvent.html' title='wx::core::wxSpinEvent'>wxSpinEvent</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxNotifyEvent.html' title='wx::core::wxNotifyEvent'>wxNotifyEvent</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxNotebookEvent.html' title='wx::core::wxNotebookEvent'>wxNotebookEvent</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxListEvent.html' title='wx::core::wxListEvent'>wxListEvent</a></code></li><li><code><a class='struct' href='../../wx/advanced/struct.wxWizardEvent.html' title='wx::advanced::wxWizardEvent'>wxWizardEvent</a></code></li><li><code><a class='struct' href='../../wx/advanced/struct.wxGridSizeEvent.html' title='wx::advanced::wxGridSizeEvent'>wxGridSizeEvent</a></code></li><li><code><a class='struct' href='../../wx/advanced/struct.wxGridRangeSelectEvent.html' title='wx::advanced::wxGridRangeSelectEvent'>wxGridRangeSelectEvent</a></code></li><li><code><a class='struct' href='../../wx/advanced/struct.wxGridEvent.html' title='wx::advanced::wxGridEvent'>wxGridEvent</a></code></li><li><code><a class='struct' href='../../wx/_unavailable/struct.wxPlotEvent.html' title='wx::_unavailable::wxPlotEvent'>wxPlotEvent</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

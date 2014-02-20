@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#11591-11602'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxTipWindow</a></h1><pre class='trait'>pub trait _wxTipWindow: <a class='trait' href='../../wx/core/trait._wxPopupTransientWindow.html' title='wx::core::_wxPopupTransientWindow'>_wxPopupTransientWindow</a> {
+                       href='../../src/wx/src/core.rs.html#8342-8349'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxTipWindow</a></h1><pre class='trait'>pub trait _wxTipWindow: <a class='trait' href='../../wx/core/trait._wxPopupTransientWindow.html' title='wx::core::_wxPopupTransientWindow'>_wxPopupTransientWindow</a> {
     fn <a href='#method.setBoundingRect'
                                     class='fnname'>setBoundingRect</a>(&amp;self, x: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, y: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, w: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, h: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) { ... }
     fn <a href='#method.setTipWindowPtr'
@@ -42,9 +46,9 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.setBoundingRect' class='method'><code>fn <span class='fnname'>setBoundingRect</span>(&amp;self, x: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, y: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, w: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, h: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.setTipWindowPtr' class='method'><code>fn <span class='fnname'>setTipWindowPtr</span>(&amp;self, windowPtr: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxTipWindow.html' title='wx::core::wxTipWindow'>wxTipWindow</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxTipWindow.html' title='wx::core::wxTipWindow'>wxTipWindow</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

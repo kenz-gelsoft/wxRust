@@ -26,9 +26,13 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
@@ -52,8 +56,8 @@
 <span id='18'>18</span>
 <span id='19'>19</span>
 <span id='20'>20</span>
-</pre><pre class='rust'>#[crate_type=&quot;lib&quot;];
-#[link(name=&quot;wx&quot;)];
+</pre><pre class='rust'>#[crate_id=&quot;wx#0.1&quot;];
+#[crate_type=&quot;lib&quot;];
 
 #[feature(globs)];
 #[feature(managed_boxes)];

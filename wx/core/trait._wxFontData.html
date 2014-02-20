@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#3851-3927'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxFontData</a></h1><pre class='trait'>pub trait _wxFontData: <a class='trait' href='../../wx/base/trait._wxObject.html' title='wx::base::_wxObject'>_wxObject</a> {
+                       href='../../src/wx/src/core.rs.html#2852-2898'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxFontData</a></h1><pre class='trait'>pub trait _wxFontData: <a class='trait' href='../../wx/base/trait._wxObject.html' title='wx::base::_wxObject'>_wxObject</a> {
     fn <a href='#method.enableEffects'
                                     class='fnname'>enableEffects</a>(&amp;self, flag: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) { ... }
     fn <a href='#method.getAllowSymbols'
@@ -68,9 +72,9 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.enableEffects' class='method'><code>fn <span class='fnname'>enableEffects</span>(&amp;self, flag: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.getAllowSymbols' class='method'><code>fn <span class='fnname'>getAllowSymbols</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getChosenFont' class='method'><code>fn <span class='fnname'>getChosenFont</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxFont.html' title='wx::core::_wxFont'>_wxFont</a>&gt;(&amp;self, ref_: &amp;T)</code></h3><h3 id='method.getColour' class='method'><code>fn <span class='fnname'>getColour</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, _ref: &amp;T)</code></h3><h3 id='method.getEnableEffects' class='method'><code>fn <span class='fnname'>getEnableEffects</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getEncoding' class='method'><code>fn <span class='fnname'>getEncoding</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getInitialFont' class='method'><code>fn <span class='fnname'>getInitialFont</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxFont.html' title='wx::core::_wxFont'>_wxFont</a>&gt;(&amp;self, ref_: &amp;T)</code></h3><h3 id='method.getShowHelp' class='method'><code>fn <span class='fnname'>getShowHelp</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.setAllowSymbols' class='method'><code>fn <span class='fnname'>setAllowSymbols</span>(&amp;self, flag: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.setChosenFont' class='method'><code>fn <span class='fnname'>setChosenFont</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxFont.html' title='wx::core::_wxFont'>_wxFont</a>&gt;(&amp;self, font: &amp;T)</code></h3><h3 id='method.setColour' class='method'><code>fn <span class='fnname'>setColour</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxColour.html' title='wx::core::_wxColour'>_wxColour</a>&gt;(&amp;self, colour: &amp;T)</code></h3><h3 id='method.setEncoding' class='method'><code>fn <span class='fnname'>setEncoding</span>(&amp;self, encoding: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.setInitialFont' class='method'><code>fn <span class='fnname'>setInitialFont</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxFont.html' title='wx::core::_wxFont'>_wxFont</a>&gt;(&amp;self, font: &amp;T)</code></h3><h3 id='method.setRange' class='method'><code>fn <span class='fnname'>setRange</span>(&amp;self, minRange: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, maxRange: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.setShowHelp' class='method'><code>fn <span class='fnname'>setShowHelp</span>(&amp;self, flag: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxFontData.html' title='wx::core::wxFontData'>wxFontData</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxFontData.html' title='wx::core::wxFontData'>wxFontData</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

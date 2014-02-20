@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#1432-1476'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxChoice</a></h1><pre class='trait'>pub trait _wxChoice: <a class='trait' href='../../wx/core/trait._wxControl.html' title='wx::core::_wxControl'>_wxControl</a> {
+                       href='../../src/wx/src/core.rs.html#1070-1098'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxChoice</a></h1><pre class='trait'>pub trait _wxChoice: <a class='trait' href='../../wx/core/trait._wxControl.html' title='wx::core::_wxControl'>_wxControl</a> {
     fn <a href='#method.append'
                                     class='fnname'>append</a>(&amp;self, item: &amp;str) { ... }
     fn <a href='#method.clear'
@@ -54,9 +58,9 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.append' class='method'><code>fn <span class='fnname'>append</span>(&amp;self, item: &amp;str)</code></h3><h3 id='method.clear' class='method'><code>fn <span class='fnname'>clear</span>(&amp;self)</code></h3><h3 id='method.findString' class='method'><code>fn <span class='fnname'>findString</span>(&amp;self, s: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getCount' class='method'><code>fn <span class='fnname'>getCount</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getSelection' class='method'><code>fn <span class='fnname'>getSelection</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getString' class='method'><code>fn <span class='fnname'>getString</span>(&amp;self, n: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; ~str</code></h3><h3 id='method.setSelection' class='method'><code>fn <span class='fnname'>setSelection</span>(&amp;self, n: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.setString' class='method'><code>fn <span class='fnname'>setString</span>(&amp;self, n: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, s: &amp;str)</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxComboBox.html' title='wx::core::wxComboBox'>wxComboBox</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxChoice.html' title='wx::core::wxChoice'>wxChoice</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxComboBox.html' title='wx::core::wxComboBox'>wxComboBox</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxChoice.html' title='wx::core::wxChoice'>wxChoice</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

@@ -26,9 +26,13 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
@@ -249,285 +253,217 @@
 <span id='215'>215</span>
 <span id='216'>216</span>
 <span id='217'>217</span>
-<span id='218'>218</span>
-<span id='219'>219</span>
-<span id='220'>220</span>
-<span id='221'>221</span>
-<span id='222'>222</span>
-<span id='223'>223</span>
-<span id='224'>224</span>
-<span id='225'>225</span>
-<span id='226'>226</span>
-<span id='227'>227</span>
-<span id='228'>228</span>
-<span id='229'>229</span>
-<span id='230'>230</span>
-<span id='231'>231</span>
-<span id='232'>232</span>
-<span id='233'>233</span>
-<span id='234'>234</span>
-<span id='235'>235</span>
-<span id='236'>236</span>
-<span id='237'>237</span>
-<span id='238'>238</span>
-<span id='239'>239</span>
-<span id='240'>240</span>
-<span id='241'>241</span>
-<span id='242'>242</span>
-<span id='243'>243</span>
-<span id='244'>244</span>
-<span id='245'>245</span>
-<span id='246'>246</span>
-<span id='247'>247</span>
-<span id='248'>248</span>
-<span id='249'>249</span>
-<span id='250'>250</span>
-<span id='251'>251</span>
 </pre><pre class='rust'>use std::libc::*;
 use _unsafe::*;
 use base::*;
 use core::*;
 use advanced::*;
 
-pub struct wxPropertyGrid(*mut c_void);
+pub struct wxPropertyGrid { ptr: *mut c_void }
 impl _wxPropertyGrid for wxPropertyGrid {}
 impl _wxControl for wxPropertyGrid {}
 impl _wxWindow for wxPropertyGrid {}
 impl _wxEvtHandler for wxPropertyGrid {}
-impl _wxObject for wxPropertyGrid { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxPropertyGrid { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxPropertyGrid {
-    pub fn from(handle: *mut c_void) -&gt; @wxPropertyGrid { @wxPropertyGrid(handle) }
-    pub fn null() -&gt; @wxPropertyGrid { wxPropertyGrid::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxPropertyGrid { wxPropertyGrid { ptr: ptr } }
+    pub fn null() -&gt; wxPropertyGrid { wxPropertyGrid::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new&lt;T: _wxWindow&gt;(_prt: &amp;T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -&gt; @wxPropertyGrid {
-        unsafe { @wxPropertyGrid(wxPropertyGrid_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl)) }
+    pub fn new&lt;T: _wxWindow&gt;(_prt: &amp;T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -&gt; wxPropertyGrid {
+        unsafe { wxPropertyGrid { ptr: wxPropertyGrid_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
 pub trait _wxPropertyGrid : _wxControl {
-    #[fixed_stack_segment]
-    #[inline(never)]
-    fn append&lt;T: _wxPGProperty&gt;(&amp;self, prop: &amp;T) -&gt; @wxPGProperty {
-        unsafe { @wxPGProperty(wxPropertyGrid_Append(self.handle(), prop.handle())) }
+    fn append&lt;T: _wxPGProperty&gt;(&amp;self, prop: &amp;T) -&gt; wxPGProperty {
+        unsafe { wxPGProperty { ptr: wxPropertyGrid_Append(self.ptr(), prop.ptr()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn disableProperty(&amp;self, propName: &amp;str) -&gt; c_int {
         let propName = wxT(propName);
-        unsafe { wxPropertyGrid_DisableProperty(self.handle(), propName.handle()) }
+        unsafe { wxPropertyGrid_DisableProperty(self.ptr(), propName.ptr()) }
     }
 }
 
-pub struct wxPropertyGridEvent(*mut c_void);
+pub struct wxPropertyGridEvent { ptr: *mut c_void }
 impl _wxPropertyGridEvent for wxPropertyGridEvent {}
 impl _wxNotifyEvent for wxPropertyGridEvent {}
 impl _wxCommandEvent for wxPropertyGridEvent {}
 impl _wxEvent for wxPropertyGridEvent {}
-impl _wxObject for wxPropertyGridEvent { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxPropertyGridEvent { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxPropertyGridEvent {
-    pub fn from(handle: *mut c_void) -&gt; @wxPropertyGridEvent { @wxPropertyGridEvent(handle) }
-    pub fn null() -&gt; @wxPropertyGridEvent { wxPropertyGridEvent::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxPropertyGridEvent { wxPropertyGridEvent { ptr: ptr } }
+    pub fn null() -&gt; wxPropertyGridEvent { wxPropertyGridEvent::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxPropertyGridEvent : _wxNotifyEvent {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn hasProperty(&amp;self) -&gt; c_int {
-        unsafe { wxPropertyGridEvent_HasProperty(self.handle()) }
+        unsafe { wxPropertyGridEvent_HasProperty(self.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
-    fn getProperty(&amp;self) -&gt; @wxPGProperty {
-        unsafe { @wxPGProperty(wxPropertyGridEvent_GetProperty(self.handle())) }
+    fn getProperty(&amp;self) -&gt; wxPGProperty {
+        unsafe { wxPGProperty { ptr: wxPropertyGridEvent_GetProperty(self.ptr()) } }
     }
 }
 
-pub struct wxPGProperty(*mut c_void);
+pub struct wxPGProperty { ptr: *mut c_void }
 impl _wxPGProperty for wxPGProperty {}
-impl _wxObject for wxPGProperty { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxPGProperty { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxPGProperty {
-    pub fn from(handle: *mut c_void) -&gt; @wxPGProperty { @wxPGProperty(handle) }
-    pub fn null() -&gt; @wxPGProperty { wxPGProperty::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxPGProperty { wxPGProperty { ptr: ptr } }
+    pub fn null() -&gt; wxPGProperty { wxPGProperty::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxPGProperty : _wxObject {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getLabel(&amp;self) -&gt; ~str {
-        unsafe { wxString { handle: wxPGProperty_GetLabel(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxPGProperty_GetLabel(self.ptr()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getName(&amp;self) -&gt; ~str {
-        unsafe { wxString { handle: wxPGProperty_GetName(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxPGProperty_GetName(self.ptr()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getValueAsString(&amp;self) -&gt; ~str {
-        unsafe { wxString { handle: wxPGProperty_GetValueAsString(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxPGProperty_GetValueAsString(self.ptr()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getValueType(&amp;self) -&gt; ~str {
-        unsafe { wxString { handle: wxPGProperty_GetValueType(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxPGProperty_GetValueType(self.ptr()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setHelpString(&amp;self, helpString: &amp;str) {
         let helpString = wxT(helpString);
-        unsafe { wxPGProperty_SetHelpString(self.handle(), helpString.handle()) }
+        unsafe { wxPGProperty_SetHelpString(self.ptr(), helpString.ptr()) }
     }
 }
 
-pub struct wxStringProperty(*mut c_void);
+pub struct wxStringProperty { ptr: *mut c_void }
 impl _wxStringProperty for wxStringProperty {}
 impl _wxPGProperty for wxStringProperty {}
-impl _wxObject for wxStringProperty { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxStringProperty { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxStringProperty {
-    pub fn from(handle: *mut c_void) -&gt; @wxStringProperty { @wxStringProperty(handle) }
-    pub fn null() -&gt; @wxStringProperty { wxStringProperty::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxStringProperty { wxStringProperty { ptr: ptr } }
+    pub fn null() -&gt; wxStringProperty { wxStringProperty::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new(label: &amp;str, name: &amp;str, value: &amp;str) -&gt; @wxStringProperty {
+    pub fn new(label: &amp;str, name: &amp;str, value: &amp;str) -&gt; wxStringProperty {
         let label = wxT(label);
         let name = wxT(name);
         let value = wxT(value);
-        unsafe { @wxStringProperty(wxStringProperty_Create(label.handle(), name.handle(), value.handle())) }
+        unsafe { wxStringProperty { ptr: wxStringProperty_Create(label.ptr(), name.ptr(), value.ptr()) } }
     }
 }
 
 pub trait _wxStringProperty : _wxPGProperty {
 }
 
-pub struct wxIntProperty(*mut c_void);
+pub struct wxIntProperty { ptr: *mut c_void }
 impl _wxIntProperty for wxIntProperty {}
 impl _wxPGProperty for wxIntProperty {}
-impl _wxObject for wxIntProperty { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxIntProperty { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxIntProperty {
-    pub fn from(handle: *mut c_void) -&gt; @wxIntProperty { @wxIntProperty(handle) }
-    pub fn null() -&gt; @wxIntProperty { wxIntProperty::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxIntProperty { wxIntProperty { ptr: ptr } }
+    pub fn null() -&gt; wxIntProperty { wxIntProperty::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new(label: &amp;str, name: &amp;str, value: c_int) -&gt; @wxIntProperty {
+    pub fn new(label: &amp;str, name: &amp;str, value: c_int) -&gt; wxIntProperty {
         let label = wxT(label);
         let name = wxT(name);
-        unsafe { @wxIntProperty(wxIntProperty_Create(label.handle(), name.handle(), value)) }
+        unsafe { wxIntProperty { ptr: wxIntProperty_Create(label.ptr(), name.ptr(), value) } }
     }
 }
 
 pub trait _wxIntProperty : _wxPGProperty {
 }
 
-pub struct wxBoolProperty(*mut c_void);
+pub struct wxBoolProperty { ptr: *mut c_void }
 impl _wxBoolProperty for wxBoolProperty {}
 impl _wxPGProperty for wxBoolProperty {}
-impl _wxObject for wxBoolProperty { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxBoolProperty { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxBoolProperty {
-    pub fn from(handle: *mut c_void) -&gt; @wxBoolProperty { @wxBoolProperty(handle) }
-    pub fn null() -&gt; @wxBoolProperty { wxBoolProperty::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxBoolProperty { wxBoolProperty { ptr: ptr } }
+    pub fn null() -&gt; wxBoolProperty { wxBoolProperty::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new(label: &amp;str, name: &amp;str, value: c_int) -&gt; @wxBoolProperty {
+    pub fn new(label: &amp;str, name: &amp;str, value: c_int) -&gt; wxBoolProperty {
         let label = wxT(label);
         let name = wxT(name);
-        unsafe { @wxBoolProperty(wxBoolProperty_Create(label.handle(), name.handle(), value)) }
+        unsafe { wxBoolProperty { ptr: wxBoolProperty_Create(label.ptr(), name.ptr(), value) } }
     }
 }
 
 pub trait _wxBoolProperty : _wxPGProperty {
 }
 
-pub struct wxFloatProperty(*mut c_void);
+pub struct wxFloatProperty { ptr: *mut c_void }
 impl _wxFloatProperty for wxFloatProperty {}
 impl _wxPGProperty for wxFloatProperty {}
-impl _wxObject for wxFloatProperty { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxFloatProperty { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxFloatProperty {
-    pub fn from(handle: *mut c_void) -&gt; @wxFloatProperty { @wxFloatProperty(handle) }
-    pub fn null() -&gt; @wxFloatProperty { wxFloatProperty::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxFloatProperty { wxFloatProperty { ptr: ptr } }
+    pub fn null() -&gt; wxFloatProperty { wxFloatProperty::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new(label: &amp;str, name: &amp;str, value: c_float) -&gt; @wxFloatProperty {
+    pub fn new(label: &amp;str, name: &amp;str, value: c_float) -&gt; wxFloatProperty {
         let label = wxT(label);
         let name = wxT(name);
-        unsafe { @wxFloatProperty(wxFloatProperty_Create(label.handle(), name.handle(), value)) }
+        unsafe { wxFloatProperty { ptr: wxFloatProperty_Create(label.ptr(), name.ptr(), value) } }
     }
 }
 
 pub trait _wxFloatProperty : _wxPGProperty {
 }
 
-pub struct wxDateProperty(*mut c_void);
+pub struct wxDateProperty { ptr: *mut c_void }
 impl _wxDateProperty for wxDateProperty {}
 impl _wxPGProperty for wxDateProperty {}
-impl _wxObject for wxDateProperty { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxDateProperty { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxDateProperty {
-    pub fn from(handle: *mut c_void) -&gt; @wxDateProperty { @wxDateProperty(handle) }
-    pub fn null() -&gt; @wxDateProperty { wxDateProperty::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxDateProperty { wxDateProperty { ptr: ptr } }
+    pub fn null() -&gt; wxDateProperty { wxDateProperty::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new&lt;T: _wxDateTime&gt;(label: &amp;str, name: &amp;str, value: &amp;T) -&gt; @wxDateProperty {
+    pub fn new&lt;T: _wxDateTime&gt;(label: &amp;str, name: &amp;str, value: &amp;T) -&gt; wxDateProperty {
         let label = wxT(label);
         let name = wxT(name);
-        unsafe { @wxDateProperty(wxDateProperty_Create(label.handle(), name.handle(), value.handle())) }
+        unsafe { wxDateProperty { ptr: wxDateProperty_Create(label.ptr(), name.ptr(), value.ptr()) } }
     }
 }
 
 pub trait _wxDateProperty : _wxPGProperty {
 }
 
-pub struct wxFileProperty(*mut c_void);
+pub struct wxFileProperty { ptr: *mut c_void }
 impl _wxFileProperty for wxFileProperty {}
 impl _wxPGProperty for wxFileProperty {}
-impl _wxObject for wxFileProperty { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxFileProperty { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxFileProperty {
-    pub fn from(handle: *mut c_void) -&gt; @wxFileProperty { @wxFileProperty(handle) }
-    pub fn null() -&gt; @wxFileProperty { wxFileProperty::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxFileProperty { wxFileProperty { ptr: ptr } }
+    pub fn null() -&gt; wxFileProperty { wxFileProperty::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new(label: &amp;str, name: &amp;str, value: &amp;str) -&gt; @wxFileProperty {
+    pub fn new(label: &amp;str, name: &amp;str, value: &amp;str) -&gt; wxFileProperty {
         let label = wxT(label);
         let name = wxT(name);
         let value = wxT(value);
-        unsafe { @wxFileProperty(wxFileProperty_Create(label.handle(), name.handle(), value.handle())) }
+        unsafe { wxFileProperty { ptr: wxFileProperty_Create(label.ptr(), name.ptr(), value.ptr()) } }
     }
 }
 
 pub trait _wxFileProperty : _wxPGProperty {
 }
 
-pub struct wxPropertyCategory(*mut c_void);
+pub struct wxPropertyCategory { ptr: *mut c_void }
 impl _wxPropertyCategory for wxPropertyCategory {}
 impl _wxPGProperty for wxPropertyCategory {}
-impl _wxObject for wxPropertyCategory { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxPropertyCategory { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxPropertyCategory {
-    pub fn from(handle: *mut c_void) -&gt; @wxPropertyCategory { @wxPropertyCategory(handle) }
-    pub fn null() -&gt; @wxPropertyCategory { wxPropertyCategory::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxPropertyCategory { wxPropertyCategory { ptr: ptr } }
+    pub fn null() -&gt; wxPropertyCategory { wxPropertyCategory::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new(label: &amp;str) -&gt; @wxPropertyCategory {
+    pub fn new(label: &amp;str) -&gt; wxPropertyCategory {
         let label = wxT(label);
-        unsafe { @wxPropertyCategory(wxPropertyCategory_Create(label.handle())) }
+        unsafe { wxPropertyCategory { ptr: wxPropertyCategory_Create(label.ptr()) } }
     }
 }
 

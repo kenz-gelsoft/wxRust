@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#2673-2684'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxDataObjectComposite</a></h1><pre class='trait'>pub trait _wxDataObjectComposite: <a class='trait' href='../../wx/core/trait._wxDataObject.html' title='wx::core::_wxDataObject'>_wxDataObject</a> {
+                       href='../../src/wx/src/core.rs.html#1944-1951'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxDataObjectComposite</a></h1><pre class='trait'>pub trait _wxDataObjectComposite: <a class='trait' href='../../wx/core/trait._wxDataObject.html' title='wx::core::_wxDataObject'>_wxDataObject</a> {
     fn <a href='#method.add'
                                     class='fnname'>add</a>(&amp;self, _dat: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, _preferred: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) { ... }
     fn <a href='#method.delete'
@@ -42,9 +46,9 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.add' class='method'><code>fn <span class='fnname'>add</span>(&amp;self, _dat: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, _preferred: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.delete' class='method'><code>fn <span class='fnname'>delete</span>(&amp;self)</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxDataObjectComposite.html' title='wx::core::wxDataObjectComposite'>wxDataObjectComposite</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxDataObjectComposite.html' title='wx::core::wxDataObjectComposite'>wxDataObjectComposite</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

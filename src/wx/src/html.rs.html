@@ -26,9 +26,13 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
@@ -499,663 +503,467 @@
 <span id='465'>465</span>
 <span id='466'>466</span>
 <span id='467'>467</span>
-<span id='468'>468</span>
-<span id='469'>469</span>
-<span id='470'>470</span>
-<span id='471'>471</span>
-<span id='472'>472</span>
-<span id='473'>473</span>
-<span id='474'>474</span>
-<span id='475'>475</span>
-<span id='476'>476</span>
-<span id='477'>477</span>
-<span id='478'>478</span>
-<span id='479'>479</span>
-<span id='480'>480</span>
-<span id='481'>481</span>
-<span id='482'>482</span>
-<span id='483'>483</span>
-<span id='484'>484</span>
-<span id='485'>485</span>
-<span id='486'>486</span>
-<span id='487'>487</span>
-<span id='488'>488</span>
-<span id='489'>489</span>
-<span id='490'>490</span>
-<span id='491'>491</span>
-<span id='492'>492</span>
-<span id='493'>493</span>
-<span id='494'>494</span>
-<span id='495'>495</span>
-<span id='496'>496</span>
-<span id='497'>497</span>
-<span id='498'>498</span>
-<span id='499'>499</span>
-<span id='500'>500</span>
-<span id='501'>501</span>
-<span id='502'>502</span>
-<span id='503'>503</span>
-<span id='504'>504</span>
-<span id='505'>505</span>
-<span id='506'>506</span>
-<span id='507'>507</span>
-<span id='508'>508</span>
-<span id='509'>509</span>
-<span id='510'>510</span>
-<span id='511'>511</span>
-<span id='512'>512</span>
-<span id='513'>513</span>
-<span id='514'>514</span>
-<span id='515'>515</span>
-<span id='516'>516</span>
-<span id='517'>517</span>
-<span id='518'>518</span>
-<span id='519'>519</span>
-<span id='520'>520</span>
-<span id='521'>521</span>
-<span id='522'>522</span>
-<span id='523'>523</span>
-<span id='524'>524</span>
-<span id='525'>525</span>
-<span id='526'>526</span>
-<span id='527'>527</span>
-<span id='528'>528</span>
-<span id='529'>529</span>
-<span id='530'>530</span>
-<span id='531'>531</span>
-<span id='532'>532</span>
-<span id='533'>533</span>
-<span id='534'>534</span>
-<span id='535'>535</span>
-<span id='536'>536</span>
-<span id='537'>537</span>
-<span id='538'>538</span>
-<span id='539'>539</span>
-<span id='540'>540</span>
-<span id='541'>541</span>
-<span id='542'>542</span>
-<span id='543'>543</span>
-<span id='544'>544</span>
-<span id='545'>545</span>
-<span id='546'>546</span>
-<span id='547'>547</span>
-<span id='548'>548</span>
-<span id='549'>549</span>
-<span id='550'>550</span>
-<span id='551'>551</span>
-<span id='552'>552</span>
-<span id='553'>553</span>
-<span id='554'>554</span>
-<span id='555'>555</span>
-<span id='556'>556</span>
-<span id='557'>557</span>
-<span id='558'>558</span>
-<span id='559'>559</span>
-<span id='560'>560</span>
-<span id='561'>561</span>
-<span id='562'>562</span>
-<span id='563'>563</span>
-<span id='564'>564</span>
-<span id='565'>565</span>
 </pre><pre class='rust'>use std::libc::*;
 use _unsafe::*;
 use base::*;
 use core::*;
 
-pub struct wxHtmlCell(*mut c_void);
+pub struct wxHtmlCell { ptr: *mut c_void }
 impl _wxHtmlCell for wxHtmlCell {}
-impl _wxObject for wxHtmlCell { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlCell { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlCell {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlCell { @wxHtmlCell(handle) }
-    pub fn null() -&gt; @wxHtmlCell { wxHtmlCell::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlCell { wxHtmlCell { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlCell { wxHtmlCell::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlCell : _wxObject {
 }
 
-pub struct wxHtmlColourCell(*mut c_void);
+pub struct wxHtmlColourCell { ptr: *mut c_void }
 impl _wxHtmlColourCell for wxHtmlColourCell {}
 impl _wxHtmlCell for wxHtmlColourCell {}
-impl _wxObject for wxHtmlColourCell { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlColourCell { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlColourCell {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlColourCell { @wxHtmlColourCell(handle) }
-    pub fn null() -&gt; @wxHtmlColourCell { wxHtmlColourCell::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlColourCell { wxHtmlColourCell { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlColourCell { wxHtmlColourCell::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlColourCell : _wxHtmlCell {
 }
 
-pub struct wxHtmlContainerCell(*mut c_void);
+pub struct wxHtmlContainerCell { ptr: *mut c_void }
 impl _wxHtmlContainerCell for wxHtmlContainerCell {}
 impl _wxHtmlCell for wxHtmlContainerCell {}
-impl _wxObject for wxHtmlContainerCell { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlContainerCell { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlContainerCell {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlContainerCell { @wxHtmlContainerCell(handle) }
-    pub fn null() -&gt; @wxHtmlContainerCell { wxHtmlContainerCell::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlContainerCell { wxHtmlContainerCell { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlContainerCell { wxHtmlContainerCell::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlContainerCell : _wxHtmlCell {
 }
 
-pub struct wxHtmlDCRenderer(*mut c_void);
+pub struct wxHtmlDCRenderer { ptr: *mut c_void }
 impl _wxHtmlDCRenderer for wxHtmlDCRenderer {}
-impl _wxObject for wxHtmlDCRenderer { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlDCRenderer { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlDCRenderer {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlDCRenderer { @wxHtmlDCRenderer(handle) }
-    pub fn null() -&gt; @wxHtmlDCRenderer { wxHtmlDCRenderer::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlDCRenderer { wxHtmlDCRenderer { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlDCRenderer { wxHtmlDCRenderer::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlDCRenderer : _wxObject {
 }
 
-pub struct wxHtmlEasyPrinting(*mut c_void);
+pub struct wxHtmlEasyPrinting { ptr: *mut c_void }
 impl _wxHtmlEasyPrinting for wxHtmlEasyPrinting {}
-impl _wxObject for wxHtmlEasyPrinting { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlEasyPrinting { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlEasyPrinting {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlEasyPrinting { @wxHtmlEasyPrinting(handle) }
-    pub fn null() -&gt; @wxHtmlEasyPrinting { wxHtmlEasyPrinting::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlEasyPrinting { wxHtmlEasyPrinting { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlEasyPrinting { wxHtmlEasyPrinting::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlEasyPrinting : _wxObject {
 }
 
-pub struct wxHtmlFilter(*mut c_void);
+pub struct wxHtmlFilter { ptr: *mut c_void }
 impl _wxHtmlFilter for wxHtmlFilter {}
-impl _wxObject for wxHtmlFilter { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlFilter { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlFilter {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlFilter { @wxHtmlFilter(handle) }
-    pub fn null() -&gt; @wxHtmlFilter { wxHtmlFilter::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlFilter { wxHtmlFilter { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlFilter { wxHtmlFilter::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlFilter : _wxObject {
 }
 
-pub struct wxHtmlHelpController(*mut c_void);
+pub struct wxHtmlHelpController { ptr: *mut c_void }
 impl _wxHtmlHelpController for wxHtmlHelpController {}
 impl _wxHelpControllerBase for wxHtmlHelpController {}
-impl _wxObject for wxHtmlHelpController { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlHelpController { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlHelpController {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlHelpController { @wxHtmlHelpController(handle) }
-    pub fn null() -&gt; @wxHtmlHelpController { wxHtmlHelpController::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlHelpController { wxHtmlHelpController { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlHelpController { wxHtmlHelpController::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new(_style: c_int) -&gt; @wxHtmlHelpController {
-        unsafe { @wxHtmlHelpController(wxHtmlHelpController_Create(_style)) }
+    pub fn new(_style: c_int) -&gt; wxHtmlHelpController {
+        unsafe { wxHtmlHelpController { ptr: wxHtmlHelpController_Create(_style) } }
     }
 }
 
 pub trait _wxHtmlHelpController : _wxHelpControllerBase {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn addBook(&amp;self, book: *mut c_void, show_wait_msg: c_int) -&gt; c_int {
-        unsafe { wxHtmlHelpController_AddBook(self.handle(), book, show_wait_msg) }
+        unsafe { wxHtmlHelpController_AddBook(self.ptr(), book, show_wait_msg) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn display(&amp;self, x: *mut c_void) -&gt; c_int {
-        unsafe { wxHtmlHelpController_Display(self.handle(), x) }
+        unsafe { wxHtmlHelpController_Display(self.ptr(), x) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn displayBlock(&amp;self, blockNo: c_int) -&gt; c_int {
-        unsafe { wxHtmlHelpController_DisplayBlock(self.handle(), blockNo) }
+        unsafe { wxHtmlHelpController_DisplayBlock(self.ptr(), blockNo) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn displayContents(&amp;self) -&gt; c_int {
-        unsafe { wxHtmlHelpController_DisplayContents(self.handle()) }
+        unsafe { wxHtmlHelpController_DisplayContents(self.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn displayIndex(&amp;self) -&gt; c_int {
-        unsafe { wxHtmlHelpController_DisplayIndex(self.handle()) }
+        unsafe { wxHtmlHelpController_DisplayIndex(self.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn displayNumber(&amp;self, id: c_int) -&gt; c_int {
-        unsafe { wxHtmlHelpController_DisplayNumber(self.handle(), id) }
+        unsafe { wxHtmlHelpController_DisplayNumber(self.ptr(), id) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn displaySection(&amp;self, section: &amp;str) -&gt; c_int {
         let section = wxT(section);
-        unsafe { wxHtmlHelpController_DisplaySection(self.handle(), section.handle()) }
+        unsafe { wxHtmlHelpController_DisplaySection(self.ptr(), section.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn displaySectionNumber(&amp;self, sectionNo: c_int) -&gt; c_int {
-        unsafe { wxHtmlHelpController_DisplaySectionNumber(self.handle(), sectionNo) }
+        unsafe { wxHtmlHelpController_DisplaySectionNumber(self.ptr(), sectionNo) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
-    fn getFrame(&amp;self) -&gt; @wxFrame {
-        unsafe { @wxFrame(wxHtmlHelpController_GetFrame(self.handle())) }
+    fn getFrame(&amp;self) -&gt; wxFrame {
+        unsafe { wxFrame { ptr: wxHtmlHelpController_GetFrame(self.ptr()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getFrameParameters(&amp;self, title: *mut c_void, width: *mut c_int, height: *mut c_int, pos_x: *mut c_int, pos_y: *mut c_int, newFrameEachTime: *mut c_int) -&gt; *mut c_void {
-        unsafe { wxHtmlHelpController_GetFrameParameters(self.handle(), title, width, height, pos_x, pos_y, newFrameEachTime) }
+        unsafe { wxHtmlHelpController_GetFrameParameters(self.ptr(), title, width, height, pos_x, pos_y, newFrameEachTime) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn initialize(&amp;self, file: &amp;str) -&gt; c_int {
         let file = wxT(file);
-        unsafe { wxHtmlHelpController_Initialize(self.handle(), file.handle()) }
+        unsafe { wxHtmlHelpController_Initialize(self.ptr(), file.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn keywordSearch(&amp;self, keyword: &amp;str) -&gt; c_int {
         let keyword = wxT(keyword);
-        unsafe { wxHtmlHelpController_KeywordSearch(self.handle(), keyword.handle()) }
+        unsafe { wxHtmlHelpController_KeywordSearch(self.ptr(), keyword.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn loadFile(&amp;self, file: &amp;str) -&gt; c_int {
         let file = wxT(file);
-        unsafe { wxHtmlHelpController_LoadFile(self.handle(), file.handle()) }
+        unsafe { wxHtmlHelpController_LoadFile(self.ptr(), file.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn quit(&amp;self) -&gt; c_int {
-        unsafe { wxHtmlHelpController_Quit(self.handle()) }
+        unsafe { wxHtmlHelpController_Quit(self.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn readCustomization&lt;T: _wxConfigBase&gt;(&amp;self, cfg: &amp;T, path: &amp;str) {
         let path = wxT(path);
-        unsafe { wxHtmlHelpController_ReadCustomization(self.handle(), cfg.handle(), path.handle()) }
+        unsafe { wxHtmlHelpController_ReadCustomization(self.ptr(), cfg.ptr(), path.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setFrameParameters(&amp;self, title: *mut c_void, width: c_int, height: c_int, pos_x: c_int, pos_y: c_int, newFrameEachTime: c_int) {
-        unsafe { wxHtmlHelpController_SetFrameParameters(self.handle(), title, width, height, pos_x, pos_y, newFrameEachTime) }
+        unsafe { wxHtmlHelpController_SetFrameParameters(self.ptr(), title, width, height, pos_x, pos_y, newFrameEachTime) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setTempDir(&amp;self, path: &amp;str) {
         let path = wxT(path);
-        unsafe { wxHtmlHelpController_SetTempDir(self.handle(), path.handle()) }
+        unsafe { wxHtmlHelpController_SetTempDir(self.ptr(), path.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setTitleFormat(&amp;self, format: *mut c_void) {
-        unsafe { wxHtmlHelpController_SetTitleFormat(self.handle(), format) }
+        unsafe { wxHtmlHelpController_SetTitleFormat(self.ptr(), format) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setViewer(&amp;self, viewer: &amp;str, flags: c_int) {
         let viewer = wxT(viewer);
-        unsafe { wxHtmlHelpController_SetViewer(self.handle(), viewer.handle(), flags) }
+        unsafe { wxHtmlHelpController_SetViewer(self.ptr(), viewer.ptr(), flags) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn useConfig&lt;T: _wxConfigBase&gt;(&amp;self, config: &amp;T, rootpath: &amp;str) {
         let rootpath = wxT(rootpath);
-        unsafe { wxHtmlHelpController_UseConfig(self.handle(), config.handle(), rootpath.handle()) }
+        unsafe { wxHtmlHelpController_UseConfig(self.ptr(), config.ptr(), rootpath.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn writeCustomization&lt;T: _wxConfigBase&gt;(&amp;self, cfg: &amp;T, path: &amp;str) {
         let path = wxT(path);
-        unsafe { wxHtmlHelpController_WriteCustomization(self.handle(), cfg.handle(), path.handle()) }
+        unsafe { wxHtmlHelpController_WriteCustomization(self.ptr(), cfg.ptr(), path.ptr()) }
     }
 }
 
-pub struct wxHtmlHelpData(*mut c_void);
+pub struct wxHtmlHelpData { ptr: *mut c_void }
 impl _wxHtmlHelpData for wxHtmlHelpData {}
-impl _wxObject for wxHtmlHelpData { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlHelpData { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlHelpData {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlHelpData { @wxHtmlHelpData(handle) }
-    pub fn null() -&gt; @wxHtmlHelpData { wxHtmlHelpData::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlHelpData { wxHtmlHelpData { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlHelpData { wxHtmlHelpData::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlHelpData : _wxObject {
 }
 
-pub struct wxHtmlHelpFrame(*mut c_void);
+pub struct wxHtmlHelpFrame { ptr: *mut c_void }
 impl _wxHtmlHelpFrame for wxHtmlHelpFrame {}
 impl _wxFrame for wxHtmlHelpFrame {}
 impl _wxTopLevelWindow for wxHtmlHelpFrame {}
 impl _wxWindow for wxHtmlHelpFrame {}
 impl _wxEvtHandler for wxHtmlHelpFrame {}
-impl _wxObject for wxHtmlHelpFrame { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlHelpFrame { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlHelpFrame {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlHelpFrame { @wxHtmlHelpFrame(handle) }
-    pub fn null() -&gt; @wxHtmlHelpFrame { wxHtmlHelpFrame::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlHelpFrame { wxHtmlHelpFrame { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlHelpFrame { wxHtmlHelpFrame::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlHelpFrame : _wxFrame {
 }
 
-pub struct wxHtmlLinkInfo(*mut c_void);
+pub struct wxHtmlLinkInfo { ptr: *mut c_void }
 impl _wxHtmlLinkInfo for wxHtmlLinkInfo {}
-impl _wxObject for wxHtmlLinkInfo { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlLinkInfo { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlLinkInfo {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlLinkInfo { @wxHtmlLinkInfo(handle) }
-    pub fn null() -&gt; @wxHtmlLinkInfo { wxHtmlLinkInfo::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlLinkInfo { wxHtmlLinkInfo { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlLinkInfo { wxHtmlLinkInfo::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlLinkInfo : _wxObject {
 }
 
-pub struct wxHtmlParser(*mut c_void);
+pub struct wxHtmlParser { ptr: *mut c_void }
 impl _wxHtmlParser for wxHtmlParser {}
-impl _wxObject for wxHtmlParser { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlParser { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlParser {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlParser { @wxHtmlParser(handle) }
-    pub fn null() -&gt; @wxHtmlParser { wxHtmlParser::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlParser { wxHtmlParser { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlParser { wxHtmlParser::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlParser : _wxObject {
 }
 
-pub struct wxHtmlPrintout(*mut c_void);
+pub struct wxHtmlPrintout { ptr: *mut c_void }
 impl _wxHtmlPrintout for wxHtmlPrintout {}
 impl _wxPrintout for wxHtmlPrintout {}
-impl _wxObject for wxHtmlPrintout { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlPrintout { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlPrintout {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlPrintout { @wxHtmlPrintout(handle) }
-    pub fn null() -&gt; @wxHtmlPrintout { wxHtmlPrintout::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlPrintout { wxHtmlPrintout { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlPrintout { wxHtmlPrintout::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlPrintout : _wxPrintout {
 }
 
-pub struct wxHtmlTag(*mut c_void);
+pub struct wxHtmlTag { ptr: *mut c_void }
 impl _wxHtmlTag for wxHtmlTag {}
-impl _wxObject for wxHtmlTag { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlTag { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlTag {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlTag { @wxHtmlTag(handle) }
-    pub fn null() -&gt; @wxHtmlTag { wxHtmlTag::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlTag { wxHtmlTag { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlTag { wxHtmlTag::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlTag : _wxObject {
 }
 
-pub struct wxHtmlTagHandler(*mut c_void);
+pub struct wxHtmlTagHandler { ptr: *mut c_void }
 impl _wxHtmlTagHandler for wxHtmlTagHandler {}
-impl _wxObject for wxHtmlTagHandler { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlTagHandler { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlTagHandler {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlTagHandler { @wxHtmlTagHandler(handle) }
-    pub fn null() -&gt; @wxHtmlTagHandler { wxHtmlTagHandler::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlTagHandler { wxHtmlTagHandler { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlTagHandler { wxHtmlTagHandler::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlTagHandler : _wxObject {
 }
 
-pub struct wxHtmlTagsModule(*mut c_void);
+pub struct wxHtmlTagsModule { ptr: *mut c_void }
 impl _wxHtmlTagsModule for wxHtmlTagsModule {}
 impl _wxModule for wxHtmlTagsModule {}
-impl _wxObject for wxHtmlTagsModule { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlTagsModule { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlTagsModule {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlTagsModule { @wxHtmlTagsModule(handle) }
-    pub fn null() -&gt; @wxHtmlTagsModule { wxHtmlTagsModule::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlTagsModule { wxHtmlTagsModule { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlTagsModule { wxHtmlTagsModule::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlTagsModule : _wxModule {
 }
 
-pub struct wxHtmlWidgetCell(*mut c_void);
+pub struct wxHtmlWidgetCell { ptr: *mut c_void }
 impl _wxHtmlWidgetCell for wxHtmlWidgetCell {}
 impl _wxHtmlCell for wxHtmlWidgetCell {}
-impl _wxObject for wxHtmlWidgetCell { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlWidgetCell { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlWidgetCell {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlWidgetCell { @wxHtmlWidgetCell(handle) }
-    pub fn null() -&gt; @wxHtmlWidgetCell { wxHtmlWidgetCell::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlWidgetCell { wxHtmlWidgetCell { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlWidgetCell { wxHtmlWidgetCell::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlWidgetCell : _wxHtmlCell {
 }
 
-pub struct wxHtmlWinParser(*mut c_void);
+pub struct wxHtmlWinParser { ptr: *mut c_void }
 impl _wxHtmlWinParser for wxHtmlWinParser {}
 impl _wxHtmlParser for wxHtmlWinParser {}
-impl _wxObject for wxHtmlWinParser { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlWinParser { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlWinParser {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlWinParser { @wxHtmlWinParser(handle) }
-    pub fn null() -&gt; @wxHtmlWinParser { wxHtmlWinParser::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlWinParser { wxHtmlWinParser { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlWinParser { wxHtmlWinParser::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlWinParser : _wxHtmlParser {
 }
 
-pub struct wxHtmlWinTagHandler(*mut c_void);
+pub struct wxHtmlWinTagHandler { ptr: *mut c_void }
 impl _wxHtmlWinTagHandler for wxHtmlWinTagHandler {}
 impl _wxHtmlTagHandler for wxHtmlWinTagHandler {}
-impl _wxObject for wxHtmlWinTagHandler { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlWinTagHandler { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlWinTagHandler {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlWinTagHandler { @wxHtmlWinTagHandler(handle) }
-    pub fn null() -&gt; @wxHtmlWinTagHandler { wxHtmlWinTagHandler::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlWinTagHandler { wxHtmlWinTagHandler { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlWinTagHandler { wxHtmlWinTagHandler::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxHtmlWinTagHandler : _wxHtmlTagHandler {
 }
 
-pub struct wxHtmlWindow(*mut c_void);
+pub struct wxHtmlWindow { ptr: *mut c_void }
 impl _wxHtmlWindow for wxHtmlWindow {}
 impl _wxScrolledWindow for wxHtmlWindow {}
 impl _wxPanel for wxHtmlWindow {}
 impl _wxWindow for wxHtmlWindow {}
 impl _wxEvtHandler for wxHtmlWindow {}
-impl _wxObject for wxHtmlWindow { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxHtmlWindow { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxHtmlWindow {
-    pub fn from(handle: *mut c_void) -&gt; @wxHtmlWindow { @wxHtmlWindow(handle) }
-    pub fn null() -&gt; @wxHtmlWindow { wxHtmlWindow::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxHtmlWindow { wxHtmlWindow { ptr: ptr } }
+    pub fn null() -&gt; wxHtmlWindow { wxHtmlWindow::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new&lt;T: _wxWindow&gt;(_prt: &amp;T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &amp;str) -&gt; @wxHtmlWindow {
+    pub fn new&lt;T: _wxWindow&gt;(_prt: &amp;T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &amp;str) -&gt; wxHtmlWindow {
         let _txt = wxT(_txt);
-        unsafe { @wxHtmlWindow(wxHtmlWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.handle())) }
+        unsafe { wxHtmlWindow { ptr: wxHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr()) } }
     }
 }
 
 pub trait _wxHtmlWindow : _wxScrolledWindow {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn appendToPage(&amp;self, source: &amp;str) -&gt; c_int {
         let source = wxT(source);
-        unsafe { wxHtmlWindow_AppendToPage(self.handle(), source.handle()) }
+        unsafe { wxHtmlWindow_AppendToPage(self.ptr(), source.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
-    fn getInternalRepresentation(&amp;self) -&gt; @wxHtmlContainerCell {
-        unsafe { @wxHtmlContainerCell(wxHtmlWindow_GetInternalRepresentation(self.handle())) }
+    fn getInternalRepresentation(&amp;self) -&gt; wxHtmlContainerCell {
+        unsafe { wxHtmlContainerCell { ptr: wxHtmlWindow_GetInternalRepresentation(self.ptr()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getOpenedAnchor(&amp;self) -&gt; ~str {
-        unsafe { wxString { handle: wxHtmlWindow_GetOpenedAnchor(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxHtmlWindow_GetOpenedAnchor(self.ptr()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getOpenedPage(&amp;self) -&gt; ~str {
-        unsafe { wxString { handle: wxHtmlWindow_GetOpenedPage(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxHtmlWindow_GetOpenedPage(self.ptr()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getOpenedPageTitle(&amp;self) -&gt; ~str {
-        unsafe { wxString { handle: wxHtmlWindow_GetOpenedPageTitle(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxHtmlWindow_GetOpenedPageTitle(self.ptr()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
-    fn getRelatedFrame(&amp;self) -&gt; @wxFrame {
-        unsafe { @wxFrame(wxHtmlWindow_GetRelatedFrame(self.handle())) }
+    fn getRelatedFrame(&amp;self) -&gt; wxFrame {
+        unsafe { wxFrame { ptr: wxHtmlWindow_GetRelatedFrame(self.ptr()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn historyBack(&amp;self) -&gt; c_int {
-        unsafe { wxHtmlWindow_HistoryBack(self.handle()) }
+        unsafe { wxHtmlWindow_HistoryBack(self.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn historyCanBack(&amp;self) -&gt; c_int {
-        unsafe { wxHtmlWindow_HistoryCanBack(self.handle()) }
+        unsafe { wxHtmlWindow_HistoryCanBack(self.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn historyCanForward(&amp;self) -&gt; c_int {
-        unsafe { wxHtmlWindow_HistoryCanForward(self.handle()) }
+        unsafe { wxHtmlWindow_HistoryCanForward(self.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn historyClear(&amp;self) {
-        unsafe { wxHtmlWindow_HistoryClear(self.handle()) }
+        unsafe { wxHtmlWindow_HistoryClear(self.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn historyForward(&amp;self) -&gt; c_int {
-        unsafe { wxHtmlWindow_HistoryForward(self.handle()) }
+        unsafe { wxHtmlWindow_HistoryForward(self.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn loadPage(&amp;self, location: &amp;str) -&gt; c_int {
         let location = wxT(location);
-        unsafe { wxHtmlWindow_LoadPage(self.handle(), location.handle()) }
+        unsafe { wxHtmlWindow_LoadPage(self.ptr(), location.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn readCustomization&lt;T: _wxConfigBase&gt;(&amp;self, cfg: &amp;T, path: &amp;str) {
         let path = wxT(path);
-        unsafe { wxHtmlWindow_ReadCustomization(self.handle(), cfg.handle(), path.handle()) }
+        unsafe { wxHtmlWindow_ReadCustomization(self.ptr(), cfg.ptr(), path.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setBorders(&amp;self, b: c_int) {
-        unsafe { wxHtmlWindow_SetBorders(self.handle(), b) }
+        unsafe { wxHtmlWindow_SetBorders(self.ptr(), b) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setFonts(&amp;self, normal_face: &amp;str, fixed_face: &amp;str, sizes: *mut c_int) {
         let normal_face = wxT(normal_face);
         let fixed_face = wxT(fixed_face);
-        unsafe { wxHtmlWindow_SetFonts(self.handle(), normal_face.handle(), fixed_face.handle(), sizes) }
+        unsafe { wxHtmlWindow_SetFonts(self.ptr(), normal_face.ptr(), fixed_face.ptr(), sizes) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setPage(&amp;self, source: &amp;str) {
         let source = wxT(source);
-        unsafe { wxHtmlWindow_SetPage(self.handle(), source.handle()) }
+        unsafe { wxHtmlWindow_SetPage(self.ptr(), source.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setRelatedFrame&lt;T: _wxFrame&gt;(&amp;self, frame: &amp;T, format: &amp;str) {
         let format = wxT(format);
-        unsafe { wxHtmlWindow_SetRelatedFrame(self.handle(), frame.handle(), format.handle()) }
+        unsafe { wxHtmlWindow_SetRelatedFrame(self.ptr(), frame.ptr(), format.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setRelatedStatusBar(&amp;self, bar: c_int) {
-        unsafe { wxHtmlWindow_SetRelatedStatusBar(self.handle(), bar) }
+        unsafe { wxHtmlWindow_SetRelatedStatusBar(self.ptr(), bar) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn writeCustomization&lt;T: _wxConfigBase&gt;(&amp;self, cfg: &amp;T, path: &amp;str) {
         let path = wxT(path);
-        unsafe { wxHtmlWindow_WriteCustomization(self.handle(), cfg.handle(), path.handle()) }
+        unsafe { wxHtmlWindow_WriteCustomization(self.ptr(), cfg.ptr(), path.ptr()) }
     }
 }
 
-pub struct wxcHtmlEvent(*mut c_void);
+pub struct wxcHtmlEvent { ptr: *mut c_void }
 impl _wxcHtmlEvent for wxcHtmlEvent {}
 impl _wxCommandEvent for wxcHtmlEvent {}
 impl _wxEvent for wxcHtmlEvent {}
-impl _wxObject for wxcHtmlEvent { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxcHtmlEvent { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxcHtmlEvent {
-    pub fn from(handle: *mut c_void) -&gt; @wxcHtmlEvent { @wxcHtmlEvent(handle) }
-    pub fn null() -&gt; @wxcHtmlEvent { wxcHtmlEvent::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxcHtmlEvent { wxcHtmlEvent { ptr: ptr } }
+    pub fn null() -&gt; wxcHtmlEvent { wxcHtmlEvent::from(0 as *mut c_void) }
     
 }
 
 pub trait _wxcHtmlEvent : _wxCommandEvent {
-    #[fixed_stack_segment]
-    #[inline(never)]
-    fn getMouseEvent(&amp;self) -&gt; @wxMouseEvent {
-        unsafe { @wxMouseEvent(wxcHtmlEvent_GetMouseEvent(self.handle())) }
+    fn getMouseEvent(&amp;self) -&gt; wxMouseEvent {
+        unsafe { wxMouseEvent { ptr: wxcHtmlEvent_GetMouseEvent(self.ptr()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
-    fn getHtmlCell(&amp;self) -&gt; @wxHtmlCell {
-        unsafe { @wxHtmlCell(wxcHtmlEvent_GetHtmlCell(self.handle())) }
+    fn getHtmlCell(&amp;self) -&gt; wxHtmlCell {
+        unsafe { wxHtmlCell { ptr: wxcHtmlEvent_GetHtmlCell(self.ptr()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getHtmlCellId(&amp;self) -&gt; ~str {
-        unsafe { wxString { handle: wxcHtmlEvent_GetHtmlCellId(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxcHtmlEvent_GetHtmlCellId(self.ptr()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getHref(&amp;self) -&gt; ~str {
-        unsafe { wxString { handle: wxcHtmlEvent_GetHref(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxcHtmlEvent_GetHref(self.ptr()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn getTarget(&amp;self) -&gt; ~str {
-        unsafe { wxString { handle: wxcHtmlEvent_GetTarget(self.handle()) }.to_str() }
+        unsafe { wxString { ptr: wxcHtmlEvent_GetTarget(self.ptr()) }.to_str() }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
-    fn getLogicalPosition(&amp;self) -&gt; @wxPoint {
-        unsafe { @wxPoint(wxcHtmlEvent_GetLogicalPosition(self.handle())) }
+    fn getLogicalPosition(&amp;self) -&gt; wxPoint {
+        unsafe { wxPoint { ptr: wxcHtmlEvent_GetLogicalPosition(self.ptr()) } }
     }
 }
 
-pub struct wxcHtmlWindow(*mut c_void);
+pub struct wxcHtmlWindow { ptr: *mut c_void }
 impl _wxcHtmlWindow for wxcHtmlWindow {}
 impl _wxHtmlWindow for wxcHtmlWindow {}
 impl _wxScrolledWindow for wxcHtmlWindow {}
 impl _wxPanel for wxcHtmlWindow {}
 impl _wxWindow for wxcHtmlWindow {}
 impl _wxEvtHandler for wxcHtmlWindow {}
-impl _wxObject for wxcHtmlWindow { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxcHtmlWindow { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxcHtmlWindow {
-    pub fn from(handle: *mut c_void) -&gt; @wxcHtmlWindow { @wxcHtmlWindow(handle) }
-    pub fn null() -&gt; @wxcHtmlWindow { wxcHtmlWindow::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxcHtmlWindow { wxcHtmlWindow { ptr: ptr } }
+    pub fn null() -&gt; wxcHtmlWindow { wxcHtmlWindow::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new&lt;T: _wxWindow&gt;(_prt: &amp;T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &amp;str) -&gt; @wxcHtmlWindow {
+    pub fn new&lt;T: _wxWindow&gt;(_prt: &amp;T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &amp;str) -&gt; wxcHtmlWindow {
         let _txt = wxT(_txt);
-        unsafe { @wxcHtmlWindow(wxcHtmlWindow_Create(_prt.handle(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.handle())) }
+        unsafe { wxcHtmlWindow { ptr: wxcHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr()) } }
     }
 }
 

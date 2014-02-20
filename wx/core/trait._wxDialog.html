@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#2746-2772'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxDialog</a></h1><pre class='trait'>pub trait _wxDialog: <a class='trait' href='../../wx/core/trait._wxTopLevelWindow.html' title='wx::core::_wxTopLevelWindow'>_wxTopLevelWindow</a> {
+                       href='../../src/wx/src/core.rs.html#2011-2027'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxDialog</a></h1><pre class='trait'>pub trait _wxDialog: <a class='trait' href='../../wx/core/trait._wxTopLevelWindow.html' title='wx::core::_wxTopLevelWindow'>_wxTopLevelWindow</a> {
     fn <a href='#method.endModal'
                                     class='fnname'>endModal</a>(&amp;self, retCode: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) { ... }
     fn <a href='#method.getReturnCode'
@@ -48,9 +52,9 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.endModal' class='method'><code>fn <span class='fnname'>endModal</span>(&amp;self, retCode: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.getReturnCode' class='method'><code>fn <span class='fnname'>getReturnCode</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.isModal' class='method'><code>fn <span class='fnname'>isModal</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.setReturnCode' class='method'><code>fn <span class='fnname'>setReturnCode</span>(&amp;self, returnCode: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.showModal' class='method'><code>fn <span class='fnname'>showModal</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxTextEntryDialog.html' title='wx::core::wxTextEntryDialog'>wxTextEntryDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxSingleChoiceDialog.html' title='wx::core::wxSingleChoiceDialog'>wxSingleChoiceDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxPrintDialog.html' title='wx::core::wxPrintDialog'>wxPrintDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxPageSetupDialog.html' title='wx::core::wxPageSetupDialog'>wxPageSetupDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxMessageDialog.html' title='wx::core::wxMessageDialog'>wxMessageDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxFontDialog.html' title='wx::core::wxFontDialog'>wxFontDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxFindReplaceDialog.html' title='wx::core::wxFindReplaceDialog'>wxFindReplaceDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxFileDialog.html' title='wx::core::wxFileDialog'>wxFileDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxDirDialog.html' title='wx::core::wxDirDialog'>wxDirDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxDialog.html' title='wx::core::wxDialog'>wxDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxColourDialog.html' title='wx::core::wxColourDialog'>wxColourDialog</a></code></li><li><code><a class='struct' href='../../wx/advanced/struct.wxWizard.html' title='wx::advanced::wxWizard'>wxWizard</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxTextEntryDialog.html' title='wx::core::wxTextEntryDialog'>wxTextEntryDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxSingleChoiceDialog.html' title='wx::core::wxSingleChoiceDialog'>wxSingleChoiceDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxPrintDialog.html' title='wx::core::wxPrintDialog'>wxPrintDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxPageSetupDialog.html' title='wx::core::wxPageSetupDialog'>wxPageSetupDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxMessageDialog.html' title='wx::core::wxMessageDialog'>wxMessageDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxFontDialog.html' title='wx::core::wxFontDialog'>wxFontDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxFindReplaceDialog.html' title='wx::core::wxFindReplaceDialog'>wxFindReplaceDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxFileDialog.html' title='wx::core::wxFileDialog'>wxFileDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxDirDialog.html' title='wx::core::wxDirDialog'>wxDirDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxDialog.html' title='wx::core::wxDialog'>wxDialog</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxColourDialog.html' title='wx::core::wxColourDialog'>wxColourDialog</a></code></li><li><code><a class='struct' href='../../wx/advanced/struct.wxWizard.html' title='wx::advanced::wxWizard'>wxWizard</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

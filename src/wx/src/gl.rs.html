@@ -26,9 +26,13 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
@@ -97,104 +101,68 @@
 <span id='63'>63</span>
 <span id='64'>64</span>
 <span id='65'>65</span>
-<span id='66'>66</span>
-<span id='67'>67</span>
-<span id='68'>68</span>
-<span id='69'>69</span>
-<span id='70'>70</span>
-<span id='71'>71</span>
-<span id='72'>72</span>
-<span id='73'>73</span>
-<span id='74'>74</span>
-<span id='75'>75</span>
-<span id='76'>76</span>
-<span id='77'>77</span>
-<span id='78'>78</span>
-<span id='79'>79</span>
-<span id='80'>80</span>
-<span id='81'>81</span>
-<span id='82'>82</span>
-<span id='83'>83</span>
 </pre><pre class='rust'>use std::libc::*;
 use _unsafe::*;
 use base::*;
 use core::*;
 use advanced::*;
 
-pub struct wxGLCanvas(*mut c_void);
+pub struct wxGLCanvas { ptr: *mut c_void }
 impl _wxGLCanvas for wxGLCanvas {}
 impl _wxScrolledWindow for wxGLCanvas {}
 impl _wxPanel for wxGLCanvas {}
 impl _wxWindow for wxGLCanvas {}
 impl _wxEvtHandler for wxGLCanvas {}
-impl _wxObject for wxGLCanvas { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxGLCanvas { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxGLCanvas {
-    pub fn from(handle: *mut c_void) -&gt; @wxGLCanvas { @wxGLCanvas(handle) }
-    pub fn null() -&gt; @wxGLCanvas { wxGLCanvas::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxGLCanvas { wxGLCanvas { ptr: ptr } }
+    pub fn null() -&gt; wxGLCanvas { wxGLCanvas::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new&lt;T: _wxWindow, U: _wxPalette&gt;(parent: &amp;T, windowID: c_int, attributes: *mut c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int, title: &amp;str, palette: &amp;U) -&gt; @wxGLCanvas {
+    pub fn new&lt;T: _wxWindow, U: _wxPalette&gt;(parent: &amp;T, windowID: c_int, attributes: *mut c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int, title: &amp;str, palette: &amp;U) -&gt; wxGLCanvas {
         let title = wxT(title);
-        unsafe { @wxGLCanvas(wxGLCanvas_Create(parent.handle(), windowID, attributes, x, y, w, h, style, title.handle(), palette.handle())) }
+        unsafe { wxGLCanvas { ptr: wxGLCanvas_Create(parent.ptr(), windowID, attributes, x, y, w, h, style, title.ptr(), palette.ptr()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn isDisplaySupported(attributes: *mut c_int) -&gt; c_int {
         unsafe { wxGLCanvas_IsDisplaySupported(attributes) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     pub fn isExtensionSupported(extension: &amp;str) -&gt; c_int {
         let extension = wxT(extension);
-        unsafe { wxGLCanvas_IsExtensionSupported(extension.handle()) }
+        unsafe { wxGLCanvas_IsExtensionSupported(extension.ptr()) }
     }
 }
 
 pub trait _wxGLCanvas : _wxScrolledWindow {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setColour&lt;T: _wxColour&gt;(&amp;self, colour: &amp;T) -&gt; c_int {
-        unsafe { wxGLCanvas_SetColour(self.handle(), colour.handle()) }
+        unsafe { wxGLCanvas_SetColour(self.ptr(), colour.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setCurrent&lt;T: _wxGLContext&gt;(&amp;self, ctxt: &amp;T) -&gt; c_int {
-        unsafe { wxGLCanvas_SetCurrent(self.handle(), ctxt.handle()) }
+        unsafe { wxGLCanvas_SetCurrent(self.ptr(), ctxt.ptr()) }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn swapBuffers(&amp;self) -&gt; c_int {
-        unsafe { wxGLCanvas_SwapBuffers(self.handle()) }
+        unsafe { wxGLCanvas_SwapBuffers(self.ptr()) }
     }
 }
 
-pub struct wxGLContext(*mut c_void);
+pub struct wxGLContext { ptr: *mut c_void }
 impl _wxGLContext for wxGLContext {}
-impl _wxObject for wxGLContext { fn handle(&amp;self) -&gt; *mut c_void { **self } }
+impl _wxObject for wxGLContext { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
 impl wxGLContext {
-    pub fn from(handle: *mut c_void) -&gt; @wxGLContext { @wxGLContext(handle) }
-    pub fn null() -&gt; @wxGLContext { wxGLContext::from(0 as *mut c_void) }
+    pub fn from(ptr: *mut c_void) -&gt; wxGLContext { wxGLContext { ptr: ptr } }
+    pub fn null() -&gt; wxGLContext { wxGLContext::from(0 as *mut c_void) }
     
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn new&lt;T: _wxGLCanvas, U: _wxGLContext&gt;(win: &amp;T, other: &amp;U) -&gt; @wxGLContext {
-        unsafe { @wxGLContext(wxGLContext_Create(win.handle(), other.handle())) }
+    pub fn new&lt;T: _wxGLCanvas, U: _wxGLContext&gt;(win: &amp;T, other: &amp;U) -&gt; wxGLContext {
+        unsafe { wxGLContext { ptr: wxGLContext_Create(win.ptr(), other.ptr()) } }
     }
-    #[fixed_stack_segment]
-    #[inline(never)]
-    pub fn newFromNull&lt;T: _wxGLCanvas&gt;(win: &amp;T) -&gt; @wxGLContext {
-        unsafe { @wxGLContext(wxGLContext_CreateFromNull(win.handle())) }
+    pub fn newFromNull&lt;T: _wxGLCanvas&gt;(win: &amp;T) -&gt; wxGLContext {
+        unsafe { wxGLContext { ptr: wxGLContext_CreateFromNull(win.ptr()) } }
     }
 }
 
 pub trait _wxGLContext : _wxObject {
-    #[fixed_stack_segment]
-    #[inline(never)]
     fn setCurrent&lt;T: _wxGLCanvas&gt;(&amp;self, win: &amp;T) -&gt; c_int {
-        unsafe { wxGLContext_SetCurrent(self.handle(), win.handle()) }
+        unsafe { wxGLContext_SetCurrent(self.ptr(), win.ptr()) }
     }
 }
 

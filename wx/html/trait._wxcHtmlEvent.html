@@ -26,18 +26,22 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/html.rs.html#509-540'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>html</a>::<a class='trait' href=''>_wxcHtmlEvent</a></h1><pre class='trait'>pub trait _wxcHtmlEvent: <a class='trait' href='../../wx/core/trait._wxCommandEvent.html' title='wx::core::_wxCommandEvent'>_wxCommandEvent</a> {
+                       href='../../src/wx/src/html.rs.html#425-444'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>html</a>::<a class='trait' href=''>_wxcHtmlEvent</a></h1><pre class='trait'>pub trait _wxcHtmlEvent: <a class='trait' href='../../wx/core/trait._wxCommandEvent.html' title='wx::core::_wxCommandEvent'>_wxCommandEvent</a> {
     fn <a href='#method.getMouseEvent'
-                                    class='fnname'>getMouseEvent</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxMouseEvent.html' title='wx::core::wxMouseEvent'>wxMouseEvent</a> { ... }
+                                    class='fnname'>getMouseEvent</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxMouseEvent.html' title='wx::core::wxMouseEvent'>wxMouseEvent</a> { ... }
     fn <a href='#method.getHtmlCell'
-                                    class='fnname'>getHtmlCell</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/html/struct.wxHtmlCell.html' title='wx::html::wxHtmlCell'>wxHtmlCell</a> { ... }
+                                    class='fnname'>getHtmlCell</a>(&amp;self) -&gt; <a class='struct' href='../../wx/html/struct.wxHtmlCell.html' title='wx::html::wxHtmlCell'>wxHtmlCell</a> { ... }
     fn <a href='#method.getHtmlCellId'
                                     class='fnname'>getHtmlCellId</a>(&amp;self) -&gt; ~str { ... }
     fn <a href='#method.getHref'
@@ -45,14 +49,14 @@
     fn <a href='#method.getTarget'
                                     class='fnname'>getTarget</a>(&amp;self) -&gt; ~str { ... }
     fn <a href='#method.getLogicalPosition'
-                                    class='fnname'>getLogicalPosition</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxPoint.html' title='wx::core::wxPoint'>wxPoint</a> { ... }
+                                    class='fnname'>getLogicalPosition</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxPoint.html' title='wx::core::wxPoint'>wxPoint</a> { ... }
 }</pre>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.getMouseEvent' class='method'><code>fn <span class='fnname'>getMouseEvent</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxMouseEvent.html' title='wx::core::wxMouseEvent'>wxMouseEvent</a></code></h3><h3 id='method.getHtmlCell' class='method'><code>fn <span class='fnname'>getHtmlCell</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/html/struct.wxHtmlCell.html' title='wx::html::wxHtmlCell'>wxHtmlCell</a></code></h3><h3 id='method.getHtmlCellId' class='method'><code>fn <span class='fnname'>getHtmlCellId</span>(&amp;self) -&gt; ~str</code></h3><h3 id='method.getHref' class='method'><code>fn <span class='fnname'>getHref</span>(&amp;self) -&gt; ~str</code></h3><h3 id='method.getTarget' class='method'><code>fn <span class='fnname'>getTarget</span>(&amp;self) -&gt; ~str</code></h3><h3 id='method.getLogicalPosition' class='method'><code>fn <span class='fnname'>getLogicalPosition</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxPoint.html' title='wx::core::wxPoint'>wxPoint</a></code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/html/struct.wxcHtmlEvent.html' title='wx::html::wxcHtmlEvent'>wxcHtmlEvent</a></code></li></ul></section>
+        <h3 id='method.getMouseEvent' class='method'><code>fn <span class='fnname'>getMouseEvent</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxMouseEvent.html' title='wx::core::wxMouseEvent'>wxMouseEvent</a></code></h3><h3 id='method.getHtmlCell' class='method'><code>fn <span class='fnname'>getHtmlCell</span>(&amp;self) -&gt; <a class='struct' href='../../wx/html/struct.wxHtmlCell.html' title='wx::html::wxHtmlCell'>wxHtmlCell</a></code></h3><h3 id='method.getHtmlCellId' class='method'><code>fn <span class='fnname'>getHtmlCellId</span>(&amp;self) -&gt; ~str</code></h3><h3 id='method.getHref' class='method'><code>fn <span class='fnname'>getHref</span>(&amp;self) -&gt; ~str</code></h3><h3 id='method.getTarget' class='method'><code>fn <span class='fnname'>getTarget</span>(&amp;self) -&gt; ~str</code></h3><h3 id='method.getLogicalPosition' class='method'><code>fn <span class='fnname'>getLogicalPosition</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxPoint.html' title='wx::core::wxPoint'>wxPoint</a></code></h3></div>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/html/struct.wxcHtmlEvent.html' title='wx::html::wxcHtmlEvent'>wxcHtmlEvent</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

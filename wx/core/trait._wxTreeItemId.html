@@ -26,35 +26,39 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#12406-12429'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxTreeItemId</a></h1><pre class='trait'>pub trait _wxTreeItemId {
-    fn <a href='#tymethod.handle'
-                                    class='fnname'>handle</a>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>;
+                       href='../../src/wx/src/core.rs.html#8893-8908'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxTreeItemId</a></h1><pre class='trait'>pub trait _wxTreeItemId {
+    fn <a href='#tymethod.ptr'
+                                    class='fnname'>ptr</a>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>;
 
     fn <a href='#method.delete'
                                     class='fnname'>delete</a>(&amp;self) { ... }
     fn <a href='#method.isOk'
                                     class='fnname'>isOk</a>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
     fn <a href='#method.clone'
-                                    class='fnname'>clone</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxTreeItemId.html' title='wx::core::wxTreeItemId'>wxTreeItemId</a> { ... }
+                                    class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxTreeItemId.html' title='wx::core::wxTreeItemId'>wxTreeItemId</a> { ... }
     fn <a href='#method.getValue'
                                     class='fnname'>getValue</a>(&amp;self) -&gt; <a class='typedef' href='../../wx/_unsafe/typedef.intptr_t.html' title='wx::_unsafe::intptr_t'>intptr_t</a> { ... }
 }</pre>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.handle' class='method'><code>fn <span class='fnname'>handle</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h3></div>
+        <h3 id='tymethod.ptr' class='method'><code>fn <span class='fnname'>ptr</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h3></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.delete' class='method'><code>fn <span class='fnname'>delete</span>(&amp;self)</code></h3><h3 id='method.isOk' class='method'><code>fn <span class='fnname'>isOk</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.clone' class='method'><code>fn <span class='fnname'>clone</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxTreeItemId.html' title='wx::core::wxTreeItemId'>wxTreeItemId</a></code></h3><h3 id='method.getValue' class='method'><code>fn <span class='fnname'>getValue</span>(&amp;self) -&gt; <a class='typedef' href='../../wx/_unsafe/typedef.intptr_t.html' title='wx::_unsafe::intptr_t'>intptr_t</a></code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxTreeItemId.html' title='wx::core::wxTreeItemId'>wxTreeItemId</a></code></li></ul></section>
+        <h3 id='method.delete' class='method'><code>fn <span class='fnname'>delete</span>(&amp;self)</code></h3><h3 id='method.isOk' class='method'><code>fn <span class='fnname'>isOk</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.clone' class='method'><code>fn <span class='fnname'>clone</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxTreeItemId.html' title='wx::core::wxTreeItemId'>wxTreeItemId</a></code></h3><h3 id='method.getValue' class='method'><code>fn <span class='fnname'>getValue</span>(&amp;self) -&gt; <a class='typedef' href='../../wx/_unsafe/typedef.intptr_t.html' title='wx::_unsafe::intptr_t'>intptr_t</a></code></h3></div>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxTreeItemId.html' title='wx::core::wxTreeItemId'>wxTreeItemId</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

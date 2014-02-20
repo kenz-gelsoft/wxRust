@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#12336-12372'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxTreeEvent</a></h1><pre class='trait'>pub trait _wxTreeEvent: <a class='trait' href='../../wx/core/trait._wxNotifyEvent.html' title='wx::core::_wxNotifyEvent'>_wxNotifyEvent</a> {
+                       href='../../src/wx/src/core.rs.html#8841-8863'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxTreeEvent</a></h1><pre class='trait'>pub trait _wxTreeEvent: <a class='trait' href='../../wx/core/trait._wxNotifyEvent.html' title='wx::core::_wxNotifyEvent'>_wxNotifyEvent</a> {
     fn <a href='#method.getCode'
                                     class='fnname'>getCode</a>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
     fn <a href='#method.getItem'
@@ -43,18 +47,18 @@
     fn <a href='#method.getOldItem'
                                     class='fnname'>getOldItem</a>&lt;T: <a class='trait' href='../../wx/core/trait._wxTreeItemId.html' title='wx::core::_wxTreeItemId'>_wxTreeItemId</a>&gt;(&amp;self, _ref: &amp;T) { ... }
     fn <a href='#method.getPoint'
-                                    class='fnname'>getPoint</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxPoint.html' title='wx::core::wxPoint'>wxPoint</a> { ... }
+                                    class='fnname'>getPoint</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxPoint.html' title='wx::core::wxPoint'>wxPoint</a> { ... }
     fn <a href='#method.getKeyEvent'
-                                    class='fnname'>getKeyEvent</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxKeyEvent.html' title='wx::core::wxKeyEvent'>wxKeyEvent</a> { ... }
+                                    class='fnname'>getKeyEvent</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxKeyEvent.html' title='wx::core::wxKeyEvent'>wxKeyEvent</a> { ... }
     fn <a href='#method.isEditCancelled'
                                     class='fnname'>isEditCancelled</a>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
 }</pre>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.getCode' class='method'><code>fn <span class='fnname'>getCode</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getItem' class='method'><code>fn <span class='fnname'>getItem</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxTreeItemId.html' title='wx::core::_wxTreeItemId'>_wxTreeItemId</a>&gt;(&amp;self, _ref: &amp;T)</code></h3><h3 id='method.getLabel' class='method'><code>fn <span class='fnname'>getLabel</span>(&amp;self) -&gt; ~str</code></h3><h3 id='method.getOldItem' class='method'><code>fn <span class='fnname'>getOldItem</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxTreeItemId.html' title='wx::core::_wxTreeItemId'>_wxTreeItemId</a>&gt;(&amp;self, _ref: &amp;T)</code></h3><h3 id='method.getPoint' class='method'><code>fn <span class='fnname'>getPoint</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxPoint.html' title='wx::core::wxPoint'>wxPoint</a></code></h3><h3 id='method.getKeyEvent' class='method'><code>fn <span class='fnname'>getKeyEvent</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxKeyEvent.html' title='wx::core::wxKeyEvent'>wxKeyEvent</a></code></h3><h3 id='method.isEditCancelled' class='method'><code>fn <span class='fnname'>isEditCancelled</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxTreeEvent.html' title='wx::core::wxTreeEvent'>wxTreeEvent</a></code></li></ul></section>
+        <h3 id='method.getCode' class='method'><code>fn <span class='fnname'>getCode</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getItem' class='method'><code>fn <span class='fnname'>getItem</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxTreeItemId.html' title='wx::core::_wxTreeItemId'>_wxTreeItemId</a>&gt;(&amp;self, _ref: &amp;T)</code></h3><h3 id='method.getLabel' class='method'><code>fn <span class='fnname'>getLabel</span>(&amp;self) -&gt; ~str</code></h3><h3 id='method.getOldItem' class='method'><code>fn <span class='fnname'>getOldItem</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxTreeItemId.html' title='wx::core::_wxTreeItemId'>_wxTreeItemId</a>&gt;(&amp;self, _ref: &amp;T)</code></h3><h3 id='method.getPoint' class='method'><code>fn <span class='fnname'>getPoint</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxPoint.html' title='wx::core::wxPoint'>wxPoint</a></code></h3><h3 id='method.getKeyEvent' class='method'><code>fn <span class='fnname'>getKeyEvent</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxKeyEvent.html' title='wx::core::wxKeyEvent'>wxKeyEvent</a></code></h3><h3 id='method.isEditCancelled' class='method'><code>fn <span class='fnname'>isEditCancelled</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3></div>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxTreeEvent.html' title='wx::core::wxTreeEvent'>wxTreeEvent</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

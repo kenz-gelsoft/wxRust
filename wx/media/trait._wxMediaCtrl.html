@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/media.rs.html#26-106'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>media</a>::<a class='trait' href=''>_wxMediaCtrl</a></h1><pre class='trait'>pub trait _wxMediaCtrl: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a> {
+                       href='../../src/wx/src/media.rs.html#24-74'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>media</a>::<a class='trait' href=''>_wxMediaCtrl</a></h1><pre class='trait'>pub trait _wxMediaCtrl: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a> {
     fn <a href='#method.getPlaybackRate'
                                     class='fnname'>getPlaybackRate</a>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_double.html' title='std::libc::types::os::arch::c95::c_double'>c_double</a> { ... }
     fn <a href='#method.getVolume'
@@ -68,9 +72,9 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.getPlaybackRate' class='method'><code>fn <span class='fnname'>getPlaybackRate</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_double.html' title='std::libc::types::os::arch::c95::c_double'>c_double</a></code></h3><h3 id='method.getVolume' class='method'><code>fn <span class='fnname'>getVolume</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_double.html' title='std::libc::types::os::arch::c95::c_double'>c_double</a></code></h3><h3 id='method.getState' class='method'><code>fn <span class='fnname'>getState</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.length' class='method'><code>fn <span class='fnname'>length</span>(&amp;self) -&gt; i64</code></h3><h3 id='method.load' class='method'><code>fn <span class='fnname'>load</span>(&amp;self, fileName: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.loadURI' class='method'><code>fn <span class='fnname'>loadURI</span>(&amp;self, uri: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.loadURIWithProxy' class='method'><code>fn <span class='fnname'>loadURIWithProxy</span>(&amp;self, uri: &amp;str, proxy: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.pause' class='method'><code>fn <span class='fnname'>pause</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.play' class='method'><code>fn <span class='fnname'>play</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.seek' class='method'><code>fn <span class='fnname'>seek</span>(&amp;self, offsetWhere: i64, mode: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; i64</code></h3><h3 id='method.setPlaybackRate' class='method'><code>fn <span class='fnname'>setPlaybackRate</span>(&amp;self, dRate: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_double.html' title='std::libc::types::os::arch::c95::c_double'>c_double</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.setVolume' class='method'><code>fn <span class='fnname'>setVolume</span>(&amp;self, dVolume: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_double.html' title='std::libc::types::os::arch::c95::c_double'>c_double</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.showPlayerControls' class='method'><code>fn <span class='fnname'>showPlayerControls</span>(&amp;self, flags: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.stop' class='method'><code>fn <span class='fnname'>stop</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.tell' class='method'><code>fn <span class='fnname'>tell</span>(&amp;self) -&gt; i64</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/media/struct.wxMediaCtrl.html' title='wx::media::wxMediaCtrl'>wxMediaCtrl</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/media/struct.wxMediaCtrl.html' title='wx::media::wxMediaCtrl'>wxMediaCtrl</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

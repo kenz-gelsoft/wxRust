@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#3410-3467'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxFileHistory</a></h1><pre class='trait'>pub trait _wxFileHistory: <a class='trait' href='../../wx/base/trait._wxObject.html' title='wx::base::_wxObject'>_wxObject</a> {
+                       href='../../src/wx/src/core.rs.html#2539-2574'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxFileHistory</a></h1><pre class='trait'>pub trait _wxFileHistory: <a class='trait' href='../../wx/base/trait._wxObject.html' title='wx::base::_wxObject'>_wxObject</a> {
     fn <a href='#method.addFileToHistory'
                                     class='fnname'>addFileToHistory</a>(&amp;self, file: &amp;str) { ... }
     fn <a href='#method.addFilesToMenu'
@@ -60,9 +64,9 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.addFileToHistory' class='method'><code>fn <span class='fnname'>addFileToHistory</span>(&amp;self, file: &amp;str)</code></h3><h3 id='method.addFilesToMenu' class='method'><code>fn <span class='fnname'>addFilesToMenu</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxMenu.html' title='wx::core::_wxMenu'>_wxMenu</a>&gt;(&amp;self, menu: &amp;T)</code></h3><h3 id='method.getCount' class='method'><code>fn <span class='fnname'>getCount</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getHistoryFile' class='method'><code>fn <span class='fnname'>getHistoryFile</span>(&amp;self, i: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; ~str</code></h3><h3 id='method.getMaxFiles' class='method'><code>fn <span class='fnname'>getMaxFiles</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getMenus' class='method'><code>fn <span class='fnname'>getMenus</span>(&amp;self, _ref: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.load' class='method'><code>fn <span class='fnname'>load</span>&lt;T: <a class='trait' href='../../wx/base/trait._wxConfigBase.html' title='wx::base::_wxConfigBase'>_wxConfigBase</a>&gt;(&amp;self, config: &amp;T)</code></h3><h3 id='method.removeFileFromHistory' class='method'><code>fn <span class='fnname'>removeFileFromHistory</span>(&amp;self, i: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.removeMenu' class='method'><code>fn <span class='fnname'>removeMenu</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxMenu.html' title='wx::core::_wxMenu'>_wxMenu</a>&gt;(&amp;self, menu: &amp;T)</code></h3><h3 id='method.save' class='method'><code>fn <span class='fnname'>save</span>&lt;T: <a class='trait' href='../../wx/base/trait._wxConfigBase.html' title='wx::base::_wxConfigBase'>_wxConfigBase</a>&gt;(&amp;self, config: &amp;T)</code></h3><h3 id='method.useMenu' class='method'><code>fn <span class='fnname'>useMenu</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxMenu.html' title='wx::core::_wxMenu'>_wxMenu</a>&gt;(&amp;self, menu: &amp;T)</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxFileHistory.html' title='wx::core::wxFileHistory'>wxFileHistory</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxFileHistory.html' title='wx::core::wxFileHistory'>wxFileHistory</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

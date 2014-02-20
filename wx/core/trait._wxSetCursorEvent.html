@@ -26,16 +26,20 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#9818-9844'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxSetCursorEvent</a></h1><pre class='trait'>pub trait _wxSetCursorEvent: <a class='trait' href='../../wx/core/trait._wxEvent.html' title='wx::core::_wxEvent'>_wxEvent</a> {
+                       href='../../src/wx/src/core.rs.html#7083-7099'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxSetCursorEvent</a></h1><pre class='trait'>pub trait _wxSetCursorEvent: <a class='trait' href='../../wx/core/trait._wxEvent.html' title='wx::core::_wxEvent'>_wxEvent</a> {
     fn <a href='#method.getCursor'
-                                    class='fnname'>getCursor</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxCursor.html' title='wx::core::wxCursor'>wxCursor</a> { ... }
+                                    class='fnname'>getCursor</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxCursor.html' title='wx::core::wxCursor'>wxCursor</a> { ... }
     fn <a href='#method.getX'
                                     class='fnname'>getX</a>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
     fn <a href='#method.getY'
@@ -47,10 +51,10 @@
 }</pre>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.getCursor' class='method'><code>fn <span class='fnname'>getCursor</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxCursor.html' title='wx::core::wxCursor'>wxCursor</a></code></h3><h3 id='method.getX' class='method'><code>fn <span class='fnname'>getX</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getY' class='method'><code>fn <span class='fnname'>getY</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.hasCursor' class='method'><code>fn <span class='fnname'>hasCursor</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.setCursor' class='method'><code>fn <span class='fnname'>setCursor</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxCursor.html' title='wx::core::_wxCursor'>_wxCursor</a>&gt;(&amp;self, cursor: &amp;T)</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxSetCursorEvent.html' title='wx::core::wxSetCursorEvent'>wxSetCursorEvent</a></code></li></ul></section>
+        <h3 id='method.getCursor' class='method'><code>fn <span class='fnname'>getCursor</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxCursor.html' title='wx::core::wxCursor'>wxCursor</a></code></h3><h3 id='method.getX' class='method'><code>fn <span class='fnname'>getX</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getY' class='method'><code>fn <span class='fnname'>getY</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.hasCursor' class='method'><code>fn <span class='fnname'>hasCursor</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.setCursor' class='method'><code>fn <span class='fnname'>setCursor</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxCursor.html' title='wx::core::_wxCursor'>_wxCursor</a>&gt;(&amp;self, cursor: &amp;T)</code></h3></div>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxSetCursorEvent.html' title='wx::core::wxSetCursorEvent'>wxSetCursorEvent</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

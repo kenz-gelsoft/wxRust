@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#9478-9519'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxRegionIterator</a></h1><pre class='trait'>pub trait _wxRegionIterator: <a class='trait' href='../../wx/base/trait._wxObject.html' title='wx::base::_wxObject'>_wxObject</a> {
+                       href='../../src/wx/src/core.rs.html#6837-6862'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxRegionIterator</a></h1><pre class='trait'>pub trait _wxRegionIterator: <a class='trait' href='../../wx/base/trait._wxObject.html' title='wx::base::_wxObject'>_wxObject</a> {
     fn <a href='#method.getHeight'
                                     class='fnname'>getHeight</a>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
     fn <a href='#method.getWidth'
@@ -54,9 +58,9 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.getHeight' class='method'><code>fn <span class='fnname'>getHeight</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getWidth' class='method'><code>fn <span class='fnname'>getWidth</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getX' class='method'><code>fn <span class='fnname'>getX</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getY' class='method'><code>fn <span class='fnname'>getY</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.haveRects' class='method'><code>fn <span class='fnname'>haveRects</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.next' class='method'><code>fn <span class='fnname'>next</span>(&amp;self)</code></h3><h3 id='method.reset' class='method'><code>fn <span class='fnname'>reset</span>(&amp;self)</code></h3><h3 id='method.resetToRegion' class='method'><code>fn <span class='fnname'>resetToRegion</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxRegion.html' title='wx::core::_wxRegion'>_wxRegion</a>&gt;(&amp;self, region: &amp;T)</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxRegionIterator.html' title='wx::core::wxRegionIterator'>wxRegionIterator</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxRegionIterator.html' title='wx::core::wxRegionIterator'>wxRegionIterator</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

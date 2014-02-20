@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#9233-9302'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxRadioBox</a></h1><pre class='trait'>pub trait _wxRadioBox: <a class='trait' href='../../wx/core/trait._wxControl.html' title='wx::core::_wxControl'>_wxControl</a> {
+                       href='../../src/wx/src/core.rs.html#6660-6703'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxRadioBox</a></h1><pre class='trait'>pub trait _wxRadioBox: <a class='trait' href='../../wx/core/trait._wxControl.html' title='wx::core::_wxControl'>_wxControl</a> {
     fn <a href='#method.enableItem'
                                     class='fnname'>enableItem</a>(&amp;self, item: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, enable: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) { ... }
     fn <a href='#method.findString'
@@ -64,9 +68,9 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.enableItem' class='method'><code>fn <span class='fnname'>enableItem</span>(&amp;self, item: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, enable: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.findString' class='method'><code>fn <span class='fnname'>findString</span>(&amp;self, s: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getItemLabel' class='method'><code>fn <span class='fnname'>getItemLabel</span>(&amp;self, item: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; ~str</code></h3><h3 id='method.getNumberOfRowsOrCols' class='method'><code>fn <span class='fnname'>getNumberOfRowsOrCols</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getSelection' class='method'><code>fn <span class='fnname'>getSelection</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getStringSelection' class='method'><code>fn <span class='fnname'>getStringSelection</span>(&amp;self) -&gt; ~str</code></h3><h3 id='method.number' class='method'><code>fn <span class='fnname'>number</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.setItemBitmap' class='method'><code>fn <span class='fnname'>setItemBitmap</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxBitmap.html' title='wx::core::_wxBitmap'>_wxBitmap</a>&gt;(&amp;self, item: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, bitmap: &amp;T)</code></h3><h3 id='method.setItemLabel' class='method'><code>fn <span class='fnname'>setItemLabel</span>(&amp;self, item: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, label: &amp;str)</code></h3><h3 id='method.setNumberOfRowsOrCols' class='method'><code>fn <span class='fnname'>setNumberOfRowsOrCols</span>(&amp;self, n: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.setSelection' class='method'><code>fn <span class='fnname'>setSelection</span>(&amp;self, _n: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.setStringSelection' class='method'><code>fn <span class='fnname'>setStringSelection</span>(&amp;self, s: &amp;str)</code></h3><h3 id='method.showItem' class='method'><code>fn <span class='fnname'>showItem</span>(&amp;self, item: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, show: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxRadioBox.html' title='wx::core::wxRadioBox'>wxRadioBox</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxRadioBox.html' title='wx::core::wxRadioBox'>wxRadioBox</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

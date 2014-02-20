@@ -26,25 +26,29 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#11544-11555'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxTimerEx</a></h1><pre class='trait'>pub trait _wxTimerEx: <a class='trait' href='../../wx/core/trait._wxTimer.html' title='wx::core::_wxTimer'>_wxTimer</a> {
+                       href='../../src/wx/src/core.rs.html#8301-8308'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxTimerEx</a></h1><pre class='trait'>pub trait _wxTimerEx: <a class='trait' href='../../wx/core/trait._wxTimer.html' title='wx::core::_wxTimer'>_wxTimer</a> {
     fn <a href='#method.connect'
                                     class='fnname'>connect</a>&lt;T: <a class='trait' href='../../wx/base/trait._wxClosure.html' title='wx::base::_wxClosure'>_wxClosure</a>&gt;(&amp;self, closure: &amp;T) { ... }
     fn <a href='#method.getClosure'
-                                    class='fnname'>getClosure</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/base/struct.wxClosure.html' title='wx::base::wxClosure'>wxClosure</a> { ... }
+                                    class='fnname'>getClosure</a>(&amp;self) -&gt; <a class='struct' href='../../wx/base/struct.wxClosure.html' title='wx::base::wxClosure'>wxClosure</a> { ... }
 }</pre>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.connect' class='method'><code>fn <span class='fnname'>connect</span>&lt;T: <a class='trait' href='../../wx/base/trait._wxClosure.html' title='wx::base::_wxClosure'>_wxClosure</a>&gt;(&amp;self, closure: &amp;T)</code></h3><h3 id='method.getClosure' class='method'><code>fn <span class='fnname'>getClosure</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/base/struct.wxClosure.html' title='wx::base::wxClosure'>wxClosure</a></code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxTimerEx.html' title='wx::core::wxTimerEx'>wxTimerEx</a></code></li></ul></section>
+        <h3 id='method.connect' class='method'><code>fn <span class='fnname'>connect</span>&lt;T: <a class='trait' href='../../wx/base/trait._wxClosure.html' title='wx::base::_wxClosure'>_wxClosure</a>&gt;(&amp;self, closure: &amp;T)</code></h3><h3 id='method.getClosure' class='method'><code>fn <span class='fnname'>getClosure</span>(&amp;self) -&gt; <a class='struct' href='../../wx/base/struct.wxClosure.html' title='wx::base::wxClosure'>wxClosure</a></code></h3></div>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxTimerEx.html' title='wx::core::wxTimerEx'>wxTimerEx</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

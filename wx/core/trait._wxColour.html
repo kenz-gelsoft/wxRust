@@ -26,14 +26,18 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#1656-1718'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxColour</a></h1><pre class='trait'>pub trait _wxColour: <a class='trait' href='../../wx/base/trait._wxObject.html' title='wx::base::_wxObject'>_wxObject</a> {
+                       href='../../src/wx/src/core.rs.html#1228-1266'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxColour</a></h1><pre class='trait'>pub trait _wxColour: <a class='trait' href='../../wx/base/trait._wxObject.html' title='wx::base::_wxObject'>_wxObject</a> {
     fn <a href='#method.alpha'
                                     class='fnname'>alpha</a>(&amp;self) -&gt; <a class='typedef' href='../../wx/_unsafe/typedef.uint8_t.html' title='wx::_unsafe::uint8_t'>uint8_t</a> { ... }
     fn <a href='#method.assign'
@@ -62,9 +66,9 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.alpha' class='method'><code>fn <span class='fnname'>alpha</span>(&amp;self) -&gt; <a class='typedef' href='../../wx/_unsafe/typedef.uint8_t.html' title='wx::_unsafe::uint8_t'>uint8_t</a></code></h3><h3 id='method.assign' class='method'><code>fn <span class='fnname'>assign</span>(&amp;self, other: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3><h3 id='method.blue' class='method'><code>fn <span class='fnname'>blue</span>(&amp;self) -&gt; <a class='typedef' href='../../wx/_unsafe/typedef.uint8_t.html' title='wx::_unsafe::uint8_t'>uint8_t</a></code></h3><h3 id='method.copy' class='method'><code>fn <span class='fnname'>copy</span>(&amp;self, _other: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3><h3 id='method.green' class='method'><code>fn <span class='fnname'>green</span>(&amp;self) -&gt; <a class='typedef' href='../../wx/_unsafe/typedef.uint8_t.html' title='wx::_unsafe::uint8_t'>uint8_t</a></code></h3><h3 id='method.isOk' class='method'><code>fn <span class='fnname'>isOk</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.red' class='method'><code>fn <span class='fnname'>red</span>(&amp;self) -&gt; <a class='typedef' href='../../wx/_unsafe/typedef.uint8_t.html' title='wx::_unsafe::uint8_t'>uint8_t</a></code></h3><h3 id='method.set' class='method'><code>fn <span class='fnname'>set</span>(&amp;self, _red: <a class='typedef' href='../../wx/_unsafe/typedef.uint8_t.html' title='wx::_unsafe::uint8_t'>uint8_t</a>, _green: <a class='typedef' href='../../wx/_unsafe/typedef.uint8_t.html' title='wx::_unsafe::uint8_t'>uint8_t</a>, _blue: <a class='typedef' href='../../wx/_unsafe/typedef.uint8_t.html' title='wx::_unsafe::uint8_t'>uint8_t</a>, _alpha: <a class='typedef' href='../../wx/_unsafe/typedef.uint8_t.html' title='wx::_unsafe::uint8_t'>uint8_t</a>)</code></h3><h3 id='method.setByName' class='method'><code>fn <span class='fnname'>setByName</span>(&amp;self, _name: &amp;str)</code></h3><h3 id='method.isStatic' class='method'><code>fn <span class='fnname'>isStatic</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getInt' class='method'><code>fn <span class='fnname'>getInt</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getUnsignedInt' class='method'><code>fn <span class='fnname'>getUnsignedInt</span>(&amp;self) -&gt; <a class='typedef' href='../../wx/_unsafe/typedef.uint32_t.html' title='wx::_unsafe::uint32_t'>uint32_t</a></code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxColour.html' title='wx::core::wxColour'>wxColour</a></code></li></ul></section>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxColour.html' title='wx::core::wxColour'>wxColour</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

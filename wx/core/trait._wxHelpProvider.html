@@ -26,16 +26,20 @@
 
     <nav class="sub">
         <form class="search-form js-only">
-            <input class="search-input" name="search"
-                   autocomplete="off" />
             <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
         </form>
     </nav>
 
     <section id='main' class="content trait"><a class='source'
-                       href='../../src/wx/src/core.rs.html#4425-4465'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxHelpProvider</a></h1><pre class='trait'>pub trait _wxHelpProvider {
-    fn <a href='#tymethod.handle'
-                                    class='fnname'>handle</a>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>;
+                       href='../../src/wx/src/core.rs.html#3286-3312'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>core</a>::<a class='trait' href=''>_wxHelpProvider</a></h1><pre class='trait'>pub trait _wxHelpProvider {
+    fn <a href='#tymethod.ptr'
+                                    class='fnname'>ptr</a>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>;
 
     fn <a href='#method.addHelp'
                                     class='fnname'>addHelp</a>&lt;T: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a>&gt;(&amp;self, window: &amp;T, text: &amp;str) { ... }
@@ -48,19 +52,19 @@
     fn <a href='#method.removeHelp'
                                     class='fnname'>removeHelp</a>&lt;T: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a>&gt;(&amp;self, window: &amp;T) { ... }
     fn <a href='#method.set'
-                                    class='fnname'>set</a>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxHelpProvider.html' title='wx::core::wxHelpProvider'>wxHelpProvider</a> { ... }
+                                    class='fnname'>set</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxHelpProvider.html' title='wx::core::wxHelpProvider'>wxHelpProvider</a> { ... }
     fn <a href='#method.showHelp'
                                     class='fnname'>showHelp</a>&lt;T: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a>&gt;(&amp;self, window: &amp;T) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
 }</pre>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.handle' class='method'><code>fn <span class='fnname'>handle</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h3></div>
+        <h3 id='tymethod.ptr' class='method'><code>fn <span class='fnname'>ptr</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h3></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.addHelp' class='method'><code>fn <span class='fnname'>addHelp</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a>&gt;(&amp;self, window: &amp;T, text: &amp;str)</code></h3><h3 id='method.addHelpById' class='method'><code>fn <span class='fnname'>addHelpById</span>(&amp;self, id: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, text: &amp;str)</code></h3><h3 id='method.delete' class='method'><code>fn <span class='fnname'>delete</span>(&amp;self)</code></h3><h3 id='method.getHelp' class='method'><code>fn <span class='fnname'>getHelp</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a>&gt;(&amp;self, window: &amp;T) -&gt; ~str</code></h3><h3 id='method.removeHelp' class='method'><code>fn <span class='fnname'>removeHelp</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a>&gt;(&amp;self, window: &amp;T)</code></h3><h3 id='method.set' class='method'><code>fn <span class='fnname'>set</span>(&amp;self) -&gt; @<a class='struct' href='../../wx/core/struct.wxHelpProvider.html' title='wx::core::wxHelpProvider'>wxHelpProvider</a></code></h3><h3 id='method.showHelp' class='method'><code>fn <span class='fnname'>showHelp</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a>&gt;(&amp;self, window: &amp;T) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3></div>
-                        <h2 id='implementors'>Implementors</h2>
-                        <ul class='item-list'>
-                    <li><code><a class='struct' href='../../wx/core/struct.wxSimpleHelpProvider.html' title='wx::core::wxSimpleHelpProvider'>wxSimpleHelpProvider</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxHelpProvider.html' title='wx::core::wxHelpProvider'>wxHelpProvider</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxHelpControllerHelpProvider.html' title='wx::core::wxHelpControllerHelpProvider'>wxHelpControllerHelpProvider</a></code></li></ul></section>
+        <h3 id='method.addHelp' class='method'><code>fn <span class='fnname'>addHelp</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a>&gt;(&amp;self, window: &amp;T, text: &amp;str)</code></h3><h3 id='method.addHelpById' class='method'><code>fn <span class='fnname'>addHelpById</span>(&amp;self, id: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, text: &amp;str)</code></h3><h3 id='method.delete' class='method'><code>fn <span class='fnname'>delete</span>(&amp;self)</code></h3><h3 id='method.getHelp' class='method'><code>fn <span class='fnname'>getHelp</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a>&gt;(&amp;self, window: &amp;T) -&gt; ~str</code></h3><h3 id='method.removeHelp' class='method'><code>fn <span class='fnname'>removeHelp</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a>&gt;(&amp;self, window: &amp;T)</code></h3><h3 id='method.set' class='method'><code>fn <span class='fnname'>set</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.wxHelpProvider.html' title='wx::core::wxHelpProvider'>wxHelpProvider</a></code></h3><h3 id='method.showHelp' class='method'><code>fn <span class='fnname'>showHelp</span>&lt;T: <a class='trait' href='../../wx/core/trait._wxWindow.html' title='wx::core::_wxWindow'>_wxWindow</a>&gt;(&amp;self, window: &amp;T) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3></div>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/core/struct.wxSimpleHelpProvider.html' title='wx::core::wxSimpleHelpProvider'>wxSimpleHelpProvider</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxHelpProvider.html' title='wx::core::wxHelpProvider'>wxHelpProvider</a></code></li><li><code><a class='struct' href='../../wx/core/struct.wxHelpControllerHelpProvider.html' title='wx::core::wxHelpControllerHelpProvider'>wxHelpControllerHelpProvider</a></code></li></ul></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
