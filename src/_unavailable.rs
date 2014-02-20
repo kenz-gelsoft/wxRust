@@ -2,32 +2,32 @@ use std::libc::*;
 use base::*;
 use core::*;
 
-pub struct ELJMessageParameters { ptr: *mut c_void }
-impl _ELJMessageParameters for ELJMessageParameters { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustMessageParameters { ptr: *mut c_void }
+impl _wxRustMessageParameters for wxRustMessageParameters { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJMessageParameters {
-    pub fn from(ptr: *mut c_void) -> ELJMessageParameters { ELJMessageParameters { ptr: ptr } }
-    pub fn null() -> ELJMessageParameters { ELJMessageParameters::from(0 as *mut c_void) }
+impl wxRustMessageParameters {
+    pub fn from(ptr: *mut c_void) -> wxRustMessageParameters { wxRustMessageParameters { ptr: ptr } }
+    pub fn null() -> wxRustMessageParameters { wxRustMessageParameters::from(0 as *mut c_void) }
     
 }
 
-pub trait _ELJMessageParameters {
+pub trait _wxRustMessageParameters {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct ELJPlotCurve { ptr: *mut c_void }
-impl _ELJPlotCurve for ELJPlotCurve {}
-impl _wxPlotCurve for ELJPlotCurve {}
-impl _wxObject for ELJPlotCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustPlotCurve { ptr: *mut c_void }
+impl _wxRustPlotCurve for wxRustPlotCurve {}
+impl _wxPlotCurve for wxRustPlotCurve {}
+impl _wxObject for wxRustPlotCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJPlotCurve {
-    pub fn from(ptr: *mut c_void) -> ELJPlotCurve { ELJPlotCurve { ptr: ptr } }
-    pub fn null() -> ELJPlotCurve { ELJPlotCurve::from(0 as *mut c_void) }
+impl wxRustPlotCurve {
+    pub fn from(ptr: *mut c_void) -> wxRustPlotCurve { wxRustPlotCurve { ptr: ptr } }
+    pub fn null() -> wxRustPlotCurve { wxRustPlotCurve::from(0 as *mut c_void) }
     
 }
 
-pub trait _ELJPlotCurve : _wxPlotCurve {
+pub trait _wxRustPlotCurve : _wxPlotCurve {
 }
 
 pub struct wxDynToolInfo { ptr: *mut c_void }

@@ -3,23 +3,23 @@ use _unsafe::*;
 use base::*;
 use core::*;
 
-pub struct ELJGridTable { ptr: *mut c_void }
-impl _ELJGridTable for ELJGridTable {}
-impl _wxGridTableBase for ELJGridTable {}
-impl _wxObject for ELJGridTable { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustGridTable { ptr: *mut c_void }
+impl _wxRustGridTable for wxRustGridTable {}
+impl _wxGridTableBase for wxRustGridTable {}
+impl _wxObject for wxRustGridTable { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJGridTable {
-    pub fn from(ptr: *mut c_void) -> ELJGridTable { ELJGridTable { ptr: ptr } }
-    pub fn null() -> ELJGridTable { ELJGridTable::from(0 as *mut c_void) }
+impl wxRustGridTable {
+    pub fn from(ptr: *mut c_void) -> wxRustGridTable { wxRustGridTable { ptr: ptr } }
+    pub fn null() -> wxRustGridTable { wxRustGridTable::from(0 as *mut c_void) }
     
     #[fixed_stack_segment]
     #[inline(never)]
-    pub fn new(_obj: *mut c_void, _EifGetNumberRows: *mut c_void, _EifGetNumberCols: *mut c_void, _EifGetValue: *mut c_void, _EifSetValue: *mut c_void, _EifIsEmptyCell: *mut c_void, _EifClear: *mut c_void, _EifInsertRows: *mut c_void, _EifAppendRows: *mut c_void, _EifDeleteRows: *mut c_void, _EifInsertCols: *mut c_void, _EifAppendCols: *mut c_void, _EifDeleteCols: *mut c_void, _EifSetRowLabelValue: *mut c_void, _EifSetColLabelValue: *mut c_void, _EifGetRowLabelValue: *mut c_void, _EifGetColLabelValue: *mut c_void) -> ELJGridTable {
-        unsafe { ELJGridTable { ptr: ELJGridTable_Create(_obj, _EifGetNumberRows, _EifGetNumberCols, _EifGetValue, _EifSetValue, _EifIsEmptyCell, _EifClear, _EifInsertRows, _EifAppendRows, _EifDeleteRows, _EifInsertCols, _EifAppendCols, _EifDeleteCols, _EifSetRowLabelValue, _EifSetColLabelValue, _EifGetRowLabelValue, _EifGetColLabelValue) } }
+    pub fn new(_obj: *mut c_void, _EifGetNumberRows: *mut c_void, _EifGetNumberCols: *mut c_void, _EifGetValue: *mut c_void, _EifSetValue: *mut c_void, _EifIsEmptyCell: *mut c_void, _EifClear: *mut c_void, _EifInsertRows: *mut c_void, _EifAppendRows: *mut c_void, _EifDeleteRows: *mut c_void, _EifInsertCols: *mut c_void, _EifAppendCols: *mut c_void, _EifDeleteCols: *mut c_void, _EifSetRowLabelValue: *mut c_void, _EifSetColLabelValue: *mut c_void, _EifGetRowLabelValue: *mut c_void, _EifGetColLabelValue: *mut c_void) -> wxRustGridTable {
+        unsafe { wxRustGridTable { ptr: ELJGridTable_Create(_obj, _EifGetNumberRows, _EifGetNumberCols, _EifGetValue, _EifSetValue, _EifIsEmptyCell, _EifClear, _EifInsertRows, _EifAppendRows, _EifDeleteRows, _EifInsertCols, _EifAppendCols, _EifDeleteCols, _EifSetRowLabelValue, _EifSetColLabelValue, _EifGetRowLabelValue, _EifGetColLabelValue) } }
     }
 }
 
-pub trait _ELJGridTable : _wxGridTableBase {
+pub trait _wxRustGridTable : _wxGridTableBase {
     #[fixed_stack_segment]
     #[inline(never)]
     fn getView(&self) -> wxView {
