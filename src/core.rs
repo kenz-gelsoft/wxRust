@@ -2,21 +2,21 @@ use std::libc::*;
 use _unsafe::*;
 use base::*;
 
-pub struct ELJApp { ptr: *mut c_void }
-impl _ELJApp for ELJApp {}
-impl _wxApp for ELJApp {}
-impl _wxEvtHandler for ELJApp {}
-impl _wxObject for ELJApp { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustApp { ptr: *mut c_void }
+impl _wxRustApp for wxRustApp {}
+impl _wxApp for wxRustApp {}
+impl _wxEvtHandler for wxRustApp {}
+impl _wxObject for wxRustApp { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJApp {
-    pub fn from(ptr: *mut c_void) -> ELJApp { ELJApp { ptr: ptr } }
-    pub fn null() -> ELJApp { ELJApp::from(0 as *mut c_void) }
+impl wxRustApp {
+    pub fn from(ptr: *mut c_void) -> wxRustApp { wxRustApp { ptr: ptr } }
+    pub fn null() -> wxRustApp { wxRustApp::from(0 as *mut c_void) }
     
     pub fn bell() {
         unsafe { ELJApp_Bell() }
     }
-    pub fn newLogTarget() -> ELJLog {
-        unsafe { ELJLog { ptr: ELJApp_CreateLogTarget() } }
+    pub fn newLogTarget() -> wxRustLog {
+        unsafe { wxRustLog { ptr: ELJApp_CreateLogTarget() } }
     }
     pub fn dispatch() {
         unsafe { ELJApp_Dispatch() }
@@ -155,57 +155,57 @@ impl ELJApp {
     }
 }
 
-pub trait _ELJApp : _wxApp {
+pub trait _wxRustApp : _wxApp {
 }
 
-pub struct ELJArtProv { ptr: *mut c_void }
-impl _ELJArtProv for ELJArtProv {}
-impl _wxArtProvider for ELJArtProv {}
-impl _wxObject for ELJArtProv { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustArtProv { ptr: *mut c_void }
+impl _wxRustArtProv for wxRustArtProv {}
+impl _wxArtProvider for wxRustArtProv {}
+impl _wxObject for wxRustArtProv { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJArtProv {
-    pub fn from(ptr: *mut c_void) -> ELJArtProv { ELJArtProv { ptr: ptr } }
-    pub fn null() -> ELJArtProv { ELJArtProv::from(0 as *mut c_void) }
+impl wxRustArtProv {
+    pub fn from(ptr: *mut c_void) -> wxRustArtProv { wxRustArtProv { ptr: ptr } }
+    pub fn null() -> wxRustArtProv { wxRustArtProv::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _clb: *mut c_void) -> ELJArtProv {
-        unsafe { ELJArtProv { ptr: ELJArtProv_Create(_obj, _clb) } }
+    pub fn new(_obj: *mut c_void, _clb: *mut c_void) -> wxRustArtProv {
+        unsafe { wxRustArtProv { ptr: ELJArtProv_Create(_obj, _clb) } }
     }
 }
 
-pub trait _ELJArtProv : _wxArtProvider {
+pub trait _wxRustArtProv : _wxArtProvider {
     fn release(&self) {
         unsafe { ELJArtProv_Release(self.ptr()) }
     }
 }
 
-pub struct ELJCommand { ptr: *mut c_void }
-impl _ELJCommand for ELJCommand {}
-impl _wxCommand for ELJCommand {}
-impl _wxObject for ELJCommand { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustCommand { ptr: *mut c_void }
+impl _wxRustCommand for wxRustCommand {}
+impl _wxCommand for wxRustCommand {}
+impl _wxObject for wxRustCommand { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJCommand {
-    pub fn from(ptr: *mut c_void) -> ELJCommand { ELJCommand { ptr: ptr } }
-    pub fn null() -> ELJCommand { ELJCommand::from(0 as *mut c_void) }
+impl wxRustCommand {
+    pub fn from(ptr: *mut c_void) -> wxRustCommand { wxRustCommand { ptr: ptr } }
+    pub fn null() -> wxRustCommand { wxRustCommand::from(0 as *mut c_void) }
     
 }
 
-pub trait _ELJCommand : _wxCommand {
+pub trait _wxRustCommand : _wxCommand {
 }
 
-pub struct ELJDragDataObject { ptr: *mut c_void }
-impl _ELJDragDataObject for ELJDragDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustDragDataObject { ptr: *mut c_void }
+impl _wxRustDragDataObject for wxRustDragDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJDragDataObject {
-    pub fn from(ptr: *mut c_void) -> ELJDragDataObject { ELJDragDataObject { ptr: ptr } }
-    pub fn null() -> ELJDragDataObject { ELJDragDataObject::from(0 as *mut c_void) }
+impl wxRustDragDataObject {
+    pub fn from(ptr: *mut c_void) -> wxRustDragDataObject { wxRustDragDataObject { ptr: ptr } }
+    pub fn null() -> wxRustDragDataObject { wxRustDragDataObject::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _fmt: &str, _func1: *mut c_void, _func2: *mut c_void, _func3: *mut c_void) -> ELJDragDataObject {
+    pub fn new(_obj: *mut c_void, _fmt: &str, _func1: *mut c_void, _func2: *mut c_void, _func3: *mut c_void) -> wxRustDragDataObject {
         let _fmt = wxT(_fmt);
-        unsafe { ELJDragDataObject { ptr: ELJDragDataObject_Create(_obj, _fmt.ptr(), _func1, _func2, _func3) } }
+        unsafe { wxRustDragDataObject { ptr: ELJDragDataObject_Create(_obj, _fmt.ptr(), _func1, _func2, _func3) } }
     }
 }
 
-pub trait _ELJDragDataObject {
+pub trait _wxRustDragDataObject {
     fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
@@ -213,20 +213,20 @@ pub trait _ELJDragDataObject {
     }
 }
 
-pub struct ELJDropTarget { ptr: *mut c_void }
-impl _ELJDropTarget for ELJDropTarget {}
-impl _wxDropTarget for ELJDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustDropTarget { ptr: *mut c_void }
+impl _wxRustDropTarget for wxRustDropTarget {}
+impl _wxDropTarget for wxRustDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJDropTarget {
-    pub fn from(ptr: *mut c_void) -> ELJDropTarget { ELJDropTarget { ptr: ptr } }
-    pub fn null() -> ELJDropTarget { ELJDropTarget::from(0 as *mut c_void) }
+impl wxRustDropTarget {
+    pub fn from(ptr: *mut c_void) -> wxRustDropTarget { wxRustDropTarget { ptr: ptr } }
+    pub fn null() -> wxRustDropTarget { wxRustDropTarget::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void) -> ELJDropTarget {
-        unsafe { ELJDropTarget { ptr: ELJDropTarget_Create(_obj) } }
+    pub fn new(_obj: *mut c_void) -> wxRustDropTarget {
+        unsafe { wxRustDropTarget { ptr: ELJDropTarget_Create(_obj) } }
     }
 }
 
-pub trait _ELJDropTarget : _wxDropTarget {
+pub trait _wxRustDropTarget : _wxDropTarget {
     fn delete(&self) {
         unsafe { ELJDropTarget_Delete(self.ptr()) }
     }
@@ -247,21 +247,21 @@ pub trait _ELJDropTarget : _wxDropTarget {
     }
 }
 
-pub struct ELJFileDropTarget { ptr: *mut c_void }
-impl _ELJFileDropTarget for ELJFileDropTarget {}
-impl _wxFileDropTarget for ELJFileDropTarget {}
-impl _wxDropTarget for ELJFileDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustFileDropTarget { ptr: *mut c_void }
+impl _wxRustFileDropTarget for wxRustFileDropTarget {}
+impl _wxFileDropTarget for wxRustFileDropTarget {}
+impl _wxDropTarget for wxRustFileDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJFileDropTarget {
-    pub fn from(ptr: *mut c_void) -> ELJFileDropTarget { ELJFileDropTarget { ptr: ptr } }
-    pub fn null() -> ELJFileDropTarget { ELJFileDropTarget::from(0 as *mut c_void) }
+impl wxRustFileDropTarget {
+    pub fn from(ptr: *mut c_void) -> wxRustFileDropTarget { wxRustFileDropTarget { ptr: ptr } }
+    pub fn null() -> wxRustFileDropTarget { wxRustFileDropTarget::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _func: *mut c_void) -> ELJFileDropTarget {
-        unsafe { ELJFileDropTarget { ptr: ELJFileDropTarget_Create(_obj, _func) } }
+    pub fn new(_obj: *mut c_void, _func: *mut c_void) -> wxRustFileDropTarget {
+        unsafe { wxRustFileDropTarget { ptr: ELJFileDropTarget_Create(_obj, _func) } }
     }
 }
 
-pub trait _ELJFileDropTarget : _wxFileDropTarget {
+pub trait _wxRustFileDropTarget : _wxFileDropTarget {
     fn delete(&self) {
         unsafe { ELJFileDropTarget_Delete(self.ptr()) }
     }
@@ -282,23 +282,23 @@ pub trait _ELJFileDropTarget : _wxFileDropTarget {
     }
 }
 
-pub struct ELJLog { ptr: *mut c_void }
-impl _ELJLog for ELJLog {}
-impl _wxLog for ELJLog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustLog { ptr: *mut c_void }
+impl _wxRustLog for wxRustLog {}
+impl _wxLog for wxRustLog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJLog {
-    pub fn from(ptr: *mut c_void) -> ELJLog { ELJLog { ptr: ptr } }
-    pub fn null() -> ELJLog { ELJLog::from(0 as *mut c_void) }
+impl wxRustLog {
+    pub fn from(ptr: *mut c_void) -> wxRustLog { wxRustLog { ptr: ptr } }
+    pub fn null() -> wxRustLog { wxRustLog::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _fnc: *mut c_void) -> ELJLog {
-        unsafe { ELJLog { ptr: ELJLog_Create(_obj, _fnc) } }
+    pub fn new(_obj: *mut c_void, _fnc: *mut c_void) -> wxRustLog {
+        unsafe { wxRustLog { ptr: ELJLog_Create(_obj, _fnc) } }
     }
     pub fn getActiveTarget() -> *mut c_void {
         unsafe { ELJLog_GetActiveTarget() }
     }
 }
 
-pub trait _ELJLog : _wxLog {
+pub trait _wxRustLog : _wxLog {
     fn enableLogging(&self, doIt: c_int) -> c_int {
         unsafe { ELJLog_EnableLogging(self.ptr(), doIt) }
     }
@@ -307,45 +307,45 @@ pub trait _ELJLog : _wxLog {
     }
 }
 
-pub struct ELJPreviewControlBar { ptr: *mut c_void }
-impl _ELJPreviewControlBar for ELJPreviewControlBar {}
-impl _wxPreviewControlBar for ELJPreviewControlBar {}
-impl _wxPanel for ELJPreviewControlBar {}
-impl _wxWindow for ELJPreviewControlBar {}
-impl _wxEvtHandler for ELJPreviewControlBar {}
-impl _wxObject for ELJPreviewControlBar { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustPreviewControlBar { ptr: *mut c_void }
+impl _wxRustPreviewControlBar for wxRustPreviewControlBar {}
+impl _wxPreviewControlBar for wxRustPreviewControlBar {}
+impl _wxPanel for wxRustPreviewControlBar {}
+impl _wxWindow for wxRustPreviewControlBar {}
+impl _wxEvtHandler for wxRustPreviewControlBar {}
+impl _wxObject for wxRustPreviewControlBar { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJPreviewControlBar {
-    pub fn from(ptr: *mut c_void) -> ELJPreviewControlBar { ELJPreviewControlBar { ptr: ptr } }
-    pub fn null() -> ELJPreviewControlBar { ELJPreviewControlBar::from(0 as *mut c_void) }
+impl wxRustPreviewControlBar {
+    pub fn from(ptr: *mut c_void) -> wxRustPreviewControlBar { wxRustPreviewControlBar { ptr: ptr } }
+    pub fn null() -> wxRustPreviewControlBar { wxRustPreviewControlBar::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(preview: *mut c_void, buttons: c_int, parent: &T, title: *mut c_void, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> ELJPreviewControlBar {
-        unsafe { ELJPreviewControlBar { ptr: ELJPreviewControlBar_Create(preview, buttons, parent.ptr(), title, x, y, w, h, style) } }
+    pub fn new<T: _wxWindow>(preview: *mut c_void, buttons: c_int, parent: &T, title: *mut c_void, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> wxRustPreviewControlBar {
+        unsafe { wxRustPreviewControlBar { ptr: ELJPreviewControlBar_Create(preview, buttons, parent.ptr(), title, x, y, w, h, style) } }
     }
 }
 
-pub trait _ELJPreviewControlBar : _wxPreviewControlBar {
+pub trait _wxRustPreviewControlBar : _wxPreviewControlBar {
 }
 
-pub struct ELJPreviewFrame { ptr: *mut c_void }
-impl _ELJPreviewFrame for ELJPreviewFrame {}
-impl _wxPreviewFrame for ELJPreviewFrame {}
-impl _wxFrame for ELJPreviewFrame {}
-impl _wxTopLevelWindow for ELJPreviewFrame {}
-impl _wxWindow for ELJPreviewFrame {}
-impl _wxEvtHandler for ELJPreviewFrame {}
-impl _wxObject for ELJPreviewFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustPreviewFrame { ptr: *mut c_void }
+impl _wxRustPreviewFrame for wxRustPreviewFrame {}
+impl _wxPreviewFrame for wxRustPreviewFrame {}
+impl _wxFrame for wxRustPreviewFrame {}
+impl _wxTopLevelWindow for wxRustPreviewFrame {}
+impl _wxWindow for wxRustPreviewFrame {}
+impl _wxEvtHandler for wxRustPreviewFrame {}
+impl _wxObject for wxRustPreviewFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJPreviewFrame {
-    pub fn from(ptr: *mut c_void) -> ELJPreviewFrame { ELJPreviewFrame { ptr: ptr } }
-    pub fn null() -> ELJPreviewFrame { ELJPreviewFrame::from(0 as *mut c_void) }
+impl wxRustPreviewFrame {
+    pub fn from(ptr: *mut c_void) -> wxRustPreviewFrame { wxRustPreviewFrame { ptr: ptr } }
+    pub fn null() -> wxRustPreviewFrame { wxRustPreviewFrame::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_obj: *mut c_void, _init: *mut c_void, _create_canvas: *mut c_void, _create_toolbar: *mut c_void, preview: *mut c_void, parent: &T, title: *mut c_void, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> ELJPreviewFrame {
-        unsafe { ELJPreviewFrame { ptr: ELJPreviewFrame_Create(_obj, _init, _create_canvas, _create_toolbar, preview, parent.ptr(), title, x, y, w, h, style) } }
+    pub fn new<T: _wxWindow>(_obj: *mut c_void, _init: *mut c_void, _create_canvas: *mut c_void, _create_toolbar: *mut c_void, preview: *mut c_void, parent: &T, title: *mut c_void, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> wxRustPreviewFrame {
+        unsafe { wxRustPreviewFrame { ptr: ELJPreviewFrame_Create(_obj, _init, _create_canvas, _create_toolbar, preview, parent.ptr(), title, x, y, w, h, style) } }
     }
 }
 
-pub trait _ELJPreviewFrame : _wxPreviewFrame {
+pub trait _wxRustPreviewFrame : _wxPreviewFrame {
     fn getControlBar(&self) -> *mut c_void {
         unsafe { ELJPreviewFrame_GetControlBar(self.ptr()) }
     }
@@ -366,21 +366,21 @@ pub trait _ELJPreviewFrame : _wxPreviewFrame {
     }
 }
 
-pub struct ELJTextDropTarget { ptr: *mut c_void }
-impl _ELJTextDropTarget for ELJTextDropTarget {}
-impl _wxTextDropTarget for ELJTextDropTarget {}
-impl _wxDropTarget for ELJTextDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustTextDropTarget { ptr: *mut c_void }
+impl _wxRustTextDropTarget for wxRustTextDropTarget {}
+impl _wxTextDropTarget for wxRustTextDropTarget {}
+impl _wxDropTarget for wxRustTextDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJTextDropTarget {
-    pub fn from(ptr: *mut c_void) -> ELJTextDropTarget { ELJTextDropTarget { ptr: ptr } }
-    pub fn null() -> ELJTextDropTarget { ELJTextDropTarget::from(0 as *mut c_void) }
+impl wxRustTextDropTarget {
+    pub fn from(ptr: *mut c_void) -> wxRustTextDropTarget { wxRustTextDropTarget { ptr: ptr } }
+    pub fn null() -> wxRustTextDropTarget { wxRustTextDropTarget::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _func: *mut c_void) -> ELJTextDropTarget {
-        unsafe { ELJTextDropTarget { ptr: ELJTextDropTarget_Create(_obj, _func) } }
+    pub fn new(_obj: *mut c_void, _func: *mut c_void) -> wxRustTextDropTarget {
+        unsafe { wxRustTextDropTarget { ptr: ELJTextDropTarget_Create(_obj, _func) } }
     }
 }
 
-pub trait _ELJTextDropTarget : _wxTextDropTarget {
+pub trait _wxRustTextDropTarget : _wxTextDropTarget {
     fn delete(&self) {
         unsafe { ELJTextDropTarget_Delete(self.ptr()) }
     }
@@ -401,23 +401,23 @@ pub trait _ELJTextDropTarget : _wxTextDropTarget {
     }
 }
 
-pub struct ELJTextValidator { ptr: *mut c_void }
-impl _ELJTextValidator for ELJTextValidator {}
-impl _wxTextValidator for ELJTextValidator {}
-impl _wxValidator for ELJTextValidator {}
-impl _wxEvtHandler for ELJTextValidator {}
-impl _wxObject for ELJTextValidator { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct wxRustTextValidator { ptr: *mut c_void }
+impl _wxRustTextValidator for wxRustTextValidator {}
+impl _wxTextValidator for wxRustTextValidator {}
+impl _wxValidator for wxRustTextValidator {}
+impl _wxEvtHandler for wxRustTextValidator {}
+impl _wxObject for wxRustTextValidator { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl ELJTextValidator {
-    pub fn from(ptr: *mut c_void) -> ELJTextValidator { ELJTextValidator { ptr: ptr } }
-    pub fn null() -> ELJTextValidator { ELJTextValidator::from(0 as *mut c_void) }
+impl wxRustTextValidator {
+    pub fn from(ptr: *mut c_void) -> wxRustTextValidator { wxRustTextValidator { ptr: ptr } }
+    pub fn null() -> wxRustTextValidator { wxRustTextValidator::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _fnc: *mut c_void, _txt: *mut c_void, _stl: c_int) -> ELJTextValidator {
-        unsafe { ELJTextValidator { ptr: ELJTextValidator_Create(_obj, _fnc, _txt, _stl) } }
+    pub fn new(_obj: *mut c_void, _fnc: *mut c_void, _txt: *mut c_void, _stl: c_int) -> wxRustTextValidator {
+        unsafe { wxRustTextValidator { ptr: ELJTextValidator_Create(_obj, _fnc, _txt, _stl) } }
     }
 }
 
-pub trait _ELJTextValidator : _wxTextValidator {
+pub trait _wxRustTextValidator : _wxTextValidator {
 }
 
 pub struct wxAcceleratorEntry { ptr: *mut c_void }

@@ -1056,10 +1056,12 @@ class Class(object):
 
 
 def struct_name(name):
+    if name.startswith('ELJ'):
+        return 'wxRust' + name[len('ELJ'):]
     return name
 
 def trait_name(name):
-    return '_' + name
+    return '_' + struct_name(name)
 
 
 class Function(object):
