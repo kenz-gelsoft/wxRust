@@ -2020,62 +2020,62 @@ impl wxString {
     }
 }
 
-pub struct ELJClient { ptr: *mut c_void }
-impl _ELJClient for ELJClient {}
-impl _wxClient for ELJClient {}
-impl _wxClientBase for ELJClient {}
-impl _wxObject for ELJClient { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
+pub struct wxRustClient { ptr: *mut c_void }
+impl _wxRustClient for wxRustClient {}
+impl _wxClient for wxRustClient {}
+impl _wxClientBase for wxRustClient {}
+impl _wxObject for wxRustClient { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
-impl ELJClient {
-    pub fn from(ptr: *mut c_void) -&gt; ELJClient { ELJClient { ptr: ptr } }
-    pub fn null() -&gt; ELJClient { ELJClient::from(0 as *mut c_void) }
+impl wxRustClient {
+    pub fn from(ptr: *mut c_void) -&gt; wxRustClient { wxRustClient { ptr: ptr } }
+    pub fn null() -&gt; wxRustClient { wxRustClient::from(0 as *mut c_void) }
     
 }
 
-pub trait _ELJClient : _wxClient {
+pub trait _wxRustClient : _wxClient {
 }
 
-pub struct ELJConnection { ptr: *mut c_void }
-impl _ELJConnection for ELJConnection {}
-impl _wxConnection for ELJConnection {}
-impl _wxConnectionBase for ELJConnection {}
-impl _wxObject for ELJConnection { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
+pub struct wxRustConnection { ptr: *mut c_void }
+impl _wxRustConnection for wxRustConnection {}
+impl _wxConnection for wxRustConnection {}
+impl _wxConnectionBase for wxRustConnection {}
+impl _wxObject for wxRustConnection { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
-impl ELJConnection {
-    pub fn from(ptr: *mut c_void) -&gt; ELJConnection { ELJConnection { ptr: ptr } }
-    pub fn null() -&gt; ELJConnection { ELJConnection::from(0 as *mut c_void) }
+impl wxRustConnection {
+    pub fn from(ptr: *mut c_void) -&gt; wxRustConnection { wxRustConnection { ptr: ptr } }
+    pub fn null() -&gt; wxRustConnection { wxRustConnection::from(0 as *mut c_void) }
     
 }
 
-pub trait _ELJConnection : _wxConnection {
+pub trait _wxRustConnection : _wxConnection {
 }
 
-pub struct ELJLocale { ptr: *mut c_void }
-impl _ELJLocale for ELJLocale {}
-impl _wxLocale for ELJLocale { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
+pub struct wxRustLocale { ptr: *mut c_void }
+impl _wxRustLocale for wxRustLocale {}
+impl _wxLocale for wxRustLocale { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
-impl ELJLocale {
-    pub fn from(ptr: *mut c_void) -&gt; ELJLocale { ELJLocale { ptr: ptr } }
-    pub fn null() -&gt; ELJLocale { ELJLocale::from(0 as *mut c_void) }
+impl wxRustLocale {
+    pub fn from(ptr: *mut c_void) -&gt; wxRustLocale { wxRustLocale { ptr: ptr } }
+    pub fn null() -&gt; wxRustLocale { wxRustLocale::from(0 as *mut c_void) }
     
 }
 
-pub trait _ELJLocale : _wxLocale {
+pub trait _wxRustLocale : _wxLocale {
 }
 
-pub struct ELJServer { ptr: *mut c_void }
-impl _ELJServer for ELJServer {}
-impl _wxServer for ELJServer {}
-impl _wxServerBase for ELJServer {}
-impl _wxObject for ELJServer { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
+pub struct wxRustServer { ptr: *mut c_void }
+impl _wxRustServer for wxRustServer {}
+impl _wxServer for wxRustServer {}
+impl _wxServerBase for wxRustServer {}
+impl _wxObject for wxRustServer { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
 
-impl ELJServer {
-    pub fn from(ptr: *mut c_void) -&gt; ELJServer { ELJServer { ptr: ptr } }
-    pub fn null() -&gt; ELJServer { ELJServer::from(0 as *mut c_void) }
+impl wxRustServer {
+    pub fn from(ptr: *mut c_void) -&gt; wxRustServer { wxRustServer { ptr: ptr } }
+    pub fn null() -&gt; wxRustServer { wxRustServer::from(0 as *mut c_void) }
     
 }
 
-pub trait _ELJServer : _wxServer {
+pub trait _wxRustServer : _wxServer {
 }
 
 pub struct wxArray { ptr: *mut c_void }
