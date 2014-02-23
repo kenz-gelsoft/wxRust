@@ -24,12 +24,12 @@ fn wx_main() {
     frame.asFrame().raise();
 }
 
-struct MyFrame { base: wxFrame }
+struct MyFrame { base: WxFrame }
 impl MyFrame {
     #[fixed_stack_segment]
     #[inline(never)]
     fn new() -> MyFrame {
-        let frame = wxFrame::new(&wxWindow::null(), wxID_ANY, "Hello, wxRust!", -1, -1, -1, -1, wxDEFAULT_FRAME_STYLE);
+        let frame = WxFrame::new(&WxWindow::null(), wxID_ANY, "Hello, wxRust!", -1, -1, -1, -1, wxDEFAULT_FRAME_STYLE);
         let menubar = MyMenuBar::new();
         frame.setMenuBar(&menubar.asMenuBar());
         
@@ -37,26 +37,26 @@ impl MyFrame {
 
         MyFrame { base: frame }
     }
-    fn asFrame(&self) -> wxFrame {
+    fn asFrame(&self) -> WxFrame {
         return self.base;
     }
 }
 
-struct MyMenuBar { base: wxMenuBar }
+struct MyMenuBar { base: WxMenuBar }
 impl MyMenuBar {
     #[fixed_stack_segment]
     #[inline(never)]
     fn new() -> MyMenuBar {
-        let menubar = wxMenuBar::new(0);
+        let menubar = WxMenuBar::new(0);
         
-        let fileMenu = wxMenu::new("", 0);
-        let fileNew = wxMenuItem::newEx(wxID_ANY, "New", "Create a new file.", 0, &wxMenu::null());
+        let fileMenu = WxMenu::new("", 0);
+        let fileNew = WxMenuItem::newEx(wxID_ANY, "New", "Create a new file.", 0, &WxMenu::null());
         fileMenu.appendItem(&fileNew);
 
         menubar.append(&fileMenu, "File");
         MyMenuBar { base: menubar }
     }
-    fn asMenuBar(&self) -> wxMenuBar {
+    fn asMenuBar(&self) -> WxMenuBar {
         return self.base;
     }
 }
@@ -69,18 +69,18 @@ fn MyButton_clicked(fun: *mut c_void, data: *mut c_void, evt: *mut c_void) {
     }
 
     println!("hello!");
-    let parent = wxWindow::from(data);
-    let msgDlg = wxMessageDialog::new(&parent, "Pushed!!", "The Button", wxOK);
+    let parent = WxWindow::from(data);
+    let msgDlg = WxMessageDialog::new(&parent, "Pushed!!", "The Button", wxOK);
     msgDlg.showModal();
 }
 
-struct MyButton(wxButton);
+struct MyButton(WxButton);
 impl MyButton {
     #[fixed_stack_segment]
     #[inline(never)]
-    fn new<T: _wxWindow>(parent: &T) -> MyButton {
-        let button = wxButton::new(parent, wxID_ANY, "Push me!", 10, 10, 50, 30, 0);
-        let closure = wxClosure::new(MyButton_clicked as *mut c_void, parent.ptr());
+    fn new<T: TWxWindow>(parent: &T) -> MyButton {
+        let button = WxButton::new(parent, wxID_ANY, "Push me!", 10, 10, 50, 30, 0);
+        let closure = WxClosure::new(MyButton_clicked as *mut c_void, parent.ptr());
         unsafe {
             button.connect(wxID_ANY, wxID_ANY, expEVT_COMMAND_BUTTON_CLICKED(), closure.ptr());
         }
