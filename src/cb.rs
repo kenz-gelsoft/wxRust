@@ -4,747 +4,747 @@ use base::*;
 use core::*;
 use _unavailable::*;
 
-pub struct cbAntiflickerPlugin { ptr: *mut c_void }
-impl _cbAntiflickerPlugin for cbAntiflickerPlugin {}
-impl _cbPluginBase for cbAntiflickerPlugin {}
-impl _wxEvtHandler for cbAntiflickerPlugin {}
-impl _wxObject for cbAntiflickerPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbAntiflickerPlugin { ptr: *mut c_void }
+impl TCbAntiflickerPlugin for CbAntiflickerPlugin {}
+impl TCbPluginBase for CbAntiflickerPlugin {}
+impl TWxEvtHandler for CbAntiflickerPlugin {}
+impl TWxObject for CbAntiflickerPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbAntiflickerPlugin {
-    pub fn from(ptr: *mut c_void) -> cbAntiflickerPlugin { cbAntiflickerPlugin { ptr: ptr } }
-    pub fn null() -> cbAntiflickerPlugin { cbAntiflickerPlugin::from(0 as *mut c_void) }
+impl CbAntiflickerPlugin {
+    pub fn from(ptr: *mut c_void) -> CbAntiflickerPlugin { CbAntiflickerPlugin { ptr: ptr } }
+    pub fn null() -> CbAntiflickerPlugin { CbAntiflickerPlugin::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbAntiflickerPlugin : _cbPluginBase {
+pub trait TCbAntiflickerPlugin : TCbPluginBase {
 }
 
-pub struct cbBarDragPlugin { ptr: *mut c_void }
-impl _cbBarDragPlugin for cbBarDragPlugin {}
-impl _cbPluginBase for cbBarDragPlugin {}
-impl _wxEvtHandler for cbBarDragPlugin {}
-impl _wxObject for cbBarDragPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbBarDragPlugin { ptr: *mut c_void }
+impl TCbBarDragPlugin for CbBarDragPlugin {}
+impl TCbPluginBase for CbBarDragPlugin {}
+impl TWxEvtHandler for CbBarDragPlugin {}
+impl TWxObject for CbBarDragPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbBarDragPlugin {
-    pub fn from(ptr: *mut c_void) -> cbBarDragPlugin { cbBarDragPlugin { ptr: ptr } }
-    pub fn null() -> cbBarDragPlugin { cbBarDragPlugin::from(0 as *mut c_void) }
+impl CbBarDragPlugin {
+    pub fn from(ptr: *mut c_void) -> CbBarDragPlugin { CbBarDragPlugin { ptr: ptr } }
+    pub fn null() -> CbBarDragPlugin { CbBarDragPlugin::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbBarDragPlugin : _cbPluginBase {
+pub trait TCbBarDragPlugin : TCbPluginBase {
 }
 
-pub struct cbBarHintsPlugin { ptr: *mut c_void }
-impl _cbBarHintsPlugin for cbBarHintsPlugin {}
-impl _cbPluginBase for cbBarHintsPlugin {}
-impl _wxEvtHandler for cbBarHintsPlugin {}
-impl _wxObject for cbBarHintsPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbBarHintsPlugin { ptr: *mut c_void }
+impl TCbBarHintsPlugin for CbBarHintsPlugin {}
+impl TCbPluginBase for CbBarHintsPlugin {}
+impl TWxEvtHandler for CbBarHintsPlugin {}
+impl TWxObject for CbBarHintsPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbBarHintsPlugin {
-    pub fn from(ptr: *mut c_void) -> cbBarHintsPlugin { cbBarHintsPlugin { ptr: ptr } }
-    pub fn null() -> cbBarHintsPlugin { cbBarHintsPlugin::from(0 as *mut c_void) }
+impl CbBarHintsPlugin {
+    pub fn from(ptr: *mut c_void) -> CbBarHintsPlugin { CbBarHintsPlugin { ptr: ptr } }
+    pub fn null() -> CbBarHintsPlugin { CbBarHintsPlugin::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbBarHintsPlugin : _cbPluginBase {
+pub trait TCbBarHintsPlugin : TCbPluginBase {
 }
 
-pub struct cbBarInfo { ptr: *mut c_void }
-impl _cbBarInfo for cbBarInfo {}
-impl _wxObject for cbBarInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbBarInfo { ptr: *mut c_void }
+impl TCbBarInfo for CbBarInfo {}
+impl TWxObject for CbBarInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbBarInfo {
-    pub fn from(ptr: *mut c_void) -> cbBarInfo { cbBarInfo { ptr: ptr } }
-    pub fn null() -> cbBarInfo { cbBarInfo::from(0 as *mut c_void) }
+impl CbBarInfo {
+    pub fn from(ptr: *mut c_void) -> CbBarInfo { CbBarInfo { ptr: ptr } }
+    pub fn null() -> CbBarInfo { CbBarInfo::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbBarInfo : _wxObject {
+pub trait TCbBarInfo : TWxObject {
 }
 
-pub struct cbBarSpy { ptr: *mut c_void }
-impl _cbBarSpy for cbBarSpy {}
-impl _wxEvtHandler for cbBarSpy {}
-impl _wxObject for cbBarSpy { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbBarSpy { ptr: *mut c_void }
+impl TCbBarSpy for CbBarSpy {}
+impl TWxEvtHandler for CbBarSpy {}
+impl TWxObject for CbBarSpy { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbBarSpy {
-    pub fn from(ptr: *mut c_void) -> cbBarSpy { cbBarSpy { ptr: ptr } }
-    pub fn null() -> cbBarSpy { cbBarSpy::from(0 as *mut c_void) }
+impl CbBarSpy {
+    pub fn from(ptr: *mut c_void) -> CbBarSpy { CbBarSpy { ptr: ptr } }
+    pub fn null() -> CbBarSpy { CbBarSpy::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbBarSpy : _wxEvtHandler {
+pub trait TCbBarSpy : TWxEvtHandler {
 }
 
-pub struct cbCloseBox { ptr: *mut c_void }
-impl _cbCloseBox for cbCloseBox {}
-impl _cbMiniButton for cbCloseBox {}
-impl _wxObject for cbCloseBox { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbCloseBox { ptr: *mut c_void }
+impl TCbCloseBox for CbCloseBox {}
+impl TCbMiniButton for CbCloseBox {}
+impl TWxObject for CbCloseBox { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbCloseBox {
-    pub fn from(ptr: *mut c_void) -> cbCloseBox { cbCloseBox { ptr: ptr } }
-    pub fn null() -> cbCloseBox { cbCloseBox::from(0 as *mut c_void) }
+impl CbCloseBox {
+    pub fn from(ptr: *mut c_void) -> CbCloseBox { CbCloseBox { ptr: ptr } }
+    pub fn null() -> CbCloseBox { CbCloseBox::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbCloseBox : _cbMiniButton {
+pub trait TCbCloseBox : TCbMiniButton {
 }
 
-pub struct cbCollapseBox { ptr: *mut c_void }
-impl _cbCollapseBox for cbCollapseBox {}
-impl _cbMiniButton for cbCollapseBox {}
-impl _wxObject for cbCollapseBox { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbCollapseBox { ptr: *mut c_void }
+impl TCbCollapseBox for CbCollapseBox {}
+impl TCbMiniButton for CbCollapseBox {}
+impl TWxObject for CbCollapseBox { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbCollapseBox {
-    pub fn from(ptr: *mut c_void) -> cbCollapseBox { cbCollapseBox { ptr: ptr } }
-    pub fn null() -> cbCollapseBox { cbCollapseBox::from(0 as *mut c_void) }
+impl CbCollapseBox {
+    pub fn from(ptr: *mut c_void) -> CbCollapseBox { CbCollapseBox { ptr: ptr } }
+    pub fn null() -> CbCollapseBox { CbCollapseBox::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbCollapseBox : _cbMiniButton {
+pub trait TCbCollapseBox : TCbMiniButton {
 }
 
-pub struct cbCommonPaneProperties { ptr: *mut c_void }
-impl _cbCommonPaneProperties for cbCommonPaneProperties {}
-impl _wxObject for cbCommonPaneProperties { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbCommonPaneProperties { ptr: *mut c_void }
+impl TCbCommonPaneProperties for CbCommonPaneProperties {}
+impl TWxObject for CbCommonPaneProperties { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbCommonPaneProperties {
-    pub fn from(ptr: *mut c_void) -> cbCommonPaneProperties { cbCommonPaneProperties { ptr: ptr } }
-    pub fn null() -> cbCommonPaneProperties { cbCommonPaneProperties::from(0 as *mut c_void) }
+impl CbCommonPaneProperties {
+    pub fn from(ptr: *mut c_void) -> CbCommonPaneProperties { CbCommonPaneProperties { ptr: ptr } }
+    pub fn null() -> CbCommonPaneProperties { CbCommonPaneProperties::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbCommonPaneProperties : _wxObject {
+pub trait TCbCommonPaneProperties : TWxObject {
 }
 
-pub struct cbCustomizeBarEvent { ptr: *mut c_void }
-impl _cbCustomizeBarEvent for cbCustomizeBarEvent {}
-impl _cbPluginEvent for cbCustomizeBarEvent {}
-impl _wxEvent for cbCustomizeBarEvent {}
-impl _wxObject for cbCustomizeBarEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbCustomizeBarEvent { ptr: *mut c_void }
+impl TCbCustomizeBarEvent for CbCustomizeBarEvent {}
+impl TCbPluginEvent for CbCustomizeBarEvent {}
+impl TWxEvent for CbCustomizeBarEvent {}
+impl TWxObject for CbCustomizeBarEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbCustomizeBarEvent {
-    pub fn from(ptr: *mut c_void) -> cbCustomizeBarEvent { cbCustomizeBarEvent { ptr: ptr } }
-    pub fn null() -> cbCustomizeBarEvent { cbCustomizeBarEvent::from(0 as *mut c_void) }
+impl CbCustomizeBarEvent {
+    pub fn from(ptr: *mut c_void) -> CbCustomizeBarEvent { CbCustomizeBarEvent { ptr: ptr } }
+    pub fn null() -> CbCustomizeBarEvent { CbCustomizeBarEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbCustomizeBarEvent : _cbPluginEvent {
+pub trait TCbCustomizeBarEvent : TCbPluginEvent {
 }
 
-pub struct cbCustomizeLayoutEvent { ptr: *mut c_void }
-impl _cbCustomizeLayoutEvent for cbCustomizeLayoutEvent {}
-impl _cbPluginEvent for cbCustomizeLayoutEvent {}
-impl _wxEvent for cbCustomizeLayoutEvent {}
-impl _wxObject for cbCustomizeLayoutEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbCustomizeLayoutEvent { ptr: *mut c_void }
+impl TCbCustomizeLayoutEvent for CbCustomizeLayoutEvent {}
+impl TCbPluginEvent for CbCustomizeLayoutEvent {}
+impl TWxEvent for CbCustomizeLayoutEvent {}
+impl TWxObject for CbCustomizeLayoutEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbCustomizeLayoutEvent {
-    pub fn from(ptr: *mut c_void) -> cbCustomizeLayoutEvent { cbCustomizeLayoutEvent { ptr: ptr } }
-    pub fn null() -> cbCustomizeLayoutEvent { cbCustomizeLayoutEvent::from(0 as *mut c_void) }
+impl CbCustomizeLayoutEvent {
+    pub fn from(ptr: *mut c_void) -> CbCustomizeLayoutEvent { CbCustomizeLayoutEvent { ptr: ptr } }
+    pub fn null() -> CbCustomizeLayoutEvent { CbCustomizeLayoutEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbCustomizeLayoutEvent : _cbPluginEvent {
+pub trait TCbCustomizeLayoutEvent : TCbPluginEvent {
 }
 
-pub struct cbDimHandlerBase { ptr: *mut c_void }
-impl _cbDimHandlerBase for cbDimHandlerBase {}
-impl _wxObject for cbDimHandlerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDimHandlerBase { ptr: *mut c_void }
+impl TCbDimHandlerBase for CbDimHandlerBase {}
+impl TWxObject for CbDimHandlerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDimHandlerBase {
-    pub fn from(ptr: *mut c_void) -> cbDimHandlerBase { cbDimHandlerBase { ptr: ptr } }
-    pub fn null() -> cbDimHandlerBase { cbDimHandlerBase::from(0 as *mut c_void) }
+impl CbDimHandlerBase {
+    pub fn from(ptr: *mut c_void) -> CbDimHandlerBase { CbDimHandlerBase { ptr: ptr } }
+    pub fn null() -> CbDimHandlerBase { CbDimHandlerBase::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDimHandlerBase : _wxObject {
+pub trait TCbDimHandlerBase : TWxObject {
 }
 
-pub struct cbDimInfo { ptr: *mut c_void }
-impl _cbDimInfo for cbDimInfo {}
-impl _wxObject for cbDimInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDimInfo { ptr: *mut c_void }
+impl TCbDimInfo for CbDimInfo {}
+impl TWxObject for CbDimInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDimInfo {
-    pub fn from(ptr: *mut c_void) -> cbDimInfo { cbDimInfo { ptr: ptr } }
-    pub fn null() -> cbDimInfo { cbDimInfo::from(0 as *mut c_void) }
+impl CbDimInfo {
+    pub fn from(ptr: *mut c_void) -> CbDimInfo { CbDimInfo { ptr: ptr } }
+    pub fn null() -> CbDimInfo { CbDimInfo::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDimInfo : _wxObject {
+pub trait TCbDimInfo : TWxObject {
 }
 
-pub struct cbDockBox { ptr: *mut c_void }
-impl _cbDockBox for cbDockBox {}
-impl _cbMiniButton for cbDockBox {}
-impl _wxObject for cbDockBox { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDockBox { ptr: *mut c_void }
+impl TCbDockBox for CbDockBox {}
+impl TCbMiniButton for CbDockBox {}
+impl TWxObject for CbDockBox { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDockBox {
-    pub fn from(ptr: *mut c_void) -> cbDockBox { cbDockBox { ptr: ptr } }
-    pub fn null() -> cbDockBox { cbDockBox::from(0 as *mut c_void) }
+impl CbDockBox {
+    pub fn from(ptr: *mut c_void) -> CbDockBox { CbDockBox { ptr: ptr } }
+    pub fn null() -> CbDockBox { CbDockBox::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDockBox : _cbMiniButton {
+pub trait TCbDockBox : TCbMiniButton {
 }
 
-pub struct cbDockPane { ptr: *mut c_void }
-impl _cbDockPane for cbDockPane {}
-impl _wxObject for cbDockPane { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDockPane { ptr: *mut c_void }
+impl TCbDockPane for CbDockPane {}
+impl TWxObject for CbDockPane { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDockPane {
-    pub fn from(ptr: *mut c_void) -> cbDockPane { cbDockPane { ptr: ptr } }
-    pub fn null() -> cbDockPane { cbDockPane::from(0 as *mut c_void) }
+impl CbDockPane {
+    pub fn from(ptr: *mut c_void) -> CbDockPane { CbDockPane { ptr: ptr } }
+    pub fn null() -> CbDockPane { CbDockPane::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDockPane : _wxObject {
+pub trait TCbDockPane : TWxObject {
 }
 
-pub struct cbDrawBarDecorEvent { ptr: *mut c_void }
-impl _cbDrawBarDecorEvent for cbDrawBarDecorEvent {}
-impl _cbPluginEvent for cbDrawBarDecorEvent {}
-impl _wxEvent for cbDrawBarDecorEvent {}
-impl _wxObject for cbDrawBarDecorEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDrawBarDecorEvent { ptr: *mut c_void }
+impl TCbDrawBarDecorEvent for CbDrawBarDecorEvent {}
+impl TCbPluginEvent for CbDrawBarDecorEvent {}
+impl TWxEvent for CbDrawBarDecorEvent {}
+impl TWxObject for CbDrawBarDecorEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDrawBarDecorEvent {
-    pub fn from(ptr: *mut c_void) -> cbDrawBarDecorEvent { cbDrawBarDecorEvent { ptr: ptr } }
-    pub fn null() -> cbDrawBarDecorEvent { cbDrawBarDecorEvent::from(0 as *mut c_void) }
+impl CbDrawBarDecorEvent {
+    pub fn from(ptr: *mut c_void) -> CbDrawBarDecorEvent { CbDrawBarDecorEvent { ptr: ptr } }
+    pub fn null() -> CbDrawBarDecorEvent { CbDrawBarDecorEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDrawBarDecorEvent : _cbPluginEvent {
+pub trait TCbDrawBarDecorEvent : TCbPluginEvent {
 }
 
-pub struct cbDrawBarHandlesEvent { ptr: *mut c_void }
-impl _cbDrawBarHandlesEvent for cbDrawBarHandlesEvent {}
-impl _cbPluginEvent for cbDrawBarHandlesEvent {}
-impl _wxEvent for cbDrawBarHandlesEvent {}
-impl _wxObject for cbDrawBarHandlesEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDrawBarHandlesEvent { ptr: *mut c_void }
+impl TCbDrawBarHandlesEvent for CbDrawBarHandlesEvent {}
+impl TCbPluginEvent for CbDrawBarHandlesEvent {}
+impl TWxEvent for CbDrawBarHandlesEvent {}
+impl TWxObject for CbDrawBarHandlesEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDrawBarHandlesEvent {
-    pub fn from(ptr: *mut c_void) -> cbDrawBarHandlesEvent { cbDrawBarHandlesEvent { ptr: ptr } }
-    pub fn null() -> cbDrawBarHandlesEvent { cbDrawBarHandlesEvent::from(0 as *mut c_void) }
+impl CbDrawBarHandlesEvent {
+    pub fn from(ptr: *mut c_void) -> CbDrawBarHandlesEvent { CbDrawBarHandlesEvent { ptr: ptr } }
+    pub fn null() -> CbDrawBarHandlesEvent { CbDrawBarHandlesEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDrawBarHandlesEvent : _cbPluginEvent {
+pub trait TCbDrawBarHandlesEvent : TCbPluginEvent {
 }
 
-pub struct cbDrawHintRectEvent { ptr: *mut c_void }
-impl _cbDrawHintRectEvent for cbDrawHintRectEvent {}
-impl _cbPluginEvent for cbDrawHintRectEvent {}
-impl _wxEvent for cbDrawHintRectEvent {}
-impl _wxObject for cbDrawHintRectEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDrawHintRectEvent { ptr: *mut c_void }
+impl TCbDrawHintRectEvent for CbDrawHintRectEvent {}
+impl TCbPluginEvent for CbDrawHintRectEvent {}
+impl TWxEvent for CbDrawHintRectEvent {}
+impl TWxObject for CbDrawHintRectEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDrawHintRectEvent {
-    pub fn from(ptr: *mut c_void) -> cbDrawHintRectEvent { cbDrawHintRectEvent { ptr: ptr } }
-    pub fn null() -> cbDrawHintRectEvent { cbDrawHintRectEvent::from(0 as *mut c_void) }
+impl CbDrawHintRectEvent {
+    pub fn from(ptr: *mut c_void) -> CbDrawHintRectEvent { CbDrawHintRectEvent { ptr: ptr } }
+    pub fn null() -> CbDrawHintRectEvent { CbDrawHintRectEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDrawHintRectEvent : _cbPluginEvent {
+pub trait TCbDrawHintRectEvent : TCbPluginEvent {
 }
 
-pub struct cbDrawPaneBkGroundEvent { ptr: *mut c_void }
-impl _cbDrawPaneBkGroundEvent for cbDrawPaneBkGroundEvent {}
-impl _cbPluginEvent for cbDrawPaneBkGroundEvent {}
-impl _wxEvent for cbDrawPaneBkGroundEvent {}
-impl _wxObject for cbDrawPaneBkGroundEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDrawPaneBkGroundEvent { ptr: *mut c_void }
+impl TCbDrawPaneBkGroundEvent for CbDrawPaneBkGroundEvent {}
+impl TCbPluginEvent for CbDrawPaneBkGroundEvent {}
+impl TWxEvent for CbDrawPaneBkGroundEvent {}
+impl TWxObject for CbDrawPaneBkGroundEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDrawPaneBkGroundEvent {
-    pub fn from(ptr: *mut c_void) -> cbDrawPaneBkGroundEvent { cbDrawPaneBkGroundEvent { ptr: ptr } }
-    pub fn null() -> cbDrawPaneBkGroundEvent { cbDrawPaneBkGroundEvent::from(0 as *mut c_void) }
+impl CbDrawPaneBkGroundEvent {
+    pub fn from(ptr: *mut c_void) -> CbDrawPaneBkGroundEvent { CbDrawPaneBkGroundEvent { ptr: ptr } }
+    pub fn null() -> CbDrawPaneBkGroundEvent { CbDrawPaneBkGroundEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDrawPaneBkGroundEvent : _cbPluginEvent {
+pub trait TCbDrawPaneBkGroundEvent : TCbPluginEvent {
 }
 
-pub struct cbDrawPaneDecorEvent { ptr: *mut c_void }
-impl _cbDrawPaneDecorEvent for cbDrawPaneDecorEvent {}
-impl _cbPluginEvent for cbDrawPaneDecorEvent {}
-impl _wxEvent for cbDrawPaneDecorEvent {}
-impl _wxObject for cbDrawPaneDecorEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDrawPaneDecorEvent { ptr: *mut c_void }
+impl TCbDrawPaneDecorEvent for CbDrawPaneDecorEvent {}
+impl TCbPluginEvent for CbDrawPaneDecorEvent {}
+impl TWxEvent for CbDrawPaneDecorEvent {}
+impl TWxObject for CbDrawPaneDecorEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDrawPaneDecorEvent {
-    pub fn from(ptr: *mut c_void) -> cbDrawPaneDecorEvent { cbDrawPaneDecorEvent { ptr: ptr } }
-    pub fn null() -> cbDrawPaneDecorEvent { cbDrawPaneDecorEvent::from(0 as *mut c_void) }
+impl CbDrawPaneDecorEvent {
+    pub fn from(ptr: *mut c_void) -> CbDrawPaneDecorEvent { CbDrawPaneDecorEvent { ptr: ptr } }
+    pub fn null() -> CbDrawPaneDecorEvent { CbDrawPaneDecorEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDrawPaneDecorEvent : _cbPluginEvent {
+pub trait TCbDrawPaneDecorEvent : TCbPluginEvent {
 }
 
-pub struct cbDrawRowBkGroundEvent { ptr: *mut c_void }
-impl _cbDrawRowBkGroundEvent for cbDrawRowBkGroundEvent {}
-impl _cbPluginEvent for cbDrawRowBkGroundEvent {}
-impl _wxEvent for cbDrawRowBkGroundEvent {}
-impl _wxObject for cbDrawRowBkGroundEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDrawRowBkGroundEvent { ptr: *mut c_void }
+impl TCbDrawRowBkGroundEvent for CbDrawRowBkGroundEvent {}
+impl TCbPluginEvent for CbDrawRowBkGroundEvent {}
+impl TWxEvent for CbDrawRowBkGroundEvent {}
+impl TWxObject for CbDrawRowBkGroundEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDrawRowBkGroundEvent {
-    pub fn from(ptr: *mut c_void) -> cbDrawRowBkGroundEvent { cbDrawRowBkGroundEvent { ptr: ptr } }
-    pub fn null() -> cbDrawRowBkGroundEvent { cbDrawRowBkGroundEvent::from(0 as *mut c_void) }
+impl CbDrawRowBkGroundEvent {
+    pub fn from(ptr: *mut c_void) -> CbDrawRowBkGroundEvent { CbDrawRowBkGroundEvent { ptr: ptr } }
+    pub fn null() -> CbDrawRowBkGroundEvent { CbDrawRowBkGroundEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDrawRowBkGroundEvent : _cbPluginEvent {
+pub trait TCbDrawRowBkGroundEvent : TCbPluginEvent {
 }
 
-pub struct cbDrawRowDecorEvent { ptr: *mut c_void }
-impl _cbDrawRowDecorEvent for cbDrawRowDecorEvent {}
-impl _cbPluginEvent for cbDrawRowDecorEvent {}
-impl _wxEvent for cbDrawRowDecorEvent {}
-impl _wxObject for cbDrawRowDecorEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDrawRowDecorEvent { ptr: *mut c_void }
+impl TCbDrawRowDecorEvent for CbDrawRowDecorEvent {}
+impl TCbPluginEvent for CbDrawRowDecorEvent {}
+impl TWxEvent for CbDrawRowDecorEvent {}
+impl TWxObject for CbDrawRowDecorEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDrawRowDecorEvent {
-    pub fn from(ptr: *mut c_void) -> cbDrawRowDecorEvent { cbDrawRowDecorEvent { ptr: ptr } }
-    pub fn null() -> cbDrawRowDecorEvent { cbDrawRowDecorEvent::from(0 as *mut c_void) }
+impl CbDrawRowDecorEvent {
+    pub fn from(ptr: *mut c_void) -> CbDrawRowDecorEvent { CbDrawRowDecorEvent { ptr: ptr } }
+    pub fn null() -> CbDrawRowDecorEvent { CbDrawRowDecorEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDrawRowDecorEvent : _cbPluginEvent {
+pub trait TCbDrawRowDecorEvent : TCbPluginEvent {
 }
 
-pub struct cbDrawRowHandlesEvent { ptr: *mut c_void }
-impl _cbDrawRowHandlesEvent for cbDrawRowHandlesEvent {}
-impl _cbPluginEvent for cbDrawRowHandlesEvent {}
-impl _wxEvent for cbDrawRowHandlesEvent {}
-impl _wxObject for cbDrawRowHandlesEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDrawRowHandlesEvent { ptr: *mut c_void }
+impl TCbDrawRowHandlesEvent for CbDrawRowHandlesEvent {}
+impl TCbPluginEvent for CbDrawRowHandlesEvent {}
+impl TWxEvent for CbDrawRowHandlesEvent {}
+impl TWxObject for CbDrawRowHandlesEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDrawRowHandlesEvent {
-    pub fn from(ptr: *mut c_void) -> cbDrawRowHandlesEvent { cbDrawRowHandlesEvent { ptr: ptr } }
-    pub fn null() -> cbDrawRowHandlesEvent { cbDrawRowHandlesEvent::from(0 as *mut c_void) }
+impl CbDrawRowHandlesEvent {
+    pub fn from(ptr: *mut c_void) -> CbDrawRowHandlesEvent { CbDrawRowHandlesEvent { ptr: ptr } }
+    pub fn null() -> CbDrawRowHandlesEvent { CbDrawRowHandlesEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDrawRowHandlesEvent : _cbPluginEvent {
+pub trait TCbDrawRowHandlesEvent : TCbPluginEvent {
 }
 
-pub struct cbDynToolBarDimHandler { ptr: *mut c_void }
-impl _cbDynToolBarDimHandler for cbDynToolBarDimHandler {}
-impl _cbDimHandlerBase for cbDynToolBarDimHandler {}
-impl _wxObject for cbDynToolBarDimHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbDynToolBarDimHandler { ptr: *mut c_void }
+impl TCbDynToolBarDimHandler for CbDynToolBarDimHandler {}
+impl TCbDimHandlerBase for CbDynToolBarDimHandler {}
+impl TWxObject for CbDynToolBarDimHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbDynToolBarDimHandler {
-    pub fn from(ptr: *mut c_void) -> cbDynToolBarDimHandler { cbDynToolBarDimHandler { ptr: ptr } }
-    pub fn null() -> cbDynToolBarDimHandler { cbDynToolBarDimHandler::from(0 as *mut c_void) }
+impl CbDynToolBarDimHandler {
+    pub fn from(ptr: *mut c_void) -> CbDynToolBarDimHandler { CbDynToolBarDimHandler { ptr: ptr } }
+    pub fn null() -> CbDynToolBarDimHandler { CbDynToolBarDimHandler::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbDynToolBarDimHandler : _cbDimHandlerBase {
+pub trait TCbDynToolBarDimHandler : TCbDimHandlerBase {
 }
 
-pub struct cbFinishDrawInAreaEvent { ptr: *mut c_void }
-impl _cbFinishDrawInAreaEvent for cbFinishDrawInAreaEvent {}
-impl _cbPluginEvent for cbFinishDrawInAreaEvent {}
-impl _wxEvent for cbFinishDrawInAreaEvent {}
-impl _wxObject for cbFinishDrawInAreaEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbFinishDrawInAreaEvent { ptr: *mut c_void }
+impl TCbFinishDrawInAreaEvent for CbFinishDrawInAreaEvent {}
+impl TCbPluginEvent for CbFinishDrawInAreaEvent {}
+impl TWxEvent for CbFinishDrawInAreaEvent {}
+impl TWxObject for CbFinishDrawInAreaEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbFinishDrawInAreaEvent {
-    pub fn from(ptr: *mut c_void) -> cbFinishDrawInAreaEvent { cbFinishDrawInAreaEvent { ptr: ptr } }
-    pub fn null() -> cbFinishDrawInAreaEvent { cbFinishDrawInAreaEvent::from(0 as *mut c_void) }
+impl CbFinishDrawInAreaEvent {
+    pub fn from(ptr: *mut c_void) -> CbFinishDrawInAreaEvent { CbFinishDrawInAreaEvent { ptr: ptr } }
+    pub fn null() -> CbFinishDrawInAreaEvent { CbFinishDrawInAreaEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbFinishDrawInAreaEvent : _cbPluginEvent {
+pub trait TCbFinishDrawInAreaEvent : TCbPluginEvent {
 }
 
-pub struct cbFloatedBarWindow { ptr: *mut c_void }
-impl _cbFloatedBarWindow for cbFloatedBarWindow {}
-impl _wxToolWindow for cbFloatedBarWindow {}
-impl _wxFrame for cbFloatedBarWindow {}
-impl _wxTopLevelWindow for cbFloatedBarWindow {}
-impl _wxWindow for cbFloatedBarWindow {}
-impl _wxEvtHandler for cbFloatedBarWindow {}
-impl _wxObject for cbFloatedBarWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbFloatedBarWindow { ptr: *mut c_void }
+impl TCbFloatedBarWindow for CbFloatedBarWindow {}
+impl TWxToolWindow for CbFloatedBarWindow {}
+impl TWxFrame for CbFloatedBarWindow {}
+impl TWxTopLevelWindow for CbFloatedBarWindow {}
+impl TWxWindow for CbFloatedBarWindow {}
+impl TWxEvtHandler for CbFloatedBarWindow {}
+impl TWxObject for CbFloatedBarWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbFloatedBarWindow {
-    pub fn from(ptr: *mut c_void) -> cbFloatedBarWindow { cbFloatedBarWindow { ptr: ptr } }
-    pub fn null() -> cbFloatedBarWindow { cbFloatedBarWindow::from(0 as *mut c_void) }
+impl CbFloatedBarWindow {
+    pub fn from(ptr: *mut c_void) -> CbFloatedBarWindow { CbFloatedBarWindow { ptr: ptr } }
+    pub fn null() -> CbFloatedBarWindow { CbFloatedBarWindow::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbFloatedBarWindow : _wxToolWindow {
+pub trait TCbFloatedBarWindow : TWxToolWindow {
 }
 
-pub struct cbGCUpdatesMgr { ptr: *mut c_void }
-impl _cbGCUpdatesMgr for cbGCUpdatesMgr {}
-impl _cbSimpleUpdatesMgr for cbGCUpdatesMgr {}
-impl _cbUpdatesManagerBase for cbGCUpdatesMgr {}
-impl _wxObject for cbGCUpdatesMgr { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbGCUpdatesMgr { ptr: *mut c_void }
+impl TCbGCUpdatesMgr for CbGCUpdatesMgr {}
+impl TCbSimpleUpdatesMgr for CbGCUpdatesMgr {}
+impl TCbUpdatesManagerBase for CbGCUpdatesMgr {}
+impl TWxObject for CbGCUpdatesMgr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbGCUpdatesMgr {
-    pub fn from(ptr: *mut c_void) -> cbGCUpdatesMgr { cbGCUpdatesMgr { ptr: ptr } }
-    pub fn null() -> cbGCUpdatesMgr { cbGCUpdatesMgr::from(0 as *mut c_void) }
+impl CbGCUpdatesMgr {
+    pub fn from(ptr: *mut c_void) -> CbGCUpdatesMgr { CbGCUpdatesMgr { ptr: ptr } }
+    pub fn null() -> CbGCUpdatesMgr { CbGCUpdatesMgr::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbGCUpdatesMgr : _cbSimpleUpdatesMgr {
+pub trait TCbGCUpdatesMgr : TCbSimpleUpdatesMgr {
 }
 
-pub struct cbHintAnimationPlugin { ptr: *mut c_void }
-impl _cbHintAnimationPlugin for cbHintAnimationPlugin {}
-impl _cbPluginBase for cbHintAnimationPlugin {}
-impl _wxEvtHandler for cbHintAnimationPlugin {}
-impl _wxObject for cbHintAnimationPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbHintAnimationPlugin { ptr: *mut c_void }
+impl TCbHintAnimationPlugin for CbHintAnimationPlugin {}
+impl TCbPluginBase for CbHintAnimationPlugin {}
+impl TWxEvtHandler for CbHintAnimationPlugin {}
+impl TWxObject for CbHintAnimationPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbHintAnimationPlugin {
-    pub fn from(ptr: *mut c_void) -> cbHintAnimationPlugin { cbHintAnimationPlugin { ptr: ptr } }
-    pub fn null() -> cbHintAnimationPlugin { cbHintAnimationPlugin::from(0 as *mut c_void) }
+impl CbHintAnimationPlugin {
+    pub fn from(ptr: *mut c_void) -> CbHintAnimationPlugin { CbHintAnimationPlugin { ptr: ptr } }
+    pub fn null() -> CbHintAnimationPlugin { CbHintAnimationPlugin::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbHintAnimationPlugin : _cbPluginBase {
+pub trait TCbHintAnimationPlugin : TCbPluginBase {
 }
 
-pub struct cbInsertBarEvent { ptr: *mut c_void }
-impl _cbInsertBarEvent for cbInsertBarEvent {}
-impl _cbPluginEvent for cbInsertBarEvent {}
-impl _wxEvent for cbInsertBarEvent {}
-impl _wxObject for cbInsertBarEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbInsertBarEvent { ptr: *mut c_void }
+impl TCbInsertBarEvent for CbInsertBarEvent {}
+impl TCbPluginEvent for CbInsertBarEvent {}
+impl TWxEvent for CbInsertBarEvent {}
+impl TWxObject for CbInsertBarEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbInsertBarEvent {
-    pub fn from(ptr: *mut c_void) -> cbInsertBarEvent { cbInsertBarEvent { ptr: ptr } }
-    pub fn null() -> cbInsertBarEvent { cbInsertBarEvent::from(0 as *mut c_void) }
+impl CbInsertBarEvent {
+    pub fn from(ptr: *mut c_void) -> CbInsertBarEvent { CbInsertBarEvent { ptr: ptr } }
+    pub fn null() -> CbInsertBarEvent { CbInsertBarEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbInsertBarEvent : _cbPluginEvent {
+pub trait TCbInsertBarEvent : TCbPluginEvent {
 }
 
-pub struct cbLayoutRowEvent { ptr: *mut c_void }
-impl _cbLayoutRowEvent for cbLayoutRowEvent {}
-impl _cbPluginEvent for cbLayoutRowEvent {}
-impl _wxEvent for cbLayoutRowEvent {}
-impl _wxObject for cbLayoutRowEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbLayoutRowEvent { ptr: *mut c_void }
+impl TCbLayoutRowEvent for CbLayoutRowEvent {}
+impl TCbPluginEvent for CbLayoutRowEvent {}
+impl TWxEvent for CbLayoutRowEvent {}
+impl TWxObject for CbLayoutRowEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbLayoutRowEvent {
-    pub fn from(ptr: *mut c_void) -> cbLayoutRowEvent { cbLayoutRowEvent { ptr: ptr } }
-    pub fn null() -> cbLayoutRowEvent { cbLayoutRowEvent::from(0 as *mut c_void) }
+impl CbLayoutRowEvent {
+    pub fn from(ptr: *mut c_void) -> CbLayoutRowEvent { CbLayoutRowEvent { ptr: ptr } }
+    pub fn null() -> CbLayoutRowEvent { CbLayoutRowEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbLayoutRowEvent : _cbPluginEvent {
+pub trait TCbLayoutRowEvent : TCbPluginEvent {
 }
 
-pub struct cbLeftDClickEvent { ptr: *mut c_void }
-impl _cbLeftDClickEvent for cbLeftDClickEvent {}
-impl _cbPluginEvent for cbLeftDClickEvent {}
-impl _wxEvent for cbLeftDClickEvent {}
-impl _wxObject for cbLeftDClickEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbLeftDClickEvent { ptr: *mut c_void }
+impl TCbLeftDClickEvent for CbLeftDClickEvent {}
+impl TCbPluginEvent for CbLeftDClickEvent {}
+impl TWxEvent for CbLeftDClickEvent {}
+impl TWxObject for CbLeftDClickEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbLeftDClickEvent {
-    pub fn from(ptr: *mut c_void) -> cbLeftDClickEvent { cbLeftDClickEvent { ptr: ptr } }
-    pub fn null() -> cbLeftDClickEvent { cbLeftDClickEvent::from(0 as *mut c_void) }
+impl CbLeftDClickEvent {
+    pub fn from(ptr: *mut c_void) -> CbLeftDClickEvent { CbLeftDClickEvent { ptr: ptr } }
+    pub fn null() -> CbLeftDClickEvent { CbLeftDClickEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbLeftDClickEvent : _cbPluginEvent {
+pub trait TCbLeftDClickEvent : TCbPluginEvent {
 }
 
-pub struct cbLeftDownEvent { ptr: *mut c_void }
-impl _cbLeftDownEvent for cbLeftDownEvent {}
-impl _cbPluginEvent for cbLeftDownEvent {}
-impl _wxEvent for cbLeftDownEvent {}
-impl _wxObject for cbLeftDownEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbLeftDownEvent { ptr: *mut c_void }
+impl TCbLeftDownEvent for CbLeftDownEvent {}
+impl TCbPluginEvent for CbLeftDownEvent {}
+impl TWxEvent for CbLeftDownEvent {}
+impl TWxObject for CbLeftDownEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbLeftDownEvent {
-    pub fn from(ptr: *mut c_void) -> cbLeftDownEvent { cbLeftDownEvent { ptr: ptr } }
-    pub fn null() -> cbLeftDownEvent { cbLeftDownEvent::from(0 as *mut c_void) }
+impl CbLeftDownEvent {
+    pub fn from(ptr: *mut c_void) -> CbLeftDownEvent { CbLeftDownEvent { ptr: ptr } }
+    pub fn null() -> CbLeftDownEvent { CbLeftDownEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbLeftDownEvent : _cbPluginEvent {
+pub trait TCbLeftDownEvent : TCbPluginEvent {
 }
 
-pub struct cbLeftUpEvent { ptr: *mut c_void }
-impl _cbLeftUpEvent for cbLeftUpEvent {}
-impl _cbPluginEvent for cbLeftUpEvent {}
-impl _wxEvent for cbLeftUpEvent {}
-impl _wxObject for cbLeftUpEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbLeftUpEvent { ptr: *mut c_void }
+impl TCbLeftUpEvent for CbLeftUpEvent {}
+impl TCbPluginEvent for CbLeftUpEvent {}
+impl TWxEvent for CbLeftUpEvent {}
+impl TWxObject for CbLeftUpEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbLeftUpEvent {
-    pub fn from(ptr: *mut c_void) -> cbLeftUpEvent { cbLeftUpEvent { ptr: ptr } }
-    pub fn null() -> cbLeftUpEvent { cbLeftUpEvent::from(0 as *mut c_void) }
+impl CbLeftUpEvent {
+    pub fn from(ptr: *mut c_void) -> CbLeftUpEvent { CbLeftUpEvent { ptr: ptr } }
+    pub fn null() -> CbLeftUpEvent { CbLeftUpEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbLeftUpEvent : _cbPluginEvent {
+pub trait TCbLeftUpEvent : TCbPluginEvent {
 }
 
-pub struct cbMiniButton { ptr: *mut c_void }
-impl _cbMiniButton for cbMiniButton {}
-impl _wxObject for cbMiniButton { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbMiniButton { ptr: *mut c_void }
+impl TCbMiniButton for CbMiniButton {}
+impl TWxObject for CbMiniButton { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbMiniButton {
-    pub fn from(ptr: *mut c_void) -> cbMiniButton { cbMiniButton { ptr: ptr } }
-    pub fn null() -> cbMiniButton { cbMiniButton::from(0 as *mut c_void) }
+impl CbMiniButton {
+    pub fn from(ptr: *mut c_void) -> CbMiniButton { CbMiniButton { ptr: ptr } }
+    pub fn null() -> CbMiniButton { CbMiniButton::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbMiniButton : _wxObject {
+pub trait TCbMiniButton : TWxObject {
 }
 
-pub struct cbMotionEvent { ptr: *mut c_void }
-impl _cbMotionEvent for cbMotionEvent {}
-impl _cbPluginEvent for cbMotionEvent {}
-impl _wxEvent for cbMotionEvent {}
-impl _wxObject for cbMotionEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbMotionEvent { ptr: *mut c_void }
+impl TCbMotionEvent for CbMotionEvent {}
+impl TCbPluginEvent for CbMotionEvent {}
+impl TWxEvent for CbMotionEvent {}
+impl TWxObject for CbMotionEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbMotionEvent {
-    pub fn from(ptr: *mut c_void) -> cbMotionEvent { cbMotionEvent { ptr: ptr } }
-    pub fn null() -> cbMotionEvent { cbMotionEvent::from(0 as *mut c_void) }
+impl CbMotionEvent {
+    pub fn from(ptr: *mut c_void) -> CbMotionEvent { CbMotionEvent { ptr: ptr } }
+    pub fn null() -> CbMotionEvent { CbMotionEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbMotionEvent : _cbPluginEvent {
+pub trait TCbMotionEvent : TCbPluginEvent {
 }
 
-pub struct cbPaneDrawPlugin { ptr: *mut c_void }
-impl _cbPaneDrawPlugin for cbPaneDrawPlugin {}
-impl _cbPluginBase for cbPaneDrawPlugin {}
-impl _wxEvtHandler for cbPaneDrawPlugin {}
-impl _wxObject for cbPaneDrawPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbPaneDrawPlugin { ptr: *mut c_void }
+impl TCbPaneDrawPlugin for CbPaneDrawPlugin {}
+impl TCbPluginBase for CbPaneDrawPlugin {}
+impl TWxEvtHandler for CbPaneDrawPlugin {}
+impl TWxObject for CbPaneDrawPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbPaneDrawPlugin {
-    pub fn from(ptr: *mut c_void) -> cbPaneDrawPlugin { cbPaneDrawPlugin { ptr: ptr } }
-    pub fn null() -> cbPaneDrawPlugin { cbPaneDrawPlugin::from(0 as *mut c_void) }
+impl CbPaneDrawPlugin {
+    pub fn from(ptr: *mut c_void) -> CbPaneDrawPlugin { CbPaneDrawPlugin { ptr: ptr } }
+    pub fn null() -> CbPaneDrawPlugin { CbPaneDrawPlugin::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbPaneDrawPlugin : _cbPluginBase {
+pub trait TCbPaneDrawPlugin : TCbPluginBase {
 }
 
-pub struct cbPluginBase { ptr: *mut c_void }
-impl _cbPluginBase for cbPluginBase {}
-impl _wxEvtHandler for cbPluginBase {}
-impl _wxObject for cbPluginBase { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbPluginBase { ptr: *mut c_void }
+impl TCbPluginBase for CbPluginBase {}
+impl TWxEvtHandler for CbPluginBase {}
+impl TWxObject for CbPluginBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbPluginBase {
-    pub fn from(ptr: *mut c_void) -> cbPluginBase { cbPluginBase { ptr: ptr } }
-    pub fn null() -> cbPluginBase { cbPluginBase::from(0 as *mut c_void) }
+impl CbPluginBase {
+    pub fn from(ptr: *mut c_void) -> CbPluginBase { CbPluginBase { ptr: ptr } }
+    pub fn null() -> CbPluginBase { CbPluginBase::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbPluginBase : _wxEvtHandler {
+pub trait TCbPluginBase : TWxEvtHandler {
 }
 
-pub struct cbPluginEvent { ptr: *mut c_void }
-impl _cbPluginEvent for cbPluginEvent {}
-impl _wxEvent for cbPluginEvent {}
-impl _wxObject for cbPluginEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbPluginEvent { ptr: *mut c_void }
+impl TCbPluginEvent for CbPluginEvent {}
+impl TWxEvent for CbPluginEvent {}
+impl TWxObject for CbPluginEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbPluginEvent {
-    pub fn from(ptr: *mut c_void) -> cbPluginEvent { cbPluginEvent { ptr: ptr } }
-    pub fn null() -> cbPluginEvent { cbPluginEvent::from(0 as *mut c_void) }
+impl CbPluginEvent {
+    pub fn from(ptr: *mut c_void) -> CbPluginEvent { CbPluginEvent { ptr: ptr } }
+    pub fn null() -> CbPluginEvent { CbPluginEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbPluginEvent : _wxEvent {
+pub trait TCbPluginEvent : TWxEvent {
 }
 
-pub struct cbRemoveBarEvent { ptr: *mut c_void }
-impl _cbRemoveBarEvent for cbRemoveBarEvent {}
-impl _cbPluginEvent for cbRemoveBarEvent {}
-impl _wxEvent for cbRemoveBarEvent {}
-impl _wxObject for cbRemoveBarEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbRemoveBarEvent { ptr: *mut c_void }
+impl TCbRemoveBarEvent for CbRemoveBarEvent {}
+impl TCbPluginEvent for CbRemoveBarEvent {}
+impl TWxEvent for CbRemoveBarEvent {}
+impl TWxObject for CbRemoveBarEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbRemoveBarEvent {
-    pub fn from(ptr: *mut c_void) -> cbRemoveBarEvent { cbRemoveBarEvent { ptr: ptr } }
-    pub fn null() -> cbRemoveBarEvent { cbRemoveBarEvent::from(0 as *mut c_void) }
+impl CbRemoveBarEvent {
+    pub fn from(ptr: *mut c_void) -> CbRemoveBarEvent { CbRemoveBarEvent { ptr: ptr } }
+    pub fn null() -> CbRemoveBarEvent { CbRemoveBarEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbRemoveBarEvent : _cbPluginEvent {
+pub trait TCbRemoveBarEvent : TCbPluginEvent {
 }
 
-pub struct cbResizeBarEvent { ptr: *mut c_void }
-impl _cbResizeBarEvent for cbResizeBarEvent {}
-impl _cbPluginEvent for cbResizeBarEvent {}
-impl _wxEvent for cbResizeBarEvent {}
-impl _wxObject for cbResizeBarEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbResizeBarEvent { ptr: *mut c_void }
+impl TCbResizeBarEvent for CbResizeBarEvent {}
+impl TCbPluginEvent for CbResizeBarEvent {}
+impl TWxEvent for CbResizeBarEvent {}
+impl TWxObject for CbResizeBarEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbResizeBarEvent {
-    pub fn from(ptr: *mut c_void) -> cbResizeBarEvent { cbResizeBarEvent { ptr: ptr } }
-    pub fn null() -> cbResizeBarEvent { cbResizeBarEvent::from(0 as *mut c_void) }
+impl CbResizeBarEvent {
+    pub fn from(ptr: *mut c_void) -> CbResizeBarEvent { CbResizeBarEvent { ptr: ptr } }
+    pub fn null() -> CbResizeBarEvent { CbResizeBarEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbResizeBarEvent : _cbPluginEvent {
+pub trait TCbResizeBarEvent : TCbPluginEvent {
 }
 
-pub struct cbResizeRowEvent { ptr: *mut c_void }
-impl _cbResizeRowEvent for cbResizeRowEvent {}
-impl _cbPluginEvent for cbResizeRowEvent {}
-impl _wxEvent for cbResizeRowEvent {}
-impl _wxObject for cbResizeRowEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbResizeRowEvent { ptr: *mut c_void }
+impl TCbResizeRowEvent for CbResizeRowEvent {}
+impl TCbPluginEvent for CbResizeRowEvent {}
+impl TWxEvent for CbResizeRowEvent {}
+impl TWxObject for CbResizeRowEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbResizeRowEvent {
-    pub fn from(ptr: *mut c_void) -> cbResizeRowEvent { cbResizeRowEvent { ptr: ptr } }
-    pub fn null() -> cbResizeRowEvent { cbResizeRowEvent::from(0 as *mut c_void) }
+impl CbResizeRowEvent {
+    pub fn from(ptr: *mut c_void) -> CbResizeRowEvent { CbResizeRowEvent { ptr: ptr } }
+    pub fn null() -> CbResizeRowEvent { CbResizeRowEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbResizeRowEvent : _cbPluginEvent {
+pub trait TCbResizeRowEvent : TCbPluginEvent {
 }
 
-pub struct cbRightDownEvent { ptr: *mut c_void }
-impl _cbRightDownEvent for cbRightDownEvent {}
-impl _cbPluginEvent for cbRightDownEvent {}
-impl _wxEvent for cbRightDownEvent {}
-impl _wxObject for cbRightDownEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbRightDownEvent { ptr: *mut c_void }
+impl TCbRightDownEvent for CbRightDownEvent {}
+impl TCbPluginEvent for CbRightDownEvent {}
+impl TWxEvent for CbRightDownEvent {}
+impl TWxObject for CbRightDownEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbRightDownEvent {
-    pub fn from(ptr: *mut c_void) -> cbRightDownEvent { cbRightDownEvent { ptr: ptr } }
-    pub fn null() -> cbRightDownEvent { cbRightDownEvent::from(0 as *mut c_void) }
+impl CbRightDownEvent {
+    pub fn from(ptr: *mut c_void) -> CbRightDownEvent { CbRightDownEvent { ptr: ptr } }
+    pub fn null() -> CbRightDownEvent { CbRightDownEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbRightDownEvent : _cbPluginEvent {
+pub trait TCbRightDownEvent : TCbPluginEvent {
 }
 
-pub struct cbRightUpEvent { ptr: *mut c_void }
-impl _cbRightUpEvent for cbRightUpEvent {}
-impl _cbPluginEvent for cbRightUpEvent {}
-impl _wxEvent for cbRightUpEvent {}
-impl _wxObject for cbRightUpEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbRightUpEvent { ptr: *mut c_void }
+impl TCbRightUpEvent for CbRightUpEvent {}
+impl TCbPluginEvent for CbRightUpEvent {}
+impl TWxEvent for CbRightUpEvent {}
+impl TWxObject for CbRightUpEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbRightUpEvent {
-    pub fn from(ptr: *mut c_void) -> cbRightUpEvent { cbRightUpEvent { ptr: ptr } }
-    pub fn null() -> cbRightUpEvent { cbRightUpEvent::from(0 as *mut c_void) }
+impl CbRightUpEvent {
+    pub fn from(ptr: *mut c_void) -> CbRightUpEvent { CbRightUpEvent { ptr: ptr } }
+    pub fn null() -> CbRightUpEvent { CbRightUpEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbRightUpEvent : _cbPluginEvent {
+pub trait TCbRightUpEvent : TCbPluginEvent {
 }
 
-pub struct cbRowDragPlugin { ptr: *mut c_void }
-impl _cbRowDragPlugin for cbRowDragPlugin {}
-impl _cbPluginBase for cbRowDragPlugin {}
-impl _wxEvtHandler for cbRowDragPlugin {}
-impl _wxObject for cbRowDragPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbRowDragPlugin { ptr: *mut c_void }
+impl TCbRowDragPlugin for CbRowDragPlugin {}
+impl TCbPluginBase for CbRowDragPlugin {}
+impl TWxEvtHandler for CbRowDragPlugin {}
+impl TWxObject for CbRowDragPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbRowDragPlugin {
-    pub fn from(ptr: *mut c_void) -> cbRowDragPlugin { cbRowDragPlugin { ptr: ptr } }
-    pub fn null() -> cbRowDragPlugin { cbRowDragPlugin::from(0 as *mut c_void) }
+impl CbRowDragPlugin {
+    pub fn from(ptr: *mut c_void) -> CbRowDragPlugin { CbRowDragPlugin { ptr: ptr } }
+    pub fn null() -> CbRowDragPlugin { CbRowDragPlugin::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbRowDragPlugin : _cbPluginBase {
+pub trait TCbRowDragPlugin : TCbPluginBase {
 }
 
-pub struct cbRowInfo { ptr: *mut c_void }
-impl _cbRowInfo for cbRowInfo {}
-impl _wxObject for cbRowInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbRowInfo { ptr: *mut c_void }
+impl TCbRowInfo for CbRowInfo {}
+impl TWxObject for CbRowInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbRowInfo {
-    pub fn from(ptr: *mut c_void) -> cbRowInfo { cbRowInfo { ptr: ptr } }
-    pub fn null() -> cbRowInfo { cbRowInfo::from(0 as *mut c_void) }
+impl CbRowInfo {
+    pub fn from(ptr: *mut c_void) -> CbRowInfo { CbRowInfo { ptr: ptr } }
+    pub fn null() -> CbRowInfo { CbRowInfo::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbRowInfo : _wxObject {
+pub trait TCbRowInfo : TWxObject {
 }
 
-pub struct cbRowLayoutPlugin { ptr: *mut c_void }
-impl _cbRowLayoutPlugin for cbRowLayoutPlugin {}
-impl _cbPluginBase for cbRowLayoutPlugin {}
-impl _wxEvtHandler for cbRowLayoutPlugin {}
-impl _wxObject for cbRowLayoutPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbRowLayoutPlugin { ptr: *mut c_void }
+impl TCbRowLayoutPlugin for CbRowLayoutPlugin {}
+impl TCbPluginBase for CbRowLayoutPlugin {}
+impl TWxEvtHandler for CbRowLayoutPlugin {}
+impl TWxObject for CbRowLayoutPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbRowLayoutPlugin {
-    pub fn from(ptr: *mut c_void) -> cbRowLayoutPlugin { cbRowLayoutPlugin { ptr: ptr } }
-    pub fn null() -> cbRowLayoutPlugin { cbRowLayoutPlugin::from(0 as *mut c_void) }
+impl CbRowLayoutPlugin {
+    pub fn from(ptr: *mut c_void) -> CbRowLayoutPlugin { CbRowLayoutPlugin { ptr: ptr } }
+    pub fn null() -> CbRowLayoutPlugin { CbRowLayoutPlugin::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbRowLayoutPlugin : _cbPluginBase {
+pub trait TCbRowLayoutPlugin : TCbPluginBase {
 }
 
-pub struct cbSimpleCustomizationPlugin { ptr: *mut c_void }
-impl _cbSimpleCustomizationPlugin for cbSimpleCustomizationPlugin {}
-impl _cbPluginBase for cbSimpleCustomizationPlugin {}
-impl _wxEvtHandler for cbSimpleCustomizationPlugin {}
-impl _wxObject for cbSimpleCustomizationPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbSimpleCustomizationPlugin { ptr: *mut c_void }
+impl TCbSimpleCustomizationPlugin for CbSimpleCustomizationPlugin {}
+impl TCbPluginBase for CbSimpleCustomizationPlugin {}
+impl TWxEvtHandler for CbSimpleCustomizationPlugin {}
+impl TWxObject for CbSimpleCustomizationPlugin { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbSimpleCustomizationPlugin {
-    pub fn from(ptr: *mut c_void) -> cbSimpleCustomizationPlugin { cbSimpleCustomizationPlugin { ptr: ptr } }
-    pub fn null() -> cbSimpleCustomizationPlugin { cbSimpleCustomizationPlugin::from(0 as *mut c_void) }
+impl CbSimpleCustomizationPlugin {
+    pub fn from(ptr: *mut c_void) -> CbSimpleCustomizationPlugin { CbSimpleCustomizationPlugin { ptr: ptr } }
+    pub fn null() -> CbSimpleCustomizationPlugin { CbSimpleCustomizationPlugin::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbSimpleCustomizationPlugin : _cbPluginBase {
+pub trait TCbSimpleCustomizationPlugin : TCbPluginBase {
 }
 
-pub struct cbSimpleUpdatesMgr { ptr: *mut c_void }
-impl _cbSimpleUpdatesMgr for cbSimpleUpdatesMgr {}
-impl _cbUpdatesManagerBase for cbSimpleUpdatesMgr {}
-impl _wxObject for cbSimpleUpdatesMgr { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbSimpleUpdatesMgr { ptr: *mut c_void }
+impl TCbSimpleUpdatesMgr for CbSimpleUpdatesMgr {}
+impl TCbUpdatesManagerBase for CbSimpleUpdatesMgr {}
+impl TWxObject for CbSimpleUpdatesMgr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbSimpleUpdatesMgr {
-    pub fn from(ptr: *mut c_void) -> cbSimpleUpdatesMgr { cbSimpleUpdatesMgr { ptr: ptr } }
-    pub fn null() -> cbSimpleUpdatesMgr { cbSimpleUpdatesMgr::from(0 as *mut c_void) }
+impl CbSimpleUpdatesMgr {
+    pub fn from(ptr: *mut c_void) -> CbSimpleUpdatesMgr { CbSimpleUpdatesMgr { ptr: ptr } }
+    pub fn null() -> CbSimpleUpdatesMgr { CbSimpleUpdatesMgr::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbSimpleUpdatesMgr : _cbUpdatesManagerBase {
+pub trait TCbSimpleUpdatesMgr : TCbUpdatesManagerBase {
 }
 
-pub struct cbSizeBarWndEvent { ptr: *mut c_void }
-impl _cbSizeBarWndEvent for cbSizeBarWndEvent {}
-impl _cbPluginEvent for cbSizeBarWndEvent {}
-impl _wxEvent for cbSizeBarWndEvent {}
-impl _wxObject for cbSizeBarWndEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbSizeBarWndEvent { ptr: *mut c_void }
+impl TCbSizeBarWndEvent for CbSizeBarWndEvent {}
+impl TCbPluginEvent for CbSizeBarWndEvent {}
+impl TWxEvent for CbSizeBarWndEvent {}
+impl TWxObject for CbSizeBarWndEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbSizeBarWndEvent {
-    pub fn from(ptr: *mut c_void) -> cbSizeBarWndEvent { cbSizeBarWndEvent { ptr: ptr } }
-    pub fn null() -> cbSizeBarWndEvent { cbSizeBarWndEvent::from(0 as *mut c_void) }
+impl CbSizeBarWndEvent {
+    pub fn from(ptr: *mut c_void) -> CbSizeBarWndEvent { CbSizeBarWndEvent { ptr: ptr } }
+    pub fn null() -> CbSizeBarWndEvent { CbSizeBarWndEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbSizeBarWndEvent : _cbPluginEvent {
+pub trait TCbSizeBarWndEvent : TCbPluginEvent {
 }
 
-pub struct cbStartBarDraggingEvent { ptr: *mut c_void }
-impl _cbStartBarDraggingEvent for cbStartBarDraggingEvent {}
-impl _cbPluginEvent for cbStartBarDraggingEvent {}
-impl _wxEvent for cbStartBarDraggingEvent {}
-impl _wxObject for cbStartBarDraggingEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbStartBarDraggingEvent { ptr: *mut c_void }
+impl TCbStartBarDraggingEvent for CbStartBarDraggingEvent {}
+impl TCbPluginEvent for CbStartBarDraggingEvent {}
+impl TWxEvent for CbStartBarDraggingEvent {}
+impl TWxObject for CbStartBarDraggingEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbStartBarDraggingEvent {
-    pub fn from(ptr: *mut c_void) -> cbStartBarDraggingEvent { cbStartBarDraggingEvent { ptr: ptr } }
-    pub fn null() -> cbStartBarDraggingEvent { cbStartBarDraggingEvent::from(0 as *mut c_void) }
+impl CbStartBarDraggingEvent {
+    pub fn from(ptr: *mut c_void) -> CbStartBarDraggingEvent { CbStartBarDraggingEvent { ptr: ptr } }
+    pub fn null() -> CbStartBarDraggingEvent { CbStartBarDraggingEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbStartBarDraggingEvent : _cbPluginEvent {
+pub trait TCbStartBarDraggingEvent : TCbPluginEvent {
 }
 
-pub struct cbStartDrawInAreaEvent { ptr: *mut c_void }
-impl _cbStartDrawInAreaEvent for cbStartDrawInAreaEvent {}
-impl _cbPluginEvent for cbStartDrawInAreaEvent {}
-impl _wxEvent for cbStartDrawInAreaEvent {}
-impl _wxObject for cbStartDrawInAreaEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbStartDrawInAreaEvent { ptr: *mut c_void }
+impl TCbStartDrawInAreaEvent for CbStartDrawInAreaEvent {}
+impl TCbPluginEvent for CbStartDrawInAreaEvent {}
+impl TWxEvent for CbStartDrawInAreaEvent {}
+impl TWxObject for CbStartDrawInAreaEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbStartDrawInAreaEvent {
-    pub fn from(ptr: *mut c_void) -> cbStartDrawInAreaEvent { cbStartDrawInAreaEvent { ptr: ptr } }
-    pub fn null() -> cbStartDrawInAreaEvent { cbStartDrawInAreaEvent::from(0 as *mut c_void) }
+impl CbStartDrawInAreaEvent {
+    pub fn from(ptr: *mut c_void) -> CbStartDrawInAreaEvent { CbStartDrawInAreaEvent { ptr: ptr } }
+    pub fn null() -> CbStartDrawInAreaEvent { CbStartDrawInAreaEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbStartDrawInAreaEvent : _cbPluginEvent {
+pub trait TCbStartDrawInAreaEvent : TCbPluginEvent {
 }
 
-pub struct cbUpdatesManagerBase { ptr: *mut c_void }
-impl _cbUpdatesManagerBase for cbUpdatesManagerBase {}
-impl _wxObject for cbUpdatesManagerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CbUpdatesManagerBase { ptr: *mut c_void }
+impl TCbUpdatesManagerBase for CbUpdatesManagerBase {}
+impl TWxObject for CbUpdatesManagerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl cbUpdatesManagerBase {
-    pub fn from(ptr: *mut c_void) -> cbUpdatesManagerBase { cbUpdatesManagerBase { ptr: ptr } }
-    pub fn null() -> cbUpdatesManagerBase { cbUpdatesManagerBase::from(0 as *mut c_void) }
+impl CbUpdatesManagerBase {
+    pub fn from(ptr: *mut c_void) -> CbUpdatesManagerBase { CbUpdatesManagerBase { ptr: ptr } }
+    pub fn null() -> CbUpdatesManagerBase { CbUpdatesManagerBase::from(0 as *mut c_void) }
     
 }
 
-pub trait _cbUpdatesManagerBase : _wxObject {
+pub trait TCbUpdatesManagerBase : TWxObject {
 }
 

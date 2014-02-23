@@ -2,27 +2,27 @@ use std::libc::*;
 use _unsafe::*;
 use base::*;
 
-pub struct wxRustApp { ptr: *mut c_void }
-impl _wxRustApp for wxRustApp {}
-impl _wxApp for wxRustApp {}
-impl _wxEvtHandler for wxRustApp {}
-impl _wxObject for wxRustApp { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxrApp { ptr: *mut c_void }
+impl TWxrApp for WxrApp {}
+impl TWxApp for WxrApp {}
+impl TWxEvtHandler for WxrApp {}
+impl TWxObject for WxrApp { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRustApp {
-    pub fn from(ptr: *mut c_void) -> wxRustApp { wxRustApp { ptr: ptr } }
-    pub fn null() -> wxRustApp { wxRustApp::from(0 as *mut c_void) }
+impl WxrApp {
+    pub fn from(ptr: *mut c_void) -> WxrApp { WxrApp { ptr: ptr } }
+    pub fn null() -> WxrApp { WxrApp::from(0 as *mut c_void) }
     
     pub fn bell() {
         unsafe { ELJApp_Bell() }
     }
-    pub fn newLogTarget() -> wxRustLog {
-        unsafe { wxRustLog { ptr: ELJApp_CreateLogTarget() } }
+    pub fn newLogTarget() -> WxrLog {
+        unsafe { WxrLog { ptr: ELJApp_CreateLogTarget() } }
     }
     pub fn dispatch() {
         unsafe { ELJApp_Dispatch() }
     }
-    pub fn displaySize() -> wxSize {
-        unsafe { wxSize { ptr: ELJApp_DisplaySize() } }
+    pub fn displaySize() -> WxSize {
+        unsafe { WxSize { ptr: ELJApp_DisplaySize() } }
     }
     pub fn enableTooltips(_enable: c_int) {
         unsafe { ELJApp_EnableTooltips(_enable) }
@@ -30,7 +30,7 @@ impl wxRustApp {
     pub fn enableTopLevelWindows(_enb: c_int) {
         unsafe { ELJApp_EnableTopLevelWindows(_enb) }
     }
-    pub fn executeProcess<T: _wxProcess>(_cmd: &str, _snc: c_int, _prc: &T) -> c_int {
+    pub fn executeProcess<T: TWxProcess>(_cmd: &str, _snc: c_int, _prc: &T) -> c_int {
         let _cmd = wxT(_cmd);
         unsafe { ELJApp_ExecuteProcess(_cmd.ptr(), _snc, _prc.ptr()) }
     }
@@ -40,52 +40,52 @@ impl wxRustApp {
     pub fn exitMainLoop() {
         unsafe { ELJApp_ExitMainLoop() }
     }
-    pub fn findWindowById<T: _wxWindow>(_id: c_int, _prt: &T) -> *mut c_void {
+    pub fn findWindowById<T: TWxWindow>(_id: c_int, _prt: &T) -> *mut c_void {
         unsafe { ELJApp_FindWindowById(_id, _prt.ptr()) }
     }
-    pub fn findWindowByLabel<T: _wxWindow>(_lbl: &str, _prt: &T) -> wxWindow {
+    pub fn findWindowByLabel<T: TWxWindow>(_lbl: &str, _prt: &T) -> WxWindow {
         let _lbl = wxT(_lbl);
-        unsafe { wxWindow { ptr: ELJApp_FindWindowByLabel(_lbl.ptr(), _prt.ptr()) } }
+        unsafe { WxWindow { ptr: ELJApp_FindWindowByLabel(_lbl.ptr(), _prt.ptr()) } }
     }
-    pub fn findWindowByName<T: _wxWindow>(_lbl: &str, _prt: &T) -> wxWindow {
+    pub fn findWindowByName<T: TWxWindow>(_lbl: &str, _prt: &T) -> WxWindow {
         let _lbl = wxT(_lbl);
-        unsafe { wxWindow { ptr: ELJApp_FindWindowByName(_lbl.ptr(), _prt.ptr()) } }
+        unsafe { WxWindow { ptr: ELJApp_FindWindowByName(_lbl.ptr(), _prt.ptr()) } }
     }
-    pub fn getApp() -> wxApp {
-        unsafe { wxApp { ptr: ELJApp_GetApp() } }
+    pub fn getApp() -> WxApp {
+        unsafe { WxApp { ptr: ELJApp_GetApp() } }
     }
     pub fn getAppName() -> ~str {
-        unsafe { wxString { ptr: ELJApp_GetAppName() }.to_str() }
+        unsafe { WxString { ptr: ELJApp_GetAppName() }.to_str() }
     }
     pub fn getClassName() -> ~str {
-        unsafe { wxString { ptr: ELJApp_GetClassName() }.to_str() }
+        unsafe { WxString { ptr: ELJApp_GetClassName() }.to_str() }
     }
     pub fn getExitOnFrameDelete() -> c_int {
         unsafe { ELJApp_GetExitOnFrameDelete() }
     }
     pub fn getOsDescription() -> ~str {
-        unsafe { wxString { ptr: ELJApp_GetOsDescription() }.to_str() }
+        unsafe { WxString { ptr: ELJApp_GetOsDescription() }.to_str() }
     }
     pub fn getOsVersion(_maj: *mut c_void, _min: *mut c_void) -> c_int {
         unsafe { ELJApp_GetOsVersion(_maj, _min) }
     }
-    pub fn getTopWindow() -> wxWindow {
-        unsafe { wxWindow { ptr: ELJApp_GetTopWindow() } }
+    pub fn getTopWindow() -> WxWindow {
+        unsafe { WxWindow { ptr: ELJApp_GetTopWindow() } }
     }
     pub fn getUseBestVisual() -> c_int {
         unsafe { ELJApp_GetUseBestVisual() }
     }
     pub fn getUserHome(_usr: *mut c_void) -> ~str {
-        unsafe { wxString { ptr: ELJApp_GetUserHome(_usr) }.to_str() }
+        unsafe { WxString { ptr: ELJApp_GetUserHome(_usr) }.to_str() }
     }
     pub fn getUserId() -> ~str {
-        unsafe { wxString { ptr: ELJApp_GetUserId() }.to_str() }
+        unsafe { WxString { ptr: ELJApp_GetUserId() }.to_str() }
     }
     pub fn getUserName() -> ~str {
-        unsafe { wxString { ptr: ELJApp_GetUserName() }.to_str() }
+        unsafe { WxString { ptr: ELJApp_GetUserName() }.to_str() }
     }
     pub fn getVendorName() -> ~str {
-        unsafe { wxString { ptr: ELJApp_GetVendorName() }.to_str() }
+        unsafe { WxString { ptr: ELJApp_GetVendorName() }.to_str() }
     }
     pub fn initAllImageHandlers() {
         unsafe { ELJApp_InitAllImageHandlers() }
@@ -96,13 +96,13 @@ impl wxRustApp {
     pub fn mainLoop() -> c_int {
         unsafe { ELJApp_MainLoop() }
     }
-    pub fn mousePosition() -> wxPoint {
-        unsafe { wxPoint { ptr: ELJApp_MousePosition() } }
+    pub fn mousePosition() -> WxPoint {
+        unsafe { WxPoint { ptr: ELJApp_MousePosition() } }
     }
     pub fn pending() -> c_int {
         unsafe { ELJApp_Pending() }
     }
-    pub fn safeYield<T: _wxWindow>(_win: &T) -> c_int {
+    pub fn safeYield<T: TWxWindow>(_win: &T) -> c_int {
         unsafe { ELJApp_SafeYield(_win.ptr()) }
     }
     pub fn setAppName(name: &str) {
@@ -122,7 +122,7 @@ impl wxRustApp {
     pub fn setTooltipDelay(_ms: c_int) {
         unsafe { ELJApp_SetTooltipDelay(_ms) }
     }
-    pub fn setTopWindow<T: _wxWindow>(_wnd: &T) {
+    pub fn setTopWindow<T: TWxWindow>(_wnd: &T) {
         unsafe { ELJApp_SetTopWindow(_wnd.ptr()) }
     }
     pub fn setUseBestVisual(flag: c_int) {
@@ -144,7 +144,7 @@ impl wxRustApp {
     pub fn isTerminating() -> c_int {
         unsafe { ELJApp_IsTerminating() }
     }
-    pub fn initializeC<T: _wxClosure>(closure: &T, _argc: c_int, _argv: *mut *mut c_char) {
+    pub fn initializeC<T: TWxClosure>(closure: &T, _argc: c_int, _argv: *mut *mut c_char) {
         unsafe { ELJApp_InitializeC(closure.ptr(), _argc, _argv) }
     }
     pub fn getIdleInterval() -> c_int {
@@ -155,57 +155,57 @@ impl wxRustApp {
     }
 }
 
-pub trait _wxRustApp : _wxApp {
+pub trait TWxrApp : TWxApp {
 }
 
-pub struct wxRustArtProv { ptr: *mut c_void }
-impl _wxRustArtProv for wxRustArtProv {}
-impl _wxArtProvider for wxRustArtProv {}
-impl _wxObject for wxRustArtProv { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxrArtProv { ptr: *mut c_void }
+impl TWxrArtProv for WxrArtProv {}
+impl TWxArtProvider for WxrArtProv {}
+impl TWxObject for WxrArtProv { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRustArtProv {
-    pub fn from(ptr: *mut c_void) -> wxRustArtProv { wxRustArtProv { ptr: ptr } }
-    pub fn null() -> wxRustArtProv { wxRustArtProv::from(0 as *mut c_void) }
+impl WxrArtProv {
+    pub fn from(ptr: *mut c_void) -> WxrArtProv { WxrArtProv { ptr: ptr } }
+    pub fn null() -> WxrArtProv { WxrArtProv::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _clb: *mut c_void) -> wxRustArtProv {
-        unsafe { wxRustArtProv { ptr: ELJArtProv_Create(_obj, _clb) } }
+    pub fn new(_obj: *mut c_void, _clb: *mut c_void) -> WxrArtProv {
+        unsafe { WxrArtProv { ptr: ELJArtProv_Create(_obj, _clb) } }
     }
 }
 
-pub trait _wxRustArtProv : _wxArtProvider {
+pub trait TWxrArtProv : TWxArtProvider {
     fn release(&self) {
         unsafe { ELJArtProv_Release(self.ptr()) }
     }
 }
 
-pub struct wxRustCommand { ptr: *mut c_void }
-impl _wxRustCommand for wxRustCommand {}
-impl _wxCommand for wxRustCommand {}
-impl _wxObject for wxRustCommand { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxrCommand { ptr: *mut c_void }
+impl TWxrCommand for WxrCommand {}
+impl TWxCommand for WxrCommand {}
+impl TWxObject for WxrCommand { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRustCommand {
-    pub fn from(ptr: *mut c_void) -> wxRustCommand { wxRustCommand { ptr: ptr } }
-    pub fn null() -> wxRustCommand { wxRustCommand::from(0 as *mut c_void) }
+impl WxrCommand {
+    pub fn from(ptr: *mut c_void) -> WxrCommand { WxrCommand { ptr: ptr } }
+    pub fn null() -> WxrCommand { WxrCommand::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxRustCommand : _wxCommand {
+pub trait TWxrCommand : TWxCommand {
 }
 
-pub struct wxRustDragDataObject { ptr: *mut c_void }
-impl _wxRustDragDataObject for wxRustDragDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxrDragDataObject { ptr: *mut c_void }
+impl TWxrDragDataObject for WxrDragDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRustDragDataObject {
-    pub fn from(ptr: *mut c_void) -> wxRustDragDataObject { wxRustDragDataObject { ptr: ptr } }
-    pub fn null() -> wxRustDragDataObject { wxRustDragDataObject::from(0 as *mut c_void) }
+impl WxrDragDataObject {
+    pub fn from(ptr: *mut c_void) -> WxrDragDataObject { WxrDragDataObject { ptr: ptr } }
+    pub fn null() -> WxrDragDataObject { WxrDragDataObject::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _fmt: &str, _func1: *mut c_void, _func2: *mut c_void, _func3: *mut c_void) -> wxRustDragDataObject {
+    pub fn new(_obj: *mut c_void, _fmt: &str, _func1: *mut c_void, _func2: *mut c_void, _func3: *mut c_void) -> WxrDragDataObject {
         let _fmt = wxT(_fmt);
-        unsafe { wxRustDragDataObject { ptr: ELJDragDataObject_Create(_obj, _fmt.ptr(), _func1, _func2, _func3) } }
+        unsafe { WxrDragDataObject { ptr: ELJDragDataObject_Create(_obj, _fmt.ptr(), _func1, _func2, _func3) } }
     }
 }
 
-pub trait _wxRustDragDataObject {
+pub trait TWxrDragDataObject {
     fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
@@ -213,20 +213,20 @@ pub trait _wxRustDragDataObject {
     }
 }
 
-pub struct wxRustDropTarget { ptr: *mut c_void }
-impl _wxRustDropTarget for wxRustDropTarget {}
-impl _wxDropTarget for wxRustDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxrDropTarget { ptr: *mut c_void }
+impl TWxrDropTarget for WxrDropTarget {}
+impl TWxDropTarget for WxrDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRustDropTarget {
-    pub fn from(ptr: *mut c_void) -> wxRustDropTarget { wxRustDropTarget { ptr: ptr } }
-    pub fn null() -> wxRustDropTarget { wxRustDropTarget::from(0 as *mut c_void) }
+impl WxrDropTarget {
+    pub fn from(ptr: *mut c_void) -> WxrDropTarget { WxrDropTarget { ptr: ptr } }
+    pub fn null() -> WxrDropTarget { WxrDropTarget::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void) -> wxRustDropTarget {
-        unsafe { wxRustDropTarget { ptr: ELJDropTarget_Create(_obj) } }
+    pub fn new(_obj: *mut c_void) -> WxrDropTarget {
+        unsafe { WxrDropTarget { ptr: ELJDropTarget_Create(_obj) } }
     }
 }
 
-pub trait _wxRustDropTarget : _wxDropTarget {
+pub trait TWxrDropTarget : TWxDropTarget {
     fn delete(&self) {
         unsafe { ELJDropTarget_Delete(self.ptr()) }
     }
@@ -247,21 +247,21 @@ pub trait _wxRustDropTarget : _wxDropTarget {
     }
 }
 
-pub struct wxRustFileDropTarget { ptr: *mut c_void }
-impl _wxRustFileDropTarget for wxRustFileDropTarget {}
-impl _wxFileDropTarget for wxRustFileDropTarget {}
-impl _wxDropTarget for wxRustFileDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxrFileDropTarget { ptr: *mut c_void }
+impl TWxrFileDropTarget for WxrFileDropTarget {}
+impl TWxFileDropTarget for WxrFileDropTarget {}
+impl TWxDropTarget for WxrFileDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRustFileDropTarget {
-    pub fn from(ptr: *mut c_void) -> wxRustFileDropTarget { wxRustFileDropTarget { ptr: ptr } }
-    pub fn null() -> wxRustFileDropTarget { wxRustFileDropTarget::from(0 as *mut c_void) }
+impl WxrFileDropTarget {
+    pub fn from(ptr: *mut c_void) -> WxrFileDropTarget { WxrFileDropTarget { ptr: ptr } }
+    pub fn null() -> WxrFileDropTarget { WxrFileDropTarget::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _func: *mut c_void) -> wxRustFileDropTarget {
-        unsafe { wxRustFileDropTarget { ptr: ELJFileDropTarget_Create(_obj, _func) } }
+    pub fn new(_obj: *mut c_void, _func: *mut c_void) -> WxrFileDropTarget {
+        unsafe { WxrFileDropTarget { ptr: ELJFileDropTarget_Create(_obj, _func) } }
     }
 }
 
-pub trait _wxRustFileDropTarget : _wxFileDropTarget {
+pub trait TWxrFileDropTarget : TWxFileDropTarget {
     fn delete(&self) {
         unsafe { ELJFileDropTarget_Delete(self.ptr()) }
     }
@@ -282,23 +282,23 @@ pub trait _wxRustFileDropTarget : _wxFileDropTarget {
     }
 }
 
-pub struct wxRustLog { ptr: *mut c_void }
-impl _wxRustLog for wxRustLog {}
-impl _wxLog for wxRustLog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxrLog { ptr: *mut c_void }
+impl TWxrLog for WxrLog {}
+impl TWxLog for WxrLog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRustLog {
-    pub fn from(ptr: *mut c_void) -> wxRustLog { wxRustLog { ptr: ptr } }
-    pub fn null() -> wxRustLog { wxRustLog::from(0 as *mut c_void) }
+impl WxrLog {
+    pub fn from(ptr: *mut c_void) -> WxrLog { WxrLog { ptr: ptr } }
+    pub fn null() -> WxrLog { WxrLog::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _fnc: *mut c_void) -> wxRustLog {
-        unsafe { wxRustLog { ptr: ELJLog_Create(_obj, _fnc) } }
+    pub fn new(_obj: *mut c_void, _fnc: *mut c_void) -> WxrLog {
+        unsafe { WxrLog { ptr: ELJLog_Create(_obj, _fnc) } }
     }
     pub fn getActiveTarget() -> *mut c_void {
         unsafe { ELJLog_GetActiveTarget() }
     }
 }
 
-pub trait _wxRustLog : _wxLog {
+pub trait TWxrLog : TWxLog {
     fn enableLogging(&self, doIt: c_int) -> c_int {
         unsafe { ELJLog_EnableLogging(self.ptr(), doIt) }
     }
@@ -307,80 +307,80 @@ pub trait _wxRustLog : _wxLog {
     }
 }
 
-pub struct wxRustPreviewControlBar { ptr: *mut c_void }
-impl _wxRustPreviewControlBar for wxRustPreviewControlBar {}
-impl _wxPreviewControlBar for wxRustPreviewControlBar {}
-impl _wxPanel for wxRustPreviewControlBar {}
-impl _wxWindow for wxRustPreviewControlBar {}
-impl _wxEvtHandler for wxRustPreviewControlBar {}
-impl _wxObject for wxRustPreviewControlBar { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxrPreviewControlBar { ptr: *mut c_void }
+impl TWxrPreviewControlBar for WxrPreviewControlBar {}
+impl TWxPreviewControlBar for WxrPreviewControlBar {}
+impl TWxPanel for WxrPreviewControlBar {}
+impl TWxWindow for WxrPreviewControlBar {}
+impl TWxEvtHandler for WxrPreviewControlBar {}
+impl TWxObject for WxrPreviewControlBar { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRustPreviewControlBar {
-    pub fn from(ptr: *mut c_void) -> wxRustPreviewControlBar { wxRustPreviewControlBar { ptr: ptr } }
-    pub fn null() -> wxRustPreviewControlBar { wxRustPreviewControlBar::from(0 as *mut c_void) }
+impl WxrPreviewControlBar {
+    pub fn from(ptr: *mut c_void) -> WxrPreviewControlBar { WxrPreviewControlBar { ptr: ptr } }
+    pub fn null() -> WxrPreviewControlBar { WxrPreviewControlBar::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(preview: *mut c_void, buttons: c_int, parent: &T, title: *mut c_void, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> wxRustPreviewControlBar {
-        unsafe { wxRustPreviewControlBar { ptr: ELJPreviewControlBar_Create(preview, buttons, parent.ptr(), title, x, y, w, h, style) } }
+    pub fn new<T: TWxWindow>(preview: *mut c_void, buttons: c_int, parent: &T, title: *mut c_void, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> WxrPreviewControlBar {
+        unsafe { WxrPreviewControlBar { ptr: ELJPreviewControlBar_Create(preview, buttons, parent.ptr(), title, x, y, w, h, style) } }
     }
 }
 
-pub trait _wxRustPreviewControlBar : _wxPreviewControlBar {
+pub trait TWxrPreviewControlBar : TWxPreviewControlBar {
 }
 
-pub struct wxRustPreviewFrame { ptr: *mut c_void }
-impl _wxRustPreviewFrame for wxRustPreviewFrame {}
-impl _wxPreviewFrame for wxRustPreviewFrame {}
-impl _wxFrame for wxRustPreviewFrame {}
-impl _wxTopLevelWindow for wxRustPreviewFrame {}
-impl _wxWindow for wxRustPreviewFrame {}
-impl _wxEvtHandler for wxRustPreviewFrame {}
-impl _wxObject for wxRustPreviewFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxrPreviewFrame { ptr: *mut c_void }
+impl TWxrPreviewFrame for WxrPreviewFrame {}
+impl TWxPreviewFrame for WxrPreviewFrame {}
+impl TWxFrame for WxrPreviewFrame {}
+impl TWxTopLevelWindow for WxrPreviewFrame {}
+impl TWxWindow for WxrPreviewFrame {}
+impl TWxEvtHandler for WxrPreviewFrame {}
+impl TWxObject for WxrPreviewFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRustPreviewFrame {
-    pub fn from(ptr: *mut c_void) -> wxRustPreviewFrame { wxRustPreviewFrame { ptr: ptr } }
-    pub fn null() -> wxRustPreviewFrame { wxRustPreviewFrame::from(0 as *mut c_void) }
+impl WxrPreviewFrame {
+    pub fn from(ptr: *mut c_void) -> WxrPreviewFrame { WxrPreviewFrame { ptr: ptr } }
+    pub fn null() -> WxrPreviewFrame { WxrPreviewFrame::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_obj: *mut c_void, _init: *mut c_void, _create_canvas: *mut c_void, _create_toolbar: *mut c_void, preview: *mut c_void, parent: &T, title: *mut c_void, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> wxRustPreviewFrame {
-        unsafe { wxRustPreviewFrame { ptr: ELJPreviewFrame_Create(_obj, _init, _create_canvas, _create_toolbar, preview, parent.ptr(), title, x, y, w, h, style) } }
+    pub fn new<T: TWxWindow>(_obj: *mut c_void, _init: *mut c_void, _create_canvas: *mut c_void, _create_toolbar: *mut c_void, preview: *mut c_void, parent: &T, title: *mut c_void, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> WxrPreviewFrame {
+        unsafe { WxrPreviewFrame { ptr: ELJPreviewFrame_Create(_obj, _init, _create_canvas, _create_toolbar, preview, parent.ptr(), title, x, y, w, h, style) } }
     }
 }
 
-pub trait _wxRustPreviewFrame : _wxPreviewFrame {
+pub trait TWxrPreviewFrame : TWxPreviewFrame {
     fn getControlBar(&self) -> *mut c_void {
         unsafe { ELJPreviewFrame_GetControlBar(self.ptr()) }
     }
-    fn getPreviewCanvas(&self) -> wxPreviewCanvas {
-        unsafe { wxPreviewCanvas { ptr: ELJPreviewFrame_GetPreviewCanvas(self.ptr()) } }
+    fn getPreviewCanvas(&self) -> WxPreviewCanvas {
+        unsafe { WxPreviewCanvas { ptr: ELJPreviewFrame_GetPreviewCanvas(self.ptr()) } }
     }
-    fn getPrintPreview(&self) -> wxPrintPreview {
-        unsafe { wxPrintPreview { ptr: ELJPreviewFrame_GetPrintPreview(self.ptr()) } }
+    fn getPrintPreview(&self) -> WxPrintPreview {
+        unsafe { WxPrintPreview { ptr: ELJPreviewFrame_GetPrintPreview(self.ptr()) } }
     }
     fn setControlBar(&self, obj: *mut c_void) {
         unsafe { ELJPreviewFrame_SetControlBar(self.ptr(), obj) }
     }
-    fn setPreviewCanvas<T: _wxPreviewCanvas>(&self, obj: &T) {
+    fn setPreviewCanvas<T: TWxPreviewCanvas>(&self, obj: &T) {
         unsafe { ELJPreviewFrame_SetPreviewCanvas(self.ptr(), obj.ptr()) }
     }
-    fn setPrintPreview<T: _wxPrintPreview>(&self, obj: &T) {
+    fn setPrintPreview<T: TWxPrintPreview>(&self, obj: &T) {
         unsafe { ELJPreviewFrame_SetPrintPreview(self.ptr(), obj.ptr()) }
     }
 }
 
-pub struct wxRustTextDropTarget { ptr: *mut c_void }
-impl _wxRustTextDropTarget for wxRustTextDropTarget {}
-impl _wxTextDropTarget for wxRustTextDropTarget {}
-impl _wxDropTarget for wxRustTextDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxrTextDropTarget { ptr: *mut c_void }
+impl TWxrTextDropTarget for WxrTextDropTarget {}
+impl TWxTextDropTarget for WxrTextDropTarget {}
+impl TWxDropTarget for WxrTextDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRustTextDropTarget {
-    pub fn from(ptr: *mut c_void) -> wxRustTextDropTarget { wxRustTextDropTarget { ptr: ptr } }
-    pub fn null() -> wxRustTextDropTarget { wxRustTextDropTarget::from(0 as *mut c_void) }
+impl WxrTextDropTarget {
+    pub fn from(ptr: *mut c_void) -> WxrTextDropTarget { WxrTextDropTarget { ptr: ptr } }
+    pub fn null() -> WxrTextDropTarget { WxrTextDropTarget::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _func: *mut c_void) -> wxRustTextDropTarget {
-        unsafe { wxRustTextDropTarget { ptr: ELJTextDropTarget_Create(_obj, _func) } }
+    pub fn new(_obj: *mut c_void, _func: *mut c_void) -> WxrTextDropTarget {
+        unsafe { WxrTextDropTarget { ptr: ELJTextDropTarget_Create(_obj, _func) } }
     }
 }
 
-pub trait _wxRustTextDropTarget : _wxTextDropTarget {
+pub trait TWxrTextDropTarget : TWxTextDropTarget {
     fn delete(&self) {
         unsafe { ELJTextDropTarget_Delete(self.ptr()) }
     }
@@ -401,38 +401,38 @@ pub trait _wxRustTextDropTarget : _wxTextDropTarget {
     }
 }
 
-pub struct wxRustTextValidator { ptr: *mut c_void }
-impl _wxRustTextValidator for wxRustTextValidator {}
-impl _wxTextValidator for wxRustTextValidator {}
-impl _wxValidator for wxRustTextValidator {}
-impl _wxEvtHandler for wxRustTextValidator {}
-impl _wxObject for wxRustTextValidator { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxrTextValidator { ptr: *mut c_void }
+impl TWxrTextValidator for WxrTextValidator {}
+impl TWxTextValidator for WxrTextValidator {}
+impl TWxValidator for WxrTextValidator {}
+impl TWxEvtHandler for WxrTextValidator {}
+impl TWxObject for WxrTextValidator { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRustTextValidator {
-    pub fn from(ptr: *mut c_void) -> wxRustTextValidator { wxRustTextValidator { ptr: ptr } }
-    pub fn null() -> wxRustTextValidator { wxRustTextValidator::from(0 as *mut c_void) }
+impl WxrTextValidator {
+    pub fn from(ptr: *mut c_void) -> WxrTextValidator { WxrTextValidator { ptr: ptr } }
+    pub fn null() -> WxrTextValidator { WxrTextValidator::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _fnc: *mut c_void, _txt: *mut c_void, _stl: c_int) -> wxRustTextValidator {
-        unsafe { wxRustTextValidator { ptr: ELJTextValidator_Create(_obj, _fnc, _txt, _stl) } }
+    pub fn new(_obj: *mut c_void, _fnc: *mut c_void, _txt: *mut c_void, _stl: c_int) -> WxrTextValidator {
+        unsafe { WxrTextValidator { ptr: ELJTextValidator_Create(_obj, _fnc, _txt, _stl) } }
     }
 }
 
-pub trait _wxRustTextValidator : _wxTextValidator {
+pub trait TWxrTextValidator : TWxTextValidator {
 }
 
-pub struct wxAcceleratorEntry { ptr: *mut c_void }
-impl _wxAcceleratorEntry for wxAcceleratorEntry { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxAcceleratorEntry { ptr: *mut c_void }
+impl TWxAcceleratorEntry for WxAcceleratorEntry { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxAcceleratorEntry {
-    pub fn from(ptr: *mut c_void) -> wxAcceleratorEntry { wxAcceleratorEntry { ptr: ptr } }
-    pub fn null() -> wxAcceleratorEntry { wxAcceleratorEntry::from(0 as *mut c_void) }
+impl WxAcceleratorEntry {
+    pub fn from(ptr: *mut c_void) -> WxAcceleratorEntry { WxAcceleratorEntry { ptr: ptr } }
+    pub fn null() -> WxAcceleratorEntry { WxAcceleratorEntry::from(0 as *mut c_void) }
     
-    pub fn new(flags: c_int, keyCode: c_int, cmd: c_int) -> wxAcceleratorEntry {
-        unsafe { wxAcceleratorEntry { ptr: wxAcceleratorEntry_Create(flags, keyCode, cmd) } }
+    pub fn new(flags: c_int, keyCode: c_int, cmd: c_int) -> WxAcceleratorEntry {
+        unsafe { WxAcceleratorEntry { ptr: wxAcceleratorEntry_Create(flags, keyCode, cmd) } }
     }
 }
 
-pub trait _wxAcceleratorEntry {
+pub trait TWxAcceleratorEntry {
     fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
@@ -452,19 +452,19 @@ pub trait _wxAcceleratorEntry {
     }
 }
 
-pub struct wxAcceleratorTable { ptr: *mut c_void }
-impl _wxAcceleratorTable for wxAcceleratorTable { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxAcceleratorTable { ptr: *mut c_void }
+impl TWxAcceleratorTable for WxAcceleratorTable { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxAcceleratorTable {
-    pub fn from(ptr: *mut c_void) -> wxAcceleratorTable { wxAcceleratorTable { ptr: ptr } }
-    pub fn null() -> wxAcceleratorTable { wxAcceleratorTable::from(0 as *mut c_void) }
+impl WxAcceleratorTable {
+    pub fn from(ptr: *mut c_void) -> WxAcceleratorTable { WxAcceleratorTable { ptr: ptr } }
+    pub fn null() -> WxAcceleratorTable { WxAcceleratorTable::from(0 as *mut c_void) }
     
-    pub fn new(n: c_int, entries: *mut c_void) -> wxAcceleratorTable {
-        unsafe { wxAcceleratorTable { ptr: wxAcceleratorTable_Create(n, entries) } }
+    pub fn new(n: c_int, entries: *mut c_void) -> WxAcceleratorTable {
+        unsafe { WxAcceleratorTable { ptr: wxAcceleratorTable_Create(n, entries) } }
     }
 }
 
-pub trait _wxAcceleratorTable {
+pub trait TWxAcceleratorTable {
     fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
@@ -472,107 +472,107 @@ pub trait _wxAcceleratorTable {
     }
 }
 
-pub struct wxActivateEvent { ptr: *mut c_void }
-impl _wxActivateEvent for wxActivateEvent {}
-impl _wxEvent for wxActivateEvent {}
-impl _wxObject for wxActivateEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxActivateEvent { ptr: *mut c_void }
+impl TWxActivateEvent for WxActivateEvent {}
+impl TWxEvent for WxActivateEvent {}
+impl TWxObject for WxActivateEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxActivateEvent {
-    pub fn from(ptr: *mut c_void) -> wxActivateEvent { wxActivateEvent { ptr: ptr } }
-    pub fn null() -> wxActivateEvent { wxActivateEvent::from(0 as *mut c_void) }
+impl WxActivateEvent {
+    pub fn from(ptr: *mut c_void) -> WxActivateEvent { WxActivateEvent { ptr: ptr } }
+    pub fn null() -> WxActivateEvent { WxActivateEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxActivateEvent : _wxEvent {
+pub trait TWxActivateEvent : TWxEvent {
     fn getActive(&self) -> c_int {
         unsafe { wxActivateEvent_GetActive(self.ptr()) }
     }
 }
 
-pub struct wxApp { ptr: *mut c_void }
-impl _wxApp for wxApp {}
-impl _wxEvtHandler for wxApp {}
-impl _wxObject for wxApp { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxApp { ptr: *mut c_void }
+impl TWxApp for WxApp {}
+impl TWxEvtHandler for WxApp {}
+impl TWxObject for WxApp { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxApp {
-    pub fn from(ptr: *mut c_void) -> wxApp { wxApp { ptr: ptr } }
-    pub fn null() -> wxApp { wxApp::from(0 as *mut c_void) }
+impl WxApp {
+    pub fn from(ptr: *mut c_void) -> WxApp { WxApp { ptr: ptr } }
+    pub fn null() -> WxApp { WxApp::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxApp : _wxEvtHandler {
+pub trait TWxApp : TWxEvtHandler {
 }
 
-pub struct wxArtProvider { ptr: *mut c_void }
-impl _wxArtProvider for wxArtProvider {}
-impl _wxObject for wxArtProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxArtProvider { ptr: *mut c_void }
+impl TWxArtProvider for WxArtProvider {}
+impl TWxObject for WxArtProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxArtProvider {
-    pub fn from(ptr: *mut c_void) -> wxArtProvider { wxArtProvider { ptr: ptr } }
-    pub fn null() -> wxArtProvider { wxArtProvider::from(0 as *mut c_void) }
+impl WxArtProvider {
+    pub fn from(ptr: *mut c_void) -> WxArtProvider { WxArtProvider { ptr: ptr } }
+    pub fn null() -> WxArtProvider { WxArtProvider::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxArtProvider : _wxObject {
+pub trait TWxArtProvider : TWxObject {
 }
 
-pub struct wxAutoBufferedPaintDC { ptr: *mut c_void }
-impl _wxAutoBufferedPaintDC for wxAutoBufferedPaintDC {}
-impl _wxDC for wxAutoBufferedPaintDC {}
-impl _wxObject for wxAutoBufferedPaintDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxAutoBufferedPaintDC { ptr: *mut c_void }
+impl TWxAutoBufferedPaintDC for WxAutoBufferedPaintDC {}
+impl TWxDC for WxAutoBufferedPaintDC {}
+impl TWxObject for WxAutoBufferedPaintDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxAutoBufferedPaintDC {
-    pub fn from(ptr: *mut c_void) -> wxAutoBufferedPaintDC { wxAutoBufferedPaintDC { ptr: ptr } }
-    pub fn null() -> wxAutoBufferedPaintDC { wxAutoBufferedPaintDC::from(0 as *mut c_void) }
+impl WxAutoBufferedPaintDC {
+    pub fn from(ptr: *mut c_void) -> WxAutoBufferedPaintDC { WxAutoBufferedPaintDC { ptr: ptr } }
+    pub fn null() -> WxAutoBufferedPaintDC { WxAutoBufferedPaintDC::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(window: &T) -> wxAutoBufferedPaintDC {
-        unsafe { wxAutoBufferedPaintDC { ptr: wxAutoBufferedPaintDC_Create(window.ptr()) } }
+    pub fn new<T: TWxWindow>(window: &T) -> WxAutoBufferedPaintDC {
+        unsafe { WxAutoBufferedPaintDC { ptr: wxAutoBufferedPaintDC_Create(window.ptr()) } }
     }
 }
 
-pub trait _wxAutoBufferedPaintDC : _wxDC {
+pub trait TWxAutoBufferedPaintDC : TWxDC {
 }
 
-pub struct wxAutomationObject { ptr: *mut c_void }
-impl _wxAutomationObject for wxAutomationObject {}
-impl _wxObject for wxAutomationObject { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxAutomationObject { ptr: *mut c_void }
+impl TWxAutomationObject for WxAutomationObject {}
+impl TWxObject for WxAutomationObject { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxAutomationObject {
-    pub fn from(ptr: *mut c_void) -> wxAutomationObject { wxAutomationObject { ptr: ptr } }
-    pub fn null() -> wxAutomationObject { wxAutomationObject::from(0 as *mut c_void) }
+impl WxAutomationObject {
+    pub fn from(ptr: *mut c_void) -> WxAutomationObject { WxAutomationObject { ptr: ptr } }
+    pub fn null() -> WxAutomationObject { WxAutomationObject::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxAutomationObject : _wxObject {
+pub trait TWxAutomationObject : TWxObject {
 }
 
-pub struct wxBitmap { ptr: *mut c_void }
-impl _wxBitmap for wxBitmap {}
-impl _wxGDIObject for wxBitmap {}
-impl _wxObject for wxBitmap { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxBitmap { ptr: *mut c_void }
+impl TWxBitmap for WxBitmap {}
+impl TWxGDIObject for WxBitmap {}
+impl TWxObject for WxBitmap { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxBitmap {
-    pub fn from(ptr: *mut c_void) -> wxBitmap { wxBitmap { ptr: ptr } }
-    pub fn null() -> wxBitmap { wxBitmap::from(0 as *mut c_void) }
+impl WxBitmap {
+    pub fn from(ptr: *mut c_void) -> WxBitmap { WxBitmap { ptr: ptr } }
+    pub fn null() -> WxBitmap { WxBitmap::from(0 as *mut c_void) }
     
-    pub fn addHandler<T: _wxEvtHandler>(handler: &T) {
+    pub fn addHandler<T: TWxEvtHandler>(handler: &T) {
         unsafe { wxBitmap_AddHandler(handler.ptr()) }
     }
     pub fn cleanUpHandlers() {
         unsafe { wxBitmap_CleanUpHandlers() }
     }
-    pub fn new(_data: *mut c_void, _type: c_int, _width: c_int, _height: c_int, _depth: c_int) -> wxBitmap {
-        unsafe { wxBitmap { ptr: wxBitmap_Create(_data, _type, _width, _height, _depth) } }
+    pub fn new(_data: *mut c_void, _type: c_int, _width: c_int, _height: c_int, _depth: c_int) -> WxBitmap {
+        unsafe { WxBitmap { ptr: wxBitmap_Create(_data, _type, _width, _height, _depth) } }
     }
-    pub fn newDefault() -> wxBitmap {
-        unsafe { wxBitmap { ptr: wxBitmap_CreateDefault() } }
+    pub fn newDefault() -> WxBitmap {
+        unsafe { WxBitmap { ptr: wxBitmap_CreateDefault() } }
     }
-    pub fn newEmpty(_width: c_int, _height: c_int, _depth: c_int) -> wxBitmap {
-        unsafe { wxBitmap { ptr: wxBitmap_CreateEmpty(_width, _height, _depth) } }
+    pub fn newEmpty(_width: c_int, _height: c_int, _depth: c_int) -> WxBitmap {
+        unsafe { WxBitmap { ptr: wxBitmap_CreateEmpty(_width, _height, _depth) } }
     }
-    pub fn newLoad(name: &str, type_: c_int) -> wxBitmap {
+    pub fn newLoad(name: &str, type_: c_int) -> WxBitmap {
         let name = wxT(name);
-        unsafe { wxBitmap { ptr: wxBitmap_CreateLoad(name.ptr(), type_) } }
+        unsafe { WxBitmap { ptr: wxBitmap_CreateLoad(name.ptr(), type_) } }
     }
     pub fn findHandlerByName(name: &str) -> *mut c_void {
         let name = wxT(name);
@@ -584,21 +584,21 @@ impl wxBitmap {
     pub fn initStandardHandlers() {
         unsafe { wxBitmap_InitStandardHandlers() }
     }
-    pub fn insertHandler<T: _wxEvtHandler>(handler: &T) {
+    pub fn insertHandler<T: TWxEvtHandler>(handler: &T) {
         unsafe { wxBitmap_InsertHandler(handler.ptr()) }
     }
     pub fn removeHandler(name: &str) -> c_int {
         let name = wxT(name);
         unsafe { wxBitmap_RemoveHandler(name.ptr()) }
     }
-    pub fn newFromImage<T: _wxImage>(image: &T, depth: c_int) -> wxBitmap {
-        unsafe { wxBitmap { ptr: wxBitmap_CreateFromImage(image.ptr(), depth) } }
+    pub fn newFromImage<T: TWxImage>(image: &T, depth: c_int) -> WxBitmap {
+        unsafe { WxBitmap { ptr: wxBitmap_CreateFromImage(image.ptr(), depth) } }
     }
 }
 
-pub trait _wxBitmap : _wxGDIObject {
-    fn newFromXPM(&self) -> wxBitmap {
-        unsafe { wxBitmap { ptr: wxBitmap_CreateFromXPM(self.ptr()) } }
+pub trait TWxBitmap : TWxGDIObject {
+    fn newFromXPM(&self) -> WxBitmap {
+        unsafe { WxBitmap { ptr: wxBitmap_CreateFromXPM(self.ptr()) } }
     }
     fn findHandlerByExtension(&self, type_: c_int) -> *mut c_void {
         unsafe { wxBitmap_FindHandlerByExtension(self.ptr(), type_) }
@@ -609,10 +609,10 @@ pub trait _wxBitmap : _wxGDIObject {
     fn getHeight(&self) -> c_int {
         unsafe { wxBitmap_GetHeight(self.ptr()) }
     }
-    fn getMask(&self) -> wxMask {
-        unsafe { wxMask { ptr: wxBitmap_GetMask(self.ptr()) } }
+    fn getMask(&self) -> WxMask {
+        unsafe { WxMask { ptr: wxBitmap_GetMask(self.ptr()) } }
     }
-    fn getSubBitmap<T: _wxBitmap>(&self, x: c_int, y: c_int, w: c_int, h: c_int, _ref: &T) {
+    fn getSubBitmap<T: TWxBitmap>(&self, x: c_int, y: c_int, w: c_int, h: c_int, _ref: &T) {
         unsafe { wxBitmap_GetSubBitmap(self.ptr(), x, y, w, h, _ref.ptr()) }
     }
     fn getWidth(&self) -> c_int {
@@ -625,7 +625,7 @@ pub trait _wxBitmap : _wxGDIObject {
     fn isOk(&self) -> c_int {
         unsafe { wxBitmap_IsOk(self.ptr()) }
     }
-    fn saveFile<T: _wxPalette>(&self, name: &str, type_: c_int, cmap: &T) -> c_int {
+    fn saveFile<T: TWxPalette>(&self, name: &str, type_: c_int, cmap: &T) -> c_int {
         let name = wxT(name);
         unsafe { wxBitmap_SaveFile(self.ptr(), name.ptr(), type_, cmap.ptr()) }
     }
@@ -635,7 +635,7 @@ pub trait _wxBitmap : _wxGDIObject {
     fn setHeight(&self, h: c_int) {
         unsafe { wxBitmap_SetHeight(self.ptr(), h) }
     }
-    fn setMask<T: _wxMask>(&self, mask: &T) {
+    fn setMask<T: TWxMask>(&self, mask: &T) {
         unsafe { wxBitmap_SetMask(self.ptr(), mask.ptr()) }
     }
     fn setWidth(&self, w: c_int) {
@@ -646,34 +646,34 @@ pub trait _wxBitmap : _wxGDIObject {
     }
 }
 
-pub struct wxBitmapButton { ptr: *mut c_void }
-impl _wxBitmapButton for wxBitmapButton {}
-impl _wxButton for wxBitmapButton {}
-impl _wxControl for wxBitmapButton {}
-impl _wxWindow for wxBitmapButton {}
-impl _wxEvtHandler for wxBitmapButton {}
-impl _wxObject for wxBitmapButton { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxBitmapButton { ptr: *mut c_void }
+impl TWxBitmapButton for WxBitmapButton {}
+impl TWxButton for WxBitmapButton {}
+impl TWxControl for WxBitmapButton {}
+impl TWxWindow for WxBitmapButton {}
+impl TWxEvtHandler for WxBitmapButton {}
+impl TWxObject for WxBitmapButton { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxBitmapButton {
-    pub fn from(ptr: *mut c_void) -> wxBitmapButton { wxBitmapButton { ptr: ptr } }
-    pub fn null() -> wxBitmapButton { wxBitmapButton::from(0 as *mut c_void) }
+impl WxBitmapButton {
+    pub fn from(ptr: *mut c_void) -> WxBitmapButton { WxBitmapButton { ptr: ptr } }
+    pub fn null() -> WxBitmapButton { WxBitmapButton::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow, U: _wxBitmap>(_prt: &T, _id: c_int, _bmp: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxBitmapButton {
-        unsafe { wxBitmapButton { ptr: wxBitmapButton_Create(_prt.ptr(), _id, _bmp.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow, U: TWxBitmap>(_prt: &T, _id: c_int, _bmp: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxBitmapButton {
+        unsafe { WxBitmapButton { ptr: wxBitmapButton_Create(_prt.ptr(), _id, _bmp.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxBitmapButton : _wxButton {
-    fn getBitmapDisabled<T: _wxBitmap>(&self, _ref: &T) {
+pub trait TWxBitmapButton : TWxButton {
+    fn getBitmapDisabled<T: TWxBitmap>(&self, _ref: &T) {
         unsafe { wxBitmapButton_GetBitmapDisabled(self.ptr(), _ref.ptr()) }
     }
-    fn getBitmapFocus<T: _wxBitmap>(&self, _ref: &T) {
+    fn getBitmapFocus<T: TWxBitmap>(&self, _ref: &T) {
         unsafe { wxBitmapButton_GetBitmapFocus(self.ptr(), _ref.ptr()) }
     }
-    fn getBitmapLabel<T: _wxBitmap>(&self, _ref: &T) {
+    fn getBitmapLabel<T: TWxBitmap>(&self, _ref: &T) {
         unsafe { wxBitmapButton_GetBitmapLabel(self.ptr(), _ref.ptr()) }
     }
-    fn getBitmapSelected<T: _wxBitmap>(&self, _ref: &T) {
+    fn getBitmapSelected<T: TWxBitmap>(&self, _ref: &T) {
         unsafe { wxBitmapButton_GetBitmapSelected(self.ptr(), _ref.ptr()) }
     }
     fn getMarginX(&self) -> c_int {
@@ -682,16 +682,16 @@ pub trait _wxBitmapButton : _wxButton {
     fn getMarginY(&self) -> c_int {
         unsafe { wxBitmapButton_GetMarginY(self.ptr()) }
     }
-    fn setBitmapDisabled<T: _wxBitmap>(&self, disabled: &T) {
+    fn setBitmapDisabled<T: TWxBitmap>(&self, disabled: &T) {
         unsafe { wxBitmapButton_SetBitmapDisabled(self.ptr(), disabled.ptr()) }
     }
-    fn setBitmapFocus<T: _wxBitmap>(&self, focus: &T) {
+    fn setBitmapFocus<T: TWxBitmap>(&self, focus: &T) {
         unsafe { wxBitmapButton_SetBitmapFocus(self.ptr(), focus.ptr()) }
     }
-    fn setBitmapLabel<T: _wxBitmap>(&self, bitmap: &T) {
+    fn setBitmapLabel<T: TWxBitmap>(&self, bitmap: &T) {
         unsafe { wxBitmapButton_SetBitmapLabel(self.ptr(), bitmap.ptr()) }
     }
-    fn setBitmapSelected<T: _wxBitmap>(&self, sel: &T) {
+    fn setBitmapSelected<T: TWxBitmap>(&self, sel: &T) {
         unsafe { wxBitmapButton_SetBitmapSelected(self.ptr(), sel.ptr()) }
     }
     fn setMargins(&self, x: c_int, y: c_int) {
@@ -699,125 +699,125 @@ pub trait _wxBitmapButton : _wxButton {
     }
 }
 
-pub struct wxBitmapToggleButton { ptr: *mut c_void }
-impl _wxBitmapToggleButton for wxBitmapToggleButton {}
-impl _wxToggleButton for wxBitmapToggleButton {}
-impl _wxControl for wxBitmapToggleButton {}
-impl _wxWindow for wxBitmapToggleButton {}
-impl _wxEvtHandler for wxBitmapToggleButton {}
-impl _wxObject for wxBitmapToggleButton { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxBitmapToggleButton { ptr: *mut c_void }
+impl TWxBitmapToggleButton for WxBitmapToggleButton {}
+impl TWxToggleButton for WxBitmapToggleButton {}
+impl TWxControl for WxBitmapToggleButton {}
+impl TWxWindow for WxBitmapToggleButton {}
+impl TWxEvtHandler for WxBitmapToggleButton {}
+impl TWxObject for WxBitmapToggleButton { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxBitmapToggleButton {
-    pub fn from(ptr: *mut c_void) -> wxBitmapToggleButton { wxBitmapToggleButton { ptr: ptr } }
-    pub fn null() -> wxBitmapToggleButton { wxBitmapToggleButton::from(0 as *mut c_void) }
+impl WxBitmapToggleButton {
+    pub fn from(ptr: *mut c_void) -> WxBitmapToggleButton { WxBitmapToggleButton { ptr: ptr } }
+    pub fn null() -> WxBitmapToggleButton { WxBitmapToggleButton::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow, U: _wxBitmap>(parent: &T, id: c_int, _bmp: &U, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> wxBitmapToggleButton {
-        unsafe { wxBitmapToggleButton { ptr: wxBitmapToggleButton_Create(parent.ptr(), id, _bmp.ptr(), x, y, w, h, style) } }
+    pub fn new<T: TWxWindow, U: TWxBitmap>(parent: &T, id: c_int, _bmp: &U, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> WxBitmapToggleButton {
+        unsafe { WxBitmapToggleButton { ptr: wxBitmapToggleButton_Create(parent.ptr(), id, _bmp.ptr(), x, y, w, h, style) } }
     }
 }
 
-pub trait _wxBitmapToggleButton : _wxToggleButton {
-    fn setBitmapLabel<T: _wxBitmap>(&self, _bmp: &T) {
+pub trait TWxBitmapToggleButton : TWxToggleButton {
+    fn setBitmapLabel<T: TWxBitmap>(&self, _bmp: &T) {
         unsafe { wxBitmapToggleButton_SetBitmapLabel(self.ptr(), _bmp.ptr()) }
     }
 }
 
-pub struct wxBitmapDataObject { ptr: *mut c_void }
-impl _wxBitmapDataObject for wxBitmapDataObject {}
-impl _wxDataObjectSimple for wxBitmapDataObject {}
-impl _wxDataObject for wxBitmapDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxBitmapDataObject { ptr: *mut c_void }
+impl TWxBitmapDataObject for WxBitmapDataObject {}
+impl TWxDataObjectSimple for WxBitmapDataObject {}
+impl TWxDataObject for WxBitmapDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxBitmapDataObject {
-    pub fn from(ptr: *mut c_void) -> wxBitmapDataObject { wxBitmapDataObject { ptr: ptr } }
-    pub fn null() -> wxBitmapDataObject { wxBitmapDataObject::from(0 as *mut c_void) }
+impl WxBitmapDataObject {
+    pub fn from(ptr: *mut c_void) -> WxBitmapDataObject { WxBitmapDataObject { ptr: ptr } }
+    pub fn null() -> WxBitmapDataObject { WxBitmapDataObject::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxBitmapDataObject : _wxDataObjectSimple {
+pub trait TWxBitmapDataObject : TWxDataObjectSimple {
 }
 
-pub struct wxBitmapHandler { ptr: *mut c_void }
-impl _wxBitmapHandler for wxBitmapHandler {}
-impl _wxObject for wxBitmapHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxBitmapHandler { ptr: *mut c_void }
+impl TWxBitmapHandler for WxBitmapHandler {}
+impl TWxObject for WxBitmapHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxBitmapHandler {
-    pub fn from(ptr: *mut c_void) -> wxBitmapHandler { wxBitmapHandler { ptr: ptr } }
-    pub fn null() -> wxBitmapHandler { wxBitmapHandler::from(0 as *mut c_void) }
+impl WxBitmapHandler {
+    pub fn from(ptr: *mut c_void) -> WxBitmapHandler { WxBitmapHandler { ptr: ptr } }
+    pub fn null() -> WxBitmapHandler { WxBitmapHandler::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxBitmapHandler : _wxObject {
+pub trait TWxBitmapHandler : TWxObject {
 }
 
-pub struct wxBoxSizer { ptr: *mut c_void }
-impl _wxBoxSizer for wxBoxSizer {}
-impl _wxSizer for wxBoxSizer {}
-impl _wxObject for wxBoxSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxBoxSizer { ptr: *mut c_void }
+impl TWxBoxSizer for WxBoxSizer {}
+impl TWxSizer for WxBoxSizer {}
+impl TWxObject for WxBoxSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxBoxSizer {
-    pub fn from(ptr: *mut c_void) -> wxBoxSizer { wxBoxSizer { ptr: ptr } }
-    pub fn null() -> wxBoxSizer { wxBoxSizer::from(0 as *mut c_void) }
+impl WxBoxSizer {
+    pub fn from(ptr: *mut c_void) -> WxBoxSizer { WxBoxSizer { ptr: ptr } }
+    pub fn null() -> WxBoxSizer { WxBoxSizer::from(0 as *mut c_void) }
     
-    pub fn new(orient: c_int) -> wxBoxSizer {
-        unsafe { wxBoxSizer { ptr: wxBoxSizer_Create(orient) } }
+    pub fn new(orient: c_int) -> WxBoxSizer {
+        unsafe { WxBoxSizer { ptr: wxBoxSizer_Create(orient) } }
     }
 }
 
-pub trait _wxBoxSizer : _wxSizer {
+pub trait TWxBoxSizer : TWxSizer {
     fn getOrientation(&self) -> c_int {
         unsafe { wxBoxSizer_GetOrientation(self.ptr()) }
     }
 }
 
-pub struct wxBrush { ptr: *mut c_void }
-impl _wxBrush for wxBrush {}
-impl _wxGDIObject for wxBrush {}
-impl _wxObject for wxBrush { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxBrush { ptr: *mut c_void }
+impl TWxBrush for WxBrush {}
+impl TWxGDIObject for WxBrush {}
+impl TWxObject for WxBrush { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxBrush {
-    pub fn from(ptr: *mut c_void) -> wxBrush { wxBrush { ptr: ptr } }
-    pub fn null() -> wxBrush { wxBrush::from(0 as *mut c_void) }
+impl WxBrush {
+    pub fn from(ptr: *mut c_void) -> WxBrush { WxBrush { ptr: ptr } }
+    pub fn null() -> WxBrush { WxBrush::from(0 as *mut c_void) }
     
-    pub fn newDefault() -> wxBrush {
-        unsafe { wxBrush { ptr: wxBrush_CreateDefault() } }
+    pub fn newDefault() -> WxBrush {
+        unsafe { WxBrush { ptr: wxBrush_CreateDefault() } }
     }
-    pub fn newFromBitmap<T: _wxBitmap>(bitmap: &T) -> wxBrush {
-        unsafe { wxBrush { ptr: wxBrush_CreateFromBitmap(bitmap.ptr()) } }
+    pub fn newFromBitmap<T: TWxBitmap>(bitmap: &T) -> WxBrush {
+        unsafe { WxBrush { ptr: wxBrush_CreateFromBitmap(bitmap.ptr()) } }
     }
-    pub fn newFromColour<T: _wxColour>(col: &T, style: c_int) -> wxBrush {
-        unsafe { wxBrush { ptr: wxBrush_CreateFromColour(col.ptr(), style) } }
+    pub fn newFromColour<T: TWxColour>(col: &T, style: c_int) -> WxBrush {
+        unsafe { WxBrush { ptr: wxBrush_CreateFromColour(col.ptr(), style) } }
     }
-    pub fn newFromStock(id: c_int) -> wxBrush {
-        unsafe { wxBrush { ptr: wxBrush_CreateFromStock(id) } }
+    pub fn newFromStock(id: c_int) -> WxBrush {
+        unsafe { WxBrush { ptr: wxBrush_CreateFromStock(id) } }
     }
 }
 
-pub trait _wxBrush : _wxGDIObject {
-    fn assign<T: _wxBrush>(&self, brush: &T) {
+pub trait TWxBrush : TWxGDIObject {
+    fn assign<T: TWxBrush>(&self, brush: &T) {
         unsafe { wxBrush_Assign(self.ptr(), brush.ptr()) }
     }
-    fn getColour<T: _wxColour>(&self, _ref: &T) {
+    fn getColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxBrush_GetColour(self.ptr(), _ref.ptr()) }
     }
-    fn getStipple<T: _wxBitmap>(&self, _ref: &T) {
+    fn getStipple<T: TWxBitmap>(&self, _ref: &T) {
         unsafe { wxBrush_GetStipple(self.ptr(), _ref.ptr()) }
     }
     fn getStyle(&self) -> c_int {
         unsafe { wxBrush_GetStyle(self.ptr()) }
     }
-    fn isEqual<T: _wxBrush>(&self, brush: &T) -> c_int {
+    fn isEqual<T: TWxBrush>(&self, brush: &T) -> c_int {
         unsafe { wxBrush_IsEqual(self.ptr(), brush.ptr()) }
     }
     fn isOk(&self) -> c_int {
         unsafe { wxBrush_IsOk(self.ptr()) }
     }
-    fn setColour<T: _wxColour>(&self, col: &T) {
+    fn setColour<T: TWxColour>(&self, col: &T) {
         unsafe { wxBrush_SetColour(self.ptr(), col.ptr()) }
     }
     fn setColourSingle(&self, r: int8_t, g: int8_t, b: int8_t) {
         unsafe { wxBrush_SetColourSingle(self.ptr(), r, g, b) }
     }
-    fn setStipple<T: _wxBitmap>(&self, stipple: &T) {
+    fn setStipple<T: TWxBitmap>(&self, stipple: &T) {
         unsafe { wxBrush_SetStipple(self.ptr(), stipple.ptr()) }
     }
     fn setStyle(&self, style: c_int) {
@@ -828,73 +828,73 @@ pub trait _wxBrush : _wxGDIObject {
     }
 }
 
-pub struct wxBrushList { ptr: *mut c_void }
-impl _wxBrushList for wxBrushList {}
-impl _wxList for wxBrushList {}
-impl _wxObject for wxBrushList { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxBrushList { ptr: *mut c_void }
+impl TWxBrushList for WxBrushList {}
+impl TWxList for WxBrushList {}
+impl TWxObject for WxBrushList { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxBrushList {
-    pub fn from(ptr: *mut c_void) -> wxBrushList { wxBrushList { ptr: ptr } }
-    pub fn null() -> wxBrushList { wxBrushList::from(0 as *mut c_void) }
+impl WxBrushList {
+    pub fn from(ptr: *mut c_void) -> WxBrushList { WxBrushList { ptr: ptr } }
+    pub fn null() -> WxBrushList { WxBrushList::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxBrushList : _wxList {
+pub trait TWxBrushList : TWxList {
 }
 
-pub struct wxBufferedDC { ptr: *mut c_void }
-impl _wxBufferedDC for wxBufferedDC {}
-impl _wxDC for wxBufferedDC {}
-impl _wxObject for wxBufferedDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxBufferedDC { ptr: *mut c_void }
+impl TWxBufferedDC for WxBufferedDC {}
+impl TWxDC for WxBufferedDC {}
+impl TWxObject for WxBufferedDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxBufferedDC {
-    pub fn from(ptr: *mut c_void) -> wxBufferedDC { wxBufferedDC { ptr: ptr } }
-    pub fn null() -> wxBufferedDC { wxBufferedDC::from(0 as *mut c_void) }
+impl WxBufferedDC {
+    pub fn from(ptr: *mut c_void) -> WxBufferedDC { WxBufferedDC { ptr: ptr } }
+    pub fn null() -> WxBufferedDC { WxBufferedDC::from(0 as *mut c_void) }
     
-    pub fn newByDCAndSize<T: _wxDC>(dc: &T, width: c_int, hight: c_int, style: c_int) -> wxBufferedDC {
-        unsafe { wxBufferedDC { ptr: wxBufferedDC_CreateByDCAndSize(dc.ptr(), width, hight, style) } }
+    pub fn newByDCAndSize<T: TWxDC>(dc: &T, width: c_int, hight: c_int, style: c_int) -> WxBufferedDC {
+        unsafe { WxBufferedDC { ptr: wxBufferedDC_CreateByDCAndSize(dc.ptr(), width, hight, style) } }
     }
-    pub fn newByDCAndBitmap<T: _wxDC, U: _wxBitmap>(dc: &T, bitmap: &U, style: c_int) -> wxBufferedDC {
-        unsafe { wxBufferedDC { ptr: wxBufferedDC_CreateByDCAndBitmap(dc.ptr(), bitmap.ptr(), style) } }
+    pub fn newByDCAndBitmap<T: TWxDC, U: TWxBitmap>(dc: &T, bitmap: &U, style: c_int) -> WxBufferedDC {
+        unsafe { WxBufferedDC { ptr: wxBufferedDC_CreateByDCAndBitmap(dc.ptr(), bitmap.ptr(), style) } }
     }
 }
 
-pub trait _wxBufferedDC : _wxDC {
+pub trait TWxBufferedDC : TWxDC {
 }
 
-pub struct wxBufferedPaintDC { ptr: *mut c_void }
-impl _wxBufferedPaintDC for wxBufferedPaintDC {}
-impl _wxDC for wxBufferedPaintDC {}
-impl _wxObject for wxBufferedPaintDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxBufferedPaintDC { ptr: *mut c_void }
+impl TWxBufferedPaintDC for WxBufferedPaintDC {}
+impl TWxDC for WxBufferedPaintDC {}
+impl TWxObject for WxBufferedPaintDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxBufferedPaintDC {
-    pub fn from(ptr: *mut c_void) -> wxBufferedPaintDC { wxBufferedPaintDC { ptr: ptr } }
-    pub fn null() -> wxBufferedPaintDC { wxBufferedPaintDC::from(0 as *mut c_void) }
+impl WxBufferedPaintDC {
+    pub fn from(ptr: *mut c_void) -> WxBufferedPaintDC { WxBufferedPaintDC { ptr: ptr } }
+    pub fn null() -> WxBufferedPaintDC { WxBufferedPaintDC::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(window: &T, style: c_int) -> wxBufferedPaintDC {
-        unsafe { wxBufferedPaintDC { ptr: wxBufferedPaintDC_Create(window.ptr(), style) } }
+    pub fn new<T: TWxWindow>(window: &T, style: c_int) -> WxBufferedPaintDC {
+        unsafe { WxBufferedPaintDC { ptr: wxBufferedPaintDC_Create(window.ptr(), style) } }
     }
-    pub fn newWithBitmap<T: _wxWindow, U: _wxBitmap>(window: &T, bitmap: &U, style: c_int) -> wxBufferedPaintDC {
-        unsafe { wxBufferedPaintDC { ptr: wxBufferedPaintDC_CreateWithBitmap(window.ptr(), bitmap.ptr(), style) } }
+    pub fn newWithBitmap<T: TWxWindow, U: TWxBitmap>(window: &T, bitmap: &U, style: c_int) -> WxBufferedPaintDC {
+        unsafe { WxBufferedPaintDC { ptr: wxBufferedPaintDC_CreateWithBitmap(window.ptr(), bitmap.ptr(), style) } }
     }
 }
 
-pub trait _wxBufferedPaintDC : _wxDC {
+pub trait TWxBufferedPaintDC : TWxDC {
 }
 
-pub struct wxBusyCursor { ptr: *mut c_void }
-impl _wxBusyCursor for wxBusyCursor { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxBusyCursor { ptr: *mut c_void }
+impl TWxBusyCursor for WxBusyCursor { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxBusyCursor {
-    pub fn from(ptr: *mut c_void) -> wxBusyCursor { wxBusyCursor { ptr: ptr } }
-    pub fn null() -> wxBusyCursor { wxBusyCursor::from(0 as *mut c_void) }
+impl WxBusyCursor {
+    pub fn from(ptr: *mut c_void) -> WxBusyCursor { WxBusyCursor { ptr: ptr } }
+    pub fn null() -> WxBusyCursor { WxBusyCursor::from(0 as *mut c_void) }
     
-    pub fn new() -> wxBusyCursor {
-        unsafe { wxBusyCursor { ptr: wxBusyCursor_Create() } }
+    pub fn new() -> WxBusyCursor {
+        unsafe { WxBusyCursor { ptr: wxBusyCursor_Create() } }
     }
 }
 
-pub trait _wxBusyCursor {
+pub trait TWxBusyCursor {
     fn ptr(&self) -> *mut c_void;
     
     fn newWithCursor(&self) -> *mut c_void {
@@ -905,20 +905,20 @@ pub trait _wxBusyCursor {
     }
 }
 
-pub struct wxBusyInfo { ptr: *mut c_void }
-impl _wxBusyInfo for wxBusyInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxBusyInfo { ptr: *mut c_void }
+impl TWxBusyInfo for WxBusyInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxBusyInfo {
-    pub fn from(ptr: *mut c_void) -> wxBusyInfo { wxBusyInfo { ptr: ptr } }
-    pub fn null() -> wxBusyInfo { wxBusyInfo::from(0 as *mut c_void) }
+impl WxBusyInfo {
+    pub fn from(ptr: *mut c_void) -> WxBusyInfo { WxBusyInfo { ptr: ptr } }
+    pub fn null() -> WxBusyInfo { WxBusyInfo::from(0 as *mut c_void) }
     
-    pub fn new(_txt: &str) -> wxBusyInfo {
+    pub fn new(_txt: &str) -> WxBusyInfo {
         let _txt = wxT(_txt);
-        unsafe { wxBusyInfo { ptr: wxBusyInfo_Create(_txt.ptr()) } }
+        unsafe { WxBusyInfo { ptr: wxBusyInfo_Create(_txt.ptr()) } }
     }
 }
 
-pub trait _wxBusyInfo {
+pub trait TWxBusyInfo {
     fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
@@ -926,38 +926,38 @@ pub trait _wxBusyInfo {
     }
 }
 
-pub struct wxButton { ptr: *mut c_void }
-impl _wxButton for wxButton {}
-impl _wxControl for wxButton {}
-impl _wxWindow for wxButton {}
-impl _wxEvtHandler for wxButton {}
-impl _wxObject for wxButton { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxButton { ptr: *mut c_void }
+impl TWxButton for WxButton {}
+impl TWxControl for WxButton {}
+impl TWxWindow for WxButton {}
+impl TWxEvtHandler for WxButton {}
+impl TWxObject for WxButton { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxButton {
-    pub fn from(ptr: *mut c_void) -> wxButton { wxButton { ptr: ptr } }
-    pub fn null() -> wxButton { wxButton::from(0 as *mut c_void) }
+impl WxButton {
+    pub fn from(ptr: *mut c_void) -> WxButton { WxButton { ptr: ptr } }
+    pub fn null() -> WxButton { WxButton::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxButton {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxButton {
         let _txt = wxT(_txt);
-        unsafe { wxButton { ptr: wxButton_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { WxButton { ptr: wxButton_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxButton : _wxControl {
+pub trait TWxButton : TWxControl {
     fn setDefault(&self) {
         unsafe { wxButton_SetDefault(self.ptr()) }
     }
 }
 
-pub struct wxCaret { ptr: *mut c_void }
-impl _wxCaret for wxCaret { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCaret { ptr: *mut c_void }
+impl TWxCaret for WxCaret { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCaret {
-    pub fn from(ptr: *mut c_void) -> wxCaret { wxCaret { ptr: ptr } }
-    pub fn null() -> wxCaret { wxCaret::from(0 as *mut c_void) }
+impl WxCaret {
+    pub fn from(ptr: *mut c_void) -> WxCaret { WxCaret { ptr: ptr } }
+    pub fn null() -> WxCaret { WxCaret::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_wnd: &T, _wth: c_int, _hgt: c_int) -> wxCaret {
-        unsafe { wxCaret { ptr: wxCaret_Create(_wnd.ptr(), _wth, _hgt) } }
+    pub fn new<T: TWxWindow>(_wnd: &T, _wth: c_int, _hgt: c_int) -> WxCaret {
+        unsafe { WxCaret { ptr: wxCaret_Create(_wnd.ptr(), _wth, _hgt) } }
     }
     pub fn getBlinkTime() -> c_int {
         unsafe { wxCaret_GetBlinkTime() }
@@ -967,17 +967,17 @@ impl wxCaret {
     }
 }
 
-pub trait _wxCaret {
+pub trait TWxCaret {
     fn ptr(&self) -> *mut c_void;
     
-    fn getPosition(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxCaret_GetPosition(self.ptr()) } }
+    fn getPosition(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxCaret_GetPosition(self.ptr()) } }
     }
-    fn getSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxCaret_GetSize(self.ptr()) } }
+    fn getSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxCaret_GetSize(self.ptr()) } }
     }
-    fn getWindow(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxCaret_GetWindow(self.ptr()) } }
+    fn getWindow(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxCaret_GetWindow(self.ptr()) } }
     }
     fn hide(&self) {
         unsafe { wxCaret_Hide(self.ptr()) }
@@ -999,24 +999,24 @@ pub trait _wxCaret {
     }
 }
 
-pub struct wxCheckBox { ptr: *mut c_void }
-impl _wxCheckBox for wxCheckBox {}
-impl _wxControl for wxCheckBox {}
-impl _wxWindow for wxCheckBox {}
-impl _wxEvtHandler for wxCheckBox {}
-impl _wxObject for wxCheckBox { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCheckBox { ptr: *mut c_void }
+impl TWxCheckBox for WxCheckBox {}
+impl TWxControl for WxCheckBox {}
+impl TWxWindow for WxCheckBox {}
+impl TWxEvtHandler for WxCheckBox {}
+impl TWxObject for WxCheckBox { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCheckBox {
-    pub fn from(ptr: *mut c_void) -> wxCheckBox { wxCheckBox { ptr: ptr } }
-    pub fn null() -> wxCheckBox { wxCheckBox::from(0 as *mut c_void) }
+impl WxCheckBox {
+    pub fn from(ptr: *mut c_void) -> WxCheckBox { WxCheckBox { ptr: ptr } }
+    pub fn null() -> WxCheckBox { WxCheckBox::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxCheckBox {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxCheckBox {
         let _txt = wxT(_txt);
-        unsafe { wxCheckBox { ptr: wxCheckBox_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { WxCheckBox { ptr: wxCheckBox_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxCheckBox : _wxControl {
+pub trait TWxCheckBox : TWxControl {
     fn getValue(&self) -> c_int {
         unsafe { wxCheckBox_GetValue(self.ptr()) }
     }
@@ -1025,24 +1025,24 @@ pub trait _wxCheckBox : _wxControl {
     }
 }
 
-pub struct wxCheckListBox { ptr: *mut c_void }
-impl _wxCheckListBox for wxCheckListBox {}
-impl _wxListBox for wxCheckListBox {}
-impl _wxControl for wxCheckListBox {}
-impl _wxWindow for wxCheckListBox {}
-impl _wxEvtHandler for wxCheckListBox {}
-impl _wxObject for wxCheckListBox { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCheckListBox { ptr: *mut c_void }
+impl TWxCheckListBox for WxCheckListBox {}
+impl TWxListBox for WxCheckListBox {}
+impl TWxControl for WxCheckListBox {}
+impl TWxWindow for WxCheckListBox {}
+impl TWxEvtHandler for WxCheckListBox {}
+impl TWxObject for WxCheckListBox { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCheckListBox {
-    pub fn from(ptr: *mut c_void) -> wxCheckListBox { wxCheckListBox { ptr: ptr } }
-    pub fn null() -> wxCheckListBox { wxCheckListBox::from(0 as *mut c_void) }
+impl WxCheckListBox {
+    pub fn from(ptr: *mut c_void) -> WxCheckListBox { WxCheckListBox { ptr: ptr } }
+    pub fn null() -> WxCheckListBox { WxCheckListBox::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *mut *mut c_char, _stl: c_int) -> wxCheckListBox {
-        unsafe { wxCheckListBox { ptr: wxCheckListBox_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, n, str, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *mut *mut c_char, _stl: c_int) -> WxCheckListBox {
+        unsafe { WxCheckListBox { ptr: wxCheckListBox_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, n, str, _stl) } }
     }
 }
 
-pub trait _wxCheckListBox : _wxListBox {
+pub trait TWxCheckListBox : TWxListBox {
     fn check(&self, item: c_int, check: c_int) {
         unsafe { wxCheckListBox_Check(self.ptr(), item, check) }
     }
@@ -1051,23 +1051,23 @@ pub trait _wxCheckListBox : _wxListBox {
     }
 }
 
-pub struct wxChoice { ptr: *mut c_void }
-impl _wxChoice for wxChoice {}
-impl _wxControl for wxChoice {}
-impl _wxWindow for wxChoice {}
-impl _wxEvtHandler for wxChoice {}
-impl _wxObject for wxChoice { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxChoice { ptr: *mut c_void }
+impl TWxChoice for WxChoice {}
+impl TWxControl for WxChoice {}
+impl TWxWindow for WxChoice {}
+impl TWxEvtHandler for WxChoice {}
+impl TWxObject for WxChoice { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxChoice {
-    pub fn from(ptr: *mut c_void) -> wxChoice { wxChoice { ptr: ptr } }
-    pub fn null() -> wxChoice { wxChoice::from(0 as *mut c_void) }
+impl WxChoice {
+    pub fn from(ptr: *mut c_void) -> WxChoice { WxChoice { ptr: ptr } }
+    pub fn null() -> WxChoice { WxChoice::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *mut *mut c_char, _stl: c_int) -> wxChoice {
-        unsafe { wxChoice { ptr: wxChoice_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, n, str, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *mut *mut c_char, _stl: c_int) -> WxChoice {
+        unsafe { WxChoice { ptr: wxChoice_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, n, str, _stl) } }
     }
 }
 
-pub trait _wxChoice : _wxControl {
+pub trait TWxChoice : TWxControl {
     fn append(&self, item: &str) {
         let item = wxT(item);
         unsafe { wxChoice_Append(self.ptr(), item.ptr()) }
@@ -1086,7 +1086,7 @@ pub trait _wxChoice : _wxControl {
         unsafe { wxChoice_GetSelection(self.ptr()) }
     }
     fn getString(&self, n: c_int) -> ~str {
-        unsafe { wxString { ptr: wxChoice_GetString(self.ptr(), n) }.to_str() }
+        unsafe { WxString { ptr: wxChoice_GetString(self.ptr(), n) }.to_str() }
     }
     fn setSelection(&self, n: c_int) {
         unsafe { wxChoice_SetSelection(self.ptr(), n) }
@@ -1097,39 +1097,39 @@ pub trait _wxChoice : _wxControl {
     }
 }
 
-pub struct wxClientDC { ptr: *mut c_void }
-impl _wxClientDC for wxClientDC {}
-impl _wxWindowDC for wxClientDC {}
-impl _wxDC for wxClientDC {}
-impl _wxObject for wxClientDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxClientDC { ptr: *mut c_void }
+impl TWxClientDC for WxClientDC {}
+impl TWxWindowDC for WxClientDC {}
+impl TWxDC for WxClientDC {}
+impl TWxObject for WxClientDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxClientDC {
-    pub fn from(ptr: *mut c_void) -> wxClientDC { wxClientDC { ptr: ptr } }
-    pub fn null() -> wxClientDC { wxClientDC::from(0 as *mut c_void) }
+impl WxClientDC {
+    pub fn from(ptr: *mut c_void) -> WxClientDC { WxClientDC { ptr: ptr } }
+    pub fn null() -> WxClientDC { WxClientDC::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(win: &T) -> wxClientDC {
-        unsafe { wxClientDC { ptr: wxClientDC_Create(win.ptr()) } }
+    pub fn new<T: TWxWindow>(win: &T) -> WxClientDC {
+        unsafe { WxClientDC { ptr: wxClientDC_Create(win.ptr()) } }
     }
 }
 
-pub trait _wxClientDC : _wxWindowDC {
+pub trait TWxClientDC : TWxWindowDC {
 }
 
-pub struct wxClipboard { ptr: *mut c_void }
-impl _wxClipboard for wxClipboard {}
-impl _wxObject for wxClipboard { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxClipboard { ptr: *mut c_void }
+impl TWxClipboard for WxClipboard {}
+impl TWxObject for WxClipboard { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxClipboard {
-    pub fn from(ptr: *mut c_void) -> wxClipboard { wxClipboard { ptr: ptr } }
-    pub fn null() -> wxClipboard { wxClipboard::from(0 as *mut c_void) }
+impl WxClipboard {
+    pub fn from(ptr: *mut c_void) -> WxClipboard { WxClipboard { ptr: ptr } }
+    pub fn null() -> WxClipboard { WxClipboard::from(0 as *mut c_void) }
     
-    pub fn new() -> wxClipboard {
-        unsafe { wxClipboard { ptr: wxClipboard_Create() } }
+    pub fn new() -> WxClipboard {
+        unsafe { WxClipboard { ptr: wxClipboard_Create() } }
     }
 }
 
-pub trait _wxClipboard : _wxObject {
-    fn addData<T: _wxDataObject>(&self, data: &T) -> c_int {
+pub trait TWxClipboard : TWxObject {
+    fn addData<T: TWxDataObject>(&self, data: &T) -> c_int {
         unsafe { wxClipboard_AddData(self.ptr(), data.ptr()) }
     }
     fn clear(&self) {
@@ -1141,19 +1141,19 @@ pub trait _wxClipboard : _wxObject {
     fn flush(&self) -> c_int {
         unsafe { wxClipboard_Flush(self.ptr()) }
     }
-    fn getData<T: _wxDataObject>(&self, data: &T) -> c_int {
+    fn getData<T: TWxDataObject>(&self, data: &T) -> c_int {
         unsafe { wxClipboard_GetData(self.ptr(), data.ptr()) }
     }
     fn isOpened(&self) -> c_int {
         unsafe { wxClipboard_IsOpened(self.ptr()) }
     }
-    fn isSupported<T: _wxDataFormat>(&self, format: &T) -> c_int {
+    fn isSupported<T: TWxDataFormat>(&self, format: &T) -> c_int {
         unsafe { wxClipboard_IsSupported(self.ptr(), format.ptr()) }
     }
     fn open(&self) -> c_int {
         unsafe { wxClipboard_Open(self.ptr()) }
     }
-    fn setData<T: _wxDataObject>(&self, data: &T) -> c_int {
+    fn setData<T: TWxDataObject>(&self, data: &T) -> c_int {
         unsafe { wxClipboard_SetData(self.ptr(), data.ptr()) }
     }
     fn usePrimarySelection(&self, primary: c_int) {
@@ -1161,18 +1161,18 @@ pub trait _wxClipboard : _wxObject {
     }
 }
 
-pub struct wxCloseEvent { ptr: *mut c_void }
-impl _wxCloseEvent for wxCloseEvent {}
-impl _wxEvent for wxCloseEvent {}
-impl _wxObject for wxCloseEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCloseEvent { ptr: *mut c_void }
+impl TWxCloseEvent for WxCloseEvent {}
+impl TWxEvent for WxCloseEvent {}
+impl TWxObject for WxCloseEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCloseEvent {
-    pub fn from(ptr: *mut c_void) -> wxCloseEvent { wxCloseEvent { ptr: ptr } }
-    pub fn null() -> wxCloseEvent { wxCloseEvent::from(0 as *mut c_void) }
+impl WxCloseEvent {
+    pub fn from(ptr: *mut c_void) -> WxCloseEvent { WxCloseEvent { ptr: ptr } }
+    pub fn null() -> WxCloseEvent { WxCloseEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxCloseEvent : _wxEvent {
+pub trait TWxCloseEvent : TWxEvent {
     fn canVeto(&self) -> c_int {
         unsafe { wxCloseEvent_CanVeto(self.ptr()) }
     }
@@ -1193,39 +1193,39 @@ pub trait _wxCloseEvent : _wxEvent {
     }
 }
 
-pub struct wxColour { ptr: *mut c_void }
-impl _wxColour for wxColour {}
-impl _wxObject for wxColour { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxColour { ptr: *mut c_void }
+impl TWxColour for WxColour {}
+impl TWxObject for WxColour { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxColour {
-    pub fn from(ptr: *mut c_void) -> wxColour { wxColour { ptr: ptr } }
-    pub fn null() -> wxColour { wxColour::from(0 as *mut c_void) }
+impl WxColour {
+    pub fn from(ptr: *mut c_void) -> WxColour { WxColour { ptr: ptr } }
+    pub fn null() -> WxColour { WxColour::from(0 as *mut c_void) }
     
-    pub fn newByName(_name: &str) -> wxColour {
+    pub fn newByName(_name: &str) -> WxColour {
         let _name = wxT(_name);
-        unsafe { wxColour { ptr: wxColour_CreateByName(_name.ptr()) } }
+        unsafe { WxColour { ptr: wxColour_CreateByName(_name.ptr()) } }
     }
-    pub fn newEmpty() -> wxColour {
-        unsafe { wxColour { ptr: wxColour_CreateEmpty() } }
+    pub fn newEmpty() -> WxColour {
+        unsafe { WxColour { ptr: wxColour_CreateEmpty() } }
     }
-    pub fn newFromStock(id: c_int) -> wxColour {
-        unsafe { wxColour { ptr: wxColour_CreateFromStock(id) } }
+    pub fn newFromStock(id: c_int) -> WxColour {
+        unsafe { WxColour { ptr: wxColour_CreateFromStock(id) } }
     }
-    pub fn newRGB(_red: uint8_t, _green: uint8_t, _blue: uint8_t, _alpha: uint8_t) -> wxColour {
-        unsafe { wxColour { ptr: wxColour_CreateRGB(_red, _green, _blue, _alpha) } }
+    pub fn newRGB(_red: uint8_t, _green: uint8_t, _blue: uint8_t, _alpha: uint8_t) -> WxColour {
+        unsafe { WxColour { ptr: wxColour_CreateRGB(_red, _green, _blue, _alpha) } }
     }
     pub fn validName(_name: *mut c_void) -> c_int {
         unsafe { wxColour_ValidName(_name) }
     }
-    pub fn newFromInt(rgb: c_int) -> wxColour {
-        unsafe { wxColour { ptr: wxColour_CreateFromInt(rgb) } }
+    pub fn newFromInt(rgb: c_int) -> WxColour {
+        unsafe { WxColour { ptr: wxColour_CreateFromInt(rgb) } }
     }
-    pub fn newFromUnsignedInt(rgba: uint32_t) -> wxColour {
-        unsafe { wxColour { ptr: wxColour_CreateFromUnsignedInt(rgba) } }
+    pub fn newFromUnsignedInt(rgba: uint32_t) -> WxColour {
+        unsafe { WxColour { ptr: wxColour_CreateFromUnsignedInt(rgba) } }
     }
 }
 
-pub trait _wxColour : _wxObject {
+pub trait TWxColour : TWxObject {
     fn alpha(&self) -> uint8_t {
         unsafe { wxColour_Alpha(self.ptr()) }
     }
@@ -1265,96 +1265,96 @@ pub trait _wxColour : _wxObject {
     }
 }
 
-pub struct wxColourData { ptr: *mut c_void }
-impl _wxColourData for wxColourData {}
-impl _wxObject for wxColourData { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxColourData { ptr: *mut c_void }
+impl TWxColourData for WxColourData {}
+impl TWxObject for WxColourData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxColourData {
-    pub fn from(ptr: *mut c_void) -> wxColourData { wxColourData { ptr: ptr } }
-    pub fn null() -> wxColourData { wxColourData::from(0 as *mut c_void) }
+impl WxColourData {
+    pub fn from(ptr: *mut c_void) -> WxColourData { WxColourData { ptr: ptr } }
+    pub fn null() -> WxColourData { WxColourData::from(0 as *mut c_void) }
     
-    pub fn new() -> wxColourData {
-        unsafe { wxColourData { ptr: wxColourData_Create() } }
+    pub fn new() -> WxColourData {
+        unsafe { WxColourData { ptr: wxColourData_Create() } }
     }
 }
 
-pub trait _wxColourData : _wxObject {
+pub trait TWxColourData : TWxObject {
     fn getChooseFull(&self) -> c_int {
         unsafe { wxColourData_GetChooseFull(self.ptr()) }
     }
-    fn getColour<T: _wxColour>(&self, _ref: &T) {
+    fn getColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxColourData_GetColour(self.ptr(), _ref.ptr()) }
     }
-    fn getCustomColour<T: _wxColour>(&self, i: c_int, _ref: &T) {
+    fn getCustomColour<T: TWxColour>(&self, i: c_int, _ref: &T) {
         unsafe { wxColourData_GetCustomColour(self.ptr(), i, _ref.ptr()) }
     }
     fn setChooseFull(&self, flag: c_int) {
         unsafe { wxColourData_SetChooseFull(self.ptr(), flag) }
     }
-    fn setColour<T: _wxColour>(&self, colour: &T) {
+    fn setColour<T: TWxColour>(&self, colour: &T) {
         unsafe { wxColourData_SetColour(self.ptr(), colour.ptr()) }
     }
-    fn setCustomColour<T: _wxColour>(&self, i: c_int, colour: &T) {
+    fn setCustomColour<T: TWxColour>(&self, i: c_int, colour: &T) {
         unsafe { wxColourData_SetCustomColour(self.ptr(), i, colour.ptr()) }
     }
 }
 
-pub struct wxColourDatabase { ptr: *mut c_void }
-impl _wxColourDatabase for wxColourDatabase {}
-impl _wxList for wxColourDatabase {}
-impl _wxObject for wxColourDatabase { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxColourDatabase { ptr: *mut c_void }
+impl TWxColourDatabase for WxColourDatabase {}
+impl TWxList for WxColourDatabase {}
+impl TWxObject for WxColourDatabase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxColourDatabase {
-    pub fn from(ptr: *mut c_void) -> wxColourDatabase { wxColourDatabase { ptr: ptr } }
-    pub fn null() -> wxColourDatabase { wxColourDatabase::from(0 as *mut c_void) }
+impl WxColourDatabase {
+    pub fn from(ptr: *mut c_void) -> WxColourDatabase { WxColourDatabase { ptr: ptr } }
+    pub fn null() -> WxColourDatabase { WxColourDatabase::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxColourDatabase : _wxList {
+pub trait TWxColourDatabase : TWxList {
 }
 
-pub struct wxColourDialog { ptr: *mut c_void }
-impl _wxColourDialog for wxColourDialog {}
-impl _wxDialog for wxColourDialog {}
-impl _wxTopLevelWindow for wxColourDialog {}
-impl _wxWindow for wxColourDialog {}
-impl _wxEvtHandler for wxColourDialog {}
-impl _wxObject for wxColourDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxColourDialog { ptr: *mut c_void }
+impl TWxColourDialog for WxColourDialog {}
+impl TWxDialog for WxColourDialog {}
+impl TWxTopLevelWindow for WxColourDialog {}
+impl TWxWindow for WxColourDialog {}
+impl TWxEvtHandler for WxColourDialog {}
+impl TWxObject for WxColourDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxColourDialog {
-    pub fn from(ptr: *mut c_void) -> wxColourDialog { wxColourDialog { ptr: ptr } }
-    pub fn null() -> wxColourDialog { wxColourDialog::from(0 as *mut c_void) }
+impl WxColourDialog {
+    pub fn from(ptr: *mut c_void) -> WxColourDialog { WxColourDialog { ptr: ptr } }
+    pub fn null() -> WxColourDialog { WxColourDialog::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow, U: _wxColourData>(_prt: &T, col: &U) -> wxColourDialog {
-        unsafe { wxColourDialog { ptr: wxColourDialog_Create(_prt.ptr(), col.ptr()) } }
+    pub fn new<T: TWxWindow, U: TWxColourData>(_prt: &T, col: &U) -> WxColourDialog {
+        unsafe { WxColourDialog { ptr: wxColourDialog_Create(_prt.ptr(), col.ptr()) } }
     }
 }
 
-pub trait _wxColourDialog : _wxDialog {
-    fn getColourData<T: _wxColourData>(&self, _ref: &T) {
+pub trait TWxColourDialog : TWxDialog {
+    fn getColourData<T: TWxColourData>(&self, _ref: &T) {
         unsafe { wxColourDialog_GetColourData(self.ptr(), _ref.ptr()) }
     }
 }
 
-pub struct wxComboBox { ptr: *mut c_void }
-impl _wxComboBox for wxComboBox {}
-impl _wxChoice for wxComboBox {}
-impl _wxControl for wxComboBox {}
-impl _wxWindow for wxComboBox {}
-impl _wxEvtHandler for wxComboBox {}
-impl _wxObject for wxComboBox { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxComboBox { ptr: *mut c_void }
+impl TWxComboBox for WxComboBox {}
+impl TWxChoice for WxComboBox {}
+impl TWxControl for WxComboBox {}
+impl TWxWindow for WxComboBox {}
+impl TWxEvtHandler for WxComboBox {}
+impl TWxObject for WxComboBox { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxComboBox {
-    pub fn from(ptr: *mut c_void) -> wxComboBox { wxComboBox { ptr: ptr } }
-    pub fn null() -> wxComboBox { wxComboBox::from(0 as *mut c_void) }
+impl WxComboBox {
+    pub fn from(ptr: *mut c_void) -> WxComboBox { WxComboBox { ptr: ptr } }
+    pub fn null() -> WxComboBox { WxComboBox::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *mut *mut c_char, _stl: c_int) -> wxComboBox {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *mut *mut c_char, _stl: c_int) -> WxComboBox {
         let _txt = wxT(_txt);
-        unsafe { wxComboBox { ptr: wxComboBox_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, n, str, _stl) } }
+        unsafe { WxComboBox { ptr: wxComboBox_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, n, str, _stl) } }
     }
 }
 
-pub trait _wxComboBox : _wxChoice {
+pub trait TWxComboBox : TWxChoice {
     fn appendData(&self, item: &str, d: *mut c_void) {
         let item = wxT(item);
         unsafe { wxComboBox_AppendData(self.ptr(), item.ptr(), d) }
@@ -1372,10 +1372,10 @@ pub trait _wxComboBox : _wxChoice {
         unsafe { wxComboBox_GetLastPosition(self.ptr()) }
     }
     fn getStringSelection(&self) -> ~str {
-        unsafe { wxString { ptr: wxComboBox_GetStringSelection(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxComboBox_GetStringSelection(self.ptr()) }.to_str() }
     }
     fn getValue(&self) -> ~str {
-        unsafe { wxString { ptr: wxComboBox_GetValue(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxComboBox_GetValue(self.ptr()) }.to_str() }
     }
     fn paste(&self) {
         unsafe { wxComboBox_Paste(self.ptr()) }
@@ -1401,39 +1401,39 @@ pub trait _wxComboBox : _wxChoice {
     }
 }
 
-pub struct wxCommand { ptr: *mut c_void }
-impl _wxCommand for wxCommand {}
-impl _wxObject for wxCommand { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCommand { ptr: *mut c_void }
+impl TWxCommand for WxCommand {}
+impl TWxObject for WxCommand { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCommand {
-    pub fn from(ptr: *mut c_void) -> wxCommand { wxCommand { ptr: ptr } }
-    pub fn null() -> wxCommand { wxCommand::from(0 as *mut c_void) }
+impl WxCommand {
+    pub fn from(ptr: *mut c_void) -> WxCommand { WxCommand { ptr: ptr } }
+    pub fn null() -> WxCommand { WxCommand::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxCommand : _wxObject {
+pub trait TWxCommand : TWxObject {
 }
 
-pub struct wxCommandEvent { ptr: *mut c_void }
-impl _wxCommandEvent for wxCommandEvent {}
-impl _wxEvent for wxCommandEvent {}
-impl _wxObject for wxCommandEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCommandEvent { ptr: *mut c_void }
+impl TWxCommandEvent for WxCommandEvent {}
+impl TWxEvent for WxCommandEvent {}
+impl TWxObject for WxCommandEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCommandEvent {
-    pub fn from(ptr: *mut c_void) -> wxCommandEvent { wxCommandEvent { ptr: ptr } }
-    pub fn null() -> wxCommandEvent { wxCommandEvent::from(0 as *mut c_void) }
+impl WxCommandEvent {
+    pub fn from(ptr: *mut c_void) -> WxCommandEvent { WxCommandEvent { ptr: ptr } }
+    pub fn null() -> WxCommandEvent { WxCommandEvent::from(0 as *mut c_void) }
     
-    pub fn new(_typ: c_int, _id: c_int) -> wxCommandEvent {
-        unsafe { wxCommandEvent { ptr: wxCommandEvent_Create(_typ, _id) } }
+    pub fn new(_typ: c_int, _id: c_int) -> WxCommandEvent {
+        unsafe { WxCommandEvent { ptr: wxCommandEvent_Create(_typ, _id) } }
     }
 }
 
-pub trait _wxCommandEvent : _wxEvent {
-    fn getClientData(&self) -> wxClientData {
-        unsafe { wxClientData { ptr: wxCommandEvent_GetClientData(self.ptr()) } }
+pub trait TWxCommandEvent : TWxEvent {
+    fn getClientData(&self) -> WxClientData {
+        unsafe { WxClientData { ptr: wxCommandEvent_GetClientData(self.ptr()) } }
     }
-    fn getClientObject(&self) -> wxClientData {
-        unsafe { wxClientData { ptr: wxCommandEvent_GetClientObject(self.ptr()) } }
+    fn getClientObject(&self) -> WxClientData {
+        unsafe { WxClientData { ptr: wxCommandEvent_GetClientObject(self.ptr()) } }
     }
     fn getExtraLong(&self) -> c_long {
         unsafe { wxCommandEvent_GetExtraLong(self.ptr()) }
@@ -1445,7 +1445,7 @@ pub trait _wxCommandEvent : _wxEvent {
         unsafe { wxCommandEvent_GetSelection(self.ptr()) }
     }
     fn getString(&self) -> ~str {
-        unsafe { wxString { ptr: wxCommandEvent_GetString(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxCommandEvent_GetString(self.ptr()) }.to_str() }
     }
     fn isChecked(&self) -> c_int {
         unsafe { wxCommandEvent_IsChecked(self.ptr()) }
@@ -1453,10 +1453,10 @@ pub trait _wxCommandEvent : _wxEvent {
     fn isSelection(&self) -> c_int {
         unsafe { wxCommandEvent_IsSelection(self.ptr()) }
     }
-    fn setClientData<T: _wxClientData>(&self, clientData: &T) {
+    fn setClientData<T: TWxClientData>(&self, clientData: &T) {
         unsafe { wxCommandEvent_SetClientData(self.ptr(), clientData.ptr()) }
     }
-    fn setClientObject<T: _wxClientData>(&self, clientObject: &T) {
+    fn setClientObject<T: TWxClientData>(&self, clientObject: &T) {
         unsafe { wxCommandEvent_SetClientObject(self.ptr(), clientObject.ptr()) }
     }
     fn setExtraLong(&self, extraLong: c_long) {
@@ -1471,34 +1471,34 @@ pub trait _wxCommandEvent : _wxEvent {
     }
 }
 
-pub struct wxCommandProcessor { ptr: *mut c_void }
-impl _wxCommandProcessor for wxCommandProcessor {}
-impl _wxObject for wxCommandProcessor { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCommandProcessor { ptr: *mut c_void }
+impl TWxCommandProcessor for WxCommandProcessor {}
+impl TWxObject for WxCommandProcessor { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCommandProcessor {
-    pub fn from(ptr: *mut c_void) -> wxCommandProcessor { wxCommandProcessor { ptr: ptr } }
-    pub fn null() -> wxCommandProcessor { wxCommandProcessor::from(0 as *mut c_void) }
+impl WxCommandProcessor {
+    pub fn from(ptr: *mut c_void) -> WxCommandProcessor { WxCommandProcessor { ptr: ptr } }
+    pub fn null() -> WxCommandProcessor { WxCommandProcessor::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxCommandProcessor : _wxObject {
+pub trait TWxCommandProcessor : TWxObject {
 }
 
-pub struct wxContextHelp { ptr: *mut c_void }
-impl _wxContextHelp for wxContextHelp {}
-impl _wxObject for wxContextHelp { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxContextHelp { ptr: *mut c_void }
+impl TWxContextHelp for WxContextHelp {}
+impl TWxObject for WxContextHelp { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxContextHelp {
-    pub fn from(ptr: *mut c_void) -> wxContextHelp { wxContextHelp { ptr: ptr } }
-    pub fn null() -> wxContextHelp { wxContextHelp::from(0 as *mut c_void) }
+impl WxContextHelp {
+    pub fn from(ptr: *mut c_void) -> WxContextHelp { WxContextHelp { ptr: ptr } }
+    pub fn null() -> WxContextHelp { WxContextHelp::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(win: &T, beginHelp: c_int) -> wxContextHelp {
-        unsafe { wxContextHelp { ptr: wxContextHelp_Create(win.ptr(), beginHelp) } }
+    pub fn new<T: TWxWindow>(win: &T, beginHelp: c_int) -> WxContextHelp {
+        unsafe { WxContextHelp { ptr: wxContextHelp_Create(win.ptr(), beginHelp) } }
     }
 }
 
-pub trait _wxContextHelp : _wxObject {
-    fn beginContextHelp<T: _wxWindow>(&self, win: &T) -> c_int {
+pub trait TWxContextHelp : TWxObject {
+    fn beginContextHelp<T: TWxWindow>(&self, win: &T) -> c_int {
         unsafe { wxContextHelp_BeginContextHelp(self.ptr(), win.ptr()) }
     }
     fn endContextHelp(&self) -> c_int {
@@ -1506,86 +1506,86 @@ pub trait _wxContextHelp : _wxObject {
     }
 }
 
-pub struct wxContextHelpButton { ptr: *mut c_void }
-impl _wxContextHelpButton for wxContextHelpButton {}
-impl _wxBitmapButton for wxContextHelpButton {}
-impl _wxButton for wxContextHelpButton {}
-impl _wxControl for wxContextHelpButton {}
-impl _wxWindow for wxContextHelpButton {}
-impl _wxEvtHandler for wxContextHelpButton {}
-impl _wxObject for wxContextHelpButton { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxContextHelpButton { ptr: *mut c_void }
+impl TWxContextHelpButton for WxContextHelpButton {}
+impl TWxBitmapButton for WxContextHelpButton {}
+impl TWxButton for WxContextHelpButton {}
+impl TWxControl for WxContextHelpButton {}
+impl TWxWindow for WxContextHelpButton {}
+impl TWxEvtHandler for WxContextHelpButton {}
+impl TWxObject for WxContextHelpButton { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxContextHelpButton {
-    pub fn from(ptr: *mut c_void) -> wxContextHelpButton { wxContextHelpButton { ptr: ptr } }
-    pub fn null() -> wxContextHelpButton { wxContextHelpButton::from(0 as *mut c_void) }
+impl WxContextHelpButton {
+    pub fn from(ptr: *mut c_void) -> WxContextHelpButton { WxContextHelpButton { ptr: ptr } }
+    pub fn null() -> WxContextHelpButton { WxContextHelpButton::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(parent: &T, id: c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_long) -> wxContextHelpButton {
-        unsafe { wxContextHelpButton { ptr: wxContextHelpButton_Create(parent.ptr(), id, x, y, w, h, style) } }
+    pub fn new<T: TWxWindow>(parent: &T, id: c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_long) -> WxContextHelpButton {
+        unsafe { WxContextHelpButton { ptr: wxContextHelpButton_Create(parent.ptr(), id, x, y, w, h, style) } }
     }
 }
 
-pub trait _wxContextHelpButton : _wxBitmapButton {
+pub trait TWxContextHelpButton : TWxBitmapButton {
 }
 
-pub struct wxControl { ptr: *mut c_void }
-impl _wxControl for wxControl {}
-impl _wxWindow for wxControl {}
-impl _wxEvtHandler for wxControl {}
-impl _wxObject for wxControl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxControl { ptr: *mut c_void }
+impl TWxControl for WxControl {}
+impl TWxWindow for WxControl {}
+impl TWxEvtHandler for WxControl {}
+impl TWxObject for WxControl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxControl {
-    pub fn from(ptr: *mut c_void) -> wxControl { wxControl { ptr: ptr } }
-    pub fn null() -> wxControl { wxControl::from(0 as *mut c_void) }
+impl WxControl {
+    pub fn from(ptr: *mut c_void) -> WxControl { WxControl { ptr: ptr } }
+    pub fn null() -> WxControl { WxControl::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxControl : _wxWindow {
-    fn command<T: _wxEvent>(&self, event: &T) {
+pub trait TWxControl : TWxWindow {
+    fn command<T: TWxEvent>(&self, event: &T) {
         unsafe { wxControl_Command(self.ptr(), event.ptr()) }
     }
 }
 
-pub struct wxCursor { ptr: *mut c_void }
-impl _wxCursor for wxCursor {}
-impl _wxBitmap for wxCursor {}
-impl _wxGDIObject for wxCursor {}
-impl _wxObject for wxCursor { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCursor { ptr: *mut c_void }
+impl TWxCursor for WxCursor {}
+impl TWxBitmap for WxCursor {}
+impl TWxGDIObject for WxCursor {}
+impl TWxObject for WxCursor { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCursor {
-    pub fn from(ptr: *mut c_void) -> wxCursor { wxCursor { ptr: ptr } }
-    pub fn null() -> wxCursor { wxCursor::from(0 as *mut c_void) }
+impl WxCursor {
+    pub fn from(ptr: *mut c_void) -> WxCursor { WxCursor { ptr: ptr } }
+    pub fn null() -> WxCursor { WxCursor::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxCursor : _wxBitmap {
+pub trait TWxCursor : TWxBitmap {
 }
 
-pub struct wxCustomDataObject { ptr: *mut c_void }
-impl _wxCustomDataObject for wxCustomDataObject {}
-impl _wxDataObjectSimple for wxCustomDataObject {}
-impl _wxDataObject for wxCustomDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCustomDataObject { ptr: *mut c_void }
+impl TWxCustomDataObject for WxCustomDataObject {}
+impl TWxDataObjectSimple for WxCustomDataObject {}
+impl TWxDataObject for WxCustomDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCustomDataObject {
-    pub fn from(ptr: *mut c_void) -> wxCustomDataObject { wxCustomDataObject { ptr: ptr } }
-    pub fn null() -> wxCustomDataObject { wxCustomDataObject::from(0 as *mut c_void) }
+impl WxCustomDataObject {
+    pub fn from(ptr: *mut c_void) -> WxCustomDataObject { WxCustomDataObject { ptr: ptr } }
+    pub fn null() -> WxCustomDataObject { WxCustomDataObject::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxCustomDataObject : _wxDataObjectSimple {
+pub trait TWxCustomDataObject : TWxDataObjectSimple {
 }
 
-pub struct wxDC { ptr: *mut c_void }
-impl _wxDC for wxDC {}
-impl _wxObject for wxDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDC { ptr: *mut c_void }
+impl TWxDC for WxDC {}
+impl TWxObject for WxDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDC {
-    pub fn from(ptr: *mut c_void) -> wxDC { wxDC { ptr: ptr } }
-    pub fn null() -> wxDC { wxDC::from(0 as *mut c_void) }
+impl WxDC {
+    pub fn from(ptr: *mut c_void) -> WxDC { WxDC { ptr: ptr } }
+    pub fn null() -> WxDC { WxDC::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDC : _wxObject {
-    fn blit<T: _wxDC>(&self, xdest: c_int, ydest: c_int, width: c_int, height: c_int, source: &T, xsrc: c_int, ysrc: c_int, rop: c_int, useMask: c_int) -> c_int {
+pub trait TWxDC : TWxObject {
+    fn blit<T: TWxDC>(&self, xdest: c_int, ydest: c_int, width: c_int, height: c_int, source: &T, xsrc: c_int, ysrc: c_int, rop: c_int, useMask: c_int) -> c_int {
         unsafe { wxDC_Blit(self.ptr(), xdest, ydest, width, height, source.ptr(), xsrc, ysrc, rop, useMask) }
     }
     fn calcBoundingBox(&self, x: c_int, y: c_int) {
@@ -1624,7 +1624,7 @@ pub trait _wxDC : _wxObject {
     fn drawArc(&self, x1: c_int, y1: c_int, x2: c_int, y2: c_int, xc: c_int, yc: c_int) {
         unsafe { wxDC_DrawArc(self.ptr(), x1, y1, x2, y2, xc, yc) }
     }
-    fn drawBitmap<T: _wxBitmap>(&self, bmp: &T, x: c_int, y: c_int, useMask: c_int) {
+    fn drawBitmap<T: TWxBitmap>(&self, bmp: &T, x: c_int, y: c_int, useMask: c_int) {
         unsafe { wxDC_DrawBitmap(self.ptr(), bmp.ptr(), x, y, useMask) }
     }
     fn drawCheckMark(&self, x: c_int, y: c_int, width: c_int, height: c_int) {
@@ -1639,16 +1639,16 @@ pub trait _wxDC : _wxObject {
     fn drawEllipticArc(&self, x: c_int, y: c_int, w: c_int, h: c_int, sa: c_double, ea: c_double) {
         unsafe { wxDC_DrawEllipticArc(self.ptr(), x, y, w, h, sa, ea) }
     }
-    fn drawIcon<T: _wxIcon>(&self, icon: &T, x: c_int, y: c_int) {
+    fn drawIcon<T: TWxIcon>(&self, icon: &T, x: c_int, y: c_int) {
         unsafe { wxDC_DrawIcon(self.ptr(), icon.ptr(), x, y) }
     }
     fn drawLabel(&self, str: &str, x: c_int, y: c_int, w: c_int, h: c_int, align: c_int, indexAccel: c_int) {
         let str = wxT(str);
         unsafe { wxDC_DrawLabel(self.ptr(), str.ptr(), x, y, w, h, align, indexAccel) }
     }
-    fn drawLabelBitmap<T: _wxBitmap>(&self, str: &str, bmp: &T, x: c_int, y: c_int, w: c_int, h: c_int, align: c_int, indexAccel: c_int) -> wxRect {
+    fn drawLabelBitmap<T: TWxBitmap>(&self, str: &str, bmp: &T, x: c_int, y: c_int, w: c_int, h: c_int, align: c_int, indexAccel: c_int) -> WxRect {
         let str = wxT(str);
-        unsafe { wxRect { ptr: wxDC_DrawLabelBitmap(self.ptr(), str.ptr(), bmp.ptr(), x, y, w, h, align, indexAccel) } }
+        unsafe { WxRect { ptr: wxDC_DrawLabelBitmap(self.ptr(), str.ptr(), bmp.ptr(), x, y, w, h, align, indexAccel) } }
     }
     fn drawLine(&self, x1: c_int, y1: c_int, x2: c_int, y2: c_int) {
         unsafe { wxDC_DrawLine(self.ptr(), x1, y1, x2, y2) }
@@ -1685,16 +1685,16 @@ pub trait _wxDC : _wxObject {
     fn endPage(&self) {
         unsafe { wxDC_EndPage(self.ptr()) }
     }
-    fn floodFill<T: _wxColour>(&self, x: c_int, y: c_int, col: &T, style: c_int) {
+    fn floodFill<T: TWxColour>(&self, x: c_int, y: c_int, col: &T, style: c_int) {
         unsafe { wxDC_FloodFill(self.ptr(), x, y, col.ptr(), style) }
     }
-    fn getBackground<T: _wxBrush>(&self, _ref: &T) {
+    fn getBackground<T: TWxBrush>(&self, _ref: &T) {
         unsafe { wxDC_GetBackground(self.ptr(), _ref.ptr()) }
     }
     fn getBackgroundMode(&self) -> c_int {
         unsafe { wxDC_GetBackgroundMode(self.ptr()) }
     }
-    fn getBrush<T: _wxBrush>(&self, _ref: &T) {
+    fn getBrush<T: TWxBrush>(&self, _ref: &T) {
         unsafe { wxDC_GetBrush(self.ptr(), _ref.ptr()) }
     }
     fn getCharHeight(&self) -> c_int {
@@ -1712,7 +1712,7 @@ pub trait _wxDC : _wxObject {
     fn getDeviceOrigin(&self, _x: *mut c_void, _y: *mut c_void) {
         unsafe { wxDC_GetDeviceOrigin(self.ptr(), _x, _y) }
     }
-    fn getFont<T: _wxFont>(&self, _ref: &T) {
+    fn getFont<T: TWxFont>(&self, _ref: &T) {
         unsafe { wxDC_GetFont(self.ptr(), _ref.ptr()) }
     }
     fn getLogicalFunction(&self) -> c_int {
@@ -1727,33 +1727,33 @@ pub trait _wxDC : _wxObject {
     fn getMapMode(&self) -> c_int {
         unsafe { wxDC_GetMapMode(self.ptr()) }
     }
-    fn getPPI(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxDC_GetPPI(self.ptr()) } }
+    fn getPPI(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxDC_GetPPI(self.ptr()) } }
     }
-    fn getPen<T: _wxPen>(&self, _ref: &T) {
+    fn getPen<T: TWxPen>(&self, _ref: &T) {
         unsafe { wxDC_GetPen(self.ptr(), _ref.ptr()) }
     }
-    fn getPixel<T: _wxColour>(&self, x: c_int, y: c_int, col: &T) -> c_int {
+    fn getPixel<T: TWxColour>(&self, x: c_int, y: c_int, col: &T) -> c_int {
         unsafe { wxDC_GetPixel(self.ptr(), x, y, col.ptr()) }
     }
-    fn getSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxDC_GetSize(self.ptr()) } }
+    fn getSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxDC_GetSize(self.ptr()) } }
     }
-    fn getSizeMM(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxDC_GetSizeMM(self.ptr()) } }
+    fn getSizeMM(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxDC_GetSizeMM(self.ptr()) } }
     }
-    fn getTextBackground<T: _wxColour>(&self, _ref: &T) {
+    fn getTextBackground<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxDC_GetTextBackground(self.ptr(), _ref.ptr()) }
     }
-    fn getTextExtent<T: _wxFont>(&self, string: &str, w: *mut c_void, h: *mut c_void, descent: *mut c_void, externalLeading: *mut c_void, theFont: &T) {
+    fn getTextExtent<T: TWxFont>(&self, string: &str, w: *mut c_void, h: *mut c_void, descent: *mut c_void, externalLeading: *mut c_void, theFont: &T) {
         let string = wxT(string);
         unsafe { wxDC_GetTextExtent(self.ptr(), string.ptr(), w, h, descent, externalLeading, theFont.ptr()) }
     }
-    fn getMultiLineTextExtent<T: _wxFont>(&self, string: &str, w: *mut c_void, h: *mut c_void, heightLine: *mut c_void, theFont: &T) {
+    fn getMultiLineTextExtent<T: TWxFont>(&self, string: &str, w: *mut c_void, h: *mut c_void, heightLine: *mut c_void, theFont: &T) {
         let string = wxT(string);
         unsafe { wxDC_GetMultiLineTextExtent(self.ptr(), string.ptr(), w, h, heightLine, theFont.ptr()) }
     }
-    fn getTextForeground<T: _wxColour>(&self, _ref: &T) {
+    fn getTextForeground<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxDC_GetTextForeground(self.ptr(), _ref.ptr()) }
     }
     fn getUserScale(&self, x: *mut c_double, y: *mut c_double) {
@@ -1792,28 +1792,28 @@ pub trait _wxDC : _wxObject {
     fn setAxisOrientation(&self, xLeftRight: c_int, yBottomUp: c_int) {
         unsafe { wxDC_SetAxisOrientation(self.ptr(), xLeftRight, yBottomUp) }
     }
-    fn setBackground<T: _wxBrush>(&self, brush: &T) {
+    fn setBackground<T: TWxBrush>(&self, brush: &T) {
         unsafe { wxDC_SetBackground(self.ptr(), brush.ptr()) }
     }
     fn setBackgroundMode(&self, mode: c_int) {
         unsafe { wxDC_SetBackgroundMode(self.ptr(), mode) }
     }
-    fn setBrush<T: _wxBrush>(&self, brush: &T) {
+    fn setBrush<T: TWxBrush>(&self, brush: &T) {
         unsafe { wxDC_SetBrush(self.ptr(), brush.ptr()) }
     }
     fn setClippingRegion(&self, x: c_int, y: c_int, width: c_int, height: c_int) {
         unsafe { wxDC_SetClippingRegion(self.ptr(), x, y, width, height) }
     }
-    fn setClippingRegionFromRegion<T: _wxRegion>(&self, region: &T) {
+    fn setClippingRegionFromRegion<T: TWxRegion>(&self, region: &T) {
         unsafe { wxDC_SetClippingRegionFromRegion(self.ptr(), region.ptr()) }
     }
-    fn setDeviceClippingRegion<T: _wxRegion>(&self, region: &T) {
+    fn setDeviceClippingRegion<T: TWxRegion>(&self, region: &T) {
         unsafe { wxDC_SetDeviceClippingRegion(self.ptr(), region.ptr()) }
     }
     fn setDeviceOrigin(&self, x: c_int, y: c_int) {
         unsafe { wxDC_SetDeviceOrigin(self.ptr(), x, y) }
     }
-    fn setFont<T: _wxFont>(&self, font: &T) {
+    fn setFont<T: TWxFont>(&self, font: &T) {
         unsafe { wxDC_SetFont(self.ptr(), font.ptr()) }
     }
     fn setLogicalFunction(&self, function: c_int) {
@@ -1828,16 +1828,16 @@ pub trait _wxDC : _wxObject {
     fn setMapMode(&self, mode: c_int) {
         unsafe { wxDC_SetMapMode(self.ptr(), mode) }
     }
-    fn setPalette<T: _wxPalette>(&self, palette: &T) {
+    fn setPalette<T: TWxPalette>(&self, palette: &T) {
         unsafe { wxDC_SetPalette(self.ptr(), palette.ptr()) }
     }
-    fn setPen<T: _wxPen>(&self, pen: &T) {
+    fn setPen<T: TWxPen>(&self, pen: &T) {
         unsafe { wxDC_SetPen(self.ptr(), pen.ptr()) }
     }
-    fn setTextBackground<T: _wxColour>(&self, colour: &T) {
+    fn setTextBackground<T: TWxColour>(&self, colour: &T) {
         unsafe { wxDC_SetTextBackground(self.ptr(), colour.ptr()) }
     }
-    fn setTextForeground<T: _wxColour>(&self, colour: &T) {
+    fn setTextForeground<T: TWxColour>(&self, colour: &T) {
         unsafe { wxDC_SetTextForeground(self.ptr(), colour.ptr()) }
     }
     fn setUserScale(&self, x: c_double, y: c_double) {
@@ -1856,49 +1856,49 @@ pub trait _wxDC : _wxObject {
     fn getUserScaleY(&self) -> c_double {
         unsafe { wxDC_GetUserScaleY(self.ptr()) }
     }
-    fn getPixel2<T: _wxColour>(&self, x: c_int, y: c_int, col: &T) {
+    fn getPixel2<T: TWxColour>(&self, x: c_int, y: c_int, col: &T) {
         unsafe { wxDC_GetPixel2(self.ptr(), x, y, col.ptr()) }
     }
 }
 
-pub struct wxDCClipper { ptr: *mut c_void }
-impl _wxDCClipper for wxDCClipper { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDCClipper { ptr: *mut c_void }
+impl TWxDCClipper for WxDCClipper { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDCClipper {
-    pub fn from(ptr: *mut c_void) -> wxDCClipper { wxDCClipper { ptr: ptr } }
-    pub fn null() -> wxDCClipper { wxDCClipper::from(0 as *mut c_void) }
+impl WxDCClipper {
+    pub fn from(ptr: *mut c_void) -> WxDCClipper { WxDCClipper { ptr: ptr } }
+    pub fn null() -> WxDCClipper { WxDCClipper::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDCClipper {
+pub trait TWxDCClipper {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDataFormat { ptr: *mut c_void }
-impl _wxDataFormat for wxDataFormat { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDataFormat { ptr: *mut c_void }
+impl TWxDataFormat for WxDataFormat { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDataFormat {
-    pub fn from(ptr: *mut c_void) -> wxDataFormat { wxDataFormat { ptr: ptr } }
-    pub fn null() -> wxDataFormat { wxDataFormat::from(0 as *mut c_void) }
+impl WxDataFormat {
+    pub fn from(ptr: *mut c_void) -> WxDataFormat { WxDataFormat { ptr: ptr } }
+    pub fn null() -> WxDataFormat { WxDataFormat::from(0 as *mut c_void) }
     
-    pub fn newFromId(name: &str) -> wxDataFormat {
+    pub fn newFromId(name: &str) -> WxDataFormat {
         let name = wxT(name);
-        unsafe { wxDataFormat { ptr: wxDataFormat_CreateFromId(name.ptr()) } }
+        unsafe { WxDataFormat { ptr: wxDataFormat_CreateFromId(name.ptr()) } }
     }
-    pub fn newFromType(typ: c_int) -> wxDataFormat {
-        unsafe { wxDataFormat { ptr: wxDataFormat_CreateFromType(typ) } }
+    pub fn newFromType(typ: c_int) -> WxDataFormat {
+        unsafe { WxDataFormat { ptr: wxDataFormat_CreateFromType(typ) } }
     }
 }
 
-pub trait _wxDataFormat {
+pub trait TWxDataFormat {
     fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
         unsafe { wxDataFormat_Delete(self.ptr()) }
     }
     fn getId(&self) -> ~str {
-        unsafe { wxString { ptr: wxDataFormat_GetId(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxDataFormat_GetId(self.ptr()) }.to_str() }
     }
     fn getType(&self) -> c_int {
         unsafe { wxDataFormat_GetType(self.ptr()) }
@@ -1914,34 +1914,34 @@ pub trait _wxDataFormat {
     }
 }
 
-pub struct wxDataObject { ptr: *mut c_void }
-impl _wxDataObject for wxDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDataObject { ptr: *mut c_void }
+impl TWxDataObject for WxDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDataObject {
-    pub fn from(ptr: *mut c_void) -> wxDataObject { wxDataObject { ptr: ptr } }
-    pub fn null() -> wxDataObject { wxDataObject::from(0 as *mut c_void) }
+impl WxDataObject {
+    pub fn from(ptr: *mut c_void) -> WxDataObject { WxDataObject { ptr: ptr } }
+    pub fn null() -> WxDataObject { WxDataObject::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDataObject {
+pub trait TWxDataObject {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDataObjectComposite { ptr: *mut c_void }
-impl _wxDataObjectComposite for wxDataObjectComposite {}
-impl _wxDataObject for wxDataObjectComposite { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDataObjectComposite { ptr: *mut c_void }
+impl TWxDataObjectComposite for WxDataObjectComposite {}
+impl TWxDataObject for WxDataObjectComposite { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDataObjectComposite {
-    pub fn from(ptr: *mut c_void) -> wxDataObjectComposite { wxDataObjectComposite { ptr: ptr } }
-    pub fn null() -> wxDataObjectComposite { wxDataObjectComposite::from(0 as *mut c_void) }
+impl WxDataObjectComposite {
+    pub fn from(ptr: *mut c_void) -> WxDataObjectComposite { WxDataObjectComposite { ptr: ptr } }
+    pub fn null() -> WxDataObjectComposite { WxDataObjectComposite::from(0 as *mut c_void) }
     
-    pub fn new() -> wxDataObjectComposite {
-        unsafe { wxDataObjectComposite { ptr: wxDataObjectComposite_Create() } }
+    pub fn new() -> WxDataObjectComposite {
+        unsafe { WxDataObjectComposite { ptr: wxDataObjectComposite_Create() } }
     }
 }
 
-pub trait _wxDataObjectComposite : _wxDataObject {
+pub trait TWxDataObjectComposite : TWxDataObject {
     fn add(&self, _dat: *mut c_void, _preferred: c_int) {
         unsafe { wxDataObjectComposite_Add(self.ptr(), _dat, _preferred) }
     }
@@ -1950,65 +1950,65 @@ pub trait _wxDataObjectComposite : _wxDataObject {
     }
 }
 
-pub struct wxDataObjectSimple { ptr: *mut c_void }
-impl _wxDataObjectSimple for wxDataObjectSimple {}
-impl _wxDataObject for wxDataObjectSimple { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDataObjectSimple { ptr: *mut c_void }
+impl TWxDataObjectSimple for WxDataObjectSimple {}
+impl TWxDataObject for WxDataObjectSimple { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDataObjectSimple {
-    pub fn from(ptr: *mut c_void) -> wxDataObjectSimple { wxDataObjectSimple { ptr: ptr } }
-    pub fn null() -> wxDataObjectSimple { wxDataObjectSimple::from(0 as *mut c_void) }
+impl WxDataObjectSimple {
+    pub fn from(ptr: *mut c_void) -> WxDataObjectSimple { WxDataObjectSimple { ptr: ptr } }
+    pub fn null() -> WxDataObjectSimple { WxDataObjectSimple::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDataObjectSimple : _wxDataObject {
+pub trait TWxDataObjectSimple : TWxDataObject {
 }
 
-pub struct wxDialUpEvent { ptr: *mut c_void }
-impl _wxDialUpEvent for wxDialUpEvent {}
-impl _wxEvent for wxDialUpEvent {}
-impl _wxObject for wxDialUpEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDialUpEvent { ptr: *mut c_void }
+impl TWxDialUpEvent for WxDialUpEvent {}
+impl TWxEvent for WxDialUpEvent {}
+impl TWxObject for WxDialUpEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDialUpEvent {
-    pub fn from(ptr: *mut c_void) -> wxDialUpEvent { wxDialUpEvent { ptr: ptr } }
-    pub fn null() -> wxDialUpEvent { wxDialUpEvent::from(0 as *mut c_void) }
+impl WxDialUpEvent {
+    pub fn from(ptr: *mut c_void) -> WxDialUpEvent { WxDialUpEvent { ptr: ptr } }
+    pub fn null() -> WxDialUpEvent { WxDialUpEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDialUpEvent : _wxEvent {
+pub trait TWxDialUpEvent : TWxEvent {
 }
 
-pub struct wxDialUpManager { ptr: *mut c_void }
-impl _wxDialUpManager for wxDialUpManager { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDialUpManager { ptr: *mut c_void }
+impl TWxDialUpManager for WxDialUpManager { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDialUpManager {
-    pub fn from(ptr: *mut c_void) -> wxDialUpManager { wxDialUpManager { ptr: ptr } }
-    pub fn null() -> wxDialUpManager { wxDialUpManager::from(0 as *mut c_void) }
+impl WxDialUpManager {
+    pub fn from(ptr: *mut c_void) -> WxDialUpManager { WxDialUpManager { ptr: ptr } }
+    pub fn null() -> WxDialUpManager { WxDialUpManager::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDialUpManager {
+pub trait TWxDialUpManager {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDialog { ptr: *mut c_void }
-impl _wxDialog for wxDialog {}
-impl _wxTopLevelWindow for wxDialog {}
-impl _wxWindow for wxDialog {}
-impl _wxEvtHandler for wxDialog {}
-impl _wxObject for wxDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDialog { ptr: *mut c_void }
+impl TWxDialog for WxDialog {}
+impl TWxTopLevelWindow for WxDialog {}
+impl TWxWindow for WxDialog {}
+impl TWxEvtHandler for WxDialog {}
+impl TWxObject for WxDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDialog {
-    pub fn from(ptr: *mut c_void) -> wxDialog { wxDialog { ptr: ptr } }
-    pub fn null() -> wxDialog { wxDialog::from(0 as *mut c_void) }
+impl WxDialog {
+    pub fn from(ptr: *mut c_void) -> WxDialog { WxDialog { ptr: ptr } }
+    pub fn null() -> WxDialog { WxDialog::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxDialog {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxDialog {
         let _txt = wxT(_txt);
-        unsafe { wxDialog { ptr: wxDialog_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { WxDialog { ptr: wxDialog_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxDialog : _wxTopLevelWindow {
+pub trait TWxDialog : TWxTopLevelWindow {
     fn endModal(&self, retCode: c_int) {
         unsafe { wxDialog_EndModal(self.ptr(), retCode) }
     }
@@ -2026,31 +2026,31 @@ pub trait _wxDialog : _wxTopLevelWindow {
     }
 }
 
-pub struct wxDirDialog { ptr: *mut c_void }
-impl _wxDirDialog for wxDirDialog {}
-impl _wxDialog for wxDirDialog {}
-impl _wxTopLevelWindow for wxDirDialog {}
-impl _wxWindow for wxDirDialog {}
-impl _wxEvtHandler for wxDirDialog {}
-impl _wxObject for wxDirDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDirDialog { ptr: *mut c_void }
+impl TWxDirDialog for WxDirDialog {}
+impl TWxDialog for WxDirDialog {}
+impl TWxTopLevelWindow for WxDirDialog {}
+impl TWxWindow for WxDirDialog {}
+impl TWxEvtHandler for WxDirDialog {}
+impl TWxObject for WxDirDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDirDialog {
-    pub fn from(ptr: *mut c_void) -> wxDirDialog { wxDirDialog { ptr: ptr } }
-    pub fn null() -> wxDirDialog { wxDirDialog::from(0 as *mut c_void) }
+impl WxDirDialog {
+    pub fn from(ptr: *mut c_void) -> WxDirDialog { WxDirDialog { ptr: ptr } }
+    pub fn null() -> WxDirDialog { WxDirDialog::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _msg: &str, _dir: &str, _lft: c_int, _top: c_int, _stl: c_int) -> wxDirDialog {
+    pub fn new<T: TWxWindow>(_prt: &T, _msg: &str, _dir: &str, _lft: c_int, _top: c_int, _stl: c_int) -> WxDirDialog {
         let _msg = wxT(_msg);
         let _dir = wxT(_dir);
-        unsafe { wxDirDialog { ptr: wxDirDialog_Create(_prt.ptr(), _msg.ptr(), _dir.ptr(), _lft, _top, _stl) } }
+        unsafe { WxDirDialog { ptr: wxDirDialog_Create(_prt.ptr(), _msg.ptr(), _dir.ptr(), _lft, _top, _stl) } }
     }
 }
 
-pub trait _wxDirDialog : _wxDialog {
+pub trait TWxDirDialog : TWxDialog {
     fn getMessage(&self) -> ~str {
-        unsafe { wxString { ptr: wxDirDialog_GetMessage(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxDirDialog_GetMessage(self.ptr()) }.to_str() }
     }
     fn getPath(&self) -> ~str {
-        unsafe { wxString { ptr: wxDirDialog_GetPath(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxDirDialog_GetPath(self.ptr()) }.to_str() }
     }
     fn getStyle(&self) -> c_int {
         unsafe { wxDirDialog_GetStyle(self.ptr()) }
@@ -2068,135 +2068,135 @@ pub trait _wxDirDialog : _wxDialog {
     }
 }
 
-pub struct wxDocChildFrame { ptr: *mut c_void }
-impl _wxDocChildFrame for wxDocChildFrame {}
-impl _wxFrame for wxDocChildFrame {}
-impl _wxTopLevelWindow for wxDocChildFrame {}
-impl _wxWindow for wxDocChildFrame {}
-impl _wxEvtHandler for wxDocChildFrame {}
-impl _wxObject for wxDocChildFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDocChildFrame { ptr: *mut c_void }
+impl TWxDocChildFrame for WxDocChildFrame {}
+impl TWxFrame for WxDocChildFrame {}
+impl TWxTopLevelWindow for WxDocChildFrame {}
+impl TWxWindow for WxDocChildFrame {}
+impl TWxEvtHandler for WxDocChildFrame {}
+impl TWxObject for WxDocChildFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDocChildFrame {
-    pub fn from(ptr: *mut c_void) -> wxDocChildFrame { wxDocChildFrame { ptr: ptr } }
-    pub fn null() -> wxDocChildFrame { wxDocChildFrame::from(0 as *mut c_void) }
+impl WxDocChildFrame {
+    pub fn from(ptr: *mut c_void) -> WxDocChildFrame { WxDocChildFrame { ptr: ptr } }
+    pub fn null() -> WxDocChildFrame { WxDocChildFrame::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDocChildFrame : _wxFrame {
+pub trait TWxDocChildFrame : TWxFrame {
 }
 
-pub struct wxDocMDIChildFrame { ptr: *mut c_void }
-impl _wxDocMDIChildFrame for wxDocMDIChildFrame {}
-impl _wxMDIChildFrame for wxDocMDIChildFrame {}
-impl _wxFrame for wxDocMDIChildFrame {}
-impl _wxTopLevelWindow for wxDocMDIChildFrame {}
-impl _wxWindow for wxDocMDIChildFrame {}
-impl _wxEvtHandler for wxDocMDIChildFrame {}
-impl _wxObject for wxDocMDIChildFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDocMDIChildFrame { ptr: *mut c_void }
+impl TWxDocMDIChildFrame for WxDocMDIChildFrame {}
+impl TWxMDIChildFrame for WxDocMDIChildFrame {}
+impl TWxFrame for WxDocMDIChildFrame {}
+impl TWxTopLevelWindow for WxDocMDIChildFrame {}
+impl TWxWindow for WxDocMDIChildFrame {}
+impl TWxEvtHandler for WxDocMDIChildFrame {}
+impl TWxObject for WxDocMDIChildFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDocMDIChildFrame {
-    pub fn from(ptr: *mut c_void) -> wxDocMDIChildFrame { wxDocMDIChildFrame { ptr: ptr } }
-    pub fn null() -> wxDocMDIChildFrame { wxDocMDIChildFrame::from(0 as *mut c_void) }
+impl WxDocMDIChildFrame {
+    pub fn from(ptr: *mut c_void) -> WxDocMDIChildFrame { WxDocMDIChildFrame { ptr: ptr } }
+    pub fn null() -> WxDocMDIChildFrame { WxDocMDIChildFrame::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDocMDIChildFrame : _wxMDIChildFrame {
+pub trait TWxDocMDIChildFrame : TWxMDIChildFrame {
 }
 
-pub struct wxDocMDIParentFrame { ptr: *mut c_void }
-impl _wxDocMDIParentFrame for wxDocMDIParentFrame {}
-impl _wxMDIParentFrame for wxDocMDIParentFrame {}
-impl _wxFrame for wxDocMDIParentFrame {}
-impl _wxTopLevelWindow for wxDocMDIParentFrame {}
-impl _wxWindow for wxDocMDIParentFrame {}
-impl _wxEvtHandler for wxDocMDIParentFrame {}
-impl _wxObject for wxDocMDIParentFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDocMDIParentFrame { ptr: *mut c_void }
+impl TWxDocMDIParentFrame for WxDocMDIParentFrame {}
+impl TWxMDIParentFrame for WxDocMDIParentFrame {}
+impl TWxFrame for WxDocMDIParentFrame {}
+impl TWxTopLevelWindow for WxDocMDIParentFrame {}
+impl TWxWindow for WxDocMDIParentFrame {}
+impl TWxEvtHandler for WxDocMDIParentFrame {}
+impl TWxObject for WxDocMDIParentFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDocMDIParentFrame {
-    pub fn from(ptr: *mut c_void) -> wxDocMDIParentFrame { wxDocMDIParentFrame { ptr: ptr } }
-    pub fn null() -> wxDocMDIParentFrame { wxDocMDIParentFrame::from(0 as *mut c_void) }
+impl WxDocMDIParentFrame {
+    pub fn from(ptr: *mut c_void) -> WxDocMDIParentFrame { WxDocMDIParentFrame { ptr: ptr } }
+    pub fn null() -> WxDocMDIParentFrame { WxDocMDIParentFrame::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDocMDIParentFrame : _wxMDIParentFrame {
+pub trait TWxDocMDIParentFrame : TWxMDIParentFrame {
 }
 
-pub struct wxDocManager { ptr: *mut c_void }
-impl _wxDocManager for wxDocManager {}
-impl _wxEvtHandler for wxDocManager {}
-impl _wxObject for wxDocManager { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDocManager { ptr: *mut c_void }
+impl TWxDocManager for WxDocManager {}
+impl TWxEvtHandler for WxDocManager {}
+impl TWxObject for WxDocManager { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDocManager {
-    pub fn from(ptr: *mut c_void) -> wxDocManager { wxDocManager { ptr: ptr } }
-    pub fn null() -> wxDocManager { wxDocManager::from(0 as *mut c_void) }
+impl WxDocManager {
+    pub fn from(ptr: *mut c_void) -> WxDocManager { WxDocManager { ptr: ptr } }
+    pub fn null() -> WxDocManager { WxDocManager::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDocManager : _wxEvtHandler {
+pub trait TWxDocManager : TWxEvtHandler {
 }
 
-pub struct wxDocParentFrame { ptr: *mut c_void }
-impl _wxDocParentFrame for wxDocParentFrame {}
-impl _wxFrame for wxDocParentFrame {}
-impl _wxTopLevelWindow for wxDocParentFrame {}
-impl _wxWindow for wxDocParentFrame {}
-impl _wxEvtHandler for wxDocParentFrame {}
-impl _wxObject for wxDocParentFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDocParentFrame { ptr: *mut c_void }
+impl TWxDocParentFrame for WxDocParentFrame {}
+impl TWxFrame for WxDocParentFrame {}
+impl TWxTopLevelWindow for WxDocParentFrame {}
+impl TWxWindow for WxDocParentFrame {}
+impl TWxEvtHandler for WxDocParentFrame {}
+impl TWxObject for WxDocParentFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDocParentFrame {
-    pub fn from(ptr: *mut c_void) -> wxDocParentFrame { wxDocParentFrame { ptr: ptr } }
-    pub fn null() -> wxDocParentFrame { wxDocParentFrame::from(0 as *mut c_void) }
+impl WxDocParentFrame {
+    pub fn from(ptr: *mut c_void) -> WxDocParentFrame { WxDocParentFrame { ptr: ptr } }
+    pub fn null() -> WxDocParentFrame { WxDocParentFrame::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDocParentFrame : _wxFrame {
+pub trait TWxDocParentFrame : TWxFrame {
 }
 
-pub struct wxDocTemplate { ptr: *mut c_void }
-impl _wxDocTemplate for wxDocTemplate {}
-impl _wxObject for wxDocTemplate { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDocTemplate { ptr: *mut c_void }
+impl TWxDocTemplate for WxDocTemplate {}
+impl TWxObject for WxDocTemplate { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDocTemplate {
-    pub fn from(ptr: *mut c_void) -> wxDocTemplate { wxDocTemplate { ptr: ptr } }
-    pub fn null() -> wxDocTemplate { wxDocTemplate::from(0 as *mut c_void) }
+impl WxDocTemplate {
+    pub fn from(ptr: *mut c_void) -> WxDocTemplate { WxDocTemplate { ptr: ptr } }
+    pub fn null() -> WxDocTemplate { WxDocTemplate::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDocTemplate : _wxObject {
+pub trait TWxDocTemplate : TWxObject {
 }
 
-pub struct wxDocument { ptr: *mut c_void }
-impl _wxDocument for wxDocument {}
-impl _wxEvtHandler for wxDocument {}
-impl _wxObject for wxDocument { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDocument { ptr: *mut c_void }
+impl TWxDocument for WxDocument {}
+impl TWxEvtHandler for WxDocument {}
+impl TWxObject for WxDocument { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDocument {
-    pub fn from(ptr: *mut c_void) -> wxDocument { wxDocument { ptr: ptr } }
-    pub fn null() -> wxDocument { wxDocument::from(0 as *mut c_void) }
+impl WxDocument {
+    pub fn from(ptr: *mut c_void) -> WxDocument { WxDocument { ptr: ptr } }
+    pub fn null() -> WxDocument { WxDocument::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDocument : _wxEvtHandler {
+pub trait TWxDocument : TWxEvtHandler {
 }
 
-pub struct wxDragImage { ptr: *mut c_void }
-impl _wxDragImage for wxDragImage {}
-impl _wxObject for wxDragImage { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDragImage { ptr: *mut c_void }
+impl TWxDragImage for WxDragImage {}
+impl TWxObject for WxDragImage { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDragImage {
-    pub fn from(ptr: *mut c_void) -> wxDragImage { wxDragImage { ptr: ptr } }
-    pub fn null() -> wxDragImage { wxDragImage::from(0 as *mut c_void) }
+impl WxDragImage {
+    pub fn from(ptr: *mut c_void) -> WxDragImage { WxDragImage { ptr: ptr } }
+    pub fn null() -> WxDragImage { WxDragImage::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxBitmap>(image: &T, x: c_int, y: c_int) -> wxDragImage {
-        unsafe { wxDragImage { ptr: wxDragImage_Create(image.ptr(), x, y) } }
+    pub fn new<T: TWxBitmap>(image: &T, x: c_int, y: c_int) -> WxDragImage {
+        unsafe { WxDragImage { ptr: wxDragImage_Create(image.ptr(), x, y) } }
     }
 }
 
-pub trait _wxDragImage : _wxObject {
-    fn beginDragFullScreen<T: _wxWindow, U: _wxRect>(&self, x_pos: c_int, y_pos: c_int, window: &T, fullScreen: c_int, rect: &U) -> c_int {
+pub trait TWxDragImage : TWxObject {
+    fn beginDragFullScreen<T: TWxWindow, U: TWxRect>(&self, x_pos: c_int, y_pos: c_int, window: &T, fullScreen: c_int, rect: &U) -> c_int {
         unsafe { wxDragImage_BeginDragFullScreen(self.ptr(), x_pos, y_pos, window.ptr(), fullScreen, rect.ptr()) }
     }
-    fn beginDrag<T: _wxWindow, U: _wxWindow>(&self, x: c_int, y: c_int, window: &T, boundingWindow: &U) -> c_int {
+    fn beginDrag<T: TWxWindow, U: TWxWindow>(&self, x: c_int, y: c_int, window: &T, boundingWindow: &U) -> c_int {
         unsafe { wxDragImage_BeginDrag(self.ptr(), x, y, window.ptr(), boundingWindow.ptr()) }
     }
     fn endDrag(&self) {
@@ -2213,127 +2213,127 @@ pub trait _wxDragImage : _wxObject {
     }
 }
 
-pub struct wxDrawControl { ptr: *mut c_void }
-impl _wxDrawControl for wxDrawControl {}
-impl _wxControl for wxDrawControl {}
-impl _wxWindow for wxDrawControl {}
-impl _wxEvtHandler for wxDrawControl {}
-impl _wxObject for wxDrawControl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDrawControl { ptr: *mut c_void }
+impl TWxDrawControl for WxDrawControl {}
+impl TWxControl for WxDrawControl {}
+impl TWxWindow for WxDrawControl {}
+impl TWxEvtHandler for WxDrawControl {}
+impl TWxObject for WxDrawControl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDrawControl {
-    pub fn from(ptr: *mut c_void) -> wxDrawControl { wxDrawControl { ptr: ptr } }
-    pub fn null() -> wxDrawControl { wxDrawControl::from(0 as *mut c_void) }
+impl WxDrawControl {
+    pub fn from(ptr: *mut c_void) -> WxDrawControl { WxDrawControl { ptr: ptr } }
+    pub fn null() -> WxDrawControl { WxDrawControl::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxDrawControl {
-        unsafe { wxDrawControl { ptr: wxDrawControl_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxDrawControl {
+        unsafe { WxDrawControl { ptr: wxDrawControl_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxDrawControl : _wxControl {
+pub trait TWxDrawControl : TWxControl {
 }
 
-pub struct wxDrawWindow { ptr: *mut c_void }
-impl _wxDrawWindow for wxDrawWindow {}
-impl _wxWindow for wxDrawWindow {}
-impl _wxEvtHandler for wxDrawWindow {}
-impl _wxObject for wxDrawWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDrawWindow { ptr: *mut c_void }
+impl TWxDrawWindow for WxDrawWindow {}
+impl TWxWindow for WxDrawWindow {}
+impl TWxEvtHandler for WxDrawWindow {}
+impl TWxObject for WxDrawWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDrawWindow {
-    pub fn from(ptr: *mut c_void) -> wxDrawWindow { wxDrawWindow { ptr: ptr } }
-    pub fn null() -> wxDrawWindow { wxDrawWindow::from(0 as *mut c_void) }
+impl WxDrawWindow {
+    pub fn from(ptr: *mut c_void) -> WxDrawWindow { WxDrawWindow { ptr: ptr } }
+    pub fn null() -> WxDrawWindow { WxDrawWindow::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxDrawWindow {
-        unsafe { wxDrawWindow { ptr: wxDrawWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxDrawWindow {
+        unsafe { WxDrawWindow { ptr: wxDrawWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxDrawWindow : _wxWindow {
+pub trait TWxDrawWindow : TWxWindow {
 }
 
-pub struct wxDropFilesEvent { ptr: *mut c_void }
-impl _wxDropFilesEvent for wxDropFilesEvent {}
-impl _wxEvent for wxDropFilesEvent {}
-impl _wxObject for wxDropFilesEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDropFilesEvent { ptr: *mut c_void }
+impl TWxDropFilesEvent for WxDropFilesEvent {}
+impl TWxEvent for WxDropFilesEvent {}
+impl TWxObject for WxDropFilesEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDropFilesEvent {
-    pub fn from(ptr: *mut c_void) -> wxDropFilesEvent { wxDropFilesEvent { ptr: ptr } }
-    pub fn null() -> wxDropFilesEvent { wxDropFilesEvent::from(0 as *mut c_void) }
+impl WxDropFilesEvent {
+    pub fn from(ptr: *mut c_void) -> WxDropFilesEvent { WxDropFilesEvent { ptr: ptr } }
+    pub fn null() -> WxDropFilesEvent { WxDropFilesEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDropFilesEvent : _wxEvent {
+pub trait TWxDropFilesEvent : TWxEvent {
 }
 
-pub struct wxDropSource { ptr: *mut c_void }
-impl _wxDropSource for wxDropSource { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDropSource { ptr: *mut c_void }
+impl TWxDropSource for WxDropSource { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDropSource {
-    pub fn from(ptr: *mut c_void) -> wxDropSource { wxDropSource { ptr: ptr } }
-    pub fn null() -> wxDropSource { wxDropSource::from(0 as *mut c_void) }
+impl WxDropSource {
+    pub fn from(ptr: *mut c_void) -> WxDropSource { WxDropSource { ptr: ptr } }
+    pub fn null() -> WxDropSource { WxDropSource::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDropSource {
+pub trait TWxDropSource {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDropTarget { ptr: *mut c_void }
-impl _wxDropTarget for wxDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDropTarget { ptr: *mut c_void }
+impl TWxDropTarget for WxDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDropTarget {
-    pub fn from(ptr: *mut c_void) -> wxDropTarget { wxDropTarget { ptr: ptr } }
-    pub fn null() -> wxDropTarget { wxDropTarget::from(0 as *mut c_void) }
+impl WxDropTarget {
+    pub fn from(ptr: *mut c_void) -> WxDropTarget { WxDropTarget { ptr: ptr } }
+    pub fn null() -> WxDropTarget { WxDropTarget::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDropTarget {
+pub trait TWxDropTarget {
     fn ptr(&self) -> *mut c_void;
     
     fn getData(&self) {
         unsafe { wxDropTarget_GetData(self.ptr()) }
     }
-    fn setDataObject<T: _wxDataObject>(&self, _dat: &T) {
+    fn setDataObject<T: TWxDataObject>(&self, _dat: &T) {
         unsafe { wxDropTarget_SetDataObject(self.ptr(), _dat.ptr()) }
     }
 }
 
-pub struct wxEraseEvent { ptr: *mut c_void }
-impl _wxEraseEvent for wxEraseEvent {}
-impl _wxEvent for wxEraseEvent {}
-impl _wxObject for wxEraseEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxEraseEvent { ptr: *mut c_void }
+impl TWxEraseEvent for WxEraseEvent {}
+impl TWxEvent for WxEraseEvent {}
+impl TWxObject for WxEraseEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxEraseEvent {
-    pub fn from(ptr: *mut c_void) -> wxEraseEvent { wxEraseEvent { ptr: ptr } }
-    pub fn null() -> wxEraseEvent { wxEraseEvent::from(0 as *mut c_void) }
+impl WxEraseEvent {
+    pub fn from(ptr: *mut c_void) -> WxEraseEvent { WxEraseEvent { ptr: ptr } }
+    pub fn null() -> WxEraseEvent { WxEraseEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxEraseEvent : _wxEvent {
-    fn getDC(&self) -> wxDC {
-        unsafe { wxDC { ptr: wxEraseEvent_GetDC(self.ptr()) } }
+pub trait TWxEraseEvent : TWxEvent {
+    fn getDC(&self) -> WxDC {
+        unsafe { WxDC { ptr: wxEraseEvent_GetDC(self.ptr()) } }
     }
 }
 
-pub struct wxEvent { ptr: *mut c_void }
-impl _wxEvent for wxEvent {}
-impl _wxObject for wxEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxEvent { ptr: *mut c_void }
+impl TWxEvent for WxEvent {}
+impl TWxObject for WxEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxEvent {
-    pub fn from(ptr: *mut c_void) -> wxEvent { wxEvent { ptr: ptr } }
-    pub fn null() -> wxEvent { wxEvent::from(0 as *mut c_void) }
+impl WxEvent {
+    pub fn from(ptr: *mut c_void) -> WxEvent { WxEvent { ptr: ptr } }
+    pub fn null() -> WxEvent { WxEvent::from(0 as *mut c_void) }
     
     pub fn newEventType() -> c_int {
         unsafe { wxEvent_NewEventType() }
     }
 }
 
-pub trait _wxEvent : _wxObject {
+pub trait TWxEvent : TWxObject {
     fn copyObject(&self, object_dest: *mut c_void) {
         unsafe { wxEvent_CopyObject(self.ptr(), object_dest) }
     }
-    fn getEventObject(&self) -> wxObject {
-        unsafe { wxObject { ptr: wxEvent_GetEventObject(self.ptr()) } }
+    fn getEventObject(&self) -> WxObject {
+        unsafe { WxObject { ptr: wxEvent_GetEventObject(self.ptr()) } }
     }
     fn getEventType(&self) -> c_int {
         unsafe { wxEvent_GetEventType(self.ptr()) }
@@ -2350,7 +2350,7 @@ pub trait _wxEvent : _wxObject {
     fn isCommandEvent(&self) -> c_int {
         unsafe { wxEvent_IsCommandEvent(self.ptr()) }
     }
-    fn setEventObject<T: _wxObject>(&self, obj: &T) {
+    fn setEventObject<T: TWxObject>(&self, obj: &T) {
         unsafe { wxEvent_SetEventObject(self.ptr(), obj.ptr()) }
     }
     fn setEventType(&self, typ: c_int) {
@@ -2367,21 +2367,21 @@ pub trait _wxEvent : _wxObject {
     }
 }
 
-pub struct wxEvtHandler { ptr: *mut c_void }
-impl _wxEvtHandler for wxEvtHandler {}
-impl _wxObject for wxEvtHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxEvtHandler { ptr: *mut c_void }
+impl TWxEvtHandler for WxEvtHandler {}
+impl TWxObject for WxEvtHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxEvtHandler {
-    pub fn from(ptr: *mut c_void) -> wxEvtHandler { wxEvtHandler { ptr: ptr } }
-    pub fn null() -> wxEvtHandler { wxEvtHandler::from(0 as *mut c_void) }
+impl WxEvtHandler {
+    pub fn from(ptr: *mut c_void) -> WxEvtHandler { WxEvtHandler { ptr: ptr } }
+    pub fn null() -> WxEvtHandler { WxEvtHandler::from(0 as *mut c_void) }
     
-    pub fn new() -> wxEvtHandler {
-        unsafe { wxEvtHandler { ptr: wxEvtHandler_Create() } }
+    pub fn new() -> WxEvtHandler {
+        unsafe { WxEvtHandler { ptr: wxEvtHandler_Create() } }
     }
 }
 
-pub trait _wxEvtHandler : _wxObject {
-    fn addPendingEvent<T: _wxEvent>(&self, event: &T) {
+pub trait TWxEvtHandler : TWxObject {
+    fn addPendingEvent<T: TWxEvent>(&self, event: &T) {
         unsafe { wxEvtHandler_AddPendingEvent(self.ptr(), event.ptr()) }
     }
     fn connect(&self, first: c_int, last: c_int, type_: c_int, data: *mut c_void) -> c_int {
@@ -2393,13 +2393,13 @@ pub trait _wxEvtHandler : _wxObject {
     fn getEvtHandlerEnabled(&self) -> c_int {
         unsafe { wxEvtHandler_GetEvtHandlerEnabled(self.ptr()) }
     }
-    fn getNextHandler(&self) -> wxEvtHandler {
-        unsafe { wxEvtHandler { ptr: wxEvtHandler_GetNextHandler(self.ptr()) } }
+    fn getNextHandler(&self) -> WxEvtHandler {
+        unsafe { WxEvtHandler { ptr: wxEvtHandler_GetNextHandler(self.ptr()) } }
     }
-    fn getPreviousHandler(&self) -> wxEvtHandler {
-        unsafe { wxEvtHandler { ptr: wxEvtHandler_GetPreviousHandler(self.ptr()) } }
+    fn getPreviousHandler(&self) -> WxEvtHandler {
+        unsafe { WxEvtHandler { ptr: wxEvtHandler_GetPreviousHandler(self.ptr()) } }
     }
-    fn processEvent<T: _wxEvent>(&self, event: &T) -> c_int {
+    fn processEvent<T: TWxEvent>(&self, event: &T) -> c_int {
         unsafe { wxEvtHandler_ProcessEvent(self.ptr(), event.ptr()) }
     }
     fn processPendingEvents(&self) {
@@ -2408,58 +2408,58 @@ pub trait _wxEvtHandler : _wxObject {
     fn setEvtHandlerEnabled(&self, enabled: c_int) {
         unsafe { wxEvtHandler_SetEvtHandlerEnabled(self.ptr(), enabled) }
     }
-    fn setNextHandler<T: _wxEvtHandler>(&self, handler: &T) {
+    fn setNextHandler<T: TWxEvtHandler>(&self, handler: &T) {
         unsafe { wxEvtHandler_SetNextHandler(self.ptr(), handler.ptr()) }
     }
-    fn setPreviousHandler<T: _wxEvtHandler>(&self, handler: &T) {
+    fn setPreviousHandler<T: TWxEvtHandler>(&self, handler: &T) {
         unsafe { wxEvtHandler_SetPreviousHandler(self.ptr(), handler.ptr()) }
     }
-    fn getClosure(&self, id: c_int, type_: c_int) -> wxClosure {
-        unsafe { wxClosure { ptr: wxEvtHandler_GetClosure(self.ptr(), id, type_) } }
+    fn getClosure(&self, id: c_int, type_: c_int) -> WxClosure {
+        unsafe { WxClosure { ptr: wxEvtHandler_GetClosure(self.ptr(), id, type_) } }
     }
 }
 
-pub struct wxFileDataObject { ptr: *mut c_void }
-impl _wxFileDataObject for wxFileDataObject {}
-impl _wxDataObjectSimple for wxFileDataObject {}
-impl _wxDataObject for wxFileDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFileDataObject { ptr: *mut c_void }
+impl TWxFileDataObject for WxFileDataObject {}
+impl TWxDataObjectSimple for WxFileDataObject {}
+impl TWxDataObject for WxFileDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFileDataObject {
-    pub fn from(ptr: *mut c_void) -> wxFileDataObject { wxFileDataObject { ptr: ptr } }
-    pub fn null() -> wxFileDataObject { wxFileDataObject::from(0 as *mut c_void) }
+impl WxFileDataObject {
+    pub fn from(ptr: *mut c_void) -> WxFileDataObject { WxFileDataObject { ptr: ptr } }
+    pub fn null() -> WxFileDataObject { WxFileDataObject::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxFileDataObject : _wxDataObjectSimple {
+pub trait TWxFileDataObject : TWxDataObjectSimple {
 }
 
-pub struct wxFileDialog { ptr: *mut c_void }
-impl _wxFileDialog for wxFileDialog {}
-impl _wxDialog for wxFileDialog {}
-impl _wxTopLevelWindow for wxFileDialog {}
-impl _wxWindow for wxFileDialog {}
-impl _wxEvtHandler for wxFileDialog {}
-impl _wxObject for wxFileDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFileDialog { ptr: *mut c_void }
+impl TWxFileDialog for WxFileDialog {}
+impl TWxDialog for WxFileDialog {}
+impl TWxTopLevelWindow for WxFileDialog {}
+impl TWxWindow for WxFileDialog {}
+impl TWxEvtHandler for WxFileDialog {}
+impl TWxObject for WxFileDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFileDialog {
-    pub fn from(ptr: *mut c_void) -> wxFileDialog { wxFileDialog { ptr: ptr } }
-    pub fn null() -> wxFileDialog { wxFileDialog::from(0 as *mut c_void) }
+impl WxFileDialog {
+    pub fn from(ptr: *mut c_void) -> WxFileDialog { WxFileDialog { ptr: ptr } }
+    pub fn null() -> WxFileDialog { WxFileDialog::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _msg: &str, _dir: &str, _fle: &str, _wcd: &str, _lft: c_int, _top: c_int, _stl: c_int) -> wxFileDialog {
+    pub fn new<T: TWxWindow>(_prt: &T, _msg: &str, _dir: &str, _fle: &str, _wcd: &str, _lft: c_int, _top: c_int, _stl: c_int) -> WxFileDialog {
         let _msg = wxT(_msg);
         let _dir = wxT(_dir);
         let _fle = wxT(_fle);
         let _wcd = wxT(_wcd);
-        unsafe { wxFileDialog { ptr: wxFileDialog_Create(_prt.ptr(), _msg.ptr(), _dir.ptr(), _fle.ptr(), _wcd.ptr(), _lft, _top, _stl) } }
+        unsafe { WxFileDialog { ptr: wxFileDialog_Create(_prt.ptr(), _msg.ptr(), _dir.ptr(), _fle.ptr(), _wcd.ptr(), _lft, _top, _stl) } }
     }
 }
 
-pub trait _wxFileDialog : _wxDialog {
+pub trait TWxFileDialog : TWxDialog {
     fn getDirectory(&self) -> ~str {
-        unsafe { wxString { ptr: wxFileDialog_GetDirectory(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFileDialog_GetDirectory(self.ptr()) }.to_str() }
     }
     fn getFilename(&self) -> ~str {
-        unsafe { wxString { ptr: wxFileDialog_GetFilename(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFileDialog_GetFilename(self.ptr()) }.to_str() }
     }
     fn getFilenames(&self, paths: *mut c_void) -> c_int {
         unsafe { wxFileDialog_GetFilenames(self.ptr(), paths) }
@@ -2468,10 +2468,10 @@ pub trait _wxFileDialog : _wxDialog {
         unsafe { wxFileDialog_GetFilterIndex(self.ptr()) }
     }
     fn getMessage(&self) -> ~str {
-        unsafe { wxString { ptr: wxFileDialog_GetMessage(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFileDialog_GetMessage(self.ptr()) }.to_str() }
     }
     fn getPath(&self) -> ~str {
-        unsafe { wxString { ptr: wxFileDialog_GetPath(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFileDialog_GetPath(self.ptr()) }.to_str() }
     }
     fn getPaths(&self, paths: *mut c_void) -> c_int {
         unsafe { wxFileDialog_GetPaths(self.ptr(), paths) }
@@ -2480,7 +2480,7 @@ pub trait _wxFileDialog : _wxDialog {
         unsafe { wxFileDialog_GetStyle(self.ptr()) }
     }
     fn getWildcard(&self) -> ~str {
-        unsafe { wxString { ptr: wxFileDialog_GetWildcard(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFileDialog_GetWildcard(self.ptr()) }.to_str() }
     }
     fn setDirectory(&self, dir: &str) {
         let dir = wxT(dir);
@@ -2510,45 +2510,45 @@ pub trait _wxFileDialog : _wxDialog {
     }
 }
 
-pub struct wxFileDropTarget { ptr: *mut c_void }
-impl _wxFileDropTarget for wxFileDropTarget {}
-impl _wxDropTarget for wxFileDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFileDropTarget { ptr: *mut c_void }
+impl TWxFileDropTarget for WxFileDropTarget {}
+impl TWxDropTarget for WxFileDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFileDropTarget {
-    pub fn from(ptr: *mut c_void) -> wxFileDropTarget { wxFileDropTarget { ptr: ptr } }
-    pub fn null() -> wxFileDropTarget { wxFileDropTarget::from(0 as *mut c_void) }
+impl WxFileDropTarget {
+    pub fn from(ptr: *mut c_void) -> WxFileDropTarget { WxFileDropTarget { ptr: ptr } }
+    pub fn null() -> WxFileDropTarget { WxFileDropTarget::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxFileDropTarget : _wxDropTarget {
+pub trait TWxFileDropTarget : TWxDropTarget {
 }
 
-pub struct wxFileHistory { ptr: *mut c_void }
-impl _wxFileHistory for wxFileHistory {}
-impl _wxObject for wxFileHistory { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFileHistory { ptr: *mut c_void }
+impl TWxFileHistory for WxFileHistory {}
+impl TWxObject for WxFileHistory { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFileHistory {
-    pub fn from(ptr: *mut c_void) -> wxFileHistory { wxFileHistory { ptr: ptr } }
-    pub fn null() -> wxFileHistory { wxFileHistory::from(0 as *mut c_void) }
+impl WxFileHistory {
+    pub fn from(ptr: *mut c_void) -> WxFileHistory { WxFileHistory { ptr: ptr } }
+    pub fn null() -> WxFileHistory { WxFileHistory::from(0 as *mut c_void) }
     
-    pub fn new(maxFiles: c_int) -> wxFileHistory {
-        unsafe { wxFileHistory { ptr: wxFileHistory_Create(maxFiles) } }
+    pub fn new(maxFiles: c_int) -> WxFileHistory {
+        unsafe { WxFileHistory { ptr: wxFileHistory_Create(maxFiles) } }
     }
 }
 
-pub trait _wxFileHistory : _wxObject {
+pub trait TWxFileHistory : TWxObject {
     fn addFileToHistory(&self, file: &str) {
         let file = wxT(file);
         unsafe { wxFileHistory_AddFileToHistory(self.ptr(), file.ptr()) }
     }
-    fn addFilesToMenu<T: _wxMenu>(&self, menu: &T) {
+    fn addFilesToMenu<T: TWxMenu>(&self, menu: &T) {
         unsafe { wxFileHistory_AddFilesToMenu(self.ptr(), menu.ptr()) }
     }
     fn getCount(&self) -> c_int {
         unsafe { wxFileHistory_GetCount(self.ptr()) }
     }
     fn getHistoryFile(&self, i: c_int) -> ~str {
-        unsafe { wxString { ptr: wxFileHistory_GetHistoryFile(self.ptr(), i) }.to_str() }
+        unsafe { WxString { ptr: wxFileHistory_GetHistoryFile(self.ptr(), i) }.to_str() }
     }
     fn getMaxFiles(&self) -> c_int {
         unsafe { wxFileHistory_GetMaxFiles(self.ptr()) }
@@ -2556,54 +2556,54 @@ pub trait _wxFileHistory : _wxObject {
     fn getMenus(&self, _ref: *mut c_void) -> c_int {
         unsafe { wxFileHistory_GetMenus(self.ptr(), _ref) }
     }
-    fn load<T: _wxConfigBase>(&self, config: &T) {
+    fn load<T: TWxConfigBase>(&self, config: &T) {
         unsafe { wxFileHistory_Load(self.ptr(), config.ptr()) }
     }
     fn removeFileFromHistory(&self, i: c_int) {
         unsafe { wxFileHistory_RemoveFileFromHistory(self.ptr(), i) }
     }
-    fn removeMenu<T: _wxMenu>(&self, menu: &T) {
+    fn removeMenu<T: TWxMenu>(&self, menu: &T) {
         unsafe { wxFileHistory_RemoveMenu(self.ptr(), menu.ptr()) }
     }
-    fn save<T: _wxConfigBase>(&self, config: &T) {
+    fn save<T: TWxConfigBase>(&self, config: &T) {
         unsafe { wxFileHistory_Save(self.ptr(), config.ptr()) }
     }
-    fn useMenu<T: _wxMenu>(&self, menu: &T) {
+    fn useMenu<T: TWxMenu>(&self, menu: &T) {
         unsafe { wxFileHistory_UseMenu(self.ptr(), menu.ptr()) }
     }
 }
 
-pub struct wxFileType { ptr: *mut c_void }
-impl _wxFileType for wxFileType { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFileType { ptr: *mut c_void }
+impl TWxFileType for WxFileType { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFileType {
-    pub fn from(ptr: *mut c_void) -> wxFileType { wxFileType { ptr: ptr } }
-    pub fn null() -> wxFileType { wxFileType::from(0 as *mut c_void) }
+impl WxFileType {
+    pub fn from(ptr: *mut c_void) -> WxFileType { WxFileType { ptr: ptr } }
+    pub fn null() -> WxFileType { WxFileType::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxFileType {
+pub trait TWxFileType {
     fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
         unsafe { wxFileType_Delete(self.ptr()) }
     }
     fn expandCommand(&self, _cmd: *mut c_void, _params: *mut c_void) -> ~str {
-        unsafe { wxString { ptr: wxFileType_ExpandCommand(self.ptr(), _cmd, _params) }.to_str() }
+        unsafe { WxString { ptr: wxFileType_ExpandCommand(self.ptr(), _cmd, _params) }.to_str() }
     }
     fn getDescription(&self) -> ~str {
-        unsafe { wxString { ptr: wxFileType_GetDescription(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFileType_GetDescription(self.ptr()) }.to_str() }
     }
-    fn getExtensions<T: _wxList>(&self, _lst: &T) -> c_int {
+    fn getExtensions<T: TWxList>(&self, _lst: &T) -> c_int {
         unsafe { wxFileType_GetExtensions(self.ptr(), _lst.ptr()) }
     }
-    fn getIcon<T: _wxIcon>(&self, icon: &T) -> c_int {
+    fn getIcon<T: TWxIcon>(&self, icon: &T) -> c_int {
         unsafe { wxFileType_GetIcon(self.ptr(), icon.ptr()) }
     }
     fn getMimeType(&self) -> ~str {
-        unsafe { wxString { ptr: wxFileType_GetMimeType(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFileType_GetMimeType(self.ptr()) }.to_str() }
     }
-    fn getMimeTypes<T: _wxList>(&self, _lst: &T) -> c_int {
+    fn getMimeTypes<T: TWxList>(&self, _lst: &T) -> c_int {
         unsafe { wxFileType_GetMimeTypes(self.ptr(), _lst.ptr()) }
     }
     fn getOpenCommand(&self, _buf: *mut c_void, _params: *mut c_void) -> c_int {
@@ -2614,19 +2614,19 @@ pub trait _wxFileType {
     }
 }
 
-pub struct wxFindDialogEvent { ptr: *mut c_void }
-impl _wxFindDialogEvent for wxFindDialogEvent {}
-impl _wxCommandEvent for wxFindDialogEvent {}
-impl _wxEvent for wxFindDialogEvent {}
-impl _wxObject for wxFindDialogEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFindDialogEvent { ptr: *mut c_void }
+impl TWxFindDialogEvent for WxFindDialogEvent {}
+impl TWxCommandEvent for WxFindDialogEvent {}
+impl TWxEvent for WxFindDialogEvent {}
+impl TWxObject for WxFindDialogEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFindDialogEvent {
-    pub fn from(ptr: *mut c_void) -> wxFindDialogEvent { wxFindDialogEvent { ptr: ptr } }
-    pub fn null() -> wxFindDialogEvent { wxFindDialogEvent::from(0 as *mut c_void) }
+impl WxFindDialogEvent {
+    pub fn from(ptr: *mut c_void) -> WxFindDialogEvent { WxFindDialogEvent { ptr: ptr } }
+    pub fn null() -> WxFindDialogEvent { WxFindDialogEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxFindDialogEvent : _wxCommandEvent {
+pub trait TWxFindDialogEvent : TWxCommandEvent {
     fn getFindString(&self, _ref: *mut c_void) -> c_int {
         unsafe { wxFindDialogEvent_GetFindString(self.ptr(), _ref) }
     }
@@ -2638,31 +2638,31 @@ pub trait _wxFindDialogEvent : _wxCommandEvent {
     }
 }
 
-pub struct wxFindReplaceData { ptr: *mut c_void }
-impl _wxFindReplaceData for wxFindReplaceData {}
-impl _wxObject for wxFindReplaceData { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFindReplaceData { ptr: *mut c_void }
+impl TWxFindReplaceData for WxFindReplaceData {}
+impl TWxObject for WxFindReplaceData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFindReplaceData {
-    pub fn from(ptr: *mut c_void) -> wxFindReplaceData { wxFindReplaceData { ptr: ptr } }
-    pub fn null() -> wxFindReplaceData { wxFindReplaceData::from(0 as *mut c_void) }
+impl WxFindReplaceData {
+    pub fn from(ptr: *mut c_void) -> WxFindReplaceData { WxFindReplaceData { ptr: ptr } }
+    pub fn null() -> WxFindReplaceData { WxFindReplaceData::from(0 as *mut c_void) }
     
-    pub fn new(flags: c_int) -> wxFindReplaceData {
-        unsafe { wxFindReplaceData { ptr: wxFindReplaceData_Create(flags) } }
+    pub fn new(flags: c_int) -> WxFindReplaceData {
+        unsafe { WxFindReplaceData { ptr: wxFindReplaceData_Create(flags) } }
     }
-    pub fn newDefault() -> wxFindReplaceData {
-        unsafe { wxFindReplaceData { ptr: wxFindReplaceData_CreateDefault() } }
+    pub fn newDefault() -> WxFindReplaceData {
+        unsafe { WxFindReplaceData { ptr: wxFindReplaceData_CreateDefault() } }
     }
 }
 
-pub trait _wxFindReplaceData : _wxObject {
+pub trait TWxFindReplaceData : TWxObject {
     fn getFindString(&self) -> ~str {
-        unsafe { wxString { ptr: wxFindReplaceData_GetFindString(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFindReplaceData_GetFindString(self.ptr()) }.to_str() }
     }
     fn getFlags(&self) -> c_int {
         unsafe { wxFindReplaceData_GetFlags(self.ptr()) }
     }
     fn getReplaceString(&self) -> ~str {
-        unsafe { wxString { ptr: wxFindReplaceData_GetReplaceString(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFindReplaceData_GetReplaceString(self.ptr()) }.to_str() }
     }
     fn setFindString(&self, str: &str) {
         let str = wxT(str);
@@ -2677,49 +2677,49 @@ pub trait _wxFindReplaceData : _wxObject {
     }
 }
 
-pub struct wxFindReplaceDialog { ptr: *mut c_void }
-impl _wxFindReplaceDialog for wxFindReplaceDialog {}
-impl _wxDialog for wxFindReplaceDialog {}
-impl _wxTopLevelWindow for wxFindReplaceDialog {}
-impl _wxWindow for wxFindReplaceDialog {}
-impl _wxEvtHandler for wxFindReplaceDialog {}
-impl _wxObject for wxFindReplaceDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFindReplaceDialog { ptr: *mut c_void }
+impl TWxFindReplaceDialog for WxFindReplaceDialog {}
+impl TWxDialog for WxFindReplaceDialog {}
+impl TWxTopLevelWindow for WxFindReplaceDialog {}
+impl TWxWindow for WxFindReplaceDialog {}
+impl TWxEvtHandler for WxFindReplaceDialog {}
+impl TWxObject for WxFindReplaceDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFindReplaceDialog {
-    pub fn from(ptr: *mut c_void) -> wxFindReplaceDialog { wxFindReplaceDialog { ptr: ptr } }
-    pub fn null() -> wxFindReplaceDialog { wxFindReplaceDialog::from(0 as *mut c_void) }
+impl WxFindReplaceDialog {
+    pub fn from(ptr: *mut c_void) -> WxFindReplaceDialog { WxFindReplaceDialog { ptr: ptr } }
+    pub fn null() -> WxFindReplaceDialog { WxFindReplaceDialog::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow, U: _wxFindReplaceData>(parent: &T, data: &U, title: &str, style: c_int) -> wxFindReplaceDialog {
+    pub fn new<T: TWxWindow, U: TWxFindReplaceData>(parent: &T, data: &U, title: &str, style: c_int) -> WxFindReplaceDialog {
         let title = wxT(title);
-        unsafe { wxFindReplaceDialog { ptr: wxFindReplaceDialog_Create(parent.ptr(), data.ptr(), title.ptr(), style) } }
+        unsafe { WxFindReplaceDialog { ptr: wxFindReplaceDialog_Create(parent.ptr(), data.ptr(), title.ptr(), style) } }
     }
 }
 
-pub trait _wxFindReplaceDialog : _wxDialog {
-    fn getData(&self) -> wxFindReplaceData {
-        unsafe { wxFindReplaceData { ptr: wxFindReplaceDialog_GetData(self.ptr()) } }
+pub trait TWxFindReplaceDialog : TWxDialog {
+    fn getData(&self) -> WxFindReplaceData {
+        unsafe { WxFindReplaceData { ptr: wxFindReplaceDialog_GetData(self.ptr()) } }
     }
-    fn setData<T: _wxFindReplaceData>(&self, data: &T) {
+    fn setData<T: TWxFindReplaceData>(&self, data: &T) {
         unsafe { wxFindReplaceDialog_SetData(self.ptr(), data.ptr()) }
     }
 }
 
-pub struct wxFlexGridSizer { ptr: *mut c_void }
-impl _wxFlexGridSizer for wxFlexGridSizer {}
-impl _wxGridSizer for wxFlexGridSizer {}
-impl _wxSizer for wxFlexGridSizer {}
-impl _wxObject for wxFlexGridSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFlexGridSizer { ptr: *mut c_void }
+impl TWxFlexGridSizer for WxFlexGridSizer {}
+impl TWxGridSizer for WxFlexGridSizer {}
+impl TWxSizer for WxFlexGridSizer {}
+impl TWxObject for WxFlexGridSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFlexGridSizer {
-    pub fn from(ptr: *mut c_void) -> wxFlexGridSizer { wxFlexGridSizer { ptr: ptr } }
-    pub fn null() -> wxFlexGridSizer { wxFlexGridSizer::from(0 as *mut c_void) }
+impl WxFlexGridSizer {
+    pub fn from(ptr: *mut c_void) -> WxFlexGridSizer { WxFlexGridSizer { ptr: ptr } }
+    pub fn null() -> WxFlexGridSizer { WxFlexGridSizer::from(0 as *mut c_void) }
     
-    pub fn new(rows: c_int, cols: c_int, vgap: c_int, hgap: c_int) -> wxFlexGridSizer {
-        unsafe { wxFlexGridSizer { ptr: wxFlexGridSizer_Create(rows, cols, vgap, hgap) } }
+    pub fn new(rows: c_int, cols: c_int, vgap: c_int, hgap: c_int) -> WxFlexGridSizer {
+        unsafe { WxFlexGridSizer { ptr: wxFlexGridSizer_Create(rows, cols, vgap, hgap) } }
     }
 }
 
-pub trait _wxFlexGridSizer : _wxGridSizer {
+pub trait TWxFlexGridSizer : TWxGridSizer {
     fn addGrowableCol(&self, idx: size_t) {
         unsafe { wxFlexGridSizer_AddGrowableCol(self.ptr(), idx) }
     }
@@ -2734,42 +2734,42 @@ pub trait _wxFlexGridSizer : _wxGridSizer {
     }
 }
 
-pub struct wxFocusEvent { ptr: *mut c_void }
-impl _wxFocusEvent for wxFocusEvent {}
-impl _wxEvent for wxFocusEvent {}
-impl _wxObject for wxFocusEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFocusEvent { ptr: *mut c_void }
+impl TWxFocusEvent for WxFocusEvent {}
+impl TWxEvent for WxFocusEvent {}
+impl TWxObject for WxFocusEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFocusEvent {
-    pub fn from(ptr: *mut c_void) -> wxFocusEvent { wxFocusEvent { ptr: ptr } }
-    pub fn null() -> wxFocusEvent { wxFocusEvent::from(0 as *mut c_void) }
+impl WxFocusEvent {
+    pub fn from(ptr: *mut c_void) -> WxFocusEvent { WxFocusEvent { ptr: ptr } }
+    pub fn null() -> WxFocusEvent { WxFocusEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxFocusEvent : _wxEvent {
+pub trait TWxFocusEvent : TWxEvent {
 }
 
-pub struct wxFont { ptr: *mut c_void }
-impl _wxFont for wxFont {}
-impl _wxGDIObject for wxFont {}
-impl _wxObject for wxFont { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFont { ptr: *mut c_void }
+impl TWxFont for WxFont {}
+impl TWxGDIObject for WxFont {}
+impl TWxObject for WxFont { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFont {
-    pub fn from(ptr: *mut c_void) -> wxFont { wxFont { ptr: ptr } }
-    pub fn null() -> wxFont { wxFont::from(0 as *mut c_void) }
+impl WxFont {
+    pub fn from(ptr: *mut c_void) -> WxFont { WxFont { ptr: ptr } }
+    pub fn null() -> WxFont { WxFont::from(0 as *mut c_void) }
     
-    pub fn new(pointSize: c_int, family: c_int, style: c_int, weight: c_int, underlined: c_int, face: &str, enc: c_int) -> wxFont {
+    pub fn new(pointSize: c_int, family: c_int, style: c_int, weight: c_int, underlined: c_int, face: &str, enc: c_int) -> WxFont {
         let face = wxT(face);
-        unsafe { wxFont { ptr: wxFont_Create(pointSize, family, style, weight, underlined, face.ptr(), enc) } }
+        unsafe { WxFont { ptr: wxFont_Create(pointSize, family, style, weight, underlined, face.ptr(), enc) } }
     }
-    pub fn newFromStock(id: c_int) -> wxFont {
-        unsafe { wxFont { ptr: wxFont_CreateFromStock(id) } }
+    pub fn newFromStock(id: c_int) -> WxFont {
+        unsafe { WxFont { ptr: wxFont_CreateFromStock(id) } }
     }
-    pub fn newDefault() -> wxFont {
-        unsafe { wxFont { ptr: wxFont_CreateDefault() } }
+    pub fn newDefault() -> WxFont {
+        unsafe { WxFont { ptr: wxFont_CreateDefault() } }
     }
 }
 
-pub trait _wxFont : _wxGDIObject {
+pub trait TWxFont : TWxGDIObject {
     fn getDefaultEncoding(&self) -> c_int {
         unsafe { wxFont_GetDefaultEncoding(self.ptr()) }
     }
@@ -2777,13 +2777,13 @@ pub trait _wxFont : _wxGDIObject {
         unsafe { wxFont_GetEncoding(self.ptr()) }
     }
     fn getFaceName(&self) -> ~str {
-        unsafe { wxString { ptr: wxFont_GetFaceName(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFont_GetFaceName(self.ptr()) }.to_str() }
     }
     fn getFamily(&self) -> c_int {
         unsafe { wxFont_GetFamily(self.ptr()) }
     }
     fn getFamilyString(&self) -> ~str {
-        unsafe { wxString { ptr: wxFont_GetFamilyString(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFont_GetFamilyString(self.ptr()) }.to_str() }
     }
     fn getPointSize(&self) -> c_int {
         unsafe { wxFont_GetPointSize(self.ptr()) }
@@ -2792,7 +2792,7 @@ pub trait _wxFont : _wxGDIObject {
         unsafe { wxFont_GetStyle(self.ptr()) }
     }
     fn getStyleString(&self) -> ~str {
-        unsafe { wxString { ptr: wxFont_GetStyleString(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFont_GetStyleString(self.ptr()) }.to_str() }
     }
     fn getUnderlined(&self) -> c_int {
         unsafe { wxFont_GetUnderlined(self.ptr()) }
@@ -2801,7 +2801,7 @@ pub trait _wxFont : _wxGDIObject {
         unsafe { wxFont_GetWeight(self.ptr()) }
     }
     fn getWeightString(&self) -> ~str {
-        unsafe { wxString { ptr: wxFont_GetWeightString(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxFont_GetWeightString(self.ptr()) }.to_str() }
     }
     fn isOk(&self) -> c_int {
         unsafe { wxFont_IsOk(self.ptr()) }
@@ -2836,30 +2836,30 @@ pub trait _wxFont : _wxGDIObject {
     }
 }
 
-pub struct wxFontData { ptr: *mut c_void }
-impl _wxFontData for wxFontData {}
-impl _wxObject for wxFontData { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFontData { ptr: *mut c_void }
+impl TWxFontData for WxFontData {}
+impl TWxObject for WxFontData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFontData {
-    pub fn from(ptr: *mut c_void) -> wxFontData { wxFontData { ptr: ptr } }
-    pub fn null() -> wxFontData { wxFontData::from(0 as *mut c_void) }
+impl WxFontData {
+    pub fn from(ptr: *mut c_void) -> WxFontData { WxFontData { ptr: ptr } }
+    pub fn null() -> WxFontData { WxFontData::from(0 as *mut c_void) }
     
-    pub fn new() -> wxFontData {
-        unsafe { wxFontData { ptr: wxFontData_Create() } }
+    pub fn new() -> WxFontData {
+        unsafe { WxFontData { ptr: wxFontData_Create() } }
     }
 }
 
-pub trait _wxFontData : _wxObject {
+pub trait TWxFontData : TWxObject {
     fn enableEffects(&self, flag: c_int) {
         unsafe { wxFontData_EnableEffects(self.ptr(), flag) }
     }
     fn getAllowSymbols(&self) -> c_int {
         unsafe { wxFontData_GetAllowSymbols(self.ptr()) }
     }
-    fn getChosenFont<T: _wxFont>(&self, ref_: &T) {
+    fn getChosenFont<T: TWxFont>(&self, ref_: &T) {
         unsafe { wxFontData_GetChosenFont(self.ptr(), ref_.ptr()) }
     }
-    fn getColour<T: _wxColour>(&self, _ref: &T) {
+    fn getColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxFontData_GetColour(self.ptr(), _ref.ptr()) }
     }
     fn getEnableEffects(&self) -> c_int {
@@ -2868,7 +2868,7 @@ pub trait _wxFontData : _wxObject {
     fn getEncoding(&self) -> c_int {
         unsafe { wxFontData_GetEncoding(self.ptr()) }
     }
-    fn getInitialFont<T: _wxFont>(&self, ref_: &T) {
+    fn getInitialFont<T: TWxFont>(&self, ref_: &T) {
         unsafe { wxFontData_GetInitialFont(self.ptr(), ref_.ptr()) }
     }
     fn getShowHelp(&self) -> c_int {
@@ -2877,16 +2877,16 @@ pub trait _wxFontData : _wxObject {
     fn setAllowSymbols(&self, flag: c_int) {
         unsafe { wxFontData_SetAllowSymbols(self.ptr(), flag) }
     }
-    fn setChosenFont<T: _wxFont>(&self, font: &T) {
+    fn setChosenFont<T: TWxFont>(&self, font: &T) {
         unsafe { wxFontData_SetChosenFont(self.ptr(), font.ptr()) }
     }
-    fn setColour<T: _wxColour>(&self, colour: &T) {
+    fn setColour<T: TWxColour>(&self, colour: &T) {
         unsafe { wxFontData_SetColour(self.ptr(), colour.ptr()) }
     }
     fn setEncoding(&self, encoding: c_int) {
         unsafe { wxFontData_SetEncoding(self.ptr(), encoding) }
     }
-    fn setInitialFont<T: _wxFont>(&self, font: &T) {
+    fn setInitialFont<T: TWxFont>(&self, font: &T) {
         unsafe { wxFontData_SetInitialFont(self.ptr(), font.ptr()) }
     }
     fn setRange(&self, minRange: c_int, maxRange: c_int) {
@@ -2897,42 +2897,42 @@ pub trait _wxFontData : _wxObject {
     }
 }
 
-pub struct wxFontDialog { ptr: *mut c_void }
-impl _wxFontDialog for wxFontDialog {}
-impl _wxDialog for wxFontDialog {}
-impl _wxTopLevelWindow for wxFontDialog {}
-impl _wxWindow for wxFontDialog {}
-impl _wxEvtHandler for wxFontDialog {}
-impl _wxObject for wxFontDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFontDialog { ptr: *mut c_void }
+impl TWxFontDialog for WxFontDialog {}
+impl TWxDialog for WxFontDialog {}
+impl TWxTopLevelWindow for WxFontDialog {}
+impl TWxWindow for WxFontDialog {}
+impl TWxEvtHandler for WxFontDialog {}
+impl TWxObject for WxFontDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFontDialog {
-    pub fn from(ptr: *mut c_void) -> wxFontDialog { wxFontDialog { ptr: ptr } }
-    pub fn null() -> wxFontDialog { wxFontDialog::from(0 as *mut c_void) }
+impl WxFontDialog {
+    pub fn from(ptr: *mut c_void) -> WxFontDialog { WxFontDialog { ptr: ptr } }
+    pub fn null() -> WxFontDialog { WxFontDialog::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow, U: _wxFontData>(_prt: &T, fnt: &U) -> wxFontDialog {
-        unsafe { wxFontDialog { ptr: wxFontDialog_Create(_prt.ptr(), fnt.ptr()) } }
+    pub fn new<T: TWxWindow, U: TWxFontData>(_prt: &T, fnt: &U) -> WxFontDialog {
+        unsafe { WxFontDialog { ptr: wxFontDialog_Create(_prt.ptr(), fnt.ptr()) } }
     }
 }
 
-pub trait _wxFontDialog : _wxDialog {
-    fn getFontData<T: _wxFontData>(&self, _ref: &T) {
+pub trait TWxFontDialog : TWxDialog {
+    fn getFontData<T: TWxFontData>(&self, _ref: &T) {
         unsafe { wxFontDialog_GetFontData(self.ptr(), _ref.ptr()) }
     }
 }
 
-pub struct wxFontEnumerator { ptr: *mut c_void }
-impl _wxFontEnumerator for wxFontEnumerator { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFontEnumerator { ptr: *mut c_void }
+impl TWxFontEnumerator for WxFontEnumerator { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFontEnumerator {
-    pub fn from(ptr: *mut c_void) -> wxFontEnumerator { wxFontEnumerator { ptr: ptr } }
-    pub fn null() -> wxFontEnumerator { wxFontEnumerator::from(0 as *mut c_void) }
+impl WxFontEnumerator {
+    pub fn from(ptr: *mut c_void) -> WxFontEnumerator { WxFontEnumerator { ptr: ptr } }
+    pub fn null() -> WxFontEnumerator { WxFontEnumerator::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _fnc: *mut c_void) -> wxFontEnumerator {
-        unsafe { wxFontEnumerator { ptr: wxFontEnumerator_Create(_obj, _fnc) } }
+    pub fn new(_obj: *mut c_void, _fnc: *mut c_void) -> WxFontEnumerator {
+        unsafe { WxFontEnumerator { ptr: wxFontEnumerator_Create(_obj, _fnc) } }
     }
 }
 
-pub trait _wxFontEnumerator {
+pub trait TWxFontEnumerator {
     fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
@@ -2947,33 +2947,33 @@ pub trait _wxFontEnumerator {
     }
 }
 
-pub struct wxFontList { ptr: *mut c_void }
-impl _wxFontList for wxFontList {}
-impl _wxList for wxFontList {}
-impl _wxObject for wxFontList { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFontList { ptr: *mut c_void }
+impl TWxFontList for WxFontList {}
+impl TWxList for WxFontList {}
+impl TWxObject for WxFontList { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFontList {
-    pub fn from(ptr: *mut c_void) -> wxFontList { wxFontList { ptr: ptr } }
-    pub fn null() -> wxFontList { wxFontList::from(0 as *mut c_void) }
+impl WxFontList {
+    pub fn from(ptr: *mut c_void) -> WxFontList { WxFontList { ptr: ptr } }
+    pub fn null() -> WxFontList { WxFontList::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxFontList : _wxList {
+pub trait TWxFontList : TWxList {
 }
 
-pub struct wxFontMapper { ptr: *mut c_void }
-impl _wxFontMapper for wxFontMapper { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFontMapper { ptr: *mut c_void }
+impl TWxFontMapper for WxFontMapper { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFontMapper {
-    pub fn from(ptr: *mut c_void) -> wxFontMapper { wxFontMapper { ptr: ptr } }
-    pub fn null() -> wxFontMapper { wxFontMapper::from(0 as *mut c_void) }
+impl WxFontMapper {
+    pub fn from(ptr: *mut c_void) -> WxFontMapper { WxFontMapper { ptr: ptr } }
+    pub fn null() -> WxFontMapper { WxFontMapper::from(0 as *mut c_void) }
     
-    pub fn new() -> wxFontMapper {
-        unsafe { wxFontMapper { ptr: wxFontMapper_Create() } }
+    pub fn new() -> WxFontMapper {
+        unsafe { WxFontMapper { ptr: wxFontMapper_Create() } }
     }
 }
 
-pub trait _wxFontMapper {
+pub trait TWxFontMapper {
     fn ptr(&self) -> *mut c_void;
     
     fn getAltForEncoding(&self, encoding: c_int, alt_encoding: *mut c_void, _buf: &str) -> c_int {
@@ -2986,29 +2986,29 @@ pub trait _wxFontMapper {
     }
 }
 
-pub struct wxFrame { ptr: *mut c_void }
-impl _wxFrame for wxFrame {}
-impl _wxTopLevelWindow for wxFrame {}
-impl _wxWindow for wxFrame {}
-impl _wxEvtHandler for wxFrame {}
-impl _wxObject for wxFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxFrame { ptr: *mut c_void }
+impl TWxFrame for WxFrame {}
+impl TWxTopLevelWindow for WxFrame {}
+impl TWxWindow for WxFrame {}
+impl TWxEvtHandler for WxFrame {}
+impl TWxObject for WxFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxFrame {
-    pub fn from(ptr: *mut c_void) -> wxFrame { wxFrame { ptr: ptr } }
-    pub fn null() -> wxFrame { wxFrame::from(0 as *mut c_void) }
+impl WxFrame {
+    pub fn from(ptr: *mut c_void) -> WxFrame { WxFrame { ptr: ptr } }
+    pub fn null() -> WxFrame { WxFrame::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxFrame {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxFrame {
         let _txt = wxT(_txt);
-        unsafe { wxFrame { ptr: wxFrame_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { WxFrame { ptr: wxFrame_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxFrame : _wxTopLevelWindow {
-    fn newStatusBar(&self, number: c_int, style: c_int) -> wxStatusBar {
-        unsafe { wxStatusBar { ptr: wxFrame_CreateStatusBar(self.ptr(), number, style) } }
+pub trait TWxFrame : TWxTopLevelWindow {
+    fn newStatusBar(&self, number: c_int, style: c_int) -> WxStatusBar {
+        unsafe { WxStatusBar { ptr: wxFrame_CreateStatusBar(self.ptr(), number, style) } }
     }
-    fn newToolBar(&self, style: c_long) -> wxToolBar {
-        unsafe { wxToolBar { ptr: wxFrame_CreateToolBar(self.ptr(), style) } }
+    fn newToolBar(&self, style: c_long) -> WxToolBar {
+        unsafe { WxToolBar { ptr: wxFrame_CreateToolBar(self.ptr(), style) } }
     }
     fn getClientAreaOrigin_left(&self) -> c_int {
         unsafe { wxFrame_GetClientAreaOrigin_left(self.ptr()) }
@@ -3016,22 +3016,22 @@ pub trait _wxFrame : _wxTopLevelWindow {
     fn getClientAreaOrigin_top(&self) -> c_int {
         unsafe { wxFrame_GetClientAreaOrigin_top(self.ptr()) }
     }
-    fn getMenuBar(&self) -> wxMenuBar {
-        unsafe { wxMenuBar { ptr: wxFrame_GetMenuBar(self.ptr()) } }
+    fn getMenuBar(&self) -> WxMenuBar {
+        unsafe { WxMenuBar { ptr: wxFrame_GetMenuBar(self.ptr()) } }
     }
-    fn getStatusBar(&self) -> wxStatusBar {
-        unsafe { wxStatusBar { ptr: wxFrame_GetStatusBar(self.ptr()) } }
+    fn getStatusBar(&self) -> WxStatusBar {
+        unsafe { WxStatusBar { ptr: wxFrame_GetStatusBar(self.ptr()) } }
     }
-    fn getToolBar(&self) -> wxToolBar {
-        unsafe { wxToolBar { ptr: wxFrame_GetToolBar(self.ptr()) } }
+    fn getToolBar(&self) -> WxToolBar {
+        unsafe { WxToolBar { ptr: wxFrame_GetToolBar(self.ptr()) } }
     }
     fn restore(&self) {
         unsafe { wxFrame_Restore(self.ptr()) }
     }
-    fn setMenuBar<T: _wxMenuBar>(&self, menubar: &T) {
+    fn setMenuBar<T: TWxMenuBar>(&self, menubar: &T) {
         unsafe { wxFrame_SetMenuBar(self.ptr(), menubar.ptr()) }
     }
-    fn setStatusBar<T: _wxStatusBar>(&self, statBar: &T) {
+    fn setStatusBar<T: TWxStatusBar>(&self, statBar: &T) {
         unsafe { wxFrame_SetStatusBar(self.ptr(), statBar.ptr()) }
     }
     fn setStatusText(&self, _txt: &str, _number: c_int) {
@@ -3041,10 +3041,10 @@ pub trait _wxFrame : _wxTopLevelWindow {
     fn setStatusWidths(&self, _n: c_int, _widths_field: *mut c_void) {
         unsafe { wxFrame_SetStatusWidths(self.ptr(), _n, _widths_field) }
     }
-    fn setToolBar<T: _wxToolBar>(&self, _toolbar: &T) {
+    fn setToolBar<T: TWxToolBar>(&self, _toolbar: &T) {
         unsafe { wxFrame_SetToolBar(self.ptr(), _toolbar.ptr()) }
     }
-    fn setShape<T: _wxRegion>(&self, region: &T) -> c_int {
+    fn setShape<T: TWxRegion>(&self, region: &T) -> c_int {
         unsafe { wxFrame_SetShape(self.ptr(), region.ptr()) }
     }
     fn showFullScreen(&self, show: c_int, style: c_int) -> c_int {
@@ -3058,36 +3058,36 @@ pub trait _wxFrame : _wxTopLevelWindow {
     }
 }
 
-pub struct wxGDIObject { ptr: *mut c_void }
-impl _wxGDIObject for wxGDIObject {}
-impl _wxObject for wxGDIObject { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGDIObject { ptr: *mut c_void }
+impl TWxGDIObject for WxGDIObject {}
+impl TWxObject for WxGDIObject { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGDIObject {
-    pub fn from(ptr: *mut c_void) -> wxGDIObject { wxGDIObject { ptr: ptr } }
-    pub fn null() -> wxGDIObject { wxGDIObject::from(0 as *mut c_void) }
+impl WxGDIObject {
+    pub fn from(ptr: *mut c_void) -> WxGDIObject { WxGDIObject { ptr: ptr } }
+    pub fn null() -> WxGDIObject { WxGDIObject::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGDIObject : _wxObject {
+pub trait TWxGDIObject : TWxObject {
 }
 
-pub struct wxGauge { ptr: *mut c_void }
-impl _wxGauge for wxGauge {}
-impl _wxControl for wxGauge {}
-impl _wxWindow for wxGauge {}
-impl _wxEvtHandler for wxGauge {}
-impl _wxObject for wxGauge { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGauge { ptr: *mut c_void }
+impl TWxGauge for WxGauge {}
+impl TWxControl for WxGauge {}
+impl TWxWindow for WxGauge {}
+impl TWxEvtHandler for WxGauge {}
+impl TWxObject for WxGauge { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGauge {
-    pub fn from(ptr: *mut c_void) -> wxGauge { wxGauge { ptr: ptr } }
-    pub fn null() -> wxGauge { wxGauge::from(0 as *mut c_void) }
+impl WxGauge {
+    pub fn from(ptr: *mut c_void) -> WxGauge { WxGauge { ptr: ptr } }
+    pub fn null() -> WxGauge { WxGauge::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _rng: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxGauge {
-        unsafe { wxGauge { ptr: wxGauge_Create(_prt.ptr(), _id, _rng, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _rng: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxGauge {
+        unsafe { WxGauge { ptr: wxGauge_Create(_prt.ptr(), _id, _rng, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxGauge : _wxControl {
+pub trait TWxGauge : TWxControl {
     fn getBezelFace(&self) -> c_int {
         unsafe { wxGauge_GetBezelFace(self.ptr()) }
     }
@@ -3114,52 +3114,52 @@ pub trait _wxGauge : _wxControl {
     }
 }
 
-pub struct wxGenericDirCtrl { ptr: *mut c_void }
-impl _wxGenericDirCtrl for wxGenericDirCtrl {}
-impl _wxControl for wxGenericDirCtrl {}
-impl _wxWindow for wxGenericDirCtrl {}
-impl _wxEvtHandler for wxGenericDirCtrl {}
-impl _wxObject for wxGenericDirCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGenericDirCtrl { ptr: *mut c_void }
+impl TWxGenericDirCtrl for WxGenericDirCtrl {}
+impl TWxControl for WxGenericDirCtrl {}
+impl TWxWindow for WxGenericDirCtrl {}
+impl TWxEvtHandler for WxGenericDirCtrl {}
+impl TWxObject for WxGenericDirCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGenericDirCtrl {
-    pub fn from(ptr: *mut c_void) -> wxGenericDirCtrl { wxGenericDirCtrl { ptr: ptr } }
-    pub fn null() -> wxGenericDirCtrl { wxGenericDirCtrl::from(0 as *mut c_void) }
+impl WxGenericDirCtrl {
+    pub fn from(ptr: *mut c_void) -> WxGenericDirCtrl { WxGenericDirCtrl { ptr: ptr } }
+    pub fn null() -> WxGenericDirCtrl { WxGenericDirCtrl::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGenericDirCtrl : _wxControl {
+pub trait TWxGenericDirCtrl : TWxControl {
 }
 
-pub struct wxGenericValidator { ptr: *mut c_void }
-impl _wxGenericValidator for wxGenericValidator {}
-impl _wxValidator for wxGenericValidator {}
-impl _wxEvtHandler for wxGenericValidator {}
-impl _wxObject for wxGenericValidator { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGenericValidator { ptr: *mut c_void }
+impl TWxGenericValidator for WxGenericValidator {}
+impl TWxValidator for WxGenericValidator {}
+impl TWxEvtHandler for WxGenericValidator {}
+impl TWxObject for WxGenericValidator { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGenericValidator {
-    pub fn from(ptr: *mut c_void) -> wxGenericValidator { wxGenericValidator { ptr: ptr } }
-    pub fn null() -> wxGenericValidator { wxGenericValidator::from(0 as *mut c_void) }
+impl WxGenericValidator {
+    pub fn from(ptr: *mut c_void) -> WxGenericValidator { WxGenericValidator { ptr: ptr } }
+    pub fn null() -> WxGenericValidator { WxGenericValidator::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGenericValidator : _wxValidator {
+pub trait TWxGenericValidator : TWxValidator {
 }
 
-pub struct wxGridSizer { ptr: *mut c_void }
-impl _wxGridSizer for wxGridSizer {}
-impl _wxSizer for wxGridSizer {}
-impl _wxObject for wxGridSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridSizer { ptr: *mut c_void }
+impl TWxGridSizer for WxGridSizer {}
+impl TWxSizer for WxGridSizer {}
+impl TWxObject for WxGridSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridSizer {
-    pub fn from(ptr: *mut c_void) -> wxGridSizer { wxGridSizer { ptr: ptr } }
-    pub fn null() -> wxGridSizer { wxGridSizer::from(0 as *mut c_void) }
+impl WxGridSizer {
+    pub fn from(ptr: *mut c_void) -> WxGridSizer { WxGridSizer { ptr: ptr } }
+    pub fn null() -> WxGridSizer { WxGridSizer::from(0 as *mut c_void) }
     
-    pub fn new(rows: c_int, cols: c_int, vgap: c_int, hgap: c_int) -> wxGridSizer {
-        unsafe { wxGridSizer { ptr: wxGridSizer_Create(rows, cols, vgap, hgap) } }
+    pub fn new(rows: c_int, cols: c_int, vgap: c_int, hgap: c_int) -> WxGridSizer {
+        unsafe { WxGridSizer { ptr: wxGridSizer_Create(rows, cols, vgap, hgap) } }
     }
 }
 
-pub trait _wxGridSizer : _wxSizer {
+pub trait TWxGridSizer : TWxSizer {
     fn getCols(&self) -> c_int {
         unsafe { wxGridSizer_GetCols(self.ptr()) }
     }
@@ -3186,77 +3186,77 @@ pub trait _wxGridSizer : _wxSizer {
     }
 }
 
-pub struct wxHelpController { ptr: *mut c_void }
-impl _wxHelpController for wxHelpController {}
-impl _wxHelpControllerBase for wxHelpController {}
-impl _wxObject for wxHelpController { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxHelpController { ptr: *mut c_void }
+impl TWxHelpController for WxHelpController {}
+impl TWxHelpControllerBase for WxHelpController {}
+impl TWxObject for WxHelpController { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxHelpController {
-    pub fn from(ptr: *mut c_void) -> wxHelpController { wxHelpController { ptr: ptr } }
-    pub fn null() -> wxHelpController { wxHelpController::from(0 as *mut c_void) }
+impl WxHelpController {
+    pub fn from(ptr: *mut c_void) -> WxHelpController { WxHelpController { ptr: ptr } }
+    pub fn null() -> WxHelpController { WxHelpController::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxHelpController : _wxHelpControllerBase {
+pub trait TWxHelpController : TWxHelpControllerBase {
 }
 
-pub struct wxHelpControllerBase { ptr: *mut c_void }
-impl _wxHelpControllerBase for wxHelpControllerBase {}
-impl _wxObject for wxHelpControllerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxHelpControllerBase { ptr: *mut c_void }
+impl TWxHelpControllerBase for WxHelpControllerBase {}
+impl TWxObject for WxHelpControllerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxHelpControllerBase {
-    pub fn from(ptr: *mut c_void) -> wxHelpControllerBase { wxHelpControllerBase { ptr: ptr } }
-    pub fn null() -> wxHelpControllerBase { wxHelpControllerBase::from(0 as *mut c_void) }
+impl WxHelpControllerBase {
+    pub fn from(ptr: *mut c_void) -> WxHelpControllerBase { WxHelpControllerBase { ptr: ptr } }
+    pub fn null() -> WxHelpControllerBase { WxHelpControllerBase::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxHelpControllerBase : _wxObject {
+pub trait TWxHelpControllerBase : TWxObject {
 }
 
-pub struct wxHelpControllerHelpProvider { ptr: *mut c_void }
-impl _wxHelpControllerHelpProvider for wxHelpControllerHelpProvider {}
-impl _wxSimpleHelpProvider for wxHelpControllerHelpProvider {}
-impl _wxHelpProvider for wxHelpControllerHelpProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxHelpControllerHelpProvider { ptr: *mut c_void }
+impl TWxHelpControllerHelpProvider for WxHelpControllerHelpProvider {}
+impl TWxSimpleHelpProvider for WxHelpControllerHelpProvider {}
+impl TWxHelpProvider for WxHelpControllerHelpProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxHelpControllerHelpProvider {
-    pub fn from(ptr: *mut c_void) -> wxHelpControllerHelpProvider { wxHelpControllerHelpProvider { ptr: ptr } }
-    pub fn null() -> wxHelpControllerHelpProvider { wxHelpControllerHelpProvider::from(0 as *mut c_void) }
+impl WxHelpControllerHelpProvider {
+    pub fn from(ptr: *mut c_void) -> WxHelpControllerHelpProvider { WxHelpControllerHelpProvider { ptr: ptr } }
+    pub fn null() -> WxHelpControllerHelpProvider { WxHelpControllerHelpProvider::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxHelpControllerBase>(ctr: &T) -> wxHelpControllerHelpProvider {
-        unsafe { wxHelpControllerHelpProvider { ptr: wxHelpControllerHelpProvider_Create(ctr.ptr()) } }
+    pub fn new<T: TWxHelpControllerBase>(ctr: &T) -> WxHelpControllerHelpProvider {
+        unsafe { WxHelpControllerHelpProvider { ptr: wxHelpControllerHelpProvider_Create(ctr.ptr()) } }
     }
 }
 
-pub trait _wxHelpControllerHelpProvider : _wxSimpleHelpProvider {
-    fn getHelpController(&self) -> wxHelpControllerBase {
-        unsafe { wxHelpControllerBase { ptr: wxHelpControllerHelpProvider_GetHelpController(self.ptr()) } }
+pub trait TWxHelpControllerHelpProvider : TWxSimpleHelpProvider {
+    fn getHelpController(&self) -> WxHelpControllerBase {
+        unsafe { WxHelpControllerBase { ptr: wxHelpControllerHelpProvider_GetHelpController(self.ptr()) } }
     }
-    fn setHelpController<T: _wxHelpController>(&self, hc: &T) {
+    fn setHelpController<T: TWxHelpController>(&self, hc: &T) {
         unsafe { wxHelpControllerHelpProvider_SetHelpController(self.ptr(), hc.ptr()) }
     }
 }
 
-pub struct wxHelpEvent { ptr: *mut c_void }
-impl _wxHelpEvent for wxHelpEvent {}
-impl _wxCommandEvent for wxHelpEvent {}
-impl _wxEvent for wxHelpEvent {}
-impl _wxObject for wxHelpEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxHelpEvent { ptr: *mut c_void }
+impl TWxHelpEvent for WxHelpEvent {}
+impl TWxCommandEvent for WxHelpEvent {}
+impl TWxEvent for WxHelpEvent {}
+impl TWxObject for WxHelpEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxHelpEvent {
-    pub fn from(ptr: *mut c_void) -> wxHelpEvent { wxHelpEvent { ptr: ptr } }
-    pub fn null() -> wxHelpEvent { wxHelpEvent::from(0 as *mut c_void) }
+impl WxHelpEvent {
+    pub fn from(ptr: *mut c_void) -> WxHelpEvent { WxHelpEvent { ptr: ptr } }
+    pub fn null() -> WxHelpEvent { WxHelpEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxHelpEvent : _wxCommandEvent {
+pub trait TWxHelpEvent : TWxCommandEvent {
     fn getLink(&self) -> ~str {
-        unsafe { wxString { ptr: wxHelpEvent_GetLink(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxHelpEvent_GetLink(self.ptr()) }.to_str() }
     }
-    fn getPosition(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxHelpEvent_GetPosition(self.ptr()) } }
+    fn getPosition(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxHelpEvent_GetPosition(self.ptr()) } }
     }
     fn getTarget(&self) -> ~str {
-        unsafe { wxString { ptr: wxHelpEvent_GetTarget(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxHelpEvent_GetTarget(self.ptr()) }.to_str() }
     }
     fn setLink(&self, link: &str) {
         let link = wxT(link);
@@ -3271,22 +3271,22 @@ pub trait _wxHelpEvent : _wxCommandEvent {
     }
 }
 
-pub struct wxHelpProvider { ptr: *mut c_void }
-impl _wxHelpProvider for wxHelpProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxHelpProvider { ptr: *mut c_void }
+impl TWxHelpProvider for WxHelpProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxHelpProvider {
-    pub fn from(ptr: *mut c_void) -> wxHelpProvider { wxHelpProvider { ptr: ptr } }
-    pub fn null() -> wxHelpProvider { wxHelpProvider::from(0 as *mut c_void) }
+impl WxHelpProvider {
+    pub fn from(ptr: *mut c_void) -> WxHelpProvider { WxHelpProvider { ptr: ptr } }
+    pub fn null() -> WxHelpProvider { WxHelpProvider::from(0 as *mut c_void) }
     
-    pub fn get() -> wxHelpProvider {
-        unsafe { wxHelpProvider { ptr: wxHelpProvider_Get() } }
+    pub fn get() -> WxHelpProvider {
+        unsafe { WxHelpProvider { ptr: wxHelpProvider_Get() } }
     }
 }
 
-pub trait _wxHelpProvider {
+pub trait TWxHelpProvider {
     fn ptr(&self) -> *mut c_void;
     
-    fn addHelp<T: _wxWindow>(&self, window: &T, text: &str) {
+    fn addHelp<T: TWxWindow>(&self, window: &T, text: &str) {
         let text = wxT(text);
         unsafe { wxHelpProvider_AddHelp(self.ptr(), window.ptr(), text.ptr()) }
     }
@@ -3297,53 +3297,53 @@ pub trait _wxHelpProvider {
     fn delete(&self) {
         unsafe { wxHelpProvider_Delete(self.ptr()) }
     }
-    fn getHelp<T: _wxWindow>(&self, window: &T) -> ~str {
-        unsafe { wxString { ptr: wxHelpProvider_GetHelp(self.ptr(), window.ptr()) }.to_str() }
+    fn getHelp<T: TWxWindow>(&self, window: &T) -> ~str {
+        unsafe { WxString { ptr: wxHelpProvider_GetHelp(self.ptr(), window.ptr()) }.to_str() }
     }
-    fn removeHelp<T: _wxWindow>(&self, window: &T) {
+    fn removeHelp<T: TWxWindow>(&self, window: &T) {
         unsafe { wxHelpProvider_RemoveHelp(self.ptr(), window.ptr()) }
     }
-    fn set(&self) -> wxHelpProvider {
-        unsafe { wxHelpProvider { ptr: wxHelpProvider_Set(self.ptr()) } }
+    fn set(&self) -> WxHelpProvider {
+        unsafe { WxHelpProvider { ptr: wxHelpProvider_Set(self.ptr()) } }
     }
-    fn showHelp<T: _wxWindow>(&self, window: &T) -> c_int {
+    fn showHelp<T: TWxWindow>(&self, window: &T) -> c_int {
         unsafe { wxHelpProvider_ShowHelp(self.ptr(), window.ptr()) }
     }
 }
 
-pub struct wxIcon { ptr: *mut c_void }
-impl _wxIcon for wxIcon {}
-impl _wxBitmap for wxIcon {}
-impl _wxGDIObject for wxIcon {}
-impl _wxObject for wxIcon { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxIcon { ptr: *mut c_void }
+impl TWxIcon for WxIcon {}
+impl TWxBitmap for WxIcon {}
+impl TWxGDIObject for WxIcon {}
+impl TWxObject for WxIcon { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxIcon {
-    pub fn from(ptr: *mut c_void) -> wxIcon { wxIcon { ptr: ptr } }
-    pub fn null() -> wxIcon { wxIcon::from(0 as *mut c_void) }
+impl WxIcon {
+    pub fn from(ptr: *mut c_void) -> WxIcon { WxIcon { ptr: ptr } }
+    pub fn null() -> WxIcon { WxIcon::from(0 as *mut c_void) }
     
-    pub fn newDefault() -> wxIcon {
-        unsafe { wxIcon { ptr: wxIcon_CreateDefault() } }
+    pub fn newDefault() -> WxIcon {
+        unsafe { WxIcon { ptr: wxIcon_CreateDefault() } }
     }
-    pub fn newLoad(name: &str, type_: c_long, width: c_int, height: c_int) -> wxIcon {
+    pub fn newLoad(name: &str, type_: c_long, width: c_int, height: c_int) -> WxIcon {
         let name = wxT(name);
-        unsafe { wxIcon { ptr: wxIcon_CreateLoad(name.ptr(), type_, width, height) } }
+        unsafe { WxIcon { ptr: wxIcon_CreateLoad(name.ptr(), type_, width, height) } }
     }
 }
 
-pub trait _wxIcon : _wxBitmap {
+pub trait TWxIcon : TWxBitmap {
     fn assign(&self, other: *mut c_void) {
         unsafe { wxIcon_Assign(self.ptr(), other) }
     }
-    fn copyFromBitmap<T: _wxBitmap>(&self, bmp: &T) {
+    fn copyFromBitmap<T: TWxBitmap>(&self, bmp: &T) {
         unsafe { wxIcon_CopyFromBitmap(self.ptr(), bmp.ptr()) }
     }
-    fn fromRaw(&self, width: c_int, height: c_int) -> wxIcon {
-        unsafe { wxIcon { ptr: wxIcon_FromRaw(self.ptr(), width, height) } }
+    fn fromRaw(&self, width: c_int, height: c_int) -> WxIcon {
+        unsafe { WxIcon { ptr: wxIcon_FromRaw(self.ptr(), width, height) } }
     }
-    fn fromXPM(&self) -> wxIcon {
-        unsafe { wxIcon { ptr: wxIcon_FromXPM(self.ptr()) } }
+    fn fromXPM(&self) -> WxIcon {
+        unsafe { WxIcon { ptr: wxIcon_FromXPM(self.ptr()) } }
     }
-    fn isEqual(&self, other: &_wxIcon) -> c_int {
+    fn isEqual(&self, other: &TWxIcon) -> c_int {
         unsafe { wxIcon_IsEqual(self.ptr(), other.ptr()) }
     }
     fn load(&self, name: &str, type_: c_long, width: c_int, height: c_int) -> c_int {
@@ -3352,72 +3352,72 @@ pub trait _wxIcon : _wxBitmap {
     }
 }
 
-pub struct wxIconBundle { ptr: *mut c_void }
-impl _wxIconBundle for wxIconBundle { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxIconBundle { ptr: *mut c_void }
+impl TWxIconBundle for WxIconBundle { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxIconBundle {
-    pub fn from(ptr: *mut c_void) -> wxIconBundle { wxIconBundle { ptr: ptr } }
-    pub fn null() -> wxIconBundle { wxIconBundle::from(0 as *mut c_void) }
+impl WxIconBundle {
+    pub fn from(ptr: *mut c_void) -> WxIconBundle { WxIconBundle { ptr: ptr } }
+    pub fn null() -> WxIconBundle { WxIconBundle::from(0 as *mut c_void) }
     
-    pub fn newDefault() -> wxIconBundle {
-        unsafe { wxIconBundle { ptr: wxIconBundle_CreateDefault() } }
+    pub fn newDefault() -> WxIconBundle {
+        unsafe { WxIconBundle { ptr: wxIconBundle_CreateDefault() } }
     }
-    pub fn newFromFile(file: &str, type_: c_int) -> wxIconBundle {
+    pub fn newFromFile(file: &str, type_: c_int) -> WxIconBundle {
         let file = wxT(file);
-        unsafe { wxIconBundle { ptr: wxIconBundle_CreateFromFile(file.ptr(), type_) } }
+        unsafe { WxIconBundle { ptr: wxIconBundle_CreateFromFile(file.ptr(), type_) } }
     }
-    pub fn newFromIcon<T: _wxIcon>(icon: &T) -> wxIconBundle {
-        unsafe { wxIconBundle { ptr: wxIconBundle_CreateFromIcon(icon.ptr()) } }
+    pub fn newFromIcon<T: TWxIcon>(icon: &T) -> WxIconBundle {
+        unsafe { WxIconBundle { ptr: wxIconBundle_CreateFromIcon(icon.ptr()) } }
     }
 }
 
-pub trait _wxIconBundle {
+pub trait TWxIconBundle {
     fn ptr(&self) -> *mut c_void;
     
-    fn addIcon<T: _wxIcon>(&self, icon: &T) {
+    fn addIcon<T: TWxIcon>(&self, icon: &T) {
         unsafe { wxIconBundle_AddIcon(self.ptr(), icon.ptr()) }
     }
     fn addIconFromFile(&self, file: &str, type_: c_int) {
         let file = wxT(file);
         unsafe { wxIconBundle_AddIconFromFile(self.ptr(), file.ptr(), type_) }
     }
-    fn assign<T: _wxIconBundle>(&self, _ref: &T) {
+    fn assign<T: TWxIconBundle>(&self, _ref: &T) {
         unsafe { wxIconBundle_Assign(self.ptr(), _ref.ptr()) }
     }
     fn delete(&self) {
         unsafe { wxIconBundle_Delete(self.ptr()) }
     }
-    fn getIcon<T: _wxIcon>(&self, w: c_int, h: c_int, _ref: &T) {
+    fn getIcon<T: TWxIcon>(&self, w: c_int, h: c_int, _ref: &T) {
         unsafe { wxIconBundle_GetIcon(self.ptr(), w, h, _ref.ptr()) }
     }
 }
 
-pub struct wxIconizeEvent { ptr: *mut c_void }
-impl _wxIconizeEvent for wxIconizeEvent {}
-impl _wxEvent for wxIconizeEvent {}
-impl _wxObject for wxIconizeEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxIconizeEvent { ptr: *mut c_void }
+impl TWxIconizeEvent for WxIconizeEvent {}
+impl TWxEvent for WxIconizeEvent {}
+impl TWxObject for WxIconizeEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxIconizeEvent {
-    pub fn from(ptr: *mut c_void) -> wxIconizeEvent { wxIconizeEvent { ptr: ptr } }
-    pub fn null() -> wxIconizeEvent { wxIconizeEvent::from(0 as *mut c_void) }
+impl WxIconizeEvent {
+    pub fn from(ptr: *mut c_void) -> WxIconizeEvent { WxIconizeEvent { ptr: ptr } }
+    pub fn null() -> WxIconizeEvent { WxIconizeEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxIconizeEvent : _wxEvent {
+pub trait TWxIconizeEvent : TWxEvent {
 }
 
-pub struct wxIdleEvent { ptr: *mut c_void }
-impl _wxIdleEvent for wxIdleEvent {}
-impl _wxEvent for wxIdleEvent {}
-impl _wxObject for wxIdleEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxIdleEvent { ptr: *mut c_void }
+impl TWxIdleEvent for WxIdleEvent {}
+impl TWxEvent for WxIdleEvent {}
+impl TWxObject for WxIdleEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxIdleEvent {
-    pub fn from(ptr: *mut c_void) -> wxIdleEvent { wxIdleEvent { ptr: ptr } }
-    pub fn null() -> wxIdleEvent { wxIdleEvent::from(0 as *mut c_void) }
+impl WxIdleEvent {
+    pub fn from(ptr: *mut c_void) -> WxIdleEvent { WxIdleEvent { ptr: ptr } }
+    pub fn null() -> WxIdleEvent { WxIdleEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxIdleEvent : _wxEvent {
+pub trait TWxIdleEvent : TWxEvent {
     fn moreRequested(&self) -> c_int {
         unsafe { wxIdleEvent_MoreRequested(self.ptr()) }
     }
@@ -3426,47 +3426,47 @@ pub trait _wxIdleEvent : _wxEvent {
     }
 }
 
-pub struct wxImage { ptr: *mut c_void }
-impl _wxImage for wxImage {}
-impl _wxObject for wxImage { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxImage { ptr: *mut c_void }
+impl TWxImage for WxImage {}
+impl TWxObject for WxImage { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxImage {
-    pub fn from(ptr: *mut c_void) -> wxImage { wxImage { ptr: ptr } }
-    pub fn null() -> wxImage { wxImage::from(0 as *mut c_void) }
+impl WxImage {
+    pub fn from(ptr: *mut c_void) -> WxImage { WxImage { ptr: ptr } }
+    pub fn null() -> WxImage { WxImage::from(0 as *mut c_void) }
     
     pub fn canRead(name: &str) -> c_int {
         let name = wxT(name);
         unsafe { wxImage_CanRead(name.ptr()) }
     }
-    pub fn newDefault() -> wxImage {
-        unsafe { wxImage { ptr: wxImage_CreateDefault() } }
+    pub fn newDefault() -> WxImage {
+        unsafe { WxImage { ptr: wxImage_CreateDefault() } }
     }
-    pub fn newFromBitmap<T: _wxBitmap>(bitmap: &T) -> wxImage {
-        unsafe { wxImage { ptr: wxImage_CreateFromBitmap(bitmap.ptr()) } }
+    pub fn newFromBitmap<T: TWxBitmap>(bitmap: &T) -> WxImage {
+        unsafe { WxImage { ptr: wxImage_CreateFromBitmap(bitmap.ptr()) } }
     }
-    pub fn newFromByteString(data: *mut *mut c_char, length: c_int, type_: c_int) -> wxImage {
-        unsafe { wxImage { ptr: wxImage_CreateFromByteString(data, length, type_) } }
+    pub fn newFromByteString(data: *mut *mut c_char, length: c_int, type_: c_int) -> WxImage {
+        unsafe { WxImage { ptr: wxImage_CreateFromByteString(data, length, type_) } }
     }
-    pub fn newFromLazyByteString(data: *mut *mut c_char, length: c_int, type_: c_int) -> wxImage {
-        unsafe { wxImage { ptr: wxImage_CreateFromLazyByteString(data, length, type_) } }
+    pub fn newFromLazyByteString(data: *mut *mut c_char, length: c_int, type_: c_int) -> WxImage {
+        unsafe { WxImage { ptr: wxImage_CreateFromLazyByteString(data, length, type_) } }
     }
-    pub fn newFromData(width: c_int, height: c_int, data: *mut c_void) -> wxImage {
-        unsafe { wxImage { ptr: wxImage_CreateFromData(width, height, data) } }
+    pub fn newFromData(width: c_int, height: c_int, data: *mut c_void) -> WxImage {
+        unsafe { WxImage { ptr: wxImage_CreateFromData(width, height, data) } }
     }
-    pub fn newFromFile(name: &str) -> wxImage {
+    pub fn newFromFile(name: &str) -> WxImage {
         let name = wxT(name);
-        unsafe { wxImage { ptr: wxImage_CreateFromFile(name.ptr()) } }
+        unsafe { WxImage { ptr: wxImage_CreateFromFile(name.ptr()) } }
     }
-    pub fn newSized(width: c_int, height: c_int) -> wxImage {
-        unsafe { wxImage { ptr: wxImage_CreateSized(width, height) } }
+    pub fn newSized(width: c_int, height: c_int) -> WxImage {
+        unsafe { WxImage { ptr: wxImage_CreateSized(width, height) } }
     }
-    pub fn newFromDataEx(width: c_int, height: c_int, data: *mut c_void, isStaticData: c_int) -> wxImage {
-        unsafe { wxImage { ptr: wxImage_CreateFromDataEx(width, height, data, isStaticData) } }
+    pub fn newFromDataEx(width: c_int, height: c_int, data: *mut c_void, isStaticData: c_int) -> WxImage {
+        unsafe { WxImage { ptr: wxImage_CreateFromDataEx(width, height, data, isStaticData) } }
     }
 }
 
-pub trait _wxImage : _wxObject {
-    fn convertToBitmap<T: _wxBitmap>(&self, bitmap: &T) {
+pub trait TWxImage : TWxObject {
+    fn convertToBitmap<T: TWxBitmap>(&self, bitmap: &T) {
         unsafe { wxImage_ConvertToBitmap(self.ptr(), bitmap.ptr()) }
     }
     fn convertToByteString(&self, type_: c_int, data: *mut c_char) -> c_int {
@@ -3505,7 +3505,7 @@ pub trait _wxImage : _wxObject {
     fn getRed(&self, x: c_int, y: c_int) -> int8_t {
         unsafe { wxImage_GetRed(self.ptr(), x, y) }
     }
-    fn getSubImage<T: _wxImage>(&self, x: c_int, y: c_int, w: c_int, h: c_int, image: &T) {
+    fn getSubImage<T: TWxImage>(&self, x: c_int, y: c_int, w: c_int, h: c_int, image: &T) {
         unsafe { wxImage_GetSubImage(self.ptr(), x, y, w, h, image.ptr()) }
     }
     fn getWidth(&self) -> c_int {
@@ -3516,7 +3516,7 @@ pub trait _wxImage : _wxObject {
     }
     fn getOption(&self, name: &str) -> ~str {
         let name = wxT(name);
-        unsafe { wxString { ptr: wxImage_GetOption(self.ptr(), name.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxImage_GetOption(self.ptr(), name.ptr()) }.to_str() }
     }
     fn getOptionInt(&self, name: &str) -> c_int {
         let name = wxT(name);
@@ -3536,13 +3536,13 @@ pub trait _wxImage : _wxObject {
         let name = wxT(name);
         unsafe { wxImage_LoadFile(self.ptr(), name.ptr(), type_) }
     }
-    fn mirror<T: _wxImage>(&self, horizontally: c_int, image: &T) {
+    fn mirror<T: TWxImage>(&self, horizontally: c_int, image: &T) {
         unsafe { wxImage_Mirror(self.ptr(), horizontally, image.ptr()) }
     }
     fn isOk(&self) -> c_int {
         unsafe { wxImage_IsOk(self.ptr()) }
     }
-    fn paste<T: _wxImage>(&self, image: &T, x: c_int, y: c_int) {
+    fn paste<T: TWxImage>(&self, image: &T, x: c_int, y: c_int) {
         unsafe { wxImage_Paste(self.ptr(), image.ptr(), x, y) }
     }
     fn replace(&self, r1: uint8_t, g1: uint8_t, b1: uint8_t, r2: uint8_t, g2: uint8_t, b2: uint8_t) {
@@ -3551,17 +3551,17 @@ pub trait _wxImage : _wxObject {
     fn rescale(&self, width: c_int, height: c_int) {
         unsafe { wxImage_Rescale(self.ptr(), width, height) }
     }
-    fn rotate<T: _wxImage>(&self, angle: c_double, c_x: c_int, c_y: c_int, interpolating: c_int, offset_after_rotation: *mut c_void, image: &T) {
+    fn rotate<T: TWxImage>(&self, angle: c_double, c_x: c_int, c_y: c_int, interpolating: c_int, offset_after_rotation: *mut c_void, image: &T) {
         unsafe { wxImage_Rotate(self.ptr(), angle, c_x, c_y, interpolating, offset_after_rotation, image.ptr()) }
     }
-    fn rotate90<T: _wxImage>(&self, clockwise: c_int, image: &T) {
+    fn rotate90<T: TWxImage>(&self, clockwise: c_int, image: &T) {
         unsafe { wxImage_Rotate90(self.ptr(), clockwise, image.ptr()) }
     }
     fn saveFile(&self, name: &str, type_: c_int) -> c_int {
         let name = wxT(name);
         unsafe { wxImage_SaveFile(self.ptr(), name.ptr(), type_) }
     }
-    fn scale<T: _wxImage>(&self, width: c_int, height: c_int, image: &T) {
+    fn scale<T: TWxImage>(&self, width: c_int, height: c_int, image: &T) {
         unsafe { wxImage_Scale(self.ptr(), width, height, image.ptr()) }
     }
     fn setData(&self, data: *mut c_void) {
@@ -3590,43 +3590,43 @@ pub trait _wxImage : _wxObject {
     }
 }
 
-pub struct wxImageHandler { ptr: *mut c_void }
-impl _wxImageHandler for wxImageHandler {}
-impl _wxObject for wxImageHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxImageHandler { ptr: *mut c_void }
+impl TWxImageHandler for WxImageHandler {}
+impl TWxObject for WxImageHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxImageHandler {
-    pub fn from(ptr: *mut c_void) -> wxImageHandler { wxImageHandler { ptr: ptr } }
-    pub fn null() -> wxImageHandler { wxImageHandler::from(0 as *mut c_void) }
+impl WxImageHandler {
+    pub fn from(ptr: *mut c_void) -> WxImageHandler { WxImageHandler { ptr: ptr } }
+    pub fn null() -> WxImageHandler { WxImageHandler::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxImageHandler : _wxObject {
+pub trait TWxImageHandler : TWxObject {
 }
 
-pub struct wxImageList { ptr: *mut c_void }
-impl _wxImageList for wxImageList {}
-impl _wxObject for wxImageList { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxImageList { ptr: *mut c_void }
+impl TWxImageList for WxImageList {}
+impl TWxObject for WxImageList { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxImageList {
-    pub fn from(ptr: *mut c_void) -> wxImageList { wxImageList { ptr: ptr } }
-    pub fn null() -> wxImageList { wxImageList::from(0 as *mut c_void) }
+impl WxImageList {
+    pub fn from(ptr: *mut c_void) -> WxImageList { WxImageList { ptr: ptr } }
+    pub fn null() -> WxImageList { WxImageList::from(0 as *mut c_void) }
     
-    pub fn new(width: c_int, height: c_int, mask: c_int, initialCount: c_int) -> wxImageList {
-        unsafe { wxImageList { ptr: wxImageList_Create(width, height, mask, initialCount) } }
+    pub fn new(width: c_int, height: c_int, mask: c_int, initialCount: c_int) -> WxImageList {
+        unsafe { WxImageList { ptr: wxImageList_Create(width, height, mask, initialCount) } }
     }
 }
 
-pub trait _wxImageList : _wxObject {
-    fn addBitmap<T: _wxBitmap, U: _wxBitmap>(&self, bitmap: &T, mask: &U) -> c_int {
+pub trait TWxImageList : TWxObject {
+    fn addBitmap<T: TWxBitmap, U: TWxBitmap>(&self, bitmap: &T, mask: &U) -> c_int {
         unsafe { wxImageList_AddBitmap(self.ptr(), bitmap.ptr(), mask.ptr()) }
     }
-    fn addIcon<T: _wxIcon>(&self, icon: &T) -> c_int {
+    fn addIcon<T: TWxIcon>(&self, icon: &T) -> c_int {
         unsafe { wxImageList_AddIcon(self.ptr(), icon.ptr()) }
     }
-    fn addMasked<T: _wxBitmap, U: _wxColour>(&self, bitmap: &T, maskColour: &U) -> c_int {
+    fn addMasked<T: TWxBitmap, U: TWxColour>(&self, bitmap: &T, maskColour: &U) -> c_int {
         unsafe { wxImageList_AddMasked(self.ptr(), bitmap.ptr(), maskColour.ptr()) }
     }
-    fn draw<T: _wxDC>(&self, index: c_int, dc: &T, x: c_int, y: c_int, flags: c_int, solidBackground: c_int) -> c_int {
+    fn draw<T: TWxDC>(&self, index: c_int, dc: &T, x: c_int, y: c_int, flags: c_int, solidBackground: c_int) -> c_int {
         unsafe { wxImageList_Draw(self.ptr(), index, dc.ptr(), x, y, flags, solidBackground) }
     }
     fn getImageCount(&self) -> c_int {
@@ -3641,26 +3641,26 @@ pub trait _wxImageList : _wxObject {
     fn removeAll(&self) -> c_int {
         unsafe { wxImageList_RemoveAll(self.ptr()) }
     }
-    fn replace<T: _wxBitmap, U: _wxBitmap>(&self, index: c_int, bitmap: &T, mask: &U) -> c_int {
+    fn replace<T: TWxBitmap, U: TWxBitmap>(&self, index: c_int, bitmap: &T, mask: &U) -> c_int {
         unsafe { wxImageList_Replace(self.ptr(), index, bitmap.ptr(), mask.ptr()) }
     }
-    fn replaceIcon<T: _wxIcon>(&self, index: c_int, icon: &T) -> c_int {
+    fn replaceIcon<T: TWxIcon>(&self, index: c_int, icon: &T) -> c_int {
         unsafe { wxImageList_ReplaceIcon(self.ptr(), index, icon.ptr()) }
     }
 }
 
-pub struct wxIndividualLayoutConstraint { ptr: *mut c_void }
-impl _wxIndividualLayoutConstraint for wxIndividualLayoutConstraint {}
-impl _wxObject for wxIndividualLayoutConstraint { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxIndividualLayoutConstraint { ptr: *mut c_void }
+impl TWxIndividualLayoutConstraint for WxIndividualLayoutConstraint {}
+impl TWxObject for WxIndividualLayoutConstraint { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxIndividualLayoutConstraint {
-    pub fn from(ptr: *mut c_void) -> wxIndividualLayoutConstraint { wxIndividualLayoutConstraint { ptr: ptr } }
-    pub fn null() -> wxIndividualLayoutConstraint { wxIndividualLayoutConstraint::from(0 as *mut c_void) }
+impl WxIndividualLayoutConstraint {
+    pub fn from(ptr: *mut c_void) -> WxIndividualLayoutConstraint { WxIndividualLayoutConstraint { ptr: ptr } }
+    pub fn null() -> WxIndividualLayoutConstraint { WxIndividualLayoutConstraint::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxIndividualLayoutConstraint : _wxObject {
-    fn above<T: _wxWindow>(&self, sibling: &T, marg: c_int) {
+pub trait TWxIndividualLayoutConstraint : TWxObject {
+    fn above<T: TWxWindow>(&self, sibling: &T, marg: c_int) {
         unsafe { wxIndividualLayoutConstraint_Above(self.ptr(), sibling.ptr(), marg) }
     }
     fn absolute(&self, val: c_int) {
@@ -3669,7 +3669,7 @@ pub trait _wxIndividualLayoutConstraint : _wxObject {
     fn asIs(&self) {
         unsafe { wxIndividualLayoutConstraint_AsIs(self.ptr()) }
     }
-    fn below<T: _wxWindow>(&self, sibling: &T, marg: c_int) {
+    fn below<T: TWxWindow>(&self, sibling: &T, marg: c_int) {
         unsafe { wxIndividualLayoutConstraint_Below(self.ptr(), sibling.ptr(), marg) }
     }
     fn getDone(&self) -> c_int {
@@ -3699,25 +3699,25 @@ pub trait _wxIndividualLayoutConstraint : _wxObject {
     fn getValue(&self) -> c_int {
         unsafe { wxIndividualLayoutConstraint_GetValue(self.ptr()) }
     }
-    fn leftOf<T: _wxWindow>(&self, sibling: &T, marg: c_int) {
+    fn leftOf<T: TWxWindow>(&self, sibling: &T, marg: c_int) {
         unsafe { wxIndividualLayoutConstraint_LeftOf(self.ptr(), sibling.ptr(), marg) }
     }
-    fn percentOf<T: _wxWindow>(&self, otherW: &T, wh: c_int, per: c_int) {
+    fn percentOf<T: TWxWindow>(&self, otherW: &T, wh: c_int, per: c_int) {
         unsafe { wxIndividualLayoutConstraint_PercentOf(self.ptr(), otherW.ptr(), wh, per) }
     }
-    fn resetIfWin<T: _wxWindow>(&self, otherW: &T) -> c_int {
+    fn resetIfWin<T: TWxWindow>(&self, otherW: &T) -> c_int {
         unsafe { wxIndividualLayoutConstraint_ResetIfWin(self.ptr(), otherW.ptr()) }
     }
-    fn rightOf<T: _wxWindow>(&self, sibling: &T, marg: c_int) {
+    fn rightOf<T: TWxWindow>(&self, sibling: &T, marg: c_int) {
         unsafe { wxIndividualLayoutConstraint_RightOf(self.ptr(), sibling.ptr(), marg) }
     }
-    fn sameAs<T: _wxWindow>(&self, otherW: &T, edge: c_int, marg: c_int) {
+    fn sameAs<T: TWxWindow>(&self, otherW: &T, edge: c_int, marg: c_int) {
         unsafe { wxIndividualLayoutConstraint_SameAs(self.ptr(), otherW.ptr(), edge, marg) }
     }
-    fn satisfyConstraint<T: _wxWindow>(&self, constraints: *mut c_void, win: &T) -> c_int {
+    fn satisfyConstraint<T: TWxWindow>(&self, constraints: *mut c_void, win: &T) -> c_int {
         unsafe { wxIndividualLayoutConstraint_SatisfyConstraint(self.ptr(), constraints, win.ptr()) }
     }
-    fn set<T: _wxWindow>(&self, rel: c_int, otherW: &T, otherE: c_int, val: c_int, marg: c_int) {
+    fn set<T: TWxWindow>(&self, rel: c_int, otherW: &T, otherE: c_int, val: c_int, marg: c_int) {
         unsafe { wxIndividualLayoutConstraint_Set(self.ptr(), rel, otherW.ptr(), otherE, val, marg) }
     }
     fn setDone(&self, d: c_int) {
@@ -3740,32 +3740,32 @@ pub trait _wxIndividualLayoutConstraint : _wxObject {
     }
 }
 
-pub struct wxInitDialogEvent { ptr: *mut c_void }
-impl _wxInitDialogEvent for wxInitDialogEvent {}
-impl _wxEvent for wxInitDialogEvent {}
-impl _wxObject for wxInitDialogEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxInitDialogEvent { ptr: *mut c_void }
+impl TWxInitDialogEvent for WxInitDialogEvent {}
+impl TWxEvent for WxInitDialogEvent {}
+impl TWxObject for WxInitDialogEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxInitDialogEvent {
-    pub fn from(ptr: *mut c_void) -> wxInitDialogEvent { wxInitDialogEvent { ptr: ptr } }
-    pub fn null() -> wxInitDialogEvent { wxInitDialogEvent::from(0 as *mut c_void) }
+impl WxInitDialogEvent {
+    pub fn from(ptr: *mut c_void) -> WxInitDialogEvent { WxInitDialogEvent { ptr: ptr } }
+    pub fn null() -> WxInitDialogEvent { WxInitDialogEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxInitDialogEvent : _wxEvent {
+pub trait TWxInitDialogEvent : TWxEvent {
 }
 
-pub struct wxJoystickEvent { ptr: *mut c_void }
-impl _wxJoystickEvent for wxJoystickEvent {}
-impl _wxEvent for wxJoystickEvent {}
-impl _wxObject for wxJoystickEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxJoystickEvent { ptr: *mut c_void }
+impl TWxJoystickEvent for WxJoystickEvent {}
+impl TWxEvent for WxJoystickEvent {}
+impl TWxObject for WxJoystickEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxJoystickEvent {
-    pub fn from(ptr: *mut c_void) -> wxJoystickEvent { wxJoystickEvent { ptr: ptr } }
-    pub fn null() -> wxJoystickEvent { wxJoystickEvent::from(0 as *mut c_void) }
+impl WxJoystickEvent {
+    pub fn from(ptr: *mut c_void) -> WxJoystickEvent { WxJoystickEvent { ptr: ptr } }
+    pub fn null() -> WxJoystickEvent { WxJoystickEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxJoystickEvent : _wxEvent {
+pub trait TWxJoystickEvent : TWxEvent {
     fn buttonDown(&self, but: c_int) -> c_int {
         unsafe { wxJoystickEvent_ButtonDown(self.ptr(), but) }
     }
@@ -3784,8 +3784,8 @@ pub trait _wxJoystickEvent : _wxEvent {
     fn getJoystick(&self) -> c_int {
         unsafe { wxJoystickEvent_GetJoystick(self.ptr()) }
     }
-    fn getPosition(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxJoystickEvent_GetPosition(self.ptr()) } }
+    fn getPosition(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxJoystickEvent_GetPosition(self.ptr()) } }
     }
     fn getZPosition(&self) -> c_int {
         unsafe { wxJoystickEvent_GetZPosition(self.ptr()) }
@@ -3816,18 +3816,18 @@ pub trait _wxJoystickEvent : _wxEvent {
     }
 }
 
-pub struct wxKeyEvent { ptr: *mut c_void }
-impl _wxKeyEvent for wxKeyEvent {}
-impl _wxEvent for wxKeyEvent {}
-impl _wxObject for wxKeyEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxKeyEvent { ptr: *mut c_void }
+impl TWxKeyEvent for WxKeyEvent {}
+impl TWxEvent for WxKeyEvent {}
+impl TWxObject for WxKeyEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxKeyEvent {
-    pub fn from(ptr: *mut c_void) -> wxKeyEvent { wxKeyEvent { ptr: ptr } }
-    pub fn null() -> wxKeyEvent { wxKeyEvent::from(0 as *mut c_void) }
+impl WxKeyEvent {
+    pub fn from(ptr: *mut c_void) -> WxKeyEvent { WxKeyEvent { ptr: ptr } }
+    pub fn null() -> WxKeyEvent { WxKeyEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxKeyEvent : _wxEvent {
+pub trait TWxKeyEvent : TWxEvent {
     fn altDown(&self) -> c_int {
         unsafe { wxKeyEvent_AltDown(self.ptr()) }
     }
@@ -3837,8 +3837,8 @@ pub trait _wxKeyEvent : _wxEvent {
     fn getKeyCode(&self) -> c_int {
         unsafe { wxKeyEvent_GetKeyCode(self.ptr()) }
     }
-    fn getPosition(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxKeyEvent_GetPosition(self.ptr()) } }
+    fn getPosition(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxKeyEvent_GetPosition(self.ptr()) } }
     }
     fn getX(&self) -> c_int {
         unsafe { wxKeyEvent_GetX(self.ptr()) }
@@ -3863,20 +3863,20 @@ pub trait _wxKeyEvent : _wxEvent {
     }
 }
 
-pub struct wxLayoutConstraints { ptr: *mut c_void }
-impl _wxLayoutConstraints for wxLayoutConstraints {}
-impl _wxObject for wxLayoutConstraints { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxLayoutConstraints { ptr: *mut c_void }
+impl TWxLayoutConstraints for WxLayoutConstraints {}
+impl TWxObject for WxLayoutConstraints { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxLayoutConstraints {
-    pub fn from(ptr: *mut c_void) -> wxLayoutConstraints { wxLayoutConstraints { ptr: ptr } }
-    pub fn null() -> wxLayoutConstraints { wxLayoutConstraints::from(0 as *mut c_void) }
+impl WxLayoutConstraints {
+    pub fn from(ptr: *mut c_void) -> WxLayoutConstraints { WxLayoutConstraints { ptr: ptr } }
+    pub fn null() -> WxLayoutConstraints { WxLayoutConstraints::from(0 as *mut c_void) }
     
-    pub fn new() -> wxLayoutConstraints {
-        unsafe { wxLayoutConstraints { ptr: wxLayoutConstraints_Create() } }
+    pub fn new() -> WxLayoutConstraints {
+        unsafe { WxLayoutConstraints { ptr: wxLayoutConstraints_Create() } }
     }
 }
 
-pub trait _wxLayoutConstraints : _wxObject {
+pub trait TWxLayoutConstraints : TWxObject {
     fn bottom(&self) -> *mut c_void {
         unsafe { wxLayoutConstraints_bottom(self.ptr()) }
     }
@@ -3903,23 +3903,23 @@ pub trait _wxLayoutConstraints : _wxObject {
     }
 }
 
-pub struct wxListBox { ptr: *mut c_void }
-impl _wxListBox for wxListBox {}
-impl _wxControl for wxListBox {}
-impl _wxWindow for wxListBox {}
-impl _wxEvtHandler for wxListBox {}
-impl _wxObject for wxListBox { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxListBox { ptr: *mut c_void }
+impl TWxListBox for WxListBox {}
+impl TWxControl for WxListBox {}
+impl TWxWindow for WxListBox {}
+impl TWxEvtHandler for WxListBox {}
+impl TWxObject for WxListBox { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxListBox {
-    pub fn from(ptr: *mut c_void) -> wxListBox { wxListBox { ptr: ptr } }
-    pub fn null() -> wxListBox { wxListBox::from(0 as *mut c_void) }
+impl WxListBox {
+    pub fn from(ptr: *mut c_void) -> WxListBox { WxListBox { ptr: ptr } }
+    pub fn null() -> WxListBox { WxListBox::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *mut *mut c_char, _stl: c_int) -> wxListBox {
-        unsafe { wxListBox { ptr: wxListBox_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, n, str, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, str: *mut *mut c_char, _stl: c_int) -> WxListBox {
+        unsafe { WxListBox { ptr: wxListBox_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, n, str, _stl) } }
     }
 }
 
-pub trait _wxListBox : _wxControl {
+pub trait TWxListBox : TWxControl {
     fn append(&self, item: &str) {
         let item = wxT(item);
         unsafe { wxListBox_Append(self.ptr(), item.ptr()) }
@@ -3945,7 +3945,7 @@ pub trait _wxListBox : _wxControl {
         unsafe { wxListBox_GetSelections(self.ptr(), aSelections, allocated) }
     }
     fn getString(&self, n: c_int) -> ~str {
-        unsafe { wxString { ptr: wxListBox_GetString(self.ptr(), n) }.to_str() }
+        unsafe { WxString { ptr: wxListBox_GetString(self.ptr(), n) }.to_str() }
     }
     fn insertItems(&self, items: *mut c_void, pos: c_int, count: c_int) {
         unsafe { wxListBox_InsertItems(self.ptr(), items, pos, count) }
@@ -3969,23 +3969,23 @@ pub trait _wxListBox : _wxControl {
     }
 }
 
-pub struct wxListCtrl { ptr: *mut c_void }
-impl _wxListCtrl for wxListCtrl {}
-impl _wxControl for wxListCtrl {}
-impl _wxWindow for wxListCtrl {}
-impl _wxEvtHandler for wxListCtrl {}
-impl _wxObject for wxListCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxListCtrl { ptr: *mut c_void }
+impl TWxListCtrl for WxListCtrl {}
+impl TWxControl for WxListCtrl {}
+impl TWxWindow for WxListCtrl {}
+impl TWxEvtHandler for WxListCtrl {}
+impl TWxObject for WxListCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxListCtrl {
-    pub fn from(ptr: *mut c_void) -> wxListCtrl { wxListCtrl { ptr: ptr } }
-    pub fn null() -> wxListCtrl { wxListCtrl::from(0 as *mut c_void) }
+impl WxListCtrl {
+    pub fn from(ptr: *mut c_void) -> WxListCtrl { WxListCtrl { ptr: ptr } }
+    pub fn null() -> WxListCtrl { WxListCtrl::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxListCtrl {
-        unsafe { wxListCtrl { ptr: wxListCtrl_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxListCtrl {
+        unsafe { WxListCtrl { ptr: wxListCtrl_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxListCtrl : _wxControl {
+pub trait TWxListCtrl : TWxControl {
     fn arrange(&self, flag: c_int) -> c_int {
         unsafe { wxListCtrl_Arrange(self.ptr(), flag) }
     }
@@ -4023,7 +4023,7 @@ pub trait _wxListCtrl : _wxControl {
     fn findItemByPosition(&self, start: c_int, x: c_int, y: c_int, direction: c_int) -> c_int {
         unsafe { wxListCtrl_FindItemByPosition(self.ptr(), start, x, y, direction) }
     }
-    fn getColumn<T: _wxListItem>(&self, col: c_int, item: &T) -> c_int {
+    fn getColumn<T: TWxListItem>(&self, col: c_int, item: &T) -> c_int {
         unsafe { wxListCtrl_GetColumn(self.ptr(), col, item.ptr()) }
     }
     fn getColumnCount(&self) -> c_int {
@@ -4035,13 +4035,13 @@ pub trait _wxListCtrl : _wxControl {
     fn getCountPerPage(&self) -> c_int {
         unsafe { wxListCtrl_GetCountPerPage(self.ptr()) }
     }
-    fn getEditControl(&self) -> wxTextCtrl {
-        unsafe { wxTextCtrl { ptr: wxListCtrl_GetEditControl(self.ptr()) } }
+    fn getEditControl(&self) -> WxTextCtrl {
+        unsafe { WxTextCtrl { ptr: wxListCtrl_GetEditControl(self.ptr()) } }
     }
-    fn getImageList(&self, which: c_int) -> wxImageList {
-        unsafe { wxImageList { ptr: wxListCtrl_GetImageList(self.ptr(), which) } }
+    fn getImageList(&self, which: c_int) -> WxImageList {
+        unsafe { WxImageList { ptr: wxListCtrl_GetImageList(self.ptr(), which) } }
     }
-    fn getItem<T: _wxListItem>(&self, info: &T) -> c_int {
+    fn getItem<T: TWxListItem>(&self, info: &T) -> c_int {
         unsafe { wxListCtrl_GetItem(self.ptr(), info.ptr()) }
     }
     fn getItemCount(&self) -> c_int {
@@ -4050,23 +4050,23 @@ pub trait _wxListCtrl : _wxControl {
     fn getItemData(&self, item: c_int) -> c_int {
         unsafe { wxListCtrl_GetItemData(self.ptr(), item) }
     }
-    fn getItemFont(&self, item: c_long) -> wxFont {
-        unsafe { wxFont { ptr: wxListCtrl_GetItemFont(self.ptr(), item) } }
+    fn getItemFont(&self, item: c_long) -> WxFont {
+        unsafe { WxFont { ptr: wxListCtrl_GetItemFont(self.ptr(), item) } }
     }
-    fn getItemPosition(&self, item: c_int) -> wxPoint {
-        unsafe { wxPoint { ptr: wxListCtrl_GetItemPosition(self.ptr(), item) } }
+    fn getItemPosition(&self, item: c_int) -> WxPoint {
+        unsafe { WxPoint { ptr: wxListCtrl_GetItemPosition(self.ptr(), item) } }
     }
-    fn getItemRect(&self, item: c_int, code: c_int) -> wxRect {
-        unsafe { wxRect { ptr: wxListCtrl_GetItemRect(self.ptr(), item, code) } }
+    fn getItemRect(&self, item: c_int, code: c_int) -> WxRect {
+        unsafe { WxRect { ptr: wxListCtrl_GetItemRect(self.ptr(), item, code) } }
     }
-    fn getItemSpacing(&self, isSmall: c_int) -> wxSize {
-        unsafe { wxSize { ptr: wxListCtrl_GetItemSpacing(self.ptr(), isSmall) } }
+    fn getItemSpacing(&self, isSmall: c_int) -> WxSize {
+        unsafe { WxSize { ptr: wxListCtrl_GetItemSpacing(self.ptr(), isSmall) } }
     }
     fn getItemState(&self, item: c_int, stateMask: c_int) -> c_int {
         unsafe { wxListCtrl_GetItemState(self.ptr(), item, stateMask) }
     }
     fn getItemText(&self, item: c_int) -> ~str {
-        unsafe { wxString { ptr: wxListCtrl_GetItemText(self.ptr(), item) }.to_str() }
+        unsafe { WxString { ptr: wxListCtrl_GetItemText(self.ptr(), item) }.to_str() }
     }
     fn getNextItem(&self, item: c_int, geometry: c_int, state: c_int) -> c_int {
         unsafe { wxListCtrl_GetNextItem(self.ptr(), item, geometry, state) }
@@ -4074,7 +4074,7 @@ pub trait _wxListCtrl : _wxControl {
     fn getSelectedItemCount(&self) -> c_int {
         unsafe { wxListCtrl_GetSelectedItemCount(self.ptr()) }
     }
-    fn getTextColour<T: _wxColour>(&self, _ref: &T) {
+    fn getTextColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxListCtrl_GetTextColour(self.ptr(), _ref.ptr()) }
     }
     fn getTopItem(&self) -> c_int {
@@ -4087,10 +4087,10 @@ pub trait _wxListCtrl : _wxControl {
         let heading = wxT(heading);
         unsafe { wxListCtrl_InsertColumn(self.ptr(), col, heading.ptr(), format, width) }
     }
-    fn insertColumnFromInfo<T: _wxListItem>(&self, col: c_int, info: &T) -> c_int {
+    fn insertColumnFromInfo<T: TWxListItem>(&self, col: c_int, info: &T) -> c_int {
         unsafe { wxListCtrl_InsertColumnFromInfo(self.ptr(), col, info.ptr()) }
     }
-    fn insertItem<T: _wxListItem>(&self, info: &T) -> c_int {
+    fn insertItem<T: TWxListItem>(&self, info: &T) -> c_int {
         unsafe { wxListCtrl_InsertItem(self.ptr(), info.ptr()) }
     }
     fn insertItemWithData(&self, index: c_int, label: &str) -> c_int {
@@ -4113,13 +4113,13 @@ pub trait _wxListCtrl : _wxControl {
     fn scrollList(&self, dx: c_int, dy: c_int) -> c_int {
         unsafe { wxListCtrl_ScrollList(self.ptr(), dx, dy) }
     }
-    fn setColumn<T: _wxListItem>(&self, col: c_int, item: &T) -> c_int {
+    fn setColumn<T: TWxListItem>(&self, col: c_int, item: &T) -> c_int {
         unsafe { wxListCtrl_SetColumn(self.ptr(), col, item.ptr()) }
     }
     fn setColumnWidth(&self, col: c_int, width: c_int) -> c_int {
         unsafe { wxListCtrl_SetColumnWidth(self.ptr(), col, width) }
     }
-    fn setImageList<T: _wxImageList>(&self, imageList: &T, which: c_int) {
+    fn setImageList<T: TWxImageList>(&self, imageList: &T, which: c_int) {
         unsafe { wxListCtrl_SetImageList(self.ptr(), imageList.ptr(), which) }
     }
     fn setItem(&self, index: c_int, col: c_int, label: &str, imageId: c_int) -> c_int {
@@ -4129,7 +4129,7 @@ pub trait _wxListCtrl : _wxControl {
     fn setItemData(&self, item: c_int, data: c_int) -> c_int {
         unsafe { wxListCtrl_SetItemData(self.ptr(), item, data) }
     }
-    fn setItemFromInfo<T: _wxListItem>(&self, info: &T) -> c_int {
+    fn setItemFromInfo<T: TWxListItem>(&self, info: &T) -> c_int {
         unsafe { wxListCtrl_SetItemFromInfo(self.ptr(), info.ptr()) }
     }
     fn setItemImage(&self, item: c_int, image: c_int, selImage: c_int) -> c_int {
@@ -4148,7 +4148,7 @@ pub trait _wxListCtrl : _wxControl {
     fn setSingleStyle(&self, style: c_int, add: c_int) {
         unsafe { wxListCtrl_SetSingleStyle(self.ptr(), style, add) }
     }
-    fn setTextColour<T: _wxColour>(&self, col: &T) {
+    fn setTextColour<T: TWxColour>(&self, col: &T) {
         unsafe { wxListCtrl_SetTextColour(self.ptr(), col.ptr()) }
     }
     fn sortItems(&self, fn_: *mut c_void, eif_obj: *mut c_void) -> c_int {
@@ -4157,37 +4157,37 @@ pub trait _wxListCtrl : _wxControl {
     fn updateStyle(&self) {
         unsafe { wxListCtrl_UpdateStyle(self.ptr()) }
     }
-    fn assignImageList<T: _wxImageList>(&self, images: &T, which: c_int) {
+    fn assignImageList<T: TWxImageList>(&self, images: &T, which: c_int) {
         unsafe { wxListCtrl_AssignImageList(self.ptr(), images.ptr(), which) }
     }
-    fn getColumn2<T: _wxListItem>(&self, col: c_int, item: &T) {
+    fn getColumn2<T: TWxListItem>(&self, col: c_int, item: &T) {
         unsafe { wxListCtrl_GetColumn2(self.ptr(), col, item.ptr()) }
     }
-    fn getItem2<T: _wxListItem>(&self, info: &T) {
+    fn getItem2<T: TWxListItem>(&self, info: &T) {
         unsafe { wxListCtrl_GetItem2(self.ptr(), info.ptr()) }
     }
-    fn getItemPosition2(&self, item: c_int) -> wxPoint {
-        unsafe { wxPoint { ptr: wxListCtrl_GetItemPosition2(self.ptr(), item) } }
+    fn getItemPosition2(&self, item: c_int) -> WxPoint {
+        unsafe { WxPoint { ptr: wxListCtrl_GetItemPosition2(self.ptr(), item) } }
     }
-    fn sortItems2<T: _wxClosure>(&self, closure: &T) -> c_int {
+    fn sortItems2<T: TWxClosure>(&self, closure: &T) -> c_int {
         unsafe { wxListCtrl_SortItems2(self.ptr(), closure.ptr()) }
     }
 }
 
-pub struct wxListEvent { ptr: *mut c_void }
-impl _wxListEvent for wxListEvent {}
-impl _wxNotifyEvent for wxListEvent {}
-impl _wxCommandEvent for wxListEvent {}
-impl _wxEvent for wxListEvent {}
-impl _wxObject for wxListEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxListEvent { ptr: *mut c_void }
+impl TWxListEvent for WxListEvent {}
+impl TWxNotifyEvent for WxListEvent {}
+impl TWxCommandEvent for WxListEvent {}
+impl TWxEvent for WxListEvent {}
+impl TWxObject for WxListEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxListEvent {
-    pub fn from(ptr: *mut c_void) -> wxListEvent { wxListEvent { ptr: ptr } }
-    pub fn null() -> wxListEvent { wxListEvent::from(0 as *mut c_void) }
+impl WxListEvent {
+    pub fn from(ptr: *mut c_void) -> WxListEvent { WxListEvent { ptr: ptr } }
+    pub fn null() -> WxListEvent { WxListEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxListEvent : _wxNotifyEvent {
+pub trait TWxListEvent : TWxNotifyEvent {
     fn cancelled(&self) -> c_int {
         unsafe { wxListEvent_Cancelled(self.ptr()) }
     }
@@ -4206,20 +4206,20 @@ pub trait _wxListEvent : _wxNotifyEvent {
     fn getIndex(&self) -> c_int {
         unsafe { wxListEvent_GetIndex(self.ptr()) }
     }
-    fn getItem<T: _wxListItem>(&self, _ref: &T) {
+    fn getItem<T: TWxListItem>(&self, _ref: &T) {
         unsafe { wxListEvent_GetItem(self.ptr(), _ref.ptr()) }
     }
     fn getLabel(&self) -> ~str {
-        unsafe { wxString { ptr: wxListEvent_GetLabel(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxListEvent_GetLabel(self.ptr()) }.to_str() }
     }
     fn getMask(&self) -> c_int {
         unsafe { wxListEvent_GetMask(self.ptr()) }
     }
-    fn getPoint(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxListEvent_GetPoint(self.ptr()) } }
+    fn getPoint(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxListEvent_GetPoint(self.ptr()) } }
     }
     fn getText(&self) -> ~str {
-        unsafe { wxString { ptr: wxListEvent_GetText(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxListEvent_GetText(self.ptr()) }.to_str() }
     }
     fn getCacheFrom(&self) -> c_int {
         unsafe { wxListEvent_GetCacheFrom(self.ptr()) }
@@ -4229,20 +4229,20 @@ pub trait _wxListEvent : _wxNotifyEvent {
     }
 }
 
-pub struct wxListItem { ptr: *mut c_void }
-impl _wxListItem for wxListItem {}
-impl _wxObject for wxListItem { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxListItem { ptr: *mut c_void }
+impl TWxListItem for WxListItem {}
+impl TWxObject for WxListItem { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxListItem {
-    pub fn from(ptr: *mut c_void) -> wxListItem { wxListItem { ptr: ptr } }
-    pub fn null() -> wxListItem { wxListItem::from(0 as *mut c_void) }
+impl WxListItem {
+    pub fn from(ptr: *mut c_void) -> WxListItem { WxListItem { ptr: ptr } }
+    pub fn null() -> WxListItem { WxListItem::from(0 as *mut c_void) }
     
-    pub fn new() -> wxListItem {
-        unsafe { wxListItem { ptr: wxListItem_Create() } }
+    pub fn new() -> WxListItem {
+        unsafe { WxListItem { ptr: wxListItem_Create() } }
     }
 }
 
-pub trait _wxListItem : _wxObject {
+pub trait TWxListItem : TWxObject {
     fn clear(&self) {
         unsafe { wxListItem_Clear(self.ptr()) }
     }
@@ -4255,7 +4255,7 @@ pub trait _wxListItem : _wxObject {
     fn getAttributes(&self) -> *mut c_void {
         unsafe { wxListItem_GetAttributes(self.ptr()) }
     }
-    fn getBackgroundColour<T: _wxColour>(&self, _ref: &T) {
+    fn getBackgroundColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxListItem_GetBackgroundColour(self.ptr(), _ref.ptr()) }
     }
     fn getColumn(&self) -> c_int {
@@ -4264,7 +4264,7 @@ pub trait _wxListItem : _wxObject {
     fn getData(&self) -> c_int {
         unsafe { wxListItem_GetData(self.ptr()) }
     }
-    fn getFont<T: _wxFont>(&self, _ref: &T) {
+    fn getFont<T: TWxFont>(&self, _ref: &T) {
         unsafe { wxListItem_GetFont(self.ptr(), _ref.ptr()) }
     }
     fn getId(&self) -> c_int {
@@ -4280,9 +4280,9 @@ pub trait _wxListItem : _wxObject {
         unsafe { wxListItem_GetState(self.ptr()) }
     }
     fn getText(&self) -> ~str {
-        unsafe { wxString { ptr: wxListItem_GetText(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxListItem_GetText(self.ptr()) }.to_str() }
     }
-    fn getTextColour<T: _wxColour>(&self, _ref: &T) {
+    fn getTextColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxListItem_GetTextColour(self.ptr(), _ref.ptr()) }
     }
     fn getWidth(&self) -> c_int {
@@ -4294,7 +4294,7 @@ pub trait _wxListItem : _wxObject {
     fn setAlign(&self, align: c_int) {
         unsafe { wxListItem_SetAlign(self.ptr(), align) }
     }
-    fn setBackgroundColour<T: _wxColour>(&self, colBack: &T) {
+    fn setBackgroundColour<T: TWxColour>(&self, colBack: &T) {
         unsafe { wxListItem_SetBackgroundColour(self.ptr(), colBack.ptr()) }
     }
     fn setColumn(&self, col: c_int) {
@@ -4306,7 +4306,7 @@ pub trait _wxListItem : _wxObject {
     fn setDataPointer(&self, data: *mut c_void) {
         unsafe { wxListItem_SetDataPointer(self.ptr(), data) }
     }
-    fn setFont<T: _wxFont>(&self, font: &T) {
+    fn setFont<T: TWxFont>(&self, font: &T) {
         unsafe { wxListItem_SetFont(self.ptr(), font.ptr()) }
     }
     fn setId(&self, id: c_int) {
@@ -4328,7 +4328,7 @@ pub trait _wxListItem : _wxObject {
         let text = wxT(text);
         unsafe { wxListItem_SetText(self.ptr(), text.ptr()) }
     }
-    fn setTextColour<T: _wxColour>(&self, colText: &T) {
+    fn setTextColour<T: TWxColour>(&self, colText: &T) {
         unsafe { wxListItem_SetTextColour(self.ptr(), colText.ptr()) }
     }
     fn setWidth(&self, width: c_int) {
@@ -4336,19 +4336,19 @@ pub trait _wxListItem : _wxObject {
     }
 }
 
-pub struct wxLog { ptr: *mut c_void }
-impl _wxLog for wxLog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxLog { ptr: *mut c_void }
+impl TWxLog for WxLog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxLog {
-    pub fn from(ptr: *mut c_void) -> wxLog { wxLog { ptr: ptr } }
-    pub fn null() -> wxLog { wxLog::from(0 as *mut c_void) }
+impl WxLog {
+    pub fn from(ptr: *mut c_void) -> WxLog { WxLog { ptr: ptr } }
+    pub fn null() -> WxLog { WxLog::from(0 as *mut c_void) }
     
-    pub fn getActiveTarget() -> wxLog {
-        unsafe { wxLog { ptr: wxLog_GetActiveTarget() } }
+    pub fn getActiveTarget() -> WxLog {
+        unsafe { WxLog { ptr: wxLog_GetActiveTarget() } }
     }
 }
 
-pub trait _wxLog {
+pub trait TWxLog {
     fn ptr(&self) -> *mut c_void;
     
     fn addTraceMask(&self, str: &str) {
@@ -4379,7 +4379,7 @@ pub trait _wxLog {
     fn hasPendingMessages(&self) -> c_int {
         unsafe { wxLog_HasPendingMessages(self.ptr()) }
     }
-    fn isAllowedTraceMask<T: _wxMask>(&self, mask: &T) -> c_int {
+    fn isAllowedTraceMask<T: TWxMask>(&self, mask: &T) -> c_int {
         unsafe { wxLog_IsAllowedTraceMask(self.ptr(), mask.ptr()) }
     }
     fn onLog(&self, level: c_int, szString: *mut c_void, t: c_int) {
@@ -4392,8 +4392,8 @@ pub trait _wxLog {
     fn resume(&self) {
         unsafe { wxLog_Resume(self.ptr()) }
     }
-    fn setActiveTarget(&self) -> wxLog {
-        unsafe { wxLog { ptr: wxLog_SetActiveTarget(self.ptr()) } }
+    fn setActiveTarget(&self) -> WxLog {
+        unsafe { WxLog { ptr: wxLog_SetActiveTarget(self.ptr()) } }
     }
     fn setTimestamp(&self, ts: *mut c_void) {
         unsafe { wxLog_SetTimestamp(self.ptr(), ts) }
@@ -4409,22 +4409,22 @@ pub trait _wxLog {
     }
 }
 
-pub struct wxLogChain { ptr: *mut c_void }
-impl _wxLogChain for wxLogChain {}
-impl _wxLog for wxLogChain { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxLogChain { ptr: *mut c_void }
+impl TWxLogChain for WxLogChain {}
+impl TWxLog for WxLogChain { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxLogChain {
-    pub fn from(ptr: *mut c_void) -> wxLogChain { wxLogChain { ptr: ptr } }
-    pub fn null() -> wxLogChain { wxLogChain::from(0 as *mut c_void) }
+impl WxLogChain {
+    pub fn from(ptr: *mut c_void) -> WxLogChain { WxLogChain { ptr: ptr } }
+    pub fn null() -> WxLogChain { WxLogChain::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxLog>(logger: &T) -> wxLogChain {
-        unsafe { wxLogChain { ptr: wxLogChain_Create(logger.ptr()) } }
+    pub fn new<T: TWxLog>(logger: &T) -> WxLogChain {
+        unsafe { WxLogChain { ptr: wxLogChain_Create(logger.ptr()) } }
     }
 }
 
-pub trait _wxLogChain : _wxLog {
-    fn getOldLog(&self) -> wxLog {
-        unsafe { wxLog { ptr: wxLogChain_GetOldLog(self.ptr()) } }
+pub trait TWxLogChain : TWxLog {
+    fn getOldLog(&self) -> WxLog {
+        unsafe { WxLog { ptr: wxLogChain_GetOldLog(self.ptr()) } }
     }
     fn isPassingMessages(&self) -> c_int {
         unsafe { wxLogChain_IsPassingMessages(self.ptr()) }
@@ -4432,181 +4432,181 @@ pub trait _wxLogChain : _wxLog {
     fn passMessages(&self, bDoPass: c_int) {
         unsafe { wxLogChain_PassMessages(self.ptr(), bDoPass) }
     }
-    fn setLog<T: _wxLog>(&self, logger: &T) {
+    fn setLog<T: TWxLog>(&self, logger: &T) {
         unsafe { wxLogChain_SetLog(self.ptr(), logger.ptr()) }
     }
 }
 
-pub struct wxLogGUI { ptr: *mut c_void }
-impl _wxLogGUI for wxLogGUI {}
-impl _wxLog for wxLogGUI { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxLogGUI { ptr: *mut c_void }
+impl TWxLogGUI for WxLogGUI {}
+impl TWxLog for WxLogGUI { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxLogGUI {
-    pub fn from(ptr: *mut c_void) -> wxLogGUI { wxLogGUI { ptr: ptr } }
-    pub fn null() -> wxLogGUI { wxLogGUI::from(0 as *mut c_void) }
+impl WxLogGUI {
+    pub fn from(ptr: *mut c_void) -> WxLogGUI { WxLogGUI { ptr: ptr } }
+    pub fn null() -> WxLogGUI { WxLogGUI::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxLogGUI : _wxLog {
+pub trait TWxLogGUI : TWxLog {
 }
 
-pub struct wxLogNull { ptr: *mut c_void }
-impl _wxLogNull for wxLogNull {}
-impl _wxLog for wxLogNull { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxLogNull { ptr: *mut c_void }
+impl TWxLogNull for WxLogNull {}
+impl TWxLog for WxLogNull { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxLogNull {
-    pub fn from(ptr: *mut c_void) -> wxLogNull { wxLogNull { ptr: ptr } }
-    pub fn null() -> wxLogNull { wxLogNull::from(0 as *mut c_void) }
+impl WxLogNull {
+    pub fn from(ptr: *mut c_void) -> WxLogNull { WxLogNull { ptr: ptr } }
+    pub fn null() -> WxLogNull { WxLogNull::from(0 as *mut c_void) }
     
-    pub fn new() -> wxLogNull {
-        unsafe { wxLogNull { ptr: wxLogNull_Create() } }
+    pub fn new() -> WxLogNull {
+        unsafe { WxLogNull { ptr: wxLogNull_Create() } }
     }
 }
 
-pub trait _wxLogNull : _wxLog {
+pub trait TWxLogNull : TWxLog {
 }
 
-pub struct wxLogPassThrough { ptr: *mut c_void }
-impl _wxLogPassThrough for wxLogPassThrough {}
-impl _wxLogChain for wxLogPassThrough {}
-impl _wxLog for wxLogPassThrough { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxLogPassThrough { ptr: *mut c_void }
+impl TWxLogPassThrough for WxLogPassThrough {}
+impl TWxLogChain for WxLogPassThrough {}
+impl TWxLog for WxLogPassThrough { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxLogPassThrough {
-    pub fn from(ptr: *mut c_void) -> wxLogPassThrough { wxLogPassThrough { ptr: ptr } }
-    pub fn null() -> wxLogPassThrough { wxLogPassThrough::from(0 as *mut c_void) }
+impl WxLogPassThrough {
+    pub fn from(ptr: *mut c_void) -> WxLogPassThrough { WxLogPassThrough { ptr: ptr } }
+    pub fn null() -> WxLogPassThrough { WxLogPassThrough::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxLogPassThrough : _wxLogChain {
+pub trait TWxLogPassThrough : TWxLogChain {
 }
 
-pub struct wxLogStderr { ptr: *mut c_void }
-impl _wxLogStderr for wxLogStderr {}
-impl _wxLog for wxLogStderr { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxLogStderr { ptr: *mut c_void }
+impl TWxLogStderr for WxLogStderr {}
+impl TWxLog for WxLogStderr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxLogStderr {
-    pub fn from(ptr: *mut c_void) -> wxLogStderr { wxLogStderr { ptr: ptr } }
-    pub fn null() -> wxLogStderr { wxLogStderr::from(0 as *mut c_void) }
+impl WxLogStderr {
+    pub fn from(ptr: *mut c_void) -> WxLogStderr { WxLogStderr { ptr: ptr } }
+    pub fn null() -> WxLogStderr { WxLogStderr::from(0 as *mut c_void) }
     
-    pub fn new() -> wxLogStderr {
-        unsafe { wxLogStderr { ptr: wxLogStderr_Create() } }
+    pub fn new() -> WxLogStderr {
+        unsafe { WxLogStderr { ptr: wxLogStderr_Create() } }
     }
-    pub fn newStdOut() -> wxLogStderr {
-        unsafe { wxLogStderr { ptr: wxLogStderr_CreateStdOut() } }
-    }
-}
-
-pub trait _wxLogStderr : _wxLog {
-}
-
-pub struct wxLogStream { ptr: *mut c_void }
-impl _wxLogStream for wxLogStream {}
-impl _wxLog for wxLogStream { fn ptr(&self) -> *mut c_void { self.ptr } }
-
-impl wxLogStream {
-    pub fn from(ptr: *mut c_void) -> wxLogStream { wxLogStream { ptr: ptr } }
-    pub fn null() -> wxLogStream { wxLogStream::from(0 as *mut c_void) }
-    
-}
-
-pub trait _wxLogStream : _wxLog {
-}
-
-pub struct wxLogTextCtrl { ptr: *mut c_void }
-impl _wxLogTextCtrl for wxLogTextCtrl {}
-impl _wxLog for wxLogTextCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
-
-impl wxLogTextCtrl {
-    pub fn from(ptr: *mut c_void) -> wxLogTextCtrl { wxLogTextCtrl { ptr: ptr } }
-    pub fn null() -> wxLogTextCtrl { wxLogTextCtrl::from(0 as *mut c_void) }
-    
-    pub fn new<T: _wxTextCtrl>(text: &T) -> wxLogTextCtrl {
-        unsafe { wxLogTextCtrl { ptr: wxLogTextCtrl_Create(text.ptr()) } }
+    pub fn newStdOut() -> WxLogStderr {
+        unsafe { WxLogStderr { ptr: wxLogStderr_CreateStdOut() } }
     }
 }
 
-pub trait _wxLogTextCtrl : _wxLog {
+pub trait TWxLogStderr : TWxLog {
 }
 
-pub struct wxLogWindow { ptr: *mut c_void }
-impl _wxLogWindow for wxLogWindow {}
-impl _wxLogPassThrough for wxLogWindow {}
-impl _wxLogChain for wxLogWindow {}
-impl _wxLog for wxLogWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxLogStream { ptr: *mut c_void }
+impl TWxLogStream for WxLogStream {}
+impl TWxLog for WxLogStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxLogWindow {
-    pub fn from(ptr: *mut c_void) -> wxLogWindow { wxLogWindow { ptr: ptr } }
-    pub fn null() -> wxLogWindow { wxLogWindow::from(0 as *mut c_void) }
+impl WxLogStream {
+    pub fn from(ptr: *mut c_void) -> WxLogStream { WxLogStream { ptr: ptr } }
+    pub fn null() -> WxLogStream { WxLogStream::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(parent: &T, title: *mut int8_t, showit: c_int, passthrough: c_int) -> wxLogWindow {
-        unsafe { wxLogWindow { ptr: wxLogWindow_Create(parent.ptr(), title, showit, passthrough) } }
+}
+
+pub trait TWxLogStream : TWxLog {
+}
+
+pub struct WxLogTextCtrl { ptr: *mut c_void }
+impl TWxLogTextCtrl for WxLogTextCtrl {}
+impl TWxLog for WxLogTextCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+
+impl WxLogTextCtrl {
+    pub fn from(ptr: *mut c_void) -> WxLogTextCtrl { WxLogTextCtrl { ptr: ptr } }
+    pub fn null() -> WxLogTextCtrl { WxLogTextCtrl::from(0 as *mut c_void) }
+    
+    pub fn new<T: TWxTextCtrl>(text: &T) -> WxLogTextCtrl {
+        unsafe { WxLogTextCtrl { ptr: wxLogTextCtrl_Create(text.ptr()) } }
     }
 }
 
-pub trait _wxLogWindow : _wxLogPassThrough {
-    fn getFrame(&self) -> wxFrame {
-        unsafe { wxFrame { ptr: wxLogWindow_GetFrame(self.ptr()) } }
+pub trait TWxLogTextCtrl : TWxLog {
+}
+
+pub struct WxLogWindow { ptr: *mut c_void }
+impl TWxLogWindow for WxLogWindow {}
+impl TWxLogPassThrough for WxLogWindow {}
+impl TWxLogChain for WxLogWindow {}
+impl TWxLog for WxLogWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+
+impl WxLogWindow {
+    pub fn from(ptr: *mut c_void) -> WxLogWindow { WxLogWindow { ptr: ptr } }
+    pub fn null() -> WxLogWindow { WxLogWindow::from(0 as *mut c_void) }
+    
+    pub fn new<T: TWxWindow>(parent: &T, title: *mut int8_t, showit: c_int, passthrough: c_int) -> WxLogWindow {
+        unsafe { WxLogWindow { ptr: wxLogWindow_Create(parent.ptr(), title, showit, passthrough) } }
     }
 }
 
-pub struct wxMDIChildFrame { ptr: *mut c_void }
-impl _wxMDIChildFrame for wxMDIChildFrame {}
-impl _wxFrame for wxMDIChildFrame {}
-impl _wxTopLevelWindow for wxMDIChildFrame {}
-impl _wxWindow for wxMDIChildFrame {}
-impl _wxEvtHandler for wxMDIChildFrame {}
-impl _wxObject for wxMDIChildFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub trait TWxLogWindow : TWxLogPassThrough {
+    fn getFrame(&self) -> WxFrame {
+        unsafe { WxFrame { ptr: wxLogWindow_GetFrame(self.ptr()) } }
+    }
+}
 
-impl wxMDIChildFrame {
-    pub fn from(ptr: *mut c_void) -> wxMDIChildFrame { wxMDIChildFrame { ptr: ptr } }
-    pub fn null() -> wxMDIChildFrame { wxMDIChildFrame::from(0 as *mut c_void) }
+pub struct WxMDIChildFrame { ptr: *mut c_void }
+impl TWxMDIChildFrame for WxMDIChildFrame {}
+impl TWxFrame for WxMDIChildFrame {}
+impl TWxTopLevelWindow for WxMDIChildFrame {}
+impl TWxWindow for WxMDIChildFrame {}
+impl TWxEvtHandler for WxMDIChildFrame {}
+impl TWxObject for WxMDIChildFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+
+impl WxMDIChildFrame {
+    pub fn from(ptr: *mut c_void) -> WxMDIChildFrame { WxMDIChildFrame { ptr: ptr } }
+    pub fn null() -> WxMDIChildFrame { WxMDIChildFrame::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxMDIChildFrame {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxMDIChildFrame {
         let _txt = wxT(_txt);
-        unsafe { wxMDIChildFrame { ptr: wxMDIChildFrame_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { WxMDIChildFrame { ptr: wxMDIChildFrame_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxMDIChildFrame : _wxFrame {
+pub trait TWxMDIChildFrame : TWxFrame {
     fn activate(&self) {
         unsafe { wxMDIChildFrame_Activate(self.ptr()) }
     }
 }
 
-pub struct wxMDIClientWindow { ptr: *mut c_void }
-impl _wxMDIClientWindow for wxMDIClientWindow {}
-impl _wxWindow for wxMDIClientWindow {}
-impl _wxEvtHandler for wxMDIClientWindow {}
-impl _wxObject for wxMDIClientWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMDIClientWindow { ptr: *mut c_void }
+impl TWxMDIClientWindow for WxMDIClientWindow {}
+impl TWxWindow for WxMDIClientWindow {}
+impl TWxEvtHandler for WxMDIClientWindow {}
+impl TWxObject for WxMDIClientWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMDIClientWindow {
-    pub fn from(ptr: *mut c_void) -> wxMDIClientWindow { wxMDIClientWindow { ptr: ptr } }
-    pub fn null() -> wxMDIClientWindow { wxMDIClientWindow::from(0 as *mut c_void) }
+impl WxMDIClientWindow {
+    pub fn from(ptr: *mut c_void) -> WxMDIClientWindow { WxMDIClientWindow { ptr: ptr } }
+    pub fn null() -> WxMDIClientWindow { WxMDIClientWindow::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxMDIClientWindow : _wxWindow {
+pub trait TWxMDIClientWindow : TWxWindow {
 }
 
-pub struct wxMDIParentFrame { ptr: *mut c_void }
-impl _wxMDIParentFrame for wxMDIParentFrame {}
-impl _wxFrame for wxMDIParentFrame {}
-impl _wxTopLevelWindow for wxMDIParentFrame {}
-impl _wxWindow for wxMDIParentFrame {}
-impl _wxEvtHandler for wxMDIParentFrame {}
-impl _wxObject for wxMDIParentFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMDIParentFrame { ptr: *mut c_void }
+impl TWxMDIParentFrame for WxMDIParentFrame {}
+impl TWxFrame for WxMDIParentFrame {}
+impl TWxTopLevelWindow for WxMDIParentFrame {}
+impl TWxWindow for WxMDIParentFrame {}
+impl TWxEvtHandler for WxMDIParentFrame {}
+impl TWxObject for WxMDIParentFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMDIParentFrame {
-    pub fn from(ptr: *mut c_void) -> wxMDIParentFrame { wxMDIParentFrame { ptr: ptr } }
-    pub fn null() -> wxMDIParentFrame { wxMDIParentFrame::from(0 as *mut c_void) }
+impl WxMDIParentFrame {
+    pub fn from(ptr: *mut c_void) -> WxMDIParentFrame { WxMDIParentFrame { ptr: ptr } }
+    pub fn null() -> WxMDIParentFrame { WxMDIParentFrame::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxMDIParentFrame {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxMDIParentFrame {
         let _txt = wxT(_txt);
-        unsafe { wxMDIParentFrame { ptr: wxMDIParentFrame_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { WxMDIParentFrame { ptr: wxMDIParentFrame_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxMDIParentFrame : _wxFrame {
+pub trait TWxMDIParentFrame : TWxFrame {
     fn activateNext(&self) {
         unsafe { wxMDIParentFrame_ActivateNext(self.ptr()) }
     }
@@ -4619,19 +4619,19 @@ pub trait _wxMDIParentFrame : _wxFrame {
     fn cascade(&self) {
         unsafe { wxMDIParentFrame_Cascade(self.ptr()) }
     }
-    fn getActiveChild(&self) -> wxMDIChildFrame {
-        unsafe { wxMDIChildFrame { ptr: wxMDIParentFrame_GetActiveChild(self.ptr()) } }
+    fn getActiveChild(&self) -> WxMDIChildFrame {
+        unsafe { WxMDIChildFrame { ptr: wxMDIParentFrame_GetActiveChild(self.ptr()) } }
     }
-    fn getClientWindow(&self) -> wxMDIClientWindow {
-        unsafe { wxMDIClientWindow { ptr: wxMDIParentFrame_GetClientWindow(self.ptr()) } }
+    fn getClientWindow(&self) -> WxMDIClientWindow {
+        unsafe { WxMDIClientWindow { ptr: wxMDIParentFrame_GetClientWindow(self.ptr()) } }
     }
-    fn getWindowMenu(&self) -> wxMenu {
-        unsafe { wxMenu { ptr: wxMDIParentFrame_GetWindowMenu(self.ptr()) } }
+    fn getWindowMenu(&self) -> WxMenu {
+        unsafe { WxMenu { ptr: wxMDIParentFrame_GetWindowMenu(self.ptr()) } }
     }
-    fn onCreateClient(&self) -> wxMDIClientWindow {
-        unsafe { wxMDIClientWindow { ptr: wxMDIParentFrame_OnCreateClient(self.ptr()) } }
+    fn onCreateClient(&self) -> WxMDIClientWindow {
+        unsafe { WxMDIClientWindow { ptr: wxMDIParentFrame_OnCreateClient(self.ptr()) } }
     }
-    fn setWindowMenu<T: _wxMenu>(&self, menu: &T) {
+    fn setWindowMenu<T: TWxMenu>(&self, menu: &T) {
         unsafe { wxMDIParentFrame_SetWindowMenu(self.ptr(), menu.ptr()) }
     }
     fn tile(&self) {
@@ -4639,93 +4639,93 @@ pub trait _wxMDIParentFrame : _wxFrame {
     }
 }
 
-pub struct wxMask { ptr: *mut c_void }
-impl _wxMask for wxMask {}
-impl _wxObject for wxMask { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMask { ptr: *mut c_void }
+impl TWxMask for WxMask {}
+impl TWxObject for WxMask { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMask {
-    pub fn from(ptr: *mut c_void) -> wxMask { wxMask { ptr: ptr } }
-    pub fn null() -> wxMask { wxMask::from(0 as *mut c_void) }
+impl WxMask {
+    pub fn from(ptr: *mut c_void) -> WxMask { WxMask { ptr: ptr } }
+    pub fn null() -> WxMask { WxMask::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxBitmap>(bitmap: &T) -> wxMask {
-        unsafe { wxMask { ptr: wxMask_Create(bitmap.ptr()) } }
+    pub fn new<T: TWxBitmap>(bitmap: &T) -> WxMask {
+        unsafe { WxMask { ptr: wxMask_Create(bitmap.ptr()) } }
     }
-    pub fn newColoured<T: _wxBitmap, U: _wxColour>(bitmap: &T, colour: &U) -> *mut c_void {
+    pub fn newColoured<T: TWxBitmap, U: TWxColour>(bitmap: &T, colour: &U) -> *mut c_void {
         unsafe { wxMask_CreateColoured(bitmap.ptr(), colour.ptr()) }
     }
 }
 
-pub trait _wxMask : _wxObject {
+pub trait TWxMask : TWxObject {
 }
 
-pub struct wxMaximizeEvent { ptr: *mut c_void }
-impl _wxMaximizeEvent for wxMaximizeEvent {}
-impl _wxEvent for wxMaximizeEvent {}
-impl _wxObject for wxMaximizeEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMaximizeEvent { ptr: *mut c_void }
+impl TWxMaximizeEvent for WxMaximizeEvent {}
+impl TWxEvent for WxMaximizeEvent {}
+impl TWxObject for WxMaximizeEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMaximizeEvent {
-    pub fn from(ptr: *mut c_void) -> wxMaximizeEvent { wxMaximizeEvent { ptr: ptr } }
-    pub fn null() -> wxMaximizeEvent { wxMaximizeEvent::from(0 as *mut c_void) }
+impl WxMaximizeEvent {
+    pub fn from(ptr: *mut c_void) -> WxMaximizeEvent { WxMaximizeEvent { ptr: ptr } }
+    pub fn null() -> WxMaximizeEvent { WxMaximizeEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxMaximizeEvent : _wxEvent {
+pub trait TWxMaximizeEvent : TWxEvent {
 }
 
-pub struct wxMemoryDC { ptr: *mut c_void }
-impl _wxMemoryDC for wxMemoryDC {}
-impl _wxDC for wxMemoryDC {}
-impl _wxObject for wxMemoryDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMemoryDC { ptr: *mut c_void }
+impl TWxMemoryDC for WxMemoryDC {}
+impl TWxDC for WxMemoryDC {}
+impl TWxObject for WxMemoryDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMemoryDC {
-    pub fn from(ptr: *mut c_void) -> wxMemoryDC { wxMemoryDC { ptr: ptr } }
-    pub fn null() -> wxMemoryDC { wxMemoryDC::from(0 as *mut c_void) }
+impl WxMemoryDC {
+    pub fn from(ptr: *mut c_void) -> WxMemoryDC { WxMemoryDC { ptr: ptr } }
+    pub fn null() -> WxMemoryDC { WxMemoryDC::from(0 as *mut c_void) }
     
-    pub fn new() -> wxMemoryDC {
-        unsafe { wxMemoryDC { ptr: wxMemoryDC_Create() } }
+    pub fn new() -> WxMemoryDC {
+        unsafe { WxMemoryDC { ptr: wxMemoryDC_Create() } }
     }
-    pub fn newCompatible<T: _wxDC>(dc: &T) -> wxMemoryDC {
-        unsafe { wxMemoryDC { ptr: wxMemoryDC_CreateCompatible(dc.ptr()) } }
+    pub fn newCompatible<T: TWxDC>(dc: &T) -> WxMemoryDC {
+        unsafe { WxMemoryDC { ptr: wxMemoryDC_CreateCompatible(dc.ptr()) } }
     }
-    pub fn newWithBitmap<T: _wxBitmap>(bitmap: &T) -> wxMemoryDC {
-        unsafe { wxMemoryDC { ptr: wxMemoryDC_CreateWithBitmap(bitmap.ptr()) } }
+    pub fn newWithBitmap<T: TWxBitmap>(bitmap: &T) -> WxMemoryDC {
+        unsafe { WxMemoryDC { ptr: wxMemoryDC_CreateWithBitmap(bitmap.ptr()) } }
     }
 }
 
-pub trait _wxMemoryDC : _wxDC {
-    fn selectObject<T: _wxBitmap>(&self, bitmap: &T) {
+pub trait TWxMemoryDC : TWxDC {
+    fn selectObject<T: TWxBitmap>(&self, bitmap: &T) {
         unsafe { wxMemoryDC_SelectObject(self.ptr(), bitmap.ptr()) }
     }
 }
 
-pub struct wxMenu { ptr: *mut c_void }
-impl _wxMenu for wxMenu {}
-impl _wxEvtHandler for wxMenu {}
-impl _wxObject for wxMenu { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMenu { ptr: *mut c_void }
+impl TWxMenu for WxMenu {}
+impl TWxEvtHandler for WxMenu {}
+impl TWxObject for WxMenu { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMenu {
-    pub fn from(ptr: *mut c_void) -> wxMenu { wxMenu { ptr: ptr } }
-    pub fn null() -> wxMenu { wxMenu::from(0 as *mut c_void) }
+impl WxMenu {
+    pub fn from(ptr: *mut c_void) -> WxMenu { WxMenu { ptr: ptr } }
+    pub fn null() -> WxMenu { WxMenu::from(0 as *mut c_void) }
     
-    pub fn new(title: &str, style: c_long) -> wxMenu {
+    pub fn new(title: &str, style: c_long) -> WxMenu {
         let title = wxT(title);
-        unsafe { wxMenu { ptr: wxMenu_Create(title.ptr(), style) } }
+        unsafe { WxMenu { ptr: wxMenu_Create(title.ptr(), style) } }
     }
 }
 
-pub trait _wxMenu : _wxEvtHandler {
+pub trait TWxMenu : TWxEvtHandler {
     fn append(&self, id: c_int, text: &str, help: &str, isCheckable: c_int) {
         let text = wxT(text);
         let help = wxT(help);
         unsafe { wxMenu_Append(self.ptr(), id, text.ptr(), help.ptr(), isCheckable) }
     }
-    fn appendItem<T: _wxMenuItem>(&self, _itm: &T) {
+    fn appendItem<T: TWxMenuItem>(&self, _itm: &T) {
         unsafe { wxMenu_AppendItem(self.ptr(), _itm.ptr()) }
     }
     fn appendSeparator(&self) {
         unsafe { wxMenu_AppendSeparator(self.ptr()) }
     }
-    fn appendSub<T: _wxMenu>(&self, id: c_int, text: &str, submenu: &T, help: &str) {
+    fn appendSub<T: TWxMenu>(&self, id: c_int, text: &str, submenu: &T, help: &str) {
         let text = wxT(text);
         let help = wxT(help);
         unsafe { wxMenu_AppendSub(self.ptr(), id, text.ptr(), submenu.ptr(), help.ptr()) }
@@ -4739,7 +4739,7 @@ pub trait _wxMenu : _wxEvtHandler {
     fn deleteById(&self, id: c_int) {
         unsafe { wxMenu_DeleteById(self.ptr(), id) }
     }
-    fn deleteByItem<T: _wxMenuItem>(&self, _itm: &T) {
+    fn deleteByItem<T: TWxMenuItem>(&self, _itm: &T) {
         unsafe { wxMenu_DeleteByItem(self.ptr(), _itm.ptr()) }
     }
     fn deletePointer(&self) {
@@ -4748,55 +4748,55 @@ pub trait _wxMenu : _wxEvtHandler {
     fn destroyById(&self, id: c_int) {
         unsafe { wxMenu_DestroyById(self.ptr(), id) }
     }
-    fn destroyByItem<T: _wxMenuItem>(&self, _itm: &T) {
+    fn destroyByItem<T: TWxMenuItem>(&self, _itm: &T) {
         unsafe { wxMenu_DestroyByItem(self.ptr(), _itm.ptr()) }
     }
     fn enable(&self, id: c_int, enable: c_int) {
         unsafe { wxMenu_Enable(self.ptr(), id, enable) }
     }
-    fn findItem(&self, id: c_int) -> wxMenuItem {
-        unsafe { wxMenuItem { ptr: wxMenu_FindItem(self.ptr(), id) } }
+    fn findItem(&self, id: c_int) -> WxMenuItem {
+        unsafe { WxMenuItem { ptr: wxMenu_FindItem(self.ptr(), id) } }
     }
     fn findItemByLabel(&self, itemString: &str) -> c_int {
         let itemString = wxT(itemString);
         unsafe { wxMenu_FindItemByLabel(self.ptr(), itemString.ptr()) }
     }
-    fn getClientData(&self) -> wxClientData {
-        unsafe { wxClientData { ptr: wxMenu_GetClientData(self.ptr()) } }
+    fn getClientData(&self) -> WxClientData {
+        unsafe { WxClientData { ptr: wxMenu_GetClientData(self.ptr()) } }
     }
     fn getHelpString(&self, id: c_int) -> ~str {
-        unsafe { wxString { ptr: wxMenu_GetHelpString(self.ptr(), id) }.to_str() }
+        unsafe { WxString { ptr: wxMenu_GetHelpString(self.ptr(), id) }.to_str() }
     }
-    fn getInvokingWindow(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxMenu_GetInvokingWindow(self.ptr()) } }
+    fn getInvokingWindow(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxMenu_GetInvokingWindow(self.ptr()) } }
     }
     fn getLabel(&self, id: c_int) -> ~str {
-        unsafe { wxString { ptr: wxMenu_GetLabel(self.ptr(), id) }.to_str() }
+        unsafe { WxString { ptr: wxMenu_GetLabel(self.ptr(), id) }.to_str() }
     }
     fn getMenuItemCount(&self) -> size_t {
         unsafe { wxMenu_GetMenuItemCount(self.ptr()) }
     }
-    fn getMenuItems<T: _wxList>(&self, _lst: &T) -> c_int {
+    fn getMenuItems<T: TWxList>(&self, _lst: &T) -> c_int {
         unsafe { wxMenu_GetMenuItems(self.ptr(), _lst.ptr()) }
     }
-    fn getParent(&self) -> wxMenu {
-        unsafe { wxMenu { ptr: wxMenu_GetParent(self.ptr()) } }
+    fn getParent(&self) -> WxMenu {
+        unsafe { WxMenu { ptr: wxMenu_GetParent(self.ptr()) } }
     }
     fn getStyle(&self) -> c_int {
         unsafe { wxMenu_GetStyle(self.ptr()) }
     }
     fn getTitle(&self) -> ~str {
-        unsafe { wxString { ptr: wxMenu_GetTitle(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxMenu_GetTitle(self.ptr()) }.to_str() }
     }
     fn insert(&self, pos: size_t, id: c_int, text: &str, help: &str, isCheckable: c_int) {
         let text = wxT(text);
         let help = wxT(help);
         unsafe { wxMenu_Insert(self.ptr(), pos, id, text.ptr(), help.ptr(), isCheckable) }
     }
-    fn insertItem<T: _wxMenuItem>(&self, pos: size_t, _itm: &T) {
+    fn insertItem<T: TWxMenuItem>(&self, pos: size_t, _itm: &T) {
         unsafe { wxMenu_InsertItem(self.ptr(), pos, _itm.ptr()) }
     }
-    fn insertSub<T: _wxMenu>(&self, pos: size_t, id: c_int, text: &str, submenu: &T, help: &str) {
+    fn insertSub<T: TWxMenu>(&self, pos: size_t, id: c_int, text: &str, submenu: &T, help: &str) {
         let text = wxT(text);
         let help = wxT(help);
         unsafe { wxMenu_InsertSub(self.ptr(), pos, id, text.ptr(), submenu.ptr(), help.ptr()) }
@@ -4815,38 +4815,38 @@ pub trait _wxMenu : _wxEvtHandler {
         let help = wxT(help);
         unsafe { wxMenu_Prepend(self.ptr(), id, text.ptr(), help.ptr(), isCheckable) }
     }
-    fn prependItem<T: _wxMenuItem>(&self, _itm: &T) {
+    fn prependItem<T: TWxMenuItem>(&self, _itm: &T) {
         unsafe { wxMenu_PrependItem(self.ptr(), _itm.ptr()) }
     }
-    fn prependSub<T: _wxMenu>(&self, id: c_int, text: &str, submenu: &T, help: &str) {
+    fn prependSub<T: TWxMenu>(&self, id: c_int, text: &str, submenu: &T, help: &str) {
         let text = wxT(text);
         let help = wxT(help);
         unsafe { wxMenu_PrependSub(self.ptr(), id, text.ptr(), submenu.ptr(), help.ptr()) }
     }
-    fn removeById<T: _wxMenuItem>(&self, id: c_int, _itm: &T) {
+    fn removeById<T: TWxMenuItem>(&self, id: c_int, _itm: &T) {
         unsafe { wxMenu_RemoveById(self.ptr(), id, _itm.ptr()) }
     }
     fn removeByItem(&self, item: *mut c_void) {
         unsafe { wxMenu_RemoveByItem(self.ptr(), item) }
     }
-    fn setClientData<T: _wxClientData>(&self, clientData: &T) {
+    fn setClientData<T: TWxClientData>(&self, clientData: &T) {
         unsafe { wxMenu_SetClientData(self.ptr(), clientData.ptr()) }
     }
-    fn setEventHandler<T: _wxEvtHandler>(&self, handler: &T) {
+    fn setEventHandler<T: TWxEvtHandler>(&self, handler: &T) {
         unsafe { wxMenu_SetEventHandler(self.ptr(), handler.ptr()) }
     }
     fn setHelpString(&self, id: c_int, helpString: &str) {
         let helpString = wxT(helpString);
         unsafe { wxMenu_SetHelpString(self.ptr(), id, helpString.ptr()) }
     }
-    fn setInvokingWindow<T: _wxWindow>(&self, win: &T) {
+    fn setInvokingWindow<T: TWxWindow>(&self, win: &T) {
         unsafe { wxMenu_SetInvokingWindow(self.ptr(), win.ptr()) }
     }
     fn setLabel(&self, id: c_int, label: &str) {
         let label = wxT(label);
         unsafe { wxMenu_SetLabel(self.ptr(), id, label.ptr()) }
     }
-    fn setParent<T: _wxWindow>(&self, parent: &T) {
+    fn setParent<T: TWxWindow>(&self, parent: &T) {
         unsafe { wxMenu_SetParent(self.ptr(), parent.ptr()) }
     }
     fn setTitle(&self, title: &str) {
@@ -4856,8 +4856,8 @@ pub trait _wxMenu : _wxEvtHandler {
     fn updateUI(&self, source: *mut c_void) {
         unsafe { wxMenu_UpdateUI(self.ptr(), source) }
     }
-    fn getMenuBar(&self) -> wxMenuBar {
-        unsafe { wxMenuBar { ptr: wxMenu_GetMenuBar(self.ptr()) } }
+    fn getMenuBar(&self) -> WxMenuBar {
+        unsafe { WxMenuBar { ptr: wxMenu_GetMenuBar(self.ptr()) } }
     }
     fn appendRadioItem(&self, id: c_int, text: &str, help: &str) {
         let text = wxT(text);
@@ -4866,22 +4866,22 @@ pub trait _wxMenu : _wxEvtHandler {
     }
 }
 
-pub struct wxMenuBar { ptr: *mut c_void }
-impl _wxMenuBar for wxMenuBar {}
-impl _wxEvtHandler for wxMenuBar {}
-impl _wxObject for wxMenuBar { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMenuBar { ptr: *mut c_void }
+impl TWxMenuBar for WxMenuBar {}
+impl TWxEvtHandler for WxMenuBar {}
+impl TWxObject for WxMenuBar { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMenuBar {
-    pub fn from(ptr: *mut c_void) -> wxMenuBar { wxMenuBar { ptr: ptr } }
-    pub fn null() -> wxMenuBar { wxMenuBar::from(0 as *mut c_void) }
+impl WxMenuBar {
+    pub fn from(ptr: *mut c_void) -> WxMenuBar { WxMenuBar { ptr: ptr } }
+    pub fn null() -> WxMenuBar { WxMenuBar::from(0 as *mut c_void) }
     
-    pub fn new(_style: c_int) -> wxMenuBar {
-        unsafe { wxMenuBar { ptr: wxMenuBar_Create(_style) } }
+    pub fn new(_style: c_int) -> WxMenuBar {
+        unsafe { WxMenuBar { ptr: wxMenuBar_Create(_style) } }
     }
 }
 
-pub trait _wxMenuBar : _wxEvtHandler {
-    fn append<T: _wxMenu>(&self, menu: &T, title: &str) -> c_int {
+pub trait TWxMenuBar : TWxEvtHandler {
+    fn append<T: TWxMenu>(&self, menu: &T, title: &str) -> c_int {
         let title = wxT(title);
         unsafe { wxMenuBar_Append(self.ptr(), menu.ptr(), title.ptr()) }
     }
@@ -4900,8 +4900,8 @@ pub trait _wxMenuBar : _wxEvtHandler {
     fn enableTop(&self, pos: c_int, enable: c_int) {
         unsafe { wxMenuBar_EnableTop(self.ptr(), pos, enable) }
     }
-    fn findItem(&self, id: c_int) -> wxMenuItem {
-        unsafe { wxMenuItem { ptr: wxMenuBar_FindItem(self.ptr(), id) } }
+    fn findItem(&self, id: c_int) -> WxMenuItem {
+        unsafe { WxMenuItem { ptr: wxMenuBar_FindItem(self.ptr(), id) } }
     }
     fn findMenu(&self, title: &str) -> c_int {
         let title = wxT(title);
@@ -4913,21 +4913,21 @@ pub trait _wxMenuBar : _wxEvtHandler {
         unsafe { wxMenuBar_FindMenuItem(self.ptr(), menuString.ptr(), itemString.ptr()) }
     }
     fn getHelpString(&self, id: c_int) -> ~str {
-        unsafe { wxString { ptr: wxMenuBar_GetHelpString(self.ptr(), id) }.to_str() }
+        unsafe { WxString { ptr: wxMenuBar_GetHelpString(self.ptr(), id) }.to_str() }
     }
     fn getLabel(&self, id: c_int) -> ~str {
-        unsafe { wxString { ptr: wxMenuBar_GetLabel(self.ptr(), id) }.to_str() }
+        unsafe { WxString { ptr: wxMenuBar_GetLabel(self.ptr(), id) }.to_str() }
     }
     fn getLabelTop(&self, pos: c_int) -> ~str {
-        unsafe { wxString { ptr: wxMenuBar_GetLabelTop(self.ptr(), pos) }.to_str() }
+        unsafe { WxString { ptr: wxMenuBar_GetLabelTop(self.ptr(), pos) }.to_str() }
     }
-    fn getMenu(&self, pos: c_int) -> wxMenu {
-        unsafe { wxMenu { ptr: wxMenuBar_GetMenu(self.ptr(), pos) } }
+    fn getMenu(&self, pos: c_int) -> WxMenu {
+        unsafe { WxMenu { ptr: wxMenuBar_GetMenu(self.ptr(), pos) } }
     }
     fn getMenuCount(&self) -> c_int {
         unsafe { wxMenuBar_GetMenuCount(self.ptr()) }
     }
-    fn insert<T: _wxMenu>(&self, pos: c_int, menu: &T, title: &str) -> c_int {
+    fn insert<T: TWxMenu>(&self, pos: c_int, menu: &T, title: &str) -> c_int {
         let title = wxT(title);
         unsafe { wxMenuBar_Insert(self.ptr(), pos, menu.ptr(), title.ptr()) }
     }
@@ -4937,12 +4937,12 @@ pub trait _wxMenuBar : _wxEvtHandler {
     fn isEnabled(&self, id: c_int) -> c_int {
         unsafe { wxMenuBar_IsEnabled(self.ptr(), id) }
     }
-    fn remove(&self, pos: c_int) -> wxMenu {
-        unsafe { wxMenu { ptr: wxMenuBar_Remove(self.ptr(), pos) } }
+    fn remove(&self, pos: c_int) -> WxMenu {
+        unsafe { WxMenu { ptr: wxMenuBar_Remove(self.ptr(), pos) } }
     }
-    fn replace<T: _wxMenu>(&self, pos: c_int, menu: &T, title: &str) -> wxMenu {
+    fn replace<T: TWxMenu>(&self, pos: c_int, menu: &T, title: &str) -> WxMenu {
         let title = wxT(title);
-        unsafe { wxMenu { ptr: wxMenuBar_Replace(self.ptr(), pos, menu.ptr(), title.ptr()) } }
+        unsafe { WxMenu { ptr: wxMenuBar_Replace(self.ptr(), pos, menu.ptr(), title.ptr()) } }
     }
     fn setHelpString(&self, id: c_int, helpString: &str) {
         let helpString = wxT(helpString);
@@ -4960,53 +4960,53 @@ pub trait _wxMenuBar : _wxEvtHandler {
         let label = wxT(label);
         unsafe { wxMenuBar_SetLabelTop(self.ptr(), pos, label.ptr()) }
     }
-    fn getFrame(&self) -> wxFrame {
-        unsafe { wxFrame { ptr: wxMenuBar_GetFrame(self.ptr()) } }
+    fn getFrame(&self) -> WxFrame {
+        unsafe { WxFrame { ptr: wxMenuBar_GetFrame(self.ptr()) } }
     }
 }
 
-pub struct wxMenuEvent { ptr: *mut c_void }
-impl _wxMenuEvent for wxMenuEvent {}
-impl _wxEvent for wxMenuEvent {}
-impl _wxObject for wxMenuEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMenuEvent { ptr: *mut c_void }
+impl TWxMenuEvent for WxMenuEvent {}
+impl TWxEvent for WxMenuEvent {}
+impl TWxObject for WxMenuEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMenuEvent {
-    pub fn from(ptr: *mut c_void) -> wxMenuEvent { wxMenuEvent { ptr: ptr } }
-    pub fn null() -> wxMenuEvent { wxMenuEvent::from(0 as *mut c_void) }
+impl WxMenuEvent {
+    pub fn from(ptr: *mut c_void) -> WxMenuEvent { WxMenuEvent { ptr: ptr } }
+    pub fn null() -> WxMenuEvent { WxMenuEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxMenuEvent : _wxEvent {
+pub trait TWxMenuEvent : TWxEvent {
     fn getMenuId(&self) -> c_int {
         unsafe { wxMenuEvent_GetMenuId(self.ptr()) }
     }
 }
 
-pub struct wxMenuItem { ptr: *mut c_void }
-impl _wxMenuItem for wxMenuItem {}
-impl _wxObject for wxMenuItem { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMenuItem { ptr: *mut c_void }
+impl TWxMenuItem for WxMenuItem {}
+impl TWxObject for WxMenuItem { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMenuItem {
-    pub fn from(ptr: *mut c_void) -> wxMenuItem { wxMenuItem { ptr: ptr } }
-    pub fn null() -> wxMenuItem { wxMenuItem::from(0 as *mut c_void) }
+impl WxMenuItem {
+    pub fn from(ptr: *mut c_void) -> WxMenuItem { WxMenuItem { ptr: ptr } }
+    pub fn null() -> WxMenuItem { WxMenuItem::from(0 as *mut c_void) }
     
-    pub fn new() -> wxMenuItem {
-        unsafe { wxMenuItem { ptr: wxMenuItem_Create() } }
+    pub fn new() -> WxMenuItem {
+        unsafe { WxMenuItem { ptr: wxMenuItem_Create() } }
     }
     pub fn getLabelFromText(text: *mut c_void) -> ~str {
-        unsafe { wxString { ptr: wxMenuItem_GetLabelFromText(text) }.to_str() }
+        unsafe { WxString { ptr: wxMenuItem_GetLabelFromText(text) }.to_str() }
     }
-    pub fn newSeparator() -> wxMenuItem {
-        unsafe { wxMenuItem { ptr: wxMenuItem_CreateSeparator() } }
+    pub fn newSeparator() -> WxMenuItem {
+        unsafe { WxMenuItem { ptr: wxMenuItem_CreateSeparator() } }
     }
-    pub fn newEx<T: _wxMenu>(id: c_int, label: &str, help: &str, itemkind: c_int, submenu: &T) -> wxMenuItem {
+    pub fn newEx<T: TWxMenu>(id: c_int, label: &str, help: &str, itemkind: c_int, submenu: &T) -> WxMenuItem {
         let label = wxT(label);
         let help = wxT(help);
-        unsafe { wxMenuItem { ptr: wxMenuItem_CreateEx(id, label.ptr(), help.ptr(), itemkind, submenu.ptr()) } }
+        unsafe { WxMenuItem { ptr: wxMenuItem_CreateEx(id, label.ptr(), help.ptr(), itemkind, submenu.ptr()) } }
     }
 }
 
-pub trait _wxMenuItem : _wxObject {
+pub trait TWxMenuItem : TWxObject {
     fn check(&self, check: c_int) {
         unsafe { wxMenuItem_Check(self.ptr(), check) }
     }
@@ -5014,22 +5014,22 @@ pub trait _wxMenuItem : _wxObject {
         unsafe { wxMenuItem_Enable(self.ptr(), enable) }
     }
     fn getHelp(&self) -> ~str {
-        unsafe { wxString { ptr: wxMenuItem_GetHelp(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxMenuItem_GetHelp(self.ptr()) }.to_str() }
     }
     fn getId(&self) -> c_int {
         unsafe { wxMenuItem_GetId(self.ptr()) }
     }
     fn getLabel(&self) -> ~str {
-        unsafe { wxString { ptr: wxMenuItem_GetLabel(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxMenuItem_GetLabel(self.ptr()) }.to_str() }
     }
-    fn getMenu(&self) -> wxMenu {
-        unsafe { wxMenu { ptr: wxMenuItem_GetMenu(self.ptr()) } }
+    fn getMenu(&self) -> WxMenu {
+        unsafe { WxMenu { ptr: wxMenuItem_GetMenu(self.ptr()) } }
     }
-    fn getSubMenu(&self) -> wxMenu {
-        unsafe { wxMenu { ptr: wxMenuItem_GetSubMenu(self.ptr()) } }
+    fn getSubMenu(&self) -> WxMenu {
+        unsafe { WxMenu { ptr: wxMenuItem_GetSubMenu(self.ptr()) } }
     }
     fn getText(&self) -> ~str {
-        unsafe { wxString { ptr: wxMenuItem_GetText(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxMenuItem_GetText(self.ptr()) }.to_str() }
     }
     fn isCheckable(&self) -> c_int {
         unsafe { wxMenuItem_IsCheckable(self.ptr()) }
@@ -5056,7 +5056,7 @@ pub trait _wxMenuItem : _wxObject {
     fn setId(&self, id: c_int) {
         unsafe { wxMenuItem_SetId(self.ptr(), id) }
     }
-    fn setSubMenu<T: _wxMenu>(&self, menu: &T) {
+    fn setSubMenu<T: TWxMenu>(&self, menu: &T) {
         unsafe { wxMenuItem_SetSubMenu(self.ptr(), menu.ptr()) }
     }
     fn setText(&self, str: &str) {
@@ -5065,47 +5065,47 @@ pub trait _wxMenuItem : _wxObject {
     }
 }
 
-pub struct wxMessageDialog { ptr: *mut c_void }
-impl _wxMessageDialog for wxMessageDialog {}
-impl _wxDialog for wxMessageDialog {}
-impl _wxTopLevelWindow for wxMessageDialog {}
-impl _wxWindow for wxMessageDialog {}
-impl _wxEvtHandler for wxMessageDialog {}
-impl _wxObject for wxMessageDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMessageDialog { ptr: *mut c_void }
+impl TWxMessageDialog for WxMessageDialog {}
+impl TWxDialog for WxMessageDialog {}
+impl TWxTopLevelWindow for WxMessageDialog {}
+impl TWxWindow for WxMessageDialog {}
+impl TWxEvtHandler for WxMessageDialog {}
+impl TWxObject for WxMessageDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMessageDialog {
-    pub fn from(ptr: *mut c_void) -> wxMessageDialog { wxMessageDialog { ptr: ptr } }
-    pub fn null() -> wxMessageDialog { wxMessageDialog::from(0 as *mut c_void) }
+impl WxMessageDialog {
+    pub fn from(ptr: *mut c_void) -> WxMessageDialog { WxMessageDialog { ptr: ptr } }
+    pub fn null() -> WxMessageDialog { WxMessageDialog::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _msg: &str, _cap: &str, _stl: c_int) -> wxMessageDialog {
+    pub fn new<T: TWxWindow>(_prt: &T, _msg: &str, _cap: &str, _stl: c_int) -> WxMessageDialog {
         let _msg = wxT(_msg);
         let _cap = wxT(_cap);
-        unsafe { wxMessageDialog { ptr: wxMessageDialog_Create(_prt.ptr(), _msg.ptr(), _cap.ptr(), _stl) } }
+        unsafe { WxMessageDialog { ptr: wxMessageDialog_Create(_prt.ptr(), _msg.ptr(), _cap.ptr(), _stl) } }
     }
 }
 
-pub trait _wxMessageDialog : _wxDialog {
+pub trait TWxMessageDialog : TWxDialog {
 }
 
-pub struct wxMetafile { ptr: *mut c_void }
-impl _wxMetafile for wxMetafile {}
-impl _wxObject for wxMetafile { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMetafile { ptr: *mut c_void }
+impl TWxMetafile for WxMetafile {}
+impl TWxObject for WxMetafile { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMetafile {
-    pub fn from(ptr: *mut c_void) -> wxMetafile { wxMetafile { ptr: ptr } }
-    pub fn null() -> wxMetafile { wxMetafile::from(0 as *mut c_void) }
+impl WxMetafile {
+    pub fn from(ptr: *mut c_void) -> WxMetafile { WxMetafile { ptr: ptr } }
+    pub fn null() -> WxMetafile { WxMetafile::from(0 as *mut c_void) }
     
-    pub fn new(_file: &str) -> wxMetafile {
+    pub fn new(_file: &str) -> WxMetafile {
         let _file = wxT(_file);
-        unsafe { wxMetafile { ptr: wxMetafile_Create(_file.ptr()) } }
+        unsafe { WxMetafile { ptr: wxMetafile_Create(_file.ptr()) } }
     }
 }
 
-pub trait _wxMetafile : _wxObject {
+pub trait TWxMetafile : TWxObject {
     fn isOk(&self) -> c_int {
         unsafe { wxMetafile_IsOk(self.ptr()) }
     }
-    fn play<T: _wxDC>(&self, _dc: &T) -> c_int {
+    fn play<T: TWxDC>(&self, _dc: &T) -> c_int {
         unsafe { wxMetafile_Play(self.ptr(), _dc.ptr()) }
     }
     fn setClipboard(&self, width: c_int, height: c_int) -> c_int {
@@ -5113,55 +5113,55 @@ pub trait _wxMetafile : _wxObject {
     }
 }
 
-pub struct wxMetafileDC { ptr: *mut c_void }
-impl _wxMetafileDC for wxMetafileDC {}
-impl _wxDC for wxMetafileDC {}
-impl _wxObject for wxMetafileDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMetafileDC { ptr: *mut c_void }
+impl TWxMetafileDC for WxMetafileDC {}
+impl TWxDC for WxMetafileDC {}
+impl TWxObject for WxMetafileDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMetafileDC {
-    pub fn from(ptr: *mut c_void) -> wxMetafileDC { wxMetafileDC { ptr: ptr } }
-    pub fn null() -> wxMetafileDC { wxMetafileDC::from(0 as *mut c_void) }
+impl WxMetafileDC {
+    pub fn from(ptr: *mut c_void) -> WxMetafileDC { WxMetafileDC { ptr: ptr } }
+    pub fn null() -> WxMetafileDC { WxMetafileDC::from(0 as *mut c_void) }
     
-    pub fn new(_file: &str) -> wxMetafileDC {
+    pub fn new(_file: &str) -> WxMetafileDC {
         let _file = wxT(_file);
-        unsafe { wxMetafileDC { ptr: wxMetafileDC_Create(_file.ptr()) } }
+        unsafe { WxMetafileDC { ptr: wxMetafileDC_Create(_file.ptr()) } }
     }
 }
 
-pub trait _wxMetafileDC : _wxDC {
+pub trait TWxMetafileDC : TWxDC {
     fn close(&self) -> *mut c_void {
         unsafe { wxMetafileDC_Close(self.ptr()) }
     }
 }
 
-pub struct wxMimeTypesManager { ptr: *mut c_void }
-impl _wxMimeTypesManager for wxMimeTypesManager { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMimeTypesManager { ptr: *mut c_void }
+impl TWxMimeTypesManager for WxMimeTypesManager { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMimeTypesManager {
-    pub fn from(ptr: *mut c_void) -> wxMimeTypesManager { wxMimeTypesManager { ptr: ptr } }
-    pub fn null() -> wxMimeTypesManager { wxMimeTypesManager::from(0 as *mut c_void) }
+impl WxMimeTypesManager {
+    pub fn from(ptr: *mut c_void) -> WxMimeTypesManager { WxMimeTypesManager { ptr: ptr } }
+    pub fn null() -> WxMimeTypesManager { WxMimeTypesManager::from(0 as *mut c_void) }
     
-    pub fn new() -> wxMimeTypesManager {
-        unsafe { wxMimeTypesManager { ptr: wxMimeTypesManager_Create() } }
+    pub fn new() -> WxMimeTypesManager {
+        unsafe { WxMimeTypesManager { ptr: wxMimeTypesManager_Create() } }
     }
 }
 
-pub trait _wxMimeTypesManager {
+pub trait TWxMimeTypesManager {
     fn ptr(&self) -> *mut c_void;
     
     fn addFallbacks(&self, _types: *mut c_void) {
         unsafe { wxMimeTypesManager_AddFallbacks(self.ptr(), _types) }
     }
-    fn enumAllFileTypes<T: _wxList>(&self, _lst: &T) -> c_int {
+    fn enumAllFileTypes<T: TWxList>(&self, _lst: &T) -> c_int {
         unsafe { wxMimeTypesManager_EnumAllFileTypes(self.ptr(), _lst.ptr()) }
     }
-    fn getFileTypeFromExtension(&self, _ext: &str) -> wxFileType {
+    fn getFileTypeFromExtension(&self, _ext: &str) -> WxFileType {
         let _ext = wxT(_ext);
-        unsafe { wxFileType { ptr: wxMimeTypesManager_GetFileTypeFromExtension(self.ptr(), _ext.ptr()) } }
+        unsafe { WxFileType { ptr: wxMimeTypesManager_GetFileTypeFromExtension(self.ptr(), _ext.ptr()) } }
     }
-    fn getFileTypeFromMimeType(&self, _name: &str) -> wxFileType {
+    fn getFileTypeFromMimeType(&self, _name: &str) -> WxFileType {
         let _name = wxT(_name);
-        unsafe { wxFileType { ptr: wxMimeTypesManager_GetFileTypeFromMimeType(self.ptr(), _name.ptr()) } }
+        unsafe { WxFileType { ptr: wxMimeTypesManager_GetFileTypeFromMimeType(self.ptr(), _name.ptr()) } }
     }
     fn isOfType(&self, _type: &str, _wildcard: &str) -> c_int {
         let _type = wxT(_type);
@@ -5170,70 +5170,70 @@ pub trait _wxMimeTypesManager {
     }
 }
 
-pub struct wxMiniFrame { ptr: *mut c_void }
-impl _wxMiniFrame for wxMiniFrame {}
-impl _wxFrame for wxMiniFrame {}
-impl _wxTopLevelWindow for wxMiniFrame {}
-impl _wxWindow for wxMiniFrame {}
-impl _wxEvtHandler for wxMiniFrame {}
-impl _wxObject for wxMiniFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMiniFrame { ptr: *mut c_void }
+impl TWxMiniFrame for WxMiniFrame {}
+impl TWxFrame for WxMiniFrame {}
+impl TWxTopLevelWindow for WxMiniFrame {}
+impl TWxWindow for WxMiniFrame {}
+impl TWxEvtHandler for WxMiniFrame {}
+impl TWxObject for WxMiniFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMiniFrame {
-    pub fn from(ptr: *mut c_void) -> wxMiniFrame { wxMiniFrame { ptr: ptr } }
-    pub fn null() -> wxMiniFrame { wxMiniFrame::from(0 as *mut c_void) }
+impl WxMiniFrame {
+    pub fn from(ptr: *mut c_void) -> WxMiniFrame { WxMiniFrame { ptr: ptr } }
+    pub fn null() -> WxMiniFrame { WxMiniFrame::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxMiniFrame {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxMiniFrame {
         let _txt = wxT(_txt);
-        unsafe { wxMiniFrame { ptr: wxMiniFrame_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { WxMiniFrame { ptr: wxMiniFrame_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxMiniFrame : _wxFrame {
+pub trait TWxMiniFrame : TWxFrame {
 }
 
-pub struct wxMirrorDC { ptr: *mut c_void }
-impl _wxMirrorDC for wxMirrorDC {}
-impl _wxDC for wxMirrorDC {}
-impl _wxObject for wxMirrorDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMirrorDC { ptr: *mut c_void }
+impl TWxMirrorDC for WxMirrorDC {}
+impl TWxDC for WxMirrorDC {}
+impl TWxObject for WxMirrorDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMirrorDC {
-    pub fn from(ptr: *mut c_void) -> wxMirrorDC { wxMirrorDC { ptr: ptr } }
-    pub fn null() -> wxMirrorDC { wxMirrorDC::from(0 as *mut c_void) }
+impl WxMirrorDC {
+    pub fn from(ptr: *mut c_void) -> WxMirrorDC { WxMirrorDC { ptr: ptr } }
+    pub fn null() -> WxMirrorDC { WxMirrorDC::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxDC>(dc: &T) -> wxMirrorDC {
-        unsafe { wxMirrorDC { ptr: wxMirrorDC_Create(dc.ptr()) } }
+    pub fn new<T: TWxDC>(dc: &T) -> WxMirrorDC {
+        unsafe { WxMirrorDC { ptr: wxMirrorDC_Create(dc.ptr()) } }
     }
 }
 
-pub trait _wxMirrorDC : _wxDC {
+pub trait TWxMirrorDC : TWxDC {
 }
 
-pub struct wxMouseCaptureChangedEvent { ptr: *mut c_void }
-impl _wxMouseCaptureChangedEvent for wxMouseCaptureChangedEvent {}
-impl _wxEvent for wxMouseCaptureChangedEvent {}
-impl _wxObject for wxMouseCaptureChangedEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMouseCaptureChangedEvent { ptr: *mut c_void }
+impl TWxMouseCaptureChangedEvent for WxMouseCaptureChangedEvent {}
+impl TWxEvent for WxMouseCaptureChangedEvent {}
+impl TWxObject for WxMouseCaptureChangedEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMouseCaptureChangedEvent {
-    pub fn from(ptr: *mut c_void) -> wxMouseCaptureChangedEvent { wxMouseCaptureChangedEvent { ptr: ptr } }
-    pub fn null() -> wxMouseCaptureChangedEvent { wxMouseCaptureChangedEvent::from(0 as *mut c_void) }
+impl WxMouseCaptureChangedEvent {
+    pub fn from(ptr: *mut c_void) -> WxMouseCaptureChangedEvent { WxMouseCaptureChangedEvent { ptr: ptr } }
+    pub fn null() -> WxMouseCaptureChangedEvent { WxMouseCaptureChangedEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxMouseCaptureChangedEvent : _wxEvent {
+pub trait TWxMouseCaptureChangedEvent : TWxEvent {
 }
 
-pub struct wxMouseEvent { ptr: *mut c_void }
-impl _wxMouseEvent for wxMouseEvent {}
-impl _wxEvent for wxMouseEvent {}
-impl _wxObject for wxMouseEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMouseEvent { ptr: *mut c_void }
+impl TWxMouseEvent for WxMouseEvent {}
+impl TWxEvent for WxMouseEvent {}
+impl TWxObject for WxMouseEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMouseEvent {
-    pub fn from(ptr: *mut c_void) -> wxMouseEvent { wxMouseEvent { ptr: ptr } }
-    pub fn null() -> wxMouseEvent { wxMouseEvent::from(0 as *mut c_void) }
+impl WxMouseEvent {
+    pub fn from(ptr: *mut c_void) -> WxMouseEvent { WxMouseEvent { ptr: ptr } }
+    pub fn null() -> WxMouseEvent { WxMouseEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxMouseEvent : _wxEvent {
+pub trait TWxMouseEvent : TWxEvent {
     fn altDown(&self) -> c_int {
         unsafe { wxMouseEvent_AltDown(self.ptr()) }
     }
@@ -5261,11 +5261,11 @@ pub trait _wxMouseEvent : _wxEvent {
     fn entering(&self) -> c_int {
         unsafe { wxMouseEvent_Entering(self.ptr()) }
     }
-    fn getLogicalPosition<T: _wxDC>(&self, dc: &T) -> wxPoint {
-        unsafe { wxPoint { ptr: wxMouseEvent_GetLogicalPosition(self.ptr(), dc.ptr()) } }
+    fn getLogicalPosition<T: TWxDC>(&self, dc: &T) -> WxPoint {
+        unsafe { WxPoint { ptr: wxMouseEvent_GetLogicalPosition(self.ptr(), dc.ptr()) } }
     }
-    fn getPosition(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxMouseEvent_GetPosition(self.ptr()) } }
+    fn getPosition(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxMouseEvent_GetPosition(self.ptr()) } }
     }
     fn getX(&self) -> c_int {
         unsafe { wxMouseEvent_GetX(self.ptr()) }
@@ -5335,35 +5335,35 @@ pub trait _wxMouseEvent : _wxEvent {
     }
 }
 
-pub struct wxMoveEvent { ptr: *mut c_void }
-impl _wxMoveEvent for wxMoveEvent {}
-impl _wxEvent for wxMoveEvent {}
-impl _wxObject for wxMoveEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxMoveEvent { ptr: *mut c_void }
+impl TWxMoveEvent for WxMoveEvent {}
+impl TWxEvent for WxMoveEvent {}
+impl TWxObject for WxMoveEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxMoveEvent {
-    pub fn from(ptr: *mut c_void) -> wxMoveEvent { wxMoveEvent { ptr: ptr } }
-    pub fn null() -> wxMoveEvent { wxMoveEvent::from(0 as *mut c_void) }
+impl WxMoveEvent {
+    pub fn from(ptr: *mut c_void) -> WxMoveEvent { WxMoveEvent { ptr: ptr } }
+    pub fn null() -> WxMoveEvent { WxMoveEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxMoveEvent : _wxEvent {
-    fn getPosition(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxMoveEvent_GetPosition(self.ptr()) } }
+pub trait TWxMoveEvent : TWxEvent {
+    fn getPosition(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxMoveEvent_GetPosition(self.ptr()) } }
     }
 }
 
-pub struct wxNavigationKeyEvent { ptr: *mut c_void }
-impl _wxNavigationKeyEvent for wxNavigationKeyEvent {}
-impl _wxEvent for wxNavigationKeyEvent {}
-impl _wxObject for wxNavigationKeyEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxNavigationKeyEvent { ptr: *mut c_void }
+impl TWxNavigationKeyEvent for WxNavigationKeyEvent {}
+impl TWxEvent for WxNavigationKeyEvent {}
+impl TWxObject for WxNavigationKeyEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxNavigationKeyEvent {
-    pub fn from(ptr: *mut c_void) -> wxNavigationKeyEvent { wxNavigationKeyEvent { ptr: ptr } }
-    pub fn null() -> wxNavigationKeyEvent { wxNavigationKeyEvent::from(0 as *mut c_void) }
+impl WxNavigationKeyEvent {
+    pub fn from(ptr: *mut c_void) -> WxNavigationKeyEvent { WxNavigationKeyEvent { ptr: ptr } }
+    pub fn null() -> WxNavigationKeyEvent { WxNavigationKeyEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxNavigationKeyEvent : _wxEvent {
+pub trait TWxNavigationKeyEvent : TWxEvent {
     fn getCurrentFocus(&self) -> *mut c_void {
         unsafe { wxNavigationKeyEvent_GetCurrentFocus(self.ptr()) }
     }
@@ -5373,7 +5373,7 @@ pub trait _wxNavigationKeyEvent : _wxEvent {
     fn isWindowChange(&self) -> c_int {
         unsafe { wxNavigationKeyEvent_IsWindowChange(self.ptr()) }
     }
-    fn setCurrentFocus<T: _wxWindow>(&self, win: &T) {
+    fn setCurrentFocus<T: TWxWindow>(&self, win: &T) {
         unsafe { wxNavigationKeyEvent_SetCurrentFocus(self.ptr(), win.ptr()) }
     }
     fn setDirection(&self, bForward: c_int) {
@@ -5387,24 +5387,24 @@ pub trait _wxNavigationKeyEvent : _wxEvent {
     }
 }
 
-pub struct wxNotebook { ptr: *mut c_void }
-impl _wxNotebook for wxNotebook {}
-impl _wxControl for wxNotebook {}
-impl _wxWindow for wxNotebook {}
-impl _wxEvtHandler for wxNotebook {}
-impl _wxObject for wxNotebook { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxNotebook { ptr: *mut c_void }
+impl TWxNotebook for WxNotebook {}
+impl TWxControl for WxNotebook {}
+impl TWxWindow for WxNotebook {}
+impl TWxEvtHandler for WxNotebook {}
+impl TWxObject for WxNotebook { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxNotebook {
-    pub fn from(ptr: *mut c_void) -> wxNotebook { wxNotebook { ptr: ptr } }
-    pub fn null() -> wxNotebook { wxNotebook::from(0 as *mut c_void) }
+impl WxNotebook {
+    pub fn from(ptr: *mut c_void) -> WxNotebook { WxNotebook { ptr: ptr } }
+    pub fn null() -> WxNotebook { WxNotebook::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxNotebook {
-        unsafe { wxNotebook { ptr: wxNotebook_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxNotebook {
+        unsafe { WxNotebook { ptr: wxNotebook_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxNotebook : _wxControl {
-    fn addPage<T: _wxWindow>(&self, pPage: &T, strText: &str, bSelect: c_int, imageId: c_int) -> c_int {
+pub trait TWxNotebook : TWxControl {
+    fn addPage<T: TWxWindow>(&self, pPage: &T, strText: &str, bSelect: c_int, imageId: c_int) -> c_int {
         let strText = wxT(strText);
         unsafe { wxNotebook_AddPage(self.ptr(), pPage.ptr(), strText.ptr(), bSelect, imageId) }
     }
@@ -5417,11 +5417,11 @@ pub trait _wxNotebook : _wxControl {
     fn deletePage(&self, nPage: c_int) -> c_int {
         unsafe { wxNotebook_DeletePage(self.ptr(), nPage) }
     }
-    fn getImageList(&self) -> wxImageList {
-        unsafe { wxImageList { ptr: wxNotebook_GetImageList(self.ptr()) } }
+    fn getImageList(&self) -> WxImageList {
+        unsafe { WxImageList { ptr: wxNotebook_GetImageList(self.ptr()) } }
     }
-    fn getPage(&self, nPage: c_int) -> wxWindow {
-        unsafe { wxWindow { ptr: wxNotebook_GetPage(self.ptr(), nPage) } }
+    fn getPage(&self, nPage: c_int) -> WxWindow {
+        unsafe { WxWindow { ptr: wxNotebook_GetPage(self.ptr(), nPage) } }
     }
     fn getPageCount(&self) -> c_int {
         unsafe { wxNotebook_GetPageCount(self.ptr()) }
@@ -5430,7 +5430,7 @@ pub trait _wxNotebook : _wxControl {
         unsafe { wxNotebook_GetPageImage(self.ptr(), nPage) }
     }
     fn getPageText(&self, nPage: c_int) -> ~str {
-        unsafe { wxString { ptr: wxNotebook_GetPageText(self.ptr(), nPage) }.to_str() }
+        unsafe { WxString { ptr: wxNotebook_GetPageText(self.ptr(), nPage) }.to_str() }
     }
     fn getRowCount(&self) -> c_int {
         unsafe { wxNotebook_GetRowCount(self.ptr()) }
@@ -5441,14 +5441,14 @@ pub trait _wxNotebook : _wxControl {
     fn hitTest(&self, x: c_int, y: c_int, flags: *mut c_long) -> c_int {
         unsafe { wxNotebook_HitTest(self.ptr(), x, y, flags) }
     }
-    fn insertPage<T: _wxWindow>(&self, nPage: c_int, pPage: &T, strText: &str, bSelect: c_int, imageId: c_int) -> c_int {
+    fn insertPage<T: TWxWindow>(&self, nPage: c_int, pPage: &T, strText: &str, bSelect: c_int, imageId: c_int) -> c_int {
         let strText = wxT(strText);
         unsafe { wxNotebook_InsertPage(self.ptr(), nPage, pPage.ptr(), strText.ptr(), bSelect, imageId) }
     }
     fn removePage(&self, nPage: c_int) -> c_int {
         unsafe { wxNotebook_RemovePage(self.ptr(), nPage) }
     }
-    fn setImageList<T: _wxImageList>(&self, imageList: &T) {
+    fn setImageList<T: TWxImageList>(&self, imageList: &T) {
         unsafe { wxNotebook_SetImageList(self.ptr(), imageList.ptr()) }
     }
     fn setPadding(&self, _w: c_int, _h: c_int) {
@@ -5467,40 +5467,40 @@ pub trait _wxNotebook : _wxControl {
     fn setSelection(&self, nPage: c_int) -> c_int {
         unsafe { wxNotebook_SetSelection(self.ptr(), nPage) }
     }
-    fn assignImageList<T: _wxImageList>(&self, imageList: &T) {
+    fn assignImageList<T: TWxImageList>(&self, imageList: &T) {
         unsafe { wxNotebook_AssignImageList(self.ptr(), imageList.ptr()) }
     }
 }
 
-pub struct wxNotebookEvent { ptr: *mut c_void }
-impl _wxNotebookEvent for wxNotebookEvent {}
-impl _wxNotifyEvent for wxNotebookEvent {}
-impl _wxCommandEvent for wxNotebookEvent {}
-impl _wxEvent for wxNotebookEvent {}
-impl _wxObject for wxNotebookEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxNotebookEvent { ptr: *mut c_void }
+impl TWxNotebookEvent for WxNotebookEvent {}
+impl TWxNotifyEvent for WxNotebookEvent {}
+impl TWxCommandEvent for WxNotebookEvent {}
+impl TWxEvent for WxNotebookEvent {}
+impl TWxObject for WxNotebookEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxNotebookEvent {
-    pub fn from(ptr: *mut c_void) -> wxNotebookEvent { wxNotebookEvent { ptr: ptr } }
-    pub fn null() -> wxNotebookEvent { wxNotebookEvent::from(0 as *mut c_void) }
+impl WxNotebookEvent {
+    pub fn from(ptr: *mut c_void) -> WxNotebookEvent { WxNotebookEvent { ptr: ptr } }
+    pub fn null() -> WxNotebookEvent { WxNotebookEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxNotebookEvent : _wxNotifyEvent {
+pub trait TWxNotebookEvent : TWxNotifyEvent {
 }
 
-pub struct wxNotifyEvent { ptr: *mut c_void }
-impl _wxNotifyEvent for wxNotifyEvent {}
-impl _wxCommandEvent for wxNotifyEvent {}
-impl _wxEvent for wxNotifyEvent {}
-impl _wxObject for wxNotifyEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxNotifyEvent { ptr: *mut c_void }
+impl TWxNotifyEvent for WxNotifyEvent {}
+impl TWxCommandEvent for WxNotifyEvent {}
+impl TWxEvent for WxNotifyEvent {}
+impl TWxObject for WxNotifyEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxNotifyEvent {
-    pub fn from(ptr: *mut c_void) -> wxNotifyEvent { wxNotifyEvent { ptr: ptr } }
-    pub fn null() -> wxNotifyEvent { wxNotifyEvent::from(0 as *mut c_void) }
+impl WxNotifyEvent {
+    pub fn from(ptr: *mut c_void) -> WxNotifyEvent { WxNotifyEvent { ptr: ptr } }
+    pub fn null() -> WxNotifyEvent { WxNotifyEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxNotifyEvent : _wxCommandEvent {
+pub trait TWxNotifyEvent : TWxCommandEvent {
     fn allow(&self) {
         unsafe { wxNotifyEvent_Allow(self.ptr()) }
     }
@@ -5512,50 +5512,50 @@ pub trait _wxNotifyEvent : _wxCommandEvent {
     }
 }
 
-pub struct wxPageSetupDialog { ptr: *mut c_void }
-impl _wxPageSetupDialog for wxPageSetupDialog {}
-impl _wxDialog for wxPageSetupDialog {}
-impl _wxTopLevelWindow for wxPageSetupDialog {}
-impl _wxWindow for wxPageSetupDialog {}
-impl _wxEvtHandler for wxPageSetupDialog {}
-impl _wxObject for wxPageSetupDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPageSetupDialog { ptr: *mut c_void }
+impl TWxPageSetupDialog for WxPageSetupDialog {}
+impl TWxDialog for WxPageSetupDialog {}
+impl TWxTopLevelWindow for WxPageSetupDialog {}
+impl TWxWindow for WxPageSetupDialog {}
+impl TWxEvtHandler for WxPageSetupDialog {}
+impl TWxObject for WxPageSetupDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPageSetupDialog {
-    pub fn from(ptr: *mut c_void) -> wxPageSetupDialog { wxPageSetupDialog { ptr: ptr } }
-    pub fn null() -> wxPageSetupDialog { wxPageSetupDialog::from(0 as *mut c_void) }
+impl WxPageSetupDialog {
+    pub fn from(ptr: *mut c_void) -> WxPageSetupDialog { WxPageSetupDialog { ptr: ptr } }
+    pub fn null() -> WxPageSetupDialog { WxPageSetupDialog::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow, U: _wxPageSetupDialogData>(parent: &T, data: &U) -> wxPageSetupDialog {
-        unsafe { wxPageSetupDialog { ptr: wxPageSetupDialog_Create(parent.ptr(), data.ptr()) } }
+    pub fn new<T: TWxWindow, U: TWxPageSetupDialogData>(parent: &T, data: &U) -> WxPageSetupDialog {
+        unsafe { WxPageSetupDialog { ptr: wxPageSetupDialog_Create(parent.ptr(), data.ptr()) } }
     }
 }
 
-pub trait _wxPageSetupDialog : _wxDialog {
-    fn getPageSetupData<T: _wxPageSetupDialogData>(&self, _ref: &T) {
+pub trait TWxPageSetupDialog : TWxDialog {
+    fn getPageSetupData<T: TWxPageSetupDialogData>(&self, _ref: &T) {
         unsafe { wxPageSetupDialog_GetPageSetupData(self.ptr(), _ref.ptr()) }
     }
 }
 
-pub struct wxPageSetupDialogData { ptr: *mut c_void }
-impl _wxPageSetupDialogData for wxPageSetupDialogData {}
-impl _wxObject for wxPageSetupDialogData { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPageSetupDialogData { ptr: *mut c_void }
+impl TWxPageSetupDialogData for WxPageSetupDialogData {}
+impl TWxObject for WxPageSetupDialogData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPageSetupDialogData {
-    pub fn from(ptr: *mut c_void) -> wxPageSetupDialogData { wxPageSetupDialogData { ptr: ptr } }
-    pub fn null() -> wxPageSetupDialogData { wxPageSetupDialogData::from(0 as *mut c_void) }
+impl WxPageSetupDialogData {
+    pub fn from(ptr: *mut c_void) -> WxPageSetupDialogData { WxPageSetupDialogData { ptr: ptr } }
+    pub fn null() -> WxPageSetupDialogData { WxPageSetupDialogData::from(0 as *mut c_void) }
     
-    pub fn new() -> wxPageSetupDialogData {
-        unsafe { wxPageSetupDialogData { ptr: wxPageSetupDialogData_Create() } }
+    pub fn new() -> WxPageSetupDialogData {
+        unsafe { WxPageSetupDialogData { ptr: wxPageSetupDialogData_Create() } }
     }
-    pub fn newFromData<T: _wxPrintData>(printData: &T) -> wxPageSetupDialogData {
-        unsafe { wxPageSetupDialogData { ptr: wxPageSetupDialogData_CreateFromData(printData.ptr()) } }
+    pub fn newFromData<T: TWxPrintData>(printData: &T) -> WxPageSetupDialogData {
+        unsafe { WxPageSetupDialogData { ptr: wxPageSetupDialogData_CreateFromData(printData.ptr()) } }
     }
 }
 
-pub trait _wxPageSetupDialogData : _wxObject {
-    fn assign<T: _wxPageSetupDialogData>(&self, data: &T) {
+pub trait TWxPageSetupDialogData : TWxObject {
+    fn assign<T: TWxPageSetupDialogData>(&self, data: &T) {
         unsafe { wxPageSetupDialogData_Assign(self.ptr(), data.ptr()) }
     }
-    fn assignData<T: _wxPrintData>(&self, printData: &T) {
+    fn assignData<T: TWxPrintData>(&self, printData: &T) {
         unsafe { wxPageSetupDialogData_AssignData(self.ptr(), printData.ptr()) }
     }
     fn calculateIdFromPaperSize(&self) {
@@ -5600,25 +5600,25 @@ pub trait _wxPageSetupDialogData : _wxObject {
     fn getEnablePrinter(&self) -> c_int {
         unsafe { wxPageSetupDialogData_GetEnablePrinter(self.ptr()) }
     }
-    fn getMarginBottomRight(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxPageSetupDialogData_GetMarginBottomRight(self.ptr()) } }
+    fn getMarginBottomRight(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxPageSetupDialogData_GetMarginBottomRight(self.ptr()) } }
     }
-    fn getMarginTopLeft(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxPageSetupDialogData_GetMarginTopLeft(self.ptr()) } }
+    fn getMarginTopLeft(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxPageSetupDialogData_GetMarginTopLeft(self.ptr()) } }
     }
-    fn getMinMarginBottomRight(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxPageSetupDialogData_GetMinMarginBottomRight(self.ptr()) } }
+    fn getMinMarginBottomRight(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxPageSetupDialogData_GetMinMarginBottomRight(self.ptr()) } }
     }
-    fn getMinMarginTopLeft(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxPageSetupDialogData_GetMinMarginTopLeft(self.ptr()) } }
+    fn getMinMarginTopLeft(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxPageSetupDialogData_GetMinMarginTopLeft(self.ptr()) } }
     }
     fn getPaperId(&self) -> c_int {
         unsafe { wxPageSetupDialogData_GetPaperId(self.ptr()) }
     }
-    fn getPaperSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxPageSetupDialogData_GetPaperSize(self.ptr()) } }
+    fn getPaperSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxPageSetupDialogData_GetPaperSize(self.ptr()) } }
     }
-    fn getPrintData<T: _wxPrintData>(&self, _ref: &T) {
+    fn getPrintData<T: TWxPrintData>(&self, _ref: &T) {
         unsafe { wxPageSetupDialogData_GetPrintData(self.ptr(), _ref.ptr()) }
     }
     fn setDefaultInfo(&self, flag: c_int) {
@@ -5648,62 +5648,62 @@ pub trait _wxPageSetupDialogData : _wxObject {
     fn setPaperSizeId(&self, id: c_int) {
         unsafe { wxPageSetupDialogData_SetPaperSizeId(self.ptr(), id) }
     }
-    fn setPrintData<T: _wxPrintData>(&self, printData: &T) {
+    fn setPrintData<T: TWxPrintData>(&self, printData: &T) {
         unsafe { wxPageSetupDialogData_SetPrintData(self.ptr(), printData.ptr()) }
     }
 }
 
-pub struct wxPaintDC { ptr: *mut c_void }
-impl _wxPaintDC for wxPaintDC {}
-impl _wxWindowDC for wxPaintDC {}
-impl _wxDC for wxPaintDC {}
-impl _wxObject for wxPaintDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPaintDC { ptr: *mut c_void }
+impl TWxPaintDC for WxPaintDC {}
+impl TWxWindowDC for WxPaintDC {}
+impl TWxDC for WxPaintDC {}
+impl TWxObject for WxPaintDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPaintDC {
-    pub fn from(ptr: *mut c_void) -> wxPaintDC { wxPaintDC { ptr: ptr } }
-    pub fn null() -> wxPaintDC { wxPaintDC::from(0 as *mut c_void) }
+impl WxPaintDC {
+    pub fn from(ptr: *mut c_void) -> WxPaintDC { WxPaintDC { ptr: ptr } }
+    pub fn null() -> WxPaintDC { WxPaintDC::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(win: &T) -> wxPaintDC {
-        unsafe { wxPaintDC { ptr: wxPaintDC_Create(win.ptr()) } }
+    pub fn new<T: TWxWindow>(win: &T) -> WxPaintDC {
+        unsafe { WxPaintDC { ptr: wxPaintDC_Create(win.ptr()) } }
     }
 }
 
-pub trait _wxPaintDC : _wxWindowDC {
+pub trait TWxPaintDC : TWxWindowDC {
 }
 
-pub struct wxPaintEvent { ptr: *mut c_void }
-impl _wxPaintEvent for wxPaintEvent {}
-impl _wxEvent for wxPaintEvent {}
-impl _wxObject for wxPaintEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPaintEvent { ptr: *mut c_void }
+impl TWxPaintEvent for WxPaintEvent {}
+impl TWxEvent for WxPaintEvent {}
+impl TWxObject for WxPaintEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPaintEvent {
-    pub fn from(ptr: *mut c_void) -> wxPaintEvent { wxPaintEvent { ptr: ptr } }
-    pub fn null() -> wxPaintEvent { wxPaintEvent::from(0 as *mut c_void) }
+impl WxPaintEvent {
+    pub fn from(ptr: *mut c_void) -> WxPaintEvent { WxPaintEvent { ptr: ptr } }
+    pub fn null() -> WxPaintEvent { WxPaintEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxPaintEvent : _wxEvent {
+pub trait TWxPaintEvent : TWxEvent {
 }
 
-pub struct wxPalette { ptr: *mut c_void }
-impl _wxPalette for wxPalette {}
-impl _wxGDIObject for wxPalette {}
-impl _wxObject for wxPalette { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPalette { ptr: *mut c_void }
+impl TWxPalette for WxPalette {}
+impl TWxGDIObject for WxPalette {}
+impl TWxObject for WxPalette { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPalette {
-    pub fn from(ptr: *mut c_void) -> wxPalette { wxPalette { ptr: ptr } }
-    pub fn null() -> wxPalette { wxPalette::from(0 as *mut c_void) }
+impl WxPalette {
+    pub fn from(ptr: *mut c_void) -> WxPalette { WxPalette { ptr: ptr } }
+    pub fn null() -> WxPalette { WxPalette::from(0 as *mut c_void) }
     
-    pub fn newDefault() -> wxPalette {
-        unsafe { wxPalette { ptr: wxPalette_CreateDefault() } }
+    pub fn newDefault() -> WxPalette {
+        unsafe { WxPalette { ptr: wxPalette_CreateDefault() } }
     }
-    pub fn newRGB(n: c_int, red: *mut c_void, green: *mut c_void, blue: *mut c_void) -> wxPalette {
-        unsafe { wxPalette { ptr: wxPalette_CreateRGB(n, red, green, blue) } }
+    pub fn newRGB(n: c_int, red: *mut c_void, green: *mut c_void, blue: *mut c_void) -> WxPalette {
+        unsafe { WxPalette { ptr: wxPalette_CreateRGB(n, red, green, blue) } }
     }
 }
 
-pub trait _wxPalette : _wxGDIObject {
-    fn assign<T: _wxPalette>(&self, palette: &T) {
+pub trait TWxPalette : TWxGDIObject {
+    fn assign<T: TWxPalette>(&self, palette: &T) {
         unsafe { wxPalette_Assign(self.ptr(), palette.ptr()) }
     }
     fn getPixel(&self, red: uint8_t, green: uint8_t, blue: uint8_t) -> c_int {
@@ -5712,7 +5712,7 @@ pub trait _wxPalette : _wxGDIObject {
     fn getRGB(&self, pixel: c_int, red: *mut c_void, green: *mut c_void, blue: *mut c_void) -> c_int {
         unsafe { wxPalette_GetRGB(self.ptr(), pixel, red, green, blue) }
     }
-    fn isEqual<T: _wxPalette>(&self, palette: &T) -> c_int {
+    fn isEqual<T: TWxPalette>(&self, palette: &T) -> c_int {
         unsafe { wxPalette_IsEqual(self.ptr(), palette.ptr()) }
     }
     fn isOk(&self) -> c_int {
@@ -5720,75 +5720,75 @@ pub trait _wxPalette : _wxGDIObject {
     }
 }
 
-pub struct wxPaletteChangedEvent { ptr: *mut c_void }
-impl _wxPaletteChangedEvent for wxPaletteChangedEvent {}
-impl _wxEvent for wxPaletteChangedEvent {}
-impl _wxObject for wxPaletteChangedEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPaletteChangedEvent { ptr: *mut c_void }
+impl TWxPaletteChangedEvent for WxPaletteChangedEvent {}
+impl TWxEvent for WxPaletteChangedEvent {}
+impl TWxObject for WxPaletteChangedEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPaletteChangedEvent {
-    pub fn from(ptr: *mut c_void) -> wxPaletteChangedEvent { wxPaletteChangedEvent { ptr: ptr } }
-    pub fn null() -> wxPaletteChangedEvent { wxPaletteChangedEvent::from(0 as *mut c_void) }
+impl WxPaletteChangedEvent {
+    pub fn from(ptr: *mut c_void) -> WxPaletteChangedEvent { WxPaletteChangedEvent { ptr: ptr } }
+    pub fn null() -> WxPaletteChangedEvent { WxPaletteChangedEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxPaletteChangedEvent : _wxEvent {
+pub trait TWxPaletteChangedEvent : TWxEvent {
     fn getChangedWindow(&self) -> *mut c_void {
         unsafe { wxPaletteChangedEvent_GetChangedWindow(self.ptr()) }
     }
-    fn setChangedWindow<T: _wxWindow>(&self, win: &T) {
+    fn setChangedWindow<T: TWxWindow>(&self, win: &T) {
         unsafe { wxPaletteChangedEvent_SetChangedWindow(self.ptr(), win.ptr()) }
     }
 }
 
-pub struct wxPanel { ptr: *mut c_void }
-impl _wxPanel for wxPanel {}
-impl _wxWindow for wxPanel {}
-impl _wxEvtHandler for wxPanel {}
-impl _wxObject for wxPanel { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPanel { ptr: *mut c_void }
+impl TWxPanel for WxPanel {}
+impl TWxWindow for WxPanel {}
+impl TWxEvtHandler for WxPanel {}
+impl TWxObject for WxPanel { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPanel {
-    pub fn from(ptr: *mut c_void) -> wxPanel { wxPanel { ptr: ptr } }
-    pub fn null() -> wxPanel { wxPanel::from(0 as *mut c_void) }
+impl WxPanel {
+    pub fn from(ptr: *mut c_void) -> WxPanel { WxPanel { ptr: ptr } }
+    pub fn null() -> WxPanel { WxPanel::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxPanel {
-        unsafe { wxPanel { ptr: wxPanel_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxPanel {
+        unsafe { WxPanel { ptr: wxPanel_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxPanel : _wxWindow {
+pub trait TWxPanel : TWxWindow {
 }
 
-pub struct wxPen { ptr: *mut c_void }
-impl _wxPen for wxPen {}
-impl _wxGDIObject for wxPen {}
-impl _wxObject for wxPen { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPen { ptr: *mut c_void }
+impl TWxPen for WxPen {}
+impl TWxGDIObject for WxPen {}
+impl TWxObject for WxPen { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPen {
-    pub fn from(ptr: *mut c_void) -> wxPen { wxPen { ptr: ptr } }
-    pub fn null() -> wxPen { wxPen::from(0 as *mut c_void) }
+impl WxPen {
+    pub fn from(ptr: *mut c_void) -> WxPen { WxPen { ptr: ptr } }
+    pub fn null() -> WxPen { WxPen::from(0 as *mut c_void) }
     
-    pub fn newDefault() -> wxPen {
-        unsafe { wxPen { ptr: wxPen_CreateDefault() } }
+    pub fn newDefault() -> WxPen {
+        unsafe { WxPen { ptr: wxPen_CreateDefault() } }
     }
-    pub fn newFromBitmap<T: _wxBitmap>(stipple: &T, width: c_int) -> wxPen {
-        unsafe { wxPen { ptr: wxPen_CreateFromBitmap(stipple.ptr(), width) } }
+    pub fn newFromBitmap<T: TWxBitmap>(stipple: &T, width: c_int) -> WxPen {
+        unsafe { WxPen { ptr: wxPen_CreateFromBitmap(stipple.ptr(), width) } }
     }
-    pub fn newFromColour<T: _wxColour>(col: &T, width: c_int, style: c_int) -> wxPen {
-        unsafe { wxPen { ptr: wxPen_CreateFromColour(col.ptr(), width, style) } }
+    pub fn newFromColour<T: TWxColour>(col: &T, width: c_int, style: c_int) -> WxPen {
+        unsafe { WxPen { ptr: wxPen_CreateFromColour(col.ptr(), width, style) } }
     }
-    pub fn newFromStock(id: c_int) -> wxPen {
-        unsafe { wxPen { ptr: wxPen_CreateFromStock(id) } }
+    pub fn newFromStock(id: c_int) -> WxPen {
+        unsafe { WxPen { ptr: wxPen_CreateFromStock(id) } }
     }
 }
 
-pub trait _wxPen : _wxGDIObject {
-    fn assign<T: _wxPen>(&self, pen: &T) {
+pub trait TWxPen : TWxGDIObject {
+    fn assign<T: TWxPen>(&self, pen: &T) {
         unsafe { wxPen_Assign(self.ptr(), pen.ptr()) }
     }
     fn getCap(&self) -> c_int {
         unsafe { wxPen_GetCap(self.ptr()) }
     }
-    fn getColour<T: _wxColour>(&self, _ref: &T) {
+    fn getColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxPen_GetColour(self.ptr(), _ref.ptr()) }
     }
     fn getDashes(&self, ptr: *mut c_void) -> c_int {
@@ -5797,7 +5797,7 @@ pub trait _wxPen : _wxGDIObject {
     fn getJoin(&self) -> c_int {
         unsafe { wxPen_GetJoin(self.ptr()) }
     }
-    fn getStipple<T: _wxBitmap>(&self, _ref: &T) {
+    fn getStipple<T: TWxBitmap>(&self, _ref: &T) {
         unsafe { wxPen_GetStipple(self.ptr(), _ref.ptr()) }
     }
     fn getStyle(&self) -> c_int {
@@ -5806,7 +5806,7 @@ pub trait _wxPen : _wxGDIObject {
     fn getWidth(&self) -> c_int {
         unsafe { wxPen_GetWidth(self.ptr()) }
     }
-    fn isEqual<T: _wxPen>(&self, pen: &T) -> c_int {
+    fn isEqual<T: TWxPen>(&self, pen: &T) -> c_int {
         unsafe { wxPen_IsEqual(self.ptr(), pen.ptr()) }
     }
     fn isOk(&self) -> c_int {
@@ -5815,7 +5815,7 @@ pub trait _wxPen : _wxGDIObject {
     fn setCap(&self, cap: c_int) {
         unsafe { wxPen_SetCap(self.ptr(), cap) }
     }
-    fn setColour<T: _wxColour>(&self, col: &T) {
+    fn setColour<T: TWxColour>(&self, col: &T) {
         unsafe { wxPen_SetColour(self.ptr(), col.ptr()) }
     }
     fn setColourSingle(&self, r: int8_t, g: int8_t, b: int8_t) {
@@ -5827,7 +5827,7 @@ pub trait _wxPen : _wxGDIObject {
     fn setJoin(&self, join: c_int) {
         unsafe { wxPen_SetJoin(self.ptr(), join) }
     }
-    fn setStipple<T: _wxBitmap>(&self, stipple: &T) {
+    fn setStipple<T: TWxBitmap>(&self, stipple: &T) {
         unsafe { wxPen_SetStipple(self.ptr(), stipple.ptr()) }
     }
     fn setStyle(&self, style: c_int) {
@@ -5841,33 +5841,33 @@ pub trait _wxPen : _wxGDIObject {
     }
 }
 
-pub struct wxPenList { ptr: *mut c_void }
-impl _wxPenList for wxPenList {}
-impl _wxList for wxPenList {}
-impl _wxObject for wxPenList { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPenList { ptr: *mut c_void }
+impl TWxPenList for WxPenList {}
+impl TWxList for WxPenList {}
+impl TWxObject for WxPenList { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPenList {
-    pub fn from(ptr: *mut c_void) -> wxPenList { wxPenList { ptr: ptr } }
-    pub fn null() -> wxPenList { wxPenList::from(0 as *mut c_void) }
+impl WxPenList {
+    pub fn from(ptr: *mut c_void) -> WxPenList { WxPenList { ptr: ptr } }
+    pub fn null() -> WxPenList { WxPenList::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxPenList : _wxList {
+pub trait TWxPenList : TWxList {
 }
 
-pub struct wxPoint { ptr: *mut c_void }
-impl _wxPoint for wxPoint { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPoint { ptr: *mut c_void }
+impl TWxPoint for WxPoint { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPoint {
-    pub fn from(ptr: *mut c_void) -> wxPoint { wxPoint { ptr: ptr } }
-    pub fn null() -> wxPoint { wxPoint::from(0 as *mut c_void) }
+impl WxPoint {
+    pub fn from(ptr: *mut c_void) -> WxPoint { WxPoint { ptr: ptr } }
+    pub fn null() -> WxPoint { WxPoint::from(0 as *mut c_void) }
     
-    pub fn new(xx: c_int, yy: c_int) -> wxPoint {
-        unsafe { wxPoint { ptr: wxPoint_Create(xx, yy) } }
+    pub fn new(xx: c_int, yy: c_int) -> WxPoint {
+        unsafe { WxPoint { ptr: wxPoint_Create(xx, yy) } }
     }
 }
 
-pub trait _wxPoint {
+pub trait TWxPoint {
     fn ptr(&self) -> *mut c_void;
     
     fn getX(&self) -> c_int {
@@ -5884,52 +5884,52 @@ pub trait _wxPoint {
     }
 }
 
-pub struct wxPopupTransientWindow { ptr: *mut c_void }
-impl _wxPopupTransientWindow for wxPopupTransientWindow {}
-impl _wxPopupWindow for wxPopupTransientWindow {}
-impl _wxWindow for wxPopupTransientWindow {}
-impl _wxEvtHandler for wxPopupTransientWindow {}
-impl _wxObject for wxPopupTransientWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPopupTransientWindow { ptr: *mut c_void }
+impl TWxPopupTransientWindow for WxPopupTransientWindow {}
+impl TWxPopupWindow for WxPopupTransientWindow {}
+impl TWxWindow for WxPopupTransientWindow {}
+impl TWxEvtHandler for WxPopupTransientWindow {}
+impl TWxObject for WxPopupTransientWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPopupTransientWindow {
-    pub fn from(ptr: *mut c_void) -> wxPopupTransientWindow { wxPopupTransientWindow { ptr: ptr } }
-    pub fn null() -> wxPopupTransientWindow { wxPopupTransientWindow::from(0 as *mut c_void) }
+impl WxPopupTransientWindow {
+    pub fn from(ptr: *mut c_void) -> WxPopupTransientWindow { WxPopupTransientWindow { ptr: ptr } }
+    pub fn null() -> WxPopupTransientWindow { WxPopupTransientWindow::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxPopupTransientWindow : _wxPopupWindow {
+pub trait TWxPopupTransientWindow : TWxPopupWindow {
 }
 
-pub struct wxPopupWindow { ptr: *mut c_void }
-impl _wxPopupWindow for wxPopupWindow {}
-impl _wxWindow for wxPopupWindow {}
-impl _wxEvtHandler for wxPopupWindow {}
-impl _wxObject for wxPopupWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPopupWindow { ptr: *mut c_void }
+impl TWxPopupWindow for WxPopupWindow {}
+impl TWxWindow for WxPopupWindow {}
+impl TWxEvtHandler for WxPopupWindow {}
+impl TWxObject for WxPopupWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPopupWindow {
-    pub fn from(ptr: *mut c_void) -> wxPopupWindow { wxPopupWindow { ptr: ptr } }
-    pub fn null() -> wxPopupWindow { wxPopupWindow::from(0 as *mut c_void) }
+impl WxPopupWindow {
+    pub fn from(ptr: *mut c_void) -> WxPopupWindow { WxPopupWindow { ptr: ptr } }
+    pub fn null() -> WxPopupWindow { WxPopupWindow::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxPopupWindow : _wxWindow {
+pub trait TWxPopupWindow : TWxWindow {
 }
 
-pub struct wxPostScriptDC { ptr: *mut c_void }
-impl _wxPostScriptDC for wxPostScriptDC {}
-impl _wxDC for wxPostScriptDC {}
-impl _wxObject for wxPostScriptDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPostScriptDC { ptr: *mut c_void }
+impl TWxPostScriptDC for WxPostScriptDC {}
+impl TWxDC for WxPostScriptDC {}
+impl TWxObject for WxPostScriptDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPostScriptDC {
-    pub fn from(ptr: *mut c_void) -> wxPostScriptDC { wxPostScriptDC { ptr: ptr } }
-    pub fn null() -> wxPostScriptDC { wxPostScriptDC::from(0 as *mut c_void) }
+impl WxPostScriptDC {
+    pub fn from(ptr: *mut c_void) -> WxPostScriptDC { WxPostScriptDC { ptr: ptr } }
+    pub fn null() -> WxPostScriptDC { WxPostScriptDC::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxPrintData>(data: &T) -> wxPostScriptDC {
-        unsafe { wxPostScriptDC { ptr: wxPostScriptDC_Create(data.ptr()) } }
+    pub fn new<T: TWxPrintData>(data: &T) -> WxPostScriptDC {
+        unsafe { WxPostScriptDC { ptr: wxPostScriptDC_Create(data.ptr()) } }
     }
 }
 
-pub trait _wxPostScriptDC : _wxDC {
+pub trait TWxPostScriptDC : TWxDC {
     fn setResolution(&self, ppi: c_int) {
         unsafe { wxPostScriptDC_SetResolution(self.ptr(), ppi) }
     }
@@ -5938,82 +5938,82 @@ pub trait _wxPostScriptDC : _wxDC {
     }
 }
 
-pub struct wxPreviewCanvas { ptr: *mut c_void }
-impl _wxPreviewCanvas for wxPreviewCanvas {}
-impl _wxScrolledWindow for wxPreviewCanvas {}
-impl _wxPanel for wxPreviewCanvas {}
-impl _wxWindow for wxPreviewCanvas {}
-impl _wxEvtHandler for wxPreviewCanvas {}
-impl _wxObject for wxPreviewCanvas { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPreviewCanvas { ptr: *mut c_void }
+impl TWxPreviewCanvas for WxPreviewCanvas {}
+impl TWxScrolledWindow for WxPreviewCanvas {}
+impl TWxPanel for WxPreviewCanvas {}
+impl TWxWindow for WxPreviewCanvas {}
+impl TWxEvtHandler for WxPreviewCanvas {}
+impl TWxObject for WxPreviewCanvas { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPreviewCanvas {
-    pub fn from(ptr: *mut c_void) -> wxPreviewCanvas { wxPreviewCanvas { ptr: ptr } }
-    pub fn null() -> wxPreviewCanvas { wxPreviewCanvas::from(0 as *mut c_void) }
+impl WxPreviewCanvas {
+    pub fn from(ptr: *mut c_void) -> WxPreviewCanvas { WxPreviewCanvas { ptr: ptr } }
+    pub fn null() -> WxPreviewCanvas { WxPreviewCanvas::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxPrintPreview, U: _wxWindow>(preview: &T, parent: &U, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> wxPreviewCanvas {
-        unsafe { wxPreviewCanvas { ptr: wxPreviewCanvas_Create(preview.ptr(), parent.ptr(), x, y, w, h, style) } }
+    pub fn new<T: TWxPrintPreview, U: TWxWindow>(preview: &T, parent: &U, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> WxPreviewCanvas {
+        unsafe { WxPreviewCanvas { ptr: wxPreviewCanvas_Create(preview.ptr(), parent.ptr(), x, y, w, h, style) } }
     }
 }
 
-pub trait _wxPreviewCanvas : _wxScrolledWindow {
+pub trait TWxPreviewCanvas : TWxScrolledWindow {
 }
 
-pub struct wxPreviewControlBar { ptr: *mut c_void }
-impl _wxPreviewControlBar for wxPreviewControlBar {}
-impl _wxPanel for wxPreviewControlBar {}
-impl _wxWindow for wxPreviewControlBar {}
-impl _wxEvtHandler for wxPreviewControlBar {}
-impl _wxObject for wxPreviewControlBar { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPreviewControlBar { ptr: *mut c_void }
+impl TWxPreviewControlBar for WxPreviewControlBar {}
+impl TWxPanel for WxPreviewControlBar {}
+impl TWxWindow for WxPreviewControlBar {}
+impl TWxEvtHandler for WxPreviewControlBar {}
+impl TWxObject for WxPreviewControlBar { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPreviewControlBar {
-    pub fn from(ptr: *mut c_void) -> wxPreviewControlBar { wxPreviewControlBar { ptr: ptr } }
-    pub fn null() -> wxPreviewControlBar { wxPreviewControlBar::from(0 as *mut c_void) }
+impl WxPreviewControlBar {
+    pub fn from(ptr: *mut c_void) -> WxPreviewControlBar { WxPreviewControlBar { ptr: ptr } }
+    pub fn null() -> WxPreviewControlBar { WxPreviewControlBar::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxPreviewControlBar : _wxPanel {
+pub trait TWxPreviewControlBar : TWxPanel {
 }
 
-pub struct wxPreviewFrame { ptr: *mut c_void }
-impl _wxPreviewFrame for wxPreviewFrame {}
-impl _wxFrame for wxPreviewFrame {}
-impl _wxTopLevelWindow for wxPreviewFrame {}
-impl _wxWindow for wxPreviewFrame {}
-impl _wxEvtHandler for wxPreviewFrame {}
-impl _wxObject for wxPreviewFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPreviewFrame { ptr: *mut c_void }
+impl TWxPreviewFrame for WxPreviewFrame {}
+impl TWxFrame for WxPreviewFrame {}
+impl TWxTopLevelWindow for WxPreviewFrame {}
+impl TWxWindow for WxPreviewFrame {}
+impl TWxEvtHandler for WxPreviewFrame {}
+impl TWxObject for WxPreviewFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPreviewFrame {
-    pub fn from(ptr: *mut c_void) -> wxPreviewFrame { wxPreviewFrame { ptr: ptr } }
-    pub fn null() -> wxPreviewFrame { wxPreviewFrame::from(0 as *mut c_void) }
+impl WxPreviewFrame {
+    pub fn from(ptr: *mut c_void) -> WxPreviewFrame { WxPreviewFrame { ptr: ptr } }
+    pub fn null() -> WxPreviewFrame { WxPreviewFrame::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxPrintPreview, U: _wxFrame>(preview: &T, parent: &U, title: &str, x: c_int, y: c_int, width: c_int, height: c_int, style: c_int, name: &str) -> wxPreviewFrame {
+    pub fn new<T: TWxPrintPreview, U: TWxFrame>(preview: &T, parent: &U, title: &str, x: c_int, y: c_int, width: c_int, height: c_int, style: c_int, name: &str) -> WxPreviewFrame {
         let title = wxT(title);
         let name = wxT(name);
-        unsafe { wxPreviewFrame { ptr: wxPreviewFrame_Create(preview.ptr(), parent.ptr(), title.ptr(), x, y, width, height, style, name.ptr()) } }
+        unsafe { WxPreviewFrame { ptr: wxPreviewFrame_Create(preview.ptr(), parent.ptr(), title.ptr(), x, y, width, height, style, name.ptr()) } }
     }
 }
 
-pub trait _wxPreviewFrame : _wxFrame {
+pub trait TWxPreviewFrame : TWxFrame {
     fn initialize(&self) {
         unsafe { wxPreviewFrame_Initialize(self.ptr()) }
     }
 }
 
-pub struct wxPrintData { ptr: *mut c_void }
-impl _wxPrintData for wxPrintData {}
-impl _wxObject for wxPrintData { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPrintData { ptr: *mut c_void }
+impl TWxPrintData for WxPrintData {}
+impl TWxObject for WxPrintData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPrintData {
-    pub fn from(ptr: *mut c_void) -> wxPrintData { wxPrintData { ptr: ptr } }
-    pub fn null() -> wxPrintData { wxPrintData::from(0 as *mut c_void) }
+impl WxPrintData {
+    pub fn from(ptr: *mut c_void) -> WxPrintData { WxPrintData { ptr: ptr } }
+    pub fn null() -> WxPrintData { WxPrintData::from(0 as *mut c_void) }
     
-    pub fn new() -> wxPrintData {
-        unsafe { wxPrintData { ptr: wxPrintData_Create() } }
+    pub fn new() -> WxPrintData {
+        unsafe { WxPrintData { ptr: wxPrintData_Create() } }
     }
 }
 
-pub trait _wxPrintData : _wxObject {
-    fn assign<T: _wxPrintData>(&self, data: &T) {
+pub trait TWxPrintData : TWxObject {
+    fn assign<T: TWxPrintData>(&self, data: &T) {
         unsafe { wxPrintData_Assign(self.ptr(), data.ptr()) }
     }
     fn getCollate(&self) -> c_int {
@@ -6026,10 +6026,10 @@ pub trait _wxPrintData : _wxObject {
         unsafe { wxPrintData_GetDuplex(self.ptr()) }
     }
     fn getFilename(&self) -> ~str {
-        unsafe { wxString { ptr: wxPrintData_GetFilename(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxPrintData_GetFilename(self.ptr()) }.to_str() }
     }
     fn getFontMetricPath(&self) -> ~str {
-        unsafe { wxString { ptr: wxPrintData_GetFontMetricPath(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxPrintData_GetFontMetricPath(self.ptr()) }.to_str() }
     }
     fn getNoCopies(&self) -> c_int {
         unsafe { wxPrintData_GetNoCopies(self.ptr()) }
@@ -6040,23 +6040,23 @@ pub trait _wxPrintData : _wxObject {
     fn getPaperId(&self) -> c_int {
         unsafe { wxPrintData_GetPaperId(self.ptr()) }
     }
-    fn getPaperSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxPrintData_GetPaperSize(self.ptr()) } }
+    fn getPaperSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxPrintData_GetPaperSize(self.ptr()) } }
     }
     fn getPreviewCommand(&self) -> ~str {
-        unsafe { wxString { ptr: wxPrintData_GetPreviewCommand(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxPrintData_GetPreviewCommand(self.ptr()) }.to_str() }
     }
     fn getPrintMode(&self) -> c_int {
         unsafe { wxPrintData_GetPrintMode(self.ptr()) }
     }
     fn getPrinterCommand(&self) -> ~str {
-        unsafe { wxString { ptr: wxPrintData_GetPrinterCommand(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxPrintData_GetPrinterCommand(self.ptr()) }.to_str() }
     }
     fn getPrinterName(&self) -> ~str {
-        unsafe { wxString { ptr: wxPrintData_GetPrinterName(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxPrintData_GetPrinterName(self.ptr()) }.to_str() }
     }
     fn getPrinterOptions(&self) -> ~str {
-        unsafe { wxString { ptr: wxPrintData_GetPrinterOptions(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxPrintData_GetPrinterOptions(self.ptr()) }.to_str() }
     }
     fn getPrinterScaleX(&self) -> c_double {
         unsafe { wxPrintData_GetPrinterScaleX(self.ptr()) }
@@ -6102,13 +6102,13 @@ pub trait _wxPrintData : _wxObject {
     fn setPaperSize(&self, w: c_int, h: c_int) {
         unsafe { wxPrintData_SetPaperSize(self.ptr(), w, h) }
     }
-    fn setPreviewCommand<T: _wxCommand>(&self, command: &T) {
+    fn setPreviewCommand<T: TWxCommand>(&self, command: &T) {
         unsafe { wxPrintData_SetPreviewCommand(self.ptr(), command.ptr()) }
     }
     fn setPrintMode(&self, printMode: c_int) {
         unsafe { wxPrintData_SetPrintMode(self.ptr(), printMode) }
     }
-    fn setPrinterCommand<T: _wxCommand>(&self, command: &T) {
+    fn setPrinterCommand<T: TWxCommand>(&self, command: &T) {
         unsafe { wxPrintData_SetPrinterCommand(self.ptr(), command.ptr()) }
     }
     fn setPrinterName(&self, name: &str) {
@@ -6142,72 +6142,72 @@ pub trait _wxPrintData : _wxObject {
     }
 }
 
-pub struct wxPostScriptPrintNativeData { ptr: *mut c_void }
-impl _wxPostScriptPrintNativeData for wxPostScriptPrintNativeData {}
-impl _wxObject for wxPostScriptPrintNativeData { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPostScriptPrintNativeData { ptr: *mut c_void }
+impl TWxPostScriptPrintNativeData for WxPostScriptPrintNativeData {}
+impl TWxObject for WxPostScriptPrintNativeData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPostScriptPrintNativeData {
-    pub fn from(ptr: *mut c_void) -> wxPostScriptPrintNativeData { wxPostScriptPrintNativeData { ptr: ptr } }
-    pub fn null() -> wxPostScriptPrintNativeData { wxPostScriptPrintNativeData::from(0 as *mut c_void) }
+impl WxPostScriptPrintNativeData {
+    pub fn from(ptr: *mut c_void) -> WxPostScriptPrintNativeData { WxPostScriptPrintNativeData { ptr: ptr } }
+    pub fn null() -> WxPostScriptPrintNativeData { WxPostScriptPrintNativeData::from(0 as *mut c_void) }
     
-    pub fn new() -> wxPostScriptPrintNativeData {
-        unsafe { wxPostScriptPrintNativeData { ptr: wxPostScriptPrintNativeData_Create() } }
+    pub fn new() -> WxPostScriptPrintNativeData {
+        unsafe { WxPostScriptPrintNativeData { ptr: wxPostScriptPrintNativeData_Create() } }
     }
 }
 
-pub trait _wxPostScriptPrintNativeData : _wxObject {
+pub trait TWxPostScriptPrintNativeData : TWxObject {
 }
 
-pub struct wxPrintDialog { ptr: *mut c_void }
-impl _wxPrintDialog for wxPrintDialog {}
-impl _wxDialog for wxPrintDialog {}
-impl _wxTopLevelWindow for wxPrintDialog {}
-impl _wxWindow for wxPrintDialog {}
-impl _wxEvtHandler for wxPrintDialog {}
-impl _wxObject for wxPrintDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPrintDialog { ptr: *mut c_void }
+impl TWxPrintDialog for WxPrintDialog {}
+impl TWxDialog for WxPrintDialog {}
+impl TWxTopLevelWindow for WxPrintDialog {}
+impl TWxWindow for WxPrintDialog {}
+impl TWxEvtHandler for WxPrintDialog {}
+impl TWxObject for WxPrintDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPrintDialog {
-    pub fn from(ptr: *mut c_void) -> wxPrintDialog { wxPrintDialog { ptr: ptr } }
-    pub fn null() -> wxPrintDialog { wxPrintDialog::from(0 as *mut c_void) }
+impl WxPrintDialog {
+    pub fn from(ptr: *mut c_void) -> WxPrintDialog { WxPrintDialog { ptr: ptr } }
+    pub fn null() -> WxPrintDialog { WxPrintDialog::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow, U: _wxPrintDialogData>(parent: &T, data: &U) -> wxPrintDialog {
-        unsafe { wxPrintDialog { ptr: wxPrintDialog_Create(parent.ptr(), data.ptr()) } }
+    pub fn new<T: TWxWindow, U: TWxPrintDialogData>(parent: &T, data: &U) -> WxPrintDialog {
+        unsafe { WxPrintDialog { ptr: wxPrintDialog_Create(parent.ptr(), data.ptr()) } }
     }
 }
 
-pub trait _wxPrintDialog : _wxDialog {
-    fn getPrintDC(&self) -> wxDC {
-        unsafe { wxDC { ptr: wxPrintDialog_GetPrintDC(self.ptr()) } }
+pub trait TWxPrintDialog : TWxDialog {
+    fn getPrintDC(&self) -> WxDC {
+        unsafe { WxDC { ptr: wxPrintDialog_GetPrintDC(self.ptr()) } }
     }
-    fn getPrintData<T: _wxPrintData>(&self, _ref: &T) {
+    fn getPrintData<T: TWxPrintData>(&self, _ref: &T) {
         unsafe { wxPrintDialog_GetPrintData(self.ptr(), _ref.ptr()) }
     }
-    fn getPrintDialogData(&self) -> wxPrintDialogData {
-        unsafe { wxPrintDialogData { ptr: wxPrintDialog_GetPrintDialogData(self.ptr()) } }
+    fn getPrintDialogData(&self) -> WxPrintDialogData {
+        unsafe { WxPrintDialogData { ptr: wxPrintDialog_GetPrintDialogData(self.ptr()) } }
     }
 }
 
-pub struct wxPrintDialogData { ptr: *mut c_void }
-impl _wxPrintDialogData for wxPrintDialogData {}
-impl _wxObject for wxPrintDialogData { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPrintDialogData { ptr: *mut c_void }
+impl TWxPrintDialogData for WxPrintDialogData {}
+impl TWxObject for WxPrintDialogData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPrintDialogData {
-    pub fn from(ptr: *mut c_void) -> wxPrintDialogData { wxPrintDialogData { ptr: ptr } }
-    pub fn null() -> wxPrintDialogData { wxPrintDialogData::from(0 as *mut c_void) }
+impl WxPrintDialogData {
+    pub fn from(ptr: *mut c_void) -> WxPrintDialogData { WxPrintDialogData { ptr: ptr } }
+    pub fn null() -> WxPrintDialogData { WxPrintDialogData::from(0 as *mut c_void) }
     
-    pub fn newDefault() -> wxPrintDialogData {
-        unsafe { wxPrintDialogData { ptr: wxPrintDialogData_CreateDefault() } }
+    pub fn newDefault() -> WxPrintDialogData {
+        unsafe { WxPrintDialogData { ptr: wxPrintDialogData_CreateDefault() } }
     }
-    pub fn newFromData<T: _wxPrintData>(printData: &T) -> wxPrintDialogData {
-        unsafe { wxPrintDialogData { ptr: wxPrintDialogData_CreateFromData(printData.ptr()) } }
+    pub fn newFromData<T: TWxPrintData>(printData: &T) -> WxPrintDialogData {
+        unsafe { WxPrintDialogData { ptr: wxPrintDialogData_CreateFromData(printData.ptr()) } }
     }
 }
 
-pub trait _wxPrintDialogData : _wxObject {
-    fn assign<T: _wxPrintDialogData>(&self, data: &T) {
+pub trait TWxPrintDialogData : TWxObject {
+    fn assign<T: TWxPrintDialogData>(&self, data: &T) {
         unsafe { wxPrintDialogData_Assign(self.ptr(), data.ptr()) }
     }
-    fn assignData<T: _wxPrintData>(&self, data: &T) {
+    fn assignData<T: TWxPrintData>(&self, data: &T) {
         unsafe { wxPrintDialogData_AssignData(self.ptr(), data.ptr()) }
     }
     fn enableHelp(&self, flag: c_int) {
@@ -6252,7 +6252,7 @@ pub trait _wxPrintDialogData : _wxObject {
     fn getNoCopies(&self) -> c_int {
         unsafe { wxPrintDialogData_GetNoCopies(self.ptr()) }
     }
-    fn getPrintData<T: _wxPrintData>(&self, _ref: &T) {
+    fn getPrintData<T: TWxPrintData>(&self, _ref: &T) {
         unsafe { wxPrintDialogData_GetPrintData(self.ptr(), _ref.ptr()) }
     }
     fn getPrintToFile(&self) -> c_int {
@@ -6282,7 +6282,7 @@ pub trait _wxPrintDialogData : _wxObject {
     fn setNoCopies(&self, v: c_int) {
         unsafe { wxPrintDialogData_SetNoCopies(self.ptr(), v) }
     }
-    fn setPrintData<T: _wxPrintData>(&self, printData: &T) {
+    fn setPrintData<T: TWxPrintData>(&self, printData: &T) {
         unsafe { wxPrintDialogData_SetPrintData(self.ptr(), printData.ptr()) }
     }
     fn setPrintToFile(&self, flag: c_int) {
@@ -6296,37 +6296,37 @@ pub trait _wxPrintDialogData : _wxObject {
     }
 }
 
-pub struct wxPrintPreview { ptr: *mut c_void }
-impl _wxPrintPreview for wxPrintPreview {}
-impl _wxObject for wxPrintPreview { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPrintPreview { ptr: *mut c_void }
+impl TWxPrintPreview for WxPrintPreview {}
+impl TWxObject for WxPrintPreview { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPrintPreview {
-    pub fn from(ptr: *mut c_void) -> wxPrintPreview { wxPrintPreview { ptr: ptr } }
-    pub fn null() -> wxPrintPreview { wxPrintPreview::from(0 as *mut c_void) }
+impl WxPrintPreview {
+    pub fn from(ptr: *mut c_void) -> WxPrintPreview { WxPrintPreview { ptr: ptr } }
+    pub fn null() -> WxPrintPreview { WxPrintPreview::from(0 as *mut c_void) }
     
-    pub fn newFromData<T: _wxPrintout, U: _wxPrintout, V: _wxPrintData>(printout: &T, printoutForPrinting: &U, data: &V) -> wxPrintPreview {
-        unsafe { wxPrintPreview { ptr: wxPrintPreview_CreateFromData(printout.ptr(), printoutForPrinting.ptr(), data.ptr()) } }
+    pub fn newFromData<T: TWxPrintout, U: TWxPrintout, V: TWxPrintData>(printout: &T, printoutForPrinting: &U, data: &V) -> WxPrintPreview {
+        unsafe { WxPrintPreview { ptr: wxPrintPreview_CreateFromData(printout.ptr(), printoutForPrinting.ptr(), data.ptr()) } }
     }
-    pub fn newFromDialogData<T: _wxPrintout, U: _wxPrintout, V: _wxPrintDialogData>(printout: &T, printoutForPrinting: &U, data: &V) -> wxPrintPreview {
-        unsafe { wxPrintPreview { ptr: wxPrintPreview_CreateFromDialogData(printout.ptr(), printoutForPrinting.ptr(), data.ptr()) } }
+    pub fn newFromDialogData<T: TWxPrintout, U: TWxPrintout, V: TWxPrintDialogData>(printout: &T, printoutForPrinting: &U, data: &V) -> WxPrintPreview {
+        unsafe { WxPrintPreview { ptr: wxPrintPreview_CreateFromDialogData(printout.ptr(), printoutForPrinting.ptr(), data.ptr()) } }
     }
 }
 
-pub trait _wxPrintPreview : _wxObject {
+pub trait TWxPrintPreview : TWxObject {
     fn determineScaling(&self) {
         unsafe { wxPrintPreview_DetermineScaling(self.ptr()) }
     }
-    fn drawBlankPage<T: _wxPreviewCanvas, U: _wxDC>(&self, canvas: &T, dc: &U) -> c_int {
+    fn drawBlankPage<T: TWxPreviewCanvas, U: TWxDC>(&self, canvas: &T, dc: &U) -> c_int {
         unsafe { wxPrintPreview_DrawBlankPage(self.ptr(), canvas.ptr(), dc.ptr()) }
     }
-    fn getCanvas(&self) -> wxPreviewCanvas {
-        unsafe { wxPreviewCanvas { ptr: wxPrintPreview_GetCanvas(self.ptr()) } }
+    fn getCanvas(&self) -> WxPreviewCanvas {
+        unsafe { WxPreviewCanvas { ptr: wxPrintPreview_GetCanvas(self.ptr()) } }
     }
     fn getCurrentPage(&self) -> c_int {
         unsafe { wxPrintPreview_GetCurrentPage(self.ptr()) }
     }
-    fn getFrame(&self) -> wxFrame {
-        unsafe { wxFrame { ptr: wxPrintPreview_GetFrame(self.ptr()) } }
+    fn getFrame(&self) -> WxFrame {
+        unsafe { WxFrame { ptr: wxPrintPreview_GetFrame(self.ptr()) } }
     }
     fn getMaxPage(&self) -> c_int {
         unsafe { wxPrintPreview_GetMaxPage(self.ptr()) }
@@ -6334,14 +6334,14 @@ pub trait _wxPrintPreview : _wxObject {
     fn getMinPage(&self) -> c_int {
         unsafe { wxPrintPreview_GetMinPage(self.ptr()) }
     }
-    fn getPrintDialogData<T: _wxPrintDialogData>(&self, _ref: &T) {
+    fn getPrintDialogData<T: TWxPrintDialogData>(&self, _ref: &T) {
         unsafe { wxPrintPreview_GetPrintDialogData(self.ptr(), _ref.ptr()) }
     }
-    fn getPrintout(&self) -> wxPrintout {
-        unsafe { wxPrintout { ptr: wxPrintPreview_GetPrintout(self.ptr()) } }
+    fn getPrintout(&self) -> WxPrintout {
+        unsafe { WxPrintout { ptr: wxPrintPreview_GetPrintout(self.ptr()) } }
     }
-    fn getPrintoutForPrinting(&self) -> wxPrintout {
-        unsafe { wxPrintout { ptr: wxPrintPreview_GetPrintoutForPrinting(self.ptr()) } }
+    fn getPrintoutForPrinting(&self) -> WxPrintout {
+        unsafe { WxPrintout { ptr: wxPrintPreview_GetPrintoutForPrinting(self.ptr()) } }
     }
     fn getZoom(&self) -> c_int {
         unsafe { wxPrintPreview_GetZoom(self.ptr()) }
@@ -6349,7 +6349,7 @@ pub trait _wxPrintPreview : _wxObject {
     fn isOk(&self) -> c_int {
         unsafe { wxPrintPreview_IsOk(self.ptr()) }
     }
-    fn paintPage<T: _wxPrintPreview, U: _wxDC>(&self, canvas: &T, dc: &U) -> c_int {
+    fn paintPage<T: TWxPrintPreview, U: TWxDC>(&self, canvas: &T, dc: &U) -> c_int {
         unsafe { wxPrintPreview_PaintPage(self.ptr(), canvas.ptr(), dc.ptr()) }
     }
     fn print(&self, interactive: c_int) -> c_int {
@@ -6358,19 +6358,19 @@ pub trait _wxPrintPreview : _wxObject {
     fn renderPage(&self, pageNum: c_int) -> c_int {
         unsafe { wxPrintPreview_RenderPage(self.ptr(), pageNum) }
     }
-    fn setCanvas<T: _wxPreviewCanvas>(&self, canvas: &T) {
+    fn setCanvas<T: TWxPreviewCanvas>(&self, canvas: &T) {
         unsafe { wxPrintPreview_SetCanvas(self.ptr(), canvas.ptr()) }
     }
     fn setCurrentPage(&self, pageNum: c_int) -> c_int {
         unsafe { wxPrintPreview_SetCurrentPage(self.ptr(), pageNum) }
     }
-    fn setFrame<T: _wxFrame>(&self, frame: &T) {
+    fn setFrame<T: TWxFrame>(&self, frame: &T) {
         unsafe { wxPrintPreview_SetFrame(self.ptr(), frame.ptr()) }
     }
     fn setOk(&self, ok: c_int) {
         unsafe { wxPrintPreview_SetOk(self.ptr(), ok) }
     }
-    fn setPrintout<T: _wxPrintout>(&self, printout: &T) {
+    fn setPrintout<T: TWxPrintout>(&self, printout: &T) {
         unsafe { wxPrintPreview_SetPrintout(self.ptr(), printout.ptr()) }
     }
     fn setZoom(&self, percent: c_int) {
@@ -6378,22 +6378,22 @@ pub trait _wxPrintPreview : _wxObject {
     }
 }
 
-pub struct wxPrinter { ptr: *mut c_void }
-impl _wxPrinter for wxPrinter {}
-impl _wxObject for wxPrinter { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPrinter { ptr: *mut c_void }
+impl TWxPrinter for WxPrinter {}
+impl TWxObject for WxPrinter { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPrinter {
-    pub fn from(ptr: *mut c_void) -> wxPrinter { wxPrinter { ptr: ptr } }
-    pub fn null() -> wxPrinter { wxPrinter::from(0 as *mut c_void) }
+impl WxPrinter {
+    pub fn from(ptr: *mut c_void) -> WxPrinter { WxPrinter { ptr: ptr } }
+    pub fn null() -> WxPrinter { WxPrinter::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxPrintDialogData>(data: &T) -> wxPrinter {
-        unsafe { wxPrinter { ptr: wxPrinter_Create(data.ptr()) } }
+    pub fn new<T: TWxPrintDialogData>(data: &T) -> WxPrinter {
+        unsafe { WxPrinter { ptr: wxPrinter_Create(data.ptr()) } }
     }
 }
 
-pub trait _wxPrinter : _wxObject {
-    fn newAbortWindow<T: _wxWindow, U: _wxPrintout>(&self, parent: &T, printout: &U) -> wxWindow {
-        unsafe { wxWindow { ptr: wxPrinter_CreateAbortWindow(self.ptr(), parent.ptr(), printout.ptr()) } }
+pub trait TWxPrinter : TWxObject {
+    fn newAbortWindow<T: TWxWindow, U: TWxPrintout>(&self, parent: &T, printout: &U) -> WxWindow {
+        unsafe { WxWindow { ptr: wxPrinter_CreateAbortWindow(self.ptr(), parent.ptr(), printout.ptr()) } }
     }
     fn getAbort(&self) -> c_int {
         unsafe { wxPrinter_GetAbort(self.ptr()) }
@@ -6401,57 +6401,57 @@ pub trait _wxPrinter : _wxObject {
     fn getLastError(&self) -> c_int {
         unsafe { wxPrinter_GetLastError(self.ptr()) }
     }
-    fn getPrintDialogData<T: _wxPrintDialogData>(&self, _ref: &T) {
+    fn getPrintDialogData<T: TWxPrintDialogData>(&self, _ref: &T) {
         unsafe { wxPrinter_GetPrintDialogData(self.ptr(), _ref.ptr()) }
     }
-    fn print<T: _wxWindow, U: _wxPrintout>(&self, parent: &T, printout: &U, prompt: c_int) -> c_int {
+    fn print<T: TWxWindow, U: TWxPrintout>(&self, parent: &T, printout: &U, prompt: c_int) -> c_int {
         unsafe { wxPrinter_Print(self.ptr(), parent.ptr(), printout.ptr(), prompt) }
     }
-    fn printDialog<T: _wxWindow>(&self, parent: &T) -> wxDC {
-        unsafe { wxDC { ptr: wxPrinter_PrintDialog(self.ptr(), parent.ptr()) } }
+    fn printDialog<T: TWxWindow>(&self, parent: &T) -> WxDC {
+        unsafe { WxDC { ptr: wxPrinter_PrintDialog(self.ptr(), parent.ptr()) } }
     }
-    fn reportError<T: _wxWindow, U: _wxPrintout>(&self, parent: &T, printout: &U, message: &str) {
+    fn reportError<T: TWxWindow, U: TWxPrintout>(&self, parent: &T, printout: &U, message: &str) {
         let message = wxT(message);
         unsafe { wxPrinter_ReportError(self.ptr(), parent.ptr(), printout.ptr(), message.ptr()) }
     }
-    fn setup<T: _wxWindow>(&self, parent: &T) -> c_int {
+    fn setup<T: TWxWindow>(&self, parent: &T) -> c_int {
         unsafe { wxPrinter_Setup(self.ptr(), parent.ptr()) }
     }
 }
 
-pub struct wxPrinterDC { ptr: *mut c_void }
-impl _wxPrinterDC for wxPrinterDC {}
-impl _wxDC for wxPrinterDC {}
-impl _wxObject for wxPrinterDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPrinterDC { ptr: *mut c_void }
+impl TWxPrinterDC for WxPrinterDC {}
+impl TWxDC for WxPrinterDC {}
+impl TWxObject for WxPrinterDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPrinterDC {
-    pub fn from(ptr: *mut c_void) -> wxPrinterDC { wxPrinterDC { ptr: ptr } }
-    pub fn null() -> wxPrinterDC { wxPrinterDC::from(0 as *mut c_void) }
+impl WxPrinterDC {
+    pub fn from(ptr: *mut c_void) -> WxPrinterDC { WxPrinterDC { ptr: ptr } }
+    pub fn null() -> WxPrinterDC { WxPrinterDC::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxPrintData>(data: &T) -> wxPrinterDC {
-        unsafe { wxPrinterDC { ptr: wxPrinterDC_Create(data.ptr()) } }
+    pub fn new<T: TWxPrintData>(data: &T) -> WxPrinterDC {
+        unsafe { WxPrinterDC { ptr: wxPrinterDC_Create(data.ptr()) } }
     }
 }
 
-pub trait _wxPrinterDC : _wxDC {
-    fn getPaperRect(&self) -> wxRect {
-        unsafe { wxRect { ptr: wxPrinterDC_GetPaperRect(self.ptr()) } }
+pub trait TWxPrinterDC : TWxDC {
+    fn getPaperRect(&self) -> WxRect {
+        unsafe { WxRect { ptr: wxPrinterDC_GetPaperRect(self.ptr()) } }
     }
 }
 
-pub struct wxPrintout { ptr: *mut c_void }
-impl _wxPrintout for wxPrintout {}
-impl _wxObject for wxPrintout { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPrintout { ptr: *mut c_void }
+impl TWxPrintout for WxPrintout {}
+impl TWxObject for WxPrintout { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPrintout {
-    pub fn from(ptr: *mut c_void) -> wxPrintout { wxPrintout { ptr: ptr } }
-    pub fn null() -> wxPrintout { wxPrintout::from(0 as *mut c_void) }
+impl WxPrintout {
+    pub fn from(ptr: *mut c_void) -> WxPrintout { WxPrintout { ptr: ptr } }
+    pub fn null() -> WxPrintout { WxPrintout::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxPrintout : _wxObject {
-    fn getDC(&self) -> wxDC {
-        unsafe { wxDC { ptr: wxPrintout_GetDC(self.ptr()) } }
+pub trait TWxPrintout : TWxObject {
+    fn getDC(&self) -> WxDC {
+        unsafe { WxDC { ptr: wxPrintout_GetDC(self.ptr()) } }
     }
     fn getPPIPrinter(&self, _x: *mut c_void, _y: *mut c_void) {
         unsafe { wxPrintout_GetPPIPrinter(self.ptr(), _x, _y) }
@@ -6466,12 +6466,12 @@ pub trait _wxPrintout : _wxObject {
         unsafe { wxPrintout_GetPageSizePixels(self.ptr(), _w, _h) }
     }
     fn getTitle(&self) -> ~str {
-        unsafe { wxString { ptr: wxPrintout_GetTitle(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxPrintout_GetTitle(self.ptr()) }.to_str() }
     }
     fn isPreview(&self) -> c_int {
         unsafe { wxPrintout_IsPreview(self.ptr()) }
     }
-    fn setDC<T: _wxDC>(&self, dc: &T) {
+    fn setDC<T: TWxDC>(&self, dc: &T) {
         unsafe { wxPrintout_SetDC(self.ptr(), dc.ptr()) }
     }
     fn setPPIPrinter(&self, x: c_int, y: c_int) {
@@ -6488,55 +6488,55 @@ pub trait _wxPrintout : _wxObject {
     }
 }
 
-pub struct wxPrivateDropTarget { ptr: *mut c_void }
-impl _wxPrivateDropTarget for wxPrivateDropTarget {}
-impl _wxDropTarget for wxPrivateDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxPrivateDropTarget { ptr: *mut c_void }
+impl TWxPrivateDropTarget for WxPrivateDropTarget {}
+impl TWxDropTarget for WxPrivateDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxPrivateDropTarget {
-    pub fn from(ptr: *mut c_void) -> wxPrivateDropTarget { wxPrivateDropTarget { ptr: ptr } }
-    pub fn null() -> wxPrivateDropTarget { wxPrivateDropTarget::from(0 as *mut c_void) }
+impl WxPrivateDropTarget {
+    pub fn from(ptr: *mut c_void) -> WxPrivateDropTarget { WxPrivateDropTarget { ptr: ptr } }
+    pub fn null() -> WxPrivateDropTarget { WxPrivateDropTarget::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxPrivateDropTarget : _wxDropTarget {
+pub trait TWxPrivateDropTarget : TWxDropTarget {
 }
 
-pub struct wxProcess { ptr: *mut c_void }
-impl _wxProcess for wxProcess {}
-impl _wxEvtHandler for wxProcess {}
-impl _wxObject for wxProcess { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxProcess { ptr: *mut c_void }
+impl TWxProcess for WxProcess {}
+impl TWxEvtHandler for WxProcess {}
+impl TWxObject for WxProcess { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxProcess {
-    pub fn from(ptr: *mut c_void) -> wxProcess { wxProcess { ptr: ptr } }
-    pub fn null() -> wxProcess { wxProcess::from(0 as *mut c_void) }
+impl WxProcess {
+    pub fn from(ptr: *mut c_void) -> WxProcess { WxProcess { ptr: ptr } }
+    pub fn null() -> WxProcess { WxProcess::from(0 as *mut c_void) }
     
-    pub fn newDefault<T: _wxWindow>(_prt: &T, _id: c_int) -> wxProcess {
-        unsafe { wxProcess { ptr: wxProcess_CreateDefault(_prt.ptr(), _id) } }
+    pub fn newDefault<T: TWxWindow>(_prt: &T, _id: c_int) -> WxProcess {
+        unsafe { WxProcess { ptr: wxProcess_CreateDefault(_prt.ptr(), _id) } }
     }
-    pub fn newRedirect<T: _wxWindow>(_prt: &T, _rdr: c_int) -> wxProcess {
-        unsafe { wxProcess { ptr: wxProcess_CreateRedirect(_prt.ptr(), _rdr) } }
+    pub fn newRedirect<T: TWxWindow>(_prt: &T, _rdr: c_int) -> WxProcess {
+        unsafe { WxProcess { ptr: wxProcess_CreateRedirect(_prt.ptr(), _rdr) } }
     }
-    pub fn open(cmd: &str, flags: c_int) -> wxProcess {
+    pub fn open(cmd: &str, flags: c_int) -> WxProcess {
         let cmd = wxT(cmd);
-        unsafe { wxProcess { ptr: wxProcess_Open(cmd.ptr(), flags) } }
+        unsafe { WxProcess { ptr: wxProcess_Open(cmd.ptr(), flags) } }
     }
 }
 
-pub trait _wxProcess : _wxEvtHandler {
+pub trait TWxProcess : TWxEvtHandler {
     fn closeOutput(&self) {
         unsafe { wxProcess_CloseOutput(self.ptr()) }
     }
     fn detach(&self) {
         unsafe { wxProcess_Detach(self.ptr()) }
     }
-    fn getErrorStream(&self) -> wxInputStream {
-        unsafe { wxInputStream { ptr: wxProcess_GetErrorStream(self.ptr()) } }
+    fn getErrorStream(&self) -> WxInputStream {
+        unsafe { WxInputStream { ptr: wxProcess_GetErrorStream(self.ptr()) } }
     }
-    fn getInputStream(&self) -> wxInputStream {
-        unsafe { wxInputStream { ptr: wxProcess_GetInputStream(self.ptr()) } }
+    fn getInputStream(&self) -> WxInputStream {
+        unsafe { WxInputStream { ptr: wxProcess_GetInputStream(self.ptr()) } }
     }
-    fn getOutputStream(&self) -> wxOutputStream {
-        unsafe { wxOutputStream { ptr: wxProcess_GetOutputStream(self.ptr()) } }
+    fn getOutputStream(&self) -> WxOutputStream {
+        unsafe { WxOutputStream { ptr: wxProcess_GetOutputStream(self.ptr()) } }
     }
     fn isRedirected(&self) -> c_int {
         unsafe { wxProcess_IsRedirected(self.ptr()) }
@@ -6555,18 +6555,18 @@ pub trait _wxProcess : _wxEvtHandler {
     }
 }
 
-pub struct wxProcessEvent { ptr: *mut c_void }
-impl _wxProcessEvent for wxProcessEvent {}
-impl _wxEvent for wxProcessEvent {}
-impl _wxObject for wxProcessEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxProcessEvent { ptr: *mut c_void }
+impl TWxProcessEvent for WxProcessEvent {}
+impl TWxEvent for WxProcessEvent {}
+impl TWxObject for WxProcessEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxProcessEvent {
-    pub fn from(ptr: *mut c_void) -> wxProcessEvent { wxProcessEvent { ptr: ptr } }
-    pub fn null() -> wxProcessEvent { wxProcessEvent::from(0 as *mut c_void) }
+impl WxProcessEvent {
+    pub fn from(ptr: *mut c_void) -> WxProcessEvent { WxProcessEvent { ptr: ptr } }
+    pub fn null() -> WxProcessEvent { WxProcessEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxProcessEvent : _wxEvent {
+pub trait TWxProcessEvent : TWxEvent {
     fn getExitCode(&self) -> c_int {
         unsafe { wxProcessEvent_GetExitCode(self.ptr()) }
     }
@@ -6575,26 +6575,26 @@ pub trait _wxProcessEvent : _wxEvent {
     }
 }
 
-pub struct wxProgressDialog { ptr: *mut c_void }
-impl _wxProgressDialog for wxProgressDialog {}
-impl _wxFrame for wxProgressDialog {}
-impl _wxTopLevelWindow for wxProgressDialog {}
-impl _wxWindow for wxProgressDialog {}
-impl _wxEvtHandler for wxProgressDialog {}
-impl _wxObject for wxProgressDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxProgressDialog { ptr: *mut c_void }
+impl TWxProgressDialog for WxProgressDialog {}
+impl TWxFrame for WxProgressDialog {}
+impl TWxTopLevelWindow for WxProgressDialog {}
+impl TWxWindow for WxProgressDialog {}
+impl TWxEvtHandler for WxProgressDialog {}
+impl TWxObject for WxProgressDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxProgressDialog {
-    pub fn from(ptr: *mut c_void) -> wxProgressDialog { wxProgressDialog { ptr: ptr } }
-    pub fn null() -> wxProgressDialog { wxProgressDialog::from(0 as *mut c_void) }
+impl WxProgressDialog {
+    pub fn from(ptr: *mut c_void) -> WxProgressDialog { WxProgressDialog { ptr: ptr } }
+    pub fn null() -> WxProgressDialog { WxProgressDialog::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(title: &str, message: &str, max: c_int, parent: &T, style: c_int) -> wxProgressDialog {
+    pub fn new<T: TWxWindow>(title: &str, message: &str, max: c_int, parent: &T, style: c_int) -> WxProgressDialog {
         let title = wxT(title);
         let message = wxT(message);
-        unsafe { wxProgressDialog { ptr: wxProgressDialog_Create(title.ptr(), message.ptr(), max, parent.ptr(), style) } }
+        unsafe { WxProgressDialog { ptr: wxProgressDialog_Create(title.ptr(), message.ptr(), max, parent.ptr(), style) } }
     }
 }
 
-pub trait _wxProgressDialog : _wxFrame {
+pub trait TWxProgressDialog : TWxFrame {
     fn update(&self, value: c_int) -> c_int {
         unsafe { wxProgressDialog_Update(self.ptr(), value) }
     }
@@ -6607,31 +6607,31 @@ pub trait _wxProgressDialog : _wxFrame {
     }
 }
 
-pub struct wxQuantize { ptr: *mut c_void }
-impl _wxQuantize for wxQuantize {}
-impl _wxObject for wxQuantize { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxQuantize { ptr: *mut c_void }
+impl TWxQuantize for WxQuantize {}
+impl TWxObject for WxQuantize { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxQuantize {
-    pub fn from(ptr: *mut c_void) -> wxQuantize { wxQuantize { ptr: ptr } }
-    pub fn null() -> wxQuantize { wxQuantize::from(0 as *mut c_void) }
+impl WxQuantize {
+    pub fn from(ptr: *mut c_void) -> WxQuantize { WxQuantize { ptr: ptr } }
+    pub fn null() -> WxQuantize { WxQuantize::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxQuantize : _wxObject {
+pub trait TWxQuantize : TWxObject {
 }
 
-pub struct wxQueryNewPaletteEvent { ptr: *mut c_void }
-impl _wxQueryNewPaletteEvent for wxQueryNewPaletteEvent {}
-impl _wxEvent for wxQueryNewPaletteEvent {}
-impl _wxObject for wxQueryNewPaletteEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxQueryNewPaletteEvent { ptr: *mut c_void }
+impl TWxQueryNewPaletteEvent for WxQueryNewPaletteEvent {}
+impl TWxEvent for WxQueryNewPaletteEvent {}
+impl TWxObject for WxQueryNewPaletteEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxQueryNewPaletteEvent {
-    pub fn from(ptr: *mut c_void) -> wxQueryNewPaletteEvent { wxQueryNewPaletteEvent { ptr: ptr } }
-    pub fn null() -> wxQueryNewPaletteEvent { wxQueryNewPaletteEvent::from(0 as *mut c_void) }
+impl WxQueryNewPaletteEvent {
+    pub fn from(ptr: *mut c_void) -> WxQueryNewPaletteEvent { WxQueryNewPaletteEvent { ptr: ptr } }
+    pub fn null() -> WxQueryNewPaletteEvent { WxQueryNewPaletteEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxQueryNewPaletteEvent : _wxEvent {
+pub trait TWxQueryNewPaletteEvent : TWxEvent {
     fn getPaletteRealized(&self) -> c_int {
         unsafe { wxQueryNewPaletteEvent_GetPaletteRealized(self.ptr()) }
     }
@@ -6640,24 +6640,24 @@ pub trait _wxQueryNewPaletteEvent : _wxEvent {
     }
 }
 
-pub struct wxRadioBox { ptr: *mut c_void }
-impl _wxRadioBox for wxRadioBox {}
-impl _wxControl for wxRadioBox {}
-impl _wxWindow for wxRadioBox {}
-impl _wxEvtHandler for wxRadioBox {}
-impl _wxObject for wxRadioBox { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxRadioBox { ptr: *mut c_void }
+impl TWxRadioBox for WxRadioBox {}
+impl TWxControl for WxRadioBox {}
+impl TWxWindow for WxRadioBox {}
+impl TWxEvtHandler for WxRadioBox {}
+impl TWxObject for WxRadioBox { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRadioBox {
-    pub fn from(ptr: *mut c_void) -> wxRadioBox { wxRadioBox { ptr: ptr } }
-    pub fn null() -> wxRadioBox { wxRadioBox::from(0 as *mut c_void) }
+impl WxRadioBox {
+    pub fn from(ptr: *mut c_void) -> WxRadioBox { WxRadioBox { ptr: ptr } }
+    pub fn null() -> WxRadioBox { WxRadioBox::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, _str: *mut *mut c_char, _dim: c_int, _stl: c_int) -> wxRadioBox {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, n: c_int, _str: *mut *mut c_char, _dim: c_int, _stl: c_int) -> WxRadioBox {
         let _txt = wxT(_txt);
-        unsafe { wxRadioBox { ptr: wxRadioBox_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, n, _str, _dim, _stl) } }
+        unsafe { WxRadioBox { ptr: wxRadioBox_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, n, _str, _dim, _stl) } }
     }
 }
 
-pub trait _wxRadioBox : _wxControl {
+pub trait TWxRadioBox : TWxControl {
     fn enableItem(&self, item: c_int, enable: c_int) {
         unsafe { wxRadioBox_EnableItem(self.ptr(), item, enable) }
     }
@@ -6666,7 +6666,7 @@ pub trait _wxRadioBox : _wxControl {
         unsafe { wxRadioBox_FindString(self.ptr(), s.ptr()) }
     }
     fn getItemLabel(&self, item: c_int) -> ~str {
-        unsafe { wxString { ptr: wxRadioBox_GetItemLabel(self.ptr(), item) }.to_str() }
+        unsafe { WxString { ptr: wxRadioBox_GetItemLabel(self.ptr(), item) }.to_str() }
     }
     fn getNumberOfRowsOrCols(&self) -> c_int {
         unsafe { wxRadioBox_GetNumberOfRowsOrCols(self.ptr()) }
@@ -6675,12 +6675,12 @@ pub trait _wxRadioBox : _wxControl {
         unsafe { wxRadioBox_GetSelection(self.ptr()) }
     }
     fn getStringSelection(&self) -> ~str {
-        unsafe { wxString { ptr: wxRadioBox_GetStringSelection(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxRadioBox_GetStringSelection(self.ptr()) }.to_str() }
     }
     fn number(&self) -> c_int {
         unsafe { wxRadioBox_Number(self.ptr()) }
     }
-    fn setItemBitmap<T: _wxBitmap>(&self, item: c_int, bitmap: &T) {
+    fn setItemBitmap<T: TWxBitmap>(&self, item: c_int, bitmap: &T) {
         unsafe { wxRadioBox_SetItemBitmap(self.ptr(), item, bitmap.ptr()) }
     }
     fn setItemLabel(&self, item: c_int, label: &str) {
@@ -6702,24 +6702,24 @@ pub trait _wxRadioBox : _wxControl {
     }
 }
 
-pub struct wxRadioButton { ptr: *mut c_void }
-impl _wxRadioButton for wxRadioButton {}
-impl _wxControl for wxRadioButton {}
-impl _wxWindow for wxRadioButton {}
-impl _wxEvtHandler for wxRadioButton {}
-impl _wxObject for wxRadioButton { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxRadioButton { ptr: *mut c_void }
+impl TWxRadioButton for WxRadioButton {}
+impl TWxControl for WxRadioButton {}
+impl TWxWindow for WxRadioButton {}
+impl TWxEvtHandler for WxRadioButton {}
+impl TWxObject for WxRadioButton { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRadioButton {
-    pub fn from(ptr: *mut c_void) -> wxRadioButton { wxRadioButton { ptr: ptr } }
-    pub fn null() -> wxRadioButton { wxRadioButton::from(0 as *mut c_void) }
+impl WxRadioButton {
+    pub fn from(ptr: *mut c_void) -> WxRadioButton { WxRadioButton { ptr: ptr } }
+    pub fn null() -> WxRadioButton { WxRadioButton::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxRadioButton {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxRadioButton {
         let _txt = wxT(_txt);
-        unsafe { wxRadioButton { ptr: wxRadioButton_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { WxRadioButton { ptr: wxRadioButton_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxRadioButton : _wxControl {
+pub trait TWxRadioButton : TWxControl {
     fn getValue(&self) -> c_int {
         unsafe { wxRadioButton_GetValue(self.ptr()) }
     }
@@ -6728,53 +6728,53 @@ pub trait _wxRadioButton : _wxControl {
     }
 }
 
-pub struct wxRealPoint { ptr: *mut c_void }
-impl _wxRealPoint for wxRealPoint { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxRealPoint { ptr: *mut c_void }
+impl TWxRealPoint for WxRealPoint { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRealPoint {
-    pub fn from(ptr: *mut c_void) -> wxRealPoint { wxRealPoint { ptr: ptr } }
-    pub fn null() -> wxRealPoint { wxRealPoint::from(0 as *mut c_void) }
+impl WxRealPoint {
+    pub fn from(ptr: *mut c_void) -> WxRealPoint { WxRealPoint { ptr: ptr } }
+    pub fn null() -> WxRealPoint { WxRealPoint::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxRealPoint {
+pub trait TWxRealPoint {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxRect { ptr: *mut c_void }
-impl _wxRect for wxRect { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxRect { ptr: *mut c_void }
+impl TWxRect for WxRect { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRect {
-    pub fn from(ptr: *mut c_void) -> wxRect { wxRect { ptr: ptr } }
-    pub fn null() -> wxRect { wxRect::from(0 as *mut c_void) }
+impl WxRect {
+    pub fn from(ptr: *mut c_void) -> WxRect { WxRect { ptr: ptr } }
+    pub fn null() -> WxRect { WxRect::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxRect {
+pub trait TWxRect {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxRegion { ptr: *mut c_void }
-impl _wxRegion for wxRegion {}
-impl _wxGDIObject for wxRegion {}
-impl _wxObject for wxRegion { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxRegion { ptr: *mut c_void }
+impl TWxRegion for WxRegion {}
+impl TWxGDIObject for WxRegion {}
+impl TWxObject for WxRegion { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRegion {
-    pub fn from(ptr: *mut c_void) -> wxRegion { wxRegion { ptr: ptr } }
-    pub fn null() -> wxRegion { wxRegion::from(0 as *mut c_void) }
+impl WxRegion {
+    pub fn from(ptr: *mut c_void) -> WxRegion { WxRegion { ptr: ptr } }
+    pub fn null() -> WxRegion { WxRegion::from(0 as *mut c_void) }
     
-    pub fn newDefault() -> wxRegion {
-        unsafe { wxRegion { ptr: wxRegion_CreateDefault() } }
+    pub fn newDefault() -> WxRegion {
+        unsafe { WxRegion { ptr: wxRegion_CreateDefault() } }
     }
-    pub fn newFromRect(x: c_int, y: c_int, w: c_int, h: c_int) -> wxRegion {
-        unsafe { wxRegion { ptr: wxRegion_CreateFromRect(x, y, w, h) } }
+    pub fn newFromRect(x: c_int, y: c_int, w: c_int, h: c_int) -> WxRegion {
+        unsafe { WxRegion { ptr: wxRegion_CreateFromRect(x, y, w, h) } }
     }
 }
 
-pub trait _wxRegion : _wxGDIObject {
-    fn assign<T: _wxRegion>(&self, region: &T) {
+pub trait TWxRegion : TWxGDIObject {
+    fn assign<T: TWxRegion>(&self, region: &T) {
         unsafe { wxRegion_Assign(self.ptr(), region.ptr()) }
     }
     fn clear(&self) {
@@ -6795,46 +6795,46 @@ pub trait _wxRegion : _wxGDIObject {
     fn intersectRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> c_int {
         unsafe { wxRegion_IntersectRect(self.ptr(), x, y, width, height) }
     }
-    fn intersectRegion<T: _wxRegion>(&self, region: &T) -> c_int {
+    fn intersectRegion<T: TWxRegion>(&self, region: &T) -> c_int {
         unsafe { wxRegion_IntersectRegion(self.ptr(), region.ptr()) }
     }
     fn subtractRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> c_int {
         unsafe { wxRegion_SubtractRect(self.ptr(), x, y, width, height) }
     }
-    fn subtractRegion<T: _wxRegion>(&self, region: &T) -> c_int {
+    fn subtractRegion<T: TWxRegion>(&self, region: &T) -> c_int {
         unsafe { wxRegion_SubtractRegion(self.ptr(), region.ptr()) }
     }
     fn unionRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> c_int {
         unsafe { wxRegion_UnionRect(self.ptr(), x, y, width, height) }
     }
-    fn unionRegion<T: _wxRegion>(&self, region: &T) -> c_int {
+    fn unionRegion<T: TWxRegion>(&self, region: &T) -> c_int {
         unsafe { wxRegion_UnionRegion(self.ptr(), region.ptr()) }
     }
     fn xorRect(&self, x: c_int, y: c_int, width: c_int, height: c_int) -> c_int {
         unsafe { wxRegion_XorRect(self.ptr(), x, y, width, height) }
     }
-    fn xorRegion<T: _wxRegion>(&self, region: &T) -> c_int {
+    fn xorRegion<T: TWxRegion>(&self, region: &T) -> c_int {
         unsafe { wxRegion_XorRegion(self.ptr(), region.ptr()) }
     }
 }
 
-pub struct wxRegionIterator { ptr: *mut c_void }
-impl _wxRegionIterator for wxRegionIterator {}
-impl _wxObject for wxRegionIterator { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxRegionIterator { ptr: *mut c_void }
+impl TWxRegionIterator for WxRegionIterator {}
+impl TWxObject for WxRegionIterator { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRegionIterator {
-    pub fn from(ptr: *mut c_void) -> wxRegionIterator { wxRegionIterator { ptr: ptr } }
-    pub fn null() -> wxRegionIterator { wxRegionIterator::from(0 as *mut c_void) }
+impl WxRegionIterator {
+    pub fn from(ptr: *mut c_void) -> WxRegionIterator { WxRegionIterator { ptr: ptr } }
+    pub fn null() -> WxRegionIterator { WxRegionIterator::from(0 as *mut c_void) }
     
-    pub fn new() -> wxRegionIterator {
-        unsafe { wxRegionIterator { ptr: wxRegionIterator_Create() } }
+    pub fn new() -> WxRegionIterator {
+        unsafe { WxRegionIterator { ptr: wxRegionIterator_Create() } }
     }
-    pub fn newFromRegion<T: _wxRegion>(region: &T) -> wxRegionIterator {
-        unsafe { wxRegionIterator { ptr: wxRegionIterator_CreateFromRegion(region.ptr()) } }
+    pub fn newFromRegion<T: TWxRegion>(region: &T) -> WxRegionIterator {
+        unsafe { WxRegionIterator { ptr: wxRegionIterator_CreateFromRegion(region.ptr()) } }
     }
 }
 
-pub trait _wxRegionIterator : _wxObject {
+pub trait TWxRegionIterator : TWxObject {
     fn getHeight(&self) -> c_int {
         unsafe { wxRegionIterator_GetHeight(self.ptr()) }
     }
@@ -6856,80 +6856,80 @@ pub trait _wxRegionIterator : _wxObject {
     fn reset(&self) {
         unsafe { wxRegionIterator_Reset(self.ptr()) }
     }
-    fn resetToRegion<T: _wxRegion>(&self, region: &T) {
+    fn resetToRegion<T: TWxRegion>(&self, region: &T) {
         unsafe { wxRegionIterator_ResetToRegion(self.ptr(), region.ptr()) }
     }
 }
 
-pub struct wxSVGFileDC { ptr: *mut c_void }
-impl _wxSVGFileDC for wxSVGFileDC {}
-impl _wxDC for wxSVGFileDC {}
-impl _wxObject for wxSVGFileDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSVGFileDC { ptr: *mut c_void }
+impl TWxSVGFileDC for WxSVGFileDC {}
+impl TWxDC for WxSVGFileDC {}
+impl TWxObject for WxSVGFileDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSVGFileDC {
-    pub fn from(ptr: *mut c_void) -> wxSVGFileDC { wxSVGFileDC { ptr: ptr } }
-    pub fn null() -> wxSVGFileDC { wxSVGFileDC::from(0 as *mut c_void) }
+impl WxSVGFileDC {
+    pub fn from(ptr: *mut c_void) -> WxSVGFileDC { WxSVGFileDC { ptr: ptr } }
+    pub fn null() -> WxSVGFileDC { WxSVGFileDC::from(0 as *mut c_void) }
     
-    pub fn new(fileName: &str) -> wxSVGFileDC {
+    pub fn new(fileName: &str) -> WxSVGFileDC {
         let fileName = wxT(fileName);
-        unsafe { wxSVGFileDC { ptr: wxSVGFileDC_Create(fileName.ptr()) } }
+        unsafe { WxSVGFileDC { ptr: wxSVGFileDC_Create(fileName.ptr()) } }
     }
-    pub fn newWithSize(fileName: &str, w: c_int, h: c_int) -> wxSVGFileDC {
+    pub fn newWithSize(fileName: &str, w: c_int, h: c_int) -> WxSVGFileDC {
         let fileName = wxT(fileName);
-        unsafe { wxSVGFileDC { ptr: wxSVGFileDC_CreateWithSize(fileName.ptr(), w, h) } }
+        unsafe { WxSVGFileDC { ptr: wxSVGFileDC_CreateWithSize(fileName.ptr(), w, h) } }
     }
-    pub fn newWithSizeAndResolution(fileName: &str, w: c_int, h: c_int, a_dpi: c_float) -> wxSVGFileDC {
+    pub fn newWithSizeAndResolution(fileName: &str, w: c_int, h: c_int, a_dpi: c_float) -> WxSVGFileDC {
         let fileName = wxT(fileName);
-        unsafe { wxSVGFileDC { ptr: wxSVGFileDC_CreateWithSizeAndResolution(fileName.ptr(), w, h, a_dpi) } }
+        unsafe { WxSVGFileDC { ptr: wxSVGFileDC_CreateWithSizeAndResolution(fileName.ptr(), w, h, a_dpi) } }
     }
 }
 
-pub trait _wxSVGFileDC : _wxDC {
+pub trait TWxSVGFileDC : TWxDC {
 }
 
-pub struct wxScreenDC { ptr: *mut c_void }
-impl _wxScreenDC for wxScreenDC {}
-impl _wxDC for wxScreenDC {}
-impl _wxObject for wxScreenDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxScreenDC { ptr: *mut c_void }
+impl TWxScreenDC for WxScreenDC {}
+impl TWxDC for WxScreenDC {}
+impl TWxObject for WxScreenDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxScreenDC {
-    pub fn from(ptr: *mut c_void) -> wxScreenDC { wxScreenDC { ptr: ptr } }
-    pub fn null() -> wxScreenDC { wxScreenDC::from(0 as *mut c_void) }
+impl WxScreenDC {
+    pub fn from(ptr: *mut c_void) -> WxScreenDC { WxScreenDC { ptr: ptr } }
+    pub fn null() -> WxScreenDC { WxScreenDC::from(0 as *mut c_void) }
     
-    pub fn new() -> wxScreenDC {
-        unsafe { wxScreenDC { ptr: wxScreenDC_Create() } }
+    pub fn new() -> WxScreenDC {
+        unsafe { WxScreenDC { ptr: wxScreenDC_Create() } }
     }
 }
 
-pub trait _wxScreenDC : _wxDC {
+pub trait TWxScreenDC : TWxDC {
     fn endDrawingOnTop(&self) -> c_int {
         unsafe { wxScreenDC_EndDrawingOnTop(self.ptr()) }
     }
     fn startDrawingOnTop(&self, x: c_int, y: c_int, w: c_int, h: c_int) -> c_int {
         unsafe { wxScreenDC_StartDrawingOnTop(self.ptr(), x, y, w, h) }
     }
-    fn startDrawingOnTopOfWin<T: _wxWindow>(&self, win: &T) -> c_int {
+    fn startDrawingOnTopOfWin<T: TWxWindow>(&self, win: &T) -> c_int {
         unsafe { wxScreenDC_StartDrawingOnTopOfWin(self.ptr(), win.ptr()) }
     }
 }
 
-pub struct wxScrollBar { ptr: *mut c_void }
-impl _wxScrollBar for wxScrollBar {}
-impl _wxControl for wxScrollBar {}
-impl _wxWindow for wxScrollBar {}
-impl _wxEvtHandler for wxScrollBar {}
-impl _wxObject for wxScrollBar { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxScrollBar { ptr: *mut c_void }
+impl TWxScrollBar for WxScrollBar {}
+impl TWxControl for WxScrollBar {}
+impl TWxWindow for WxScrollBar {}
+impl TWxEvtHandler for WxScrollBar {}
+impl TWxObject for WxScrollBar { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxScrollBar {
-    pub fn from(ptr: *mut c_void) -> wxScrollBar { wxScrollBar { ptr: ptr } }
-    pub fn null() -> wxScrollBar { wxScrollBar::from(0 as *mut c_void) }
+impl WxScrollBar {
+    pub fn from(ptr: *mut c_void) -> WxScrollBar { WxScrollBar { ptr: ptr } }
+    pub fn null() -> WxScrollBar { WxScrollBar::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxScrollBar {
-        unsafe { wxScrollBar { ptr: wxScrollBar_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxScrollBar {
+        unsafe { WxScrollBar { ptr: wxScrollBar_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxScrollBar : _wxControl {
+pub trait TWxScrollBar : TWxControl {
     fn getPageSize(&self) -> c_int {
         unsafe { wxScrollBar_GetPageSize(self.ptr()) }
     }
@@ -6947,18 +6947,18 @@ pub trait _wxScrollBar : _wxControl {
     }
 }
 
-pub struct wxScrollEvent { ptr: *mut c_void }
-impl _wxScrollEvent for wxScrollEvent {}
-impl _wxEvent for wxScrollEvent {}
-impl _wxObject for wxScrollEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxScrollEvent { ptr: *mut c_void }
+impl TWxScrollEvent for WxScrollEvent {}
+impl TWxEvent for WxScrollEvent {}
+impl TWxObject for WxScrollEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxScrollEvent {
-    pub fn from(ptr: *mut c_void) -> wxScrollEvent { wxScrollEvent { ptr: ptr } }
-    pub fn null() -> wxScrollEvent { wxScrollEvent::from(0 as *mut c_void) }
+impl WxScrollEvent {
+    pub fn from(ptr: *mut c_void) -> WxScrollEvent { WxScrollEvent { ptr: ptr } }
+    pub fn null() -> WxScrollEvent { WxScrollEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxScrollEvent : _wxEvent {
+pub trait TWxScrollEvent : TWxEvent {
     fn getOrientation(&self) -> c_int {
         unsafe { wxScrollEvent_GetOrientation(self.ptr()) }
     }
@@ -6967,18 +6967,18 @@ pub trait _wxScrollEvent : _wxEvent {
     }
 }
 
-pub struct wxScrollWinEvent { ptr: *mut c_void }
-impl _wxScrollWinEvent for wxScrollWinEvent {}
-impl _wxEvent for wxScrollWinEvent {}
-impl _wxObject for wxScrollWinEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxScrollWinEvent { ptr: *mut c_void }
+impl TWxScrollWinEvent for WxScrollWinEvent {}
+impl TWxEvent for WxScrollWinEvent {}
+impl TWxObject for WxScrollWinEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxScrollWinEvent {
-    pub fn from(ptr: *mut c_void) -> wxScrollWinEvent { wxScrollWinEvent { ptr: ptr } }
-    pub fn null() -> wxScrollWinEvent { wxScrollWinEvent::from(0 as *mut c_void) }
+impl WxScrollWinEvent {
+    pub fn from(ptr: *mut c_void) -> WxScrollWinEvent { WxScrollWinEvent { ptr: ptr } }
+    pub fn null() -> WxScrollWinEvent { WxScrollWinEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxScrollWinEvent : _wxEvent {
+pub trait TWxScrollWinEvent : TWxEvent {
     fn getOrientation(&self) -> c_int {
         unsafe { wxScrollWinEvent_GetOrientation(self.ptr()) }
     }
@@ -6993,23 +6993,23 @@ pub trait _wxScrollWinEvent : _wxEvent {
     }
 }
 
-pub struct wxScrolledWindow { ptr: *mut c_void }
-impl _wxScrolledWindow for wxScrolledWindow {}
-impl _wxPanel for wxScrolledWindow {}
-impl _wxWindow for wxScrolledWindow {}
-impl _wxEvtHandler for wxScrolledWindow {}
-impl _wxObject for wxScrolledWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxScrolledWindow { ptr: *mut c_void }
+impl TWxScrolledWindow for WxScrolledWindow {}
+impl TWxPanel for WxScrolledWindow {}
+impl TWxWindow for WxScrolledWindow {}
+impl TWxEvtHandler for WxScrolledWindow {}
+impl TWxObject for WxScrolledWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxScrolledWindow {
-    pub fn from(ptr: *mut c_void) -> wxScrolledWindow { wxScrolledWindow { ptr: ptr } }
-    pub fn null() -> wxScrolledWindow { wxScrolledWindow::from(0 as *mut c_void) }
+impl WxScrolledWindow {
+    pub fn from(ptr: *mut c_void) -> WxScrolledWindow { WxScrolledWindow { ptr: ptr } }
+    pub fn null() -> WxScrolledWindow { WxScrolledWindow::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxScrolledWindow {
-        unsafe { wxScrolledWindow { ptr: wxScrolledWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxScrolledWindow {
+        unsafe { WxScrolledWindow { ptr: wxScrolledWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxScrolledWindow : _wxPanel {
+pub trait TWxScrolledWindow : TWxPanel {
     fn adjustScrollbars(&self) {
         unsafe { wxScrolledWindow_AdjustScrollbars(self.ptr()) }
     }
@@ -7034,13 +7034,13 @@ pub trait _wxScrolledWindow : _wxPanel {
     fn getScrollPixelsPerUnit(&self, _x: *mut c_void, _y: *mut c_void) {
         unsafe { wxScrolledWindow_GetScrollPixelsPerUnit(self.ptr(), _x, _y) }
     }
-    fn getTargetWindow(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxScrolledWindow_GetTargetWindow(self.ptr()) } }
+    fn getTargetWindow(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxScrolledWindow_GetTargetWindow(self.ptr()) } }
     }
     fn getViewStart(&self, _x: *mut c_void, _y: *mut c_void) {
         unsafe { wxScrolledWindow_GetViewStart(self.ptr(), _x, _y) }
     }
-    fn onDraw<T: _wxDC>(&self, dc: &T) {
+    fn onDraw<T: TWxDC>(&self, dc: &T) {
         unsafe { wxScrolledWindow_OnDraw(self.ptr(), dc.ptr()) }
     }
     fn scroll(&self, x_pos: c_int, y_pos: c_int) {
@@ -7058,7 +7058,7 @@ pub trait _wxScrolledWindow : _wxPanel {
     fn showScrollbars(&self, showh: c_int, showv: c_int) {
         unsafe { wxScrolledWindow_ShowScrollbars(self.ptr(), showh, showv) }
     }
-    fn setTargetWindow<T: _wxWindow>(&self, target: &T) {
+    fn setTargetWindow<T: TWxWindow>(&self, target: &T) {
         unsafe { wxScrolledWindow_SetTargetWindow(self.ptr(), target.ptr()) }
     }
     fn viewStart(&self, _x: *mut c_void, _y: *mut c_void) {
@@ -7069,20 +7069,20 @@ pub trait _wxScrolledWindow : _wxPanel {
     }
 }
 
-pub struct wxSetCursorEvent { ptr: *mut c_void }
-impl _wxSetCursorEvent for wxSetCursorEvent {}
-impl _wxEvent for wxSetCursorEvent {}
-impl _wxObject for wxSetCursorEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSetCursorEvent { ptr: *mut c_void }
+impl TWxSetCursorEvent for WxSetCursorEvent {}
+impl TWxEvent for WxSetCursorEvent {}
+impl TWxObject for WxSetCursorEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSetCursorEvent {
-    pub fn from(ptr: *mut c_void) -> wxSetCursorEvent { wxSetCursorEvent { ptr: ptr } }
-    pub fn null() -> wxSetCursorEvent { wxSetCursorEvent::from(0 as *mut c_void) }
+impl WxSetCursorEvent {
+    pub fn from(ptr: *mut c_void) -> WxSetCursorEvent { WxSetCursorEvent { ptr: ptr } }
+    pub fn null() -> WxSetCursorEvent { WxSetCursorEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxSetCursorEvent : _wxEvent {
-    fn getCursor(&self) -> wxCursor {
-        unsafe { wxCursor { ptr: wxSetCursorEvent_GetCursor(self.ptr()) } }
+pub trait TWxSetCursorEvent : TWxEvent {
+    fn getCursor(&self) -> WxCursor {
+        unsafe { WxCursor { ptr: wxSetCursorEvent_GetCursor(self.ptr()) } }
     }
     fn getX(&self) -> c_int {
         unsafe { wxSetCursorEvent_GetX(self.ptr()) }
@@ -7093,23 +7093,23 @@ pub trait _wxSetCursorEvent : _wxEvent {
     fn hasCursor(&self) -> c_int {
         unsafe { wxSetCursorEvent_HasCursor(self.ptr()) }
     }
-    fn setCursor<T: _wxCursor>(&self, cursor: &T) {
+    fn setCursor<T: TWxCursor>(&self, cursor: &T) {
         unsafe { wxSetCursorEvent_SetCursor(self.ptr(), cursor.ptr()) }
     }
 }
 
-pub struct wxShowEvent { ptr: *mut c_void }
-impl _wxShowEvent for wxShowEvent {}
-impl _wxEvent for wxShowEvent {}
-impl _wxObject for wxShowEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxShowEvent { ptr: *mut c_void }
+impl TWxShowEvent for WxShowEvent {}
+impl TWxEvent for WxShowEvent {}
+impl TWxObject for WxShowEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxShowEvent {
-    pub fn from(ptr: *mut c_void) -> wxShowEvent { wxShowEvent { ptr: ptr } }
-    pub fn null() -> wxShowEvent { wxShowEvent::from(0 as *mut c_void) }
+impl WxShowEvent {
+    pub fn from(ptr: *mut c_void) -> WxShowEvent { WxShowEvent { ptr: ptr } }
+    pub fn null() -> WxShowEvent { WxShowEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxShowEvent : _wxEvent {
+pub trait TWxShowEvent : TWxEvent {
     fn isShown(&self) -> c_int {
         unsafe { wxShowEvent_IsShown(self.ptr()) }
     }
@@ -7118,52 +7118,52 @@ pub trait _wxShowEvent : _wxEvent {
     }
 }
 
-pub struct wxSimpleHelpProvider { ptr: *mut c_void }
-impl _wxSimpleHelpProvider for wxSimpleHelpProvider {}
-impl _wxHelpProvider for wxSimpleHelpProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSimpleHelpProvider { ptr: *mut c_void }
+impl TWxSimpleHelpProvider for WxSimpleHelpProvider {}
+impl TWxHelpProvider for WxSimpleHelpProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSimpleHelpProvider {
-    pub fn from(ptr: *mut c_void) -> wxSimpleHelpProvider { wxSimpleHelpProvider { ptr: ptr } }
-    pub fn null() -> wxSimpleHelpProvider { wxSimpleHelpProvider::from(0 as *mut c_void) }
+impl WxSimpleHelpProvider {
+    pub fn from(ptr: *mut c_void) -> WxSimpleHelpProvider { WxSimpleHelpProvider { ptr: ptr } }
+    pub fn null() -> WxSimpleHelpProvider { WxSimpleHelpProvider::from(0 as *mut c_void) }
     
-    pub fn new() -> wxSimpleHelpProvider {
-        unsafe { wxSimpleHelpProvider { ptr: wxSimpleHelpProvider_Create() } }
+    pub fn new() -> WxSimpleHelpProvider {
+        unsafe { WxSimpleHelpProvider { ptr: wxSimpleHelpProvider_Create() } }
     }
 }
 
-pub trait _wxSimpleHelpProvider : _wxHelpProvider {
+pub trait TWxSimpleHelpProvider : TWxHelpProvider {
 }
 
-pub struct wxSingleChoiceDialog { ptr: *mut c_void }
-impl _wxSingleChoiceDialog for wxSingleChoiceDialog {}
-impl _wxDialog for wxSingleChoiceDialog {}
-impl _wxTopLevelWindow for wxSingleChoiceDialog {}
-impl _wxWindow for wxSingleChoiceDialog {}
-impl _wxEvtHandler for wxSingleChoiceDialog {}
-impl _wxObject for wxSingleChoiceDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSingleChoiceDialog { ptr: *mut c_void }
+impl TWxSingleChoiceDialog for WxSingleChoiceDialog {}
+impl TWxDialog for WxSingleChoiceDialog {}
+impl TWxTopLevelWindow for WxSingleChoiceDialog {}
+impl TWxWindow for WxSingleChoiceDialog {}
+impl TWxEvtHandler for WxSingleChoiceDialog {}
+impl TWxObject for WxSingleChoiceDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSingleChoiceDialog {
-    pub fn from(ptr: *mut c_void) -> wxSingleChoiceDialog { wxSingleChoiceDialog { ptr: ptr } }
-    pub fn null() -> wxSingleChoiceDialog { wxSingleChoiceDialog::from(0 as *mut c_void) }
+impl WxSingleChoiceDialog {
+    pub fn from(ptr: *mut c_void) -> WxSingleChoiceDialog { WxSingleChoiceDialog { ptr: ptr } }
+    pub fn null() -> WxSingleChoiceDialog { WxSingleChoiceDialog::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxSingleChoiceDialog : _wxDialog {
+pub trait TWxSingleChoiceDialog : TWxDialog {
 }
 
-pub struct wxSize { ptr: *mut c_void }
-impl _wxSize for wxSize { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSize { ptr: *mut c_void }
+impl TWxSize for WxSize { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSize {
-    pub fn from(ptr: *mut c_void) -> wxSize { wxSize { ptr: ptr } }
-    pub fn null() -> wxSize { wxSize::from(0 as *mut c_void) }
+impl WxSize {
+    pub fn from(ptr: *mut c_void) -> WxSize { WxSize { ptr: ptr } }
+    pub fn null() -> WxSize { WxSize::from(0 as *mut c_void) }
     
-    pub fn new(w: c_int, h: c_int) -> wxSize {
-        unsafe { wxSize { ptr: wxSize_Create(w, h) } }
+    pub fn new(w: c_int, h: c_int) -> WxSize {
+        unsafe { WxSize { ptr: wxSize_Create(w, h) } }
     }
 }
 
-pub trait _wxSize {
+pub trait TWxSize {
     fn ptr(&self) -> *mut c_void;
     
     fn getHeight(&self) -> c_int {
@@ -7180,68 +7180,68 @@ pub trait _wxSize {
     }
 }
 
-pub struct wxSizeEvent { ptr: *mut c_void }
-impl _wxSizeEvent for wxSizeEvent {}
-impl _wxEvent for wxSizeEvent {}
-impl _wxObject for wxSizeEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSizeEvent { ptr: *mut c_void }
+impl TWxSizeEvent for WxSizeEvent {}
+impl TWxEvent for WxSizeEvent {}
+impl TWxObject for WxSizeEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSizeEvent {
-    pub fn from(ptr: *mut c_void) -> wxSizeEvent { wxSizeEvent { ptr: ptr } }
-    pub fn null() -> wxSizeEvent { wxSizeEvent::from(0 as *mut c_void) }
+impl WxSizeEvent {
+    pub fn from(ptr: *mut c_void) -> WxSizeEvent { WxSizeEvent { ptr: ptr } }
+    pub fn null() -> WxSizeEvent { WxSizeEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxSizeEvent : _wxEvent {
-    fn getSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxSizeEvent_GetSize(self.ptr()) } }
+pub trait TWxSizeEvent : TWxEvent {
+    fn getSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxSizeEvent_GetSize(self.ptr()) } }
     }
 }
 
-pub struct wxSizer { ptr: *mut c_void }
-impl _wxSizer for wxSizer {}
-impl _wxObject for wxSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSizer { ptr: *mut c_void }
+impl TWxSizer for WxSizer {}
+impl TWxObject for WxSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSizer {
-    pub fn from(ptr: *mut c_void) -> wxSizer { wxSizer { ptr: ptr } }
-    pub fn null() -> wxSizer { wxSizer::from(0 as *mut c_void) }
+impl WxSizer {
+    pub fn from(ptr: *mut c_void) -> WxSizer { WxSizer { ptr: ptr } }
+    pub fn null() -> WxSizer { WxSizer::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxSizer : _wxObject {
+pub trait TWxSizer : TWxObject {
     fn add(&self, width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_Add(self.ptr(), width, height, option, flag, border, userData) }
     }
-    fn addSizer<T: _wxSizer>(&self, sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
+    fn addSizer<T: TWxSizer>(&self, sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_AddSizer(self.ptr(), sizer.ptr(), option, flag, border, userData) }
     }
-    fn addWindow<T: _wxWindow>(&self, window: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
+    fn addWindow<T: TWxWindow>(&self, window: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_AddWindow(self.ptr(), window.ptr(), option, flag, border, userData) }
     }
-    fn calcMin(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxSizer_CalcMin(self.ptr()) } }
+    fn calcMin(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxSizer_CalcMin(self.ptr()) } }
     }
-    fn fit<T: _wxWindow>(&self, window: &T) {
+    fn fit<T: TWxWindow>(&self, window: &T) {
         unsafe { wxSizer_Fit(self.ptr(), window.ptr()) }
     }
     fn getChildren(&self, _res: *mut c_void, _cnt: c_int) -> c_int {
         unsafe { wxSizer_GetChildren(self.ptr(), _res, _cnt) }
     }
-    fn getMinSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxSizer_GetMinSize(self.ptr()) } }
+    fn getMinSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxSizer_GetMinSize(self.ptr()) } }
     }
-    fn getPosition(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxSizer_GetPosition(self.ptr()) } }
+    fn getPosition(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxSizer_GetPosition(self.ptr()) } }
     }
-    fn getSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxSizer_GetSize(self.ptr()) } }
+    fn getSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxSizer_GetSize(self.ptr()) } }
     }
     fn insert(&self, before: c_int, width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_Insert(self.ptr(), before, width, height, option, flag, border, userData) }
     }
-    fn insertSizer<T: _wxSizer>(&self, before: c_int, sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
+    fn insertSizer<T: TWxSizer>(&self, before: c_int, sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_InsertSizer(self.ptr(), before, sizer.ptr(), option, flag, border, userData) }
     }
-    fn insertWindow<T: _wxWindow>(&self, before: c_int, window: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
+    fn insertWindow<T: TWxWindow>(&self, before: c_int, window: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_InsertWindow(self.ptr(), before, window.ptr(), option, flag, border, userData) }
     }
     fn layout(&self) {
@@ -7250,10 +7250,10 @@ pub trait _wxSizer : _wxObject {
     fn prepend(&self, width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_Prepend(self.ptr(), width, height, option, flag, border, userData) }
     }
-    fn prependSizer<T: _wxSizer>(&self, sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
+    fn prependSizer<T: TWxSizer>(&self, sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_PrependSizer(self.ptr(), sizer.ptr(), option, flag, border, userData) }
     }
-    fn prependWindow<T: _wxWindow>(&self, window: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
+    fn prependWindow<T: TWxWindow>(&self, window: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_PrependWindow(self.ptr(), window.ptr(), option, flag, border, userData) }
     }
     fn recalcSizes(&self) {
@@ -7265,16 +7265,16 @@ pub trait _wxSizer : _wxObject {
     fn setItemMinSize(&self, pos: c_int, width: c_int, height: c_int) {
         unsafe { wxSizer_SetItemMinSize(self.ptr(), pos, width, height) }
     }
-    fn setItemMinSizeSizer<T: _wxSizer>(&self, sizer: &T, width: c_int, height: c_int) {
+    fn setItemMinSizeSizer<T: TWxSizer>(&self, sizer: &T, width: c_int, height: c_int) {
         unsafe { wxSizer_SetItemMinSizeSizer(self.ptr(), sizer.ptr(), width, height) }
     }
-    fn setItemMinSizeWindow<T: _wxWindow>(&self, window: &T, width: c_int, height: c_int) {
+    fn setItemMinSizeWindow<T: TWxWindow>(&self, window: &T, width: c_int, height: c_int) {
         unsafe { wxSizer_SetItemMinSizeWindow(self.ptr(), window.ptr(), width, height) }
     }
     fn setMinSize(&self, width: c_int, height: c_int) {
         unsafe { wxSizer_SetMinSize(self.ptr(), width, height) }
     }
-    fn setSizeHints<T: _wxWindow>(&self, window: &T) {
+    fn setSizeHints<T: TWxWindow>(&self, window: &T) {
         unsafe { wxSizer_SetSizeHints(self.ptr(), window.ptr()) }
     }
     fn addSpacer(&self, size: c_int) {
@@ -7286,44 +7286,44 @@ pub trait _wxSizer : _wxObject {
     fn clear(&self, delete_windows: c_int) {
         unsafe { wxSizer_Clear(self.ptr(), delete_windows) }
     }
-    fn detachWindow<T: _wxWindow>(&self, window: &T) -> c_int {
+    fn detachWindow<T: TWxWindow>(&self, window: &T) -> c_int {
         unsafe { wxSizer_DetachWindow(self.ptr(), window.ptr()) }
     }
-    fn detachSizer<T: _wxSizer>(&self, sizer: &T) -> c_int {
+    fn detachSizer<T: TWxSizer>(&self, sizer: &T) -> c_int {
         unsafe { wxSizer_DetachSizer(self.ptr(), sizer.ptr()) }
     }
     fn detach(&self, index: c_int) -> c_int {
         unsafe { wxSizer_Detach(self.ptr(), index) }
     }
-    fn fitInside<T: _wxWindow>(&self, window: &T) {
+    fn fitInside<T: TWxWindow>(&self, window: &T) {
         unsafe { wxSizer_FitInside(self.ptr(), window.ptr()) }
     }
-    fn getContainingWindow(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxSizer_GetContainingWindow(self.ptr()) } }
+    fn getContainingWindow(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxSizer_GetContainingWindow(self.ptr()) } }
     }
-    fn getItemWindow<T: _wxWindow>(&self, window: &T, recursive: c_int) -> wxSizerItem {
-        unsafe { wxSizerItem { ptr: wxSizer_GetItemWindow(self.ptr(), window.ptr(), recursive) } }
+    fn getItemWindow<T: TWxWindow>(&self, window: &T, recursive: c_int) -> WxSizerItem {
+        unsafe { WxSizerItem { ptr: wxSizer_GetItemWindow(self.ptr(), window.ptr(), recursive) } }
     }
-    fn getItemSizer<T: _wxSizer>(&self, window: &T, recursive: c_int) -> wxSizerItem {
-        unsafe { wxSizerItem { ptr: wxSizer_GetItemSizer(self.ptr(), window.ptr(), recursive) } }
+    fn getItemSizer<T: TWxSizer>(&self, window: &T, recursive: c_int) -> WxSizerItem {
+        unsafe { WxSizerItem { ptr: wxSizer_GetItemSizer(self.ptr(), window.ptr(), recursive) } }
     }
-    fn getItem(&self, index: c_int) -> wxSizerItem {
-        unsafe { wxSizerItem { ptr: wxSizer_GetItem(self.ptr(), index) } }
+    fn getItem(&self, index: c_int) -> WxSizerItem {
+        unsafe { WxSizerItem { ptr: wxSizer_GetItem(self.ptr(), index) } }
     }
-    fn hideWindow<T: _wxWindow>(&self, window: &T) -> c_int {
+    fn hideWindow<T: TWxWindow>(&self, window: &T) -> c_int {
         unsafe { wxSizer_HideWindow(self.ptr(), window.ptr()) }
     }
-    fn hideSizer<T: _wxSizer>(&self, sizer: &T) -> c_int {
+    fn hideSizer<T: TWxSizer>(&self, sizer: &T) -> c_int {
         unsafe { wxSizer_HideSizer(self.ptr(), sizer.ptr()) }
     }
     fn hide(&self, index: c_int) -> c_int {
         unsafe { wxSizer_Hide(self.ptr(), index) }
     }
-    fn insertSpacer(&self, index: c_int, size: c_int) -> wxSizerItem {
-        unsafe { wxSizerItem { ptr: wxSizer_InsertSpacer(self.ptr(), index, size) } }
+    fn insertSpacer(&self, index: c_int, size: c_int) -> WxSizerItem {
+        unsafe { WxSizerItem { ptr: wxSizer_InsertSpacer(self.ptr(), index, size) } }
     }
-    fn insertStretchSpacer(&self, index: c_int, prop: c_int) -> wxSizerItem {
-        unsafe { wxSizerItem { ptr: wxSizer_InsertStretchSpacer(self.ptr(), index, prop) } }
+    fn insertStretchSpacer(&self, index: c_int, prop: c_int) -> WxSizerItem {
+        unsafe { WxSizerItem { ptr: wxSizer_InsertStretchSpacer(self.ptr(), index, prop) } }
     }
     fn isShownWindow(&self, window: *mut *mut c_void) -> c_int {
         unsafe { wxSizer_IsShownWindow(self.ptr(), window) }
@@ -7334,57 +7334,57 @@ pub trait _wxSizer : _wxObject {
     fn isShown(&self, index: c_int) -> c_int {
         unsafe { wxSizer_IsShown(self.ptr(), index) }
     }
-    fn prependSpacer(&self, size: c_int) -> wxSizerItem {
-        unsafe { wxSizerItem { ptr: wxSizer_PrependSpacer(self.ptr(), size) } }
+    fn prependSpacer(&self, size: c_int) -> WxSizerItem {
+        unsafe { WxSizerItem { ptr: wxSizer_PrependSpacer(self.ptr(), size) } }
     }
-    fn prependStretchSpacer(&self, prop: c_int) -> wxSizerItem {
-        unsafe { wxSizerItem { ptr: wxSizer_PrependStretchSpacer(self.ptr(), prop) } }
+    fn prependStretchSpacer(&self, prop: c_int) -> WxSizerItem {
+        unsafe { WxSizerItem { ptr: wxSizer_PrependStretchSpacer(self.ptr(), prop) } }
     }
-    fn replaceWindow<T: _wxWindow, U: _wxWindow>(&self, oldwin: &T, newwin: &U, recursive: c_int) -> c_int {
+    fn replaceWindow<T: TWxWindow, U: TWxWindow>(&self, oldwin: &T, newwin: &U, recursive: c_int) -> c_int {
         unsafe { wxSizer_ReplaceWindow(self.ptr(), oldwin.ptr(), newwin.ptr(), recursive) }
     }
-    fn replaceSizer<T: _wxSizer, U: _wxSizer>(&self, oldsz: &T, newsz: &U, recursive: c_int) -> c_int {
+    fn replaceSizer<T: TWxSizer, U: TWxSizer>(&self, oldsz: &T, newsz: &U, recursive: c_int) -> c_int {
         unsafe { wxSizer_ReplaceSizer(self.ptr(), oldsz.ptr(), newsz.ptr(), recursive) }
     }
-    fn replace<T: _wxSizerItem>(&self, oldindex: c_int, newitem: &T) -> c_int {
+    fn replace<T: TWxSizerItem>(&self, oldindex: c_int, newitem: &T) -> c_int {
         unsafe { wxSizer_Replace(self.ptr(), oldindex, newitem.ptr()) }
     }
-    fn setVirtualSizeHints<T: _wxWindow>(&self, window: &T) {
+    fn setVirtualSizeHints<T: TWxWindow>(&self, window: &T) {
         unsafe { wxSizer_SetVirtualSizeHints(self.ptr(), window.ptr()) }
     }
-    fn showWindow<T: _wxWindow>(&self, window: &T, show: c_int, recursive: c_int) -> c_int {
+    fn showWindow<T: TWxWindow>(&self, window: &T, show: c_int, recursive: c_int) -> c_int {
         unsafe { wxSizer_ShowWindow(self.ptr(), window.ptr(), show, recursive) }
     }
-    fn showSizer<T: _wxSizer>(&self, sizer: &T, show: c_int, recursive: c_int) -> c_int {
+    fn showSizer<T: TWxSizer>(&self, sizer: &T, show: c_int, recursive: c_int) -> c_int {
         unsafe { wxSizer_ShowSizer(self.ptr(), sizer.ptr(), show, recursive) }
     }
-    fn show<T: _wxSizer>(&self, sizer: &T, index: c_int, show: c_int) -> c_int {
+    fn show<T: TWxSizer>(&self, sizer: &T, index: c_int, show: c_int) -> c_int {
         unsafe { wxSizer_Show(self.ptr(), sizer.ptr(), index, show) }
     }
 }
 
-pub struct wxSizerItem { ptr: *mut c_void }
-impl _wxSizerItem for wxSizerItem {}
-impl _wxObject for wxSizerItem { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSizerItem { ptr: *mut c_void }
+impl TWxSizerItem for WxSizerItem {}
+impl TWxObject for WxSizerItem { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSizerItem {
-    pub fn from(ptr: *mut c_void) -> wxSizerItem { wxSizerItem { ptr: ptr } }
-    pub fn null() -> wxSizerItem { wxSizerItem::from(0 as *mut c_void) }
+impl WxSizerItem {
+    pub fn from(ptr: *mut c_void) -> WxSizerItem { WxSizerItem { ptr: ptr } }
+    pub fn null() -> WxSizerItem { WxSizerItem::from(0 as *mut c_void) }
     
-    pub fn new(width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) -> wxSizerItem {
-        unsafe { wxSizerItem { ptr: wxSizerItem_Create(width, height, option, flag, border, userData) } }
+    pub fn new(width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) -> WxSizerItem {
+        unsafe { WxSizerItem { ptr: wxSizerItem_Create(width, height, option, flag, border, userData) } }
     }
-    pub fn newInSizer<T: _wxSizer>(sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) -> *mut c_void {
+    pub fn newInSizer<T: TWxSizer>(sizer: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) -> *mut c_void {
         unsafe { wxSizerItem_CreateInSizer(sizer.ptr(), option, flag, border, userData) }
     }
-    pub fn newInWindow<T: _wxWindow>(window: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) -> *mut c_void {
+    pub fn newInWindow<T: TWxWindow>(window: &T, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) -> *mut c_void {
         unsafe { wxSizerItem_CreateInWindow(window.ptr(), option, flag, border, userData) }
     }
 }
 
-pub trait _wxSizerItem : _wxObject {
-    fn calcMin(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxSizerItem_CalcMin(self.ptr()) } }
+pub trait TWxSizerItem : TWxObject {
+    fn calcMin(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxSizerItem_CalcMin(self.ptr()) } }
     }
     fn getBorder(&self) -> c_int {
         unsafe { wxSizerItem_GetBorder(self.ptr()) }
@@ -7392,26 +7392,26 @@ pub trait _wxSizerItem : _wxObject {
     fn getFlag(&self) -> c_int {
         unsafe { wxSizerItem_GetFlag(self.ptr()) }
     }
-    fn getMinSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxSizerItem_GetMinSize(self.ptr()) } }
+    fn getMinSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxSizerItem_GetMinSize(self.ptr()) } }
     }
-    fn getPosition(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxSizerItem_GetPosition(self.ptr()) } }
+    fn getPosition(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxSizerItem_GetPosition(self.ptr()) } }
     }
     fn getRatio(&self) -> c_float {
         unsafe { wxSizerItem_GetRatio(self.ptr()) }
     }
-    fn getSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxSizerItem_GetSize(self.ptr()) } }
+    fn getSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxSizerItem_GetSize(self.ptr()) } }
     }
-    fn getSizer(&self) -> wxSizer {
-        unsafe { wxSizer { ptr: wxSizerItem_GetSizer(self.ptr()) } }
+    fn getSizer(&self) -> WxSizer {
+        unsafe { WxSizer { ptr: wxSizerItem_GetSizer(self.ptr()) } }
     }
     fn getUserData(&self) -> *mut c_void {
         unsafe { wxSizerItem_GetUserData(self.ptr()) }
     }
-    fn getWindow(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxSizerItem_GetWindow(self.ptr()) } }
+    fn getWindow(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxSizerItem_GetWindow(self.ptr()) } }
     }
     fn isSizer(&self) -> c_int {
         unsafe { wxSizerItem_IsSizer(self.ptr()) }
@@ -7440,10 +7440,10 @@ pub trait _wxSizerItem : _wxObject {
     fn setRatio(&self, width: c_int, height: c_int) {
         unsafe { wxSizerItem_SetRatio(self.ptr(), width, height) }
     }
-    fn setSizer<T: _wxSizer>(&self, sizer: &T) {
+    fn setSizer<T: TWxSizer>(&self, sizer: &T) {
         unsafe { wxSizerItem_SetSizer(self.ptr(), sizer.ptr()) }
     }
-    fn setWindow<T: _wxWindow>(&self, window: &T) {
+    fn setWindow<T: TWxWindow>(&self, window: &T) {
         unsafe { wxSizerItem_SetWindow(self.ptr(), window.ptr()) }
     }
     fn deleteWindows(&self) {
@@ -7455,11 +7455,11 @@ pub trait _wxSizerItem : _wxObject {
     fn getProportion(&self) -> c_int {
         unsafe { wxSizerItem_GetProportion(self.ptr()) }
     }
-    fn getRect(&self) -> wxRect {
-        unsafe { wxRect { ptr: wxSizerItem_GetRect(self.ptr()) } }
+    fn getRect(&self) -> WxRect {
+        unsafe { WxRect { ptr: wxSizerItem_GetRect(self.ptr()) } }
     }
-    fn getSpacer(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxSizerItem_GetSpacer(self.ptr()) } }
+    fn getSpacer(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxSizerItem_GetSpacer(self.ptr()) } }
     }
     fn isShown(&self) -> c_int {
         unsafe { wxSizerItem_IsShown(self.ptr()) }
@@ -7475,23 +7475,23 @@ pub trait _wxSizerItem : _wxObject {
     }
 }
 
-pub struct wxSlider { ptr: *mut c_void }
-impl _wxSlider for wxSlider {}
-impl _wxControl for wxSlider {}
-impl _wxWindow for wxSlider {}
-impl _wxEvtHandler for wxSlider {}
-impl _wxObject for wxSlider { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSlider { ptr: *mut c_void }
+impl TWxSlider for WxSlider {}
+impl TWxControl for WxSlider {}
+impl TWxWindow for WxSlider {}
+impl TWxEvtHandler for WxSlider {}
+impl TWxObject for WxSlider { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSlider {
-    pub fn from(ptr: *mut c_void) -> wxSlider { wxSlider { ptr: ptr } }
-    pub fn null() -> wxSlider { wxSlider::from(0 as *mut c_void) }
+impl WxSlider {
+    pub fn from(ptr: *mut c_void) -> WxSlider { WxSlider { ptr: ptr } }
+    pub fn null() -> WxSlider { WxSlider::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _init: c_int, _min: c_int, _max: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_long) -> wxSlider {
-        unsafe { wxSlider { ptr: wxSlider_Create(_prt.ptr(), _id, _init, _min, _max, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _init: c_int, _min: c_int, _max: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_long) -> WxSlider {
+        unsafe { WxSlider { ptr: wxSlider_Create(_prt.ptr(), _id, _init, _min, _max, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxSlider : _wxControl {
+pub trait TWxSlider : TWxControl {
     fn clearSel(&self) {
         unsafe { wxSlider_ClearSel(self.ptr()) }
     }
@@ -7551,23 +7551,23 @@ pub trait _wxSlider : _wxControl {
     }
 }
 
-pub struct wxSpinButton { ptr: *mut c_void }
-impl _wxSpinButton for wxSpinButton {}
-impl _wxControl for wxSpinButton {}
-impl _wxWindow for wxSpinButton {}
-impl _wxEvtHandler for wxSpinButton {}
-impl _wxObject for wxSpinButton { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSpinButton { ptr: *mut c_void }
+impl TWxSpinButton for WxSpinButton {}
+impl TWxControl for WxSpinButton {}
+impl TWxWindow for WxSpinButton {}
+impl TWxEvtHandler for WxSpinButton {}
+impl TWxObject for WxSpinButton { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSpinButton {
-    pub fn from(ptr: *mut c_void) -> wxSpinButton { wxSpinButton { ptr: ptr } }
-    pub fn null() -> wxSpinButton { wxSpinButton::from(0 as *mut c_void) }
+impl WxSpinButton {
+    pub fn from(ptr: *mut c_void) -> WxSpinButton { WxSpinButton { ptr: ptr } }
+    pub fn null() -> WxSpinButton { WxSpinButton::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_long) -> wxSpinButton {
-        unsafe { wxSpinButton { ptr: wxSpinButton_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_long) -> WxSpinButton {
+        unsafe { WxSpinButton { ptr: wxSpinButton_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxSpinButton : _wxControl {
+pub trait TWxSpinButton : TWxControl {
     fn getMax(&self) -> c_int {
         unsafe { wxSpinButton_GetMax(self.ptr()) }
     }
@@ -7585,24 +7585,24 @@ pub trait _wxSpinButton : _wxControl {
     }
 }
 
-pub struct wxSpinCtrl { ptr: *mut c_void }
-impl _wxSpinCtrl for wxSpinCtrl {}
-impl _wxControl for wxSpinCtrl {}
-impl _wxWindow for wxSpinCtrl {}
-impl _wxEvtHandler for wxSpinCtrl {}
-impl _wxObject for wxSpinCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSpinCtrl { ptr: *mut c_void }
+impl TWxSpinCtrl for WxSpinCtrl {}
+impl TWxControl for WxSpinCtrl {}
+impl TWxWindow for WxSpinCtrl {}
+impl TWxEvtHandler for WxSpinCtrl {}
+impl TWxObject for WxSpinCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSpinCtrl {
-    pub fn from(ptr: *mut c_void) -> wxSpinCtrl { wxSpinCtrl { ptr: ptr } }
-    pub fn null() -> wxSpinCtrl { wxSpinCtrl::from(0 as *mut c_void) }
+impl WxSpinCtrl {
+    pub fn from(ptr: *mut c_void) -> WxSpinCtrl { WxSpinCtrl { ptr: ptr } }
+    pub fn null() -> WxSpinCtrl { WxSpinCtrl::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_long, _min: c_int, _max: c_int, _init: c_int) -> wxSpinCtrl {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_long, _min: c_int, _max: c_int, _init: c_int) -> WxSpinCtrl {
         let _txt = wxT(_txt);
-        unsafe { wxSpinCtrl { ptr: wxSpinCtrl_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl, _min, _max, _init) } }
+        unsafe { WxSpinCtrl { ptr: wxSpinCtrl_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl, _min, _max, _init) } }
     }
 }
 
-pub trait _wxSpinCtrl : _wxControl {
+pub trait TWxSpinCtrl : TWxControl {
     fn getMax(&self) -> c_int {
         unsafe { wxSpinCtrl_GetMax(self.ptr()) }
     }
@@ -7620,20 +7620,20 @@ pub trait _wxSpinCtrl : _wxControl {
     }
 }
 
-pub struct wxSpinEvent { ptr: *mut c_void }
-impl _wxSpinEvent for wxSpinEvent {}
-impl _wxNotifyEvent for wxSpinEvent {}
-impl _wxCommandEvent for wxSpinEvent {}
-impl _wxEvent for wxSpinEvent {}
-impl _wxObject for wxSpinEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSpinEvent { ptr: *mut c_void }
+impl TWxSpinEvent for WxSpinEvent {}
+impl TWxNotifyEvent for WxSpinEvent {}
+impl TWxCommandEvent for WxSpinEvent {}
+impl TWxEvent for WxSpinEvent {}
+impl TWxObject for WxSpinEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSpinEvent {
-    pub fn from(ptr: *mut c_void) -> wxSpinEvent { wxSpinEvent { ptr: ptr } }
-    pub fn null() -> wxSpinEvent { wxSpinEvent::from(0 as *mut c_void) }
+impl WxSpinEvent {
+    pub fn from(ptr: *mut c_void) -> WxSpinEvent { WxSpinEvent { ptr: ptr } }
+    pub fn null() -> WxSpinEvent { WxSpinEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxSpinEvent : _wxNotifyEvent {
+pub trait TWxSpinEvent : TWxNotifyEvent {
     fn getPosition(&self) -> c_int {
         unsafe { wxSpinEvent_GetPosition(self.ptr()) }
     }
@@ -7642,38 +7642,38 @@ pub trait _wxSpinEvent : _wxNotifyEvent {
     }
 }
 
-pub struct wxSplitterEvent { ptr: *mut c_void }
-impl _wxSplitterEvent for wxSplitterEvent {}
-impl _wxNotifyEvent for wxSplitterEvent {}
-impl _wxCommandEvent for wxSplitterEvent {}
-impl _wxEvent for wxSplitterEvent {}
-impl _wxObject for wxSplitterEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSplitterEvent { ptr: *mut c_void }
+impl TWxSplitterEvent for WxSplitterEvent {}
+impl TWxNotifyEvent for WxSplitterEvent {}
+impl TWxCommandEvent for WxSplitterEvent {}
+impl TWxEvent for WxSplitterEvent {}
+impl TWxObject for WxSplitterEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSplitterEvent {
-    pub fn from(ptr: *mut c_void) -> wxSplitterEvent { wxSplitterEvent { ptr: ptr } }
-    pub fn null() -> wxSplitterEvent { wxSplitterEvent::from(0 as *mut c_void) }
+impl WxSplitterEvent {
+    pub fn from(ptr: *mut c_void) -> WxSplitterEvent { WxSplitterEvent { ptr: ptr } }
+    pub fn null() -> WxSplitterEvent { WxSplitterEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxSplitterEvent : _wxNotifyEvent {
+pub trait TWxSplitterEvent : TWxNotifyEvent {
 }
 
-pub struct wxSplitterWindow { ptr: *mut c_void }
-impl _wxSplitterWindow for wxSplitterWindow {}
-impl _wxWindow for wxSplitterWindow {}
-impl _wxEvtHandler for wxSplitterWindow {}
-impl _wxObject for wxSplitterWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSplitterWindow { ptr: *mut c_void }
+impl TWxSplitterWindow for WxSplitterWindow {}
+impl TWxWindow for WxSplitterWindow {}
+impl TWxEvtHandler for WxSplitterWindow {}
+impl TWxObject for WxSplitterWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSplitterWindow {
-    pub fn from(ptr: *mut c_void) -> wxSplitterWindow { wxSplitterWindow { ptr: ptr } }
-    pub fn null() -> wxSplitterWindow { wxSplitterWindow::from(0 as *mut c_void) }
+impl WxSplitterWindow {
+    pub fn from(ptr: *mut c_void) -> WxSplitterWindow { WxSplitterWindow { ptr: ptr } }
+    pub fn null() -> WxSplitterWindow { WxSplitterWindow::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxSplitterWindow {
-        unsafe { wxSplitterWindow { ptr: wxSplitterWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxSplitterWindow {
+        unsafe { WxSplitterWindow { ptr: wxSplitterWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxSplitterWindow : _wxWindow {
+pub trait TWxSplitterWindow : TWxWindow {
     fn getBorderSize(&self) -> c_int {
         unsafe { wxSplitterWindow_GetBorderSize(self.ptr()) }
     }
@@ -7689,19 +7689,19 @@ pub trait _wxSplitterWindow : _wxWindow {
     fn getSplitMode(&self) -> c_int {
         unsafe { wxSplitterWindow_GetSplitMode(self.ptr()) }
     }
-    fn getWindow1(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxSplitterWindow_GetWindow1(self.ptr()) } }
+    fn getWindow1(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxSplitterWindow_GetWindow1(self.ptr()) } }
     }
-    fn getWindow2(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxSplitterWindow_GetWindow2(self.ptr()) } }
+    fn getWindow2(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxSplitterWindow_GetWindow2(self.ptr()) } }
     }
-    fn initialize<T: _wxWindow>(&self, window: &T) {
+    fn initialize<T: TWxWindow>(&self, window: &T) {
         unsafe { wxSplitterWindow_Initialize(self.ptr(), window.ptr()) }
     }
     fn isSplit(&self) -> c_int {
         unsafe { wxSplitterWindow_IsSplit(self.ptr()) }
     }
-    fn replaceWindow<T: _wxWindow, U: _wxWindow>(&self, winOld: &T, winNew: &U) -> c_int {
+    fn replaceWindow<T: TWxWindow, U: TWxWindow>(&self, winOld: &T, winNew: &U) -> c_int {
         unsafe { wxSplitterWindow_ReplaceWindow(self.ptr(), winOld.ptr(), winNew.ptr()) }
     }
     fn setBorderSize(&self, width: c_int) {
@@ -7719,13 +7719,13 @@ pub trait _wxSplitterWindow : _wxWindow {
     fn setSplitMode(&self, mode: c_int) {
         unsafe { wxSplitterWindow_SetSplitMode(self.ptr(), mode) }
     }
-    fn splitHorizontally<T: _wxWindow, U: _wxWindow>(&self, window1: &T, window2: &U, sashPosition: c_int) -> c_int {
+    fn splitHorizontally<T: TWxWindow, U: TWxWindow>(&self, window1: &T, window2: &U, sashPosition: c_int) -> c_int {
         unsafe { wxSplitterWindow_SplitHorizontally(self.ptr(), window1.ptr(), window2.ptr(), sashPosition) }
     }
-    fn splitVertically<T: _wxWindow, U: _wxWindow>(&self, window1: &T, window2: &U, sashPosition: c_int) -> c_int {
+    fn splitVertically<T: TWxWindow, U: TWxWindow>(&self, window1: &T, window2: &U, sashPosition: c_int) -> c_int {
         unsafe { wxSplitterWindow_SplitVertically(self.ptr(), window1.ptr(), window2.ptr(), sashPosition) }
     }
-    fn unsplit<T: _wxWindow>(&self, toRemove: &T) -> c_int {
+    fn unsplit<T: TWxWindow>(&self, toRemove: &T) -> c_int {
         unsafe { wxSplitterWindow_Unsplit(self.ptr(), toRemove.ptr()) }
     }
     fn getSashGravity(&self) -> c_double {
@@ -7736,95 +7736,95 @@ pub trait _wxSplitterWindow : _wxWindow {
     }
 }
 
-pub struct wxStaticBitmap { ptr: *mut c_void }
-impl _wxStaticBitmap for wxStaticBitmap {}
-impl _wxControl for wxStaticBitmap {}
-impl _wxWindow for wxStaticBitmap {}
-impl _wxEvtHandler for wxStaticBitmap {}
-impl _wxObject for wxStaticBitmap { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxStaticBitmap { ptr: *mut c_void }
+impl TWxStaticBitmap for WxStaticBitmap {}
+impl TWxControl for WxStaticBitmap {}
+impl TWxWindow for WxStaticBitmap {}
+impl TWxEvtHandler for WxStaticBitmap {}
+impl TWxObject for WxStaticBitmap { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxStaticBitmap {
-    pub fn from(ptr: *mut c_void) -> wxStaticBitmap { wxStaticBitmap { ptr: ptr } }
-    pub fn null() -> wxStaticBitmap { wxStaticBitmap::from(0 as *mut c_void) }
+impl WxStaticBitmap {
+    pub fn from(ptr: *mut c_void) -> WxStaticBitmap { WxStaticBitmap { ptr: ptr } }
+    pub fn null() -> WxStaticBitmap { WxStaticBitmap::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow, U: _wxBitmap>(_prt: &T, _id: c_int, bitmap: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxStaticBitmap {
-        unsafe { wxStaticBitmap { ptr: wxStaticBitmap_Create(_prt.ptr(), _id, bitmap.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow, U: TWxBitmap>(_prt: &T, _id: c_int, bitmap: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxStaticBitmap {
+        unsafe { WxStaticBitmap { ptr: wxStaticBitmap_Create(_prt.ptr(), _id, bitmap.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxStaticBitmap : _wxControl {
-    fn getBitmap<T: _wxBitmap>(&self, _ref: &T) {
+pub trait TWxStaticBitmap : TWxControl {
+    fn getBitmap<T: TWxBitmap>(&self, _ref: &T) {
         unsafe { wxStaticBitmap_GetBitmap(self.ptr(), _ref.ptr()) }
     }
-    fn getIcon<T: _wxIcon>(&self, _ref: &T) {
+    fn getIcon<T: TWxIcon>(&self, _ref: &T) {
         unsafe { wxStaticBitmap_GetIcon(self.ptr(), _ref.ptr()) }
     }
-    fn setBitmap<T: _wxBitmap>(&self, bitmap: &T) {
+    fn setBitmap<T: TWxBitmap>(&self, bitmap: &T) {
         unsafe { wxStaticBitmap_SetBitmap(self.ptr(), bitmap.ptr()) }
     }
-    fn setIcon<T: _wxIcon>(&self, icon: &T) {
+    fn setIcon<T: TWxIcon>(&self, icon: &T) {
         unsafe { wxStaticBitmap_SetIcon(self.ptr(), icon.ptr()) }
     }
 }
 
-pub struct wxStaticBox { ptr: *mut c_void }
-impl _wxStaticBox for wxStaticBox {}
-impl _wxControl for wxStaticBox {}
-impl _wxWindow for wxStaticBox {}
-impl _wxEvtHandler for wxStaticBox {}
-impl _wxObject for wxStaticBox { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxStaticBox { ptr: *mut c_void }
+impl TWxStaticBox for WxStaticBox {}
+impl TWxControl for WxStaticBox {}
+impl TWxWindow for WxStaticBox {}
+impl TWxEvtHandler for WxStaticBox {}
+impl TWxObject for WxStaticBox { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxStaticBox {
-    pub fn from(ptr: *mut c_void) -> wxStaticBox { wxStaticBox { ptr: ptr } }
-    pub fn null() -> wxStaticBox { wxStaticBox::from(0 as *mut c_void) }
+impl WxStaticBox {
+    pub fn from(ptr: *mut c_void) -> WxStaticBox { WxStaticBox { ptr: ptr } }
+    pub fn null() -> WxStaticBox { WxStaticBox::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxStaticBox {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxStaticBox {
         let _txt = wxT(_txt);
-        unsafe { wxStaticBox { ptr: wxStaticBox_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { WxStaticBox { ptr: wxStaticBox_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxStaticBox : _wxControl {
+pub trait TWxStaticBox : TWxControl {
 }
 
-pub struct wxStaticBoxSizer { ptr: *mut c_void }
-impl _wxStaticBoxSizer for wxStaticBoxSizer {}
-impl _wxBoxSizer for wxStaticBoxSizer {}
-impl _wxSizer for wxStaticBoxSizer {}
-impl _wxObject for wxStaticBoxSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxStaticBoxSizer { ptr: *mut c_void }
+impl TWxStaticBoxSizer for WxStaticBoxSizer {}
+impl TWxBoxSizer for WxStaticBoxSizer {}
+impl TWxSizer for WxStaticBoxSizer {}
+impl TWxObject for WxStaticBoxSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxStaticBoxSizer {
-    pub fn from(ptr: *mut c_void) -> wxStaticBoxSizer { wxStaticBoxSizer { ptr: ptr } }
-    pub fn null() -> wxStaticBoxSizer { wxStaticBoxSizer::from(0 as *mut c_void) }
+impl WxStaticBoxSizer {
+    pub fn from(ptr: *mut c_void) -> WxStaticBoxSizer { WxStaticBoxSizer { ptr: ptr } }
+    pub fn null() -> WxStaticBoxSizer { WxStaticBoxSizer::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxStaticBox>(box_: &T, orient: c_int) -> wxStaticBoxSizer {
-        unsafe { wxStaticBoxSizer { ptr: wxStaticBoxSizer_Create(box_.ptr(), orient) } }
+    pub fn new<T: TWxStaticBox>(box_: &T, orient: c_int) -> WxStaticBoxSizer {
+        unsafe { WxStaticBoxSizer { ptr: wxStaticBoxSizer_Create(box_.ptr(), orient) } }
     }
 }
 
-pub trait _wxStaticBoxSizer : _wxBoxSizer {
-    fn getStaticBox(&self) -> wxStaticBox {
-        unsafe { wxStaticBox { ptr: wxStaticBoxSizer_GetStaticBox(self.ptr()) } }
+pub trait TWxStaticBoxSizer : TWxBoxSizer {
+    fn getStaticBox(&self) -> WxStaticBox {
+        unsafe { WxStaticBox { ptr: wxStaticBoxSizer_GetStaticBox(self.ptr()) } }
     }
 }
 
-pub struct wxStaticLine { ptr: *mut c_void }
-impl _wxStaticLine for wxStaticLine {}
-impl _wxControl for wxStaticLine {}
-impl _wxWindow for wxStaticLine {}
-impl _wxEvtHandler for wxStaticLine {}
-impl _wxObject for wxStaticLine { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxStaticLine { ptr: *mut c_void }
+impl TWxStaticLine for WxStaticLine {}
+impl TWxControl for WxStaticLine {}
+impl TWxWindow for WxStaticLine {}
+impl TWxEvtHandler for WxStaticLine {}
+impl TWxObject for WxStaticLine { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxStaticLine {
-    pub fn from(ptr: *mut c_void) -> wxStaticLine { wxStaticLine { ptr: ptr } }
-    pub fn null() -> wxStaticLine { wxStaticLine::from(0 as *mut c_void) }
+impl WxStaticLine {
+    pub fn from(ptr: *mut c_void) -> WxStaticLine { WxStaticLine { ptr: ptr } }
+    pub fn null() -> WxStaticLine { WxStaticLine::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxStaticLine {
-        unsafe { wxStaticLine { ptr: wxStaticLine_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxStaticLine {
+        unsafe { WxStaticLine { ptr: wxStaticLine_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxStaticLine : _wxControl {
+pub trait TWxStaticLine : TWxControl {
     fn getDefaultSize(&self) -> c_int {
         unsafe { wxStaticLine_GetDefaultSize(self.ptr()) }
     }
@@ -7833,42 +7833,42 @@ pub trait _wxStaticLine : _wxControl {
     }
 }
 
-pub struct wxStaticText { ptr: *mut c_void }
-impl _wxStaticText for wxStaticText {}
-impl _wxControl for wxStaticText {}
-impl _wxWindow for wxStaticText {}
-impl _wxEvtHandler for wxStaticText {}
-impl _wxObject for wxStaticText { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxStaticText { ptr: *mut c_void }
+impl TWxStaticText for WxStaticText {}
+impl TWxControl for WxStaticText {}
+impl TWxWindow for WxStaticText {}
+impl TWxEvtHandler for WxStaticText {}
+impl TWxObject for WxStaticText { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxStaticText {
-    pub fn from(ptr: *mut c_void) -> wxStaticText { wxStaticText { ptr: ptr } }
-    pub fn null() -> wxStaticText { wxStaticText::from(0 as *mut c_void) }
+impl WxStaticText {
+    pub fn from(ptr: *mut c_void) -> WxStaticText { WxStaticText { ptr: ptr } }
+    pub fn null() -> WxStaticText { WxStaticText::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxStaticText {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxStaticText {
         let _txt = wxT(_txt);
-        unsafe { wxStaticText { ptr: wxStaticText_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { WxStaticText { ptr: wxStaticText_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxStaticText : _wxControl {
+pub trait TWxStaticText : TWxControl {
 }
 
-pub struct wxStatusBar { ptr: *mut c_void }
-impl _wxStatusBar for wxStatusBar {}
-impl _wxWindow for wxStatusBar {}
-impl _wxEvtHandler for wxStatusBar {}
-impl _wxObject for wxStatusBar { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxStatusBar { ptr: *mut c_void }
+impl TWxStatusBar for WxStatusBar {}
+impl TWxWindow for WxStatusBar {}
+impl TWxEvtHandler for WxStatusBar {}
+impl TWxObject for WxStatusBar { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxStatusBar {
-    pub fn from(ptr: *mut c_void) -> wxStatusBar { wxStatusBar { ptr: ptr } }
-    pub fn null() -> wxStatusBar { wxStatusBar::from(0 as *mut c_void) }
+impl WxStatusBar {
+    pub fn from(ptr: *mut c_void) -> WxStatusBar { WxStatusBar { ptr: ptr } }
+    pub fn null() -> WxStatusBar { WxStatusBar::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxStatusBar {
-        unsafe { wxStatusBar { ptr: wxStatusBar_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxStatusBar {
+        unsafe { WxStatusBar { ptr: wxStatusBar_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxStatusBar : _wxWindow {
+pub trait TWxStatusBar : TWxWindow {
     fn getBorderX(&self) -> c_int {
         unsafe { wxStatusBar_GetBorderX(self.ptr()) }
     }
@@ -7879,7 +7879,7 @@ pub trait _wxStatusBar : _wxWindow {
         unsafe { wxStatusBar_GetFieldsCount(self.ptr()) }
     }
     fn getStatusText(&self, number: c_int) -> ~str {
-        unsafe { wxString { ptr: wxStatusBar_GetStatusText(self.ptr(), number) }.to_str() }
+        unsafe { WxString { ptr: wxStatusBar_GetStatusText(self.ptr(), number) }.to_str() }
     }
     fn setFieldsCount(&self, number: c_int, widths: *mut c_int) {
         unsafe { wxStatusBar_SetFieldsCount(self.ptr(), number, widths) }
@@ -7896,32 +7896,32 @@ pub trait _wxStatusBar : _wxWindow {
     }
 }
 
-pub struct wxSysColourChangedEvent { ptr: *mut c_void }
-impl _wxSysColourChangedEvent for wxSysColourChangedEvent {}
-impl _wxEvent for wxSysColourChangedEvent {}
-impl _wxObject for wxSysColourChangedEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSysColourChangedEvent { ptr: *mut c_void }
+impl TWxSysColourChangedEvent for WxSysColourChangedEvent {}
+impl TWxEvent for WxSysColourChangedEvent {}
+impl TWxObject for WxSysColourChangedEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSysColourChangedEvent {
-    pub fn from(ptr: *mut c_void) -> wxSysColourChangedEvent { wxSysColourChangedEvent { ptr: ptr } }
-    pub fn null() -> wxSysColourChangedEvent { wxSysColourChangedEvent::from(0 as *mut c_void) }
+impl WxSysColourChangedEvent {
+    pub fn from(ptr: *mut c_void) -> WxSysColourChangedEvent { WxSysColourChangedEvent { ptr: ptr } }
+    pub fn null() -> WxSysColourChangedEvent { WxSysColourChangedEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxSysColourChangedEvent : _wxEvent {
+pub trait TWxSysColourChangedEvent : TWxEvent {
 }
 
-pub struct wxSystemSettings { ptr: *mut c_void }
-impl _wxSystemSettings for wxSystemSettings {}
-impl _wxObject for wxSystemSettings { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSystemSettings { ptr: *mut c_void }
+impl TWxSystemSettings for WxSystemSettings {}
+impl TWxObject for WxSystemSettings { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSystemSettings {
-    pub fn from(ptr: *mut c_void) -> wxSystemSettings { wxSystemSettings { ptr: ptr } }
-    pub fn null() -> wxSystemSettings { wxSystemSettings::from(0 as *mut c_void) }
+impl WxSystemSettings {
+    pub fn from(ptr: *mut c_void) -> WxSystemSettings { WxSystemSettings { ptr: ptr } }
+    pub fn null() -> WxSystemSettings { WxSystemSettings::from(0 as *mut c_void) }
     
-    pub fn getColour<T: _wxColour>(index: c_int, _ref: &T) {
+    pub fn getColour<T: TWxColour>(index: c_int, _ref: &T) {
         unsafe { wxSystemSettings_GetColour(index, _ref.ptr()) }
     }
-    pub fn getFont<T: _wxFont>(index: c_int, _ref: &T) {
+    pub fn getFont<T: TWxFont>(index: c_int, _ref: &T) {
         unsafe { wxSystemSettings_GetFont(index, _ref.ptr()) }
     }
     pub fn getMetric(index: c_int) -> c_int {
@@ -7932,37 +7932,37 @@ impl wxSystemSettings {
     }
 }
 
-pub trait _wxSystemSettings : _wxObject {
+pub trait TWxSystemSettings : TWxObject {
 }
 
-pub struct wxTextAttr { ptr: *mut c_void }
-impl _wxTextAttr for wxTextAttr { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTextAttr { ptr: *mut c_void }
+impl TWxTextAttr for WxTextAttr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTextAttr {
-    pub fn from(ptr: *mut c_void) -> wxTextAttr { wxTextAttr { ptr: ptr } }
-    pub fn null() -> wxTextAttr { wxTextAttr::from(0 as *mut c_void) }
+impl WxTextAttr {
+    pub fn from(ptr: *mut c_void) -> WxTextAttr { WxTextAttr { ptr: ptr } }
+    pub fn null() -> WxTextAttr { WxTextAttr::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxColour, U: _wxColour, V: _wxFont>(colText: &T, colBack: &U, font: &V) -> wxTextAttr {
-        unsafe { wxTextAttr { ptr: wxTextAttr_Create(colText.ptr(), colBack.ptr(), font.ptr()) } }
+    pub fn new<T: TWxColour, U: TWxColour, V: TWxFont>(colText: &T, colBack: &U, font: &V) -> WxTextAttr {
+        unsafe { WxTextAttr { ptr: wxTextAttr_Create(colText.ptr(), colBack.ptr(), font.ptr()) } }
     }
-    pub fn newDefault() -> wxTextAttr {
-        unsafe { wxTextAttr { ptr: wxTextAttr_CreateDefault() } }
+    pub fn newDefault() -> WxTextAttr {
+        unsafe { WxTextAttr { ptr: wxTextAttr_CreateDefault() } }
     }
 }
 
-pub trait _wxTextAttr {
+pub trait TWxTextAttr {
     fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
         unsafe { wxTextAttr_Delete(self.ptr()) }
     }
-    fn getBackgroundColour<T: _wxColour>(&self, colour: &T) {
+    fn getBackgroundColour<T: TWxColour>(&self, colour: &T) {
         unsafe { wxTextAttr_GetBackgroundColour(self.ptr(), colour.ptr()) }
     }
-    fn getFont<T: _wxFont>(&self, font: &T) {
+    fn getFont<T: TWxFont>(&self, font: &T) {
         unsafe { wxTextAttr_GetFont(self.ptr(), font.ptr()) }
     }
-    fn getTextColour<T: _wxColour>(&self, colour: &T) {
+    fn getTextColour<T: TWxColour>(&self, colour: &T) {
         unsafe { wxTextAttr_GetTextColour(self.ptr(), colour.ptr()) }
     }
     fn hasBackgroundColour(&self) -> c_int {
@@ -7977,35 +7977,35 @@ pub trait _wxTextAttr {
     fn isDefault(&self) -> c_int {
         unsafe { wxTextAttr_IsDefault(self.ptr()) }
     }
-    fn setTextColour<T: _wxColour>(&self, colour: &T) {
+    fn setTextColour<T: TWxColour>(&self, colour: &T) {
         unsafe { wxTextAttr_SetTextColour(self.ptr(), colour.ptr()) }
     }
-    fn setBackgroundColour<T: _wxColour>(&self, colour: &T) {
+    fn setBackgroundColour<T: TWxColour>(&self, colour: &T) {
         unsafe { wxTextAttr_SetBackgroundColour(self.ptr(), colour.ptr()) }
     }
-    fn setFont<T: _wxFont>(&self, font: &T) {
+    fn setFont<T: TWxFont>(&self, font: &T) {
         unsafe { wxTextAttr_SetFont(self.ptr(), font.ptr()) }
     }
 }
 
-pub struct wxTextCtrl { ptr: *mut c_void }
-impl _wxTextCtrl for wxTextCtrl {}
-impl _wxControl for wxTextCtrl {}
-impl _wxWindow for wxTextCtrl {}
-impl _wxEvtHandler for wxTextCtrl {}
-impl _wxObject for wxTextCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTextCtrl { ptr: *mut c_void }
+impl TWxTextCtrl for WxTextCtrl {}
+impl TWxControl for WxTextCtrl {}
+impl TWxWindow for WxTextCtrl {}
+impl TWxEvtHandler for WxTextCtrl {}
+impl TWxObject for WxTextCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTextCtrl {
-    pub fn from(ptr: *mut c_void) -> wxTextCtrl { wxTextCtrl { ptr: ptr } }
-    pub fn null() -> wxTextCtrl { wxTextCtrl::from(0 as *mut c_void) }
+impl WxTextCtrl {
+    pub fn from(ptr: *mut c_void) -> WxTextCtrl { WxTextCtrl { ptr: ptr } }
+    pub fn null() -> WxTextCtrl { WxTextCtrl::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_long) -> wxTextCtrl {
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_long) -> WxTextCtrl {
         let _txt = wxT(_txt);
-        unsafe { wxTextCtrl { ptr: wxTextCtrl_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { WxTextCtrl { ptr: wxTextCtrl_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxTextCtrl : _wxControl {
+pub trait TWxTextCtrl : TWxControl {
     fn appendText(&self, text: &str) {
         let text = wxT(text);
         unsafe { wxTextCtrl_AppendText(self.ptr(), text.ptr()) }
@@ -8051,7 +8051,7 @@ pub trait _wxTextCtrl : _wxControl {
         unsafe { wxTextCtrl_GetLineLength(self.ptr(), lineNo) }
     }
     fn getLineText(&self, lineNo: c_long) -> ~str {
-        unsafe { wxString { ptr: wxTextCtrl_GetLineText(self.ptr(), lineNo) }.to_str() }
+        unsafe { WxString { ptr: wxTextCtrl_GetLineText(self.ptr(), lineNo) }.to_str() }
     }
     fn getNumberOfLines(&self) -> c_int {
         unsafe { wxTextCtrl_GetNumberOfLines(self.ptr()) }
@@ -8060,7 +8060,7 @@ pub trait _wxTextCtrl : _wxControl {
         unsafe { wxTextCtrl_GetSelection(self.ptr(), from, to) }
     }
     fn getValue(&self) -> ~str {
-        unsafe { wxString { ptr: wxTextCtrl_GetValue(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxTextCtrl_GetValue(self.ptr()) }.to_str() }
     }
     fn isEditable(&self) -> c_int {
         unsafe { wxTextCtrl_IsEditable(self.ptr()) }
@@ -8121,17 +8121,17 @@ pub trait _wxTextCtrl : _wxControl {
     fn xYToPosition(&self, x: c_long, y: c_long) -> c_long {
         unsafe { wxTextCtrl_XYToPosition(self.ptr(), x, y) }
     }
-    fn emulateKeyPress<T: _wxKeyEvent>(&self, keyevent: &T) -> c_int {
+    fn emulateKeyPress<T: TWxKeyEvent>(&self, keyevent: &T) -> c_int {
         unsafe { wxTextCtrl_EmulateKeyPress(self.ptr(), keyevent.ptr()) }
     }
-    fn getDefaultStyle(&self) -> wxTextAttr {
-        unsafe { wxTextAttr { ptr: wxTextCtrl_GetDefaultStyle(self.ptr()) } }
+    fn getDefaultStyle(&self) -> WxTextAttr {
+        unsafe { WxTextAttr { ptr: wxTextCtrl_GetDefaultStyle(self.ptr()) } }
     }
     fn getRange(&self, from: c_long, to: c_long) -> ~str {
-        unsafe { wxString { ptr: wxTextCtrl_GetRange(self.ptr(), from, to) }.to_str() }
+        unsafe { WxString { ptr: wxTextCtrl_GetRange(self.ptr(), from, to) }.to_str() }
     }
     fn getStringSelection(&self) -> ~str {
-        unsafe { wxString { ptr: wxTextCtrl_GetStringSelection(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxTextCtrl_GetStringSelection(self.ptr()) }.to_str() }
     }
     fn isMultiLine(&self) -> c_int {
         unsafe { wxTextCtrl_IsMultiLine(self.ptr()) }
@@ -8139,77 +8139,77 @@ pub trait _wxTextCtrl : _wxControl {
     fn isSingleLine(&self) -> c_int {
         unsafe { wxTextCtrl_IsSingleLine(self.ptr()) }
     }
-    fn setDefaultStyle<T: _wxTextAttr>(&self, style: &T) -> c_int {
+    fn setDefaultStyle<T: TWxTextAttr>(&self, style: &T) -> c_int {
         unsafe { wxTextCtrl_SetDefaultStyle(self.ptr(), style.ptr()) }
     }
     fn setMaxLength(&self, len: c_long) {
         unsafe { wxTextCtrl_SetMaxLength(self.ptr(), len) }
     }
-    fn setStyle<T: _wxTextAttr>(&self, start: c_long, end: c_long, style: &T) -> c_int {
+    fn setStyle<T: TWxTextAttr>(&self, start: c_long, end: c_long, style: &T) -> c_int {
         unsafe { wxTextCtrl_SetStyle(self.ptr(), start, end, style.ptr()) }
     }
 }
 
-pub struct wxTextDataObject { ptr: *mut c_void }
-impl _wxTextDataObject for wxTextDataObject {}
-impl _wxDataObjectSimple for wxTextDataObject {}
-impl _wxDataObject for wxTextDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTextDataObject { ptr: *mut c_void }
+impl TWxTextDataObject for WxTextDataObject {}
+impl TWxDataObjectSimple for WxTextDataObject {}
+impl TWxDataObject for WxTextDataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTextDataObject {
-    pub fn from(ptr: *mut c_void) -> wxTextDataObject { wxTextDataObject { ptr: ptr } }
-    pub fn null() -> wxTextDataObject { wxTextDataObject::from(0 as *mut c_void) }
+impl WxTextDataObject {
+    pub fn from(ptr: *mut c_void) -> WxTextDataObject { WxTextDataObject { ptr: ptr } }
+    pub fn null() -> WxTextDataObject { WxTextDataObject::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxTextDataObject : _wxDataObjectSimple {
+pub trait TWxTextDataObject : TWxDataObjectSimple {
 }
 
-pub struct wxTextDropTarget { ptr: *mut c_void }
-impl _wxTextDropTarget for wxTextDropTarget {}
-impl _wxDropTarget for wxTextDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTextDropTarget { ptr: *mut c_void }
+impl TWxTextDropTarget for WxTextDropTarget {}
+impl TWxDropTarget for WxTextDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTextDropTarget {
-    pub fn from(ptr: *mut c_void) -> wxTextDropTarget { wxTextDropTarget { ptr: ptr } }
-    pub fn null() -> wxTextDropTarget { wxTextDropTarget::from(0 as *mut c_void) }
+impl WxTextDropTarget {
+    pub fn from(ptr: *mut c_void) -> WxTextDropTarget { WxTextDropTarget { ptr: ptr } }
+    pub fn null() -> WxTextDropTarget { WxTextDropTarget::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxTextDropTarget : _wxDropTarget {
+pub trait TWxTextDropTarget : TWxDropTarget {
 }
 
-pub struct wxTextEntryDialog { ptr: *mut c_void }
-impl _wxTextEntryDialog for wxTextEntryDialog {}
-impl _wxDialog for wxTextEntryDialog {}
-impl _wxTopLevelWindow for wxTextEntryDialog {}
-impl _wxWindow for wxTextEntryDialog {}
-impl _wxEvtHandler for wxTextEntryDialog {}
-impl _wxObject for wxTextEntryDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTextEntryDialog { ptr: *mut c_void }
+impl TWxTextEntryDialog for WxTextEntryDialog {}
+impl TWxDialog for WxTextEntryDialog {}
+impl TWxTopLevelWindow for WxTextEntryDialog {}
+impl TWxWindow for WxTextEntryDialog {}
+impl TWxEvtHandler for WxTextEntryDialog {}
+impl TWxObject for WxTextEntryDialog { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTextEntryDialog {
-    pub fn from(ptr: *mut c_void) -> wxTextEntryDialog { wxTextEntryDialog { ptr: ptr } }
-    pub fn null() -> wxTextEntryDialog { wxTextEntryDialog::from(0 as *mut c_void) }
+impl WxTextEntryDialog {
+    pub fn from(ptr: *mut c_void) -> WxTextEntryDialog { WxTextEntryDialog { ptr: ptr } }
+    pub fn null() -> WxTextEntryDialog { WxTextEntryDialog::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxTextEntryDialog : _wxDialog {
+pub trait TWxTextEntryDialog : TWxDialog {
 }
 
-pub struct wxTextValidator { ptr: *mut c_void }
-impl _wxTextValidator for wxTextValidator {}
-impl _wxValidator for wxTextValidator {}
-impl _wxEvtHandler for wxTextValidator {}
-impl _wxObject for wxTextValidator { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTextValidator { ptr: *mut c_void }
+impl TWxTextValidator for WxTextValidator {}
+impl TWxValidator for WxTextValidator {}
+impl TWxEvtHandler for WxTextValidator {}
+impl TWxObject for WxTextValidator { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTextValidator {
-    pub fn from(ptr: *mut c_void) -> wxTextValidator { wxTextValidator { ptr: ptr } }
-    pub fn null() -> wxTextValidator { wxTextValidator::from(0 as *mut c_void) }
+impl WxTextValidator {
+    pub fn from(ptr: *mut c_void) -> WxTextValidator { WxTextValidator { ptr: ptr } }
+    pub fn null() -> WxTextValidator { WxTextValidator::from(0 as *mut c_void) }
     
-    pub fn new(style: c_int, val: *mut c_void) -> wxTextValidator {
-        unsafe { wxTextValidator { ptr: wxTextValidator_Create(style, val) } }
+    pub fn new(style: c_int, val: *mut c_void) -> WxTextValidator {
+        unsafe { WxTextValidator { ptr: wxTextValidator_Create(style, val) } }
     }
 }
 
-pub trait _wxTextValidator : _wxValidator {
+pub trait TWxTextValidator : TWxValidator {
     fn getExcludes(&self, _ref: *mut c_void) -> c_int {
         unsafe { wxTextValidator_GetExcludes(self.ptr(), _ref) }
     }
@@ -8222,13 +8222,13 @@ pub trait _wxTextValidator : _wxValidator {
     fn setIncludes(&self, list: *mut c_void, count: c_int) {
         unsafe { wxTextValidator_SetIncludes(self.ptr(), list, count) }
     }
-    fn clone(&self) -> wxValidator {
-        unsafe { wxValidator { ptr: wxTextValidator_Clone(self.ptr()) } }
+    fn clone(&self) -> WxValidator {
+        unsafe { WxValidator { ptr: wxTextValidator_Clone(self.ptr()) } }
     }
     fn getStyle(&self) -> c_int {
         unsafe { wxTextValidator_GetStyle(self.ptr()) }
     }
-    fn onChar<T: _wxEvent>(&self, event: &T) {
+    fn onChar<T: TWxEvent>(&self, event: &T) {
         unsafe { wxTextValidator_OnChar(self.ptr(), event.ptr()) }
     }
     fn setStyle(&self, style: c_int) {
@@ -8236,20 +8236,20 @@ pub trait _wxTextValidator : _wxValidator {
     }
 }
 
-pub struct wxTimer { ptr: *mut c_void }
-impl _wxTimer for wxTimer {}
-impl _wxObject for wxTimer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTimer { ptr: *mut c_void }
+impl TWxTimer for WxTimer {}
+impl TWxObject for WxTimer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTimer {
-    pub fn from(ptr: *mut c_void) -> wxTimer { wxTimer { ptr: ptr } }
-    pub fn null() -> wxTimer { wxTimer::from(0 as *mut c_void) }
+impl WxTimer {
+    pub fn from(ptr: *mut c_void) -> WxTimer { WxTimer { ptr: ptr } }
+    pub fn null() -> WxTimer { WxTimer::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int) -> wxTimer {
-        unsafe { wxTimer { ptr: wxTimer_Create(_prt.ptr(), _id) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int) -> WxTimer {
+        unsafe { WxTimer { ptr: wxTimer_Create(_prt.ptr(), _id) } }
     }
 }
 
-pub trait _wxTimer : _wxObject {
+pub trait TWxTimer : TWxObject {
     fn getInterval(&self) -> c_int {
         unsafe { wxTimer_GetInterval(self.ptr()) }
     }
@@ -8267,79 +8267,79 @@ pub trait _wxTimer : _wxObject {
     }
 }
 
-pub struct wxTimerEvent { ptr: *mut c_void }
-impl _wxTimerEvent for wxTimerEvent {}
-impl _wxEvent for wxTimerEvent {}
-impl _wxObject for wxTimerEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTimerEvent { ptr: *mut c_void }
+impl TWxTimerEvent for WxTimerEvent {}
+impl TWxEvent for WxTimerEvent {}
+impl TWxObject for WxTimerEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTimerEvent {
-    pub fn from(ptr: *mut c_void) -> wxTimerEvent { wxTimerEvent { ptr: ptr } }
-    pub fn null() -> wxTimerEvent { wxTimerEvent::from(0 as *mut c_void) }
+impl WxTimerEvent {
+    pub fn from(ptr: *mut c_void) -> WxTimerEvent { WxTimerEvent { ptr: ptr } }
+    pub fn null() -> WxTimerEvent { WxTimerEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxTimerEvent : _wxEvent {
+pub trait TWxTimerEvent : TWxEvent {
     fn getInterval(&self) -> c_int {
         unsafe { wxTimerEvent_GetInterval(self.ptr()) }
     }
 }
 
-pub struct wxTimerEx { ptr: *mut c_void }
-impl _wxTimerEx for wxTimerEx {}
-impl _wxTimer for wxTimerEx {}
-impl _wxObject for wxTimerEx { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTimerEx { ptr: *mut c_void }
+impl TWxTimerEx for WxTimerEx {}
+impl TWxTimer for WxTimerEx {}
+impl TWxObject for WxTimerEx { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTimerEx {
-    pub fn from(ptr: *mut c_void) -> wxTimerEx { wxTimerEx { ptr: ptr } }
-    pub fn null() -> wxTimerEx { wxTimerEx::from(0 as *mut c_void) }
+impl WxTimerEx {
+    pub fn from(ptr: *mut c_void) -> WxTimerEx { WxTimerEx { ptr: ptr } }
+    pub fn null() -> WxTimerEx { WxTimerEx::from(0 as *mut c_void) }
     
-    pub fn new() -> wxTimerEx {
-        unsafe { wxTimerEx { ptr: wxTimerEx_Create() } }
+    pub fn new() -> WxTimerEx {
+        unsafe { WxTimerEx { ptr: wxTimerEx_Create() } }
     }
 }
 
-pub trait _wxTimerEx : _wxTimer {
-    fn connect<T: _wxClosure>(&self, closure: &T) {
+pub trait TWxTimerEx : TWxTimer {
+    fn connect<T: TWxClosure>(&self, closure: &T) {
         unsafe { wxTimerEx_Connect(self.ptr(), closure.ptr()) }
     }
-    fn getClosure(&self) -> wxClosure {
-        unsafe { wxClosure { ptr: wxTimerEx_GetClosure(self.ptr()) } }
+    fn getClosure(&self) -> WxClosure {
+        unsafe { WxClosure { ptr: wxTimerEx_GetClosure(self.ptr()) } }
     }
 }
 
-pub struct wxTimerRunner { ptr: *mut c_void }
-impl _wxTimerRunner for wxTimerRunner { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTimerRunner { ptr: *mut c_void }
+impl TWxTimerRunner for WxTimerRunner { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTimerRunner {
-    pub fn from(ptr: *mut c_void) -> wxTimerRunner { wxTimerRunner { ptr: ptr } }
-    pub fn null() -> wxTimerRunner { wxTimerRunner::from(0 as *mut c_void) }
+impl WxTimerRunner {
+    pub fn from(ptr: *mut c_void) -> WxTimerRunner { WxTimerRunner { ptr: ptr } }
+    pub fn null() -> WxTimerRunner { WxTimerRunner::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxTimerRunner {
+pub trait TWxTimerRunner {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxTipWindow { ptr: *mut c_void }
-impl _wxTipWindow for wxTipWindow {}
-impl _wxPopupTransientWindow for wxTipWindow {}
-impl _wxPopupWindow for wxTipWindow {}
-impl _wxWindow for wxTipWindow {}
-impl _wxEvtHandler for wxTipWindow {}
-impl _wxObject for wxTipWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTipWindow { ptr: *mut c_void }
+impl TWxTipWindow for WxTipWindow {}
+impl TWxPopupTransientWindow for WxTipWindow {}
+impl TWxPopupWindow for WxTipWindow {}
+impl TWxWindow for WxTipWindow {}
+impl TWxEvtHandler for WxTipWindow {}
+impl TWxObject for WxTipWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTipWindow {
-    pub fn from(ptr: *mut c_void) -> wxTipWindow { wxTipWindow { ptr: ptr } }
-    pub fn null() -> wxTipWindow { wxTipWindow::from(0 as *mut c_void) }
+impl WxTipWindow {
+    pub fn from(ptr: *mut c_void) -> WxTipWindow { WxTipWindow { ptr: ptr } }
+    pub fn null() -> WxTipWindow { WxTipWindow::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(parent: &T, text: &str, maxLength: c_int) -> wxTipWindow {
+    pub fn new<T: TWxWindow>(parent: &T, text: &str, maxLength: c_int) -> WxTipWindow {
         let text = wxT(text);
-        unsafe { wxTipWindow { ptr: wxTipWindow_Create(parent.ptr(), text.ptr(), maxLength) } }
+        unsafe { WxTipWindow { ptr: wxTipWindow_Create(parent.ptr(), text.ptr(), maxLength) } }
     }
 }
 
-pub trait _wxTipWindow : _wxPopupTransientWindow {
+pub trait TWxTipWindow : TWxPopupTransientWindow {
     fn setBoundingRect(&self, x: c_int, y: c_int, w: c_int, h: c_int) {
         unsafe { wxTipWindow_SetBoundingRect(self.ptr(), x, y, w, h) }
     }
@@ -8348,24 +8348,24 @@ pub trait _wxTipWindow : _wxPopupTransientWindow {
     }
 }
 
-pub struct wxToggleButton { ptr: *mut c_void }
-impl _wxToggleButton for wxToggleButton {}
-impl _wxControl for wxToggleButton {}
-impl _wxWindow for wxToggleButton {}
-impl _wxEvtHandler for wxToggleButton {}
-impl _wxObject for wxToggleButton { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxToggleButton { ptr: *mut c_void }
+impl TWxToggleButton for WxToggleButton {}
+impl TWxControl for WxToggleButton {}
+impl TWxWindow for WxToggleButton {}
+impl TWxEvtHandler for WxToggleButton {}
+impl TWxObject for WxToggleButton { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxToggleButton {
-    pub fn from(ptr: *mut c_void) -> wxToggleButton { wxToggleButton { ptr: ptr } }
-    pub fn null() -> wxToggleButton { wxToggleButton::from(0 as *mut c_void) }
+impl WxToggleButton {
+    pub fn from(ptr: *mut c_void) -> WxToggleButton { WxToggleButton { ptr: ptr } }
+    pub fn null() -> WxToggleButton { WxToggleButton::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(parent: &T, id: c_int, label: &str, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> wxToggleButton {
+    pub fn new<T: TWxWindow>(parent: &T, id: c_int, label: &str, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int) -> WxToggleButton {
         let label = wxT(label);
-        unsafe { wxToggleButton { ptr: wxToggleButton_Create(parent.ptr(), id, label.ptr(), x, y, w, h, style) } }
+        unsafe { WxToggleButton { ptr: wxToggleButton_Create(parent.ptr(), id, label.ptr(), x, y, w, h, style) } }
     }
 }
 
-pub trait _wxToggleButton : _wxControl {
+pub trait TWxToggleButton : TWxControl {
     fn getValue(&self) -> c_int {
         unsafe { wxToggleButton_GetValue(self.ptr()) }
     }
@@ -8374,36 +8374,36 @@ pub trait _wxToggleButton : _wxControl {
     }
 }
 
-pub struct wxToolBar { ptr: *mut c_void }
-impl _wxToolBar for wxToolBar {}
-impl _wxToolBarBase for wxToolBar {}
-impl _wxControl for wxToolBar {}
-impl _wxWindow for wxToolBar {}
-impl _wxEvtHandler for wxToolBar {}
-impl _wxObject for wxToolBar { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxToolBar { ptr: *mut c_void }
+impl TWxToolBar for WxToolBar {}
+impl TWxToolBarBase for WxToolBar {}
+impl TWxControl for WxToolBar {}
+impl TWxWindow for WxToolBar {}
+impl TWxEvtHandler for WxToolBar {}
+impl TWxObject for WxToolBar { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxToolBar {
-    pub fn from(ptr: *mut c_void) -> wxToolBar { wxToolBar { ptr: ptr } }
-    pub fn null() -> wxToolBar { wxToolBar::from(0 as *mut c_void) }
+impl WxToolBar {
+    pub fn from(ptr: *mut c_void) -> WxToolBar { WxToolBar { ptr: ptr } }
+    pub fn null() -> WxToolBar { WxToolBar::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxToolBar {
-        unsafe { wxToolBar { ptr: wxToolBar_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxToolBar {
+        unsafe { WxToolBar { ptr: wxToolBar_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxToolBar : _wxToolBarBase {
-    fn addControl<T: _wxControl>(&self, ctrl: &T) -> c_int {
+pub trait TWxToolBar : TWxToolBarBase {
+    fn addControl<T: TWxControl>(&self, ctrl: &T) -> c_int {
         unsafe { wxToolBar_AddControl(self.ptr(), ctrl.ptr()) }
     }
     fn addSeparator(&self) {
         unsafe { wxToolBar_AddSeparator(self.ptr()) }
     }
-    fn addTool<T: _wxBitmap>(&self, id: c_int, bmp: &T, shelp: &str, lhelp: &str) {
+    fn addTool<T: TWxBitmap>(&self, id: c_int, bmp: &T, shelp: &str, lhelp: &str) {
         let shelp = wxT(shelp);
         let lhelp = wxT(lhelp);
         unsafe { wxToolBar_AddTool(self.ptr(), id, bmp.ptr(), shelp.ptr(), lhelp.ptr()) }
     }
-    fn addToolEx<T: _wxBitmap, U: _wxBitmap, V: _wxObject>(&self, id: c_int, bmp1: &T, bmp2: &U, isToggle: c_int, x: c_int, y: c_int, data: &V, shelp: &str, lhelp: &str) {
+    fn addToolEx<T: TWxBitmap, U: TWxBitmap, V: TWxObject>(&self, id: c_int, bmp1: &T, bmp2: &U, isToggle: c_int, x: c_int, y: c_int, data: &V, shelp: &str, lhelp: &str) {
         let shelp = wxT(shelp);
         let lhelp = wxT(lhelp);
         unsafe { wxToolBar_AddToolEx(self.ptr(), id, bmp1.ptr(), bmp2.ptr(), isToggle, x, y, data.ptr(), shelp.ptr(), lhelp.ptr()) }
@@ -8417,40 +8417,40 @@ pub trait _wxToolBar : _wxToolBarBase {
     fn enableTool(&self, id: c_int, enable: c_int) {
         unsafe { wxToolBar_EnableTool(self.ptr(), id, enable) }
     }
-    fn getMargins(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxToolBar_GetMargins(self.ptr()) } }
+    fn getMargins(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxToolBar_GetMargins(self.ptr()) } }
     }
-    fn getToolBitmapSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxToolBar_GetToolBitmapSize(self.ptr()) } }
+    fn getToolBitmapSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxToolBar_GetToolBitmapSize(self.ptr()) } }
     }
-    fn getToolClientData(&self, id: c_int) -> wxObject {
-        unsafe { wxObject { ptr: wxToolBar_GetToolClientData(self.ptr(), id) } }
+    fn getToolClientData(&self, id: c_int) -> WxObject {
+        unsafe { WxObject { ptr: wxToolBar_GetToolClientData(self.ptr(), id) } }
     }
     fn getToolEnabled(&self, id: c_int) -> c_int {
         unsafe { wxToolBar_GetToolEnabled(self.ptr(), id) }
     }
     fn getToolLongHelp(&self, id: c_int) -> ~str {
-        unsafe { wxString { ptr: wxToolBar_GetToolLongHelp(self.ptr(), id) }.to_str() }
+        unsafe { WxString { ptr: wxToolBar_GetToolLongHelp(self.ptr(), id) }.to_str() }
     }
     fn getToolPacking(&self) -> c_int {
         unsafe { wxToolBar_GetToolPacking(self.ptr()) }
     }
     fn getToolShortHelp(&self, id: c_int) -> ~str {
-        unsafe { wxString { ptr: wxToolBar_GetToolShortHelp(self.ptr(), id) }.to_str() }
+        unsafe { WxString { ptr: wxToolBar_GetToolShortHelp(self.ptr(), id) }.to_str() }
     }
-    fn getToolSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxToolBar_GetToolSize(self.ptr()) } }
+    fn getToolSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxToolBar_GetToolSize(self.ptr()) } }
     }
     fn getToolState(&self, id: c_int) -> c_int {
         unsafe { wxToolBar_GetToolState(self.ptr(), id) }
     }
-    fn insertControl<T: _wxControl>(&self, pos: c_int, ctrl: &T) {
+    fn insertControl<T: TWxControl>(&self, pos: c_int, ctrl: &T) {
         unsafe { wxToolBar_InsertControl(self.ptr(), pos, ctrl.ptr()) }
     }
     fn insertSeparator(&self, pos: c_int) {
         unsafe { wxToolBar_InsertSeparator(self.ptr(), pos) }
     }
-    fn insertTool<T: _wxBitmap, U: _wxBitmap, V: _wxObject>(&self, pos: c_int, id: c_int, bmp1: &T, bmp2: &U, isToggle: c_int, data: &V, shelp: &str, lhelp: &str) {
+    fn insertTool<T: TWxBitmap, U: TWxBitmap, V: TWxObject>(&self, pos: c_int, id: c_int, bmp1: &T, bmp2: &U, isToggle: c_int, data: &V, shelp: &str, lhelp: &str) {
         let shelp = wxT(shelp);
         let lhelp = wxT(lhelp);
         unsafe { wxToolBar_InsertTool(self.ptr(), pos, id, bmp1.ptr(), bmp2.ptr(), isToggle, data.ptr(), shelp.ptr(), lhelp.ptr()) }
@@ -8467,7 +8467,7 @@ pub trait _wxToolBar : _wxToolBarBase {
     fn setToolBitmapSize(&self, x: c_int, y: c_int) {
         unsafe { wxToolBar_SetToolBitmapSize(self.ptr(), x, y) }
     }
-    fn setToolClientData<T: _wxObject>(&self, id: c_int, data: &T) {
+    fn setToolClientData<T: TWxObject>(&self, id: c_int, data: &T) {
         unsafe { wxToolBar_SetToolClientData(self.ptr(), id, data.ptr()) }
     }
     fn setToolLongHelp(&self, id: c_int, str: &str) {
@@ -8487,7 +8487,7 @@ pub trait _wxToolBar : _wxToolBarBase {
     fn toggleTool(&self, id: c_int, toggle: c_int) {
         unsafe { wxToolBar_ToggleTool(self.ptr(), id, toggle) }
     }
-    fn addTool2<T: _wxBitmap, U: _wxBitmap>(&self, toolId: c_int, label: &str, bmp: &T, bmpDisabled: &U, itemKind: c_int, shortHelp: &str, longHelp: &str) {
+    fn addTool2<T: TWxBitmap, U: TWxBitmap>(&self, toolId: c_int, label: &str, bmp: &T, bmpDisabled: &U, itemKind: c_int, shortHelp: &str, longHelp: &str) {
         let label = wxT(label);
         let shortHelp = wxT(shortHelp);
         let longHelp = wxT(longHelp);
@@ -8495,62 +8495,62 @@ pub trait _wxToolBar : _wxToolBarBase {
     }
 }
 
-pub struct wxToolBarBase { ptr: *mut c_void }
-impl _wxToolBarBase for wxToolBarBase {}
-impl _wxControl for wxToolBarBase {}
-impl _wxWindow for wxToolBarBase {}
-impl _wxEvtHandler for wxToolBarBase {}
-impl _wxObject for wxToolBarBase { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxToolBarBase { ptr: *mut c_void }
+impl TWxToolBarBase for WxToolBarBase {}
+impl TWxControl for WxToolBarBase {}
+impl TWxWindow for WxToolBarBase {}
+impl TWxEvtHandler for WxToolBarBase {}
+impl TWxObject for WxToolBarBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxToolBarBase {
-    pub fn from(ptr: *mut c_void) -> wxToolBarBase { wxToolBarBase { ptr: ptr } }
-    pub fn null() -> wxToolBarBase { wxToolBarBase::from(0 as *mut c_void) }
+impl WxToolBarBase {
+    pub fn from(ptr: *mut c_void) -> WxToolBarBase { WxToolBarBase { ptr: ptr } }
+    pub fn null() -> WxToolBarBase { WxToolBarBase::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxToolBarBase : _wxControl {
+pub trait TWxToolBarBase : TWxControl {
 }
 
-pub struct wxToolTip { ptr: *mut c_void }
-impl _wxToolTip for wxToolTip {}
-impl _wxObject for wxToolTip { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxToolTip { ptr: *mut c_void }
+impl TWxToolTip for WxToolTip {}
+impl TWxObject for WxToolTip { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxToolTip {
-    pub fn from(ptr: *mut c_void) -> wxToolTip { wxToolTip { ptr: ptr } }
-    pub fn null() -> wxToolTip { wxToolTip::from(0 as *mut c_void) }
+impl WxToolTip {
+    pub fn from(ptr: *mut c_void) -> WxToolTip { WxToolTip { ptr: ptr } }
+    pub fn null() -> WxToolTip { WxToolTip::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxToolTip : _wxObject {
+pub trait TWxToolTip : TWxObject {
 }
 
-pub struct wxTopLevelWindow { ptr: *mut c_void }
-impl _wxTopLevelWindow for wxTopLevelWindow {}
-impl _wxWindow for wxTopLevelWindow {}
-impl _wxEvtHandler for wxTopLevelWindow {}
-impl _wxObject for wxTopLevelWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTopLevelWindow { ptr: *mut c_void }
+impl TWxTopLevelWindow for WxTopLevelWindow {}
+impl TWxWindow for WxTopLevelWindow {}
+impl TWxEvtHandler for WxTopLevelWindow {}
+impl TWxObject for WxTopLevelWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTopLevelWindow {
-    pub fn from(ptr: *mut c_void) -> wxTopLevelWindow { wxTopLevelWindow { ptr: ptr } }
-    pub fn null() -> wxTopLevelWindow { wxTopLevelWindow::from(0 as *mut c_void) }
+impl WxTopLevelWindow {
+    pub fn from(ptr: *mut c_void) -> WxTopLevelWindow { WxTopLevelWindow { ptr: ptr } }
+    pub fn null() -> WxTopLevelWindow { WxTopLevelWindow::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxTopLevelWindow : _wxWindow {
+pub trait TWxTopLevelWindow : TWxWindow {
     fn enableCloseButton(&self, enable: c_int) -> c_int {
         unsafe { wxTopLevelWindow_EnableCloseButton(self.ptr(), enable) }
     }
-    fn getDefaultButton(&self) -> wxButton {
-        unsafe { wxButton { ptr: wxTopLevelWindow_GetDefaultButton(self.ptr()) } }
+    fn getDefaultButton(&self) -> WxButton {
+        unsafe { WxButton { ptr: wxTopLevelWindow_GetDefaultButton(self.ptr()) } }
     }
-    fn getDefaultItem(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxTopLevelWindow_GetDefaultItem(self.ptr()) } }
+    fn getDefaultItem(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxTopLevelWindow_GetDefaultItem(self.ptr()) } }
     }
-    fn getIcon(&self) -> wxIcon {
-        unsafe { wxIcon { ptr: wxTopLevelWindow_GetIcon(self.ptr()) } }
+    fn getIcon(&self) -> WxIcon {
+        unsafe { WxIcon { ptr: wxTopLevelWindow_GetIcon(self.ptr()) } }
     }
     fn getTitle(&self) -> ~str {
-        unsafe { wxString { ptr: wxTopLevelWindow_GetTitle(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxTopLevelWindow_GetTitle(self.ptr()) }.to_str() }
     }
     fn iconize(&self, iconize: c_int) -> c_int {
         unsafe { wxTopLevelWindow_Iconize(self.ptr(), iconize) }
@@ -8570,13 +8570,13 @@ pub trait _wxTopLevelWindow : _wxWindow {
     fn requestUserAttention(&self, flags: c_int) {
         unsafe { wxTopLevelWindow_RequestUserAttention(self.ptr(), flags) }
     }
-    fn setDefaultButton<T: _wxButton>(&self, pBut: &T) {
+    fn setDefaultButton<T: TWxButton>(&self, pBut: &T) {
         unsafe { wxTopLevelWindow_SetDefaultButton(self.ptr(), pBut.ptr()) }
     }
-    fn setDefaultItem<T: _wxWindow>(&self, pBut: &T) {
+    fn setDefaultItem<T: TWxWindow>(&self, pBut: &T) {
         unsafe { wxTopLevelWindow_SetDefaultItem(self.ptr(), pBut.ptr()) }
     }
-    fn setIcon<T: _wxIcon>(&self, pIcon: &T) {
+    fn setIcon<T: TWxIcon>(&self, pIcon: &T) {
         unsafe { wxTopLevelWindow_SetIcon(self.ptr(), pIcon.ptr()) }
     }
     fn setIcons(&self, _icons: *mut c_void) {
@@ -8594,113 +8594,113 @@ pub trait _wxTopLevelWindow : _wxWindow {
     }
 }
 
-pub struct wxTreeCtrl { ptr: *mut c_void }
-impl _wxTreeCtrl for wxTreeCtrl {}
-impl _wxControl for wxTreeCtrl {}
-impl _wxWindow for wxTreeCtrl {}
-impl _wxEvtHandler for wxTreeCtrl {}
-impl _wxObject for wxTreeCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTreeCtrl { ptr: *mut c_void }
+impl TWxTreeCtrl for WxTreeCtrl {}
+impl TWxControl for WxTreeCtrl {}
+impl TWxWindow for WxTreeCtrl {}
+impl TWxEvtHandler for WxTreeCtrl {}
+impl TWxObject for WxTreeCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTreeCtrl {
-    pub fn from(ptr: *mut c_void) -> wxTreeCtrl { wxTreeCtrl { ptr: ptr } }
-    pub fn null() -> wxTreeCtrl { wxTreeCtrl::from(0 as *mut c_void) }
+impl WxTreeCtrl {
+    pub fn from(ptr: *mut c_void) -> WxTreeCtrl { WxTreeCtrl { ptr: ptr } }
+    pub fn null() -> WxTreeCtrl { WxTreeCtrl::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_obj: *mut c_void, _cmp: *mut c_void, _prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxTreeCtrl {
-        unsafe { wxTreeCtrl { ptr: wxTreeCtrl_Create(_obj, _cmp, _prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_obj: *mut c_void, _cmp: *mut c_void, _prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxTreeCtrl {
+        unsafe { WxTreeCtrl { ptr: wxTreeCtrl_Create(_obj, _cmp, _prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
-    pub fn new2<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxTreeCtrl {
-        unsafe { wxTreeCtrl { ptr: wxTreeCtrl_Create2(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new2<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxTreeCtrl {
+        unsafe { WxTreeCtrl { ptr: wxTreeCtrl_Create2(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxTreeCtrl : _wxControl {
-    fn addRoot<T: _wxTreeItemData, U: _wxTreeItemId>(&self, text: &str, image: c_int, selectedImage: c_int, data: &T, _item: &U) {
+pub trait TWxTreeCtrl : TWxControl {
+    fn addRoot<T: TWxTreeItemData, U: TWxTreeItemId>(&self, text: &str, image: c_int, selectedImage: c_int, data: &T, _item: &U) {
         let text = wxT(text);
         unsafe { wxTreeCtrl_AddRoot(self.ptr(), text.ptr(), image, selectedImage, data.ptr(), _item.ptr()) }
     }
-    fn appendItem<T: _wxTreeItemId, U: _wxTreeItemData, V: _wxTreeItemId>(&self, parent: &T, text: &str, image: c_int, selectedImage: c_int, data: &U, _item: &V) {
+    fn appendItem<T: TWxTreeItemId, U: TWxTreeItemData, V: TWxTreeItemId>(&self, parent: &T, text: &str, image: c_int, selectedImage: c_int, data: &U, _item: &V) {
         let text = wxT(text);
         unsafe { wxTreeCtrl_AppendItem(self.ptr(), parent.ptr(), text.ptr(), image, selectedImage, data.ptr(), _item.ptr()) }
     }
-    fn collapse<T: _wxTreeItemId>(&self, item: &T) {
+    fn collapse<T: TWxTreeItemId>(&self, item: &T) {
         unsafe { wxTreeCtrl_Collapse(self.ptr(), item.ptr()) }
     }
-    fn collapseAndReset<T: _wxTreeItemId>(&self, item: &T) {
+    fn collapseAndReset<T: TWxTreeItemId>(&self, item: &T) {
         unsafe { wxTreeCtrl_CollapseAndReset(self.ptr(), item.ptr()) }
     }
     fn deleteAllItems(&self) {
         unsafe { wxTreeCtrl_DeleteAllItems(self.ptr()) }
     }
-    fn deleteChildren<T: _wxTreeItemId>(&self, item: &T) {
+    fn deleteChildren<T: TWxTreeItemId>(&self, item: &T) {
         unsafe { wxTreeCtrl_DeleteChildren(self.ptr(), item.ptr()) }
     }
-    fn editLabel<T: _wxTreeItemId>(&self, item: &T) {
+    fn editLabel<T: TWxTreeItemId>(&self, item: &T) {
         unsafe { wxTreeCtrl_EditLabel(self.ptr(), item.ptr()) }
     }
-    fn endEditLabel<T: _wxTreeItemId>(&self, item: &T, discardChanges: c_int) {
+    fn endEditLabel<T: TWxTreeItemId>(&self, item: &T, discardChanges: c_int) {
         unsafe { wxTreeCtrl_EndEditLabel(self.ptr(), item.ptr(), discardChanges) }
     }
-    fn ensureVisible<T: _wxTreeItemId>(&self, item: &T) {
+    fn ensureVisible<T: TWxTreeItemId>(&self, item: &T) {
         unsafe { wxTreeCtrl_EnsureVisible(self.ptr(), item.ptr()) }
     }
-    fn expand<T: _wxTreeItemId>(&self, item: &T) {
+    fn expand<T: TWxTreeItemId>(&self, item: &T) {
         unsafe { wxTreeCtrl_Expand(self.ptr(), item.ptr()) }
     }
-    fn getBoundingRect<T: _wxTreeItemId>(&self, item: &T, textOnly: c_int) -> wxRect {
-        unsafe { wxRect { ptr: wxTreeCtrl_GetBoundingRect(self.ptr(), item.ptr(), textOnly) } }
+    fn getBoundingRect<T: TWxTreeItemId>(&self, item: &T, textOnly: c_int) -> WxRect {
+        unsafe { WxRect { ptr: wxTreeCtrl_GetBoundingRect(self.ptr(), item.ptr(), textOnly) } }
     }
-    fn getChildrenCount<T: _wxTreeItemId>(&self, item: &T, recursively: c_int) -> c_int {
+    fn getChildrenCount<T: TWxTreeItemId>(&self, item: &T, recursively: c_int) -> c_int {
         unsafe { wxTreeCtrl_GetChildrenCount(self.ptr(), item.ptr(), recursively) }
     }
     fn getCount(&self) -> c_int {
         unsafe { wxTreeCtrl_GetCount(self.ptr()) }
     }
-    fn getEditControl(&self) -> wxTextCtrl {
-        unsafe { wxTextCtrl { ptr: wxTreeCtrl_GetEditControl(self.ptr()) } }
+    fn getEditControl(&self) -> WxTextCtrl {
+        unsafe { WxTextCtrl { ptr: wxTreeCtrl_GetEditControl(self.ptr()) } }
     }
-    fn getFirstChild<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: &T, cookie: *mut c_int, _item: &U) {
+    fn getFirstChild<T: TWxTreeItemId, U: TWxTreeItemId>(&self, item: &T, cookie: *mut c_int, _item: &U) {
         unsafe { wxTreeCtrl_GetFirstChild(self.ptr(), item.ptr(), cookie, _item.ptr()) }
     }
-    fn getFirstVisibleItem<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: &T, _item: &U) {
+    fn getFirstVisibleItem<T: TWxTreeItemId, U: TWxTreeItemId>(&self, item: &T, _item: &U) {
         unsafe { wxTreeCtrl_GetFirstVisibleItem(self.ptr(), item.ptr(), _item.ptr()) }
     }
-    fn getImageList(&self) -> wxImageList {
-        unsafe { wxImageList { ptr: wxTreeCtrl_GetImageList(self.ptr()) } }
+    fn getImageList(&self) -> WxImageList {
+        unsafe { WxImageList { ptr: wxTreeCtrl_GetImageList(self.ptr()) } }
     }
     fn getIndent(&self) -> c_int {
         unsafe { wxTreeCtrl_GetIndent(self.ptr()) }
     }
-    fn getItemData<T: _wxTreeItemId>(&self, item: &T) -> *mut c_void {
+    fn getItemData<T: TWxTreeItemId>(&self, item: &T) -> *mut c_void {
         unsafe { wxTreeCtrl_GetItemData(self.ptr(), item.ptr()) }
     }
-    fn getItemImage<T: _wxTreeItemId>(&self, item: &T, which: c_int) -> c_int {
+    fn getItemImage<T: TWxTreeItemId>(&self, item: &T, which: c_int) -> c_int {
         unsafe { wxTreeCtrl_GetItemImage(self.ptr(), item.ptr(), which) }
     }
-    fn getItemText<T: _wxTreeItemId>(&self, item: &T) -> ~str {
-        unsafe { wxString { ptr: wxTreeCtrl_GetItemText(self.ptr(), item.ptr()) }.to_str() }
+    fn getItemText<T: TWxTreeItemId>(&self, item: &T) -> ~str {
+        unsafe { WxString { ptr: wxTreeCtrl_GetItemText(self.ptr(), item.ptr()) }.to_str() }
     }
-    fn getLastChild<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: &T, _item: &U) {
+    fn getLastChild<T: TWxTreeItemId, U: TWxTreeItemId>(&self, item: &T, _item: &U) {
         unsafe { wxTreeCtrl_GetLastChild(self.ptr(), item.ptr(), _item.ptr()) }
     }
-    fn getNextChild<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: &T, cookie: *mut c_int, _item: &U) {
+    fn getNextChild<T: TWxTreeItemId, U: TWxTreeItemId>(&self, item: &T, cookie: *mut c_int, _item: &U) {
         unsafe { wxTreeCtrl_GetNextChild(self.ptr(), item.ptr(), cookie, _item.ptr()) }
     }
-    fn getNextSibling<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: &T, _item: &U) {
+    fn getNextSibling<T: TWxTreeItemId, U: TWxTreeItemId>(&self, item: &T, _item: &U) {
         unsafe { wxTreeCtrl_GetNextSibling(self.ptr(), item.ptr(), _item.ptr()) }
     }
-    fn getNextVisible<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: &T, _item: &U) {
+    fn getNextVisible<T: TWxTreeItemId, U: TWxTreeItemId>(&self, item: &T, _item: &U) {
         unsafe { wxTreeCtrl_GetNextVisible(self.ptr(), item.ptr(), _item.ptr()) }
     }
-    fn getPrevSibling<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: &T, _item: &U) {
+    fn getPrevSibling<T: TWxTreeItemId, U: TWxTreeItemId>(&self, item: &T, _item: &U) {
         unsafe { wxTreeCtrl_GetPrevSibling(self.ptr(), item.ptr(), _item.ptr()) }
     }
-    fn getPrevVisible<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item: &T, _item: &U) {
+    fn getPrevVisible<T: TWxTreeItemId, U: TWxTreeItemId>(&self, item: &T, _item: &U) {
         unsafe { wxTreeCtrl_GetPrevVisible(self.ptr(), item.ptr(), _item.ptr()) }
     }
-    fn getRootItem<T: _wxTreeItemId>(&self, _item: &T) {
+    fn getRootItem<T: TWxTreeItemId>(&self, _item: &T) {
         unsafe { wxTreeCtrl_GetRootItem(self.ptr(), _item.ptr()) }
     }
-    fn getSelection<T: _wxTreeItemId>(&self, _item: &T) {
+    fn getSelection<T: TWxTreeItemId>(&self, _item: &T) {
         unsafe { wxTreeCtrl_GetSelection(self.ptr(), _item.ptr()) }
     }
     fn getSelections(&self, selections: *mut c_void) -> c_int {
@@ -8709,92 +8709,92 @@ pub trait _wxTreeCtrl : _wxControl {
     fn getSpacing(&self) -> c_int {
         unsafe { wxTreeCtrl_GetSpacing(self.ptr()) }
     }
-    fn getStateImageList(&self) -> wxImageList {
-        unsafe { wxImageList { ptr: wxTreeCtrl_GetStateImageList(self.ptr()) } }
+    fn getStateImageList(&self) -> WxImageList {
+        unsafe { WxImageList { ptr: wxTreeCtrl_GetStateImageList(self.ptr()) } }
     }
-    fn hitTest<T: _wxTreeItemId>(&self, _x: c_int, _y: c_int, flags: *mut c_int, _item: &T) {
+    fn hitTest<T: TWxTreeItemId>(&self, _x: c_int, _y: c_int, flags: *mut c_int, _item: &T) {
         unsafe { wxTreeCtrl_HitTest(self.ptr(), _x, _y, flags, _item.ptr()) }
     }
-    fn insertItem<T: _wxTreeItemId, U: _wxTreeItemId, V: _wxTreeItemId>(&self, parent: &T, idPrevious: &U, text: &str, image: c_int, selectedImage: c_int, data: *mut c_void, _item: &V) {
+    fn insertItem<T: TWxTreeItemId, U: TWxTreeItemId, V: TWxTreeItemId>(&self, parent: &T, idPrevious: &U, text: &str, image: c_int, selectedImage: c_int, data: *mut c_void, _item: &V) {
         let text = wxT(text);
         unsafe { wxTreeCtrl_InsertItem(self.ptr(), parent.ptr(), idPrevious.ptr(), text.ptr(), image, selectedImage, data, _item.ptr()) }
     }
-    fn insertItemByIndex<T: _wxTreeItemId, U: _wxTreeItemId>(&self, parent: &T, index: c_int, text: &str, image: c_int, selectedImage: c_int, data: *mut c_void, _item: &U) {
+    fn insertItemByIndex<T: TWxTreeItemId, U: TWxTreeItemId>(&self, parent: &T, index: c_int, text: &str, image: c_int, selectedImage: c_int, data: *mut c_void, _item: &U) {
         let text = wxT(text);
         unsafe { wxTreeCtrl_InsertItemByIndex(self.ptr(), parent.ptr(), index, text.ptr(), image, selectedImage, data, _item.ptr()) }
     }
-    fn isBold<T: _wxTreeItemId>(&self, item: &T) -> c_int {
+    fn isBold<T: TWxTreeItemId>(&self, item: &T) -> c_int {
         unsafe { wxTreeCtrl_IsBold(self.ptr(), item.ptr()) }
     }
-    fn isExpanded<T: _wxTreeItemId>(&self, item: &T) -> c_int {
+    fn isExpanded<T: TWxTreeItemId>(&self, item: &T) -> c_int {
         unsafe { wxTreeCtrl_IsExpanded(self.ptr(), item.ptr()) }
     }
-    fn isSelected<T: _wxTreeItemId>(&self, item: &T) -> c_int {
+    fn isSelected<T: TWxTreeItemId>(&self, item: &T) -> c_int {
         unsafe { wxTreeCtrl_IsSelected(self.ptr(), item.ptr()) }
     }
-    fn isVisible<T: _wxTreeItemId>(&self, item: &T) -> c_int {
+    fn isVisible<T: TWxTreeItemId>(&self, item: &T) -> c_int {
         unsafe { wxTreeCtrl_IsVisible(self.ptr(), item.ptr()) }
     }
-    fn itemHasChildren<T: _wxTreeItemId>(&self, item: &T) -> c_int {
+    fn itemHasChildren<T: TWxTreeItemId>(&self, item: &T) -> c_int {
         unsafe { wxTreeCtrl_ItemHasChildren(self.ptr(), item.ptr()) }
     }
-    fn onCompareItems<T: _wxTreeItemId, U: _wxTreeItemId>(&self, item1: &T, item2: &U) -> c_int {
+    fn onCompareItems<T: TWxTreeItemId, U: TWxTreeItemId>(&self, item1: &T, item2: &U) -> c_int {
         unsafe { wxTreeCtrl_OnCompareItems(self.ptr(), item1.ptr(), item2.ptr()) }
     }
-    fn prependItem<T: _wxTreeItemId, U: _wxTreeItemId>(&self, parent: &T, text: &str, image: c_int, selectedImage: c_int, data: *mut c_void, _item: &U) {
+    fn prependItem<T: TWxTreeItemId, U: TWxTreeItemId>(&self, parent: &T, text: &str, image: c_int, selectedImage: c_int, data: *mut c_void, _item: &U) {
         let text = wxT(text);
         unsafe { wxTreeCtrl_PrependItem(self.ptr(), parent.ptr(), text.ptr(), image, selectedImage, data, _item.ptr()) }
     }
-    fn scrollTo<T: _wxTreeItemId>(&self, item: &T) {
+    fn scrollTo<T: TWxTreeItemId>(&self, item: &T) {
         unsafe { wxTreeCtrl_ScrollTo(self.ptr(), item.ptr()) }
     }
-    fn selectItem<T: _wxTreeItemId>(&self, item: &T) {
+    fn selectItem<T: TWxTreeItemId>(&self, item: &T) {
         unsafe { wxTreeCtrl_SelectItem(self.ptr(), item.ptr()) }
     }
-    fn setImageList<T: _wxImageList>(&self, imageList: &T) {
+    fn setImageList<T: TWxImageList>(&self, imageList: &T) {
         unsafe { wxTreeCtrl_SetImageList(self.ptr(), imageList.ptr()) }
     }
     fn setIndent(&self, indent: c_int) {
         unsafe { wxTreeCtrl_SetIndent(self.ptr(), indent) }
     }
-    fn setItemBackgroundColour<T: _wxTreeItemId, U: _wxColour>(&self, item: &T, col: &U) {
+    fn setItemBackgroundColour<T: TWxTreeItemId, U: TWxColour>(&self, item: &T, col: &U) {
         unsafe { wxTreeCtrl_SetItemBackgroundColour(self.ptr(), item.ptr(), col.ptr()) }
     }
-    fn setItemBold<T: _wxTreeItemId>(&self, item: &T, bold: c_int) {
+    fn setItemBold<T: TWxTreeItemId>(&self, item: &T, bold: c_int) {
         unsafe { wxTreeCtrl_SetItemBold(self.ptr(), item.ptr(), bold) }
     }
-    fn setItemData<T: _wxTreeItemId>(&self, item: &T, data: *mut c_void) {
+    fn setItemData<T: TWxTreeItemId>(&self, item: &T, data: *mut c_void) {
         unsafe { wxTreeCtrl_SetItemData(self.ptr(), item.ptr(), data) }
     }
-    fn setItemDropHighlight<T: _wxTreeItemId>(&self, item: &T, highlight: c_int) {
+    fn setItemDropHighlight<T: TWxTreeItemId>(&self, item: &T, highlight: c_int) {
         unsafe { wxTreeCtrl_SetItemDropHighlight(self.ptr(), item.ptr(), highlight) }
     }
-    fn setItemFont<T: _wxTreeItemId, U: _wxFont>(&self, item: &T, font: &U) {
+    fn setItemFont<T: TWxTreeItemId, U: TWxFont>(&self, item: &T, font: &U) {
         unsafe { wxTreeCtrl_SetItemFont(self.ptr(), item.ptr(), font.ptr()) }
     }
-    fn setItemHasChildren<T: _wxTreeItemId>(&self, item: &T, hasChildren: c_int) {
+    fn setItemHasChildren<T: TWxTreeItemId>(&self, item: &T, hasChildren: c_int) {
         unsafe { wxTreeCtrl_SetItemHasChildren(self.ptr(), item.ptr(), hasChildren) }
     }
-    fn setItemImage<T: _wxTreeItemId>(&self, item: &T, image: c_int, which: c_int) {
+    fn setItemImage<T: TWxTreeItemId>(&self, item: &T, image: c_int, which: c_int) {
         unsafe { wxTreeCtrl_SetItemImage(self.ptr(), item.ptr(), image, which) }
     }
-    fn setItemText<T: _wxTreeItemId>(&self, item: &T, text: &str) {
+    fn setItemText<T: TWxTreeItemId>(&self, item: &T, text: &str) {
         let text = wxT(text);
         unsafe { wxTreeCtrl_SetItemText(self.ptr(), item.ptr(), text.ptr()) }
     }
-    fn setItemTextColour<T: _wxTreeItemId, U: _wxColour>(&self, item: &T, col: &U) {
+    fn setItemTextColour<T: TWxTreeItemId, U: TWxColour>(&self, item: &T, col: &U) {
         unsafe { wxTreeCtrl_SetItemTextColour(self.ptr(), item.ptr(), col.ptr()) }
     }
     fn setSpacing(&self, spacing: c_int) {
         unsafe { wxTreeCtrl_SetSpacing(self.ptr(), spacing) }
     }
-    fn setStateImageList<T: _wxImageList>(&self, imageList: &T) {
+    fn setStateImageList<T: TWxImageList>(&self, imageList: &T) {
         unsafe { wxTreeCtrl_SetStateImageList(self.ptr(), imageList.ptr()) }
     }
-    fn sortChildren<T: _wxTreeItemId>(&self, item: &T) {
+    fn sortChildren<T: TWxTreeItemId>(&self, item: &T) {
         unsafe { wxTreeCtrl_SortChildren(self.ptr(), item.ptr()) }
     }
-    fn toggle<T: _wxTreeItemId>(&self, item: &T) {
+    fn toggle<T: TWxTreeItemId>(&self, item: &T) {
         unsafe { wxTreeCtrl_Toggle(self.ptr(), item.ptr()) }
     }
     fn unselect(&self) {
@@ -8803,94 +8803,94 @@ pub trait _wxTreeCtrl : _wxControl {
     fn unselectAll(&self) {
         unsafe { wxTreeCtrl_UnselectAll(self.ptr()) }
     }
-    fn insertItem2<T: _wxWindow, U: _wxTreeItemId, V: _wxClosure, W: _wxTreeItemId>(&self, parent: &T, idPrevious: &U, text: &str, image: c_int, selectedImage: c_int, closure: &V, _item: &W) {
+    fn insertItem2<T: TWxWindow, U: TWxTreeItemId, V: TWxClosure, W: TWxTreeItemId>(&self, parent: &T, idPrevious: &U, text: &str, image: c_int, selectedImage: c_int, closure: &V, _item: &W) {
         let text = wxT(text);
         unsafe { wxTreeCtrl_InsertItem2(self.ptr(), parent.ptr(), idPrevious.ptr(), text.ptr(), image, selectedImage, closure.ptr(), _item.ptr()) }
     }
-    fn insertItemByIndex2<T: _wxWindow, U: _wxClosure, V: _wxTreeItemId>(&self, parent: &T, index: c_int, text: &str, image: c_int, selectedImage: c_int, closure: &U, _item: &V) {
+    fn insertItemByIndex2<T: TWxWindow, U: TWxClosure, V: TWxTreeItemId>(&self, parent: &T, index: c_int, text: &str, image: c_int, selectedImage: c_int, closure: &U, _item: &V) {
         let text = wxT(text);
         unsafe { wxTreeCtrl_InsertItemByIndex2(self.ptr(), parent.ptr(), index, text.ptr(), image, selectedImage, closure.ptr(), _item.ptr()) }
     }
-    fn getItemClientClosure<T: _wxTreeItemId>(&self, item: &T) -> wxClosure {
-        unsafe { wxClosure { ptr: wxTreeCtrl_GetItemClientClosure(self.ptr(), item.ptr()) } }
+    fn getItemClientClosure<T: TWxTreeItemId>(&self, item: &T) -> WxClosure {
+        unsafe { WxClosure { ptr: wxTreeCtrl_GetItemClientClosure(self.ptr(), item.ptr()) } }
     }
-    fn setItemClientClosure<T: _wxTreeItemId, U: _wxClosure>(&self, item: &T, closure: &U) {
+    fn setItemClientClosure<T: TWxTreeItemId, U: TWxClosure>(&self, item: &T, closure: &U) {
         unsafe { wxTreeCtrl_SetItemClientClosure(self.ptr(), item.ptr(), closure.ptr()) }
     }
-    fn assignImageList<T: _wxImageList>(&self, imageList: &T) {
+    fn assignImageList<T: TWxImageList>(&self, imageList: &T) {
         unsafe { wxTreeCtrl_AssignImageList(self.ptr(), imageList.ptr()) }
     }
-    fn assignStateImageList<T: _wxImageList>(&self, imageList: &T) {
+    fn assignStateImageList<T: TWxImageList>(&self, imageList: &T) {
         unsafe { wxTreeCtrl_AssignStateImageList(self.ptr(), imageList.ptr()) }
     }
 }
 
-pub struct wxTreeEvent { ptr: *mut c_void }
-impl _wxTreeEvent for wxTreeEvent {}
-impl _wxNotifyEvent for wxTreeEvent {}
-impl _wxCommandEvent for wxTreeEvent {}
-impl _wxEvent for wxTreeEvent {}
-impl _wxObject for wxTreeEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTreeEvent { ptr: *mut c_void }
+impl TWxTreeEvent for WxTreeEvent {}
+impl TWxNotifyEvent for WxTreeEvent {}
+impl TWxCommandEvent for WxTreeEvent {}
+impl TWxEvent for WxTreeEvent {}
+impl TWxObject for WxTreeEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTreeEvent {
-    pub fn from(ptr: *mut c_void) -> wxTreeEvent { wxTreeEvent { ptr: ptr } }
-    pub fn null() -> wxTreeEvent { wxTreeEvent::from(0 as *mut c_void) }
+impl WxTreeEvent {
+    pub fn from(ptr: *mut c_void) -> WxTreeEvent { WxTreeEvent { ptr: ptr } }
+    pub fn null() -> WxTreeEvent { WxTreeEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxTreeEvent : _wxNotifyEvent {
+pub trait TWxTreeEvent : TWxNotifyEvent {
     fn getCode(&self) -> c_int {
         unsafe { wxTreeEvent_GetCode(self.ptr()) }
     }
-    fn getItem<T: _wxTreeItemId>(&self, _ref: &T) {
+    fn getItem<T: TWxTreeItemId>(&self, _ref: &T) {
         unsafe { wxTreeEvent_GetItem(self.ptr(), _ref.ptr()) }
     }
     fn getLabel(&self) -> ~str {
-        unsafe { wxString { ptr: wxTreeEvent_GetLabel(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxTreeEvent_GetLabel(self.ptr()) }.to_str() }
     }
-    fn getOldItem<T: _wxTreeItemId>(&self, _ref: &T) {
+    fn getOldItem<T: TWxTreeItemId>(&self, _ref: &T) {
         unsafe { wxTreeEvent_GetOldItem(self.ptr(), _ref.ptr()) }
     }
-    fn getPoint(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxTreeEvent_GetPoint(self.ptr()) } }
+    fn getPoint(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxTreeEvent_GetPoint(self.ptr()) } }
     }
-    fn getKeyEvent(&self) -> wxKeyEvent {
-        unsafe { wxKeyEvent { ptr: wxTreeEvent_GetKeyEvent(self.ptr()) } }
+    fn getKeyEvent(&self) -> WxKeyEvent {
+        unsafe { WxKeyEvent { ptr: wxTreeEvent_GetKeyEvent(self.ptr()) } }
     }
     fn isEditCancelled(&self) -> c_int {
         unsafe { wxTreeEvent_IsEditCancelled(self.ptr()) }
     }
 }
 
-pub struct wxTreeItemData { ptr: *mut c_void }
-impl _wxTreeItemData for wxTreeItemData {}
-impl _wxClientData for wxTreeItemData { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTreeItemData { ptr: *mut c_void }
+impl TWxTreeItemData for WxTreeItemData {}
+impl TWxClientData for WxTreeItemData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTreeItemData {
-    pub fn from(ptr: *mut c_void) -> wxTreeItemData { wxTreeItemData { ptr: ptr } }
-    pub fn null() -> wxTreeItemData { wxTreeItemData::from(0 as *mut c_void) }
+impl WxTreeItemData {
+    pub fn from(ptr: *mut c_void) -> WxTreeItemData { WxTreeItemData { ptr: ptr } }
+    pub fn null() -> WxTreeItemData { WxTreeItemData::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxTreeItemData : _wxClientData {
+pub trait TWxTreeItemData : TWxClientData {
 }
 
-pub struct wxTreeItemId { ptr: *mut c_void }
-impl _wxTreeItemId for wxTreeItemId { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTreeItemId { ptr: *mut c_void }
+impl TWxTreeItemId for WxTreeItemId { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTreeItemId {
-    pub fn from(ptr: *mut c_void) -> wxTreeItemId { wxTreeItemId { ptr: ptr } }
-    pub fn null() -> wxTreeItemId { wxTreeItemId::from(0 as *mut c_void) }
+impl WxTreeItemId {
+    pub fn from(ptr: *mut c_void) -> WxTreeItemId { WxTreeItemId { ptr: ptr } }
+    pub fn null() -> WxTreeItemId { WxTreeItemId::from(0 as *mut c_void) }
     
-    pub fn new() -> wxTreeItemId {
-        unsafe { wxTreeItemId { ptr: wxTreeItemId_Create() } }
+    pub fn new() -> WxTreeItemId {
+        unsafe { WxTreeItemId { ptr: wxTreeItemId_Create() } }
     }
-    pub fn newFromValue(value: intptr_t) -> wxTreeItemId {
-        unsafe { wxTreeItemId { ptr: wxTreeItemId_CreateFromValue(value) } }
+    pub fn newFromValue(value: intptr_t) -> WxTreeItemId {
+        unsafe { WxTreeItemId { ptr: wxTreeItemId_CreateFromValue(value) } }
     }
 }
 
-pub trait _wxTreeItemId {
+pub trait TWxTreeItemId {
     fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
@@ -8899,26 +8899,26 @@ pub trait _wxTreeItemId {
     fn isOk(&self) -> c_int {
         unsafe { wxTreeItemId_IsOk(self.ptr()) }
     }
-    fn clone(&self) -> wxTreeItemId {
-        unsafe { wxTreeItemId { ptr: wxTreeItemId_Clone(self.ptr()) } }
+    fn clone(&self) -> WxTreeItemId {
+        unsafe { WxTreeItemId { ptr: wxTreeItemId_Clone(self.ptr()) } }
     }
     fn getValue(&self) -> intptr_t {
         unsafe { wxTreeItemId_GetValue(self.ptr()) }
     }
 }
 
-pub struct wxUpdateUIEvent { ptr: *mut c_void }
-impl _wxUpdateUIEvent for wxUpdateUIEvent {}
-impl _wxEvent for wxUpdateUIEvent {}
-impl _wxObject for wxUpdateUIEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxUpdateUIEvent { ptr: *mut c_void }
+impl TWxUpdateUIEvent for WxUpdateUIEvent {}
+impl TWxEvent for WxUpdateUIEvent {}
+impl TWxObject for WxUpdateUIEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxUpdateUIEvent {
-    pub fn from(ptr: *mut c_void) -> wxUpdateUIEvent { wxUpdateUIEvent { ptr: ptr } }
-    pub fn null() -> wxUpdateUIEvent { wxUpdateUIEvent::from(0 as *mut c_void) }
+impl WxUpdateUIEvent {
+    pub fn from(ptr: *mut c_void) -> WxUpdateUIEvent { WxUpdateUIEvent { ptr: ptr } }
+    pub fn null() -> WxUpdateUIEvent { WxUpdateUIEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxUpdateUIEvent : _wxEvent {
+pub trait TWxUpdateUIEvent : TWxEvent {
     fn check(&self, check: c_int) {
         unsafe { wxUpdateUIEvent_Check(self.ptr(), check) }
     }
@@ -8941,7 +8941,7 @@ pub trait _wxUpdateUIEvent : _wxEvent {
         unsafe { wxUpdateUIEvent_GetSetText(self.ptr()) }
     }
     fn getText(&self) -> ~str {
-        unsafe { wxString { ptr: wxUpdateUIEvent_GetText(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxUpdateUIEvent_GetText(self.ptr()) }.to_str() }
     }
     fn setText(&self, text: &str) {
         let text = wxT(text);
@@ -8949,28 +8949,28 @@ pub trait _wxUpdateUIEvent : _wxEvent {
     }
 }
 
-pub struct wxValidator { ptr: *mut c_void }
-impl _wxValidator for wxValidator {}
-impl _wxEvtHandler for wxValidator {}
-impl _wxObject for wxValidator { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxValidator { ptr: *mut c_void }
+impl TWxValidator for WxValidator {}
+impl TWxEvtHandler for WxValidator {}
+impl TWxObject for WxValidator { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxValidator {
-    pub fn from(ptr: *mut c_void) -> wxValidator { wxValidator { ptr: ptr } }
-    pub fn null() -> wxValidator { wxValidator::from(0 as *mut c_void) }
+impl WxValidator {
+    pub fn from(ptr: *mut c_void) -> WxValidator { WxValidator { ptr: ptr } }
+    pub fn null() -> WxValidator { WxValidator::from(0 as *mut c_void) }
     
-    pub fn new() -> wxValidator {
-        unsafe { wxValidator { ptr: wxValidator_Create() } }
+    pub fn new() -> WxValidator {
+        unsafe { WxValidator { ptr: wxValidator_Create() } }
     }
     pub fn setBellOnError(doIt: c_int) {
         unsafe { wxValidator_SetBellOnError(doIt) }
     }
 }
 
-pub trait _wxValidator : _wxEvtHandler {
-    fn getWindow(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxValidator_GetWindow(self.ptr()) } }
+pub trait TWxValidator : TWxEvtHandler {
+    fn getWindow(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxValidator_GetWindow(self.ptr()) } }
     }
-    fn setWindow<T: _wxWindow>(&self, win: &T) {
+    fn setWindow<T: TWxWindow>(&self, win: &T) {
         unsafe { wxValidator_SetWindow(self.ptr(), win.ptr()) }
     }
     fn transferFromWindow(&self) -> c_int {
@@ -8979,41 +8979,41 @@ pub trait _wxValidator : _wxEvtHandler {
     fn transferToWindow(&self) -> c_int {
         unsafe { wxValidator_TransferToWindow(self.ptr()) }
     }
-    fn validate<T: _wxWindow>(&self, parent: &T) -> c_int {
+    fn validate<T: TWxWindow>(&self, parent: &T) -> c_int {
         unsafe { wxValidator_Validate(self.ptr(), parent.ptr()) }
     }
 }
 
-pub struct wxView { ptr: *mut c_void }
-impl _wxView for wxView {}
-impl _wxEvtHandler for wxView {}
-impl _wxObject for wxView { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxView { ptr: *mut c_void }
+impl TWxView for WxView {}
+impl TWxEvtHandler for WxView {}
+impl TWxObject for WxView { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxView {
-    pub fn from(ptr: *mut c_void) -> wxView { wxView { ptr: ptr } }
-    pub fn null() -> wxView { wxView::from(0 as *mut c_void) }
+impl WxView {
+    pub fn from(ptr: *mut c_void) -> WxView { WxView { ptr: ptr } }
+    pub fn null() -> WxView { WxView::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxView : _wxEvtHandler {
+pub trait TWxView : TWxEvtHandler {
 }
 
-pub struct wxSound { ptr: *mut c_void }
-impl _wxSound for wxSound {}
-impl _wxEvtHandler for wxSound {}
-impl _wxObject for wxSound { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSound { ptr: *mut c_void }
+impl TWxSound for WxSound {}
+impl TWxEvtHandler for WxSound {}
+impl TWxObject for WxSound { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSound {
-    pub fn from(ptr: *mut c_void) -> wxSound { wxSound { ptr: ptr } }
-    pub fn null() -> wxSound { wxSound::from(0 as *mut c_void) }
+impl WxSound {
+    pub fn from(ptr: *mut c_void) -> WxSound { WxSound { ptr: ptr } }
+    pub fn null() -> WxSound { WxSound::from(0 as *mut c_void) }
     
-    pub fn new(fileName: &str, isResource: c_int) -> wxSound {
+    pub fn new(fileName: &str, isResource: c_int) -> WxSound {
         let fileName = wxT(fileName);
-        unsafe { wxSound { ptr: wxSound_Create(fileName.ptr(), isResource) } }
+        unsafe { WxSound { ptr: wxSound_Create(fileName.ptr(), isResource) } }
     }
 }
 
-pub trait _wxSound : _wxEvtHandler {
+pub trait TWxSound : TWxEvtHandler {
     fn isOk(&self) -> c_int {
         unsafe { wxSound_IsOk(self.ptr()) }
     }
@@ -9025,25 +9025,25 @@ pub trait _wxSound : _wxEvtHandler {
     }
 }
 
-pub struct wxWindow { ptr: *mut c_void }
-impl _wxWindow for wxWindow {}
-impl _wxEvtHandler for wxWindow {}
-impl _wxObject for wxWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxWindow { ptr: *mut c_void }
+impl TWxWindow for WxWindow {}
+impl TWxEvtHandler for WxWindow {}
+impl TWxObject for WxWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxWindow {
-    pub fn from(ptr: *mut c_void) -> wxWindow { wxWindow { ptr: ptr } }
-    pub fn null() -> wxWindow { wxWindow::from(0 as *mut c_void) }
+impl WxWindow {
+    pub fn from(ptr: *mut c_void) -> WxWindow { WxWindow { ptr: ptr } }
+    pub fn null() -> WxWindow { WxWindow::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> wxWindow {
-        unsafe { wxWindow { ptr: wxWindow_Create(_prt.ptr(), _id, _x, _y, _w, _h, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> WxWindow {
+        unsafe { WxWindow { ptr: wxWindow_Create(_prt.ptr(), _id, _x, _y, _w, _h, _stl) } }
     }
 }
 
-pub trait _wxWindow : _wxEvtHandler {
-    fn addChild<T: _wxWindow>(&self, child: &T) {
+pub trait TWxWindow : TWxEvtHandler {
+    fn addChild<T: TWxWindow>(&self, child: &T) {
         unsafe { wxWindow_AddChild(self.ptr(), child.ptr()) }
     }
-    fn addConstraintReference<T: _wxWindow>(&self, otherWin: &T) {
+    fn addConstraintReference<T: TWxWindow>(&self, otherWin: &T) {
         unsafe { wxWindow_AddConstraintReference(self.ptr(), otherWin.ptr()) }
     }
     fn captureMouse(&self) {
@@ -9058,17 +9058,17 @@ pub trait _wxWindow : _wxEvtHandler {
     fn clearBackground(&self) {
         unsafe { wxWindow_ClearBackground(self.ptr()) }
     }
-    fn clientToScreen(&self, x: c_int, y: c_int) -> wxPoint {
-        unsafe { wxPoint { ptr: wxWindow_ClientToScreen(self.ptr(), x, y) } }
+    fn clientToScreen(&self, x: c_int, y: c_int) -> WxPoint {
+        unsafe { WxPoint { ptr: wxWindow_ClientToScreen(self.ptr(), x, y) } }
     }
     fn close(&self, _force: c_int) -> c_int {
         unsafe { wxWindow_Close(self.ptr(), _force) }
     }
-    fn convertDialogToPixels(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxWindow_ConvertDialogToPixels(self.ptr()) } }
+    fn convertDialogToPixels(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxWindow_ConvertDialogToPixels(self.ptr()) } }
     }
-    fn convertPixelsToDialog(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxWindow_ConvertPixelsToDialog(self.ptr()) } }
+    fn convertPixelsToDialog(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxWindow_ConvertPixelsToDialog(self.ptr()) } }
     }
     fn deleteRelatedConstraints(&self) {
         unsafe { wxWindow_DeleteRelatedConstraints(self.ptr()) }
@@ -9088,12 +9088,12 @@ pub trait _wxWindow : _wxEvtHandler {
     fn enable(&self) -> c_int {
         unsafe { wxWindow_Enable(self.ptr()) }
     }
-    fn findFocus(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxWindow_FindFocus(self.ptr()) } }
+    fn findFocus(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxWindow_FindFocus(self.ptr()) } }
     }
-    fn findWindow(&self, name: &str) -> wxWindow {
+    fn findWindow(&self, name: &str) -> WxWindow {
         let name = wxT(name);
-        unsafe { wxWindow { ptr: wxWindow_FindWindow(self.ptr(), name.ptr()) } }
+        unsafe { WxWindow { ptr: wxWindow_FindWindow(self.ptr(), name.ptr()) } }
     }
     fn fit(&self) {
         unsafe { wxWindow_Fit(self.ptr()) }
@@ -9104,20 +9104,20 @@ pub trait _wxWindow : _wxEvtHandler {
     fn freeze(&self) {
         unsafe { wxWindow_Freeze(self.ptr()) }
     }
-    fn getEffectiveMinSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxWindow_GetEffectiveMinSize(self.ptr()) } }
+    fn getEffectiveMinSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxWindow_GetEffectiveMinSize(self.ptr()) } }
     }
     fn getAutoLayout(&self) -> c_int {
         unsafe { wxWindow_GetAutoLayout(self.ptr()) }
     }
-    fn getBackgroundColour<T: _wxColour>(&self, _ref: &T) {
+    fn getBackgroundColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxWindow_GetBackgroundColour(self.ptr(), _ref.ptr()) }
     }
-    fn getBestSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxWindow_GetBestSize(self.ptr()) } }
+    fn getBestSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxWindow_GetBestSize(self.ptr()) } }
     }
-    fn getCaret(&self) -> wxCaret {
-        unsafe { wxCaret { ptr: wxWindow_GetCaret(self.ptr()) } }
+    fn getCaret(&self) -> WxCaret {
+        unsafe { WxCaret { ptr: wxWindow_GetCaret(self.ptr()) } }
     }
     fn getCharHeight(&self) -> c_int {
         unsafe { wxWindow_GetCharHeight(self.ptr()) }
@@ -9128,34 +9128,34 @@ pub trait _wxWindow : _wxEvtHandler {
     fn getChildren(&self, _res: *mut c_void, _cnt: c_int) -> c_int {
         unsafe { wxWindow_GetChildren(self.ptr(), _res, _cnt) }
     }
-    fn getClientData(&self) -> wxClientData {
-        unsafe { wxClientData { ptr: wxWindow_GetClientData(self.ptr()) } }
+    fn getClientData(&self) -> WxClientData {
+        unsafe { WxClientData { ptr: wxWindow_GetClientData(self.ptr()) } }
     }
-    fn getClientSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxWindow_GetClientSize(self.ptr()) } }
+    fn getClientSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxWindow_GetClientSize(self.ptr()) } }
     }
     fn getClientSizeConstraint(&self, _w: *mut c_int, _h: *mut c_int) {
         unsafe { wxWindow_GetClientSizeConstraint(self.ptr(), _w, _h) }
     }
-    fn getConstraints(&self) -> wxLayoutConstraints {
-        unsafe { wxLayoutConstraints { ptr: wxWindow_GetConstraints(self.ptr()) } }
+    fn getConstraints(&self) -> WxLayoutConstraints {
+        unsafe { WxLayoutConstraints { ptr: wxWindow_GetConstraints(self.ptr()) } }
     }
     fn getConstraintsInvolvedIn(&self) -> *mut c_void {
         unsafe { wxWindow_GetConstraintsInvolvedIn(self.ptr()) }
     }
-    fn getCursor(&self) -> wxCursor {
-        unsafe { wxCursor { ptr: wxWindow_GetCursor(self.ptr()) } }
+    fn getCursor(&self) -> WxCursor {
+        unsafe { WxCursor { ptr: wxWindow_GetCursor(self.ptr()) } }
     }
-    fn getDropTarget(&self) -> wxDropTarget {
-        unsafe { wxDropTarget { ptr: wxWindow_GetDropTarget(self.ptr()) } }
+    fn getDropTarget(&self) -> WxDropTarget {
+        unsafe { WxDropTarget { ptr: wxWindow_GetDropTarget(self.ptr()) } }
     }
-    fn getEventHandler(&self) -> wxEvtHandler {
-        unsafe { wxEvtHandler { ptr: wxWindow_GetEventHandler(self.ptr()) } }
+    fn getEventHandler(&self) -> WxEvtHandler {
+        unsafe { WxEvtHandler { ptr: wxWindow_GetEventHandler(self.ptr()) } }
     }
-    fn getFont<T: _wxFont>(&self, _ref: &T) {
+    fn getFont<T: TWxFont>(&self, _ref: &T) {
         unsafe { wxWindow_GetFont(self.ptr(), _ref.ptr()) }
     }
-    fn getForegroundColour<T: _wxColour>(&self, _ref: &T) {
+    fn getForegroundColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxWindow_GetForegroundColour(self.ptr(), _ref.ptr()) }
     }
     fn getHandle(&self) -> *mut c_void {
@@ -9165,7 +9165,7 @@ pub trait _wxWindow : _wxEvtHandler {
         unsafe { wxWindow_GetId(self.ptr()) }
     }
     fn getLabel(&self) -> ~str {
-        unsafe { wxString { ptr: wxWindow_GetLabel(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxWindow_GetLabel(self.ptr()) }.to_str() }
     }
     fn getLabelEmpty(&self) -> c_int {
         unsafe { wxWindow_GetLabelEmpty(self.ptr()) }
@@ -9183,19 +9183,19 @@ pub trait _wxWindow : _wxEvtHandler {
         unsafe { wxWindow_GetMinWidth(self.ptr()) }
     }
     fn getName(&self) -> ~str {
-        unsafe { wxString { ptr: wxWindow_GetName(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxWindow_GetName(self.ptr()) }.to_str() }
     }
-    fn getParent(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxWindow_GetParent(self.ptr()) } }
+    fn getParent(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxWindow_GetParent(self.ptr()) } }
     }
-    fn getPosition(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxWindow_GetPosition(self.ptr()) } }
+    fn getPosition(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxWindow_GetPosition(self.ptr()) } }
     }
     fn getPositionConstraint(&self, _x: *mut c_int, _y: *mut c_int) {
         unsafe { wxWindow_GetPositionConstraint(self.ptr(), _x, _y) }
     }
-    fn getRect(&self) -> wxRect {
-        unsafe { wxRect { ptr: wxWindow_GetRect(self.ptr()) } }
+    fn getRect(&self) -> WxRect {
+        unsafe { WxRect { ptr: wxWindow_GetRect(self.ptr()) } }
     }
     fn getScrollPos(&self, orient: c_int) -> c_int {
         unsafe { wxWindow_GetScrollPos(self.ptr(), orient) }
@@ -9206,30 +9206,30 @@ pub trait _wxWindow : _wxEvtHandler {
     fn getScrollThumb(&self, orient: c_int) -> c_int {
         unsafe { wxWindow_GetScrollThumb(self.ptr(), orient) }
     }
-    fn getSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxWindow_GetSize(self.ptr()) } }
+    fn getSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxWindow_GetSize(self.ptr()) } }
     }
     fn getSizeConstraint(&self, _w: *mut c_int, _h: *mut c_int) {
         unsafe { wxWindow_GetSizeConstraint(self.ptr(), _w, _h) }
     }
-    fn getSizer(&self) -> wxSizer {
-        unsafe { wxSizer { ptr: wxWindow_GetSizer(self.ptr()) } }
+    fn getSizer(&self) -> WxSizer {
+        unsafe { WxSizer { ptr: wxWindow_GetSizer(self.ptr()) } }
     }
-    fn getTextExtent<T: _wxFont>(&self, string: &str, x: *mut c_int, y: *mut c_int, descent: *mut c_int, externalLeading: *mut c_int, theFont: &T) {
+    fn getTextExtent<T: TWxFont>(&self, string: &str, x: *mut c_int, y: *mut c_int, descent: *mut c_int, externalLeading: *mut c_int, theFont: &T) {
         let string = wxT(string);
         unsafe { wxWindow_GetTextExtent(self.ptr(), string.ptr(), x, y, descent, externalLeading, theFont.ptr()) }
     }
     fn getToolTip(&self) -> ~str {
-        unsafe { wxString { ptr: wxWindow_GetToolTip(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxWindow_GetToolTip(self.ptr()) }.to_str() }
     }
-    fn getUpdateRegion(&self) -> wxRegion {
-        unsafe { wxRegion { ptr: wxWindow_GetUpdateRegion(self.ptr()) } }
+    fn getUpdateRegion(&self) -> WxRegion {
+        unsafe { WxRegion { ptr: wxWindow_GetUpdateRegion(self.ptr()) } }
     }
-    fn getValidator(&self) -> wxValidator {
-        unsafe { wxValidator { ptr: wxWindow_GetValidator(self.ptr()) } }
+    fn getValidator(&self) -> WxValidator {
+        unsafe { WxValidator { ptr: wxWindow_GetValidator(self.ptr()) } }
     }
-    fn getVirtualSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxWindow_GetVirtualSize(self.ptr()) } }
+    fn getVirtualSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxWindow_GetVirtualSize(self.ptr()) } }
     }
     fn getWindowStyleFlag(&self) -> c_int {
         unsafe { wxWindow_GetWindowStyleFlag(self.ptr()) }
@@ -9282,13 +9282,13 @@ pub trait _wxWindow : _wxEvtHandler {
     fn popEventHandler(&self, deleteHandler: c_int) -> *mut c_void {
         unsafe { wxWindow_PopEventHandler(self.ptr(), deleteHandler) }
     }
-    fn popupMenu<T: _wxMenu>(&self, menu: &T, x: c_int, y: c_int) -> c_int {
+    fn popupMenu<T: TWxMenu>(&self, menu: &T, x: c_int, y: c_int) -> c_int {
         unsafe { wxWindow_PopupMenu(self.ptr(), menu.ptr(), x, y) }
     }
-    fn prepareDC<T: _wxDC>(&self, dc: &T) {
+    fn prepareDC<T: TWxDC>(&self, dc: &T) {
         unsafe { wxWindow_PrepareDC(self.ptr(), dc.ptr()) }
     }
-    fn pushEventHandler<T: _wxEvtHandler>(&self, handler: &T) {
+    fn pushEventHandler<T: TWxEvtHandler>(&self, handler: &T) {
         unsafe { wxWindow_PushEventHandler(self.ptr(), handler.ptr()) }
     }
     fn raise(&self) {
@@ -9303,20 +9303,20 @@ pub trait _wxWindow : _wxEvtHandler {
     fn releaseMouse(&self) {
         unsafe { wxWindow_ReleaseMouse(self.ptr()) }
     }
-    fn removeChild<T: _wxWindow>(&self, child: &T) {
+    fn removeChild<T: TWxWindow>(&self, child: &T) {
         unsafe { wxWindow_RemoveChild(self.ptr(), child.ptr()) }
     }
-    fn removeConstraintReference<T: _wxWindow>(&self, otherWin: &T) {
+    fn removeConstraintReference<T: TWxWindow>(&self, otherWin: &T) {
         unsafe { wxWindow_RemoveConstraintReference(self.ptr(), otherWin.ptr()) }
     }
-    fn reparent<T: _wxWindow>(&self, _par: &T) -> c_int {
+    fn reparent<T: TWxWindow>(&self, _par: &T) -> c_int {
         unsafe { wxWindow_Reparent(self.ptr(), _par.ptr()) }
     }
     fn resetConstraints(&self) {
         unsafe { wxWindow_ResetConstraints(self.ptr()) }
     }
-    fn screenToClient(&self, x: c_int, y: c_int) -> wxPoint {
-        unsafe { wxPoint { ptr: wxWindow_ScreenToClient(self.ptr(), x, y) } }
+    fn screenToClient(&self, x: c_int, y: c_int) -> WxPoint {
+        unsafe { WxPoint { ptr: wxWindow_ScreenToClient(self.ptr(), x, y) } }
     }
     fn scrollWindow(&self, dx: c_int, dy: c_int) {
         unsafe { wxWindow_ScrollWindow(self.ptr(), dx, dy) }
@@ -9324,22 +9324,22 @@ pub trait _wxWindow : _wxEvtHandler {
     fn scrollWindowRect(&self, dx: c_int, dy: c_int, x: c_int, y: c_int, w: c_int, h: c_int) {
         unsafe { wxWindow_ScrollWindowRect(self.ptr(), dx, dy, x, y, w, h) }
     }
-    fn setAcceleratorTable<T: _wxAcceleratorTable>(&self, accel: &T) {
+    fn setAcceleratorTable<T: TWxAcceleratorTable>(&self, accel: &T) {
         unsafe { wxWindow_SetAcceleratorTable(self.ptr(), accel.ptr()) }
     }
     fn setAutoLayout(&self, autoLayout: c_int) {
         unsafe { wxWindow_SetAutoLayout(self.ptr(), autoLayout) }
     }
-    fn setBackgroundColour<T: _wxColour>(&self, colour: &T) -> c_int {
+    fn setBackgroundColour<T: TWxColour>(&self, colour: &T) -> c_int {
         unsafe { wxWindow_SetBackgroundColour(self.ptr(), colour.ptr()) }
     }
-    fn setCaret<T: _wxCaret>(&self, caret: &T) {
+    fn setCaret<T: TWxCaret>(&self, caret: &T) {
         unsafe { wxWindow_SetCaret(self.ptr(), caret.ptr()) }
     }
-    fn setClientData<T: _wxClientData>(&self, data: &T) {
+    fn setClientData<T: TWxClientData>(&self, data: &T) {
         unsafe { wxWindow_SetClientData(self.ptr(), data.ptr()) }
     }
-    fn setClientObject<T: _wxClientData>(&self, data: &T) {
+    fn setClientObject<T: TWxClientData>(&self, data: &T) {
         unsafe { wxWindow_SetClientObject(self.ptr(), data.ptr()) }
     }
     fn setClientSize(&self, width: c_int, height: c_int) {
@@ -9348,13 +9348,13 @@ pub trait _wxWindow : _wxEvtHandler {
     fn setConstraintSizes(&self, recurse: c_int) {
         unsafe { wxWindow_SetConstraintSizes(self.ptr(), recurse) }
     }
-    fn setConstraints<T: _wxLayoutConstraints>(&self, constraints: &T) {
+    fn setConstraints<T: TWxLayoutConstraints>(&self, constraints: &T) {
         unsafe { wxWindow_SetConstraints(self.ptr(), constraints.ptr()) }
     }
-    fn setCursor<T: _wxCursor>(&self, cursor: &T) -> c_int {
+    fn setCursor<T: TWxCursor>(&self, cursor: &T) -> c_int {
         unsafe { wxWindow_SetCursor(self.ptr(), cursor.ptr()) }
     }
-    fn setDropTarget<T: _wxDropTarget>(&self, dropTarget: &T) {
+    fn setDropTarget<T: TWxDropTarget>(&self, dropTarget: &T) {
         unsafe { wxWindow_SetDropTarget(self.ptr(), dropTarget.ptr()) }
     }
     fn setExtraStyle(&self, exStyle: c_long) {
@@ -9363,10 +9363,10 @@ pub trait _wxWindow : _wxEvtHandler {
     fn setFocus(&self) {
         unsafe { wxWindow_SetFocus(self.ptr()) }
     }
-    fn setFont<T: _wxFont>(&self, font: &T) -> c_int {
+    fn setFont<T: TWxFont>(&self, font: &T) -> c_int {
         unsafe { wxWindow_SetFont(self.ptr(), font.ptr()) }
     }
-    fn setForegroundColour<T: _wxColour>(&self, colour: &T) -> c_int {
+    fn setForegroundColour<T: TWxColour>(&self, colour: &T) -> c_int {
         unsafe { wxWindow_SetForegroundColour(self.ptr(), colour.ptr()) }
     }
     fn setId(&self, _id: c_int) {
@@ -9395,14 +9395,14 @@ pub trait _wxWindow : _wxEvtHandler {
     fn setSizeHints(&self, minW: c_int, minH: c_int, maxW: c_int, maxH: c_int, incW: c_int, incH: c_int) {
         unsafe { wxWindow_SetSizeHints(self.ptr(), minW, minH, maxW, maxH, incW, incH) }
     }
-    fn setSizer<T: _wxSizer>(&self, sizer: &T) {
+    fn setSizer<T: TWxSizer>(&self, sizer: &T) {
         unsafe { wxWindow_SetSizer(self.ptr(), sizer.ptr()) }
     }
     fn setToolTip(&self, tip: &str) {
         let tip = wxT(tip);
         unsafe { wxWindow_SetToolTip(self.ptr(), tip.ptr()) }
     }
-    fn setValidator<T: _wxValidator>(&self, validator: &T) {
+    fn setValidator<T: TWxValidator>(&self, validator: &T) {
         unsafe { wxWindow_SetValidator(self.ptr(), validator.ptr()) }
     }
     fn setWindowStyleFlag(&self, style: c_long) {
@@ -9435,184 +9435,184 @@ pub trait _wxWindow : _wxEvtHandler {
     fn warpPointer(&self, x: c_int, y: c_int) {
         unsafe { wxWindow_WarpPointer(self.ptr(), x, y) }
     }
-    fn convertDialogToPixelsEx(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxWindow_ConvertDialogToPixelsEx(self.ptr()) } }
+    fn convertDialogToPixelsEx(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxWindow_ConvertDialogToPixelsEx(self.ptr()) } }
     }
-    fn convertPixelsToDialogEx(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxWindow_ConvertPixelsToDialogEx(self.ptr()) } }
+    fn convertPixelsToDialogEx(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxWindow_ConvertPixelsToDialogEx(self.ptr()) } }
     }
-    fn screenToClient2(&self, x: c_int, y: c_int) -> wxPoint {
-        unsafe { wxPoint { ptr: wxWindow_ScreenToClient2(self.ptr(), x, y) } }
+    fn screenToClient2(&self, x: c_int, y: c_int) -> WxPoint {
+        unsafe { WxPoint { ptr: wxWindow_ScreenToClient2(self.ptr(), x, y) } }
     }
 }
 
-pub struct wxWindowCreateEvent { ptr: *mut c_void }
-impl _wxWindowCreateEvent for wxWindowCreateEvent {}
-impl _wxCommandEvent for wxWindowCreateEvent {}
-impl _wxEvent for wxWindowCreateEvent {}
-impl _wxObject for wxWindowCreateEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxWindowCreateEvent { ptr: *mut c_void }
+impl TWxWindowCreateEvent for WxWindowCreateEvent {}
+impl TWxCommandEvent for WxWindowCreateEvent {}
+impl TWxEvent for WxWindowCreateEvent {}
+impl TWxObject for WxWindowCreateEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxWindowCreateEvent {
-    pub fn from(ptr: *mut c_void) -> wxWindowCreateEvent { wxWindowCreateEvent { ptr: ptr } }
-    pub fn null() -> wxWindowCreateEvent { wxWindowCreateEvent::from(0 as *mut c_void) }
+impl WxWindowCreateEvent {
+    pub fn from(ptr: *mut c_void) -> WxWindowCreateEvent { WxWindowCreateEvent { ptr: ptr } }
+    pub fn null() -> WxWindowCreateEvent { WxWindowCreateEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxWindowCreateEvent : _wxCommandEvent {
-    fn getWindow(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxWindowCreateEvent_GetWindow(self.ptr()) } }
+pub trait TWxWindowCreateEvent : TWxCommandEvent {
+    fn getWindow(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxWindowCreateEvent_GetWindow(self.ptr()) } }
     }
 }
 
-pub struct wxWindowDC { ptr: *mut c_void }
-impl _wxWindowDC for wxWindowDC {}
-impl _wxDC for wxWindowDC {}
-impl _wxObject for wxWindowDC { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxWindowDC { ptr: *mut c_void }
+impl TWxWindowDC for WxWindowDC {}
+impl TWxDC for WxWindowDC {}
+impl TWxObject for WxWindowDC { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxWindowDC {
-    pub fn from(ptr: *mut c_void) -> wxWindowDC { wxWindowDC { ptr: ptr } }
-    pub fn null() -> wxWindowDC { wxWindowDC::from(0 as *mut c_void) }
+impl WxWindowDC {
+    pub fn from(ptr: *mut c_void) -> WxWindowDC { WxWindowDC { ptr: ptr } }
+    pub fn null() -> WxWindowDC { WxWindowDC::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(win: &T) -> wxWindowDC {
-        unsafe { wxWindowDC { ptr: wxWindowDC_Create(win.ptr()) } }
+    pub fn new<T: TWxWindow>(win: &T) -> WxWindowDC {
+        unsafe { WxWindowDC { ptr: wxWindowDC_Create(win.ptr()) } }
     }
 }
 
-pub trait _wxWindowDC : _wxDC {
+pub trait TWxWindowDC : TWxDC {
 }
 
-pub struct wxWindowDestroyEvent { ptr: *mut c_void }
-impl _wxWindowDestroyEvent for wxWindowDestroyEvent {}
-impl _wxCommandEvent for wxWindowDestroyEvent {}
-impl _wxEvent for wxWindowDestroyEvent {}
-impl _wxObject for wxWindowDestroyEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxWindowDestroyEvent { ptr: *mut c_void }
+impl TWxWindowDestroyEvent for WxWindowDestroyEvent {}
+impl TWxCommandEvent for WxWindowDestroyEvent {}
+impl TWxEvent for WxWindowDestroyEvent {}
+impl TWxObject for WxWindowDestroyEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxWindowDestroyEvent {
-    pub fn from(ptr: *mut c_void) -> wxWindowDestroyEvent { wxWindowDestroyEvent { ptr: ptr } }
-    pub fn null() -> wxWindowDestroyEvent { wxWindowDestroyEvent::from(0 as *mut c_void) }
+impl WxWindowDestroyEvent {
+    pub fn from(ptr: *mut c_void) -> WxWindowDestroyEvent { WxWindowDestroyEvent { ptr: ptr } }
+    pub fn null() -> WxWindowDestroyEvent { WxWindowDestroyEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxWindowDestroyEvent : _wxCommandEvent {
-    fn getWindow(&self) -> wxWindow {
-        unsafe { wxWindow { ptr: wxWindowDestroyEvent_GetWindow(self.ptr()) } }
+pub trait TWxWindowDestroyEvent : TWxCommandEvent {
+    fn getWindow(&self) -> WxWindow {
+        unsafe { WxWindow { ptr: wxWindowDestroyEvent_GetWindow(self.ptr()) } }
     }
 }
 
-pub struct wxWindowDisabler { ptr: *mut c_void }
-impl _wxWindowDisabler for wxWindowDisabler { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxWindowDisabler { ptr: *mut c_void }
+impl TWxWindowDisabler for WxWindowDisabler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxWindowDisabler {
-    pub fn from(ptr: *mut c_void) -> wxWindowDisabler { wxWindowDisabler { ptr: ptr } }
-    pub fn null() -> wxWindowDisabler { wxWindowDisabler::from(0 as *mut c_void) }
+impl WxWindowDisabler {
+    pub fn from(ptr: *mut c_void) -> WxWindowDisabler { WxWindowDisabler { ptr: ptr } }
+    pub fn null() -> WxWindowDisabler { WxWindowDisabler::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxWindowDisabler {
+pub trait TWxWindowDisabler {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxXmlResourceHandler { ptr: *mut c_void }
-impl _wxXmlResourceHandler for wxXmlResourceHandler {}
-impl _wxObject for wxXmlResourceHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxXmlResourceHandler { ptr: *mut c_void }
+impl TWxXmlResourceHandler for WxXmlResourceHandler {}
+impl TWxObject for WxXmlResourceHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxXmlResourceHandler {
-    pub fn from(ptr: *mut c_void) -> wxXmlResourceHandler { wxXmlResourceHandler { ptr: ptr } }
-    pub fn null() -> wxXmlResourceHandler { wxXmlResourceHandler::from(0 as *mut c_void) }
+impl WxXmlResourceHandler {
+    pub fn from(ptr: *mut c_void) -> WxXmlResourceHandler { WxXmlResourceHandler { ptr: ptr } }
+    pub fn null() -> WxXmlResourceHandler { WxXmlResourceHandler::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxXmlResourceHandler : _wxObject {
+pub trait TWxXmlResourceHandler : TWxObject {
 }
 
-pub struct wxGenericDragImage { ptr: *mut c_void }
-impl _wxGenericDragImage for wxGenericDragImage {}
-impl _wxDragImage for wxGenericDragImage {}
-impl _wxObject for wxGenericDragImage { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGenericDragImage { ptr: *mut c_void }
+impl TWxGenericDragImage for WxGenericDragImage {}
+impl TWxDragImage for WxGenericDragImage {}
+impl TWxObject for WxGenericDragImage { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGenericDragImage {
-    pub fn from(ptr: *mut c_void) -> wxGenericDragImage { wxGenericDragImage { ptr: ptr } }
-    pub fn null() -> wxGenericDragImage { wxGenericDragImage::from(0 as *mut c_void) }
+impl WxGenericDragImage {
+    pub fn from(ptr: *mut c_void) -> WxGenericDragImage { WxGenericDragImage { ptr: ptr } }
+    pub fn null() -> WxGenericDragImage { WxGenericDragImage::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxCursor>(cursor: &T) -> wxGenericDragImage {
-        unsafe { wxGenericDragImage { ptr: wxGenericDragImage_Create(cursor.ptr()) } }
+    pub fn new<T: TWxCursor>(cursor: &T) -> WxGenericDragImage {
+        unsafe { WxGenericDragImage { ptr: wxGenericDragImage_Create(cursor.ptr()) } }
     }
 }
 
-pub trait _wxGenericDragImage : _wxDragImage {
-    fn doDrawImage<T: _wxDC>(&self, dc: &T, x: c_int, y: c_int) -> c_int {
+pub trait TWxGenericDragImage : TWxDragImage {
+    fn doDrawImage<T: TWxDC>(&self, dc: &T, x: c_int, y: c_int) -> c_int {
         unsafe { wxGenericDragImage_DoDrawImage(self.ptr(), dc.ptr(), x, y) }
     }
-    fn getImageRect(&self, x_pos: c_int, y_pos: c_int) -> wxRect {
-        unsafe { wxRect { ptr: wxGenericDragImage_GetImageRect(self.ptr(), x_pos, y_pos) } }
+    fn getImageRect(&self, x_pos: c_int, y_pos: c_int) -> WxRect {
+        unsafe { WxRect { ptr: wxGenericDragImage_GetImageRect(self.ptr(), x_pos, y_pos) } }
     }
-    fn updateBackingFromWindow<T: _wxDC, U: _wxMemoryDC>(&self, windowDC: &T, destDC: &U, x: c_int, y: c_int, w: c_int, h: c_int, xdest: c_int, ydest: c_int, width: c_int, height: c_int) -> c_int {
+    fn updateBackingFromWindow<T: TWxDC, U: TWxMemoryDC>(&self, windowDC: &T, destDC: &U, x: c_int, y: c_int, w: c_int, h: c_int, xdest: c_int, ydest: c_int, width: c_int, height: c_int) -> c_int {
         unsafe { wxGenericDragImage_UpdateBackingFromWindow(self.ptr(), windowDC.ptr(), destDC.ptr(), x, y, w, h, xdest, ydest, width, height) }
     }
 }
 
-pub struct wxGraphicsObject { ptr: *mut c_void }
-impl _wxGraphicsObject for wxGraphicsObject {}
-impl _wxObject for wxGraphicsObject { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGraphicsObject { ptr: *mut c_void }
+impl TWxGraphicsObject for WxGraphicsObject {}
+impl TWxObject for WxGraphicsObject { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGraphicsObject {
-    pub fn from(ptr: *mut c_void) -> wxGraphicsObject { wxGraphicsObject { ptr: ptr } }
-    pub fn null() -> wxGraphicsObject { wxGraphicsObject::from(0 as *mut c_void) }
+impl WxGraphicsObject {
+    pub fn from(ptr: *mut c_void) -> WxGraphicsObject { WxGraphicsObject { ptr: ptr } }
+    pub fn null() -> WxGraphicsObject { WxGraphicsObject::from(0 as *mut c_void) }
     
-    pub fn getRenderer() -> wxGraphicsRenderer {
-        unsafe { wxGraphicsRenderer { ptr: wxGraphicsObject_GetRenderer() } }
+    pub fn getRenderer() -> WxGraphicsRenderer {
+        unsafe { WxGraphicsRenderer { ptr: wxGraphicsObject_GetRenderer() } }
     }
 }
 
-pub trait _wxGraphicsObject : _wxObject {
+pub trait TWxGraphicsObject : TWxObject {
     fn isNull(&self) -> c_int {
         unsafe { wxGraphicsObject_IsNull(self.ptr()) }
     }
 }
 
-pub struct wxGraphicsBrush { ptr: *mut c_void }
-impl _wxGraphicsBrush for wxGraphicsBrush {}
-impl _wxGraphicsObject for wxGraphicsBrush {}
-impl _wxObject for wxGraphicsBrush { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGraphicsBrush { ptr: *mut c_void }
+impl TWxGraphicsBrush for WxGraphicsBrush {}
+impl TWxGraphicsObject for WxGraphicsBrush {}
+impl TWxObject for WxGraphicsBrush { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGraphicsBrush {
-    pub fn from(ptr: *mut c_void) -> wxGraphicsBrush { wxGraphicsBrush { ptr: ptr } }
-    pub fn null() -> wxGraphicsBrush { wxGraphicsBrush::from(0 as *mut c_void) }
+impl WxGraphicsBrush {
+    pub fn from(ptr: *mut c_void) -> WxGraphicsBrush { WxGraphicsBrush { ptr: ptr } }
+    pub fn null() -> WxGraphicsBrush { WxGraphicsBrush::from(0 as *mut c_void) }
     
-    pub fn new() -> wxGraphicsBrush {
-        unsafe { wxGraphicsBrush { ptr: wxGraphicsBrush_Create() } }
+    pub fn new() -> WxGraphicsBrush {
+        unsafe { WxGraphicsBrush { ptr: wxGraphicsBrush_Create() } }
     }
 }
 
-pub trait _wxGraphicsBrush : _wxGraphicsObject {
+pub trait TWxGraphicsBrush : TWxGraphicsObject {
 }
 
-pub struct wxGraphicsContext { ptr: *mut c_void }
-impl _wxGraphicsContext for wxGraphicsContext {}
-impl _wxGraphicsObject for wxGraphicsContext {}
-impl _wxObject for wxGraphicsContext { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGraphicsContext { ptr: *mut c_void }
+impl TWxGraphicsContext for WxGraphicsContext {}
+impl TWxGraphicsObject for WxGraphicsContext {}
+impl TWxObject for WxGraphicsContext { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGraphicsContext {
-    pub fn from(ptr: *mut c_void) -> wxGraphicsContext { wxGraphicsContext { ptr: ptr } }
-    pub fn null() -> wxGraphicsContext { wxGraphicsContext::from(0 as *mut c_void) }
+impl WxGraphicsContext {
+    pub fn from(ptr: *mut c_void) -> WxGraphicsContext { WxGraphicsContext { ptr: ptr } }
+    pub fn null() -> WxGraphicsContext { WxGraphicsContext::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindowDC>(dc: &T) -> wxGraphicsContext {
-        unsafe { wxGraphicsContext { ptr: wxGraphicsContext_Create(dc.ptr()) } }
+    pub fn new<T: TWxWindowDC>(dc: &T) -> WxGraphicsContext {
+        unsafe { WxGraphicsContext { ptr: wxGraphicsContext_Create(dc.ptr()) } }
     }
-    pub fn newFromWindow<T: _wxWindow>(window: &T) -> wxGraphicsContext {
-        unsafe { wxGraphicsContext { ptr: wxGraphicsContext_CreateFromWindow(window.ptr()) } }
+    pub fn newFromWindow<T: TWxWindow>(window: &T) -> WxGraphicsContext {
+        unsafe { WxGraphicsContext { ptr: wxGraphicsContext_CreateFromWindow(window.ptr()) } }
     }
-    pub fn newFromNative(context: *mut c_void) -> wxGraphicsContext {
-        unsafe { wxGraphicsContext { ptr: wxGraphicsContext_CreateFromNative(context) } }
+    pub fn newFromNative(context: *mut c_void) -> WxGraphicsContext {
+        unsafe { WxGraphicsContext { ptr: wxGraphicsContext_CreateFromNative(context) } }
     }
-    pub fn newFromNativeWindow(window: *mut c_void) -> wxGraphicsContext {
-        unsafe { wxGraphicsContext { ptr: wxGraphicsContext_CreateFromNativeWindow(window) } }
+    pub fn newFromNativeWindow(window: *mut c_void) -> WxGraphicsContext {
+        unsafe { WxGraphicsContext { ptr: wxGraphicsContext_CreateFromNativeWindow(window) } }
     }
 }
 
-pub trait _wxGraphicsContext : _wxGraphicsObject {
-    fn clip<T: _wxRegion>(&self, region: &T) {
+pub trait TWxGraphicsContext : TWxGraphicsObject {
+    fn clip<T: TWxRegion>(&self, region: &T) {
         unsafe { wxGraphicsContext_Clip(self.ptr(), region.ptr()) }
     }
     fn clipByRectangle(&self, x: c_double, y: c_double, w: c_double, h: c_double) {
@@ -9621,19 +9621,19 @@ pub trait _wxGraphicsContext : _wxGraphicsObject {
     fn resetClip(&self) {
         unsafe { wxGraphicsContext_ResetClip(self.ptr()) }
     }
-    fn drawBitmap<T: _wxBitmap>(&self, bmp: &T, x: c_double, y: c_double, w: c_double, h: c_double) {
+    fn drawBitmap<T: TWxBitmap>(&self, bmp: &T, x: c_double, y: c_double, w: c_double, h: c_double) {
         unsafe { wxGraphicsContext_DrawBitmap(self.ptr(), bmp.ptr(), x, y, w, h) }
     }
     fn drawEllipse(&self, x: c_double, y: c_double, w: c_double, h: c_double) {
         unsafe { wxGraphicsContext_DrawEllipse(self.ptr(), x, y, w, h) }
     }
-    fn drawIcon<T: _wxIcon>(&self, icon: &T, x: c_double, y: c_double, w: c_double, h: c_double) {
+    fn drawIcon<T: TWxIcon>(&self, icon: &T, x: c_double, y: c_double, w: c_double, h: c_double) {
         unsafe { wxGraphicsContext_DrawIcon(self.ptr(), icon.ptr(), x, y, w, h) }
     }
     fn drawLines(&self, n: size_t, x: *mut c_void, y: *mut c_void, style: c_int) {
         unsafe { wxGraphicsContext_DrawLines(self.ptr(), n, x, y, style) }
     }
-    fn drawPath<T: _wxGraphicsPath>(&self, path: &T, style: c_int) {
+    fn drawPath<T: TWxGraphicsPath>(&self, path: &T, style: c_int) {
         unsafe { wxGraphicsContext_DrawPath(self.ptr(), path.ptr(), style) }
     }
     fn drawRectangle(&self, x: c_double, y: c_double, w: c_double, h: c_double) {
@@ -9650,10 +9650,10 @@ pub trait _wxGraphicsContext : _wxGraphicsObject {
         let text = wxT(text);
         unsafe { wxGraphicsContext_DrawTextWithAngle(self.ptr(), text.ptr(), x, y, radius) }
     }
-    fn fillPath<T: _wxGraphicsPath>(&self, path: &T, style: c_int) {
+    fn fillPath<T: TWxGraphicsPath>(&self, path: &T, style: c_int) {
         unsafe { wxGraphicsContext_FillPath(self.ptr(), path.ptr(), style) }
     }
-    fn strokePath<T: _wxGraphicsPath>(&self, path: &T) {
+    fn strokePath<T: TWxGraphicsPath>(&self, path: &T) {
         unsafe { wxGraphicsContext_StrokePath(self.ptr(), path.ptr()) }
     }
     fn getNativeContext(&self) -> *mut c_void {
@@ -9672,28 +9672,28 @@ pub trait _wxGraphicsContext : _wxGraphicsObject {
     fn translate(&self, dx: c_double, dy: c_double) {
         unsafe { wxGraphicsContext_Translate(self.ptr(), dx, dy) }
     }
-    fn setTransform<T: _wxGraphicsMatrix>(&self, path: &T) {
+    fn setTransform<T: TWxGraphicsMatrix>(&self, path: &T) {
         unsafe { wxGraphicsContext_SetTransform(self.ptr(), path.ptr()) }
     }
-    fn concatTransform<T: _wxGraphicsMatrix>(&self, path: &T) {
+    fn concatTransform<T: TWxGraphicsMatrix>(&self, path: &T) {
         unsafe { wxGraphicsContext_ConcatTransform(self.ptr(), path.ptr()) }
     }
-    fn setBrush<T: _wxBrush>(&self, brush: &T) {
+    fn setBrush<T: TWxBrush>(&self, brush: &T) {
         unsafe { wxGraphicsContext_SetBrush(self.ptr(), brush.ptr()) }
     }
-    fn setGraphicsBrush<T: _wxGraphicsBrush>(&self, brush: &T) {
+    fn setGraphicsBrush<T: TWxGraphicsBrush>(&self, brush: &T) {
         unsafe { wxGraphicsContext_SetGraphicsBrush(self.ptr(), brush.ptr()) }
     }
-    fn setFont<T: _wxFont, U: _wxColour>(&self, font: &T, colour: &U) {
+    fn setFont<T: TWxFont, U: TWxColour>(&self, font: &T, colour: &U) {
         unsafe { wxGraphicsContext_SetFont(self.ptr(), font.ptr(), colour.ptr()) }
     }
-    fn setGraphicsFont<T: _wxGraphicsFont>(&self, font: &T) {
+    fn setGraphicsFont<T: TWxGraphicsFont>(&self, font: &T) {
         unsafe { wxGraphicsContext_SetGraphicsFont(self.ptr(), font.ptr()) }
     }
-    fn setPen<T: _wxPen>(&self, pen: &T) {
+    fn setPen<T: TWxPen>(&self, pen: &T) {
         unsafe { wxGraphicsContext_SetPen(self.ptr(), pen.ptr()) }
     }
-    fn setGraphicsPen<T: _wxGraphicsPen>(&self, pen: &T) {
+    fn setGraphicsPen<T: TWxGraphicsPen>(&self, pen: &T) {
         unsafe { wxGraphicsContext_SetGraphicsPen(self.ptr(), pen.ptr()) }
     }
     fn strokeLine(&self, x1: c_double, y1: c_double, x2: c_double, y2: c_double) {
@@ -9704,39 +9704,39 @@ pub trait _wxGraphicsContext : _wxGraphicsObject {
     }
 }
 
-pub struct wxGraphicsFont { ptr: *mut c_void }
-impl _wxGraphicsFont for wxGraphicsFont {}
-impl _wxGraphicsObject for wxGraphicsFont {}
-impl _wxObject for wxGraphicsFont { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGraphicsFont { ptr: *mut c_void }
+impl TWxGraphicsFont for WxGraphicsFont {}
+impl TWxGraphicsObject for WxGraphicsFont {}
+impl TWxObject for WxGraphicsFont { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGraphicsFont {
-    pub fn from(ptr: *mut c_void) -> wxGraphicsFont { wxGraphicsFont { ptr: ptr } }
-    pub fn null() -> wxGraphicsFont { wxGraphicsFont::from(0 as *mut c_void) }
+impl WxGraphicsFont {
+    pub fn from(ptr: *mut c_void) -> WxGraphicsFont { WxGraphicsFont { ptr: ptr } }
+    pub fn null() -> WxGraphicsFont { WxGraphicsFont::from(0 as *mut c_void) }
     
-    pub fn new() -> wxGraphicsFont {
-        unsafe { wxGraphicsFont { ptr: wxGraphicsFont_Create() } }
+    pub fn new() -> WxGraphicsFont {
+        unsafe { WxGraphicsFont { ptr: wxGraphicsFont_Create() } }
     }
 }
 
-pub trait _wxGraphicsFont : _wxGraphicsObject {
+pub trait TWxGraphicsFont : TWxGraphicsObject {
 }
 
-pub struct wxGraphicsMatrix { ptr: *mut c_void }
-impl _wxGraphicsMatrix for wxGraphicsMatrix {}
-impl _wxGraphicsObject for wxGraphicsMatrix {}
-impl _wxObject for wxGraphicsMatrix { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGraphicsMatrix { ptr: *mut c_void }
+impl TWxGraphicsMatrix for WxGraphicsMatrix {}
+impl TWxGraphicsObject for WxGraphicsMatrix {}
+impl TWxObject for WxGraphicsMatrix { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGraphicsMatrix {
-    pub fn from(ptr: *mut c_void) -> wxGraphicsMatrix { wxGraphicsMatrix { ptr: ptr } }
-    pub fn null() -> wxGraphicsMatrix { wxGraphicsMatrix::from(0 as *mut c_void) }
+impl WxGraphicsMatrix {
+    pub fn from(ptr: *mut c_void) -> WxGraphicsMatrix { WxGraphicsMatrix { ptr: ptr } }
+    pub fn null() -> WxGraphicsMatrix { WxGraphicsMatrix::from(0 as *mut c_void) }
     
-    pub fn new() -> wxGraphicsMatrix {
-        unsafe { wxGraphicsMatrix { ptr: wxGraphicsMatrix_Create() } }
+    pub fn new() -> WxGraphicsMatrix {
+        unsafe { WxGraphicsMatrix { ptr: wxGraphicsMatrix_Create() } }
     }
 }
 
-pub trait _wxGraphicsMatrix : _wxGraphicsObject {
-    fn concat<T: _wxGraphicsMatrix>(&self, t: &T) {
+pub trait TWxGraphicsMatrix : TWxGraphicsObject {
+    fn concat<T: TWxGraphicsMatrix>(&self, t: &T) {
         unsafe { wxGraphicsMatrix_Concat(self.ptr(), t.ptr()) }
     }
     fn get(&self, a: *mut c_double, b: *mut c_double, c: *mut c_double, d: *mut c_double, tx: *mut c_double, ty: *mut c_double) {
@@ -9748,7 +9748,7 @@ pub trait _wxGraphicsMatrix : _wxGraphicsObject {
     fn invert(&self) {
         unsafe { wxGraphicsMatrix_Invert(self.ptr()) }
     }
-    fn isEqual<T: _wxGraphicsMatrix>(&self, t: &T) -> c_int {
+    fn isEqual<T: TWxGraphicsMatrix>(&self, t: &T) -> c_int {
         unsafe { wxGraphicsMatrix_IsEqual(self.ptr(), t.ptr()) }
     }
     fn isIdentity(&self) -> c_int {
@@ -9774,24 +9774,24 @@ pub trait _wxGraphicsMatrix : _wxGraphicsObject {
     }
 }
 
-pub struct wxGraphicsPath { ptr: *mut c_void }
-impl _wxGraphicsPath for wxGraphicsPath {}
-impl _wxGraphicsObject for wxGraphicsPath {}
-impl _wxObject for wxGraphicsPath { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGraphicsPath { ptr: *mut c_void }
+impl TWxGraphicsPath for WxGraphicsPath {}
+impl TWxGraphicsObject for WxGraphicsPath {}
+impl TWxObject for WxGraphicsPath { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGraphicsPath {
-    pub fn from(ptr: *mut c_void) -> wxGraphicsPath { wxGraphicsPath { ptr: ptr } }
-    pub fn null() -> wxGraphicsPath { wxGraphicsPath::from(0 as *mut c_void) }
+impl WxGraphicsPath {
+    pub fn from(ptr: *mut c_void) -> WxGraphicsPath { WxGraphicsPath { ptr: ptr } }
+    pub fn null() -> WxGraphicsPath { WxGraphicsPath::from(0 as *mut c_void) }
     
-    pub fn new() -> wxGraphicsPath {
-        unsafe { wxGraphicsPath { ptr: wxGraphicsPath_Create() } }
+    pub fn new() -> WxGraphicsPath {
+        unsafe { WxGraphicsPath { ptr: wxGraphicsPath_Create() } }
     }
     pub fn unGetNativePath(p: *mut c_void) {
         unsafe { wxGraphicsPath_UnGetNativePath(p) }
     }
 }
 
-pub trait _wxGraphicsPath : _wxGraphicsObject {
+pub trait TWxGraphicsPath : TWxGraphicsObject {
     fn moveToPoint(&self, x: c_double, y: c_double) {
         unsafe { wxGraphicsPath_MoveToPoint(self.ptr(), x, y) }
     }
@@ -9813,7 +9813,7 @@ pub trait _wxGraphicsPath : _wxGraphicsObject {
     fn addLineToPoint(&self, x: c_double, y: c_double) {
         unsafe { wxGraphicsPath_AddLineToPoint(self.ptr(), x, y) }
     }
-    fn addPath<T: _wxGraphicsPath>(&self, x: c_double, y: c_double, path: &T) {
+    fn addPath<T: TWxGraphicsPath>(&self, x: c_double, y: c_double, path: &T) {
         unsafe { wxGraphicsPath_AddPath(self.ptr(), x, y, path.ptr()) }
     }
     fn addQuadCurveToPoint(&self, cx: c_double, cy: c_double, x: c_double, y: c_double) {
@@ -9837,7 +9837,7 @@ pub trait _wxGraphicsPath : _wxGraphicsObject {
     fn getCurrentPoint(&self, x: *mut c_double, y: *mut c_double) {
         unsafe { wxGraphicsPath_GetCurrentPoint(self.ptr(), x, y) }
     }
-    fn transform<T: _wxGraphicsMatrix>(&self, matrix: &T) {
+    fn transform<T: TWxGraphicsMatrix>(&self, matrix: &T) {
         unsafe { wxGraphicsPath_Transform(self.ptr(), matrix.ptr()) }
     }
     fn getNativePath(&self) -> *mut c_void {
@@ -9845,90 +9845,90 @@ pub trait _wxGraphicsPath : _wxGraphicsObject {
     }
 }
 
-pub struct wxGraphicsPen { ptr: *mut c_void }
-impl _wxGraphicsPen for wxGraphicsPen {}
-impl _wxGraphicsObject for wxGraphicsPen {}
-impl _wxObject for wxGraphicsPen { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGraphicsPen { ptr: *mut c_void }
+impl TWxGraphicsPen for WxGraphicsPen {}
+impl TWxGraphicsObject for WxGraphicsPen {}
+impl TWxObject for WxGraphicsPen { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGraphicsPen {
-    pub fn from(ptr: *mut c_void) -> wxGraphicsPen { wxGraphicsPen { ptr: ptr } }
-    pub fn null() -> wxGraphicsPen { wxGraphicsPen::from(0 as *mut c_void) }
+impl WxGraphicsPen {
+    pub fn from(ptr: *mut c_void) -> WxGraphicsPen { WxGraphicsPen { ptr: ptr } }
+    pub fn null() -> WxGraphicsPen { WxGraphicsPen::from(0 as *mut c_void) }
     
-    pub fn new() -> wxGraphicsPen {
-        unsafe { wxGraphicsPen { ptr: wxGraphicsPen_Create() } }
+    pub fn new() -> WxGraphicsPen {
+        unsafe { WxGraphicsPen { ptr: wxGraphicsPen_Create() } }
     }
 }
 
-pub trait _wxGraphicsPen : _wxGraphicsObject {
+pub trait TWxGraphicsPen : TWxGraphicsObject {
 }
 
-pub struct wxGraphicsRenderer { ptr: *mut c_void }
-impl _wxGraphicsRenderer for wxGraphicsRenderer {}
-impl _wxGraphicsObject for wxGraphicsRenderer {}
-impl _wxObject for wxGraphicsRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGraphicsRenderer { ptr: *mut c_void }
+impl TWxGraphicsRenderer for WxGraphicsRenderer {}
+impl TWxGraphicsObject for WxGraphicsRenderer {}
+impl TWxObject for WxGraphicsRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGraphicsRenderer {
-    pub fn from(ptr: *mut c_void) -> wxGraphicsRenderer { wxGraphicsRenderer { ptr: ptr } }
-    pub fn null() -> wxGraphicsRenderer { wxGraphicsRenderer::from(0 as *mut c_void) }
+impl WxGraphicsRenderer {
+    pub fn from(ptr: *mut c_void) -> WxGraphicsRenderer { WxGraphicsRenderer { ptr: ptr } }
+    pub fn null() -> WxGraphicsRenderer { WxGraphicsRenderer::from(0 as *mut c_void) }
     
-    pub fn newContext<T: _wxWindowDC>(dc: &T) -> wxGraphicsContext {
-        unsafe { wxGraphicsContext { ptr: wxGraphicsRenderer_CreateContext(dc.ptr()) } }
+    pub fn newContext<T: TWxWindowDC>(dc: &T) -> WxGraphicsContext {
+        unsafe { WxGraphicsContext { ptr: wxGraphicsRenderer_CreateContext(dc.ptr()) } }
     }
-    pub fn newContextFromWindow<T: _wxWindow>(window: &T) -> wxGraphicsContext {
-        unsafe { wxGraphicsContext { ptr: wxGraphicsRenderer_CreateContextFromWindow(window.ptr()) } }
+    pub fn newContextFromWindow<T: TWxWindow>(window: &T) -> WxGraphicsContext {
+        unsafe { WxGraphicsContext { ptr: wxGraphicsRenderer_CreateContextFromWindow(window.ptr()) } }
     }
-    pub fn newContextFromNativeContext(context: *mut c_void) -> wxGraphicsContext {
-        unsafe { wxGraphicsContext { ptr: wxGraphicsRenderer_CreateContextFromNativeContext(context) } }
+    pub fn newContextFromNativeContext(context: *mut c_void) -> WxGraphicsContext {
+        unsafe { WxGraphicsContext { ptr: wxGraphicsRenderer_CreateContextFromNativeContext(context) } }
     }
-    pub fn newContextFromNativeWindow(window: *mut c_void) -> wxGraphicsContext {
-        unsafe { wxGraphicsContext { ptr: wxGraphicsRenderer_CreateContextFromNativeWindow(window) } }
-    }
-}
-
-pub trait _wxGraphicsRenderer : _wxGraphicsObject {
-    fn getDefaultRenderer(&self) -> wxGraphicsRenderer {
-        unsafe { wxGraphicsRenderer { ptr: wxGraphicsRenderer_GetDefaultRenderer(self.ptr()) } }
+    pub fn newContextFromNativeWindow(window: *mut c_void) -> WxGraphicsContext {
+        unsafe { WxGraphicsContext { ptr: wxGraphicsRenderer_CreateContextFromNativeWindow(window) } }
     }
 }
 
-pub struct wxcPrintout { ptr: *mut c_void }
-impl _wxcPrintout for wxcPrintout {}
-impl _wxPrintout for wxcPrintout {}
-impl _wxObject for wxcPrintout { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub trait TWxGraphicsRenderer : TWxGraphicsObject {
+    fn getDefaultRenderer(&self) -> WxGraphicsRenderer {
+        unsafe { WxGraphicsRenderer { ptr: wxGraphicsRenderer_GetDefaultRenderer(self.ptr()) } }
+    }
+}
 
-impl wxcPrintout {
-    pub fn from(ptr: *mut c_void) -> wxcPrintout { wxcPrintout { ptr: ptr } }
-    pub fn null() -> wxcPrintout { wxcPrintout::from(0 as *mut c_void) }
+pub struct WxcPrintout { ptr: *mut c_void }
+impl TWxcPrintout for WxcPrintout {}
+impl TWxPrintout for WxcPrintout {}
+impl TWxObject for WxcPrintout { fn ptr(&self) -> *mut c_void { self.ptr } }
+
+impl WxcPrintout {
+    pub fn from(ptr: *mut c_void) -> WxcPrintout { WxcPrintout { ptr: ptr } }
+    pub fn null() -> WxcPrintout { WxcPrintout::from(0 as *mut c_void) }
     
-    pub fn new(title: &str) -> wxcPrintout {
+    pub fn new(title: &str) -> WxcPrintout {
         let title = wxT(title);
-        unsafe { wxcPrintout { ptr: wxcPrintout_Create(title.ptr()) } }
+        unsafe { WxcPrintout { ptr: wxcPrintout_Create(title.ptr()) } }
     }
 }
 
-pub trait _wxcPrintout : _wxPrintout {
+pub trait TWxcPrintout : TWxPrintout {
     fn setPageLimits(&self, startPage: c_int, endPage: c_int, fromPage: c_int, toPage: c_int) {
         unsafe { wxcPrintout_SetPageLimits(self.ptr(), startPage, endPage, fromPage, toPage) }
     }
-    fn getEvtHandler(&self) -> wxcPrintoutHandler {
-        unsafe { wxcPrintoutHandler { ptr: wxcPrintout_GetEvtHandler(self.ptr()) } }
+    fn getEvtHandler(&self) -> WxcPrintoutHandler {
+        unsafe { WxcPrintoutHandler { ptr: wxcPrintout_GetEvtHandler(self.ptr()) } }
     }
 }
 
-pub struct wxcPrintEvent { ptr: *mut c_void }
-impl _wxcPrintEvent for wxcPrintEvent {}
-impl _wxEvent for wxcPrintEvent {}
-impl _wxObject for wxcPrintEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxcPrintEvent { ptr: *mut c_void }
+impl TWxcPrintEvent for WxcPrintEvent {}
+impl TWxEvent for WxcPrintEvent {}
+impl TWxObject for WxcPrintEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxcPrintEvent {
-    pub fn from(ptr: *mut c_void) -> wxcPrintEvent { wxcPrintEvent { ptr: ptr } }
-    pub fn null() -> wxcPrintEvent { wxcPrintEvent::from(0 as *mut c_void) }
+impl WxcPrintEvent {
+    pub fn from(ptr: *mut c_void) -> WxcPrintEvent { WxcPrintEvent { ptr: ptr } }
+    pub fn null() -> WxcPrintEvent { WxcPrintEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxcPrintEvent : _wxEvent {
-    fn getPrintout(&self) -> wxcPrintout {
-        unsafe { wxcPrintout { ptr: wxcPrintEvent_GetPrintout(self.ptr()) } }
+pub trait TWxcPrintEvent : TWxEvent {
+    fn getPrintout(&self) -> WxcPrintout {
+        unsafe { WxcPrintout { ptr: wxcPrintEvent_GetPrintout(self.ptr()) } }
     }
     fn getPage(&self) -> c_int {
         unsafe { wxcPrintEvent_GetPage(self.ptr()) }
@@ -9947,57 +9947,57 @@ pub trait _wxcPrintEvent : _wxEvent {
     }
 }
 
-pub struct wxcPrintoutHandler { ptr: *mut c_void }
-impl _wxcPrintoutHandler for wxcPrintoutHandler {}
-impl _wxEvtHandler for wxcPrintoutHandler {}
-impl _wxObject for wxcPrintoutHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxcPrintoutHandler { ptr: *mut c_void }
+impl TWxcPrintoutHandler for WxcPrintoutHandler {}
+impl TWxEvtHandler for WxcPrintoutHandler {}
+impl TWxObject for WxcPrintoutHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxcPrintoutHandler {
-    pub fn from(ptr: *mut c_void) -> wxcPrintoutHandler { wxcPrintoutHandler { ptr: ptr } }
-    pub fn null() -> wxcPrintoutHandler { wxcPrintoutHandler::from(0 as *mut c_void) }
+impl WxcPrintoutHandler {
+    pub fn from(ptr: *mut c_void) -> WxcPrintoutHandler { WxcPrintoutHandler { ptr: ptr } }
+    pub fn null() -> WxcPrintoutHandler { WxcPrintoutHandler::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxcPrintoutHandler : _wxEvtHandler {
+pub trait TWxcPrintoutHandler : TWxEvtHandler {
 }
 
-pub struct wxcTreeItemData { ptr: *mut c_void }
-impl _wxcTreeItemData for wxcTreeItemData {}
-impl _wxTreeItemData for wxcTreeItemData {}
-impl _wxClientData for wxcTreeItemData { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxcTreeItemData { ptr: *mut c_void }
+impl TWxcTreeItemData for WxcTreeItemData {}
+impl TWxTreeItemData for WxcTreeItemData {}
+impl TWxClientData for WxcTreeItemData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxcTreeItemData {
-    pub fn from(ptr: *mut c_void) -> wxcTreeItemData { wxcTreeItemData { ptr: ptr } }
-    pub fn null() -> wxcTreeItemData { wxcTreeItemData::from(0 as *mut c_void) }
+impl WxcTreeItemData {
+    pub fn from(ptr: *mut c_void) -> WxcTreeItemData { WxcTreeItemData { ptr: ptr } }
+    pub fn null() -> WxcTreeItemData { WxcTreeItemData::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxClosure>(closure: &T) -> wxcTreeItemData {
-        unsafe { wxcTreeItemData { ptr: wxcTreeItemData_Create(closure.ptr()) } }
+    pub fn new<T: TWxClosure>(closure: &T) -> WxcTreeItemData {
+        unsafe { WxcTreeItemData { ptr: wxcTreeItemData_Create(closure.ptr()) } }
     }
 }
 
-pub trait _wxcTreeItemData : _wxTreeItemData {
-    fn getClientClosure(&self) -> wxClosure {
-        unsafe { wxClosure { ptr: wxcTreeItemData_GetClientClosure(self.ptr()) } }
+pub trait TWxcTreeItemData : TWxTreeItemData {
+    fn getClientClosure(&self) -> WxClosure {
+        unsafe { WxClosure { ptr: wxcTreeItemData_GetClientClosure(self.ptr()) } }
     }
-    fn setClientClosure<T: _wxClosure>(&self, closure: &T) {
+    fn setClientClosure<T: TWxClosure>(&self, closure: &T) {
         unsafe { wxcTreeItemData_SetClientClosure(self.ptr(), closure.ptr()) }
     }
 }
 
-pub struct wxInputSink { ptr: *mut c_void }
-impl _wxInputSink for wxInputSink {}
-impl _wxThread for wxInputSink { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxInputSink { ptr: *mut c_void }
+impl TWxInputSink for WxInputSink {}
+impl TWxThread for WxInputSink { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxInputSink {
-    pub fn from(ptr: *mut c_void) -> wxInputSink { wxInputSink { ptr: ptr } }
-    pub fn null() -> wxInputSink { wxInputSink::from(0 as *mut c_void) }
+impl WxInputSink {
+    pub fn from(ptr: *mut c_void) -> WxInputSink { WxInputSink { ptr: ptr } }
+    pub fn null() -> WxInputSink { WxInputSink::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxInputStream, U: _wxEvtHandler>(input: &T, evtHandler: &U, bufferLen: c_int) -> wxInputSink {
-        unsafe { wxInputSink { ptr: wxInputSink_Create(input.ptr(), evtHandler.ptr(), bufferLen) } }
+    pub fn new<T: TWxInputStream, U: TWxEvtHandler>(input: &T, evtHandler: &U, bufferLen: c_int) -> WxInputSink {
+        unsafe { WxInputSink { ptr: wxInputSink_Create(input.ptr(), evtHandler.ptr(), bufferLen) } }
     }
 }
 
-pub trait _wxInputSink : _wxThread {
+pub trait TWxInputSink : TWxThread {
     fn getId(&self) -> c_int {
         unsafe { wxInputSink_GetId(self.ptr()) }
     }
@@ -10006,18 +10006,18 @@ pub trait _wxInputSink : _wxThread {
     }
 }
 
-pub struct wxInputSinkEvent { ptr: *mut c_void }
-impl _wxInputSinkEvent for wxInputSinkEvent {}
-impl _wxEvent for wxInputSinkEvent {}
-impl _wxObject for wxInputSinkEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxInputSinkEvent { ptr: *mut c_void }
+impl TWxInputSinkEvent for WxInputSinkEvent {}
+impl TWxEvent for WxInputSinkEvent {}
+impl TWxObject for WxInputSinkEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxInputSinkEvent {
-    pub fn from(ptr: *mut c_void) -> wxInputSinkEvent { wxInputSinkEvent { ptr: ptr } }
-    pub fn null() -> wxInputSinkEvent { wxInputSinkEvent::from(0 as *mut c_void) }
+impl WxInputSinkEvent {
+    pub fn from(ptr: *mut c_void) -> WxInputSinkEvent { WxInputSinkEvent { ptr: ptr } }
+    pub fn null() -> WxInputSinkEvent { WxInputSinkEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxInputSinkEvent : _wxEvent {
+pub trait TWxInputSinkEvent : TWxEvent {
     fn lastError(&self) -> c_int {
         unsafe { wxInputSinkEvent_LastError(self.ptr()) }
     }
