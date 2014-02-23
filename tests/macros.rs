@@ -7,15 +7,15 @@ pub macro_rules! wxApp(
 
             use std::libc::c_void;
 
-            use wx::base::WxClosure;
-            use wx::core::WxrApp;
+            use wx::base::Closure;
+            use wx::core::RustApp;
 
             static nullptr: *mut c_void = 0 as *mut c_void;
 
             do native::start(argc, argv) {
-                let closure = WxClosure::new($f as *mut c_void, nullptr);
+                let closure = Closure::new($f as *mut c_void, nullptr);
                 let args: ~[*i32] = ~[];
-                WxrApp::initializeC(&closure, args.len() as i32, args.as_ptr() as *mut *mut i8);
+                RustApp::initializeC(&closure, args.len() as i32, args.as_ptr() as *mut *mut i8);
             }
         }
     )

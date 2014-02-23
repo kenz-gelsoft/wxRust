@@ -2,528 +2,528 @@ use std::libc::*;
 use base::*;
 use core::*;
 
-pub struct WxrMessageParameters { ptr: *mut c_void }
-impl TWxrMessageParameters for WxrMessageParameters { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct RustMessageParameters { ptr: *mut c_void }
+impl TRustMessageParameters for RustMessageParameters { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxrMessageParameters {
-    pub fn from(ptr: *mut c_void) -> WxrMessageParameters { WxrMessageParameters { ptr: ptr } }
-    pub fn null() -> WxrMessageParameters { WxrMessageParameters::from(0 as *mut c_void) }
+impl RustMessageParameters {
+    pub fn from(ptr: *mut c_void) -> RustMessageParameters { RustMessageParameters { ptr: ptr } }
+    pub fn null() -> RustMessageParameters { RustMessageParameters::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxrMessageParameters {
+pub trait TRustMessageParameters {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct WxrPlotCurve { ptr: *mut c_void }
-impl TWxrPlotCurve for WxrPlotCurve {}
-impl TWxPlotCurve for WxrPlotCurve {}
-impl TWxObject for WxrPlotCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct RustPlotCurve { ptr: *mut c_void }
+impl TRustPlotCurve for RustPlotCurve {}
+impl TPlotCurve for RustPlotCurve {}
+impl TObject for RustPlotCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxrPlotCurve {
-    pub fn from(ptr: *mut c_void) -> WxrPlotCurve { WxrPlotCurve { ptr: ptr } }
-    pub fn null() -> WxrPlotCurve { WxrPlotCurve::from(0 as *mut c_void) }
+impl RustPlotCurve {
+    pub fn from(ptr: *mut c_void) -> RustPlotCurve { RustPlotCurve { ptr: ptr } }
+    pub fn null() -> RustPlotCurve { RustPlotCurve::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxrPlotCurve : TWxPlotCurve {
+pub trait TRustPlotCurve : TPlotCurve {
 }
 
-pub struct WxDynToolInfo { ptr: *mut c_void }
-impl TWxDynToolInfo for WxDynToolInfo {}
-impl TWxToolLayoutItem for WxDynToolInfo {}
-impl TWxObject for WxDynToolInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct DynToolInfo { ptr: *mut c_void }
+impl TDynToolInfo for DynToolInfo {}
+impl TToolLayoutItem for DynToolInfo {}
+impl TObject for DynToolInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxDynToolInfo {
-    pub fn from(ptr: *mut c_void) -> WxDynToolInfo { WxDynToolInfo { ptr: ptr } }
-    pub fn null() -> WxDynToolInfo { WxDynToolInfo::from(0 as *mut c_void) }
+impl DynToolInfo {
+    pub fn from(ptr: *mut c_void) -> DynToolInfo { DynToolInfo { ptr: ptr } }
+    pub fn null() -> DynToolInfo { DynToolInfo::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxDynToolInfo : TWxToolLayoutItem {
+pub trait TDynToolInfo : TToolLayoutItem {
 }
 
-pub struct WxDynamicSashWindow { ptr: *mut c_void }
-impl TWxDynamicSashWindow for WxDynamicSashWindow {}
-impl TWxWindow for WxDynamicSashWindow {}
-impl TWxEvtHandler for WxDynamicSashWindow {}
-impl TWxObject for WxDynamicSashWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct DynamicSashWindow { ptr: *mut c_void }
+impl TDynamicSashWindow for DynamicSashWindow {}
+impl TWindow for DynamicSashWindow {}
+impl TEvtHandler for DynamicSashWindow {}
+impl TObject for DynamicSashWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxDynamicSashWindow {
-    pub fn from(ptr: *mut c_void) -> WxDynamicSashWindow { WxDynamicSashWindow { ptr: ptr } }
-    pub fn null() -> WxDynamicSashWindow { WxDynamicSashWindow::from(0 as *mut c_void) }
+impl DynamicSashWindow {
+    pub fn from(ptr: *mut c_void) -> DynamicSashWindow { DynamicSashWindow { ptr: ptr } }
+    pub fn null() -> DynamicSashWindow { DynamicSashWindow::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxDynamicSashWindow : TWxWindow {
+pub trait TDynamicSashWindow : TWindow {
 }
 
-pub struct WxDynamicToolBar { ptr: *mut c_void }
-impl TWxDynamicToolBar for WxDynamicToolBar {}
-impl TWxToolBarBase for WxDynamicToolBar {}
-impl TWxControl for WxDynamicToolBar {}
-impl TWxWindow for WxDynamicToolBar {}
-impl TWxEvtHandler for WxDynamicToolBar {}
-impl TWxObject for WxDynamicToolBar { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct DynamicToolBar { ptr: *mut c_void }
+impl TDynamicToolBar for DynamicToolBar {}
+impl TToolBarBase for DynamicToolBar {}
+impl TControl for DynamicToolBar {}
+impl TWindow for DynamicToolBar {}
+impl TEvtHandler for DynamicToolBar {}
+impl TObject for DynamicToolBar { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxDynamicToolBar {
-    pub fn from(ptr: *mut c_void) -> WxDynamicToolBar { WxDynamicToolBar { ptr: ptr } }
-    pub fn null() -> WxDynamicToolBar { WxDynamicToolBar::from(0 as *mut c_void) }
+impl DynamicToolBar {
+    pub fn from(ptr: *mut c_void) -> DynamicToolBar { DynamicToolBar { ptr: ptr } }
+    pub fn null() -> DynamicToolBar { DynamicToolBar::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxDynamicToolBar : TWxToolBarBase {
+pub trait TDynamicToolBar : TToolBarBase {
 }
 
-pub struct WxExpr { ptr: *mut c_void }
-impl TWxExpr for WxExpr { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct Expr { ptr: *mut c_void }
+impl TExpr for Expr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxExpr {
-    pub fn from(ptr: *mut c_void) -> WxExpr { WxExpr { ptr: ptr } }
-    pub fn null() -> WxExpr { WxExpr::from(0 as *mut c_void) }
+impl Expr {
+    pub fn from(ptr: *mut c_void) -> Expr { Expr { ptr: ptr } }
+    pub fn null() -> Expr { Expr::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxExpr {
+pub trait TExpr {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct WxExprDatabase { ptr: *mut c_void }
-impl TWxExprDatabase for WxExprDatabase {}
-impl TWxList for WxExprDatabase {}
-impl TWxObject for WxExprDatabase { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct ExprDatabase { ptr: *mut c_void }
+impl TExprDatabase for ExprDatabase {}
+impl TList for ExprDatabase {}
+impl TObject for ExprDatabase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxExprDatabase {
-    pub fn from(ptr: *mut c_void) -> WxExprDatabase { WxExprDatabase { ptr: ptr } }
-    pub fn null() -> WxExprDatabase { WxExprDatabase::from(0 as *mut c_void) }
+impl ExprDatabase {
+    pub fn from(ptr: *mut c_void) -> ExprDatabase { ExprDatabase { ptr: ptr } }
+    pub fn null() -> ExprDatabase { ExprDatabase::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxExprDatabase : TWxList {
+pub trait TExprDatabase : TList {
 }
 
-pub struct WxFrameLayout { ptr: *mut c_void }
-impl TWxFrameLayout for WxFrameLayout {}
-impl TWxEvtHandler for WxFrameLayout {}
-impl TWxObject for WxFrameLayout { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct FrameLayout { ptr: *mut c_void }
+impl TFrameLayout for FrameLayout {}
+impl TEvtHandler for FrameLayout {}
+impl TObject for FrameLayout { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxFrameLayout {
-    pub fn from(ptr: *mut c_void) -> WxFrameLayout { WxFrameLayout { ptr: ptr } }
-    pub fn null() -> WxFrameLayout { WxFrameLayout::from(0 as *mut c_void) }
+impl FrameLayout {
+    pub fn from(ptr: *mut c_void) -> FrameLayout { FrameLayout { ptr: ptr } }
+    pub fn null() -> FrameLayout { FrameLayout::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxFrameLayout : TWxEvtHandler {
+pub trait TFrameLayout : TEvtHandler {
 }
 
-pub struct WxHashMap { ptr: *mut c_void }
-impl TWxHashMap for WxHashMap { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HashMap { ptr: *mut c_void }
+impl THashMap for HashMap { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHashMap {
-    pub fn from(ptr: *mut c_void) -> WxHashMap { WxHashMap { ptr: ptr } }
-    pub fn null() -> WxHashMap { WxHashMap::from(0 as *mut c_void) }
+impl HashMap {
+    pub fn from(ptr: *mut c_void) -> HashMap { HashMap { ptr: ptr } }
+    pub fn null() -> HashMap { HashMap::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHashMap {
+pub trait THashMap {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct WxLEDNumberCtrl { ptr: *mut c_void }
-impl TWxLEDNumberCtrl for WxLEDNumberCtrl {}
-impl TWxControl for WxLEDNumberCtrl {}
-impl TWxWindow for WxLEDNumberCtrl {}
-impl TWxEvtHandler for WxLEDNumberCtrl {}
-impl TWxObject for WxLEDNumberCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct LEDNumberCtrl { ptr: *mut c_void }
+impl TLEDNumberCtrl for LEDNumberCtrl {}
+impl TControl for LEDNumberCtrl {}
+impl TWindow for LEDNumberCtrl {}
+impl TEvtHandler for LEDNumberCtrl {}
+impl TObject for LEDNumberCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxLEDNumberCtrl {
-    pub fn from(ptr: *mut c_void) -> WxLEDNumberCtrl { WxLEDNumberCtrl { ptr: ptr } }
-    pub fn null() -> WxLEDNumberCtrl { WxLEDNumberCtrl::from(0 as *mut c_void) }
+impl LEDNumberCtrl {
+    pub fn from(ptr: *mut c_void) -> LEDNumberCtrl { LEDNumberCtrl { ptr: ptr } }
+    pub fn null() -> LEDNumberCtrl { LEDNumberCtrl::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxLEDNumberCtrl : TWxControl {
+pub trait TLEDNumberCtrl : TControl {
 }
 
-pub struct WxMBConvFile { ptr: *mut c_void }
-impl TWxMBConvFile for WxMBConvFile {}
-impl TWxMBConv for WxMBConvFile { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct MBConvFile { ptr: *mut c_void }
+impl TMBConvFile for MBConvFile {}
+impl TMBConv for MBConvFile { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxMBConvFile {
-    pub fn from(ptr: *mut c_void) -> WxMBConvFile { WxMBConvFile { ptr: ptr } }
-    pub fn null() -> WxMBConvFile { WxMBConvFile::from(0 as *mut c_void) }
+impl MBConvFile {
+    pub fn from(ptr: *mut c_void) -> MBConvFile { MBConvFile { ptr: ptr } }
+    pub fn null() -> MBConvFile { MBConvFile::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxMBConvFile : TWxMBConv {
+pub trait TMBConvFile : TMBConv {
 }
 
-pub struct WxMultiCellCanvas { ptr: *mut c_void }
-impl TWxMultiCellCanvas for WxMultiCellCanvas {}
-impl TWxFlexGridSizer for WxMultiCellCanvas {}
-impl TWxGridSizer for WxMultiCellCanvas {}
-impl TWxSizer for WxMultiCellCanvas {}
-impl TWxObject for WxMultiCellCanvas { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct MultiCellCanvas { ptr: *mut c_void }
+impl TMultiCellCanvas for MultiCellCanvas {}
+impl TFlexGridSizer for MultiCellCanvas {}
+impl TGridSizer for MultiCellCanvas {}
+impl TSizer for MultiCellCanvas {}
+impl TObject for MultiCellCanvas { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxMultiCellCanvas {
-    pub fn from(ptr: *mut c_void) -> WxMultiCellCanvas { WxMultiCellCanvas { ptr: ptr } }
-    pub fn null() -> WxMultiCellCanvas { WxMultiCellCanvas::from(0 as *mut c_void) }
+impl MultiCellCanvas {
+    pub fn from(ptr: *mut c_void) -> MultiCellCanvas { MultiCellCanvas { ptr: ptr } }
+    pub fn null() -> MultiCellCanvas { MultiCellCanvas::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxMultiCellCanvas : TWxFlexGridSizer {
+pub trait TMultiCellCanvas : TFlexGridSizer {
 }
 
-pub struct WxMultiCellItemHandle { ptr: *mut c_void }
-impl TWxMultiCellItemHandle for WxMultiCellItemHandle {}
-impl TWxObject for WxMultiCellItemHandle { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct MultiCellItemHandle { ptr: *mut c_void }
+impl TMultiCellItemHandle for MultiCellItemHandle {}
+impl TObject for MultiCellItemHandle { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxMultiCellItemHandle {
-    pub fn from(ptr: *mut c_void) -> WxMultiCellItemHandle { WxMultiCellItemHandle { ptr: ptr } }
-    pub fn null() -> WxMultiCellItemHandle { WxMultiCellItemHandle::from(0 as *mut c_void) }
+impl MultiCellItemHandle {
+    pub fn from(ptr: *mut c_void) -> MultiCellItemHandle { MultiCellItemHandle { ptr: ptr } }
+    pub fn null() -> MultiCellItemHandle { MultiCellItemHandle::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxMultiCellItemHandle : TWxObject {
+pub trait TMultiCellItemHandle : TObject {
 }
 
-pub struct WxMultiCellSizer { ptr: *mut c_void }
-impl TWxMultiCellSizer for WxMultiCellSizer {}
-impl TWxSizer for WxMultiCellSizer {}
-impl TWxObject for WxMultiCellSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct MultiCellSizer { ptr: *mut c_void }
+impl TMultiCellSizer for MultiCellSizer {}
+impl TSizer for MultiCellSizer {}
+impl TObject for MultiCellSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxMultiCellSizer {
-    pub fn from(ptr: *mut c_void) -> WxMultiCellSizer { WxMultiCellSizer { ptr: ptr } }
-    pub fn null() -> WxMultiCellSizer { WxMultiCellSizer::from(0 as *mut c_void) }
+impl MultiCellSizer {
+    pub fn from(ptr: *mut c_void) -> MultiCellSizer { MultiCellSizer { ptr: ptr } }
+    pub fn null() -> MultiCellSizer { MultiCellSizer::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxMultiCellSizer : TWxSizer {
+pub trait TMultiCellSizer : TSizer {
 }
 
-pub struct WxNewBitmapButton { ptr: *mut c_void }
-impl TWxNewBitmapButton for WxNewBitmapButton {}
-impl TWxPanel for WxNewBitmapButton {}
-impl TWxWindow for WxNewBitmapButton {}
-impl TWxEvtHandler for WxNewBitmapButton {}
-impl TWxObject for WxNewBitmapButton { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct NewBitmapButton { ptr: *mut c_void }
+impl TNewBitmapButton for NewBitmapButton {}
+impl TPanel for NewBitmapButton {}
+impl TWindow for NewBitmapButton {}
+impl TEvtHandler for NewBitmapButton {}
+impl TObject for NewBitmapButton { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxNewBitmapButton {
-    pub fn from(ptr: *mut c_void) -> WxNewBitmapButton { WxNewBitmapButton { ptr: ptr } }
-    pub fn null() -> WxNewBitmapButton { WxNewBitmapButton::from(0 as *mut c_void) }
+impl NewBitmapButton {
+    pub fn from(ptr: *mut c_void) -> NewBitmapButton { NewBitmapButton { ptr: ptr } }
+    pub fn null() -> NewBitmapButton { NewBitmapButton::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxNewBitmapButton : TWxPanel {
+pub trait TNewBitmapButton : TPanel {
 }
 
-pub struct WxPlotCurve { ptr: *mut c_void }
-impl TWxPlotCurve for WxPlotCurve {}
-impl TWxObject for WxPlotCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct PlotCurve { ptr: *mut c_void }
+impl TPlotCurve for PlotCurve {}
+impl TObject for PlotCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxPlotCurve {
-    pub fn from(ptr: *mut c_void) -> WxPlotCurve { WxPlotCurve { ptr: ptr } }
-    pub fn null() -> WxPlotCurve { WxPlotCurve::from(0 as *mut c_void) }
+impl PlotCurve {
+    pub fn from(ptr: *mut c_void) -> PlotCurve { PlotCurve { ptr: ptr } }
+    pub fn null() -> PlotCurve { PlotCurve::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxPlotCurve : TWxObject {
+pub trait TPlotCurve : TObject {
 }
 
-pub struct WxPlotEvent { ptr: *mut c_void }
-impl TWxPlotEvent for WxPlotEvent {}
-impl TWxNotifyEvent for WxPlotEvent {}
-impl TWxCommandEvent for WxPlotEvent {}
-impl TWxEvent for WxPlotEvent {}
-impl TWxObject for WxPlotEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct PlotEvent { ptr: *mut c_void }
+impl TPlotEvent for PlotEvent {}
+impl TNotifyEvent for PlotEvent {}
+impl TCommandEvent for PlotEvent {}
+impl TEvent for PlotEvent {}
+impl TObject for PlotEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxPlotEvent {
-    pub fn from(ptr: *mut c_void) -> WxPlotEvent { WxPlotEvent { ptr: ptr } }
-    pub fn null() -> WxPlotEvent { WxPlotEvent::from(0 as *mut c_void) }
+impl PlotEvent {
+    pub fn from(ptr: *mut c_void) -> PlotEvent { PlotEvent { ptr: ptr } }
+    pub fn null() -> PlotEvent { PlotEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxPlotEvent : TWxNotifyEvent {
+pub trait TPlotEvent : TNotifyEvent {
 }
 
-pub struct WxPlotOnOffCurve { ptr: *mut c_void }
-impl TWxPlotOnOffCurve for WxPlotOnOffCurve {}
-impl TWxObject for WxPlotOnOffCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct PlotOnOffCurve { ptr: *mut c_void }
+impl TPlotOnOffCurve for PlotOnOffCurve {}
+impl TObject for PlotOnOffCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxPlotOnOffCurve {
-    pub fn from(ptr: *mut c_void) -> WxPlotOnOffCurve { WxPlotOnOffCurve { ptr: ptr } }
-    pub fn null() -> WxPlotOnOffCurve { WxPlotOnOffCurve::from(0 as *mut c_void) }
+impl PlotOnOffCurve {
+    pub fn from(ptr: *mut c_void) -> PlotOnOffCurve { PlotOnOffCurve { ptr: ptr } }
+    pub fn null() -> PlotOnOffCurve { PlotOnOffCurve::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxPlotOnOffCurve : TWxObject {
+pub trait TPlotOnOffCurve : TObject {
 }
 
-pub struct WxPlotWindow { ptr: *mut c_void }
-impl TWxPlotWindow for WxPlotWindow {}
-impl TWxScrolledWindow for WxPlotWindow {}
-impl TWxPanel for WxPlotWindow {}
-impl TWxWindow for WxPlotWindow {}
-impl TWxEvtHandler for WxPlotWindow {}
-impl TWxObject for WxPlotWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct PlotWindow { ptr: *mut c_void }
+impl TPlotWindow for PlotWindow {}
+impl TScrolledWindow for PlotWindow {}
+impl TPanel for PlotWindow {}
+impl TWindow for PlotWindow {}
+impl TEvtHandler for PlotWindow {}
+impl TObject for PlotWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxPlotWindow {
-    pub fn from(ptr: *mut c_void) -> WxPlotWindow { WxPlotWindow { ptr: ptr } }
-    pub fn null() -> WxPlotWindow { WxPlotWindow::from(0 as *mut c_void) }
+impl PlotWindow {
+    pub fn from(ptr: *mut c_void) -> PlotWindow { PlotWindow { ptr: ptr } }
+    pub fn null() -> PlotWindow { PlotWindow::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxPlotWindow : TWxScrolledWindow {
+pub trait TPlotWindow : TScrolledWindow {
 }
 
-pub struct WxRemotelyScrolledTreeCtrl { ptr: *mut c_void }
-impl TWxRemotelyScrolledTreeCtrl for WxRemotelyScrolledTreeCtrl {}
-impl TWxTreeCtrl for WxRemotelyScrolledTreeCtrl {}
-impl TWxControl for WxRemotelyScrolledTreeCtrl {}
-impl TWxWindow for WxRemotelyScrolledTreeCtrl {}
-impl TWxEvtHandler for WxRemotelyScrolledTreeCtrl {}
-impl TWxObject for WxRemotelyScrolledTreeCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct RemotelyScrolledTreeCtrl { ptr: *mut c_void }
+impl TRemotelyScrolledTreeCtrl for RemotelyScrolledTreeCtrl {}
+impl TTreeCtrl for RemotelyScrolledTreeCtrl {}
+impl TControl for RemotelyScrolledTreeCtrl {}
+impl TWindow for RemotelyScrolledTreeCtrl {}
+impl TEvtHandler for RemotelyScrolledTreeCtrl {}
+impl TObject for RemotelyScrolledTreeCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxRemotelyScrolledTreeCtrl {
-    pub fn from(ptr: *mut c_void) -> WxRemotelyScrolledTreeCtrl { WxRemotelyScrolledTreeCtrl { ptr: ptr } }
-    pub fn null() -> WxRemotelyScrolledTreeCtrl { WxRemotelyScrolledTreeCtrl::from(0 as *mut c_void) }
+impl RemotelyScrolledTreeCtrl {
+    pub fn from(ptr: *mut c_void) -> RemotelyScrolledTreeCtrl { RemotelyScrolledTreeCtrl { ptr: ptr } }
+    pub fn null() -> RemotelyScrolledTreeCtrl { RemotelyScrolledTreeCtrl::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxRemotelyScrolledTreeCtrl : TWxTreeCtrl {
+pub trait TRemotelyScrolledTreeCtrl : TTreeCtrl {
 }
 
-pub struct WxSplitterScrolledWindow { ptr: *mut c_void }
-impl TWxSplitterScrolledWindow for WxSplitterScrolledWindow {}
-impl TWxScrolledWindow for WxSplitterScrolledWindow {}
-impl TWxPanel for WxSplitterScrolledWindow {}
-impl TWxWindow for WxSplitterScrolledWindow {}
-impl TWxEvtHandler for WxSplitterScrolledWindow {}
-impl TWxObject for WxSplitterScrolledWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct SplitterScrolledWindow { ptr: *mut c_void }
+impl TSplitterScrolledWindow for SplitterScrolledWindow {}
+impl TScrolledWindow for SplitterScrolledWindow {}
+impl TPanel for SplitterScrolledWindow {}
+impl TWindow for SplitterScrolledWindow {}
+impl TEvtHandler for SplitterScrolledWindow {}
+impl TObject for SplitterScrolledWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxSplitterScrolledWindow {
-    pub fn from(ptr: *mut c_void) -> WxSplitterScrolledWindow { WxSplitterScrolledWindow { ptr: ptr } }
-    pub fn null() -> WxSplitterScrolledWindow { WxSplitterScrolledWindow::from(0 as *mut c_void) }
+impl SplitterScrolledWindow {
+    pub fn from(ptr: *mut c_void) -> SplitterScrolledWindow { SplitterScrolledWindow { ptr: ptr } }
+    pub fn null() -> SplitterScrolledWindow { SplitterScrolledWindow::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxSplitterScrolledWindow : TWxScrolledWindow {
+pub trait TSplitterScrolledWindow : TScrolledWindow {
 }
 
-pub struct WxStreamToTextRedirector { ptr: *mut c_void }
-impl TWxStreamToTextRedirector for WxStreamToTextRedirector { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct StreamToTextRedirector { ptr: *mut c_void }
+impl TStreamToTextRedirector for StreamToTextRedirector { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxStreamToTextRedirector {
-    pub fn from(ptr: *mut c_void) -> WxStreamToTextRedirector { WxStreamToTextRedirector { ptr: ptr } }
-    pub fn null() -> WxStreamToTextRedirector { WxStreamToTextRedirector::from(0 as *mut c_void) }
+impl StreamToTextRedirector {
+    pub fn from(ptr: *mut c_void) -> StreamToTextRedirector { StreamToTextRedirector { ptr: ptr } }
+    pub fn null() -> StreamToTextRedirector { StreamToTextRedirector::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxStreamToTextRedirector {
+pub trait TStreamToTextRedirector {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct WxTabCtrl { ptr: *mut c_void }
-impl TWxTabCtrl for WxTabCtrl {}
-impl TWxControl for WxTabCtrl {}
-impl TWxWindow for WxTabCtrl {}
-impl TWxEvtHandler for WxTabCtrl {}
-impl TWxObject for WxTabCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct TabCtrl { ptr: *mut c_void }
+impl TTabCtrl for TabCtrl {}
+impl TControl for TabCtrl {}
+impl TWindow for TabCtrl {}
+impl TEvtHandler for TabCtrl {}
+impl TObject for TabCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxTabCtrl {
-    pub fn from(ptr: *mut c_void) -> WxTabCtrl { WxTabCtrl { ptr: ptr } }
-    pub fn null() -> WxTabCtrl { WxTabCtrl::from(0 as *mut c_void) }
+impl TabCtrl {
+    pub fn from(ptr: *mut c_void) -> TabCtrl { TabCtrl { ptr: ptr } }
+    pub fn null() -> TabCtrl { TabCtrl::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxTabCtrl : TWxControl {
+pub trait TTabCtrl : TControl {
 }
 
-pub struct WxTabEvent { ptr: *mut c_void }
-impl TWxTabEvent for WxTabEvent {}
-impl TWxCommandEvent for WxTabEvent {}
-impl TWxEvent for WxTabEvent {}
-impl TWxObject for WxTabEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct TabEvent { ptr: *mut c_void }
+impl TTabEvent for TabEvent {}
+impl TCommandEvent for TabEvent {}
+impl TEvent for TabEvent {}
+impl TObject for TabEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxTabEvent {
-    pub fn from(ptr: *mut c_void) -> WxTabEvent { WxTabEvent { ptr: ptr } }
-    pub fn null() -> WxTabEvent { WxTabEvent::from(0 as *mut c_void) }
+impl TabEvent {
+    pub fn from(ptr: *mut c_void) -> TabEvent { TabEvent { ptr: ptr } }
+    pub fn null() -> TabEvent { TabEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxTabEvent : TWxCommandEvent {
+pub trait TTabEvent : TCommandEvent {
 }
 
-pub struct WxThinSplitterWindow { ptr: *mut c_void }
-impl TWxThinSplitterWindow for WxThinSplitterWindow {}
-impl TWxSplitterWindow for WxThinSplitterWindow {}
-impl TWxWindow for WxThinSplitterWindow {}
-impl TWxEvtHandler for WxThinSplitterWindow {}
-impl TWxObject for WxThinSplitterWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct ThinSplitterWindow { ptr: *mut c_void }
+impl TThinSplitterWindow for ThinSplitterWindow {}
+impl TSplitterWindow for ThinSplitterWindow {}
+impl TWindow for ThinSplitterWindow {}
+impl TEvtHandler for ThinSplitterWindow {}
+impl TObject for ThinSplitterWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxThinSplitterWindow {
-    pub fn from(ptr: *mut c_void) -> WxThinSplitterWindow { WxThinSplitterWindow { ptr: ptr } }
-    pub fn null() -> WxThinSplitterWindow { WxThinSplitterWindow::from(0 as *mut c_void) }
+impl ThinSplitterWindow {
+    pub fn from(ptr: *mut c_void) -> ThinSplitterWindow { ThinSplitterWindow { ptr: ptr } }
+    pub fn null() -> ThinSplitterWindow { ThinSplitterWindow::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxThinSplitterWindow : TWxSplitterWindow {
+pub trait TThinSplitterWindow : TSplitterWindow {
 }
 
-pub struct WxTimerBase { ptr: *mut c_void }
-impl TWxTimerBase for WxTimerBase {}
-impl TWxObject for WxTimerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct TimerBase { ptr: *mut c_void }
+impl TTimerBase for TimerBase {}
+impl TObject for TimerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxTimerBase {
-    pub fn from(ptr: *mut c_void) -> WxTimerBase { WxTimerBase { ptr: ptr } }
-    pub fn null() -> WxTimerBase { WxTimerBase::from(0 as *mut c_void) }
+impl TimerBase {
+    pub fn from(ptr: *mut c_void) -> TimerBase { TimerBase { ptr: ptr } }
+    pub fn null() -> TimerBase { TimerBase::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxTimerBase : TWxObject {
+pub trait TTimerBase : TObject {
 }
 
-pub struct WxToolLayoutItem { ptr: *mut c_void }
-impl TWxToolLayoutItem for WxToolLayoutItem {}
-impl TWxObject for WxToolLayoutItem { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct ToolLayoutItem { ptr: *mut c_void }
+impl TToolLayoutItem for ToolLayoutItem {}
+impl TObject for ToolLayoutItem { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxToolLayoutItem {
-    pub fn from(ptr: *mut c_void) -> WxToolLayoutItem { WxToolLayoutItem { ptr: ptr } }
-    pub fn null() -> WxToolLayoutItem { WxToolLayoutItem::from(0 as *mut c_void) }
+impl ToolLayoutItem {
+    pub fn from(ptr: *mut c_void) -> ToolLayoutItem { ToolLayoutItem { ptr: ptr } }
+    pub fn null() -> ToolLayoutItem { ToolLayoutItem::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxToolLayoutItem : TWxObject {
+pub trait TToolLayoutItem : TObject {
 }
 
-pub struct WxToolWindow { ptr: *mut c_void }
-impl TWxToolWindow for WxToolWindow {}
-impl TWxFrame for WxToolWindow {}
-impl TWxTopLevelWindow for WxToolWindow {}
-impl TWxWindow for WxToolWindow {}
-impl TWxEvtHandler for WxToolWindow {}
-impl TWxObject for WxToolWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct ToolWindow { ptr: *mut c_void }
+impl TToolWindow for ToolWindow {}
+impl TFrame for ToolWindow {}
+impl TTopLevelWindow for ToolWindow {}
+impl TWindow for ToolWindow {}
+impl TEvtHandler for ToolWindow {}
+impl TObject for ToolWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxToolWindow {
-    pub fn from(ptr: *mut c_void) -> WxToolWindow { WxToolWindow { ptr: ptr } }
-    pub fn null() -> WxToolWindow { WxToolWindow::from(0 as *mut c_void) }
+impl ToolWindow {
+    pub fn from(ptr: *mut c_void) -> ToolWindow { ToolWindow { ptr: ptr } }
+    pub fn null() -> ToolWindow { ToolWindow::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxToolWindow : TWxFrame {
+pub trait TToolWindow : TFrame {
 }
 
-pub struct WxTreeCompanionWindow { ptr: *mut c_void }
-impl TWxTreeCompanionWindow for WxTreeCompanionWindow {}
-impl TWxWindow for WxTreeCompanionWindow {}
-impl TWxEvtHandler for WxTreeCompanionWindow {}
-impl TWxObject for WxTreeCompanionWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct TreeCompanionWindow { ptr: *mut c_void }
+impl TTreeCompanionWindow for TreeCompanionWindow {}
+impl TWindow for TreeCompanionWindow {}
+impl TEvtHandler for TreeCompanionWindow {}
+impl TObject for TreeCompanionWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxTreeCompanionWindow {
-    pub fn from(ptr: *mut c_void) -> WxTreeCompanionWindow { WxTreeCompanionWindow { ptr: ptr } }
-    pub fn null() -> WxTreeCompanionWindow { WxTreeCompanionWindow::from(0 as *mut c_void) }
+impl TreeCompanionWindow {
+    pub fn from(ptr: *mut c_void) -> TreeCompanionWindow { TreeCompanionWindow { ptr: ptr } }
+    pub fn null() -> TreeCompanionWindow { TreeCompanionWindow::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxTreeCompanionWindow : TWxWindow {
+pub trait TTreeCompanionWindow : TWindow {
 }
 
-pub struct WxTreeLayout { ptr: *mut c_void }
-impl TWxTreeLayout for WxTreeLayout {}
-impl TWxObject for WxTreeLayout { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct TreeLayout { ptr: *mut c_void }
+impl TTreeLayout for TreeLayout {}
+impl TObject for TreeLayout { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxTreeLayout {
-    pub fn from(ptr: *mut c_void) -> WxTreeLayout { WxTreeLayout { ptr: ptr } }
-    pub fn null() -> WxTreeLayout { WxTreeLayout::from(0 as *mut c_void) }
+impl TreeLayout {
+    pub fn from(ptr: *mut c_void) -> TreeLayout { TreeLayout { ptr: ptr } }
+    pub fn null() -> TreeLayout { TreeLayout::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxTreeLayout : TWxObject {
+pub trait TTreeLayout : TObject {
 }
 
-pub struct WxTreeLayoutStored { ptr: *mut c_void }
-impl TWxTreeLayoutStored for WxTreeLayoutStored {}
-impl TWxTreeLayout for WxTreeLayoutStored {}
-impl TWxObject for WxTreeLayoutStored { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct TreeLayoutStored { ptr: *mut c_void }
+impl TTreeLayoutStored for TreeLayoutStored {}
+impl TTreeLayout for TreeLayoutStored {}
+impl TObject for TreeLayoutStored { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxTreeLayoutStored {
-    pub fn from(ptr: *mut c_void) -> WxTreeLayoutStored { WxTreeLayoutStored { ptr: ptr } }
-    pub fn null() -> WxTreeLayoutStored { WxTreeLayoutStored::from(0 as *mut c_void) }
+impl TreeLayoutStored {
+    pub fn from(ptr: *mut c_void) -> TreeLayoutStored { TreeLayoutStored { ptr: ptr } }
+    pub fn null() -> TreeLayoutStored { TreeLayoutStored::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxTreeLayoutStored : TWxTreeLayout {
+pub trait TTreeLayoutStored : TTreeLayout {
 }
 
-pub struct WxGauge95 { ptr: *mut c_void }
-impl TWxGauge95 for WxGauge95 {}
-impl TWxGauge for WxGauge95 {}
-impl TWxControl for WxGauge95 {}
-impl TWxWindow for WxGauge95 {}
-impl TWxEvtHandler for WxGauge95 {}
-impl TWxObject for WxGauge95 { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct Gauge95 { ptr: *mut c_void }
+impl TGauge95 for Gauge95 {}
+impl TGauge for Gauge95 {}
+impl TControl for Gauge95 {}
+impl TWindow for Gauge95 {}
+impl TEvtHandler for Gauge95 {}
+impl TObject for Gauge95 { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxGauge95 {
-    pub fn from(ptr: *mut c_void) -> WxGauge95 { WxGauge95 { ptr: ptr } }
-    pub fn null() -> WxGauge95 { WxGauge95::from(0 as *mut c_void) }
+impl Gauge95 {
+    pub fn from(ptr: *mut c_void) -> Gauge95 { Gauge95 { ptr: ptr } }
+    pub fn null() -> Gauge95 { Gauge95::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxGauge95 : TWxGauge {
+pub trait TGauge95 : TGauge {
 }
 
-pub struct WxGaugeMSW { ptr: *mut c_void }
-impl TWxGaugeMSW for WxGaugeMSW {}
-impl TWxGauge for WxGaugeMSW {}
-impl TWxControl for WxGaugeMSW {}
-impl TWxWindow for WxGaugeMSW {}
-impl TWxEvtHandler for WxGaugeMSW {}
-impl TWxObject for WxGaugeMSW { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct GaugeMSW { ptr: *mut c_void }
+impl TGaugeMSW for GaugeMSW {}
+impl TGauge for GaugeMSW {}
+impl TControl for GaugeMSW {}
+impl TWindow for GaugeMSW {}
+impl TEvtHandler for GaugeMSW {}
+impl TObject for GaugeMSW { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxGaugeMSW {
-    pub fn from(ptr: *mut c_void) -> WxGaugeMSW { WxGaugeMSW { ptr: ptr } }
-    pub fn null() -> WxGaugeMSW { WxGaugeMSW::from(0 as *mut c_void) }
+impl GaugeMSW {
+    pub fn from(ptr: *mut c_void) -> GaugeMSW { GaugeMSW { ptr: ptr } }
+    pub fn null() -> GaugeMSW { GaugeMSW::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxGaugeMSW : TWxGauge {
+pub trait TGaugeMSW : TGauge {
 }
 
-pub struct WxSlider95 { ptr: *mut c_void }
-impl TWxSlider95 for WxSlider95 {}
-impl TWxSlider for WxSlider95 {}
-impl TWxControl for WxSlider95 {}
-impl TWxWindow for WxSlider95 {}
-impl TWxEvtHandler for WxSlider95 {}
-impl TWxObject for WxSlider95 { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct Slider95 { ptr: *mut c_void }
+impl TSlider95 for Slider95 {}
+impl TSlider for Slider95 {}
+impl TControl for Slider95 {}
+impl TWindow for Slider95 {}
+impl TEvtHandler for Slider95 {}
+impl TObject for Slider95 { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxSlider95 {
-    pub fn from(ptr: *mut c_void) -> WxSlider95 { WxSlider95 { ptr: ptr } }
-    pub fn null() -> WxSlider95 { WxSlider95::from(0 as *mut c_void) }
+impl Slider95 {
+    pub fn from(ptr: *mut c_void) -> Slider95 { Slider95 { ptr: ptr } }
+    pub fn null() -> Slider95 { Slider95::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxSlider95 : TWxSlider {
+pub trait TSlider95 : TSlider {
 }
 
-pub struct WxSliderMSW { ptr: *mut c_void }
-impl TWxSliderMSW for WxSliderMSW {}
-impl TWxSlider for WxSliderMSW {}
-impl TWxControl for WxSliderMSW {}
-impl TWxWindow for WxSliderMSW {}
-impl TWxEvtHandler for WxSliderMSW {}
-impl TWxObject for WxSliderMSW { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct SliderMSW { ptr: *mut c_void }
+impl TSliderMSW for SliderMSW {}
+impl TSlider for SliderMSW {}
+impl TControl for SliderMSW {}
+impl TWindow for SliderMSW {}
+impl TEvtHandler for SliderMSW {}
+impl TObject for SliderMSW { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxSliderMSW {
-    pub fn from(ptr: *mut c_void) -> WxSliderMSW { WxSliderMSW { ptr: ptr } }
-    pub fn null() -> WxSliderMSW { WxSliderMSW::from(0 as *mut c_void) }
+impl SliderMSW {
+    pub fn from(ptr: *mut c_void) -> SliderMSW { SliderMSW { ptr: ptr } }
+    pub fn null() -> SliderMSW { SliderMSW::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxSliderMSW : TWxSlider {
+pub trait TSliderMSW : TSlider {
 }
 

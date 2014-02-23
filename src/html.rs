@@ -3,101 +3,101 @@ use _unsafe::*;
 use base::*;
 use core::*;
 
-pub struct WxHtmlCell { ptr: *mut c_void }
-impl TWxHtmlCell for WxHtmlCell {}
-impl TWxObject for WxHtmlCell { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlCell { ptr: *mut c_void }
+impl THtmlCell for HtmlCell {}
+impl TObject for HtmlCell { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlCell {
-    pub fn from(ptr: *mut c_void) -> WxHtmlCell { WxHtmlCell { ptr: ptr } }
-    pub fn null() -> WxHtmlCell { WxHtmlCell::from(0 as *mut c_void) }
+impl HtmlCell {
+    pub fn from(ptr: *mut c_void) -> HtmlCell { HtmlCell { ptr: ptr } }
+    pub fn null() -> HtmlCell { HtmlCell::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlCell : TWxObject {
+pub trait THtmlCell : TObject {
 }
 
-pub struct WxHtmlColourCell { ptr: *mut c_void }
-impl TWxHtmlColourCell for WxHtmlColourCell {}
-impl TWxHtmlCell for WxHtmlColourCell {}
-impl TWxObject for WxHtmlColourCell { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlColourCell { ptr: *mut c_void }
+impl THtmlColourCell for HtmlColourCell {}
+impl THtmlCell for HtmlColourCell {}
+impl TObject for HtmlColourCell { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlColourCell {
-    pub fn from(ptr: *mut c_void) -> WxHtmlColourCell { WxHtmlColourCell { ptr: ptr } }
-    pub fn null() -> WxHtmlColourCell { WxHtmlColourCell::from(0 as *mut c_void) }
+impl HtmlColourCell {
+    pub fn from(ptr: *mut c_void) -> HtmlColourCell { HtmlColourCell { ptr: ptr } }
+    pub fn null() -> HtmlColourCell { HtmlColourCell::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlColourCell : TWxHtmlCell {
+pub trait THtmlColourCell : THtmlCell {
 }
 
-pub struct WxHtmlContainerCell { ptr: *mut c_void }
-impl TWxHtmlContainerCell for WxHtmlContainerCell {}
-impl TWxHtmlCell for WxHtmlContainerCell {}
-impl TWxObject for WxHtmlContainerCell { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlContainerCell { ptr: *mut c_void }
+impl THtmlContainerCell for HtmlContainerCell {}
+impl THtmlCell for HtmlContainerCell {}
+impl TObject for HtmlContainerCell { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlContainerCell {
-    pub fn from(ptr: *mut c_void) -> WxHtmlContainerCell { WxHtmlContainerCell { ptr: ptr } }
-    pub fn null() -> WxHtmlContainerCell { WxHtmlContainerCell::from(0 as *mut c_void) }
+impl HtmlContainerCell {
+    pub fn from(ptr: *mut c_void) -> HtmlContainerCell { HtmlContainerCell { ptr: ptr } }
+    pub fn null() -> HtmlContainerCell { HtmlContainerCell::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlContainerCell : TWxHtmlCell {
+pub trait THtmlContainerCell : THtmlCell {
 }
 
-pub struct WxHtmlDCRenderer { ptr: *mut c_void }
-impl TWxHtmlDCRenderer for WxHtmlDCRenderer {}
-impl TWxObject for WxHtmlDCRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlDCRenderer { ptr: *mut c_void }
+impl THtmlDCRenderer for HtmlDCRenderer {}
+impl TObject for HtmlDCRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlDCRenderer {
-    pub fn from(ptr: *mut c_void) -> WxHtmlDCRenderer { WxHtmlDCRenderer { ptr: ptr } }
-    pub fn null() -> WxHtmlDCRenderer { WxHtmlDCRenderer::from(0 as *mut c_void) }
+impl HtmlDCRenderer {
+    pub fn from(ptr: *mut c_void) -> HtmlDCRenderer { HtmlDCRenderer { ptr: ptr } }
+    pub fn null() -> HtmlDCRenderer { HtmlDCRenderer::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlDCRenderer : TWxObject {
+pub trait THtmlDCRenderer : TObject {
 }
 
-pub struct WxHtmlEasyPrinting { ptr: *mut c_void }
-impl TWxHtmlEasyPrinting for WxHtmlEasyPrinting {}
-impl TWxObject for WxHtmlEasyPrinting { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlEasyPrinting { ptr: *mut c_void }
+impl THtmlEasyPrinting for HtmlEasyPrinting {}
+impl TObject for HtmlEasyPrinting { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlEasyPrinting {
-    pub fn from(ptr: *mut c_void) -> WxHtmlEasyPrinting { WxHtmlEasyPrinting { ptr: ptr } }
-    pub fn null() -> WxHtmlEasyPrinting { WxHtmlEasyPrinting::from(0 as *mut c_void) }
+impl HtmlEasyPrinting {
+    pub fn from(ptr: *mut c_void) -> HtmlEasyPrinting { HtmlEasyPrinting { ptr: ptr } }
+    pub fn null() -> HtmlEasyPrinting { HtmlEasyPrinting::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlEasyPrinting : TWxObject {
+pub trait THtmlEasyPrinting : TObject {
 }
 
-pub struct WxHtmlFilter { ptr: *mut c_void }
-impl TWxHtmlFilter for WxHtmlFilter {}
-impl TWxObject for WxHtmlFilter { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlFilter { ptr: *mut c_void }
+impl THtmlFilter for HtmlFilter {}
+impl TObject for HtmlFilter { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlFilter {
-    pub fn from(ptr: *mut c_void) -> WxHtmlFilter { WxHtmlFilter { ptr: ptr } }
-    pub fn null() -> WxHtmlFilter { WxHtmlFilter::from(0 as *mut c_void) }
+impl HtmlFilter {
+    pub fn from(ptr: *mut c_void) -> HtmlFilter { HtmlFilter { ptr: ptr } }
+    pub fn null() -> HtmlFilter { HtmlFilter::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlFilter : TWxObject {
+pub trait THtmlFilter : TObject {
 }
 
-pub struct WxHtmlHelpController { ptr: *mut c_void }
-impl TWxHtmlHelpController for WxHtmlHelpController {}
-impl TWxHelpControllerBase for WxHtmlHelpController {}
-impl TWxObject for WxHtmlHelpController { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlHelpController { ptr: *mut c_void }
+impl THtmlHelpController for HtmlHelpController {}
+impl THelpControllerBase for HtmlHelpController {}
+impl TObject for HtmlHelpController { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlHelpController {
-    pub fn from(ptr: *mut c_void) -> WxHtmlHelpController { WxHtmlHelpController { ptr: ptr } }
-    pub fn null() -> WxHtmlHelpController { WxHtmlHelpController::from(0 as *mut c_void) }
+impl HtmlHelpController {
+    pub fn from(ptr: *mut c_void) -> HtmlHelpController { HtmlHelpController { ptr: ptr } }
+    pub fn null() -> HtmlHelpController { HtmlHelpController::from(0 as *mut c_void) }
     
-    pub fn new(_style: c_int) -> WxHtmlHelpController {
-        unsafe { WxHtmlHelpController { ptr: wxHtmlHelpController_Create(_style) } }
+    pub fn new(_style: c_int) -> HtmlHelpController {
+        unsafe { HtmlHelpController { ptr: wxHtmlHelpController_Create(_style) } }
     }
 }
 
-pub trait TWxHtmlHelpController : TWxHelpControllerBase {
+pub trait THtmlHelpController : THelpControllerBase {
     fn addBook(&self, book: *mut c_void, show_wait_msg: c_int) -> c_int {
         unsafe { wxHtmlHelpController_AddBook(self.ptr(), book, show_wait_msg) }
     }
@@ -123,8 +123,8 @@ pub trait TWxHtmlHelpController : TWxHelpControllerBase {
     fn displaySectionNumber(&self, sectionNo: c_int) -> c_int {
         unsafe { wxHtmlHelpController_DisplaySectionNumber(self.ptr(), sectionNo) }
     }
-    fn getFrame(&self) -> WxFrame {
-        unsafe { WxFrame { ptr: wxHtmlHelpController_GetFrame(self.ptr()) } }
+    fn getFrame(&self) -> Frame {
+        unsafe { Frame { ptr: wxHtmlHelpController_GetFrame(self.ptr()) } }
     }
     fn getFrameParameters(&self, title: *mut c_void, width: *mut c_int, height: *mut c_int, pos_x: *mut c_int, pos_y: *mut c_int, newFrameEachTime: *mut c_int) -> *mut c_void {
         unsafe { wxHtmlHelpController_GetFrameParameters(self.ptr(), title, width, height, pos_x, pos_y, newFrameEachTime) }
@@ -144,7 +144,7 @@ pub trait TWxHtmlHelpController : TWxHelpControllerBase {
     fn quit(&self) -> c_int {
         unsafe { wxHtmlHelpController_Quit(self.ptr()) }
     }
-    fn readCustomization<T: TWxConfigBase>(&self, cfg: &T, path: &str) {
+    fn readCustomization<T: TConfigBase>(&self, cfg: &T, path: &str) {
         let path = wxT(path);
         unsafe { wxHtmlHelpController_ReadCustomization(self.ptr(), cfg.ptr(), path.ptr()) }
     }
@@ -162,193 +162,193 @@ pub trait TWxHtmlHelpController : TWxHelpControllerBase {
         let viewer = wxT(viewer);
         unsafe { wxHtmlHelpController_SetViewer(self.ptr(), viewer.ptr(), flags) }
     }
-    fn useConfig<T: TWxConfigBase>(&self, config: &T, rootpath: &str) {
+    fn useConfig<T: TConfigBase>(&self, config: &T, rootpath: &str) {
         let rootpath = wxT(rootpath);
         unsafe { wxHtmlHelpController_UseConfig(self.ptr(), config.ptr(), rootpath.ptr()) }
     }
-    fn writeCustomization<T: TWxConfigBase>(&self, cfg: &T, path: &str) {
+    fn writeCustomization<T: TConfigBase>(&self, cfg: &T, path: &str) {
         let path = wxT(path);
         unsafe { wxHtmlHelpController_WriteCustomization(self.ptr(), cfg.ptr(), path.ptr()) }
     }
 }
 
-pub struct WxHtmlHelpData { ptr: *mut c_void }
-impl TWxHtmlHelpData for WxHtmlHelpData {}
-impl TWxObject for WxHtmlHelpData { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlHelpData { ptr: *mut c_void }
+impl THtmlHelpData for HtmlHelpData {}
+impl TObject for HtmlHelpData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlHelpData {
-    pub fn from(ptr: *mut c_void) -> WxHtmlHelpData { WxHtmlHelpData { ptr: ptr } }
-    pub fn null() -> WxHtmlHelpData { WxHtmlHelpData::from(0 as *mut c_void) }
+impl HtmlHelpData {
+    pub fn from(ptr: *mut c_void) -> HtmlHelpData { HtmlHelpData { ptr: ptr } }
+    pub fn null() -> HtmlHelpData { HtmlHelpData::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlHelpData : TWxObject {
+pub trait THtmlHelpData : TObject {
 }
 
-pub struct WxHtmlHelpFrame { ptr: *mut c_void }
-impl TWxHtmlHelpFrame for WxHtmlHelpFrame {}
-impl TWxFrame for WxHtmlHelpFrame {}
-impl TWxTopLevelWindow for WxHtmlHelpFrame {}
-impl TWxWindow for WxHtmlHelpFrame {}
-impl TWxEvtHandler for WxHtmlHelpFrame {}
-impl TWxObject for WxHtmlHelpFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlHelpFrame { ptr: *mut c_void }
+impl THtmlHelpFrame for HtmlHelpFrame {}
+impl TFrame for HtmlHelpFrame {}
+impl TTopLevelWindow for HtmlHelpFrame {}
+impl TWindow for HtmlHelpFrame {}
+impl TEvtHandler for HtmlHelpFrame {}
+impl TObject for HtmlHelpFrame { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlHelpFrame {
-    pub fn from(ptr: *mut c_void) -> WxHtmlHelpFrame { WxHtmlHelpFrame { ptr: ptr } }
-    pub fn null() -> WxHtmlHelpFrame { WxHtmlHelpFrame::from(0 as *mut c_void) }
+impl HtmlHelpFrame {
+    pub fn from(ptr: *mut c_void) -> HtmlHelpFrame { HtmlHelpFrame { ptr: ptr } }
+    pub fn null() -> HtmlHelpFrame { HtmlHelpFrame::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlHelpFrame : TWxFrame {
+pub trait THtmlHelpFrame : TFrame {
 }
 
-pub struct WxHtmlLinkInfo { ptr: *mut c_void }
-impl TWxHtmlLinkInfo for WxHtmlLinkInfo {}
-impl TWxObject for WxHtmlLinkInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlLinkInfo { ptr: *mut c_void }
+impl THtmlLinkInfo for HtmlLinkInfo {}
+impl TObject for HtmlLinkInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlLinkInfo {
-    pub fn from(ptr: *mut c_void) -> WxHtmlLinkInfo { WxHtmlLinkInfo { ptr: ptr } }
-    pub fn null() -> WxHtmlLinkInfo { WxHtmlLinkInfo::from(0 as *mut c_void) }
+impl HtmlLinkInfo {
+    pub fn from(ptr: *mut c_void) -> HtmlLinkInfo { HtmlLinkInfo { ptr: ptr } }
+    pub fn null() -> HtmlLinkInfo { HtmlLinkInfo::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlLinkInfo : TWxObject {
+pub trait THtmlLinkInfo : TObject {
 }
 
-pub struct WxHtmlParser { ptr: *mut c_void }
-impl TWxHtmlParser for WxHtmlParser {}
-impl TWxObject for WxHtmlParser { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlParser { ptr: *mut c_void }
+impl THtmlParser for HtmlParser {}
+impl TObject for HtmlParser { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlParser {
-    pub fn from(ptr: *mut c_void) -> WxHtmlParser { WxHtmlParser { ptr: ptr } }
-    pub fn null() -> WxHtmlParser { WxHtmlParser::from(0 as *mut c_void) }
+impl HtmlParser {
+    pub fn from(ptr: *mut c_void) -> HtmlParser { HtmlParser { ptr: ptr } }
+    pub fn null() -> HtmlParser { HtmlParser::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlParser : TWxObject {
+pub trait THtmlParser : TObject {
 }
 
-pub struct WxHtmlPrintout { ptr: *mut c_void }
-impl TWxHtmlPrintout for WxHtmlPrintout {}
-impl TWxPrintout for WxHtmlPrintout {}
-impl TWxObject for WxHtmlPrintout { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlPrintout { ptr: *mut c_void }
+impl THtmlPrintout for HtmlPrintout {}
+impl TPrintout for HtmlPrintout {}
+impl TObject for HtmlPrintout { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlPrintout {
-    pub fn from(ptr: *mut c_void) -> WxHtmlPrintout { WxHtmlPrintout { ptr: ptr } }
-    pub fn null() -> WxHtmlPrintout { WxHtmlPrintout::from(0 as *mut c_void) }
+impl HtmlPrintout {
+    pub fn from(ptr: *mut c_void) -> HtmlPrintout { HtmlPrintout { ptr: ptr } }
+    pub fn null() -> HtmlPrintout { HtmlPrintout::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlPrintout : TWxPrintout {
+pub trait THtmlPrintout : TPrintout {
 }
 
-pub struct WxHtmlTag { ptr: *mut c_void }
-impl TWxHtmlTag for WxHtmlTag {}
-impl TWxObject for WxHtmlTag { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlTag { ptr: *mut c_void }
+impl THtmlTag for HtmlTag {}
+impl TObject for HtmlTag { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlTag {
-    pub fn from(ptr: *mut c_void) -> WxHtmlTag { WxHtmlTag { ptr: ptr } }
-    pub fn null() -> WxHtmlTag { WxHtmlTag::from(0 as *mut c_void) }
+impl HtmlTag {
+    pub fn from(ptr: *mut c_void) -> HtmlTag { HtmlTag { ptr: ptr } }
+    pub fn null() -> HtmlTag { HtmlTag::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlTag : TWxObject {
+pub trait THtmlTag : TObject {
 }
 
-pub struct WxHtmlTagHandler { ptr: *mut c_void }
-impl TWxHtmlTagHandler for WxHtmlTagHandler {}
-impl TWxObject for WxHtmlTagHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlTagHandler { ptr: *mut c_void }
+impl THtmlTagHandler for HtmlTagHandler {}
+impl TObject for HtmlTagHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlTagHandler {
-    pub fn from(ptr: *mut c_void) -> WxHtmlTagHandler { WxHtmlTagHandler { ptr: ptr } }
-    pub fn null() -> WxHtmlTagHandler { WxHtmlTagHandler::from(0 as *mut c_void) }
+impl HtmlTagHandler {
+    pub fn from(ptr: *mut c_void) -> HtmlTagHandler { HtmlTagHandler { ptr: ptr } }
+    pub fn null() -> HtmlTagHandler { HtmlTagHandler::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlTagHandler : TWxObject {
+pub trait THtmlTagHandler : TObject {
 }
 
-pub struct WxHtmlTagsModule { ptr: *mut c_void }
-impl TWxHtmlTagsModule for WxHtmlTagsModule {}
-impl TWxModule for WxHtmlTagsModule {}
-impl TWxObject for WxHtmlTagsModule { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlTagsModule { ptr: *mut c_void }
+impl THtmlTagsModule for HtmlTagsModule {}
+impl TModule for HtmlTagsModule {}
+impl TObject for HtmlTagsModule { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlTagsModule {
-    pub fn from(ptr: *mut c_void) -> WxHtmlTagsModule { WxHtmlTagsModule { ptr: ptr } }
-    pub fn null() -> WxHtmlTagsModule { WxHtmlTagsModule::from(0 as *mut c_void) }
+impl HtmlTagsModule {
+    pub fn from(ptr: *mut c_void) -> HtmlTagsModule { HtmlTagsModule { ptr: ptr } }
+    pub fn null() -> HtmlTagsModule { HtmlTagsModule::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlTagsModule : TWxModule {
+pub trait THtmlTagsModule : TModule {
 }
 
-pub struct WxHtmlWidgetCell { ptr: *mut c_void }
-impl TWxHtmlWidgetCell for WxHtmlWidgetCell {}
-impl TWxHtmlCell for WxHtmlWidgetCell {}
-impl TWxObject for WxHtmlWidgetCell { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlWidgetCell { ptr: *mut c_void }
+impl THtmlWidgetCell for HtmlWidgetCell {}
+impl THtmlCell for HtmlWidgetCell {}
+impl TObject for HtmlWidgetCell { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlWidgetCell {
-    pub fn from(ptr: *mut c_void) -> WxHtmlWidgetCell { WxHtmlWidgetCell { ptr: ptr } }
-    pub fn null() -> WxHtmlWidgetCell { WxHtmlWidgetCell::from(0 as *mut c_void) }
+impl HtmlWidgetCell {
+    pub fn from(ptr: *mut c_void) -> HtmlWidgetCell { HtmlWidgetCell { ptr: ptr } }
+    pub fn null() -> HtmlWidgetCell { HtmlWidgetCell::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlWidgetCell : TWxHtmlCell {
+pub trait THtmlWidgetCell : THtmlCell {
 }
 
-pub struct WxHtmlWinParser { ptr: *mut c_void }
-impl TWxHtmlWinParser for WxHtmlWinParser {}
-impl TWxHtmlParser for WxHtmlWinParser {}
-impl TWxObject for WxHtmlWinParser { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlWinParser { ptr: *mut c_void }
+impl THtmlWinParser for HtmlWinParser {}
+impl THtmlParser for HtmlWinParser {}
+impl TObject for HtmlWinParser { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlWinParser {
-    pub fn from(ptr: *mut c_void) -> WxHtmlWinParser { WxHtmlWinParser { ptr: ptr } }
-    pub fn null() -> WxHtmlWinParser { WxHtmlWinParser::from(0 as *mut c_void) }
+impl HtmlWinParser {
+    pub fn from(ptr: *mut c_void) -> HtmlWinParser { HtmlWinParser { ptr: ptr } }
+    pub fn null() -> HtmlWinParser { HtmlWinParser::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlWinParser : TWxHtmlParser {
+pub trait THtmlWinParser : THtmlParser {
 }
 
-pub struct WxHtmlWinTagHandler { ptr: *mut c_void }
-impl TWxHtmlWinTagHandler for WxHtmlWinTagHandler {}
-impl TWxHtmlTagHandler for WxHtmlWinTagHandler {}
-impl TWxObject for WxHtmlWinTagHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlWinTagHandler { ptr: *mut c_void }
+impl THtmlWinTagHandler for HtmlWinTagHandler {}
+impl THtmlTagHandler for HtmlWinTagHandler {}
+impl TObject for HtmlWinTagHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlWinTagHandler {
-    pub fn from(ptr: *mut c_void) -> WxHtmlWinTagHandler { WxHtmlWinTagHandler { ptr: ptr } }
-    pub fn null() -> WxHtmlWinTagHandler { WxHtmlWinTagHandler::from(0 as *mut c_void) }
+impl HtmlWinTagHandler {
+    pub fn from(ptr: *mut c_void) -> HtmlWinTagHandler { HtmlWinTagHandler { ptr: ptr } }
+    pub fn null() -> HtmlWinTagHandler { HtmlWinTagHandler::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHtmlWinTagHandler : TWxHtmlTagHandler {
+pub trait THtmlWinTagHandler : THtmlTagHandler {
 }
 
-pub struct WxHtmlWindow { ptr: *mut c_void }
-impl TWxHtmlWindow for WxHtmlWindow {}
-impl TWxScrolledWindow for WxHtmlWindow {}
-impl TWxPanel for WxHtmlWindow {}
-impl TWxWindow for WxHtmlWindow {}
-impl TWxEvtHandler for WxHtmlWindow {}
-impl TWxObject for WxHtmlWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HtmlWindow { ptr: *mut c_void }
+impl THtmlWindow for HtmlWindow {}
+impl TScrolledWindow for HtmlWindow {}
+impl TPanel for HtmlWindow {}
+impl TWindow for HtmlWindow {}
+impl TEvtHandler for HtmlWindow {}
+impl TObject for HtmlWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHtmlWindow {
-    pub fn from(ptr: *mut c_void) -> WxHtmlWindow { WxHtmlWindow { ptr: ptr } }
-    pub fn null() -> WxHtmlWindow { WxHtmlWindow::from(0 as *mut c_void) }
+impl HtmlWindow {
+    pub fn from(ptr: *mut c_void) -> HtmlWindow { HtmlWindow { ptr: ptr } }
+    pub fn null() -> HtmlWindow { HtmlWindow::from(0 as *mut c_void) }
     
-    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> WxHtmlWindow {
+    pub fn new<T: TWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> HtmlWindow {
         let _txt = wxT(_txt);
-        unsafe { WxHtmlWindow { ptr: wxHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr()) } }
+        unsafe { HtmlWindow { ptr: wxHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr()) } }
     }
 }
 
-pub trait TWxHtmlWindow : TWxScrolledWindow {
+pub trait THtmlWindow : TScrolledWindow {
     fn appendToPage(&self, source: &str) -> c_int {
         let source = wxT(source);
         unsafe { wxHtmlWindow_AppendToPage(self.ptr(), source.ptr()) }
     }
-    fn getInternalRepresentation(&self) -> WxHtmlContainerCell {
-        unsafe { WxHtmlContainerCell { ptr: wxHtmlWindow_GetInternalRepresentation(self.ptr()) } }
+    fn getInternalRepresentation(&self) -> HtmlContainerCell {
+        unsafe { HtmlContainerCell { ptr: wxHtmlWindow_GetInternalRepresentation(self.ptr()) } }
     }
     fn getOpenedAnchor(&self) -> ~str {
         unsafe { WxString { ptr: wxHtmlWindow_GetOpenedAnchor(self.ptr()) }.to_str() }
@@ -359,8 +359,8 @@ pub trait TWxHtmlWindow : TWxScrolledWindow {
     fn getOpenedPageTitle(&self) -> ~str {
         unsafe { WxString { ptr: wxHtmlWindow_GetOpenedPageTitle(self.ptr()) }.to_str() }
     }
-    fn getRelatedFrame(&self) -> WxFrame {
-        unsafe { WxFrame { ptr: wxHtmlWindow_GetRelatedFrame(self.ptr()) } }
+    fn getRelatedFrame(&self) -> Frame {
+        unsafe { Frame { ptr: wxHtmlWindow_GetRelatedFrame(self.ptr()) } }
     }
     fn historyBack(&self) -> c_int {
         unsafe { wxHtmlWindow_HistoryBack(self.ptr()) }
@@ -381,7 +381,7 @@ pub trait TWxHtmlWindow : TWxScrolledWindow {
         let location = wxT(location);
         unsafe { wxHtmlWindow_LoadPage(self.ptr(), location.ptr()) }
     }
-    fn readCustomization<T: TWxConfigBase>(&self, cfg: &T, path: &str) {
+    fn readCustomization<T: TConfigBase>(&self, cfg: &T, path: &str) {
         let path = wxT(path);
         unsafe { wxHtmlWindow_ReadCustomization(self.ptr(), cfg.ptr(), path.ptr()) }
     }
@@ -397,37 +397,37 @@ pub trait TWxHtmlWindow : TWxScrolledWindow {
         let source = wxT(source);
         unsafe { wxHtmlWindow_SetPage(self.ptr(), source.ptr()) }
     }
-    fn setRelatedFrame<T: TWxFrame>(&self, frame: &T, format: &str) {
+    fn setRelatedFrame<T: TFrame>(&self, frame: &T, format: &str) {
         let format = wxT(format);
         unsafe { wxHtmlWindow_SetRelatedFrame(self.ptr(), frame.ptr(), format.ptr()) }
     }
     fn setRelatedStatusBar(&self, bar: c_int) {
         unsafe { wxHtmlWindow_SetRelatedStatusBar(self.ptr(), bar) }
     }
-    fn writeCustomization<T: TWxConfigBase>(&self, cfg: &T, path: &str) {
+    fn writeCustomization<T: TConfigBase>(&self, cfg: &T, path: &str) {
         let path = wxT(path);
         unsafe { wxHtmlWindow_WriteCustomization(self.ptr(), cfg.ptr(), path.ptr()) }
     }
 }
 
-pub struct WxcHtmlEvent { ptr: *mut c_void }
-impl TWxcHtmlEvent for WxcHtmlEvent {}
-impl TWxCommandEvent for WxcHtmlEvent {}
-impl TWxEvent for WxcHtmlEvent {}
-impl TWxObject for WxcHtmlEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CHtmlEvent { ptr: *mut c_void }
+impl TCHtmlEvent for CHtmlEvent {}
+impl TCommandEvent for CHtmlEvent {}
+impl TEvent for CHtmlEvent {}
+impl TObject for CHtmlEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxcHtmlEvent {
-    pub fn from(ptr: *mut c_void) -> WxcHtmlEvent { WxcHtmlEvent { ptr: ptr } }
-    pub fn null() -> WxcHtmlEvent { WxcHtmlEvent::from(0 as *mut c_void) }
+impl CHtmlEvent {
+    pub fn from(ptr: *mut c_void) -> CHtmlEvent { CHtmlEvent { ptr: ptr } }
+    pub fn null() -> CHtmlEvent { CHtmlEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxcHtmlEvent : TWxCommandEvent {
-    fn getMouseEvent(&self) -> WxMouseEvent {
-        unsafe { WxMouseEvent { ptr: wxcHtmlEvent_GetMouseEvent(self.ptr()) } }
+pub trait TCHtmlEvent : TCommandEvent {
+    fn getMouseEvent(&self) -> MouseEvent {
+        unsafe { MouseEvent { ptr: wxcHtmlEvent_GetMouseEvent(self.ptr()) } }
     }
-    fn getHtmlCell(&self) -> WxHtmlCell {
-        unsafe { WxHtmlCell { ptr: wxcHtmlEvent_GetHtmlCell(self.ptr()) } }
+    fn getHtmlCell(&self) -> HtmlCell {
+        unsafe { HtmlCell { ptr: wxcHtmlEvent_GetHtmlCell(self.ptr()) } }
     }
     fn getHtmlCellId(&self) -> ~str {
         unsafe { WxString { ptr: wxcHtmlEvent_GetHtmlCellId(self.ptr()) }.to_str() }
@@ -438,30 +438,30 @@ pub trait TWxcHtmlEvent : TWxCommandEvent {
     fn getTarget(&self) -> ~str {
         unsafe { WxString { ptr: wxcHtmlEvent_GetTarget(self.ptr()) }.to_str() }
     }
-    fn getLogicalPosition(&self) -> WxPoint {
-        unsafe { WxPoint { ptr: wxcHtmlEvent_GetLogicalPosition(self.ptr()) } }
+    fn getLogicalPosition(&self) -> Point {
+        unsafe { Point { ptr: wxcHtmlEvent_GetLogicalPosition(self.ptr()) } }
     }
 }
 
-pub struct WxcHtmlWindow { ptr: *mut c_void }
-impl TWxcHtmlWindow for WxcHtmlWindow {}
-impl TWxHtmlWindow for WxcHtmlWindow {}
-impl TWxScrolledWindow for WxcHtmlWindow {}
-impl TWxPanel for WxcHtmlWindow {}
-impl TWxWindow for WxcHtmlWindow {}
-impl TWxEvtHandler for WxcHtmlWindow {}
-impl TWxObject for WxcHtmlWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct CHtmlWindow { ptr: *mut c_void }
+impl TCHtmlWindow for CHtmlWindow {}
+impl THtmlWindow for CHtmlWindow {}
+impl TScrolledWindow for CHtmlWindow {}
+impl TPanel for CHtmlWindow {}
+impl TWindow for CHtmlWindow {}
+impl TEvtHandler for CHtmlWindow {}
+impl TObject for CHtmlWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxcHtmlWindow {
-    pub fn from(ptr: *mut c_void) -> WxcHtmlWindow { WxcHtmlWindow { ptr: ptr } }
-    pub fn null() -> WxcHtmlWindow { WxcHtmlWindow::from(0 as *mut c_void) }
+impl CHtmlWindow {
+    pub fn from(ptr: *mut c_void) -> CHtmlWindow { CHtmlWindow { ptr: ptr } }
+    pub fn null() -> CHtmlWindow { CHtmlWindow::from(0 as *mut c_void) }
     
-    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> WxcHtmlWindow {
+    pub fn new<T: TWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> CHtmlWindow {
         let _txt = wxT(_txt);
-        unsafe { WxcHtmlWindow { ptr: wxcHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr()) } }
+        unsafe { CHtmlWindow { ptr: wxcHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr()) } }
     }
 }
 
-pub trait TWxcHtmlWindow : TWxHtmlWindow {
+pub trait TCHtmlWindow : THtmlWindow {
 }
 

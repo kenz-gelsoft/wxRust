@@ -3,25 +3,25 @@ use _unsafe::*;
 use base::*;
 use core::*;
 
-pub struct WxMediaCtrl { ptr: *mut c_void }
-impl TWxMediaCtrl for WxMediaCtrl {}
-impl TWxWindow for WxMediaCtrl {}
-impl TWxEvtHandler for WxMediaCtrl {}
-impl TWxObject for WxMediaCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct MediaCtrl { ptr: *mut c_void }
+impl TMediaCtrl for MediaCtrl {}
+impl TWindow for MediaCtrl {}
+impl TEvtHandler for MediaCtrl {}
+impl TObject for MediaCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxMediaCtrl {
-    pub fn from(ptr: *mut c_void) -> WxMediaCtrl { WxMediaCtrl { ptr: ptr } }
-    pub fn null() -> WxMediaCtrl { WxMediaCtrl::from(0 as *mut c_void) }
+impl MediaCtrl {
+    pub fn from(ptr: *mut c_void) -> MediaCtrl { MediaCtrl { ptr: ptr } }
+    pub fn null() -> MediaCtrl { MediaCtrl::from(0 as *mut c_void) }
     
-    pub fn new<T: TWxWindow>(parent: &T, windowID: c_int, fileName: &str, x: c_int, y: c_int, w: c_int, h: c_int, style: c_long, szBackend: &str, name: &str) -> WxMediaCtrl {
+    pub fn new<T: TWindow>(parent: &T, windowID: c_int, fileName: &str, x: c_int, y: c_int, w: c_int, h: c_int, style: c_long, szBackend: &str, name: &str) -> MediaCtrl {
         let fileName = wxT(fileName);
         let szBackend = wxT(szBackend);
         let name = wxT(name);
-        unsafe { WxMediaCtrl { ptr: wxMediaCtrl_Create(parent.ptr(), windowID, fileName.ptr(), x, y, w, h, style, szBackend.ptr(), name.ptr()) } }
+        unsafe { MediaCtrl { ptr: wxMediaCtrl_Create(parent.ptr(), windowID, fileName.ptr(), x, y, w, h, style, szBackend.ptr(), name.ptr()) } }
     }
 }
 
-pub trait TWxMediaCtrl : TWxWindow {
+pub trait TMediaCtrl : TWindow {
     fn getPlaybackRate(&self) -> c_double {
         unsafe { wxMediaCtrl_GetPlaybackRate(self.ptr()) }
     }
@@ -73,19 +73,19 @@ pub trait TWxMediaCtrl : TWxWindow {
     }
 }
 
-pub struct WxMediaEvent { ptr: *mut c_void }
-impl TWxMediaEvent for WxMediaEvent {}
-impl TWxNotifyEvent for WxMediaEvent {}
-impl TWxCommandEvent for WxMediaEvent {}
-impl TWxEvent for WxMediaEvent {}
-impl TWxObject for WxMediaEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct MediaEvent { ptr: *mut c_void }
+impl TMediaEvent for MediaEvent {}
+impl TNotifyEvent for MediaEvent {}
+impl TCommandEvent for MediaEvent {}
+impl TEvent for MediaEvent {}
+impl TObject for MediaEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxMediaEvent {
-    pub fn from(ptr: *mut c_void) -> WxMediaEvent { WxMediaEvent { ptr: ptr } }
-    pub fn null() -> WxMediaEvent { WxMediaEvent::from(0 as *mut c_void) }
+impl MediaEvent {
+    pub fn from(ptr: *mut c_void) -> MediaEvent { MediaEvent { ptr: ptr } }
+    pub fn null() -> MediaEvent { MediaEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxMediaEvent : TWxNotifyEvent {
+pub trait TMediaEvent : TNotifyEvent {
 }
 
