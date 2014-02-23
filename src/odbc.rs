@@ -1,194 +1,194 @@
 use std::libc::*;
 use base::*;
 
-pub struct wxDatabase { ptr: *mut c_void }
-impl _wxDatabase for wxDatabase {}
-impl _wxObject for wxDatabase { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDatabase { ptr: *mut c_void }
+impl TWxDatabase for WxDatabase {}
+impl TWxObject for WxDatabase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDatabase {
-    pub fn from(ptr: *mut c_void) -> wxDatabase { wxDatabase { ptr: ptr } }
-    pub fn null() -> wxDatabase { wxDatabase::from(0 as *mut c_void) }
+impl WxDatabase {
+    pub fn from(ptr: *mut c_void) -> WxDatabase { WxDatabase { ptr: ptr } }
+    pub fn null() -> WxDatabase { WxDatabase::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDatabase : _wxObject {
+pub trait TWxDatabase : TWxObject {
 }
 
-pub struct wxDb { ptr: *mut c_void }
-impl _wxDb for wxDb { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDb { ptr: *mut c_void }
+impl TWxDb for WxDb { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDb {
-    pub fn from(ptr: *mut c_void) -> wxDb { wxDb { ptr: ptr } }
-    pub fn null() -> wxDb { wxDb::from(0 as *mut c_void) }
+impl WxDb {
+    pub fn from(ptr: *mut c_void) -> WxDb { WxDb { ptr: ptr } }
+    pub fn null() -> WxDb { WxDb::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDb {
+pub trait TWxDb {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDbColDef { ptr: *mut c_void }
-impl _wxDbColDef for wxDbColDef { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDbColDef { ptr: *mut c_void }
+impl TWxDbColDef for WxDbColDef { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDbColDef {
-    pub fn from(ptr: *mut c_void) -> wxDbColDef { wxDbColDef { ptr: ptr } }
-    pub fn null() -> wxDbColDef { wxDbColDef::from(0 as *mut c_void) }
+impl WxDbColDef {
+    pub fn from(ptr: *mut c_void) -> WxDbColDef { WxDbColDef { ptr: ptr } }
+    pub fn null() -> WxDbColDef { WxDbColDef::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDbColDef {
+pub trait TWxDbColDef {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDbColFor { ptr: *mut c_void }
-impl _wxDbColFor for wxDbColFor { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDbColFor { ptr: *mut c_void }
+impl TWxDbColFor for WxDbColFor { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDbColFor {
-    pub fn from(ptr: *mut c_void) -> wxDbColFor { wxDbColFor { ptr: ptr } }
-    pub fn null() -> wxDbColFor { wxDbColFor::from(0 as *mut c_void) }
+impl WxDbColFor {
+    pub fn from(ptr: *mut c_void) -> WxDbColFor { WxDbColFor { ptr: ptr } }
+    pub fn null() -> WxDbColFor { WxDbColFor::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDbColFor {
+pub trait TWxDbColFor {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDbColInf { ptr: *mut c_void }
-impl _wxDbColInf for wxDbColInf { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDbColInf { ptr: *mut c_void }
+impl TWxDbColInf for WxDbColInf { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDbColInf {
-    pub fn from(ptr: *mut c_void) -> wxDbColInf { wxDbColInf { ptr: ptr } }
-    pub fn null() -> wxDbColInf { wxDbColInf::from(0 as *mut c_void) }
+impl WxDbColInf {
+    pub fn from(ptr: *mut c_void) -> WxDbColInf { WxDbColInf { ptr: ptr } }
+    pub fn null() -> WxDbColInf { WxDbColInf::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDbColInf {
+pub trait TWxDbColInf {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDbConnectInf { ptr: *mut c_void }
-impl _wxDbConnectInf for wxDbConnectInf { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDbConnectInf { ptr: *mut c_void }
+impl TWxDbConnectInf for WxDbConnectInf { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDbConnectInf {
-    pub fn from(ptr: *mut c_void) -> wxDbConnectInf { wxDbConnectInf { ptr: ptr } }
-    pub fn null() -> wxDbConnectInf { wxDbConnectInf::from(0 as *mut c_void) }
+impl WxDbConnectInf {
+    pub fn from(ptr: *mut c_void) -> WxDbConnectInf { WxDbConnectInf { ptr: ptr } }
+    pub fn null() -> WxDbConnectInf { WxDbConnectInf::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDbConnectInf {
+pub trait TWxDbConnectInf {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDbInf { ptr: *mut c_void }
-impl _wxDbInf for wxDbInf { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDbInf { ptr: *mut c_void }
+impl TWxDbInf for WxDbInf { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDbInf {
-    pub fn from(ptr: *mut c_void) -> wxDbInf { wxDbInf { ptr: ptr } }
-    pub fn null() -> wxDbInf { wxDbInf::from(0 as *mut c_void) }
+impl WxDbInf {
+    pub fn from(ptr: *mut c_void) -> WxDbInf { WxDbInf { ptr: ptr } }
+    pub fn null() -> WxDbInf { WxDbInf::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDbInf {
+pub trait TWxDbInf {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDbSqlTypeInfo { ptr: *mut c_void }
-impl _wxDbSqlTypeInfo for wxDbSqlTypeInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDbSqlTypeInfo { ptr: *mut c_void }
+impl TWxDbSqlTypeInfo for WxDbSqlTypeInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDbSqlTypeInfo {
-    pub fn from(ptr: *mut c_void) -> wxDbSqlTypeInfo { wxDbSqlTypeInfo { ptr: ptr } }
-    pub fn null() -> wxDbSqlTypeInfo { wxDbSqlTypeInfo::from(0 as *mut c_void) }
+impl WxDbSqlTypeInfo {
+    pub fn from(ptr: *mut c_void) -> WxDbSqlTypeInfo { WxDbSqlTypeInfo { ptr: ptr } }
+    pub fn null() -> WxDbSqlTypeInfo { WxDbSqlTypeInfo::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDbSqlTypeInfo {
+pub trait TWxDbSqlTypeInfo {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDbTable { ptr: *mut c_void }
-impl _wxDbTable for wxDbTable { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDbTable { ptr: *mut c_void }
+impl TWxDbTable for WxDbTable { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDbTable {
-    pub fn from(ptr: *mut c_void) -> wxDbTable { wxDbTable { ptr: ptr } }
-    pub fn null() -> wxDbTable { wxDbTable::from(0 as *mut c_void) }
+impl WxDbTable {
+    pub fn from(ptr: *mut c_void) -> WxDbTable { WxDbTable { ptr: ptr } }
+    pub fn null() -> WxDbTable { WxDbTable::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDbTable {
+pub trait TWxDbTable {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxDbTableInfo { ptr: *mut c_void }
-impl _wxDbTableInfo for wxDbTableInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxDbTableInfo { ptr: *mut c_void }
+impl TWxDbTableInfo for WxDbTableInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxDbTableInfo {
-    pub fn from(ptr: *mut c_void) -> wxDbTableInfo { wxDbTableInfo { ptr: ptr } }
-    pub fn null() -> wxDbTableInfo { wxDbTableInfo::from(0 as *mut c_void) }
+impl WxDbTableInfo {
+    pub fn from(ptr: *mut c_void) -> WxDbTableInfo { WxDbTableInfo { ptr: ptr } }
+    pub fn null() -> WxDbTableInfo { WxDbTableInfo::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxDbTableInfo {
+pub trait TWxDbTableInfo {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxQueryCol { ptr: *mut c_void }
-impl _wxQueryCol for wxQueryCol {}
-impl _wxObject for wxQueryCol { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxQueryCol { ptr: *mut c_void }
+impl TWxQueryCol for WxQueryCol {}
+impl TWxObject for WxQueryCol { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxQueryCol {
-    pub fn from(ptr: *mut c_void) -> wxQueryCol { wxQueryCol { ptr: ptr } }
-    pub fn null() -> wxQueryCol { wxQueryCol::from(0 as *mut c_void) }
+impl WxQueryCol {
+    pub fn from(ptr: *mut c_void) -> WxQueryCol { WxQueryCol { ptr: ptr } }
+    pub fn null() -> WxQueryCol { WxQueryCol::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxQueryCol : _wxObject {
+pub trait TWxQueryCol : TWxObject {
 }
 
-pub struct wxQueryField { ptr: *mut c_void }
-impl _wxQueryField for wxQueryField {}
-impl _wxObject for wxQueryField { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxQueryField { ptr: *mut c_void }
+impl TWxQueryField for WxQueryField {}
+impl TWxObject for WxQueryField { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxQueryField {
-    pub fn from(ptr: *mut c_void) -> wxQueryField { wxQueryField { ptr: ptr } }
-    pub fn null() -> wxQueryField { wxQueryField::from(0 as *mut c_void) }
+impl WxQueryField {
+    pub fn from(ptr: *mut c_void) -> WxQueryField { WxQueryField { ptr: ptr } }
+    pub fn null() -> WxQueryField { WxQueryField::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxQueryField : _wxObject {
+pub trait TWxQueryField : TWxObject {
 }
 
-pub struct wxRecordSet { ptr: *mut c_void }
-impl _wxRecordSet for wxRecordSet {}
-impl _wxObject for wxRecordSet { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxRecordSet { ptr: *mut c_void }
+impl TWxRecordSet for WxRecordSet {}
+impl TWxObject for WxRecordSet { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRecordSet {
-    pub fn from(ptr: *mut c_void) -> wxRecordSet { wxRecordSet { ptr: ptr } }
-    pub fn null() -> wxRecordSet { wxRecordSet::from(0 as *mut c_void) }
+impl WxRecordSet {
+    pub fn from(ptr: *mut c_void) -> WxRecordSet { WxRecordSet { ptr: ptr } }
+    pub fn null() -> WxRecordSet { WxRecordSet::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxRecordSet : _wxObject {
+pub trait TWxRecordSet : TWxObject {
 }
 
-pub struct wxTablesInUse { ptr: *mut c_void }
-impl _wxTablesInUse for wxTablesInUse {}
-impl _wxObject for wxTablesInUse { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTablesInUse { ptr: *mut c_void }
+impl TWxTablesInUse for WxTablesInUse {}
+impl TWxObject for WxTablesInUse { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTablesInUse {
-    pub fn from(ptr: *mut c_void) -> wxTablesInUse { wxTablesInUse { ptr: ptr } }
-    pub fn null() -> wxTablesInUse { wxTablesInUse::from(0 as *mut c_void) }
+impl WxTablesInUse {
+    pub fn from(ptr: *mut c_void) -> WxTablesInUse { WxTablesInUse { ptr: ptr } }
+    pub fn null() -> WxTablesInUse { WxTablesInUse::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxTablesInUse : _wxObject {
+pub trait TWxTablesInUse : TWxObject {
 }
 

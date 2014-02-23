@@ -6,34 +6,34 @@ use advanced::*;
 use html::*;
 use stc::*;
 
-pub struct wxXmlResource { ptr: *mut c_void }
-impl _wxXmlResource for wxXmlResource {}
-impl _wxObject for wxXmlResource { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxXmlResource { ptr: *mut c_void }
+impl TWxXmlResource for WxXmlResource {}
+impl TWxObject for WxXmlResource { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxXmlResource {
-    pub fn from(ptr: *mut c_void) -> wxXmlResource { wxXmlResource { ptr: ptr } }
-    pub fn null() -> wxXmlResource { wxXmlResource::from(0 as *mut c_void) }
+impl WxXmlResource {
+    pub fn from(ptr: *mut c_void) -> WxXmlResource { WxXmlResource { ptr: ptr } }
+    pub fn null() -> WxXmlResource { WxXmlResource::from(0 as *mut c_void) }
     
-    pub fn new(flags: c_int) -> wxXmlResource {
-        unsafe { wxXmlResource { ptr: wxXmlResource_Create(flags) } }
+    pub fn new(flags: c_int) -> WxXmlResource {
+        unsafe { WxXmlResource { ptr: wxXmlResource_Create(flags) } }
     }
-    pub fn newFromFile(filemask: &str, flags: c_int) -> wxXmlResource {
+    pub fn newFromFile(filemask: &str, flags: c_int) -> WxXmlResource {
         let filemask = wxT(filemask);
-        unsafe { wxXmlResource { ptr: wxXmlResource_CreateFromFile(filemask.ptr(), flags) } }
+        unsafe { WxXmlResource { ptr: wxXmlResource_CreateFromFile(filemask.ptr(), flags) } }
     }
-    pub fn get() -> wxXmlResource {
-        unsafe { wxXmlResource { ptr: wxXmlResource_Get() } }
+    pub fn get() -> WxXmlResource {
+        unsafe { WxXmlResource { ptr: wxXmlResource_Get() } }
     }
 }
 
-pub trait _wxXmlResource : _wxObject {
-    fn addHandler<T: _wxEvtHandler>(&self, handler: &T) {
+pub trait TWxXmlResource : TWxObject {
+    fn addHandler<T: TWxEvtHandler>(&self, handler: &T) {
         unsafe { wxXmlResource_AddHandler(self.ptr(), handler.ptr()) }
     }
     fn addSubclassFactory(&self, factory: *mut c_void) {
         unsafe { wxXmlResource_AddSubclassFactory(self.ptr(), factory) }
     }
-    fn attachUnknownControl<T: _wxControl, U: _wxWindow>(&self, control: &T, parent: &U) -> c_int {
+    fn attachUnknownControl<T: TWxControl, U: TWxWindow>(&self, control: &T, parent: &U) -> c_int {
         unsafe { wxXmlResource_AttachUnknownControl(self.ptr(), control.ptr(), parent.ptr()) }
     }
     fn clearHandlers(&self) {
@@ -43,7 +43,7 @@ pub trait _wxXmlResource : _wxObject {
         unsafe { wxXmlResource_CompareVersion(self.ptr(), major, minor, release, revision) }
     }
     fn getDomain(&self) -> ~str {
-        unsafe { wxString { ptr: wxXmlResource_GetDomain(self.ptr()) }.to_str() }
+        unsafe { WxString { ptr: wxXmlResource_GetDomain(self.ptr()) }.to_str() }
     }
     fn getFlags(&self) -> c_int {
         unsafe { wxXmlResource_GetFlags(self.ptr()) }
@@ -58,203 +58,203 @@ pub trait _wxXmlResource : _wxObject {
     fn initAllHandlers(&self) {
         unsafe { wxXmlResource_InitAllHandlers(self.ptr()) }
     }
-    fn insertHandler<T: _wxEvtHandler>(&self, handler: &T) {
+    fn insertHandler<T: TWxEvtHandler>(&self, handler: &T) {
         unsafe { wxXmlResource_InsertHandler(self.ptr(), handler.ptr()) }
     }
     fn load(&self, filemask: &str) -> c_int {
         let filemask = wxT(filemask);
         unsafe { wxXmlResource_Load(self.ptr(), filemask.ptr()) }
     }
-    fn loadBitmap<T: _wxBitmap>(&self, name: &str, _ref: &T) {
+    fn loadBitmap<T: TWxBitmap>(&self, name: &str, _ref: &T) {
         let name = wxT(name);
         unsafe { wxXmlResource_LoadBitmap(self.ptr(), name.ptr(), _ref.ptr()) }
     }
-    fn loadDialog<T: _wxWindow>(&self, parent: &T, name: &str) -> wxDialog {
+    fn loadDialog<T: TWxWindow>(&self, parent: &T, name: &str) -> WxDialog {
         let name = wxT(name);
-        unsafe { wxDialog { ptr: wxXmlResource_LoadDialog(self.ptr(), parent.ptr(), name.ptr()) } }
+        unsafe { WxDialog { ptr: wxXmlResource_LoadDialog(self.ptr(), parent.ptr(), name.ptr()) } }
     }
-    fn loadFrame<T: _wxWindow>(&self, parent: &T, name: &str) -> wxFrame {
+    fn loadFrame<T: TWxWindow>(&self, parent: &T, name: &str) -> WxFrame {
         let name = wxT(name);
-        unsafe { wxFrame { ptr: wxXmlResource_LoadFrame(self.ptr(), parent.ptr(), name.ptr()) } }
+        unsafe { WxFrame { ptr: wxXmlResource_LoadFrame(self.ptr(), parent.ptr(), name.ptr()) } }
     }
-    fn loadIcon<T: _wxIcon>(&self, name: &str, _ref: &T) {
+    fn loadIcon<T: TWxIcon>(&self, name: &str, _ref: &T) {
         let name = wxT(name);
         unsafe { wxXmlResource_LoadIcon(self.ptr(), name.ptr(), _ref.ptr()) }
     }
-    fn loadMenu(&self, name: &str) -> wxMenu {
+    fn loadMenu(&self, name: &str) -> WxMenu {
         let name = wxT(name);
-        unsafe { wxMenu { ptr: wxXmlResource_LoadMenu(self.ptr(), name.ptr()) } }
+        unsafe { WxMenu { ptr: wxXmlResource_LoadMenu(self.ptr(), name.ptr()) } }
     }
-    fn loadMenuBar<T: _wxWindow>(&self, parent: &T, name: &str) -> wxMenuBar {
+    fn loadMenuBar<T: TWxWindow>(&self, parent: &T, name: &str) -> WxMenuBar {
         let name = wxT(name);
-        unsafe { wxMenuBar { ptr: wxXmlResource_LoadMenuBar(self.ptr(), parent.ptr(), name.ptr()) } }
+        unsafe { WxMenuBar { ptr: wxXmlResource_LoadMenuBar(self.ptr(), parent.ptr(), name.ptr()) } }
     }
-    fn loadPanel<T: _wxWindow>(&self, parent: &T, name: &str) -> wxPanel {
+    fn loadPanel<T: TWxWindow>(&self, parent: &T, name: &str) -> WxPanel {
         let name = wxT(name);
-        unsafe { wxPanel { ptr: wxXmlResource_LoadPanel(self.ptr(), parent.ptr(), name.ptr()) } }
+        unsafe { WxPanel { ptr: wxXmlResource_LoadPanel(self.ptr(), parent.ptr(), name.ptr()) } }
     }
-    fn loadToolBar<T: _wxWindow>(&self, parent: &T, name: &str) -> wxToolBar {
+    fn loadToolBar<T: TWxWindow>(&self, parent: &T, name: &str) -> WxToolBar {
         let name = wxT(name);
-        unsafe { wxToolBar { ptr: wxXmlResource_LoadToolBar(self.ptr(), parent.ptr(), name.ptr()) } }
+        unsafe { WxToolBar { ptr: wxXmlResource_LoadToolBar(self.ptr(), parent.ptr(), name.ptr()) } }
     }
-    fn getSizer(&self, str_id: &str) -> wxSizer {
+    fn getSizer(&self, str_id: &str) -> WxSizer {
         let str_id = wxT(str_id);
-        unsafe { wxSizer { ptr: wxXmlResource_GetSizer(self.ptr(), str_id.ptr()) } }
+        unsafe { WxSizer { ptr: wxXmlResource_GetSizer(self.ptr(), str_id.ptr()) } }
     }
-    fn getBoxSizer(&self, str_id: &str) -> wxBoxSizer {
+    fn getBoxSizer(&self, str_id: &str) -> WxBoxSizer {
         let str_id = wxT(str_id);
-        unsafe { wxBoxSizer { ptr: wxXmlResource_GetBoxSizer(self.ptr(), str_id.ptr()) } }
+        unsafe { WxBoxSizer { ptr: wxXmlResource_GetBoxSizer(self.ptr(), str_id.ptr()) } }
     }
-    fn getStaticBoxSizer(&self, str_id: &str) -> wxStaticBoxSizer {
+    fn getStaticBoxSizer(&self, str_id: &str) -> WxStaticBoxSizer {
         let str_id = wxT(str_id);
-        unsafe { wxStaticBoxSizer { ptr: wxXmlResource_GetStaticBoxSizer(self.ptr(), str_id.ptr()) } }
+        unsafe { WxStaticBoxSizer { ptr: wxXmlResource_GetStaticBoxSizer(self.ptr(), str_id.ptr()) } }
     }
-    fn getGridSizer(&self, str_id: &str) -> wxGridSizer {
+    fn getGridSizer(&self, str_id: &str) -> WxGridSizer {
         let str_id = wxT(str_id);
-        unsafe { wxGridSizer { ptr: wxXmlResource_GetGridSizer(self.ptr(), str_id.ptr()) } }
+        unsafe { WxGridSizer { ptr: wxXmlResource_GetGridSizer(self.ptr(), str_id.ptr()) } }
     }
-    fn getFlexGridSizer(&self, str_id: &str) -> wxFlexGridSizer {
+    fn getFlexGridSizer(&self, str_id: &str) -> WxFlexGridSizer {
         let str_id = wxT(str_id);
-        unsafe { wxFlexGridSizer { ptr: wxXmlResource_GetFlexGridSizer(self.ptr(), str_id.ptr()) } }
+        unsafe { WxFlexGridSizer { ptr: wxXmlResource_GetFlexGridSizer(self.ptr(), str_id.ptr()) } }
     }
-    fn getBitmapButton(&self, str_id: &str) -> wxBitmapButton {
+    fn getBitmapButton(&self, str_id: &str) -> WxBitmapButton {
         let str_id = wxT(str_id);
-        unsafe { wxBitmapButton { ptr: wxXmlResource_GetBitmapButton(self.ptr(), str_id.ptr()) } }
+        unsafe { WxBitmapButton { ptr: wxXmlResource_GetBitmapButton(self.ptr(), str_id.ptr()) } }
     }
-    fn getButton(&self, str_id: &str) -> wxButton {
+    fn getButton(&self, str_id: &str) -> WxButton {
         let str_id = wxT(str_id);
-        unsafe { wxButton { ptr: wxXmlResource_GetButton(self.ptr(), str_id.ptr()) } }
+        unsafe { WxButton { ptr: wxXmlResource_GetButton(self.ptr(), str_id.ptr()) } }
     }
-    fn getCalendarCtrl(&self, str_id: &str) -> wxCalendarCtrl {
+    fn getCalendarCtrl(&self, str_id: &str) -> WxCalendarCtrl {
         let str_id = wxT(str_id);
-        unsafe { wxCalendarCtrl { ptr: wxXmlResource_GetCalendarCtrl(self.ptr(), str_id.ptr()) } }
+        unsafe { WxCalendarCtrl { ptr: wxXmlResource_GetCalendarCtrl(self.ptr(), str_id.ptr()) } }
     }
-    fn getCheckBox(&self, str_id: &str) -> wxCheckBox {
+    fn getCheckBox(&self, str_id: &str) -> WxCheckBox {
         let str_id = wxT(str_id);
-        unsafe { wxCheckBox { ptr: wxXmlResource_GetCheckBox(self.ptr(), str_id.ptr()) } }
+        unsafe { WxCheckBox { ptr: wxXmlResource_GetCheckBox(self.ptr(), str_id.ptr()) } }
     }
-    fn getCheckListBox(&self, str_id: &str) -> wxCheckListBox {
+    fn getCheckListBox(&self, str_id: &str) -> WxCheckListBox {
         let str_id = wxT(str_id);
-        unsafe { wxCheckListBox { ptr: wxXmlResource_GetCheckListBox(self.ptr(), str_id.ptr()) } }
+        unsafe { WxCheckListBox { ptr: wxXmlResource_GetCheckListBox(self.ptr(), str_id.ptr()) } }
     }
-    fn getChoice(&self, str_id: &str) -> wxChoice {
+    fn getChoice(&self, str_id: &str) -> WxChoice {
         let str_id = wxT(str_id);
-        unsafe { wxChoice { ptr: wxXmlResource_GetChoice(self.ptr(), str_id.ptr()) } }
+        unsafe { WxChoice { ptr: wxXmlResource_GetChoice(self.ptr(), str_id.ptr()) } }
     }
-    fn getComboBox(&self, str_id: &str) -> wxComboBox {
+    fn getComboBox(&self, str_id: &str) -> WxComboBox {
         let str_id = wxT(str_id);
-        unsafe { wxComboBox { ptr: wxXmlResource_GetComboBox(self.ptr(), str_id.ptr()) } }
+        unsafe { WxComboBox { ptr: wxXmlResource_GetComboBox(self.ptr(), str_id.ptr()) } }
     }
-    fn getGauge(&self, str_id: &str) -> wxGauge {
+    fn getGauge(&self, str_id: &str) -> WxGauge {
         let str_id = wxT(str_id);
-        unsafe { wxGauge { ptr: wxXmlResource_GetGauge(self.ptr(), str_id.ptr()) } }
+        unsafe { WxGauge { ptr: wxXmlResource_GetGauge(self.ptr(), str_id.ptr()) } }
     }
-    fn getGrid(&self, str_id: &str) -> wxGrid {
+    fn getGrid(&self, str_id: &str) -> WxGrid {
         let str_id = wxT(str_id);
-        unsafe { wxGrid { ptr: wxXmlResource_GetGrid(self.ptr(), str_id.ptr()) } }
+        unsafe { WxGrid { ptr: wxXmlResource_GetGrid(self.ptr(), str_id.ptr()) } }
     }
-    fn getHtmlWindow(&self, str_id: &str) -> wxHtmlWindow {
+    fn getHtmlWindow(&self, str_id: &str) -> WxHtmlWindow {
         let str_id = wxT(str_id);
-        unsafe { wxHtmlWindow { ptr: wxXmlResource_GetHtmlWindow(self.ptr(), str_id.ptr()) } }
+        unsafe { WxHtmlWindow { ptr: wxXmlResource_GetHtmlWindow(self.ptr(), str_id.ptr()) } }
     }
-    fn getListBox(&self, str_id: &str) -> wxListBox {
+    fn getListBox(&self, str_id: &str) -> WxListBox {
         let str_id = wxT(str_id);
-        unsafe { wxListBox { ptr: wxXmlResource_GetListBox(self.ptr(), str_id.ptr()) } }
+        unsafe { WxListBox { ptr: wxXmlResource_GetListBox(self.ptr(), str_id.ptr()) } }
     }
-    fn getListCtrl(&self, str_id: &str) -> wxListCtrl {
+    fn getListCtrl(&self, str_id: &str) -> WxListCtrl {
         let str_id = wxT(str_id);
-        unsafe { wxListCtrl { ptr: wxXmlResource_GetListCtrl(self.ptr(), str_id.ptr()) } }
+        unsafe { WxListCtrl { ptr: wxXmlResource_GetListCtrl(self.ptr(), str_id.ptr()) } }
     }
-    fn getMDIChildFrame(&self, str_id: &str) -> wxMDIChildFrame {
+    fn getMDIChildFrame(&self, str_id: &str) -> WxMDIChildFrame {
         let str_id = wxT(str_id);
-        unsafe { wxMDIChildFrame { ptr: wxXmlResource_GetMDIChildFrame(self.ptr(), str_id.ptr()) } }
+        unsafe { WxMDIChildFrame { ptr: wxXmlResource_GetMDIChildFrame(self.ptr(), str_id.ptr()) } }
     }
-    fn getMDIParentFrame(&self, str_id: &str) -> wxMDIParentFrame {
+    fn getMDIParentFrame(&self, str_id: &str) -> WxMDIParentFrame {
         let str_id = wxT(str_id);
-        unsafe { wxMDIParentFrame { ptr: wxXmlResource_GetMDIParentFrame(self.ptr(), str_id.ptr()) } }
+        unsafe { WxMDIParentFrame { ptr: wxXmlResource_GetMDIParentFrame(self.ptr(), str_id.ptr()) } }
     }
-    fn getMenu(&self, str_id: &str) -> wxMenu {
+    fn getMenu(&self, str_id: &str) -> WxMenu {
         let str_id = wxT(str_id);
-        unsafe { wxMenu { ptr: wxXmlResource_GetMenu(self.ptr(), str_id.ptr()) } }
+        unsafe { WxMenu { ptr: wxXmlResource_GetMenu(self.ptr(), str_id.ptr()) } }
     }
-    fn getMenuBar(&self, str_id: &str) -> wxMenuBar {
+    fn getMenuBar(&self, str_id: &str) -> WxMenuBar {
         let str_id = wxT(str_id);
-        unsafe { wxMenuBar { ptr: wxXmlResource_GetMenuBar(self.ptr(), str_id.ptr()) } }
+        unsafe { WxMenuBar { ptr: wxXmlResource_GetMenuBar(self.ptr(), str_id.ptr()) } }
     }
-    fn getMenuItem(&self, str_id: &str) -> wxMenuItem {
+    fn getMenuItem(&self, str_id: &str) -> WxMenuItem {
         let str_id = wxT(str_id);
-        unsafe { wxMenuItem { ptr: wxXmlResource_GetMenuItem(self.ptr(), str_id.ptr()) } }
+        unsafe { WxMenuItem { ptr: wxXmlResource_GetMenuItem(self.ptr(), str_id.ptr()) } }
     }
-    fn getNotebook(&self, str_id: &str) -> wxNotebook {
+    fn getNotebook(&self, str_id: &str) -> WxNotebook {
         let str_id = wxT(str_id);
-        unsafe { wxNotebook { ptr: wxXmlResource_GetNotebook(self.ptr(), str_id.ptr()) } }
+        unsafe { WxNotebook { ptr: wxXmlResource_GetNotebook(self.ptr(), str_id.ptr()) } }
     }
-    fn getPanel(&self, str_id: &str) -> wxPanel {
+    fn getPanel(&self, str_id: &str) -> WxPanel {
         let str_id = wxT(str_id);
-        unsafe { wxPanel { ptr: wxXmlResource_GetPanel(self.ptr(), str_id.ptr()) } }
+        unsafe { WxPanel { ptr: wxXmlResource_GetPanel(self.ptr(), str_id.ptr()) } }
     }
-    fn getRadioButton(&self, str_id: &str) -> wxRadioButton {
+    fn getRadioButton(&self, str_id: &str) -> WxRadioButton {
         let str_id = wxT(str_id);
-        unsafe { wxRadioButton { ptr: wxXmlResource_GetRadioButton(self.ptr(), str_id.ptr()) } }
+        unsafe { WxRadioButton { ptr: wxXmlResource_GetRadioButton(self.ptr(), str_id.ptr()) } }
     }
-    fn getRadioBox(&self, str_id: &str) -> wxRadioBox {
+    fn getRadioBox(&self, str_id: &str) -> WxRadioBox {
         let str_id = wxT(str_id);
-        unsafe { wxRadioBox { ptr: wxXmlResource_GetRadioBox(self.ptr(), str_id.ptr()) } }
+        unsafe { WxRadioBox { ptr: wxXmlResource_GetRadioBox(self.ptr(), str_id.ptr()) } }
     }
-    fn getScrollBar(&self, str_id: &str) -> wxScrollBar {
+    fn getScrollBar(&self, str_id: &str) -> WxScrollBar {
         let str_id = wxT(str_id);
-        unsafe { wxScrollBar { ptr: wxXmlResource_GetScrollBar(self.ptr(), str_id.ptr()) } }
+        unsafe { WxScrollBar { ptr: wxXmlResource_GetScrollBar(self.ptr(), str_id.ptr()) } }
     }
-    fn getScrolledWindow(&self, str_id: &str) -> wxScrolledWindow {
+    fn getScrolledWindow(&self, str_id: &str) -> WxScrolledWindow {
         let str_id = wxT(str_id);
-        unsafe { wxScrolledWindow { ptr: wxXmlResource_GetScrolledWindow(self.ptr(), str_id.ptr()) } }
+        unsafe { WxScrolledWindow { ptr: wxXmlResource_GetScrolledWindow(self.ptr(), str_id.ptr()) } }
     }
-    fn getSlider(&self, str_id: &str) -> wxSlider {
+    fn getSlider(&self, str_id: &str) -> WxSlider {
         let str_id = wxT(str_id);
-        unsafe { wxSlider { ptr: wxXmlResource_GetSlider(self.ptr(), str_id.ptr()) } }
+        unsafe { WxSlider { ptr: wxXmlResource_GetSlider(self.ptr(), str_id.ptr()) } }
     }
-    fn getSpinButton(&self, str_id: &str) -> wxSpinButton {
+    fn getSpinButton(&self, str_id: &str) -> WxSpinButton {
         let str_id = wxT(str_id);
-        unsafe { wxSpinButton { ptr: wxXmlResource_GetSpinButton(self.ptr(), str_id.ptr()) } }
+        unsafe { WxSpinButton { ptr: wxXmlResource_GetSpinButton(self.ptr(), str_id.ptr()) } }
     }
-    fn getSpinCtrl(&self, str_id: &str) -> wxSpinCtrl {
+    fn getSpinCtrl(&self, str_id: &str) -> WxSpinCtrl {
         let str_id = wxT(str_id);
-        unsafe { wxSpinCtrl { ptr: wxXmlResource_GetSpinCtrl(self.ptr(), str_id.ptr()) } }
+        unsafe { WxSpinCtrl { ptr: wxXmlResource_GetSpinCtrl(self.ptr(), str_id.ptr()) } }
     }
-    fn getSplitterWindow(&self, str_id: &str) -> wxSplitterWindow {
+    fn getSplitterWindow(&self, str_id: &str) -> WxSplitterWindow {
         let str_id = wxT(str_id);
-        unsafe { wxSplitterWindow { ptr: wxXmlResource_GetSplitterWindow(self.ptr(), str_id.ptr()) } }
+        unsafe { WxSplitterWindow { ptr: wxXmlResource_GetSplitterWindow(self.ptr(), str_id.ptr()) } }
     }
-    fn getStaticBitmap(&self, str_id: &str) -> wxStaticBitmap {
+    fn getStaticBitmap(&self, str_id: &str) -> WxStaticBitmap {
         let str_id = wxT(str_id);
-        unsafe { wxStaticBitmap { ptr: wxXmlResource_GetStaticBitmap(self.ptr(), str_id.ptr()) } }
+        unsafe { WxStaticBitmap { ptr: wxXmlResource_GetStaticBitmap(self.ptr(), str_id.ptr()) } }
     }
-    fn getStaticBox(&self, str_id: &str) -> wxStaticBox {
+    fn getStaticBox(&self, str_id: &str) -> WxStaticBox {
         let str_id = wxT(str_id);
-        unsafe { wxStaticBox { ptr: wxXmlResource_GetStaticBox(self.ptr(), str_id.ptr()) } }
+        unsafe { WxStaticBox { ptr: wxXmlResource_GetStaticBox(self.ptr(), str_id.ptr()) } }
     }
-    fn getStaticLine(&self, str_id: &str) -> wxStaticLine {
+    fn getStaticLine(&self, str_id: &str) -> WxStaticLine {
         let str_id = wxT(str_id);
-        unsafe { wxStaticLine { ptr: wxXmlResource_GetStaticLine(self.ptr(), str_id.ptr()) } }
+        unsafe { WxStaticLine { ptr: wxXmlResource_GetStaticLine(self.ptr(), str_id.ptr()) } }
     }
-    fn getStaticText(&self, str_id: &str) -> wxStaticText {
+    fn getStaticText(&self, str_id: &str) -> WxStaticText {
         let str_id = wxT(str_id);
-        unsafe { wxStaticText { ptr: wxXmlResource_GetStaticText(self.ptr(), str_id.ptr()) } }
+        unsafe { WxStaticText { ptr: wxXmlResource_GetStaticText(self.ptr(), str_id.ptr()) } }
     }
-    fn getTextCtrl(&self, str_id: &str) -> wxTextCtrl {
+    fn getTextCtrl(&self, str_id: &str) -> WxTextCtrl {
         let str_id = wxT(str_id);
-        unsafe { wxTextCtrl { ptr: wxXmlResource_GetTextCtrl(self.ptr(), str_id.ptr()) } }
+        unsafe { WxTextCtrl { ptr: wxXmlResource_GetTextCtrl(self.ptr(), str_id.ptr()) } }
     }
-    fn getTreeCtrl(&self, str_id: &str) -> wxTreeCtrl {
+    fn getTreeCtrl(&self, str_id: &str) -> WxTreeCtrl {
         let str_id = wxT(str_id);
-        unsafe { wxTreeCtrl { ptr: wxXmlResource_GetTreeCtrl(self.ptr(), str_id.ptr()) } }
+        unsafe { WxTreeCtrl { ptr: wxXmlResource_GetTreeCtrl(self.ptr(), str_id.ptr()) } }
     }
     fn unload(&self, filemask: &str) -> c_int {
         let filemask = wxT(filemask);
         unsafe { wxXmlResource_Unload(self.ptr(), filemask.ptr()) }
     }
-    fn set(&self, res: &_wxXmlResource) -> wxXmlResource {
-        unsafe { wxXmlResource { ptr: wxXmlResource_Set(self.ptr(), res.ptr()) } }
+    fn set(&self, res: &TWxXmlResource) -> WxXmlResource {
+        unsafe { WxXmlResource { ptr: wxXmlResource_Set(self.ptr(), res.ptr()) } }
     }
     fn setDomain(&self, domain: &str) {
         let domain = wxT(domain);
@@ -263,9 +263,9 @@ pub trait _wxXmlResource : _wxObject {
     fn setFlags(&self, flags: c_int) {
         unsafe { wxXmlResource_SetFlags(self.ptr(), flags) }
     }
-    fn getStyledTextCtrl(&self, str_id: &str) -> wxStyledTextCtrl {
+    fn getStyledTextCtrl(&self, str_id: &str) -> WxStyledTextCtrl {
         let str_id = wxT(str_id);
-        unsafe { wxStyledTextCtrl { ptr: wxXmlResource_GetStyledTextCtrl(self.ptr(), str_id.ptr()) } }
+        unsafe { WxStyledTextCtrl { ptr: wxXmlResource_GetStyledTextCtrl(self.ptr(), str_id.ptr()) } }
     }
 }
 

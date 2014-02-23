@@ -3,49 +3,49 @@ use _unsafe::*;
 use base::*;
 use core::*;
 
-pub struct wxRustGridTable { ptr: *mut c_void }
-impl _wxRustGridTable for wxRustGridTable {}
-impl _wxGridTableBase for wxRustGridTable {}
-impl _wxObject for wxRustGridTable { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxrGridTable { ptr: *mut c_void }
+impl TWxrGridTable for WxrGridTable {}
+impl TWxGridTableBase for WxrGridTable {}
+impl TWxObject for WxrGridTable { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxRustGridTable {
-    pub fn from(ptr: *mut c_void) -> wxRustGridTable { wxRustGridTable { ptr: ptr } }
-    pub fn null() -> wxRustGridTable { wxRustGridTable::from(0 as *mut c_void) }
+impl WxrGridTable {
+    pub fn from(ptr: *mut c_void) -> WxrGridTable { WxrGridTable { ptr: ptr } }
+    pub fn null() -> WxrGridTable { WxrGridTable::from(0 as *mut c_void) }
     
-    pub fn new(_obj: *mut c_void, _EifGetNumberRows: *mut c_void, _EifGetNumberCols: *mut c_void, _EifGetValue: *mut c_void, _EifSetValue: *mut c_void, _EifIsEmptyCell: *mut c_void, _EifClear: *mut c_void, _EifInsertRows: *mut c_void, _EifAppendRows: *mut c_void, _EifDeleteRows: *mut c_void, _EifInsertCols: *mut c_void, _EifAppendCols: *mut c_void, _EifDeleteCols: *mut c_void, _EifSetRowLabelValue: *mut c_void, _EifSetColLabelValue: *mut c_void, _EifGetRowLabelValue: *mut c_void, _EifGetColLabelValue: *mut c_void) -> wxRustGridTable {
-        unsafe { wxRustGridTable { ptr: ELJGridTable_Create(_obj, _EifGetNumberRows, _EifGetNumberCols, _EifGetValue, _EifSetValue, _EifIsEmptyCell, _EifClear, _EifInsertRows, _EifAppendRows, _EifDeleteRows, _EifInsertCols, _EifAppendCols, _EifDeleteCols, _EifSetRowLabelValue, _EifSetColLabelValue, _EifGetRowLabelValue, _EifGetColLabelValue) } }
+    pub fn new(_obj: *mut c_void, _EifGetNumberRows: *mut c_void, _EifGetNumberCols: *mut c_void, _EifGetValue: *mut c_void, _EifSetValue: *mut c_void, _EifIsEmptyCell: *mut c_void, _EifClear: *mut c_void, _EifInsertRows: *mut c_void, _EifAppendRows: *mut c_void, _EifDeleteRows: *mut c_void, _EifInsertCols: *mut c_void, _EifAppendCols: *mut c_void, _EifDeleteCols: *mut c_void, _EifSetRowLabelValue: *mut c_void, _EifSetColLabelValue: *mut c_void, _EifGetRowLabelValue: *mut c_void, _EifGetColLabelValue: *mut c_void) -> WxrGridTable {
+        unsafe { WxrGridTable { ptr: ELJGridTable_Create(_obj, _EifGetNumberRows, _EifGetNumberCols, _EifGetValue, _EifSetValue, _EifIsEmptyCell, _EifClear, _EifInsertRows, _EifAppendRows, _EifDeleteRows, _EifInsertCols, _EifAppendCols, _EifDeleteCols, _EifSetRowLabelValue, _EifSetColLabelValue, _EifGetRowLabelValue, _EifGetColLabelValue) } }
     }
 }
 
-pub trait _wxRustGridTable : _wxGridTableBase {
-    fn getView(&self) -> wxView {
-        unsafe { wxView { ptr: ELJGridTable_GetView(self.ptr()) } }
+pub trait TWxrGridTable : TWxGridTableBase {
+    fn getView(&self) -> WxView {
+        unsafe { WxView { ptr: ELJGridTable_GetView(self.ptr()) } }
     }
     fn sendTableMessage(&self, id: c_int, val1: c_int, val2: c_int) -> *mut c_void {
         unsafe { ELJGridTable_SendTableMessage(self.ptr(), id, val1, val2) }
     }
 }
 
-pub struct wxCalculateLayoutEvent { ptr: *mut c_void }
-impl _wxCalculateLayoutEvent for wxCalculateLayoutEvent {}
-impl _wxEvent for wxCalculateLayoutEvent {}
-impl _wxObject for wxCalculateLayoutEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCalculateLayoutEvent { ptr: *mut c_void }
+impl TWxCalculateLayoutEvent for WxCalculateLayoutEvent {}
+impl TWxEvent for WxCalculateLayoutEvent {}
+impl TWxObject for WxCalculateLayoutEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCalculateLayoutEvent {
-    pub fn from(ptr: *mut c_void) -> wxCalculateLayoutEvent { wxCalculateLayoutEvent { ptr: ptr } }
-    pub fn null() -> wxCalculateLayoutEvent { wxCalculateLayoutEvent::from(0 as *mut c_void) }
+impl WxCalculateLayoutEvent {
+    pub fn from(ptr: *mut c_void) -> WxCalculateLayoutEvent { WxCalculateLayoutEvent { ptr: ptr } }
+    pub fn null() -> WxCalculateLayoutEvent { WxCalculateLayoutEvent::from(0 as *mut c_void) }
     
-    pub fn new(id: c_int) -> wxCalculateLayoutEvent {
-        unsafe { wxCalculateLayoutEvent { ptr: wxCalculateLayoutEvent_Create(id) } }
+    pub fn new(id: c_int) -> WxCalculateLayoutEvent {
+        unsafe { WxCalculateLayoutEvent { ptr: wxCalculateLayoutEvent_Create(id) } }
     }
 }
 
-pub trait _wxCalculateLayoutEvent : _wxEvent {
+pub trait TWxCalculateLayoutEvent : TWxEvent {
     fn getFlags(&self) -> c_int {
         unsafe { wxCalculateLayoutEvent_GetFlags(self.ptr()) }
     }
-    fn getRect(&self) -> wxRect {
-        unsafe { wxRect { ptr: wxCalculateLayoutEvent_GetRect(self.ptr()) } }
+    fn getRect(&self) -> WxRect {
+        unsafe { WxRect { ptr: wxCalculateLayoutEvent_GetRect(self.ptr()) } }
     }
     fn setFlags(&self, flags: c_int) {
         unsafe { wxCalculateLayoutEvent_SetFlags(self.ptr(), flags) }
@@ -55,23 +55,23 @@ pub trait _wxCalculateLayoutEvent : _wxEvent {
     }
 }
 
-pub struct wxCalendarCtrl { ptr: *mut c_void }
-impl _wxCalendarCtrl for wxCalendarCtrl {}
-impl _wxControl for wxCalendarCtrl {}
-impl _wxWindow for wxCalendarCtrl {}
-impl _wxEvtHandler for wxCalendarCtrl {}
-impl _wxObject for wxCalendarCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCalendarCtrl { ptr: *mut c_void }
+impl TWxCalendarCtrl for WxCalendarCtrl {}
+impl TWxControl for WxCalendarCtrl {}
+impl TWxWindow for WxCalendarCtrl {}
+impl TWxEvtHandler for WxCalendarCtrl {}
+impl TWxObject for WxCalendarCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCalendarCtrl {
-    pub fn from(ptr: *mut c_void) -> wxCalendarCtrl { wxCalendarCtrl { ptr: ptr } }
-    pub fn null() -> wxCalendarCtrl { wxCalendarCtrl::from(0 as *mut c_void) }
+impl WxCalendarCtrl {
+    pub fn from(ptr: *mut c_void) -> WxCalendarCtrl { WxCalendarCtrl { ptr: ptr } }
+    pub fn null() -> WxCalendarCtrl { WxCalendarCtrl::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow, U: _wxDateTime>(_prt: &T, _id: c_int, _dat: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxCalendarCtrl {
-        unsafe { wxCalendarCtrl { ptr: wxCalendarCtrl_Create(_prt.ptr(), _id, _dat.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow, U: TWxDateTime>(_prt: &T, _id: c_int, _dat: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxCalendarCtrl {
+        unsafe { WxCalendarCtrl { ptr: wxCalendarCtrl_Create(_prt.ptr(), _id, _dat.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxCalendarCtrl : _wxControl {
+pub trait TWxCalendarCtrl : TWxControl {
     fn enableHolidayDisplay(&self, display: c_int) {
         unsafe { wxCalendarCtrl_EnableHolidayDisplay(self.ptr(), display) }
     }
@@ -84,22 +84,22 @@ pub trait _wxCalendarCtrl : _wxControl {
     fn getDate(&self, date: *mut c_void) {
         unsafe { wxCalendarCtrl_GetDate(self.ptr(), date) }
     }
-    fn getHeaderColourBg<T: _wxColour>(&self, _ref: &T) {
+    fn getHeaderColourBg<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxCalendarCtrl_GetHeaderColourBg(self.ptr(), _ref.ptr()) }
     }
-    fn getHeaderColourFg<T: _wxColour>(&self, _ref: &T) {
+    fn getHeaderColourFg<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxCalendarCtrl_GetHeaderColourFg(self.ptr(), _ref.ptr()) }
     }
-    fn getHighlightColourBg<T: _wxColour>(&self, _ref: &T) {
+    fn getHighlightColourBg<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxCalendarCtrl_GetHighlightColourBg(self.ptr(), _ref.ptr()) }
     }
-    fn getHighlightColourFg<T: _wxColour>(&self, _ref: &T) {
+    fn getHighlightColourFg<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxCalendarCtrl_GetHighlightColourFg(self.ptr(), _ref.ptr()) }
     }
-    fn getHolidayColourBg<T: _wxColour>(&self, _ref: &T) {
+    fn getHolidayColourBg<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxCalendarCtrl_GetHolidayColourBg(self.ptr(), _ref.ptr()) }
     }
-    fn getHolidayColourFg<T: _wxColour>(&self, _ref: &T) {
+    fn getHolidayColourFg<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxCalendarCtrl_GetHolidayColourFg(self.ptr(), _ref.ptr()) }
     }
     fn hitTest(&self, x: c_int, y: c_int, date: *mut c_void, wd: *mut c_void) -> c_int {
@@ -128,40 +128,40 @@ pub trait _wxCalendarCtrl : _wxControl {
     }
 }
 
-pub struct wxCalendarDateAttr { ptr: *mut c_void }
-impl _wxCalendarDateAttr for wxCalendarDateAttr { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCalendarDateAttr { ptr: *mut c_void }
+impl TWxCalendarDateAttr for WxCalendarDateAttr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCalendarDateAttr {
-    pub fn from(ptr: *mut c_void) -> wxCalendarDateAttr { wxCalendarDateAttr { ptr: ptr } }
-    pub fn null() -> wxCalendarDateAttr { wxCalendarDateAttr::from(0 as *mut c_void) }
+impl WxCalendarDateAttr {
+    pub fn from(ptr: *mut c_void) -> WxCalendarDateAttr { WxCalendarDateAttr { ptr: ptr } }
+    pub fn null() -> WxCalendarDateAttr { WxCalendarDateAttr::from(0 as *mut c_void) }
     
-    pub fn new(_ctxt: *mut c_void, _cbck: *mut c_void, _cbrd: *mut c_void, _fnt: *mut c_void, _brd: c_int) -> wxCalendarDateAttr {
-        unsafe { wxCalendarDateAttr { ptr: wxCalendarDateAttr_Create(_ctxt, _cbck, _cbrd, _fnt, _brd) } }
+    pub fn new(_ctxt: *mut c_void, _cbck: *mut c_void, _cbrd: *mut c_void, _fnt: *mut c_void, _brd: c_int) -> WxCalendarDateAttr {
+        unsafe { WxCalendarDateAttr { ptr: wxCalendarDateAttr_Create(_ctxt, _cbck, _cbrd, _fnt, _brd) } }
     }
-    pub fn newDefault() -> wxCalendarDateAttr {
-        unsafe { wxCalendarDateAttr { ptr: wxCalendarDateAttr_CreateDefault() } }
+    pub fn newDefault() -> WxCalendarDateAttr {
+        unsafe { WxCalendarDateAttr { ptr: wxCalendarDateAttr_CreateDefault() } }
     }
 }
 
-pub trait _wxCalendarDateAttr {
+pub trait TWxCalendarDateAttr {
     fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
         unsafe { wxCalendarDateAttr_Delete(self.ptr()) }
     }
-    fn getBackgroundColour<T: _wxColour>(&self, _ref: &T) {
+    fn getBackgroundColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxCalendarDateAttr_GetBackgroundColour(self.ptr(), _ref.ptr()) }
     }
     fn getBorder(&self) -> c_int {
         unsafe { wxCalendarDateAttr_GetBorder(self.ptr()) }
     }
-    fn getBorderColour<T: _wxColour>(&self, _ref: &T) {
+    fn getBorderColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxCalendarDateAttr_GetBorderColour(self.ptr(), _ref.ptr()) }
     }
-    fn getFont<T: _wxFont>(&self, _ref: &T) {
+    fn getFont<T: TWxFont>(&self, _ref: &T) {
         unsafe { wxCalendarDateAttr_GetFont(self.ptr(), _ref.ptr()) }
     }
-    fn getTextColour<T: _wxColour>(&self, _ref: &T) {
+    fn getTextColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxCalendarDateAttr_GetTextColour(self.ptr(), _ref.ptr()) }
     }
     fn hasBackgroundColour(&self) -> c_int {
@@ -182,39 +182,39 @@ pub trait _wxCalendarDateAttr {
     fn isHoliday(&self) -> c_int {
         unsafe { wxCalendarDateAttr_IsHoliday(self.ptr()) }
     }
-    fn setBackgroundColour<T: _wxColour>(&self, col: &T) {
+    fn setBackgroundColour<T: TWxColour>(&self, col: &T) {
         unsafe { wxCalendarDateAttr_SetBackgroundColour(self.ptr(), col.ptr()) }
     }
     fn setBorder(&self, border: c_int) {
         unsafe { wxCalendarDateAttr_SetBorder(self.ptr(), border) }
     }
-    fn setBorderColour<T: _wxColour>(&self, col: &T) {
+    fn setBorderColour<T: TWxColour>(&self, col: &T) {
         unsafe { wxCalendarDateAttr_SetBorderColour(self.ptr(), col.ptr()) }
     }
-    fn setFont<T: _wxFont>(&self, font: &T) {
+    fn setFont<T: TWxFont>(&self, font: &T) {
         unsafe { wxCalendarDateAttr_SetFont(self.ptr(), font.ptr()) }
     }
     fn setHoliday(&self, holiday: c_int) {
         unsafe { wxCalendarDateAttr_SetHoliday(self.ptr(), holiday) }
     }
-    fn setTextColour<T: _wxColour>(&self, col: &T) {
+    fn setTextColour<T: TWxColour>(&self, col: &T) {
         unsafe { wxCalendarDateAttr_SetTextColour(self.ptr(), col.ptr()) }
     }
 }
 
-pub struct wxCalendarEvent { ptr: *mut c_void }
-impl _wxCalendarEvent for wxCalendarEvent {}
-impl _wxCommandEvent for wxCalendarEvent {}
-impl _wxEvent for wxCalendarEvent {}
-impl _wxObject for wxCalendarEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxCalendarEvent { ptr: *mut c_void }
+impl TWxCalendarEvent for WxCalendarEvent {}
+impl TWxCommandEvent for WxCalendarEvent {}
+impl TWxEvent for WxCalendarEvent {}
+impl TWxObject for WxCalendarEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxCalendarEvent {
-    pub fn from(ptr: *mut c_void) -> wxCalendarEvent { wxCalendarEvent { ptr: ptr } }
-    pub fn null() -> wxCalendarEvent { wxCalendarEvent::from(0 as *mut c_void) }
+impl WxCalendarEvent {
+    pub fn from(ptr: *mut c_void) -> WxCalendarEvent { WxCalendarEvent { ptr: ptr } }
+    pub fn null() -> WxCalendarEvent { WxCalendarEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxCalendarEvent : _wxCommandEvent {
+pub trait TWxCalendarEvent : TWxCommandEvent {
     fn getDate(&self, _dte: *mut c_void) {
         unsafe { wxCalendarEvent_GetDate(self.ptr(), _dte) }
     }
@@ -223,40 +223,40 @@ pub trait _wxCalendarEvent : _wxCommandEvent {
     }
 }
 
-pub struct wxEditableListBox { ptr: *mut c_void }
-impl _wxEditableListBox for wxEditableListBox {}
-impl _wxPanel for wxEditableListBox {}
-impl _wxWindow for wxEditableListBox {}
-impl _wxEvtHandler for wxEditableListBox {}
-impl _wxObject for wxEditableListBox { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxEditableListBox { ptr: *mut c_void }
+impl TWxEditableListBox for WxEditableListBox {}
+impl TWxPanel for WxEditableListBox {}
+impl TWxWindow for WxEditableListBox {}
+impl TWxEvtHandler for WxEditableListBox {}
+impl TWxObject for WxEditableListBox { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxEditableListBox {
-    pub fn from(ptr: *mut c_void) -> wxEditableListBox { wxEditableListBox { ptr: ptr } }
-    pub fn null() -> wxEditableListBox { wxEditableListBox::from(0 as *mut c_void) }
+impl WxEditableListBox {
+    pub fn from(ptr: *mut c_void) -> WxEditableListBox { WxEditableListBox { ptr: ptr } }
+    pub fn null() -> WxEditableListBox { WxEditableListBox::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxEditableListBox : _wxPanel {
+pub trait TWxEditableListBox : TWxPanel {
 }
 
-pub struct wxGrid { ptr: *mut c_void }
-impl _wxGrid for wxGrid {}
-impl _wxScrolledWindow for wxGrid {}
-impl _wxPanel for wxGrid {}
-impl _wxWindow for wxGrid {}
-impl _wxEvtHandler for wxGrid {}
-impl _wxObject for wxGrid { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGrid { ptr: *mut c_void }
+impl TWxGrid for WxGrid {}
+impl TWxScrolledWindow for WxGrid {}
+impl TWxPanel for WxGrid {}
+impl TWxWindow for WxGrid {}
+impl TWxEvtHandler for WxGrid {}
+impl TWxObject for WxGrid { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGrid {
-    pub fn from(ptr: *mut c_void) -> wxGrid { wxGrid { ptr: ptr } }
-    pub fn null() -> wxGrid { wxGrid::from(0 as *mut c_void) }
+impl WxGrid {
+    pub fn from(ptr: *mut c_void) -> WxGrid { WxGrid { ptr: ptr } }
+    pub fn null() -> WxGrid { WxGrid::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> wxGrid {
-        unsafe { wxGrid { ptr: wxGrid_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> WxGrid {
+        unsafe { WxGrid { ptr: wxGrid_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
-pub trait _wxGrid : _wxScrolledWindow {
+pub trait TWxGrid : TWxScrolledWindow {
     fn appendCols(&self, numCols: c_int, updateLabels: c_int) -> c_int {
         unsafe { wxGrid_AppendCols(self.ptr(), numCols, updateLabels) }
     }
@@ -281,8 +281,8 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn beginBatch(&self) {
         unsafe { wxGrid_BeginBatch(self.ptr()) }
     }
-    fn blockToDeviceRect(&self, top: c_int, left: c_int, bottom: c_int, right: c_int) -> wxRect {
-        unsafe { wxRect { ptr: wxGrid_BlockToDeviceRect(self.ptr(), top, left, bottom, right) } }
+    fn blockToDeviceRect(&self, top: c_int, left: c_int, bottom: c_int, right: c_int) -> WxRect {
+        unsafe { WxRect { ptr: wxGrid_BlockToDeviceRect(self.ptr(), top, left, bottom, right) } }
     }
     fn canDragColSize(&self) -> c_int {
         unsafe { wxGrid_CanDragColSize(self.ptr()) }
@@ -296,8 +296,8 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn canEnableCellControl(&self) -> c_int {
         unsafe { wxGrid_CanEnableCellControl(self.ptr()) }
     }
-    fn cellToRect(&self, row: c_int, col: c_int) -> wxRect {
-        unsafe { wxRect { ptr: wxGrid_CellToRect(self.ptr(), row, col) } }
+    fn cellToRect(&self, row: c_int, col: c_int) -> WxRect {
+        unsafe { WxRect { ptr: wxGrid_CellToRect(self.ptr(), row, col) } }
     }
     fn clearGrid(&self) {
         unsafe { wxGrid_ClearGrid(self.ptr()) }
@@ -326,34 +326,34 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn disableDragRowSize(&self) {
         unsafe { wxGrid_DisableDragRowSize(self.ptr()) }
     }
-    fn drawAllGridLines<T: _wxDC, U: _wxRegion>(&self, dc: &T, reg: &U) {
+    fn drawAllGridLines<T: TWxDC, U: TWxRegion>(&self, dc: &T, reg: &U) {
         unsafe { wxGrid_DrawAllGridLines(self.ptr(), dc.ptr(), reg.ptr()) }
     }
-    fn drawCell<T: _wxDC>(&self, dc: &T, _row: c_int, _col: c_int) {
+    fn drawCell<T: TWxDC>(&self, dc: &T, _row: c_int, _col: c_int) {
         unsafe { wxGrid_DrawCell(self.ptr(), dc.ptr(), _row, _col) }
     }
-    fn drawCellBorder<T: _wxDC>(&self, dc: &T, _row: c_int, _col: c_int) {
+    fn drawCellBorder<T: TWxDC>(&self, dc: &T, _row: c_int, _col: c_int) {
         unsafe { wxGrid_DrawCellBorder(self.ptr(), dc.ptr(), _row, _col) }
     }
-    fn drawCellHighlight<T: _wxDC, U: _wxGridCellAttr>(&self, dc: &T, attr: &U) {
+    fn drawCellHighlight<T: TWxDC, U: TWxGridCellAttr>(&self, dc: &T, attr: &U) {
         unsafe { wxGrid_DrawCellHighlight(self.ptr(), dc.ptr(), attr.ptr()) }
     }
-    fn drawColLabel<T: _wxDC>(&self, dc: &T, col: c_int) {
+    fn drawColLabel<T: TWxDC>(&self, dc: &T, col: c_int) {
         unsafe { wxGrid_DrawColLabel(self.ptr(), dc.ptr(), col) }
     }
-    fn drawColLabels<T: _wxDC>(&self, dc: &T) {
+    fn drawColLabels<T: TWxDC>(&self, dc: &T) {
         unsafe { wxGrid_DrawColLabels(self.ptr(), dc.ptr()) }
     }
-    fn drawGridSpace<T: _wxDC>(&self, dc: &T) {
+    fn drawGridSpace<T: TWxDC>(&self, dc: &T) {
         unsafe { wxGrid_DrawGridSpace(self.ptr(), dc.ptr()) }
     }
-    fn drawRowLabel<T: _wxDC>(&self, dc: &T, row: c_int) {
+    fn drawRowLabel<T: TWxDC>(&self, dc: &T, row: c_int) {
         unsafe { wxGrid_DrawRowLabel(self.ptr(), dc.ptr(), row) }
     }
-    fn drawRowLabels<T: _wxDC>(&self, dc: &T) {
+    fn drawRowLabels<T: TWxDC>(&self, dc: &T) {
         unsafe { wxGrid_DrawRowLabels(self.ptr(), dc.ptr()) }
     }
-    fn drawTextRectangle<T: _wxDC>(&self, dc: &T, txt: &str, x: c_int, y: c_int, w: c_int, h: c_int, horizontalAlignment: c_int, verticalAlignment: c_int) {
+    fn drawTextRectangle<T: TWxDC>(&self, dc: &T, txt: &str, x: c_int, y: c_int, w: c_int, h: c_int, horizontalAlignment: c_int, verticalAlignment: c_int) {
         let txt = wxT(txt);
         unsafe { wxGrid_DrawTextRectangle(self.ptr(), dc.ptr(), txt.ptr(), x, y, w, h, horizontalAlignment, verticalAlignment) }
     }
@@ -384,26 +384,26 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn getCellAlignment(&self, row: c_int, col: c_int, horiz: *mut c_int, vert: *mut c_int) {
         unsafe { wxGrid_GetCellAlignment(self.ptr(), row, col, horiz, vert) }
     }
-    fn getCellBackgroundColour<T: _wxColour>(&self, row: c_int, col: c_int, colour: &T) {
+    fn getCellBackgroundColour<T: TWxColour>(&self, row: c_int, col: c_int, colour: &T) {
         unsafe { wxGrid_GetCellBackgroundColour(self.ptr(), row, col, colour.ptr()) }
     }
-    fn getCellEditor(&self, row: c_int, col: c_int) -> wxGridCellEditor {
-        unsafe { wxGridCellEditor { ptr: wxGrid_GetCellEditor(self.ptr(), row, col) } }
+    fn getCellEditor(&self, row: c_int, col: c_int) -> WxGridCellEditor {
+        unsafe { WxGridCellEditor { ptr: wxGrid_GetCellEditor(self.ptr(), row, col) } }
     }
-    fn getCellFont<T: _wxFont>(&self, row: c_int, col: c_int, font: &T) {
+    fn getCellFont<T: TWxFont>(&self, row: c_int, col: c_int, font: &T) {
         unsafe { wxGrid_GetCellFont(self.ptr(), row, col, font.ptr()) }
     }
-    fn getCellHighlightColour<T: _wxColour>(&self, _ref: &T) {
+    fn getCellHighlightColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxGrid_GetCellHighlightColour(self.ptr(), _ref.ptr()) }
     }
-    fn getCellRenderer(&self, row: c_int, col: c_int) -> wxGridCellRenderer {
-        unsafe { wxGridCellRenderer { ptr: wxGrid_GetCellRenderer(self.ptr(), row, col) } }
+    fn getCellRenderer(&self, row: c_int, col: c_int) -> WxGridCellRenderer {
+        unsafe { WxGridCellRenderer { ptr: wxGrid_GetCellRenderer(self.ptr(), row, col) } }
     }
-    fn getCellTextColour<T: _wxColour>(&self, row: c_int, col: c_int, colour: &T) {
+    fn getCellTextColour<T: TWxColour>(&self, row: c_int, col: c_int, colour: &T) {
         unsafe { wxGrid_GetCellTextColour(self.ptr(), row, col, colour.ptr()) }
     }
     fn getCellValue(&self, row: c_int, col: c_int) -> ~str {
-        unsafe { wxString { ptr: wxGrid_GetCellValue(self.ptr(), row, col) }.to_str() }
+        unsafe { WxString { ptr: wxGrid_GetCellValue(self.ptr(), row, col) }.to_str() }
     }
     fn getColLabelAlignment(&self, horiz: *mut c_int, vert: *mut c_int) {
         unsafe { wxGrid_GetColLabelAlignment(self.ptr(), horiz, vert) }
@@ -412,7 +412,7 @@ pub trait _wxGrid : _wxScrolledWindow {
         unsafe { wxGrid_GetColLabelSize(self.ptr()) }
     }
     fn getColLabelValue(&self, col: c_int) -> ~str {
-        unsafe { wxString { ptr: wxGrid_GetColLabelValue(self.ptr(), col) }.to_str() }
+        unsafe { WxString { ptr: wxGrid_GetColLabelValue(self.ptr(), col) }.to_str() }
     }
     fn getColSize(&self, col: c_int) -> c_int {
         unsafe { wxGrid_GetColSize(self.ptr(), col) }
@@ -420,13 +420,13 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn getDefaultCellAlignment(&self, horiz: *mut c_int, vert: *mut c_int) {
         unsafe { wxGrid_GetDefaultCellAlignment(self.ptr(), horiz, vert) }
     }
-    fn getDefaultCellBackgroundColour<T: _wxColour>(&self, _ref: &T) {
+    fn getDefaultCellBackgroundColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxGrid_GetDefaultCellBackgroundColour(self.ptr(), _ref.ptr()) }
     }
-    fn getDefaultCellFont<T: _wxFont>(&self, _ref: &T) {
+    fn getDefaultCellFont<T: TWxFont>(&self, _ref: &T) {
         unsafe { wxGrid_GetDefaultCellFont(self.ptr(), _ref.ptr()) }
     }
-    fn getDefaultCellTextColour<T: _wxColour>(&self, _ref: &T) {
+    fn getDefaultCellTextColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxGrid_GetDefaultCellTextColour(self.ptr(), _ref.ptr()) }
     }
     fn getDefaultColLabelSize(&self) -> c_int {
@@ -435,25 +435,25 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn getDefaultColSize(&self) -> c_int {
         unsafe { wxGrid_GetDefaultColSize(self.ptr()) }
     }
-    fn getDefaultEditor(&self) -> wxGridCellEditor {
-        unsafe { wxGridCellEditor { ptr: wxGrid_GetDefaultEditor(self.ptr()) } }
+    fn getDefaultEditor(&self) -> WxGridCellEditor {
+        unsafe { WxGridCellEditor { ptr: wxGrid_GetDefaultEditor(self.ptr()) } }
     }
-    fn getDefaultEditorForCell(&self, row: c_int, col: c_int) -> wxGridCellEditor {
-        unsafe { wxGridCellEditor { ptr: wxGrid_GetDefaultEditorForCell(self.ptr(), row, col) } }
+    fn getDefaultEditorForCell(&self, row: c_int, col: c_int) -> WxGridCellEditor {
+        unsafe { WxGridCellEditor { ptr: wxGrid_GetDefaultEditorForCell(self.ptr(), row, col) } }
     }
-    fn getDefaultEditorForType(&self, typeName: &str) -> wxGridCellEditor {
+    fn getDefaultEditorForType(&self, typeName: &str) -> WxGridCellEditor {
         let typeName = wxT(typeName);
-        unsafe { wxGridCellEditor { ptr: wxGrid_GetDefaultEditorForType(self.ptr(), typeName.ptr()) } }
+        unsafe { WxGridCellEditor { ptr: wxGrid_GetDefaultEditorForType(self.ptr(), typeName.ptr()) } }
     }
-    fn getDefaultRenderer(&self) -> wxGridCellRenderer {
-        unsafe { wxGridCellRenderer { ptr: wxGrid_GetDefaultRenderer(self.ptr()) } }
+    fn getDefaultRenderer(&self) -> WxGridCellRenderer {
+        unsafe { WxGridCellRenderer { ptr: wxGrid_GetDefaultRenderer(self.ptr()) } }
     }
-    fn getDefaultRendererForCell(&self, row: c_int, col: c_int) -> wxGridCellRenderer {
-        unsafe { wxGridCellRenderer { ptr: wxGrid_GetDefaultRendererForCell(self.ptr(), row, col) } }
+    fn getDefaultRendererForCell(&self, row: c_int, col: c_int) -> WxGridCellRenderer {
+        unsafe { WxGridCellRenderer { ptr: wxGrid_GetDefaultRendererForCell(self.ptr(), row, col) } }
     }
-    fn getDefaultRendererForType(&self, typeName: &str) -> wxGridCellRenderer {
+    fn getDefaultRendererForType(&self, typeName: &str) -> WxGridCellRenderer {
         let typeName = wxT(typeName);
-        unsafe { wxGridCellRenderer { ptr: wxGrid_GetDefaultRendererForType(self.ptr(), typeName.ptr()) } }
+        unsafe { WxGridCellRenderer { ptr: wxGrid_GetDefaultRendererForType(self.ptr(), typeName.ptr()) } }
     }
     fn getDefaultRowLabelSize(&self) -> c_int {
         unsafe { wxGrid_GetDefaultRowLabelSize(self.ptr()) }
@@ -467,16 +467,16 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn getGridCursorRow(&self) -> c_int {
         unsafe { wxGrid_GetGridCursorRow(self.ptr()) }
     }
-    fn getGridLineColour<T: _wxColour>(&self, _ref: &T) {
+    fn getGridLineColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxGrid_GetGridLineColour(self.ptr(), _ref.ptr()) }
     }
-    fn getLabelBackgroundColour<T: _wxColour>(&self, _ref: &T) {
+    fn getLabelBackgroundColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxGrid_GetLabelBackgroundColour(self.ptr(), _ref.ptr()) }
     }
-    fn getLabelFont<T: _wxFont>(&self, _ref: &T) {
+    fn getLabelFont<T: TWxFont>(&self, _ref: &T) {
         unsafe { wxGrid_GetLabelFont(self.ptr(), _ref.ptr()) }
     }
-    fn getLabelTextColour<T: _wxColour>(&self, _ref: &T) {
+    fn getLabelTextColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxGrid_GetLabelTextColour(self.ptr(), _ref.ptr()) }
     }
     fn getNumberCols(&self) -> c_int {
@@ -492,21 +492,21 @@ pub trait _wxGrid : _wxScrolledWindow {
         unsafe { wxGrid_GetRowLabelSize(self.ptr()) }
     }
     fn getRowLabelValue(&self, row: c_int) -> ~str {
-        unsafe { wxString { ptr: wxGrid_GetRowLabelValue(self.ptr(), row) }.to_str() }
+        unsafe { WxString { ptr: wxGrid_GetRowLabelValue(self.ptr(), row) }.to_str() }
     }
     fn getRowSize(&self, row: c_int) -> c_int {
         unsafe { wxGrid_GetRowSize(self.ptr(), row) }
     }
-    fn getSelectionBackground<T: _wxColour>(&self, _ref: &T) {
+    fn getSelectionBackground<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxGrid_GetSelectionBackground(self.ptr(), _ref.ptr()) }
     }
-    fn getSelectionForeground<T: _wxColour>(&self, _ref: &T) {
+    fn getSelectionForeground<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxGrid_GetSelectionForeground(self.ptr(), _ref.ptr()) }
     }
-    fn getTable(&self) -> wxGridTableBase {
-        unsafe { wxGridTableBase { ptr: wxGrid_GetTable(self.ptr()) } }
+    fn getTable(&self) -> WxGridTableBase {
+        unsafe { WxGridTableBase { ptr: wxGrid_GetTable(self.ptr()) } }
     }
-    fn getTextBoxSize<T: _wxDC>(&self, dc: &T, count: c_int, lines: *mut *mut c_char, _w: *mut c_void, _h: *mut c_void) {
+    fn getTextBoxSize<T: TWxDC>(&self, dc: &T, count: c_int, lines: *mut *mut c_char, _w: *mut c_void, _h: *mut c_void) {
         unsafe { wxGrid_GetTextBoxSize(self.ptr(), dc.ptr(), count, lines, _w, _h) }
     }
     fn gridLinesEnabled(&self) -> c_int {
@@ -578,10 +578,10 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn movePageUp(&self) -> c_int {
         unsafe { wxGrid_MovePageUp(self.ptr()) }
     }
-    fn processTableMessage<T: _wxEvent>(&self, evt: &T) -> c_int {
+    fn processTableMessage<T: TWxEvent>(&self, evt: &T) -> c_int {
         unsafe { wxGrid_ProcessTableMessage(self.ptr(), evt.ptr()) }
     }
-    fn registerDataType<T: _wxGridCellRenderer, U: _wxGridCellEditor>(&self, typeName: &str, renderer: &T, editor: &U) {
+    fn registerDataType<T: TWxGridCellRenderer, U: TWxGridCellEditor>(&self, typeName: &str, renderer: &T, editor: &U) {
         let typeName = wxT(typeName);
         unsafe { wxGrid_RegisterDataType(self.ptr(), typeName.ptr(), renderer.ptr(), editor.ptr()) }
     }
@@ -603,29 +603,29 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn setCellAlignment(&self, row: c_int, col: c_int, horiz: c_int, vert: c_int) {
         unsafe { wxGrid_SetCellAlignment(self.ptr(), row, col, horiz, vert) }
     }
-    fn setCellBackgroundColour<T: _wxColour>(&self, row: c_int, col: c_int, colour: &T) {
+    fn setCellBackgroundColour<T: TWxColour>(&self, row: c_int, col: c_int, colour: &T) {
         unsafe { wxGrid_SetCellBackgroundColour(self.ptr(), row, col, colour.ptr()) }
     }
-    fn setCellEditor<T: _wxGridCellEditor>(&self, row: c_int, col: c_int, editor: &T) {
+    fn setCellEditor<T: TWxGridCellEditor>(&self, row: c_int, col: c_int, editor: &T) {
         unsafe { wxGrid_SetCellEditor(self.ptr(), row, col, editor.ptr()) }
     }
-    fn setCellFont<T: _wxFont>(&self, row: c_int, col: c_int, font: &T) {
+    fn setCellFont<T: TWxFont>(&self, row: c_int, col: c_int, font: &T) {
         unsafe { wxGrid_SetCellFont(self.ptr(), row, col, font.ptr()) }
     }
-    fn setCellHighlightColour<T: _wxColour>(&self, col: &T) {
+    fn setCellHighlightColour<T: TWxColour>(&self, col: &T) {
         unsafe { wxGrid_SetCellHighlightColour(self.ptr(), col.ptr()) }
     }
-    fn setCellRenderer<T: _wxGridCellRenderer>(&self, row: c_int, col: c_int, renderer: &T) {
+    fn setCellRenderer<T: TWxGridCellRenderer>(&self, row: c_int, col: c_int, renderer: &T) {
         unsafe { wxGrid_SetCellRenderer(self.ptr(), row, col, renderer.ptr()) }
     }
-    fn setCellTextColour<T: _wxColour>(&self, row: c_int, col: c_int, colour: &T) {
+    fn setCellTextColour<T: TWxColour>(&self, row: c_int, col: c_int, colour: &T) {
         unsafe { wxGrid_SetCellTextColour(self.ptr(), row, col, colour.ptr()) }
     }
     fn setCellValue(&self, row: c_int, col: c_int, s: &str) {
         let s = wxT(s);
         unsafe { wxGrid_SetCellValue(self.ptr(), row, col, s.ptr()) }
     }
-    fn setColAttr<T: _wxGridCellAttr>(&self, col: c_int, attr: &T) {
+    fn setColAttr<T: TWxGridCellAttr>(&self, col: c_int, attr: &T) {
         unsafe { wxGrid_SetColAttr(self.ptr(), col, attr.ptr()) }
     }
     fn setColFormatBool(&self, col: c_int) {
@@ -660,22 +660,22 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn setDefaultCellAlignment(&self, horiz: c_int, vert: c_int) {
         unsafe { wxGrid_SetDefaultCellAlignment(self.ptr(), horiz, vert) }
     }
-    fn setDefaultCellBackgroundColour<T: _wxColour>(&self, colour: &T) {
+    fn setDefaultCellBackgroundColour<T: TWxColour>(&self, colour: &T) {
         unsafe { wxGrid_SetDefaultCellBackgroundColour(self.ptr(), colour.ptr()) }
     }
-    fn setDefaultCellFont<T: _wxFont>(&self, font: &T) {
+    fn setDefaultCellFont<T: TWxFont>(&self, font: &T) {
         unsafe { wxGrid_SetDefaultCellFont(self.ptr(), font.ptr()) }
     }
-    fn setDefaultCellTextColour<T: _wxColour>(&self, colour: &T) {
+    fn setDefaultCellTextColour<T: TWxColour>(&self, colour: &T) {
         unsafe { wxGrid_SetDefaultCellTextColour(self.ptr(), colour.ptr()) }
     }
     fn setDefaultColSize(&self, width: c_int, resizeExistingCols: c_int) {
         unsafe { wxGrid_SetDefaultColSize(self.ptr(), width, resizeExistingCols) }
     }
-    fn setDefaultEditor<T: _wxGridCellEditor>(&self, editor: &T) {
+    fn setDefaultEditor<T: TWxGridCellEditor>(&self, editor: &T) {
         unsafe { wxGrid_SetDefaultEditor(self.ptr(), editor.ptr()) }
     }
-    fn setDefaultRenderer<T: _wxGridCellRenderer>(&self, renderer: &T) {
+    fn setDefaultRenderer<T: TWxGridCellRenderer>(&self, renderer: &T) {
         unsafe { wxGrid_SetDefaultRenderer(self.ptr(), renderer.ptr()) }
     }
     fn setDefaultRowSize(&self, height: c_int, resizeExistingRows: c_int) {
@@ -684,16 +684,16 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn setGridCursor(&self, row: c_int, col: c_int) {
         unsafe { wxGrid_SetGridCursor(self.ptr(), row, col) }
     }
-    fn setGridLineColour<T: _wxColour>(&self, col: &T) {
+    fn setGridLineColour<T: TWxColour>(&self, col: &T) {
         unsafe { wxGrid_SetGridLineColour(self.ptr(), col.ptr()) }
     }
-    fn setLabelBackgroundColour<T: _wxColour>(&self, colour: &T) {
+    fn setLabelBackgroundColour<T: TWxColour>(&self, colour: &T) {
         unsafe { wxGrid_SetLabelBackgroundColour(self.ptr(), colour.ptr()) }
     }
-    fn setLabelFont<T: _wxFont>(&self, font: &T) {
+    fn setLabelFont<T: TWxFont>(&self, font: &T) {
         unsafe { wxGrid_SetLabelFont(self.ptr(), font.ptr()) }
     }
-    fn setLabelTextColour<T: _wxColour>(&self, colour: &T) {
+    fn setLabelTextColour<T: TWxColour>(&self, colour: &T) {
         unsafe { wxGrid_SetLabelTextColour(self.ptr(), colour.ptr()) }
     }
     fn setMargins(&self, extraWidth: c_int, extraHeight: c_int) {
@@ -702,7 +702,7 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn setReadOnly(&self, row: c_int, col: c_int, isReadOnly: c_int) {
         unsafe { wxGrid_SetReadOnly(self.ptr(), row, col, isReadOnly) }
     }
-    fn setRowAttr<T: _wxGridCellAttr>(&self, row: c_int, attr: &T) {
+    fn setRowAttr<T: TWxGridCellAttr>(&self, row: c_int, attr: &T) {
         unsafe { wxGrid_SetRowAttr(self.ptr(), row, attr.ptr()) }
     }
     fn setRowLabelAlignment(&self, horiz: c_int, vert: c_int) {
@@ -721,16 +721,16 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn setRowSize(&self, row: c_int, height: c_int) {
         unsafe { wxGrid_SetRowSize(self.ptr(), row, height) }
     }
-    fn setSelectionBackground<T: _wxColour>(&self, c: &T) {
+    fn setSelectionBackground<T: TWxColour>(&self, c: &T) {
         unsafe { wxGrid_SetSelectionBackground(self.ptr(), c.ptr()) }
     }
-    fn setSelectionForeground<T: _wxColour>(&self, c: &T) {
+    fn setSelectionForeground<T: TWxColour>(&self, c: &T) {
         unsafe { wxGrid_SetSelectionForeground(self.ptr(), c.ptr()) }
     }
     fn setSelectionMode(&self, selmode: c_int) {
         unsafe { wxGrid_SetSelectionMode(self.ptr(), selmode) }
     }
-    fn setTable<T: _wxGridTableBase>(&self, table: &T, takeOwnership: c_int, selmode: c_int) -> c_int {
+    fn setTable<T: TWxGridTableBase>(&self, table: &T, takeOwnership: c_int, selmode: c_int) -> c_int {
         unsafe { wxGrid_SetTable(self.ptr(), table.ptr(), takeOwnership, selmode) }
     }
     fn showCellEditControl(&self) {
@@ -755,13 +755,13 @@ pub trait _wxGrid : _wxScrolledWindow {
     fn yToRow(&self, y: c_int) -> c_int {
         unsafe { wxGrid_YToRow(self.ptr(), y) }
     }
-    fn getSelectedCells<T: _wxGridCellCoordsArray>(&self, _arr: &T) {
+    fn getSelectedCells<T: TWxGridCellCoordsArray>(&self, _arr: &T) {
         unsafe { wxGrid_GetSelectedCells(self.ptr(), _arr.ptr()) }
     }
-    fn getSelectionBlockTopLeft<T: _wxGridCellCoordsArray>(&self, _arr: &T) {
+    fn getSelectionBlockTopLeft<T: TWxGridCellCoordsArray>(&self, _arr: &T) {
         unsafe { wxGrid_GetSelectionBlockTopLeft(self.ptr(), _arr.ptr()) }
     }
-    fn getSelectionBlockBottomRight<T: _wxGridCellCoordsArray>(&self, _arr: &T) {
+    fn getSelectionBlockBottomRight<T: TWxGridCellCoordsArray>(&self, _arr: &T) {
         unsafe { wxGrid_GetSelectionBlockBottomRight(self.ptr(), _arr.ptr()) }
     }
     fn getSelectedRows(&self, _arr: *mut c_void) -> c_int {
@@ -778,19 +778,19 @@ pub trait _wxGrid : _wxScrolledWindow {
     }
 }
 
-pub struct wxGridCellAttr { ptr: *mut c_void }
-impl _wxGridCellAttr for wxGridCellAttr { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellAttr { ptr: *mut c_void }
+impl TWxGridCellAttr for WxGridCellAttr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellAttr {
-    pub fn from(ptr: *mut c_void) -> wxGridCellAttr { wxGridCellAttr { ptr: ptr } }
-    pub fn null() -> wxGridCellAttr { wxGridCellAttr::from(0 as *mut c_void) }
+impl WxGridCellAttr {
+    pub fn from(ptr: *mut c_void) -> WxGridCellAttr { WxGridCellAttr { ptr: ptr } }
+    pub fn null() -> WxGridCellAttr { WxGridCellAttr::from(0 as *mut c_void) }
     
-    pub fn ctor() -> wxGridCellAttr {
-        unsafe { wxGridCellAttr { ptr: wxGridCellAttr_Ctor() } }
+    pub fn ctor() -> WxGridCellAttr {
+        unsafe { WxGridCellAttr { ptr: wxGridCellAttr_Ctor() } }
     }
 }
 
-pub trait _wxGridCellAttr {
+pub trait TWxGridCellAttr {
     fn ptr(&self) -> *mut c_void;
     
     fn decRef(&self) {
@@ -799,19 +799,19 @@ pub trait _wxGridCellAttr {
     fn getAlignment(&self, hAlign: *mut c_int, vAlign: *mut c_int) {
         unsafe { wxGridCellAttr_GetAlignment(self.ptr(), hAlign, vAlign) }
     }
-    fn getBackgroundColour<T: _wxColour>(&self, _ref: &T) {
+    fn getBackgroundColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxGridCellAttr_GetBackgroundColour(self.ptr(), _ref.ptr()) }
     }
-    fn getEditor<T: _wxGrid>(&self, grid: &T, row: c_int, col: c_int) -> wxGridCellEditor {
-        unsafe { wxGridCellEditor { ptr: wxGridCellAttr_GetEditor(self.ptr(), grid.ptr(), row, col) } }
+    fn getEditor<T: TWxGrid>(&self, grid: &T, row: c_int, col: c_int) -> WxGridCellEditor {
+        unsafe { WxGridCellEditor { ptr: wxGridCellAttr_GetEditor(self.ptr(), grid.ptr(), row, col) } }
     }
-    fn getFont<T: _wxFont>(&self, _ref: &T) {
+    fn getFont<T: TWxFont>(&self, _ref: &T) {
         unsafe { wxGridCellAttr_GetFont(self.ptr(), _ref.ptr()) }
     }
-    fn getRenderer<T: _wxGrid>(&self, grid: &T, row: c_int, col: c_int) -> wxGridCellRenderer {
-        unsafe { wxGridCellRenderer { ptr: wxGridCellAttr_GetRenderer(self.ptr(), grid.ptr(), row, col) } }
+    fn getRenderer<T: TWxGrid>(&self, grid: &T, row: c_int, col: c_int) -> WxGridCellRenderer {
+        unsafe { WxGridCellRenderer { ptr: wxGridCellAttr_GetRenderer(self.ptr(), grid.ptr(), row, col) } }
     }
-    fn getTextColour<T: _wxColour>(&self, _ref: &T) {
+    fn getTextColour<T: TWxColour>(&self, _ref: &T) {
         unsafe { wxGridCellAttr_GetTextColour(self.ptr(), _ref.ptr()) }
     }
     fn hasAlignment(&self) -> c_int {
@@ -841,90 +841,90 @@ pub trait _wxGridCellAttr {
     fn setAlignment(&self, hAlign: c_int, vAlign: c_int) {
         unsafe { wxGridCellAttr_SetAlignment(self.ptr(), hAlign, vAlign) }
     }
-    fn setBackgroundColour<T: _wxColour>(&self, colBack: &T) {
+    fn setBackgroundColour<T: TWxColour>(&self, colBack: &T) {
         unsafe { wxGridCellAttr_SetBackgroundColour(self.ptr(), colBack.ptr()) }
     }
-    fn setDefAttr<T: _wxGridCellAttr>(&self, defAttr: &T) {
+    fn setDefAttr<T: TWxGridCellAttr>(&self, defAttr: &T) {
         unsafe { wxGridCellAttr_SetDefAttr(self.ptr(), defAttr.ptr()) }
     }
-    fn setEditor<T: _wxGridCellEditor>(&self, editor: &T) {
+    fn setEditor<T: TWxGridCellEditor>(&self, editor: &T) {
         unsafe { wxGridCellAttr_SetEditor(self.ptr(), editor.ptr()) }
     }
-    fn setFont<T: _wxFont>(&self, font: &T) {
+    fn setFont<T: TWxFont>(&self, font: &T) {
         unsafe { wxGridCellAttr_SetFont(self.ptr(), font.ptr()) }
     }
     fn setReadOnly(&self, isReadOnly: c_int) {
         unsafe { wxGridCellAttr_SetReadOnly(self.ptr(), isReadOnly) }
     }
-    fn setRenderer<T: _wxGridCellRenderer>(&self, renderer: &T) {
+    fn setRenderer<T: TWxGridCellRenderer>(&self, renderer: &T) {
         unsafe { wxGridCellAttr_SetRenderer(self.ptr(), renderer.ptr()) }
     }
-    fn setTextColour<T: _wxColour>(&self, colText: &T) {
+    fn setTextColour<T: TWxColour>(&self, colText: &T) {
         unsafe { wxGridCellAttr_SetTextColour(self.ptr(), colText.ptr()) }
     }
 }
 
-pub struct wxGridCellBoolEditor { ptr: *mut c_void }
-impl _wxGridCellBoolEditor for wxGridCellBoolEditor {}
-impl _wxGridCellEditor for wxGridCellBoolEditor {}
-impl _wxGridCellWorker for wxGridCellBoolEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellBoolEditor { ptr: *mut c_void }
+impl TWxGridCellBoolEditor for WxGridCellBoolEditor {}
+impl TWxGridCellEditor for WxGridCellBoolEditor {}
+impl TWxGridCellWorker for WxGridCellBoolEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellBoolEditor {
-    pub fn from(ptr: *mut c_void) -> wxGridCellBoolEditor { wxGridCellBoolEditor { ptr: ptr } }
-    pub fn null() -> wxGridCellBoolEditor { wxGridCellBoolEditor::from(0 as *mut c_void) }
+impl WxGridCellBoolEditor {
+    pub fn from(ptr: *mut c_void) -> WxGridCellBoolEditor { WxGridCellBoolEditor { ptr: ptr } }
+    pub fn null() -> WxGridCellBoolEditor { WxGridCellBoolEditor::from(0 as *mut c_void) }
     
-    pub fn ctor() -> wxGridCellBoolEditor {
-        unsafe { wxGridCellBoolEditor { ptr: wxGridCellBoolEditor_Ctor() } }
+    pub fn ctor() -> WxGridCellBoolEditor {
+        unsafe { WxGridCellBoolEditor { ptr: wxGridCellBoolEditor_Ctor() } }
     }
 }
 
-pub trait _wxGridCellBoolEditor : _wxGridCellEditor {
+pub trait TWxGridCellBoolEditor : TWxGridCellEditor {
 }
 
-pub struct wxGridCellBoolRenderer { ptr: *mut c_void }
-impl _wxGridCellBoolRenderer for wxGridCellBoolRenderer {}
-impl _wxGridCellRenderer for wxGridCellBoolRenderer {}
-impl _wxGridCellWorker for wxGridCellBoolRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellBoolRenderer { ptr: *mut c_void }
+impl TWxGridCellBoolRenderer for WxGridCellBoolRenderer {}
+impl TWxGridCellRenderer for WxGridCellBoolRenderer {}
+impl TWxGridCellWorker for WxGridCellBoolRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellBoolRenderer {
-    pub fn from(ptr: *mut c_void) -> wxGridCellBoolRenderer { wxGridCellBoolRenderer { ptr: ptr } }
-    pub fn null() -> wxGridCellBoolRenderer { wxGridCellBoolRenderer::from(0 as *mut c_void) }
+impl WxGridCellBoolRenderer {
+    pub fn from(ptr: *mut c_void) -> WxGridCellBoolRenderer { WxGridCellBoolRenderer { ptr: ptr } }
+    pub fn null() -> WxGridCellBoolRenderer { WxGridCellBoolRenderer::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGridCellBoolRenderer : _wxGridCellRenderer {
+pub trait TWxGridCellBoolRenderer : TWxGridCellRenderer {
 }
 
-pub struct wxGridCellChoiceEditor { ptr: *mut c_void }
-impl _wxGridCellChoiceEditor for wxGridCellChoiceEditor {}
-impl _wxGridCellEditor for wxGridCellChoiceEditor {}
-impl _wxGridCellWorker for wxGridCellChoiceEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellChoiceEditor { ptr: *mut c_void }
+impl TWxGridCellChoiceEditor for WxGridCellChoiceEditor {}
+impl TWxGridCellEditor for WxGridCellChoiceEditor {}
+impl TWxGridCellWorker for WxGridCellChoiceEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellChoiceEditor {
-    pub fn from(ptr: *mut c_void) -> wxGridCellChoiceEditor { wxGridCellChoiceEditor { ptr: ptr } }
-    pub fn null() -> wxGridCellChoiceEditor { wxGridCellChoiceEditor::from(0 as *mut c_void) }
+impl WxGridCellChoiceEditor {
+    pub fn from(ptr: *mut c_void) -> WxGridCellChoiceEditor { WxGridCellChoiceEditor { ptr: ptr } }
+    pub fn null() -> WxGridCellChoiceEditor { WxGridCellChoiceEditor::from(0 as *mut c_void) }
     
-    pub fn ctor(count: c_int, choices: *mut *mut c_char, allowOthers: c_int) -> wxGridCellChoiceEditor {
-        unsafe { wxGridCellChoiceEditor { ptr: wxGridCellChoiceEditor_Ctor(count, choices, allowOthers) } }
+    pub fn ctor(count: c_int, choices: *mut *mut c_char, allowOthers: c_int) -> WxGridCellChoiceEditor {
+        unsafe { WxGridCellChoiceEditor { ptr: wxGridCellChoiceEditor_Ctor(count, choices, allowOthers) } }
     }
 }
 
-pub trait _wxGridCellChoiceEditor : _wxGridCellEditor {
+pub trait TWxGridCellChoiceEditor : TWxGridCellEditor {
 }
 
-pub struct wxGridCellCoordsArray { ptr: *mut c_void }
-impl _wxGridCellCoordsArray for wxGridCellCoordsArray { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellCoordsArray { ptr: *mut c_void }
+impl TWxGridCellCoordsArray for WxGridCellCoordsArray { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellCoordsArray {
-    pub fn from(ptr: *mut c_void) -> wxGridCellCoordsArray { wxGridCellCoordsArray { ptr: ptr } }
-    pub fn null() -> wxGridCellCoordsArray { wxGridCellCoordsArray::from(0 as *mut c_void) }
+impl WxGridCellCoordsArray {
+    pub fn from(ptr: *mut c_void) -> WxGridCellCoordsArray { WxGridCellCoordsArray { ptr: ptr } }
+    pub fn null() -> WxGridCellCoordsArray { WxGridCellCoordsArray::from(0 as *mut c_void) }
     
-    pub fn new() -> wxGridCellCoordsArray {
-        unsafe { wxGridCellCoordsArray { ptr: wxGridCellCoordsArray_Create() } }
+    pub fn new() -> WxGridCellCoordsArray {
+        unsafe { WxGridCellCoordsArray { ptr: wxGridCellCoordsArray_Create() } }
     }
 }
 
-pub trait _wxGridCellCoordsArray {
+pub trait TWxGridCellCoordsArray {
     fn ptr(&self) -> *mut c_void;
     
     fn delete(&self) {
@@ -938,50 +938,50 @@ pub trait _wxGridCellCoordsArray {
     }
 }
 
-pub struct wxGridCellEditor { ptr: *mut c_void }
-impl _wxGridCellEditor for wxGridCellEditor {}
-impl _wxGridCellWorker for wxGridCellEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellEditor { ptr: *mut c_void }
+impl TWxGridCellEditor for WxGridCellEditor {}
+impl TWxGridCellWorker for WxGridCellEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellEditor {
-    pub fn from(ptr: *mut c_void) -> wxGridCellEditor { wxGridCellEditor { ptr: ptr } }
-    pub fn null() -> wxGridCellEditor { wxGridCellEditor::from(0 as *mut c_void) }
+impl WxGridCellEditor {
+    pub fn from(ptr: *mut c_void) -> WxGridCellEditor { WxGridCellEditor { ptr: ptr } }
+    pub fn null() -> WxGridCellEditor { WxGridCellEditor::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGridCellEditor : _wxGridCellWorker {
-    fn beginEdit<T: _wxGrid>(&self, row: c_int, col: c_int, grid: &T) {
+pub trait TWxGridCellEditor : TWxGridCellWorker {
+    fn beginEdit<T: TWxGrid>(&self, row: c_int, col: c_int, grid: &T) {
         unsafe { wxGridCellEditor_BeginEdit(self.ptr(), row, col, grid.ptr()) }
     }
-    fn new<T: _wxWindow, U: _wxEvtHandler>(&self, parent: &T, id: c_int, evtHandler: &U) {
+    fn new<T: TWxWindow, U: TWxEvtHandler>(&self, parent: &T, id: c_int, evtHandler: &U) {
         unsafe { wxGridCellEditor_Create(self.ptr(), parent.ptr(), id, evtHandler.ptr()) }
     }
     fn destroy(&self) {
         unsafe { wxGridCellEditor_Destroy(self.ptr()) }
     }
-    fn endEdit<T: _wxGrid>(&self, row: c_int, col: c_int, grid: &T, oldStr: &str, newStr: &str) -> c_int {
+    fn endEdit<T: TWxGrid>(&self, row: c_int, col: c_int, grid: &T, oldStr: &str, newStr: &str) -> c_int {
         let oldStr = wxT(oldStr);
         let newStr = wxT(newStr);
         unsafe { wxGridCellEditor_EndEdit(self.ptr(), row, col, grid.ptr(), oldStr.ptr(), newStr.ptr()) }
     }
-    fn getControl(&self) -> wxControl {
-        unsafe { wxControl { ptr: wxGridCellEditor_GetControl(self.ptr()) } }
+    fn getControl(&self) -> WxControl {
+        unsafe { WxControl { ptr: wxGridCellEditor_GetControl(self.ptr()) } }
     }
-    fn handleReturn<T: _wxEvent>(&self, event: &T) {
+    fn handleReturn<T: TWxEvent>(&self, event: &T) {
         unsafe { wxGridCellEditor_HandleReturn(self.ptr(), event.ptr()) }
     }
-    fn isAcceptedKey<T: _wxEvent>(&self, event: &T) -> c_int {
+    fn isAcceptedKey<T: TWxEvent>(&self, event: &T) -> c_int {
         unsafe { wxGridCellEditor_IsAcceptedKey(self.ptr(), event.ptr()) }
     }
     fn isCreated(&self) -> c_int {
         unsafe { wxGridCellEditor_IsCreated(self.ptr()) }
     }
-    fn paintBackground<T: _wxDC, U: _wxGridCellAttr>(&self, dc: &T, x: c_int, y: c_int, w: c_int, h: c_int, attr: &U) {
+    fn paintBackground<T: TWxDC, U: TWxGridCellAttr>(&self, dc: &T, x: c_int, y: c_int, w: c_int, h: c_int, attr: &U) {
         unsafe { wxGridCellEditor_PaintBackground(self.ptr(), dc.ptr(), x, y, w, h, attr.ptr()) }
     }
     fn reset(&self) {
         unsafe { wxGridCellEditor_Reset(self.ptr()) }
     }
-    fn setControl<T: _wxControl>(&self, control: &T) {
+    fn setControl<T: TWxControl>(&self, control: &T) {
         unsafe { wxGridCellEditor_SetControl(self.ptr(), control.ptr()) }
     }
     fn setParameters(&self, params: &str) {
@@ -991,180 +991,180 @@ pub trait _wxGridCellEditor : _wxGridCellWorker {
     fn setSize(&self, x: c_int, y: c_int, w: c_int, h: c_int) {
         unsafe { wxGridCellEditor_SetSize(self.ptr(), x, y, w, h) }
     }
-    fn show<T: _wxGridCellAttr>(&self, show: c_int, attr: &T) {
+    fn show<T: TWxGridCellAttr>(&self, show: c_int, attr: &T) {
         unsafe { wxGridCellEditor_Show(self.ptr(), show, attr.ptr()) }
     }
     fn startingClick(&self) {
         unsafe { wxGridCellEditor_StartingClick(self.ptr()) }
     }
-    fn startingKey<T: _wxEvent>(&self, event: &T) {
+    fn startingKey<T: TWxEvent>(&self, event: &T) {
         unsafe { wxGridCellEditor_StartingKey(self.ptr(), event.ptr()) }
     }
 }
 
-pub struct wxGridCellFloatEditor { ptr: *mut c_void }
-impl _wxGridCellFloatEditor for wxGridCellFloatEditor {}
-impl _wxGridCellTextEditor for wxGridCellFloatEditor {}
-impl _wxGridCellEditor for wxGridCellFloatEditor {}
-impl _wxGridCellWorker for wxGridCellFloatEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellFloatEditor { ptr: *mut c_void }
+impl TWxGridCellFloatEditor for WxGridCellFloatEditor {}
+impl TWxGridCellTextEditor for WxGridCellFloatEditor {}
+impl TWxGridCellEditor for WxGridCellFloatEditor {}
+impl TWxGridCellWorker for WxGridCellFloatEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellFloatEditor {
-    pub fn from(ptr: *mut c_void) -> wxGridCellFloatEditor { wxGridCellFloatEditor { ptr: ptr } }
-    pub fn null() -> wxGridCellFloatEditor { wxGridCellFloatEditor::from(0 as *mut c_void) }
+impl WxGridCellFloatEditor {
+    pub fn from(ptr: *mut c_void) -> WxGridCellFloatEditor { WxGridCellFloatEditor { ptr: ptr } }
+    pub fn null() -> WxGridCellFloatEditor { WxGridCellFloatEditor::from(0 as *mut c_void) }
     
-    pub fn ctor(width: c_int, precision: c_int) -> wxGridCellFloatEditor {
-        unsafe { wxGridCellFloatEditor { ptr: wxGridCellFloatEditor_Ctor(width, precision) } }
+    pub fn ctor(width: c_int, precision: c_int) -> WxGridCellFloatEditor {
+        unsafe { WxGridCellFloatEditor { ptr: wxGridCellFloatEditor_Ctor(width, precision) } }
     }
 }
 
-pub trait _wxGridCellFloatEditor : _wxGridCellTextEditor {
+pub trait TWxGridCellFloatEditor : TWxGridCellTextEditor {
 }
 
-pub struct wxGridCellFloatRenderer { ptr: *mut c_void }
-impl _wxGridCellFloatRenderer for wxGridCellFloatRenderer {}
-impl _wxGridCellStringRenderer for wxGridCellFloatRenderer {}
-impl _wxGridCellRenderer for wxGridCellFloatRenderer {}
-impl _wxGridCellWorker for wxGridCellFloatRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellFloatRenderer { ptr: *mut c_void }
+impl TWxGridCellFloatRenderer for WxGridCellFloatRenderer {}
+impl TWxGridCellStringRenderer for WxGridCellFloatRenderer {}
+impl TWxGridCellRenderer for WxGridCellFloatRenderer {}
+impl TWxGridCellWorker for WxGridCellFloatRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellFloatRenderer {
-    pub fn from(ptr: *mut c_void) -> wxGridCellFloatRenderer { wxGridCellFloatRenderer { ptr: ptr } }
-    pub fn null() -> wxGridCellFloatRenderer { wxGridCellFloatRenderer::from(0 as *mut c_void) }
+impl WxGridCellFloatRenderer {
+    pub fn from(ptr: *mut c_void) -> WxGridCellFloatRenderer { WxGridCellFloatRenderer { ptr: ptr } }
+    pub fn null() -> WxGridCellFloatRenderer { WxGridCellFloatRenderer::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGridCellFloatRenderer : _wxGridCellStringRenderer {
+pub trait TWxGridCellFloatRenderer : TWxGridCellStringRenderer {
 }
 
-pub struct wxGridCellNumberEditor { ptr: *mut c_void }
-impl _wxGridCellNumberEditor for wxGridCellNumberEditor {}
-impl _wxGridCellTextEditor for wxGridCellNumberEditor {}
-impl _wxGridCellEditor for wxGridCellNumberEditor {}
-impl _wxGridCellWorker for wxGridCellNumberEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellNumberEditor { ptr: *mut c_void }
+impl TWxGridCellNumberEditor for WxGridCellNumberEditor {}
+impl TWxGridCellTextEditor for WxGridCellNumberEditor {}
+impl TWxGridCellEditor for WxGridCellNumberEditor {}
+impl TWxGridCellWorker for WxGridCellNumberEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellNumberEditor {
-    pub fn from(ptr: *mut c_void) -> wxGridCellNumberEditor { wxGridCellNumberEditor { ptr: ptr } }
-    pub fn null() -> wxGridCellNumberEditor { wxGridCellNumberEditor::from(0 as *mut c_void) }
+impl WxGridCellNumberEditor {
+    pub fn from(ptr: *mut c_void) -> WxGridCellNumberEditor { WxGridCellNumberEditor { ptr: ptr } }
+    pub fn null() -> WxGridCellNumberEditor { WxGridCellNumberEditor::from(0 as *mut c_void) }
     
-    pub fn ctor(min: c_int, max: c_int) -> wxGridCellNumberEditor {
-        unsafe { wxGridCellNumberEditor { ptr: wxGridCellNumberEditor_Ctor(min, max) } }
+    pub fn ctor(min: c_int, max: c_int) -> WxGridCellNumberEditor {
+        unsafe { WxGridCellNumberEditor { ptr: wxGridCellNumberEditor_Ctor(min, max) } }
     }
 }
 
-pub trait _wxGridCellNumberEditor : _wxGridCellTextEditor {
+pub trait TWxGridCellNumberEditor : TWxGridCellTextEditor {
 }
 
-pub struct wxGridCellNumberRenderer { ptr: *mut c_void }
-impl _wxGridCellNumberRenderer for wxGridCellNumberRenderer {}
-impl _wxGridCellStringRenderer for wxGridCellNumberRenderer {}
-impl _wxGridCellRenderer for wxGridCellNumberRenderer {}
-impl _wxGridCellWorker for wxGridCellNumberRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellNumberRenderer { ptr: *mut c_void }
+impl TWxGridCellNumberRenderer for WxGridCellNumberRenderer {}
+impl TWxGridCellStringRenderer for WxGridCellNumberRenderer {}
+impl TWxGridCellRenderer for WxGridCellNumberRenderer {}
+impl TWxGridCellWorker for WxGridCellNumberRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellNumberRenderer {
-    pub fn from(ptr: *mut c_void) -> wxGridCellNumberRenderer { wxGridCellNumberRenderer { ptr: ptr } }
-    pub fn null() -> wxGridCellNumberRenderer { wxGridCellNumberRenderer::from(0 as *mut c_void) }
+impl WxGridCellNumberRenderer {
+    pub fn from(ptr: *mut c_void) -> WxGridCellNumberRenderer { WxGridCellNumberRenderer { ptr: ptr } }
+    pub fn null() -> WxGridCellNumberRenderer { WxGridCellNumberRenderer::from(0 as *mut c_void) }
     
-    pub fn ctor() -> wxGridCellNumberRenderer {
-        unsafe { wxGridCellNumberRenderer { ptr: wxGridCellNumberRenderer_Ctor() } }
+    pub fn ctor() -> WxGridCellNumberRenderer {
+        unsafe { WxGridCellNumberRenderer { ptr: wxGridCellNumberRenderer_Ctor() } }
     }
 }
 
-pub trait _wxGridCellNumberRenderer : _wxGridCellStringRenderer {
+pub trait TWxGridCellNumberRenderer : TWxGridCellStringRenderer {
 }
 
-pub struct wxGridCellAutoWrapStringRenderer { ptr: *mut c_void }
-impl _wxGridCellAutoWrapStringRenderer for wxGridCellAutoWrapStringRenderer {}
-impl _wxGridCellStringRenderer for wxGridCellAutoWrapStringRenderer {}
-impl _wxGridCellRenderer for wxGridCellAutoWrapStringRenderer {}
-impl _wxGridCellWorker for wxGridCellAutoWrapStringRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellAutoWrapStringRenderer { ptr: *mut c_void }
+impl TWxGridCellAutoWrapStringRenderer for WxGridCellAutoWrapStringRenderer {}
+impl TWxGridCellStringRenderer for WxGridCellAutoWrapStringRenderer {}
+impl TWxGridCellRenderer for WxGridCellAutoWrapStringRenderer {}
+impl TWxGridCellWorker for WxGridCellAutoWrapStringRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellAutoWrapStringRenderer {
-    pub fn from(ptr: *mut c_void) -> wxGridCellAutoWrapStringRenderer { wxGridCellAutoWrapStringRenderer { ptr: ptr } }
-    pub fn null() -> wxGridCellAutoWrapStringRenderer { wxGridCellAutoWrapStringRenderer::from(0 as *mut c_void) }
+impl WxGridCellAutoWrapStringRenderer {
+    pub fn from(ptr: *mut c_void) -> WxGridCellAutoWrapStringRenderer { WxGridCellAutoWrapStringRenderer { ptr: ptr } }
+    pub fn null() -> WxGridCellAutoWrapStringRenderer { WxGridCellAutoWrapStringRenderer::from(0 as *mut c_void) }
     
-    pub fn ctor() -> wxGridCellAutoWrapStringRenderer {
-        unsafe { wxGridCellAutoWrapStringRenderer { ptr: wxGridCellAutoWrapStringRenderer_Ctor() } }
+    pub fn ctor() -> WxGridCellAutoWrapStringRenderer {
+        unsafe { WxGridCellAutoWrapStringRenderer { ptr: wxGridCellAutoWrapStringRenderer_Ctor() } }
     }
 }
 
-pub trait _wxGridCellAutoWrapStringRenderer : _wxGridCellStringRenderer {
+pub trait TWxGridCellAutoWrapStringRenderer : TWxGridCellStringRenderer {
 }
 
-pub struct wxGridCellRenderer { ptr: *mut c_void }
-impl _wxGridCellRenderer for wxGridCellRenderer {}
-impl _wxGridCellWorker for wxGridCellRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellRenderer { ptr: *mut c_void }
+impl TWxGridCellRenderer for WxGridCellRenderer {}
+impl TWxGridCellWorker for WxGridCellRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellRenderer {
-    pub fn from(ptr: *mut c_void) -> wxGridCellRenderer { wxGridCellRenderer { ptr: ptr } }
-    pub fn null() -> wxGridCellRenderer { wxGridCellRenderer::from(0 as *mut c_void) }
+impl WxGridCellRenderer {
+    pub fn from(ptr: *mut c_void) -> WxGridCellRenderer { WxGridCellRenderer { ptr: ptr } }
+    pub fn null() -> WxGridCellRenderer { WxGridCellRenderer::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGridCellRenderer : _wxGridCellWorker {
+pub trait TWxGridCellRenderer : TWxGridCellWorker {
 }
 
-pub struct wxGridCellStringRenderer { ptr: *mut c_void }
-impl _wxGridCellStringRenderer for wxGridCellStringRenderer {}
-impl _wxGridCellRenderer for wxGridCellStringRenderer {}
-impl _wxGridCellWorker for wxGridCellStringRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellStringRenderer { ptr: *mut c_void }
+impl TWxGridCellStringRenderer for WxGridCellStringRenderer {}
+impl TWxGridCellRenderer for WxGridCellStringRenderer {}
+impl TWxGridCellWorker for WxGridCellStringRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellStringRenderer {
-    pub fn from(ptr: *mut c_void) -> wxGridCellStringRenderer { wxGridCellStringRenderer { ptr: ptr } }
-    pub fn null() -> wxGridCellStringRenderer { wxGridCellStringRenderer::from(0 as *mut c_void) }
+impl WxGridCellStringRenderer {
+    pub fn from(ptr: *mut c_void) -> WxGridCellStringRenderer { WxGridCellStringRenderer { ptr: ptr } }
+    pub fn null() -> WxGridCellStringRenderer { WxGridCellStringRenderer::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGridCellStringRenderer : _wxGridCellRenderer {
+pub trait TWxGridCellStringRenderer : TWxGridCellRenderer {
 }
 
-pub struct wxGridCellTextEditor { ptr: *mut c_void }
-impl _wxGridCellTextEditor for wxGridCellTextEditor {}
-impl _wxGridCellEditor for wxGridCellTextEditor {}
-impl _wxGridCellWorker for wxGridCellTextEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellTextEditor { ptr: *mut c_void }
+impl TWxGridCellTextEditor for WxGridCellTextEditor {}
+impl TWxGridCellEditor for WxGridCellTextEditor {}
+impl TWxGridCellWorker for WxGridCellTextEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellTextEditor {
-    pub fn from(ptr: *mut c_void) -> wxGridCellTextEditor { wxGridCellTextEditor { ptr: ptr } }
-    pub fn null() -> wxGridCellTextEditor { wxGridCellTextEditor::from(0 as *mut c_void) }
+impl WxGridCellTextEditor {
+    pub fn from(ptr: *mut c_void) -> WxGridCellTextEditor { WxGridCellTextEditor { ptr: ptr } }
+    pub fn null() -> WxGridCellTextEditor { WxGridCellTextEditor::from(0 as *mut c_void) }
     
-    pub fn ctor() -> wxGridCellTextEditor {
-        unsafe { wxGridCellTextEditor { ptr: wxGridCellTextEditor_Ctor() } }
+    pub fn ctor() -> WxGridCellTextEditor {
+        unsafe { WxGridCellTextEditor { ptr: wxGridCellTextEditor_Ctor() } }
     }
 }
 
-pub trait _wxGridCellTextEditor : _wxGridCellEditor {
+pub trait TWxGridCellTextEditor : TWxGridCellEditor {
 }
 
-pub struct wxGridCellWorker { ptr: *mut c_void }
-impl _wxGridCellWorker for wxGridCellWorker { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellWorker { ptr: *mut c_void }
+impl TWxGridCellWorker for WxGridCellWorker { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellWorker {
-    pub fn from(ptr: *mut c_void) -> wxGridCellWorker { wxGridCellWorker { ptr: ptr } }
-    pub fn null() -> wxGridCellWorker { wxGridCellWorker::from(0 as *mut c_void) }
+impl WxGridCellWorker {
+    pub fn from(ptr: *mut c_void) -> WxGridCellWorker { WxGridCellWorker { ptr: ptr } }
+    pub fn null() -> WxGridCellWorker { WxGridCellWorker::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGridCellWorker {
+pub trait TWxGridCellWorker {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxGridEditorCreatedEvent { ptr: *mut c_void }
-impl _wxGridEditorCreatedEvent for wxGridEditorCreatedEvent {}
-impl _wxCommandEvent for wxGridEditorCreatedEvent {}
-impl _wxEvent for wxGridEditorCreatedEvent {}
-impl _wxObject for wxGridEditorCreatedEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridEditorCreatedEvent { ptr: *mut c_void }
+impl TWxGridEditorCreatedEvent for WxGridEditorCreatedEvent {}
+impl TWxCommandEvent for WxGridEditorCreatedEvent {}
+impl TWxEvent for WxGridEditorCreatedEvent {}
+impl TWxObject for WxGridEditorCreatedEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridEditorCreatedEvent {
-    pub fn from(ptr: *mut c_void) -> wxGridEditorCreatedEvent { wxGridEditorCreatedEvent { ptr: ptr } }
-    pub fn null() -> wxGridEditorCreatedEvent { wxGridEditorCreatedEvent::from(0 as *mut c_void) }
+impl WxGridEditorCreatedEvent {
+    pub fn from(ptr: *mut c_void) -> WxGridEditorCreatedEvent { WxGridEditorCreatedEvent { ptr: ptr } }
+    pub fn null() -> WxGridEditorCreatedEvent { WxGridEditorCreatedEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGridEditorCreatedEvent : _wxCommandEvent {
+pub trait TWxGridEditorCreatedEvent : TWxCommandEvent {
     fn getCol(&self) -> c_int {
         unsafe { wxGridEditorCreatedEvent_GetCol(self.ptr()) }
     }
-    fn getControl(&self) -> wxControl {
-        unsafe { wxControl { ptr: wxGridEditorCreatedEvent_GetControl(self.ptr()) } }
+    fn getControl(&self) -> WxControl {
+        unsafe { WxControl { ptr: wxGridEditorCreatedEvent_GetControl(self.ptr()) } }
     }
     fn getRow(&self) -> c_int {
         unsafe { wxGridEditorCreatedEvent_GetRow(self.ptr()) }
@@ -1172,7 +1172,7 @@ pub trait _wxGridEditorCreatedEvent : _wxCommandEvent {
     fn setCol(&self, col: c_int) {
         unsafe { wxGridEditorCreatedEvent_SetCol(self.ptr(), col) }
     }
-    fn setControl<T: _wxControl>(&self, ctrl: &T) {
+    fn setControl<T: TWxControl>(&self, ctrl: &T) {
         unsafe { wxGridEditorCreatedEvent_SetControl(self.ptr(), ctrl.ptr()) }
     }
     fn setRow(&self, row: c_int) {
@@ -1180,20 +1180,20 @@ pub trait _wxGridEditorCreatedEvent : _wxCommandEvent {
     }
 }
 
-pub struct wxGridEvent { ptr: *mut c_void }
-impl _wxGridEvent for wxGridEvent {}
-impl _wxNotifyEvent for wxGridEvent {}
-impl _wxCommandEvent for wxGridEvent {}
-impl _wxEvent for wxGridEvent {}
-impl _wxObject for wxGridEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridEvent { ptr: *mut c_void }
+impl TWxGridEvent for WxGridEvent {}
+impl TWxNotifyEvent for WxGridEvent {}
+impl TWxCommandEvent for WxGridEvent {}
+impl TWxEvent for WxGridEvent {}
+impl TWxObject for WxGridEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridEvent {
-    pub fn from(ptr: *mut c_void) -> wxGridEvent { wxGridEvent { ptr: ptr } }
-    pub fn null() -> wxGridEvent { wxGridEvent::from(0 as *mut c_void) }
+impl WxGridEvent {
+    pub fn from(ptr: *mut c_void) -> WxGridEvent { WxGridEvent { ptr: ptr } }
+    pub fn null() -> WxGridEvent { WxGridEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGridEvent : _wxNotifyEvent {
+pub trait TWxGridEvent : TWxNotifyEvent {
     fn altDown(&self) -> c_int {
         unsafe { wxGridEvent_AltDown(self.ptr()) }
     }
@@ -1203,8 +1203,8 @@ pub trait _wxGridEvent : _wxNotifyEvent {
     fn getCol(&self) -> c_int {
         unsafe { wxGridEvent_GetCol(self.ptr()) }
     }
-    fn getPosition(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxGridEvent_GetPosition(self.ptr()) } }
+    fn getPosition(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxGridEvent_GetPosition(self.ptr()) } }
     }
     fn getRow(&self) -> c_int {
         unsafe { wxGridEvent_GetRow(self.ptr()) }
@@ -1220,20 +1220,20 @@ pub trait _wxGridEvent : _wxNotifyEvent {
     }
 }
 
-pub struct wxGridRangeSelectEvent { ptr: *mut c_void }
-impl _wxGridRangeSelectEvent for wxGridRangeSelectEvent {}
-impl _wxNotifyEvent for wxGridRangeSelectEvent {}
-impl _wxCommandEvent for wxGridRangeSelectEvent {}
-impl _wxEvent for wxGridRangeSelectEvent {}
-impl _wxObject for wxGridRangeSelectEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridRangeSelectEvent { ptr: *mut c_void }
+impl TWxGridRangeSelectEvent for WxGridRangeSelectEvent {}
+impl TWxNotifyEvent for WxGridRangeSelectEvent {}
+impl TWxCommandEvent for WxGridRangeSelectEvent {}
+impl TWxEvent for WxGridRangeSelectEvent {}
+impl TWxObject for WxGridRangeSelectEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridRangeSelectEvent {
-    pub fn from(ptr: *mut c_void) -> wxGridRangeSelectEvent { wxGridRangeSelectEvent { ptr: ptr } }
-    pub fn null() -> wxGridRangeSelectEvent { wxGridRangeSelectEvent::from(0 as *mut c_void) }
+impl WxGridRangeSelectEvent {
+    pub fn from(ptr: *mut c_void) -> WxGridRangeSelectEvent { WxGridRangeSelectEvent { ptr: ptr } }
+    pub fn null() -> WxGridRangeSelectEvent { WxGridRangeSelectEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGridRangeSelectEvent : _wxNotifyEvent {
+pub trait TWxGridRangeSelectEvent : TWxNotifyEvent {
     fn getTopLeftCoords(&self, col: *mut c_void, row: *mut c_void) {
         unsafe { wxGridRangeSelectEvent_GetTopLeftCoords(self.ptr(), col, row) }
     }
@@ -1269,25 +1269,25 @@ pub trait _wxGridRangeSelectEvent : _wxNotifyEvent {
     }
 }
 
-pub struct wxGridSizeEvent { ptr: *mut c_void }
-impl _wxGridSizeEvent for wxGridSizeEvent {}
-impl _wxNotifyEvent for wxGridSizeEvent {}
-impl _wxCommandEvent for wxGridSizeEvent {}
-impl _wxEvent for wxGridSizeEvent {}
-impl _wxObject for wxGridSizeEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridSizeEvent { ptr: *mut c_void }
+impl TWxGridSizeEvent for WxGridSizeEvent {}
+impl TWxNotifyEvent for WxGridSizeEvent {}
+impl TWxCommandEvent for WxGridSizeEvent {}
+impl TWxEvent for WxGridSizeEvent {}
+impl TWxObject for WxGridSizeEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridSizeEvent {
-    pub fn from(ptr: *mut c_void) -> wxGridSizeEvent { wxGridSizeEvent { ptr: ptr } }
-    pub fn null() -> wxGridSizeEvent { wxGridSizeEvent::from(0 as *mut c_void) }
+impl WxGridSizeEvent {
+    pub fn from(ptr: *mut c_void) -> WxGridSizeEvent { WxGridSizeEvent { ptr: ptr } }
+    pub fn null() -> WxGridSizeEvent { WxGridSizeEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGridSizeEvent : _wxNotifyEvent {
+pub trait TWxGridSizeEvent : TWxNotifyEvent {
     fn getRowOrCol(&self) -> c_int {
         unsafe { wxGridSizeEvent_GetRowOrCol(self.ptr()) }
     }
-    fn getPosition(&self) -> wxPoint {
-        unsafe { wxPoint { ptr: wxGridSizeEvent_GetPosition(self.ptr()) } }
+    fn getPosition(&self) -> WxPoint {
+        unsafe { WxPoint { ptr: wxGridSizeEvent_GetPosition(self.ptr()) } }
     }
     fn controlDown(&self) -> c_int {
         unsafe { wxGridSizeEvent_ControlDown(self.ptr()) }
@@ -1303,72 +1303,72 @@ pub trait _wxGridSizeEvent : _wxNotifyEvent {
     }
 }
 
-pub struct wxGridTableBase { ptr: *mut c_void }
-impl _wxGridTableBase for wxGridTableBase {}
-impl _wxObject for wxGridTableBase { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridTableBase { ptr: *mut c_void }
+impl TWxGridTableBase for WxGridTableBase {}
+impl TWxObject for WxGridTableBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridTableBase {
-    pub fn from(ptr: *mut c_void) -> wxGridTableBase { wxGridTableBase { ptr: ptr } }
-    pub fn null() -> wxGridTableBase { wxGridTableBase::from(0 as *mut c_void) }
+impl WxGridTableBase {
+    pub fn from(ptr: *mut c_void) -> WxGridTableBase { WxGridTableBase { ptr: ptr } }
+    pub fn null() -> WxGridTableBase { WxGridTableBase::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxGridTableBase : _wxObject {
+pub trait TWxGridTableBase : TWxObject {
 }
 
-pub struct wxJoystick { ptr: *mut c_void }
-impl _wxJoystick for wxJoystick {}
-impl _wxObject for wxJoystick { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxJoystick { ptr: *mut c_void }
+impl TWxJoystick for WxJoystick {}
+impl TWxObject for WxJoystick { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxJoystick {
-    pub fn from(ptr: *mut c_void) -> wxJoystick { wxJoystick { ptr: ptr } }
-    pub fn null() -> wxJoystick { wxJoystick::from(0 as *mut c_void) }
+impl WxJoystick {
+    pub fn from(ptr: *mut c_void) -> WxJoystick { WxJoystick { ptr: ptr } }
+    pub fn null() -> WxJoystick { WxJoystick::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxJoystick : _wxObject {
+pub trait TWxJoystick : TWxObject {
 }
 
-pub struct wxLayoutAlgorithm { ptr: *mut c_void }
-impl _wxLayoutAlgorithm for wxLayoutAlgorithm {}
-impl _wxObject for wxLayoutAlgorithm { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxLayoutAlgorithm { ptr: *mut c_void }
+impl TWxLayoutAlgorithm for WxLayoutAlgorithm {}
+impl TWxObject for WxLayoutAlgorithm { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxLayoutAlgorithm {
-    pub fn from(ptr: *mut c_void) -> wxLayoutAlgorithm { wxLayoutAlgorithm { ptr: ptr } }
-    pub fn null() -> wxLayoutAlgorithm { wxLayoutAlgorithm::from(0 as *mut c_void) }
+impl WxLayoutAlgorithm {
+    pub fn from(ptr: *mut c_void) -> WxLayoutAlgorithm { WxLayoutAlgorithm { ptr: ptr } }
+    pub fn null() -> WxLayoutAlgorithm { WxLayoutAlgorithm::from(0 as *mut c_void) }
     
-    pub fn new() -> wxLayoutAlgorithm {
-        unsafe { wxLayoutAlgorithm { ptr: wxLayoutAlgorithm_Create() } }
+    pub fn new() -> WxLayoutAlgorithm {
+        unsafe { WxLayoutAlgorithm { ptr: wxLayoutAlgorithm_Create() } }
     }
 }
 
-pub trait _wxLayoutAlgorithm : _wxObject {
-    fn layoutFrame<T: _wxFrame>(&self, frame: &T, mainWindow: *mut c_void) -> c_int {
+pub trait TWxLayoutAlgorithm : TWxObject {
+    fn layoutFrame<T: TWxFrame>(&self, frame: &T, mainWindow: *mut c_void) -> c_int {
         unsafe { wxLayoutAlgorithm_LayoutFrame(self.ptr(), frame.ptr(), mainWindow) }
     }
-    fn layoutMDIFrame<T: _wxFrame>(&self, frame: &T, x: c_int, y: c_int, w: c_int, h: c_int, use_: c_int) -> c_int {
+    fn layoutMDIFrame<T: TWxFrame>(&self, frame: &T, x: c_int, y: c_int, w: c_int, h: c_int, use_: c_int) -> c_int {
         unsafe { wxLayoutAlgorithm_LayoutMDIFrame(self.ptr(), frame.ptr(), x, y, w, h, use_) }
     }
-    fn layoutWindow<T: _wxFrame>(&self, frame: &T, mainWindow: *mut c_void) -> c_int {
+    fn layoutWindow<T: TWxFrame>(&self, frame: &T, mainWindow: *mut c_void) -> c_int {
         unsafe { wxLayoutAlgorithm_LayoutWindow(self.ptr(), frame.ptr(), mainWindow) }
     }
 }
 
-pub struct wxQueryLayoutInfoEvent { ptr: *mut c_void }
-impl _wxQueryLayoutInfoEvent for wxQueryLayoutInfoEvent {}
-impl _wxEvent for wxQueryLayoutInfoEvent {}
-impl _wxObject for wxQueryLayoutInfoEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxQueryLayoutInfoEvent { ptr: *mut c_void }
+impl TWxQueryLayoutInfoEvent for WxQueryLayoutInfoEvent {}
+impl TWxEvent for WxQueryLayoutInfoEvent {}
+impl TWxObject for WxQueryLayoutInfoEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxQueryLayoutInfoEvent {
-    pub fn from(ptr: *mut c_void) -> wxQueryLayoutInfoEvent { wxQueryLayoutInfoEvent { ptr: ptr } }
-    pub fn null() -> wxQueryLayoutInfoEvent { wxQueryLayoutInfoEvent::from(0 as *mut c_void) }
+impl WxQueryLayoutInfoEvent {
+    pub fn from(ptr: *mut c_void) -> WxQueryLayoutInfoEvent { WxQueryLayoutInfoEvent { ptr: ptr } }
+    pub fn null() -> WxQueryLayoutInfoEvent { WxQueryLayoutInfoEvent::from(0 as *mut c_void) }
     
-    pub fn new(id: c_int) -> wxQueryLayoutInfoEvent {
-        unsafe { wxQueryLayoutInfoEvent { ptr: wxQueryLayoutInfoEvent_Create(id) } }
+    pub fn new(id: c_int) -> WxQueryLayoutInfoEvent {
+        unsafe { WxQueryLayoutInfoEvent { ptr: wxQueryLayoutInfoEvent_Create(id) } }
     }
 }
 
-pub trait _wxQueryLayoutInfoEvent : _wxEvent {
+pub trait TWxQueryLayoutInfoEvent : TWxEvent {
     fn getAlignment(&self) -> c_int {
         unsafe { wxQueryLayoutInfoEvent_GetAlignment(self.ptr()) }
     }
@@ -1381,8 +1381,8 @@ pub trait _wxQueryLayoutInfoEvent : _wxEvent {
     fn getRequestedLength(&self) -> c_int {
         unsafe { wxQueryLayoutInfoEvent_GetRequestedLength(self.ptr()) }
     }
-    fn getSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxQueryLayoutInfoEvent_GetSize(self.ptr()) } }
+    fn getSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxQueryLayoutInfoEvent_GetSize(self.ptr()) } }
     }
     fn setAlignment(&self, align: c_int) {
         unsafe { wxQueryLayoutInfoEvent_SetAlignment(self.ptr(), align) }
@@ -1401,23 +1401,23 @@ pub trait _wxQueryLayoutInfoEvent : _wxEvent {
     }
 }
 
-pub struct wxSashEvent { ptr: *mut c_void }
-impl _wxSashEvent for wxSashEvent {}
-impl _wxEvent for wxSashEvent {}
-impl _wxObject for wxSashEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSashEvent { ptr: *mut c_void }
+impl TWxSashEvent for WxSashEvent {}
+impl TWxEvent for WxSashEvent {}
+impl TWxObject for WxSashEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSashEvent {
-    pub fn from(ptr: *mut c_void) -> wxSashEvent { wxSashEvent { ptr: ptr } }
-    pub fn null() -> wxSashEvent { wxSashEvent::from(0 as *mut c_void) }
+impl WxSashEvent {
+    pub fn from(ptr: *mut c_void) -> WxSashEvent { WxSashEvent { ptr: ptr } }
+    pub fn null() -> WxSashEvent { WxSashEvent::from(0 as *mut c_void) }
     
-    pub fn new(id: c_int, edge: c_int) -> wxSashEvent {
-        unsafe { wxSashEvent { ptr: wxSashEvent_Create(id, edge) } }
+    pub fn new(id: c_int, edge: c_int) -> WxSashEvent {
+        unsafe { WxSashEvent { ptr: wxSashEvent_Create(id, edge) } }
     }
 }
 
-pub trait _wxSashEvent : _wxEvent {
-    fn getDragRect(&self) -> wxRect {
-        unsafe { wxRect { ptr: wxSashEvent_GetDragRect(self.ptr()) } }
+pub trait TWxSashEvent : TWxEvent {
+    fn getDragRect(&self) -> WxRect {
+        unsafe { WxRect { ptr: wxSashEvent_GetDragRect(self.ptr()) } }
     }
     fn getDragStatus(&self) -> c_int {
         unsafe { wxSashEvent_GetDragStatus(self.ptr()) }
@@ -1436,23 +1436,23 @@ pub trait _wxSashEvent : _wxEvent {
     }
 }
 
-pub struct wxSashLayoutWindow { ptr: *mut c_void }
-impl _wxSashLayoutWindow for wxSashLayoutWindow {}
-impl _wxSashWindow for wxSashLayoutWindow {}
-impl _wxWindow for wxSashLayoutWindow {}
-impl _wxEvtHandler for wxSashLayoutWindow {}
-impl _wxObject for wxSashLayoutWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSashLayoutWindow { ptr: *mut c_void }
+impl TWxSashLayoutWindow for WxSashLayoutWindow {}
+impl TWxSashWindow for WxSashLayoutWindow {}
+impl TWxWindow for WxSashLayoutWindow {}
+impl TWxEvtHandler for WxSashLayoutWindow {}
+impl TWxObject for WxSashLayoutWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSashLayoutWindow {
-    pub fn from(ptr: *mut c_void) -> wxSashLayoutWindow { wxSashLayoutWindow { ptr: ptr } }
-    pub fn null() -> wxSashLayoutWindow { wxSashLayoutWindow::from(0 as *mut c_void) }
+impl WxSashLayoutWindow {
+    pub fn from(ptr: *mut c_void) -> WxSashLayoutWindow { WxSashLayoutWindow { ptr: ptr } }
+    pub fn null() -> WxSashLayoutWindow { WxSashLayoutWindow::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_par: &T, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> wxSashLayoutWindow {
-        unsafe { wxSashLayoutWindow { ptr: wxSashLayoutWindow_Create(_par.ptr(), _id, _x, _y, _w, _h, _stl) } }
+    pub fn new<T: TWxWindow>(_par: &T, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> WxSashLayoutWindow {
+        unsafe { WxSashLayoutWindow { ptr: wxSashLayoutWindow_Create(_par.ptr(), _id, _x, _y, _w, _h, _stl) } }
     }
 }
 
-pub trait _wxSashLayoutWindow : _wxSashWindow {
+pub trait TWxSashLayoutWindow : TWxSashWindow {
     fn getAlignment(&self) -> c_int {
         unsafe { wxSashLayoutWindow_GetAlignment(self.ptr()) }
     }
@@ -1470,22 +1470,22 @@ pub trait _wxSashLayoutWindow : _wxSashWindow {
     }
 }
 
-pub struct wxSashWindow { ptr: *mut c_void }
-impl _wxSashWindow for wxSashWindow {}
-impl _wxWindow for wxSashWindow {}
-impl _wxEvtHandler for wxSashWindow {}
-impl _wxObject for wxSashWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSashWindow { ptr: *mut c_void }
+impl TWxSashWindow for WxSashWindow {}
+impl TWxWindow for WxSashWindow {}
+impl TWxEvtHandler for WxSashWindow {}
+impl TWxObject for WxSashWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSashWindow {
-    pub fn from(ptr: *mut c_void) -> wxSashWindow { wxSashWindow { ptr: ptr } }
-    pub fn null() -> wxSashWindow { wxSashWindow::from(0 as *mut c_void) }
+impl WxSashWindow {
+    pub fn from(ptr: *mut c_void) -> WxSashWindow { WxSashWindow { ptr: ptr } }
+    pub fn null() -> WxSashWindow { WxSashWindow::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWindow>(_par: &T, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> wxSashWindow {
-        unsafe { wxSashWindow { ptr: wxSashWindow_Create(_par.ptr(), _id, _x, _y, _w, _h, _stl) } }
+    pub fn new<T: TWxWindow>(_par: &T, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> WxSashWindow {
+        unsafe { WxSashWindow { ptr: wxSashWindow_Create(_par.ptr(), _id, _x, _y, _w, _h, _stl) } }
     }
 }
 
-pub trait _wxSashWindow : _wxWindow {
+pub trait TWxSashWindow : TWxWindow {
     fn getDefaultBorderSize(&self) -> c_int {
         unsafe { wxSashWindow_GetDefaultBorderSize(self.ptr()) }
     }
@@ -1539,99 +1539,99 @@ pub trait _wxSashWindow : _wxWindow {
     }
 }
 
-pub struct wxSplashScreen { ptr: *mut c_void }
-impl _wxSplashScreen for wxSplashScreen {}
-impl _wxFrame for wxSplashScreen {}
-impl _wxTopLevelWindow for wxSplashScreen {}
-impl _wxWindow for wxSplashScreen {}
-impl _wxEvtHandler for wxSplashScreen {}
-impl _wxObject for wxSplashScreen { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxSplashScreen { ptr: *mut c_void }
+impl TWxSplashScreen for WxSplashScreen {}
+impl TWxFrame for WxSplashScreen {}
+impl TWxTopLevelWindow for WxSplashScreen {}
+impl TWxWindow for WxSplashScreen {}
+impl TWxEvtHandler for WxSplashScreen {}
+impl TWxObject for WxSplashScreen { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxSplashScreen {
-    pub fn from(ptr: *mut c_void) -> wxSplashScreen { wxSplashScreen { ptr: ptr } }
-    pub fn null() -> wxSplashScreen { wxSplashScreen::from(0 as *mut c_void) }
+impl WxSplashScreen {
+    pub fn from(ptr: *mut c_void) -> WxSplashScreen { WxSplashScreen { ptr: ptr } }
+    pub fn null() -> WxSplashScreen { WxSplashScreen::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxSplashScreen : _wxFrame {
+pub trait TWxSplashScreen : TWxFrame {
 }
 
-pub struct wxTaskBarIcon { ptr: *mut c_void }
-impl _wxTaskBarIcon for wxTaskBarIcon {}
-impl _wxEvtHandler for wxTaskBarIcon {}
-impl _wxObject for wxTaskBarIcon { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTaskBarIcon { ptr: *mut c_void }
+impl TWxTaskBarIcon for WxTaskBarIcon {}
+impl TWxEvtHandler for WxTaskBarIcon {}
+impl TWxObject for WxTaskBarIcon { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTaskBarIcon {
-    pub fn from(ptr: *mut c_void) -> wxTaskBarIcon { wxTaskBarIcon { ptr: ptr } }
-    pub fn null() -> wxTaskBarIcon { wxTaskBarIcon::from(0 as *mut c_void) }
+impl WxTaskBarIcon {
+    pub fn from(ptr: *mut c_void) -> WxTaskBarIcon { WxTaskBarIcon { ptr: ptr } }
+    pub fn null() -> WxTaskBarIcon { WxTaskBarIcon::from(0 as *mut c_void) }
     
-    pub fn new() -> wxTaskBarIcon {
-        unsafe { wxTaskBarIcon { ptr: wxTaskBarIcon_Create() } }
+    pub fn new() -> WxTaskBarIcon {
+        unsafe { WxTaskBarIcon { ptr: wxTaskBarIcon_Create() } }
     }
 }
 
-pub trait _wxTaskBarIcon : _wxEvtHandler {
+pub trait TWxTaskBarIcon : TWxEvtHandler {
     fn isIconInstalled(&self) -> c_int {
         unsafe { wxTaskBarIcon_IsIconInstalled(self.ptr()) }
     }
     fn isOk(&self) -> c_int {
         unsafe { wxTaskBarIcon_IsOk(self.ptr()) }
     }
-    fn popupMenu<T: _wxMenu>(&self, menu: &T) -> c_int {
+    fn popupMenu<T: TWxMenu>(&self, menu: &T) -> c_int {
         unsafe { wxTaskBarIcon_PopupMenu(self.ptr(), menu.ptr()) }
     }
     fn removeIcon(&self) -> c_int {
         unsafe { wxTaskBarIcon_RemoveIcon(self.ptr()) }
     }
-    fn setIcon<T: _wxIcon>(&self, icon: &T, text: &str) -> c_int {
+    fn setIcon<T: TWxIcon>(&self, icon: &T, text: &str) -> c_int {
         let text = wxT(text);
         unsafe { wxTaskBarIcon_SetIcon(self.ptr(), icon.ptr(), text.ptr()) }
     }
 }
 
-pub struct wxTipProvider { ptr: *mut c_void }
-impl _wxTipProvider for wxTipProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxTipProvider { ptr: *mut c_void }
+impl TWxTipProvider for WxTipProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxTipProvider {
-    pub fn from(ptr: *mut c_void) -> wxTipProvider { wxTipProvider { ptr: ptr } }
-    pub fn null() -> wxTipProvider { wxTipProvider::from(0 as *mut c_void) }
+impl WxTipProvider {
+    pub fn from(ptr: *mut c_void) -> WxTipProvider { WxTipProvider { ptr: ptr } }
+    pub fn null() -> WxTipProvider { WxTipProvider::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxTipProvider {
+pub trait TWxTipProvider {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct wxWizard { ptr: *mut c_void }
-impl _wxWizard for wxWizard {}
-impl _wxDialog for wxWizard {}
-impl _wxTopLevelWindow for wxWizard {}
-impl _wxWindow for wxWizard {}
-impl _wxEvtHandler for wxWizard {}
-impl _wxObject for wxWizard { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxWizard { ptr: *mut c_void }
+impl TWxWizard for WxWizard {}
+impl TWxDialog for WxWizard {}
+impl TWxTopLevelWindow for WxWizard {}
+impl TWxWindow for WxWizard {}
+impl TWxEvtHandler for WxWizard {}
+impl TWxObject for WxWizard { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxWizard {
-    pub fn from(ptr: *mut c_void) -> wxWizard { wxWizard { ptr: ptr } }
-    pub fn null() -> wxWizard { wxWizard::from(0 as *mut c_void) }
+impl WxWizard {
+    pub fn from(ptr: *mut c_void) -> WxWizard { WxWizard { ptr: ptr } }
+    pub fn null() -> WxWizard { WxWizard::from(0 as *mut c_void) }
     
-    pub fn chain<T: _wxWizardPageSimple, U: _wxWizardPageSimple>(f: &T, s: &U) {
+    pub fn chain<T: TWxWizardPageSimple, U: TWxWizardPageSimple>(f: &T, s: &U) {
         unsafe { wxWizard_Chain(f.ptr(), s.ptr()) }
     }
-    pub fn new<T: _wxWindow, U: _wxBitmap>(_prt: &T, _id: c_int, _txt: &str, _bmp: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int) -> wxWizard {
+    pub fn new<T: TWxWindow, U: TWxBitmap>(_prt: &T, _id: c_int, _txt: &str, _bmp: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int) -> WxWizard {
         let _txt = wxT(_txt);
-        unsafe { wxWizard { ptr: wxWizard_Create(_prt.ptr(), _id, _txt.ptr(), _bmp.ptr(), _lft, _top, _wdt, _hgt) } }
+        unsafe { WxWizard { ptr: wxWizard_Create(_prt.ptr(), _id, _txt.ptr(), _bmp.ptr(), _lft, _top, _wdt, _hgt) } }
     }
 }
 
-pub trait _wxWizard : _wxDialog {
-    fn getCurrentPage(&self) -> wxWizardPage {
-        unsafe { wxWizardPage { ptr: wxWizard_GetCurrentPage(self.ptr()) } }
+pub trait TWxWizard : TWxDialog {
+    fn getCurrentPage(&self) -> WxWizardPage {
+        unsafe { WxWizardPage { ptr: wxWizard_GetCurrentPage(self.ptr()) } }
     }
-    fn getPageSize(&self) -> wxSize {
-        unsafe { wxSize { ptr: wxWizard_GetPageSize(self.ptr()) } }
+    fn getPageSize(&self) -> WxSize {
+        unsafe { WxSize { ptr: wxWizard_GetPageSize(self.ptr()) } }
     }
-    fn runWizard<T: _wxWizardPage>(&self, firstPage: &T) -> c_int {
+    fn runWizard<T: TWxWizardPage>(&self, firstPage: &T) -> c_int {
         unsafe { wxWizard_RunWizard(self.ptr(), firstPage.ptr()) }
     }
     fn setPageSize(&self, w: c_int, h: c_int) {
@@ -1639,116 +1639,116 @@ pub trait _wxWizard : _wxDialog {
     }
 }
 
-pub struct wxWizardEvent { ptr: *mut c_void }
-impl _wxWizardEvent for wxWizardEvent {}
-impl _wxNotifyEvent for wxWizardEvent {}
-impl _wxCommandEvent for wxWizardEvent {}
-impl _wxEvent for wxWizardEvent {}
-impl _wxObject for wxWizardEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxWizardEvent { ptr: *mut c_void }
+impl TWxWizardEvent for WxWizardEvent {}
+impl TWxNotifyEvent for WxWizardEvent {}
+impl TWxCommandEvent for WxWizardEvent {}
+impl TWxEvent for WxWizardEvent {}
+impl TWxObject for WxWizardEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxWizardEvent {
-    pub fn from(ptr: *mut c_void) -> wxWizardEvent { wxWizardEvent { ptr: ptr } }
-    pub fn null() -> wxWizardEvent { wxWizardEvent::from(0 as *mut c_void) }
+impl WxWizardEvent {
+    pub fn from(ptr: *mut c_void) -> WxWizardEvent { WxWizardEvent { ptr: ptr } }
+    pub fn null() -> WxWizardEvent { WxWizardEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxWizardEvent : _wxNotifyEvent {
+pub trait TWxWizardEvent : TWxNotifyEvent {
     fn getDirection(&self) -> c_int {
         unsafe { wxWizardEvent_GetDirection(self.ptr()) }
     }
 }
 
-pub struct wxWizardPage { ptr: *mut c_void }
-impl _wxWizardPage for wxWizardPage {}
-impl _wxPanel for wxWizardPage {}
-impl _wxWindow for wxWizardPage {}
-impl _wxEvtHandler for wxWizardPage {}
-impl _wxObject for wxWizardPage { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxWizardPage { ptr: *mut c_void }
+impl TWxWizardPage for WxWizardPage {}
+impl TWxPanel for WxWizardPage {}
+impl TWxWindow for WxWizardPage {}
+impl TWxEvtHandler for WxWizardPage {}
+impl TWxObject for WxWizardPage { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxWizardPage {
-    pub fn from(ptr: *mut c_void) -> wxWizardPage { wxWizardPage { ptr: ptr } }
-    pub fn null() -> wxWizardPage { wxWizardPage::from(0 as *mut c_void) }
+impl WxWizardPage {
+    pub fn from(ptr: *mut c_void) -> WxWizardPage { WxWizardPage { ptr: ptr } }
+    pub fn null() -> WxWizardPage { WxWizardPage::from(0 as *mut c_void) }
     
 }
 
-pub trait _wxWizardPage : _wxPanel {
+pub trait TWxWizardPage : TWxPanel {
 }
 
-pub struct wxWizardPageSimple { ptr: *mut c_void }
-impl _wxWizardPageSimple for wxWizardPageSimple {}
-impl _wxWizardPage for wxWizardPageSimple {}
-impl _wxPanel for wxWizardPageSimple {}
-impl _wxWindow for wxWizardPageSimple {}
-impl _wxEvtHandler for wxWizardPageSimple {}
-impl _wxObject for wxWizardPageSimple { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxWizardPageSimple { ptr: *mut c_void }
+impl TWxWizardPageSimple for WxWizardPageSimple {}
+impl TWxWizardPage for WxWizardPageSimple {}
+impl TWxPanel for WxWizardPageSimple {}
+impl TWxWindow for WxWizardPageSimple {}
+impl TWxEvtHandler for WxWizardPageSimple {}
+impl TWxObject for WxWizardPageSimple { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxWizardPageSimple {
-    pub fn from(ptr: *mut c_void) -> wxWizardPageSimple { wxWizardPageSimple { ptr: ptr } }
-    pub fn null() -> wxWizardPageSimple { wxWizardPageSimple::from(0 as *mut c_void) }
+impl WxWizardPageSimple {
+    pub fn from(ptr: *mut c_void) -> WxWizardPageSimple { WxWizardPageSimple { ptr: ptr } }
+    pub fn null() -> WxWizardPageSimple { WxWizardPageSimple::from(0 as *mut c_void) }
     
-    pub fn new<T: _wxWizard>(_prt: &T) -> wxWizardPageSimple {
-        unsafe { wxWizardPageSimple { ptr: wxWizardPageSimple_Create(_prt.ptr()) } }
+    pub fn new<T: TWxWizard>(_prt: &T) -> WxWizardPageSimple {
+        unsafe { WxWizardPageSimple { ptr: wxWizardPageSimple_Create(_prt.ptr()) } }
     }
 }
 
-pub trait _wxWizardPageSimple : _wxWizardPage {
-    fn getBitmap<T: _wxBitmap>(&self, _ref: &T) {
+pub trait TWxWizardPageSimple : TWxWizardPage {
+    fn getBitmap<T: TWxBitmap>(&self, _ref: &T) {
         unsafe { wxWizardPageSimple_GetBitmap(self.ptr(), _ref.ptr()) }
     }
-    fn getNext(&self) -> wxWizardPageSimple {
-        unsafe { wxWizardPageSimple { ptr: wxWizardPageSimple_GetNext(self.ptr()) } }
+    fn getNext(&self) -> WxWizardPageSimple {
+        unsafe { WxWizardPageSimple { ptr: wxWizardPageSimple_GetNext(self.ptr()) } }
     }
-    fn getPrev(&self) -> wxWizardPageSimple {
-        unsafe { wxWizardPageSimple { ptr: wxWizardPageSimple_GetPrev(self.ptr()) } }
+    fn getPrev(&self) -> WxWizardPageSimple {
+        unsafe { WxWizardPageSimple { ptr: wxWizardPageSimple_GetPrev(self.ptr()) } }
     }
-    fn setNext<T: _wxWizardPageSimple>(&self, next: &T) {
+    fn setNext<T: TWxWizardPageSimple>(&self, next: &T) {
         unsafe { wxWizardPageSimple_SetNext(self.ptr(), next.ptr()) }
     }
-    fn setPrev<T: _wxWizardPageSimple>(&self, prev: &T) {
+    fn setPrev<T: TWxWizardPageSimple>(&self, prev: &T) {
         unsafe { wxWizardPageSimple_SetPrev(self.ptr(), prev.ptr()) }
     }
 }
 
-pub struct wxManagedPtr { ptr: *mut c_void }
-impl _wxManagedPtr for wxManagedPtr { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxManagedPtr { ptr: *mut c_void }
+impl TWxManagedPtr for WxManagedPtr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxManagedPtr {
-    pub fn from(ptr: *mut c_void) -> wxManagedPtr { wxManagedPtr { ptr: ptr } }
-    pub fn null() -> wxManagedPtr { wxManagedPtr::from(0 as *mut c_void) }
+impl WxManagedPtr {
+    pub fn from(ptr: *mut c_void) -> WxManagedPtr { WxManagedPtr { ptr: ptr } }
+    pub fn null() -> WxManagedPtr { WxManagedPtr::from(0 as *mut c_void) }
     
-    pub fn newFromObject<T: _wxObject>(obj: &T) -> wxManagedPtr {
-        unsafe { wxManagedPtr { ptr: wxManagedPtr_CreateFromObject(obj.ptr()) } }
+    pub fn newFromObject<T: TWxObject>(obj: &T) -> WxManagedPtr {
+        unsafe { WxManagedPtr { ptr: wxManagedPtr_CreateFromObject(obj.ptr()) } }
     }
-    pub fn newFromDateTime<T: _wxDateTime>(obj: &T) -> wxManagedPtr {
-        unsafe { wxManagedPtr { ptr: wxManagedPtr_CreateFromDateTime(obj.ptr()) } }
+    pub fn newFromDateTime<T: TWxDateTime>(obj: &T) -> WxManagedPtr {
+        unsafe { WxManagedPtr { ptr: wxManagedPtr_CreateFromDateTime(obj.ptr()) } }
     }
-    pub fn newFromGridCellCoordsArray<T: _wxGridCellCoordsArray>(obj: &T) -> wxManagedPtr {
-        unsafe { wxManagedPtr { ptr: wxManagedPtr_CreateFromGridCellCoordsArray(obj.ptr()) } }
+    pub fn newFromGridCellCoordsArray<T: TWxGridCellCoordsArray>(obj: &T) -> WxManagedPtr {
+        unsafe { WxManagedPtr { ptr: wxManagedPtr_CreateFromGridCellCoordsArray(obj.ptr()) } }
     }
-    pub fn newFromBitmap<T: _wxBitmap>(obj: &T) -> wxManagedPtr {
-        unsafe { wxManagedPtr { ptr: wxManagedPtr_CreateFromBitmap(obj.ptr()) } }
+    pub fn newFromBitmap<T: TWxBitmap>(obj: &T) -> WxManagedPtr {
+        unsafe { WxManagedPtr { ptr: wxManagedPtr_CreateFromBitmap(obj.ptr()) } }
     }
-    pub fn newFromIcon<T: _wxIcon>(obj: &T) -> wxManagedPtr {
-        unsafe { wxManagedPtr { ptr: wxManagedPtr_CreateFromIcon(obj.ptr()) } }
+    pub fn newFromIcon<T: TWxIcon>(obj: &T) -> WxManagedPtr {
+        unsafe { WxManagedPtr { ptr: wxManagedPtr_CreateFromIcon(obj.ptr()) } }
     }
-    pub fn newFromBrush<T: _wxBrush>(obj: &T) -> wxManagedPtr {
-        unsafe { wxManagedPtr { ptr: wxManagedPtr_CreateFromBrush(obj.ptr()) } }
+    pub fn newFromBrush<T: TWxBrush>(obj: &T) -> WxManagedPtr {
+        unsafe { WxManagedPtr { ptr: wxManagedPtr_CreateFromBrush(obj.ptr()) } }
     }
-    pub fn newFromColour<T: _wxColour>(obj: &T) -> wxManagedPtr {
-        unsafe { wxManagedPtr { ptr: wxManagedPtr_CreateFromColour(obj.ptr()) } }
+    pub fn newFromColour<T: TWxColour>(obj: &T) -> WxManagedPtr {
+        unsafe { WxManagedPtr { ptr: wxManagedPtr_CreateFromColour(obj.ptr()) } }
     }
-    pub fn newFromCursor<T: _wxCursor>(obj: &T) -> wxManagedPtr {
-        unsafe { wxManagedPtr { ptr: wxManagedPtr_CreateFromCursor(obj.ptr()) } }
+    pub fn newFromCursor<T: TWxCursor>(obj: &T) -> WxManagedPtr {
+        unsafe { WxManagedPtr { ptr: wxManagedPtr_CreateFromCursor(obj.ptr()) } }
     }
-    pub fn newFromFont<T: _wxFont>(obj: &T) -> wxManagedPtr {
-        unsafe { wxManagedPtr { ptr: wxManagedPtr_CreateFromFont(obj.ptr()) } }
+    pub fn newFromFont<T: TWxFont>(obj: &T) -> WxManagedPtr {
+        unsafe { WxManagedPtr { ptr: wxManagedPtr_CreateFromFont(obj.ptr()) } }
     }
-    pub fn newFromPen<T: _wxPen>(obj: &T) -> wxManagedPtr {
-        unsafe { wxManagedPtr { ptr: wxManagedPtr_CreateFromPen(obj.ptr()) } }
+    pub fn newFromPen<T: TWxPen>(obj: &T) -> WxManagedPtr {
+        unsafe { WxManagedPtr { ptr: wxManagedPtr_CreateFromPen(obj.ptr()) } }
     }
 }
 
-pub trait _wxManagedPtr {
+pub trait TWxManagedPtr {
     fn ptr(&self) -> *mut c_void;
     
     fn getPtr(&self) -> *mut c_void {
@@ -1765,21 +1765,21 @@ pub trait _wxManagedPtr {
     }
 }
 
-pub struct wxGridCellTextEnterEditor { ptr: *mut c_void }
-impl _wxGridCellTextEnterEditor for wxGridCellTextEnterEditor {}
-impl _wxGridCellTextEditor for wxGridCellTextEnterEditor {}
-impl _wxGridCellEditor for wxGridCellTextEnterEditor {}
-impl _wxGridCellWorker for wxGridCellTextEnterEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct WxGridCellTextEnterEditor { ptr: *mut c_void }
+impl TWxGridCellTextEnterEditor for WxGridCellTextEnterEditor {}
+impl TWxGridCellTextEditor for WxGridCellTextEnterEditor {}
+impl TWxGridCellEditor for WxGridCellTextEnterEditor {}
+impl TWxGridCellWorker for WxGridCellTextEnterEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl wxGridCellTextEnterEditor {
-    pub fn from(ptr: *mut c_void) -> wxGridCellTextEnterEditor { wxGridCellTextEnterEditor { ptr: ptr } }
-    pub fn null() -> wxGridCellTextEnterEditor { wxGridCellTextEnterEditor::from(0 as *mut c_void) }
+impl WxGridCellTextEnterEditor {
+    pub fn from(ptr: *mut c_void) -> WxGridCellTextEnterEditor { WxGridCellTextEnterEditor { ptr: ptr } }
+    pub fn null() -> WxGridCellTextEnterEditor { WxGridCellTextEnterEditor::from(0 as *mut c_void) }
     
-    pub fn ctor() -> wxGridCellTextEnterEditor {
-        unsafe { wxGridCellTextEnterEditor { ptr: wxGridCellTextEnterEditor_Ctor() } }
+    pub fn ctor() -> WxGridCellTextEnterEditor {
+        unsafe { WxGridCellTextEnterEditor { ptr: wxGridCellTextEnterEditor_Ctor() } }
     }
 }
 
-pub trait _wxGridCellTextEnterEditor : _wxGridCellTextEditor {
+pub trait TWxGridCellTextEnterEditor : TWxGridCellTextEditor {
 }
 

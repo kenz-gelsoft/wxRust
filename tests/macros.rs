@@ -8,15 +8,15 @@ pub macro_rules! wxApp(
             use std::libc::c_void;
             use std::vec;
 
-            use wx::base::wxClosure;
-            use wx::core::wxRustApp;
+            use wx::base::WxClosure;
+            use wx::core::WxrApp;
 
             static nullptr: *mut c_void = 0 as *mut c_void;
 
             do native::start(argc, argv) {
-                let closure = wxClosure::new($f as *mut c_void, nullptr);
+                let closure = WxClosure::new($f as *mut c_void, nullptr);
                 let args: ~[*i32] = ~[];
-                wxRustApp::initializeC(&closure, args.len() as i32, args.as_ptr() as *mut *mut i8);
+                WxrApp::initializeC(&closure, args.len() as i32, args.as_ptr() as *mut *mut i8);
             }
         }
     )
