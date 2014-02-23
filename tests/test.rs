@@ -25,8 +25,8 @@ fn wx_main() {
     frame.raise();
 }
 
-fn make_frame() -> WxFrame {
-    let frame = WxFrame::new(&WxWindow::null(), wxID_ANY, "Hello, wxRust!", -1, -1, -1, -1, wxDEFAULT_FRAME_STYLE);
+fn make_frame() -> Frame {
+    let frame = Frame::new(&Window::null(), ID_ANY, "Hello, wxRust!", -1, -1, -1, -1, DEFAULT_FRAME_STYLE);
     let menubar = make_menubar();
     frame.setMenuBar(&menubar);
     
@@ -35,11 +35,11 @@ fn make_frame() -> WxFrame {
     frame
 }
 
-fn make_menubar() -> WxMenuBar {
-    let menubar = WxMenuBar::new(0);
+fn make_menubar() -> MenuBar {
+    let menubar = MenuBar::new(0);
     
-    let fileMenu = WxMenu::new("", 0);
-    let fileNew = WxMenuItem::newEx(wxID_ANY, "New", "Create a new file.", 0, &WxMenu::null());
+    let fileMenu = Menu::new("", 0);
+    let fileNew = MenuItem::newEx(ID_ANY, "New", "Create a new file.", 0, &Menu::null());
     fileMenu.appendItem(&fileNew);
 
     menubar.append(&fileMenu, "File");
@@ -54,16 +54,16 @@ fn MyButton_clicked(fun: *mut c_void, data: *mut c_void, evt: *mut c_void) {
     }
 
     println!("hello!");
-    let parent = WxWindow::from(data);
-    let msgDlg = WxMessageDialog::new(&parent, "Pushed!!", "The Button", wxOK);
+    let parent = Window::from(data);
+    let msgDlg = MessageDialog::new(&parent, "Pushed!!", "The Button", OK);
     msgDlg.showModal();
 }
 
-fn make_button<T: TWxWindow>(parent: &T) -> WxButton {
-    let button = WxButton::new(parent, wxID_ANY, "Push me!", 10, 10, 50, 30, 0);
-    let closure = WxClosure::new(MyButton_clicked as *mut c_void, parent.ptr());
+fn make_button<T: TWindow>(parent: &T) -> Button {
+    let button = Button::new(parent, ID_ANY, "Push me!", 10, 10, 50, 30, 0);
+    let closure = Closure::new(MyButton_clicked as *mut c_void, parent.ptr());
     unsafe {
-        button.connect(wxID_ANY, wxID_ANY, expEVT_COMMAND_BUTTON_CLICKED(), closure.ptr());
+        button.connect(ID_ANY, ID_ANY, expEVT_COMMAND_BUTTON_CLICKED(), closure.ptr());
     }
 
     button

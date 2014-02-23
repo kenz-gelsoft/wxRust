@@ -4,29 +4,29 @@ use base::*;
 use core::*;
 use advanced::*;
 
-pub struct WxStyledTextCtrl { ptr: *mut c_void }
-impl TWxStyledTextCtrl for WxStyledTextCtrl {}
-impl TWxControl for WxStyledTextCtrl {}
-impl TWxWindow for WxStyledTextCtrl {}
-impl TWxEvtHandler for WxStyledTextCtrl {}
-impl TWxObject for WxStyledTextCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct StyledTextCtrl { ptr: *mut c_void }
+impl TStyledTextCtrl for StyledTextCtrl {}
+impl TControl for StyledTextCtrl {}
+impl TWindow for StyledTextCtrl {}
+impl TEvtHandler for StyledTextCtrl {}
+impl TObject for StyledTextCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxStyledTextCtrl {
-    pub fn from(ptr: *mut c_void) -> WxStyledTextCtrl { WxStyledTextCtrl { ptr: ptr } }
-    pub fn null() -> WxStyledTextCtrl { WxStyledTextCtrl::from(0 as *mut c_void) }
+impl StyledTextCtrl {
+    pub fn from(ptr: *mut c_void) -> StyledTextCtrl { StyledTextCtrl { ptr: ptr } }
+    pub fn null() -> StyledTextCtrl { StyledTextCtrl::from(0 as *mut c_void) }
     
-    pub fn new<T: TWxWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, style: c_int) -> WxStyledTextCtrl {
+    pub fn new<T: TWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, style: c_int) -> StyledTextCtrl {
         let _txt = wxT(_txt);
-        unsafe { WxStyledTextCtrl { ptr: wxStyledTextCtrl_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, style) } }
+        unsafe { StyledTextCtrl { ptr: wxStyledTextCtrl_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, style) } }
     }
 }
 
-pub trait TWxStyledTextCtrl : TWxControl {
+pub trait TStyledTextCtrl : TControl {
     fn addText(&self, text: &str) {
         let text = wxT(text);
         unsafe { wxStyledTextCtrl_AddText(self.ptr(), text.ptr()) }
     }
-    fn addStyledText<T: TWxMemoryBuffer>(&self, data: &T) {
+    fn addStyledText<T: TMemoryBuffer>(&self, data: &T) {
         unsafe { wxStyledTextCtrl_AddStyledText(self.ptr(), data.ptr()) }
     }
     fn insertText(&self, pos: c_int, text: &str) {
@@ -159,7 +159,7 @@ pub trait TWxStyledTextCtrl : TWxControl {
     fn markerPrevious(&self, lineStart: c_int, markerMask: c_int) -> c_int {
         unsafe { wxStyledTextCtrl_MarkerPrevious(self.ptr(), lineStart, markerMask) }
     }
-    fn markerDefineBitmap<T: TWxBitmap>(&self, markerNumber: c_int, bmp: &T) {
+    fn markerDefineBitmap<T: TBitmap>(&self, markerNumber: c_int, bmp: &T) {
         unsafe { wxStyledTextCtrl_MarkerDefineBitmap(self.ptr(), markerNumber, bmp.ptr()) }
     }
     fn setMarginType(&self, margin: c_int, marginType: c_int) {
@@ -373,7 +373,7 @@ pub trait TWxStyledTextCtrl : TWxControl {
     fn autoCompGetDropRestOfWord(&self) -> c_int {
         unsafe { wxStyledTextCtrl_AutoCompGetDropRestOfWord(self.ptr()) }
     }
-    fn registerImage<T: TWxBitmap>(&self, type_: c_int, bmp: &T) {
+    fn registerImage<T: TBitmap>(&self, type_: c_int, bmp: &T) {
         unsafe { wxStyledTextCtrl_RegisterImage(self.ptr(), type_, bmp.ptr()) }
     }
     fn clearRegisteredImages(&self) {
@@ -467,7 +467,7 @@ pub trait TWxStyledTextCtrl : TWxControl {
         let text = wxT(text);
         unsafe { wxStyledTextCtrl_FindText(self.ptr(), minPos, maxPos, text.ptr(), flags) }
     }
-    fn formatRange<T: TWxDC, U: TWxDC, V: TWxRect, W: TWxRect>(&self, doDraw: c_int, startPos: c_int, endPos: c_int, draw: &T, target: &U, renderRect: &V, pageRect: &W) -> c_int {
+    fn formatRange<T: TDC, U: TDC, V: TRect, W: TRect>(&self, doDraw: c_int, startPos: c_int, endPos: c_int, draw: &T, target: &U, renderRect: &V, pageRect: &W) -> c_int {
         unsafe { wxStyledTextCtrl_FormatRange(self.ptr(), doDraw, startPos, endPos, draw.ptr(), target.ptr(), renderRect.ptr(), pageRect.ptr()) }
     }
     fn getFirstVisibleLine(&self) -> c_int {
@@ -784,7 +784,7 @@ pub trait TWxStyledTextCtrl : TWxControl {
     fn setViewEOL(&self, visible: c_int) {
         unsafe { wxStyledTextCtrl_SetViewEOL(self.ptr(), visible) }
     }
-    fn setDocPointer<T: TWxSTCDoc>(&self, docPointer: &T) {
+    fn setDocPointer<T: TSTCDoc>(&self, docPointer: &T) {
         unsafe { wxStyledTextCtrl_SetDocPointer(self.ptr(), docPointer.ptr()) }
     }
     fn setModEventMask(&self, mask: c_int) {
@@ -831,10 +831,10 @@ pub trait TWxStyledTextCtrl : TWxControl {
     fn getZoom(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetZoom(self.ptr()) }
     }
-    fn addRefDocument<T: TWxSTCDoc>(&self, docPointer: &T) {
+    fn addRefDocument<T: TSTCDoc>(&self, docPointer: &T) {
         unsafe { wxStyledTextCtrl_AddRefDocument(self.ptr(), docPointer.ptr()) }
     }
-    fn releaseDocument<T: TWxSTCDoc>(&self, docPointer: &T) {
+    fn releaseDocument<T: TSTCDoc>(&self, docPointer: &T) {
         unsafe { wxStyledTextCtrl_ReleaseDocument(self.ptr(), docPointer.ptr()) }
     }
     fn getModEventMask(&self) -> c_int {
@@ -969,7 +969,7 @@ pub trait TWxStyledTextCtrl : TWxControl {
         let spec = wxT(spec);
         unsafe { wxStyledTextCtrl_StyleSetSpec(self.ptr(), styleNum, spec.ptr()) }
     }
-    fn styleSetFont<T: TWxFont>(&self, styleNum: c_int, font: &T) {
+    fn styleSetFont<T: TFont>(&self, styleNum: c_int, font: &T) {
         unsafe { wxStyledTextCtrl_StyleSetFont(self.ptr(), styleNum, font.ptr()) }
     }
     fn styleSetFontAttr(&self, styleNum: c_int, size: c_int, faceName: &str, bold: c_int, italic: c_int, underline: c_int) {
@@ -991,10 +991,10 @@ pub trait TWxStyledTextCtrl : TWxControl {
     fn scrollToColumn(&self, column: c_int) {
         unsafe { wxStyledTextCtrl_ScrollToColumn(self.ptr(), column) }
     }
-    fn setVScrollBar<T: TWxScrollBar>(&self, bar: &T) {
+    fn setVScrollBar<T: TScrollBar>(&self, bar: &T) {
         unsafe { wxStyledTextCtrl_SetVScrollBar(self.ptr(), bar.ptr()) }
     }
-    fn setHScrollBar<T: TWxScrollBar>(&self, bar: &T) {
+    fn setHScrollBar<T: TScrollBar>(&self, bar: &T) {
         unsafe { wxStyledTextCtrl_SetHScrollBar(self.ptr(), bar.ptr()) }
     }
     fn getLastKeydownProcessed(&self) -> c_int {
@@ -1011,17 +1011,17 @@ pub trait TWxStyledTextCtrl : TWxControl {
         let filename = wxT(filename);
         unsafe { wxStyledTextCtrl_LoadFile(self.ptr(), filename.ptr()) }
     }
-    fn indicatorGetForeground(&self, indic: c_int) -> WxColour {
-        unsafe { WxColour { ptr: wxStyledTextCtrl_IndicatorGetForeground(self.ptr(), indic) } }
+    fn indicatorGetForeground(&self, indic: c_int) -> Colour {
+        unsafe { Colour { ptr: wxStyledTextCtrl_IndicatorGetForeground(self.ptr(), indic) } }
     }
-    fn getCaretLineBackground(&self) -> WxColour {
-        unsafe { WxColour { ptr: wxStyledTextCtrl_GetCaretLineBackground(self.ptr()) } }
+    fn getCaretLineBackground(&self) -> Colour {
+        unsafe { Colour { ptr: wxStyledTextCtrl_GetCaretLineBackground(self.ptr()) } }
     }
     fn setCaretLineBackground(&self, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
         unsafe { wxStyledTextCtrl_SetCaretLineBackground(self.ptr(), back_r, back_g, back_b) }
     }
-    fn getCaretForeground(&self) -> WxColour {
-        unsafe { WxColour { ptr: wxStyledTextCtrl_GetCaretForeground(self.ptr()) } }
+    fn getCaretForeground(&self) -> Colour {
+        unsafe { Colour { ptr: wxStyledTextCtrl_GetCaretForeground(self.ptr()) } }
     }
     fn getLine(&self, line: c_int) -> ~str {
         unsafe { WxString { ptr: wxStyledTextCtrl_GetLine(self.ptr(), line) }.to_str() }
@@ -1035,47 +1035,47 @@ pub trait TWxStyledTextCtrl : TWxControl {
     fn getSelectedText(&self) -> ~str {
         unsafe { WxString { ptr: wxStyledTextCtrl_GetSelectedText(self.ptr()) }.to_str() }
     }
-    fn newDocument(&self) -> WxSTCDoc {
-        unsafe { WxSTCDoc { ptr: wxStyledTextCtrl_CreateDocument(self.ptr()) } }
+    fn newDocument(&self) -> STCDoc {
+        unsafe { STCDoc { ptr: wxStyledTextCtrl_CreateDocument(self.ptr()) } }
     }
-    fn getEdgeColour(&self) -> WxColour {
-        unsafe { WxColour { ptr: wxStyledTextCtrl_GetEdgeColour(self.ptr()) } }
+    fn getEdgeColour(&self) -> Colour {
+        unsafe { Colour { ptr: wxStyledTextCtrl_GetEdgeColour(self.ptr()) } }
     }
-    fn getDocPointer(&self) -> WxSTCDoc {
-        unsafe { WxSTCDoc { ptr: wxStyledTextCtrl_GetDocPointer(self.ptr()) } }
+    fn getDocPointer(&self) -> STCDoc {
+        unsafe { STCDoc { ptr: wxStyledTextCtrl_GetDocPointer(self.ptr()) } }
     }
-    fn pointFromPosition(&self) -> WxPoint {
-        unsafe { WxPoint { ptr: wxStyledTextCtrl_PointFromPosition(self.ptr()) } }
+    fn pointFromPosition(&self) -> Point {
+        unsafe { Point { ptr: wxStyledTextCtrl_PointFromPosition(self.ptr()) } }
     }
 }
 
-pub struct WxSTCDoc { ptr: *mut c_void }
-impl TWxSTCDoc for WxSTCDoc { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct STCDoc { ptr: *mut c_void }
+impl TSTCDoc for STCDoc { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxSTCDoc {
-    pub fn from(ptr: *mut c_void) -> WxSTCDoc { WxSTCDoc { ptr: ptr } }
-    pub fn null() -> WxSTCDoc { WxSTCDoc::from(0 as *mut c_void) }
+impl STCDoc {
+    pub fn from(ptr: *mut c_void) -> STCDoc { STCDoc { ptr: ptr } }
+    pub fn null() -> STCDoc { STCDoc::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxSTCDoc {
+pub trait TSTCDoc {
     fn ptr(&self) -> *mut c_void;
     
 }
 
-pub struct WxStyledTextEvent { ptr: *mut c_void }
-impl TWxStyledTextEvent for WxStyledTextEvent {}
-impl TWxCommandEvent for WxStyledTextEvent {}
-impl TWxEvent for WxStyledTextEvent {}
-impl TWxObject for WxStyledTextEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct StyledTextEvent { ptr: *mut c_void }
+impl TStyledTextEvent for StyledTextEvent {}
+impl TCommandEvent for StyledTextEvent {}
+impl TEvent for StyledTextEvent {}
+impl TObject for StyledTextEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxStyledTextEvent {
-    pub fn from(ptr: *mut c_void) -> WxStyledTextEvent { WxStyledTextEvent { ptr: ptr } }
-    pub fn null() -> WxStyledTextEvent { WxStyledTextEvent::from(0 as *mut c_void) }
+impl StyledTextEvent {
+    pub fn from(ptr: *mut c_void) -> StyledTextEvent { StyledTextEvent { ptr: ptr } }
+    pub fn null() -> StyledTextEvent { StyledTextEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxStyledTextEvent : TWxCommandEvent {
+pub trait TStyledTextEvent : TCommandEvent {
     fn getPosition(&self) -> c_int {
         unsafe { wxStyledTextEvent_GetPosition(self.ptr()) }
     }
@@ -1145,8 +1145,8 @@ pub trait TWxStyledTextEvent : TWxCommandEvent {
     fn getText(&self) -> ~str {
         unsafe { WxString { ptr: wxStyledTextEvent_GetText(self.ptr()) }.to_str() }
     }
-    fn clone(&self) -> WxStyledTextEvent {
-        unsafe { WxStyledTextEvent { ptr: wxStyledTextEvent_Clone(self.ptr()) } }
+    fn clone(&self) -> StyledTextEvent {
+        unsafe { StyledTextEvent { ptr: wxStyledTextEvent_Clone(self.ptr()) } }
     }
     fn setPosition(&self, pos: c_int) {
         unsafe { wxStyledTextEvent_SetPosition(self.ptr(), pos) }
