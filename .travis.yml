@@ -4,6 +4,10 @@ branches:
     - rust-0.8
     - rust-0.9
 
+env:
+  global:
+    - secure: WFLCntGUsW3FIRRtv9kUlfFuqYnGItu2/cmkJfmn0sFeF0Lu4QRn1jmLdocP2ZUfgICwSzeBTBJ+SLvP2ukFOiYe0WeofJYs+fCIEz52eU3kpIzA0jFznoWqW8JbntWNDGTaD5K0wt1yCvoJJ4PIKVEYGOLAjsbrunSL+FYsbuI=
+
 before_install:
   - yes | sudo add-apt-repository ppa:hansjorg/rust
   - yes | sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
@@ -17,3 +21,6 @@ script:
   - cd build
   - cmake -DRUSTCFLAGS="-L;/usr/lib/llvm-3.3/lib" ..
   - make
+
+after_script:
+  - curl http://www.rust-ci.org/artifacts/put?t=$RUSTCI_TOKEN | sh
