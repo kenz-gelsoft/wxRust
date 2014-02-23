@@ -2,173 +2,173 @@ use std::libc::*;
 use base::*;
 use core::*;
 
-pub struct WxFTP { ptr: *mut c_void }
-impl TWxFTP for WxFTP {}
-impl TWxProtocol for WxFTP {}
-impl TWxSocketClient for WxFTP {}
-impl TWxSocketBase for WxFTP {}
-impl TWxObject for WxFTP { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct FTP { ptr: *mut c_void }
+impl TFTP for FTP {}
+impl TProtocol for FTP {}
+impl TSocketClient for FTP {}
+impl TSocketBase for FTP {}
+impl TObject for FTP { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxFTP {
-    pub fn from(ptr: *mut c_void) -> WxFTP { WxFTP { ptr: ptr } }
-    pub fn null() -> WxFTP { WxFTP::from(0 as *mut c_void) }
+impl FTP {
+    pub fn from(ptr: *mut c_void) -> FTP { FTP { ptr: ptr } }
+    pub fn null() -> FTP { FTP::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxFTP : TWxProtocol {
+pub trait TFTP : TProtocol {
 }
 
-pub struct WxHTTP { ptr: *mut c_void }
-impl TWxHTTP for WxHTTP {}
-impl TWxProtocol for WxHTTP {}
-impl TWxSocketClient for WxHTTP {}
-impl TWxSocketBase for WxHTTP {}
-impl TWxObject for WxHTTP { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct HTTP { ptr: *mut c_void }
+impl THTTP for HTTP {}
+impl TProtocol for HTTP {}
+impl TSocketClient for HTTP {}
+impl TSocketBase for HTTP {}
+impl TObject for HTTP { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxHTTP {
-    pub fn from(ptr: *mut c_void) -> WxHTTP { WxHTTP { ptr: ptr } }
-    pub fn null() -> WxHTTP { WxHTTP::from(0 as *mut c_void) }
+impl HTTP {
+    pub fn from(ptr: *mut c_void) -> HTTP { HTTP { ptr: ptr } }
+    pub fn null() -> HTTP { HTTP::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxHTTP : TWxProtocol {
+pub trait THTTP : TProtocol {
 }
 
-pub struct WxIPV4address { ptr: *mut c_void }
-impl TWxIPV4address for WxIPV4address {}
-impl TWxSockAddress for WxIPV4address {}
-impl TWxObject for WxIPV4address { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct IPV4address { ptr: *mut c_void }
+impl TIPV4address for IPV4address {}
+impl TSockAddress for IPV4address {}
+impl TObject for IPV4address { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxIPV4address {
-    pub fn from(ptr: *mut c_void) -> WxIPV4address { WxIPV4address { ptr: ptr } }
-    pub fn null() -> WxIPV4address { WxIPV4address::from(0 as *mut c_void) }
+impl IPV4address {
+    pub fn from(ptr: *mut c_void) -> IPV4address { IPV4address { ptr: ptr } }
+    pub fn null() -> IPV4address { IPV4address::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxIPV4address : TWxSockAddress {
+pub trait TIPV4address : TSockAddress {
 }
 
-pub struct WxProtocol { ptr: *mut c_void }
-impl TWxProtocol for WxProtocol {}
-impl TWxSocketClient for WxProtocol {}
-impl TWxSocketBase for WxProtocol {}
-impl TWxObject for WxProtocol { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct Protocol { ptr: *mut c_void }
+impl TProtocol for Protocol {}
+impl TSocketClient for Protocol {}
+impl TSocketBase for Protocol {}
+impl TObject for Protocol { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxProtocol {
-    pub fn from(ptr: *mut c_void) -> WxProtocol { WxProtocol { ptr: ptr } }
-    pub fn null() -> WxProtocol { WxProtocol::from(0 as *mut c_void) }
+impl Protocol {
+    pub fn from(ptr: *mut c_void) -> Protocol { Protocol { ptr: ptr } }
+    pub fn null() -> Protocol { Protocol::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxProtocol : TWxSocketClient {
+pub trait TProtocol : TSocketClient {
 }
 
-pub struct WxSockAddress { ptr: *mut c_void }
-impl TWxSockAddress for WxSockAddress {}
-impl TWxObject for WxSockAddress { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct SockAddress { ptr: *mut c_void }
+impl TSockAddress for SockAddress {}
+impl TObject for SockAddress { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxSockAddress {
-    pub fn from(ptr: *mut c_void) -> WxSockAddress { WxSockAddress { ptr: ptr } }
-    pub fn null() -> WxSockAddress { WxSockAddress::from(0 as *mut c_void) }
+impl SockAddress {
+    pub fn from(ptr: *mut c_void) -> SockAddress { SockAddress { ptr: ptr } }
+    pub fn null() -> SockAddress { SockAddress::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxSockAddress : TWxObject {
+pub trait TSockAddress : TObject {
 }
 
-pub struct WxSocketBase { ptr: *mut c_void }
-impl TWxSocketBase for WxSocketBase {}
-impl TWxObject for WxSocketBase { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct SocketBase { ptr: *mut c_void }
+impl TSocketBase for SocketBase {}
+impl TObject for SocketBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxSocketBase {
-    pub fn from(ptr: *mut c_void) -> WxSocketBase { WxSocketBase { ptr: ptr } }
-    pub fn null() -> WxSocketBase { WxSocketBase::from(0 as *mut c_void) }
+impl SocketBase {
+    pub fn from(ptr: *mut c_void) -> SocketBase { SocketBase { ptr: ptr } }
+    pub fn null() -> SocketBase { SocketBase::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxSocketBase : TWxObject {
+pub trait TSocketBase : TObject {
 }
 
-pub struct WxSocketClient { ptr: *mut c_void }
-impl TWxSocketClient for WxSocketClient {}
-impl TWxSocketBase for WxSocketClient {}
-impl TWxObject for WxSocketClient { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct SocketClient { ptr: *mut c_void }
+impl TSocketClient for SocketClient {}
+impl TSocketBase for SocketClient {}
+impl TObject for SocketClient { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxSocketClient {
-    pub fn from(ptr: *mut c_void) -> WxSocketClient { WxSocketClient { ptr: ptr } }
-    pub fn null() -> WxSocketClient { WxSocketClient::from(0 as *mut c_void) }
+impl SocketClient {
+    pub fn from(ptr: *mut c_void) -> SocketClient { SocketClient { ptr: ptr } }
+    pub fn null() -> SocketClient { SocketClient::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxSocketClient : TWxSocketBase {
+pub trait TSocketClient : TSocketBase {
 }
 
-pub struct WxSocketEvent { ptr: *mut c_void }
-impl TWxSocketEvent for WxSocketEvent {}
-impl TWxEvent for WxSocketEvent {}
-impl TWxObject for WxSocketEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct SocketEvent { ptr: *mut c_void }
+impl TSocketEvent for SocketEvent {}
+impl TEvent for SocketEvent {}
+impl TObject for SocketEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxSocketEvent {
-    pub fn from(ptr: *mut c_void) -> WxSocketEvent { WxSocketEvent { ptr: ptr } }
-    pub fn null() -> WxSocketEvent { WxSocketEvent::from(0 as *mut c_void) }
+impl SocketEvent {
+    pub fn from(ptr: *mut c_void) -> SocketEvent { SocketEvent { ptr: ptr } }
+    pub fn null() -> SocketEvent { SocketEvent::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxSocketEvent : TWxEvent {
+pub trait TSocketEvent : TEvent {
 }
 
-pub struct WxSocketInputStream { ptr: *mut c_void }
-impl TWxSocketInputStream for WxSocketInputStream {}
-impl TWxInputStream for WxSocketInputStream {}
-impl TWxStreamBase for WxSocketInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct SocketInputStream { ptr: *mut c_void }
+impl TSocketInputStream for SocketInputStream {}
+impl TInputStream for SocketInputStream {}
+impl TStreamBase for SocketInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxSocketInputStream {
-    pub fn from(ptr: *mut c_void) -> WxSocketInputStream { WxSocketInputStream { ptr: ptr } }
-    pub fn null() -> WxSocketInputStream { WxSocketInputStream::from(0 as *mut c_void) }
+impl SocketInputStream {
+    pub fn from(ptr: *mut c_void) -> SocketInputStream { SocketInputStream { ptr: ptr } }
+    pub fn null() -> SocketInputStream { SocketInputStream::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxSocketInputStream : TWxInputStream {
+pub trait TSocketInputStream : TInputStream {
 }
 
-pub struct WxSocketOutputStream { ptr: *mut c_void }
-impl TWxSocketOutputStream for WxSocketOutputStream {}
-impl TWxOutputStream for WxSocketOutputStream {}
-impl TWxStreamBase for WxSocketOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct SocketOutputStream { ptr: *mut c_void }
+impl TSocketOutputStream for SocketOutputStream {}
+impl TOutputStream for SocketOutputStream {}
+impl TStreamBase for SocketOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxSocketOutputStream {
-    pub fn from(ptr: *mut c_void) -> WxSocketOutputStream { WxSocketOutputStream { ptr: ptr } }
-    pub fn null() -> WxSocketOutputStream { WxSocketOutputStream::from(0 as *mut c_void) }
+impl SocketOutputStream {
+    pub fn from(ptr: *mut c_void) -> SocketOutputStream { SocketOutputStream { ptr: ptr } }
+    pub fn null() -> SocketOutputStream { SocketOutputStream::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxSocketOutputStream : TWxOutputStream {
+pub trait TSocketOutputStream : TOutputStream {
 }
 
-pub struct WxSocketServer { ptr: *mut c_void }
-impl TWxSocketServer for WxSocketServer {}
-impl TWxSocketBase for WxSocketServer {}
-impl TWxObject for WxSocketServer { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct SocketServer { ptr: *mut c_void }
+impl TSocketServer for SocketServer {}
+impl TSocketBase for SocketServer {}
+impl TObject for SocketServer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxSocketServer {
-    pub fn from(ptr: *mut c_void) -> WxSocketServer { WxSocketServer { ptr: ptr } }
-    pub fn null() -> WxSocketServer { WxSocketServer::from(0 as *mut c_void) }
+impl SocketServer {
+    pub fn from(ptr: *mut c_void) -> SocketServer { SocketServer { ptr: ptr } }
+    pub fn null() -> SocketServer { SocketServer::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxSocketServer : TWxSocketBase {
+pub trait TSocketServer : TSocketBase {
 }
 
-pub struct WxURL { ptr: *mut c_void }
-impl TWxURL for WxURL {}
-impl TWxObject for WxURL { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct URL { ptr: *mut c_void }
+impl TURL for URL {}
+impl TObject for URL { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl WxURL {
-    pub fn from(ptr: *mut c_void) -> WxURL { WxURL { ptr: ptr } }
-    pub fn null() -> WxURL { WxURL::from(0 as *mut c_void) }
+impl URL {
+    pub fn from(ptr: *mut c_void) -> URL { URL { ptr: ptr } }
+    pub fn null() -> URL { URL::from(0 as *mut c_void) }
     
 }
 
-pub trait TWxURL : TWxObject {
+pub trait TURL : TObject {
 }
 

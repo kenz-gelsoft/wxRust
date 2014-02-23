@@ -1057,11 +1057,11 @@ class Class(object):
 
 def struct_name(name):
     if name.startswith('ELJ'):
-        return 'Wxr' + name[len('ELJ'):]
+        return 'Rust' + name[len('ELJ'):]
     if name.startswith('wxc'):
-        return 'Wxc' + name[len('wxc'):]
+        return 'C' + name[len('wxc'):]
     if name.startswith('wx'):
-        return 'Wx' + name[len('wx'):]
+        return name[len('wx'):]
     if name.startswith('cb'):
         return 'Cb' + name[len('cb'):]
     return name
