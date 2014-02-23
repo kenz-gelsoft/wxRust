@@ -86,6 +86,6 @@ On Mac, Run as below:
 
 At the CMake binary directory:
 
-    make docs
+    make doc
 
-Generates [a rustdoc documentation](http://kenz-gelsoft.github.io/wxRust/) under docs directory.
+Generates [a rustdoc documentation](http://kenz-gelsoft.github.io/wxRust/) under doc directory.
