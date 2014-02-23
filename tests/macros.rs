@@ -6,7 +6,6 @@ pub macro_rules! wxApp(
             #[start];
 
             use std::libc::c_void;
-            use std::vec;
 
             use wx::base::WxClosure;
             use wx::core::WxrApp;
