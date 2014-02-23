@@ -23,6 +23,8 @@ script:
   - make
   - make doc
   - cd ..
+  - find doc/ -type d -exec chmod 755 \{\} \;
+  - find doc/ -type f -exec chmod 644 \{\} \;
 
 after_script:
   - curl http://www.rust-ci.org/artifacts/put?t=$RUSTCI_TOKEN | sh
