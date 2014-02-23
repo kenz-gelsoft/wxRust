@@ -63,7 +63,7 @@ impl MyMenuBar {
 
 extern "C"
 fn MyButton_clicked(fun: *mut c_void, data: *mut c_void, evt: *mut c_void) {
-    if (evt == 0 as *mut c_void) {
+    if evt == 0 as *mut c_void {
         // Comes here when the target widget is destroyed.
         return;
     }
