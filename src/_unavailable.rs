@@ -3,7 +3,7 @@ use base::*;
 use core::*;
 
 pub struct RustMessageParameters { ptr: *mut c_void }
-impl TRustMessageParameters for RustMessageParameters { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl RustMessageParametersMethods for RustMessageParameters { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl RustMessageParameters {
     pub fn from(ptr: *mut c_void) -> RustMessageParameters { RustMessageParameters { ptr: ptr } }
@@ -11,16 +11,16 @@ impl RustMessageParameters {
     
 }
 
-pub trait TRustMessageParameters {
+pub trait RustMessageParametersMethods {
     fn ptr(&self) -> *mut c_void;
     
 }
 
 /// The wxRust-specific derived class of [wxPlotCurve](http://docs.wxwidgets.org/3.0/classwx_plot_curve.html).
 pub struct RustPlotCurve { ptr: *mut c_void }
-impl TRustPlotCurve for RustPlotCurve {}
-impl TPlotCurve for RustPlotCurve {}
-impl TObject for RustPlotCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl RustPlotCurveMethods for RustPlotCurve {}
+impl PlotCurveMethods for RustPlotCurve {}
+impl ObjectMethods for RustPlotCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl RustPlotCurve {
     pub fn from(ptr: *mut c_void) -> RustPlotCurve { RustPlotCurve { ptr: ptr } }
@@ -29,14 +29,14 @@ impl RustPlotCurve {
 }
 
 /// Methods of the wxRust-specific derived class of [wxPlotCurve](http://docs.wxwidgets.org/3.0/classwx_plot_curve.html).
-pub trait TRustPlotCurve : TPlotCurve {
+pub trait RustPlotCurveMethods : PlotCurveMethods {
 }
 
 /// Wraps the wxWidgets' [wxDynToolInfo](http://docs.wxwidgets.org/3.0/classwx_dyn_tool_info.html) class.
 pub struct DynToolInfo { ptr: *mut c_void }
-impl TDynToolInfo for DynToolInfo {}
-impl TToolLayoutItem for DynToolInfo {}
-impl TObject for DynToolInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl DynToolInfoMethods for DynToolInfo {}
+impl ToolLayoutItemMethods for DynToolInfo {}
+impl ObjectMethods for DynToolInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl DynToolInfo {
     pub fn from(ptr: *mut c_void) -> DynToolInfo { DynToolInfo { ptr: ptr } }
@@ -45,15 +45,15 @@ impl DynToolInfo {
 }
 
 /// Methods of the wxWidgets' [wxDynToolInfo](http://docs.wxwidgets.org/3.0/classwx_dyn_tool_info.html) class.
-pub trait TDynToolInfo : TToolLayoutItem {
+pub trait DynToolInfoMethods : ToolLayoutItemMethods {
 }
 
 /// Wraps the wxWidgets' [wxDynamicSashWindow](http://docs.wxwidgets.org/3.0/classwx_dynamic_sash_window.html) class.
 pub struct DynamicSashWindow { ptr: *mut c_void }
-impl TDynamicSashWindow for DynamicSashWindow {}
-impl TWindow for DynamicSashWindow {}
-impl TEvtHandler for DynamicSashWindow {}
-impl TObject for DynamicSashWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl DynamicSashWindowMethods for DynamicSashWindow {}
+impl WindowMethods for DynamicSashWindow {}
+impl EvtHandlerMethods for DynamicSashWindow {}
+impl ObjectMethods for DynamicSashWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl DynamicSashWindow {
     pub fn from(ptr: *mut c_void) -> DynamicSashWindow { DynamicSashWindow { ptr: ptr } }
@@ -62,17 +62,17 @@ impl DynamicSashWindow {
 }
 
 /// Methods of the wxWidgets' [wxDynamicSashWindow](http://docs.wxwidgets.org/3.0/classwx_dynamic_sash_window.html) class.
-pub trait TDynamicSashWindow : TWindow {
+pub trait DynamicSashWindowMethods : WindowMethods {
 }
 
 /// Wraps the wxWidgets' [wxDynamicToolBar](http://docs.wxwidgets.org/3.0/classwx_dynamic_tool_bar.html) class.
 pub struct DynamicToolBar { ptr: *mut c_void }
-impl TDynamicToolBar for DynamicToolBar {}
-impl TToolBarBase for DynamicToolBar {}
-impl TControl for DynamicToolBar {}
-impl TWindow for DynamicToolBar {}
-impl TEvtHandler for DynamicToolBar {}
-impl TObject for DynamicToolBar { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl DynamicToolBarMethods for DynamicToolBar {}
+impl ToolBarBaseMethods for DynamicToolBar {}
+impl ControlMethods for DynamicToolBar {}
+impl WindowMethods for DynamicToolBar {}
+impl EvtHandlerMethods for DynamicToolBar {}
+impl ObjectMethods for DynamicToolBar { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl DynamicToolBar {
     pub fn from(ptr: *mut c_void) -> DynamicToolBar { DynamicToolBar { ptr: ptr } }
@@ -81,12 +81,12 @@ impl DynamicToolBar {
 }
 
 /// Methods of the wxWidgets' [wxDynamicToolBar](http://docs.wxwidgets.org/3.0/classwx_dynamic_tool_bar.html) class.
-pub trait TDynamicToolBar : TToolBarBase {
+pub trait DynamicToolBarMethods : ToolBarBaseMethods {
 }
 
 /// Wraps the wxWidgets' [wxExpr](http://docs.wxwidgets.org/3.0/classwx_expr.html) class.
 pub struct Expr { ptr: *mut c_void }
-impl TExpr for Expr { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl ExprMethods for Expr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl Expr {
     pub fn from(ptr: *mut c_void) -> Expr { Expr { ptr: ptr } }
@@ -95,16 +95,16 @@ impl Expr {
 }
 
 /// Methods of the wxWidgets' [wxExpr](http://docs.wxwidgets.org/3.0/classwx_expr.html) class.
-pub trait TExpr {
+pub trait ExprMethods {
     fn ptr(&self) -> *mut c_void;
     
 }
 
 /// Wraps the wxWidgets' [wxExprDatabase](http://docs.wxwidgets.org/3.0/classwx_expr_database.html) class.
 pub struct ExprDatabase { ptr: *mut c_void }
-impl TExprDatabase for ExprDatabase {}
-impl TList for ExprDatabase {}
-impl TObject for ExprDatabase { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl ExprDatabaseMethods for ExprDatabase {}
+impl ListMethods for ExprDatabase {}
+impl ObjectMethods for ExprDatabase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl ExprDatabase {
     pub fn from(ptr: *mut c_void) -> ExprDatabase { ExprDatabase { ptr: ptr } }
@@ -113,14 +113,14 @@ impl ExprDatabase {
 }
 
 /// Methods of the wxWidgets' [wxExprDatabase](http://docs.wxwidgets.org/3.0/classwx_expr_database.html) class.
-pub trait TExprDatabase : TList {
+pub trait ExprDatabaseMethods : ListMethods {
 }
 
 /// Wraps the wxWidgets' [wxFrameLayout](http://docs.wxwidgets.org/3.0/classwx_frame_layout.html) class.
 pub struct FrameLayout { ptr: *mut c_void }
-impl TFrameLayout for FrameLayout {}
-impl TEvtHandler for FrameLayout {}
-impl TObject for FrameLayout { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl FrameLayoutMethods for FrameLayout {}
+impl EvtHandlerMethods for FrameLayout {}
+impl ObjectMethods for FrameLayout { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl FrameLayout {
     pub fn from(ptr: *mut c_void) -> FrameLayout { FrameLayout { ptr: ptr } }
@@ -129,12 +129,12 @@ impl FrameLayout {
 }
 
 /// Methods of the wxWidgets' [wxFrameLayout](http://docs.wxwidgets.org/3.0/classwx_frame_layout.html) class.
-pub trait TFrameLayout : TEvtHandler {
+pub trait FrameLayoutMethods : EvtHandlerMethods {
 }
 
 /// Wraps the wxWidgets' [wxHashMap](http://docs.wxwidgets.org/3.0/classwx_hash_map.html) class.
 pub struct HashMap { ptr: *mut c_void }
-impl THashMap for HashMap { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl HashMapMethods for HashMap { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl HashMap {
     pub fn from(ptr: *mut c_void) -> HashMap { HashMap { ptr: ptr } }
@@ -143,18 +143,18 @@ impl HashMap {
 }
 
 /// Methods of the wxWidgets' [wxHashMap](http://docs.wxwidgets.org/3.0/classwx_hash_map.html) class.
-pub trait THashMap {
+pub trait HashMapMethods {
     fn ptr(&self) -> *mut c_void;
     
 }
 
 /// Wraps the wxWidgets' [wxLEDNumberCtrl](http://docs.wxwidgets.org/3.0/classwx_ledn_umber_ctrl.html) class.
 pub struct LEDNumberCtrl { ptr: *mut c_void }
-impl TLEDNumberCtrl for LEDNumberCtrl {}
-impl TControl for LEDNumberCtrl {}
-impl TWindow for LEDNumberCtrl {}
-impl TEvtHandler for LEDNumberCtrl {}
-impl TObject for LEDNumberCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl LEDNumberCtrlMethods for LEDNumberCtrl {}
+impl ControlMethods for LEDNumberCtrl {}
+impl WindowMethods for LEDNumberCtrl {}
+impl EvtHandlerMethods for LEDNumberCtrl {}
+impl ObjectMethods for LEDNumberCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl LEDNumberCtrl {
     pub fn from(ptr: *mut c_void) -> LEDNumberCtrl { LEDNumberCtrl { ptr: ptr } }
@@ -163,13 +163,13 @@ impl LEDNumberCtrl {
 }
 
 /// Methods of the wxWidgets' [wxLEDNumberCtrl](http://docs.wxwidgets.org/3.0/classwx_ledn_umber_ctrl.html) class.
-pub trait TLEDNumberCtrl : TControl {
+pub trait LEDNumberCtrlMethods : ControlMethods {
 }
 
 /// Wraps the wxWidgets' [wxMBConvFile](http://docs.wxwidgets.org/3.0/classwx_mbc_onv_file.html) class.
 pub struct MBConvFile { ptr: *mut c_void }
-impl TMBConvFile for MBConvFile {}
-impl TMBConv for MBConvFile { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl MBConvFileMethods for MBConvFile {}
+impl MBConvMethods for MBConvFile { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl MBConvFile {
     pub fn from(ptr: *mut c_void) -> MBConvFile { MBConvFile { ptr: ptr } }
@@ -178,16 +178,16 @@ impl MBConvFile {
 }
 
 /// Methods of the wxWidgets' [wxMBConvFile](http://docs.wxwidgets.org/3.0/classwx_mbc_onv_file.html) class.
-pub trait TMBConvFile : TMBConv {
+pub trait MBConvFileMethods : MBConvMethods {
 }
 
 /// Wraps the wxWidgets' [wxMultiCellCanvas](http://docs.wxwidgets.org/3.0/classwx_multi_cell_canvas.html) class.
 pub struct MultiCellCanvas { ptr: *mut c_void }
-impl TMultiCellCanvas for MultiCellCanvas {}
-impl TFlexGridSizer for MultiCellCanvas {}
-impl TGridSizer for MultiCellCanvas {}
-impl TSizer for MultiCellCanvas {}
-impl TObject for MultiCellCanvas { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl MultiCellCanvasMethods for MultiCellCanvas {}
+impl FlexGridSizerMethods for MultiCellCanvas {}
+impl GridSizerMethods for MultiCellCanvas {}
+impl SizerMethods for MultiCellCanvas {}
+impl ObjectMethods for MultiCellCanvas { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl MultiCellCanvas {
     pub fn from(ptr: *mut c_void) -> MultiCellCanvas { MultiCellCanvas { ptr: ptr } }
@@ -196,13 +196,13 @@ impl MultiCellCanvas {
 }
 
 /// Methods of the wxWidgets' [wxMultiCellCanvas](http://docs.wxwidgets.org/3.0/classwx_multi_cell_canvas.html) class.
-pub trait TMultiCellCanvas : TFlexGridSizer {
+pub trait MultiCellCanvasMethods : FlexGridSizerMethods {
 }
 
 /// Wraps the wxWidgets' [wxMultiCellItemHandle](http://docs.wxwidgets.org/3.0/classwx_multi_cell_item_handle.html) class.
 pub struct MultiCellItemHandle { ptr: *mut c_void }
-impl TMultiCellItemHandle for MultiCellItemHandle {}
-impl TObject for MultiCellItemHandle { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl MultiCellItemHandleMethods for MultiCellItemHandle {}
+impl ObjectMethods for MultiCellItemHandle { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl MultiCellItemHandle {
     pub fn from(ptr: *mut c_void) -> MultiCellItemHandle { MultiCellItemHandle { ptr: ptr } }
@@ -211,14 +211,14 @@ impl MultiCellItemHandle {
 }
 
 /// Methods of the wxWidgets' [wxMultiCellItemHandle](http://docs.wxwidgets.org/3.0/classwx_multi_cell_item_handle.html) class.
-pub trait TMultiCellItemHandle : TObject {
+pub trait MultiCellItemHandleMethods : ObjectMethods {
 }
 
 /// Wraps the wxWidgets' [wxMultiCellSizer](http://docs.wxwidgets.org/3.0/classwx_multi_cell_sizer.html) class.
 pub struct MultiCellSizer { ptr: *mut c_void }
-impl TMultiCellSizer for MultiCellSizer {}
-impl TSizer for MultiCellSizer {}
-impl TObject for MultiCellSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl MultiCellSizerMethods for MultiCellSizer {}
+impl SizerMethods for MultiCellSizer {}
+impl ObjectMethods for MultiCellSizer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl MultiCellSizer {
     pub fn from(ptr: *mut c_void) -> MultiCellSizer { MultiCellSizer { ptr: ptr } }
@@ -227,16 +227,16 @@ impl MultiCellSizer {
 }
 
 /// Methods of the wxWidgets' [wxMultiCellSizer](http://docs.wxwidgets.org/3.0/classwx_multi_cell_sizer.html) class.
-pub trait TMultiCellSizer : TSizer {
+pub trait MultiCellSizerMethods : SizerMethods {
 }
 
 /// Wraps the wxWidgets' [wxNewBitmapButton](http://docs.wxwidgets.org/3.0/classwx_new_bitmap_button.html) class.
 pub struct NewBitmapButton { ptr: *mut c_void }
-impl TNewBitmapButton for NewBitmapButton {}
-impl TPanel for NewBitmapButton {}
-impl TWindow for NewBitmapButton {}
-impl TEvtHandler for NewBitmapButton {}
-impl TObject for NewBitmapButton { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl NewBitmapButtonMethods for NewBitmapButton {}
+impl PanelMethods for NewBitmapButton {}
+impl WindowMethods for NewBitmapButton {}
+impl EvtHandlerMethods for NewBitmapButton {}
+impl ObjectMethods for NewBitmapButton { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl NewBitmapButton {
     pub fn from(ptr: *mut c_void) -> NewBitmapButton { NewBitmapButton { ptr: ptr } }
@@ -245,14 +245,14 @@ impl NewBitmapButton {
 }
 
 /// Methods of the wxWidgets' [wxNewBitmapButton](http://docs.wxwidgets.org/3.0/classwx_new_bitmap_button.html) class.
-pub trait TNewBitmapButton : TPanel {
+pub trait NewBitmapButtonMethods : PanelMethods {
 }
 
 /// Wraps the wxWidgets' [wxPlotCurve](http://docs.wxwidgets.org/3.0/classwx_plot_curve.html) class.
 /// Rather use the wxRust-specific [RustPlotCurve](struct.RustPlotCurve.html) class.
 pub struct PlotCurve { ptr: *mut c_void }
-impl TPlotCurve for PlotCurve {}
-impl TObject for PlotCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl PlotCurveMethods for PlotCurve {}
+impl ObjectMethods for PlotCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl PlotCurve {
     pub fn from(ptr: *mut c_void) -> PlotCurve { PlotCurve { ptr: ptr } }
@@ -261,16 +261,16 @@ impl PlotCurve {
 }
 
 /// Methods of the wxWidgets' [wxPlotCurve](http://docs.wxwidgets.org/3.0/classwx_plot_curve.html) class.
-pub trait TPlotCurve : TObject {
+pub trait PlotCurveMethods : ObjectMethods {
 }
 
 /// Wraps the wxWidgets' [wxPlotEvent](http://docs.wxwidgets.org/3.0/classwx_plot_event.html) class.
 pub struct PlotEvent { ptr: *mut c_void }
-impl TPlotEvent for PlotEvent {}
-impl TNotifyEvent for PlotEvent {}
-impl TCommandEvent for PlotEvent {}
-impl TEvent for PlotEvent {}
-impl TObject for PlotEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl PlotEventMethods for PlotEvent {}
+impl NotifyEventMethods for PlotEvent {}
+impl CommandEventMethods for PlotEvent {}
+impl EventMethods for PlotEvent {}
+impl ObjectMethods for PlotEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl PlotEvent {
     pub fn from(ptr: *mut c_void) -> PlotEvent { PlotEvent { ptr: ptr } }
@@ -279,13 +279,13 @@ impl PlotEvent {
 }
 
 /// Methods of the wxWidgets' [wxPlotEvent](http://docs.wxwidgets.org/3.0/classwx_plot_event.html) class.
-pub trait TPlotEvent : TNotifyEvent {
+pub trait PlotEventMethods : NotifyEventMethods {
 }
 
 /// Wraps the wxWidgets' [wxPlotOnOffCurve](http://docs.wxwidgets.org/3.0/classwx_plot_on_off_curve.html) class.
 pub struct PlotOnOffCurve { ptr: *mut c_void }
-impl TPlotOnOffCurve for PlotOnOffCurve {}
-impl TObject for PlotOnOffCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl PlotOnOffCurveMethods for PlotOnOffCurve {}
+impl ObjectMethods for PlotOnOffCurve { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl PlotOnOffCurve {
     pub fn from(ptr: *mut c_void) -> PlotOnOffCurve { PlotOnOffCurve { ptr: ptr } }
@@ -294,17 +294,17 @@ impl PlotOnOffCurve {
 }
 
 /// Methods of the wxWidgets' [wxPlotOnOffCurve](http://docs.wxwidgets.org/3.0/classwx_plot_on_off_curve.html) class.
-pub trait TPlotOnOffCurve : TObject {
+pub trait PlotOnOffCurveMethods : ObjectMethods {
 }
 
 /// Wraps the wxWidgets' [wxPlotWindow](http://docs.wxwidgets.org/3.0/classwx_plot_window.html) class.
 pub struct PlotWindow { ptr: *mut c_void }
-impl TPlotWindow for PlotWindow {}
-impl TScrolledWindow for PlotWindow {}
-impl TPanel for PlotWindow {}
-impl TWindow for PlotWindow {}
-impl TEvtHandler for PlotWindow {}
-impl TObject for PlotWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl PlotWindowMethods for PlotWindow {}
+impl ScrolledWindowMethods for PlotWindow {}
+impl PanelMethods for PlotWindow {}
+impl WindowMethods for PlotWindow {}
+impl EvtHandlerMethods for PlotWindow {}
+impl ObjectMethods for PlotWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl PlotWindow {
     pub fn from(ptr: *mut c_void) -> PlotWindow { PlotWindow { ptr: ptr } }
@@ -313,17 +313,17 @@ impl PlotWindow {
 }
 
 /// Methods of the wxWidgets' [wxPlotWindow](http://docs.wxwidgets.org/3.0/classwx_plot_window.html) class.
-pub trait TPlotWindow : TScrolledWindow {
+pub trait PlotWindowMethods : ScrolledWindowMethods {
 }
 
 /// Wraps the wxWidgets' [wxRemotelyScrolledTreeCtrl](http://docs.wxwidgets.org/3.0/classwx_remotely_scrolled_tree_ctrl.html) class.
 pub struct RemotelyScrolledTreeCtrl { ptr: *mut c_void }
-impl TRemotelyScrolledTreeCtrl for RemotelyScrolledTreeCtrl {}
-impl TTreeCtrl for RemotelyScrolledTreeCtrl {}
-impl TControl for RemotelyScrolledTreeCtrl {}
-impl TWindow for RemotelyScrolledTreeCtrl {}
-impl TEvtHandler for RemotelyScrolledTreeCtrl {}
-impl TObject for RemotelyScrolledTreeCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl RemotelyScrolledTreeCtrlMethods for RemotelyScrolledTreeCtrl {}
+impl TreeCtrlMethods for RemotelyScrolledTreeCtrl {}
+impl ControlMethods for RemotelyScrolledTreeCtrl {}
+impl WindowMethods for RemotelyScrolledTreeCtrl {}
+impl EvtHandlerMethods for RemotelyScrolledTreeCtrl {}
+impl ObjectMethods for RemotelyScrolledTreeCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl RemotelyScrolledTreeCtrl {
     pub fn from(ptr: *mut c_void) -> RemotelyScrolledTreeCtrl { RemotelyScrolledTreeCtrl { ptr: ptr } }
@@ -332,17 +332,17 @@ impl RemotelyScrolledTreeCtrl {
 }
 
 /// Methods of the wxWidgets' [wxRemotelyScrolledTreeCtrl](http://docs.wxwidgets.org/3.0/classwx_remotely_scrolled_tree_ctrl.html) class.
-pub trait TRemotelyScrolledTreeCtrl : TTreeCtrl {
+pub trait RemotelyScrolledTreeCtrlMethods : TreeCtrlMethods {
 }
 
 /// Wraps the wxWidgets' [wxSplitterScrolledWindow](http://docs.wxwidgets.org/3.0/classwx_splitter_scrolled_window.html) class.
 pub struct SplitterScrolledWindow { ptr: *mut c_void }
-impl TSplitterScrolledWindow for SplitterScrolledWindow {}
-impl TScrolledWindow for SplitterScrolledWindow {}
-impl TPanel for SplitterScrolledWindow {}
-impl TWindow for SplitterScrolledWindow {}
-impl TEvtHandler for SplitterScrolledWindow {}
-impl TObject for SplitterScrolledWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl SplitterScrolledWindowMethods for SplitterScrolledWindow {}
+impl ScrolledWindowMethods for SplitterScrolledWindow {}
+impl PanelMethods for SplitterScrolledWindow {}
+impl WindowMethods for SplitterScrolledWindow {}
+impl EvtHandlerMethods for SplitterScrolledWindow {}
+impl ObjectMethods for SplitterScrolledWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl SplitterScrolledWindow {
     pub fn from(ptr: *mut c_void) -> SplitterScrolledWindow { SplitterScrolledWindow { ptr: ptr } }
@@ -351,12 +351,12 @@ impl SplitterScrolledWindow {
 }
 
 /// Methods of the wxWidgets' [wxSplitterScrolledWindow](http://docs.wxwidgets.org/3.0/classwx_splitter_scrolled_window.html) class.
-pub trait TSplitterScrolledWindow : TScrolledWindow {
+pub trait SplitterScrolledWindowMethods : ScrolledWindowMethods {
 }
 
 /// Wraps the wxWidgets' [wxStreamToTextRedirector](http://docs.wxwidgets.org/3.0/classwx_stream_to_text_redirector.html) class.
 pub struct StreamToTextRedirector { ptr: *mut c_void }
-impl TStreamToTextRedirector for StreamToTextRedirector { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl StreamToTextRedirectorMethods for StreamToTextRedirector { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl StreamToTextRedirector {
     pub fn from(ptr: *mut c_void) -> StreamToTextRedirector { StreamToTextRedirector { ptr: ptr } }
@@ -365,18 +365,18 @@ impl StreamToTextRedirector {
 }
 
 /// Methods of the wxWidgets' [wxStreamToTextRedirector](http://docs.wxwidgets.org/3.0/classwx_stream_to_text_redirector.html) class.
-pub trait TStreamToTextRedirector {
+pub trait StreamToTextRedirectorMethods {
     fn ptr(&self) -> *mut c_void;
     
 }
 
 /// Wraps the wxWidgets' [wxTabCtrl](http://docs.wxwidgets.org/3.0/classwx_tab_ctrl.html) class.
 pub struct TabCtrl { ptr: *mut c_void }
-impl TTabCtrl for TabCtrl {}
-impl TControl for TabCtrl {}
-impl TWindow for TabCtrl {}
-impl TEvtHandler for TabCtrl {}
-impl TObject for TabCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl TabCtrlMethods for TabCtrl {}
+impl ControlMethods for TabCtrl {}
+impl WindowMethods for TabCtrl {}
+impl EvtHandlerMethods for TabCtrl {}
+impl ObjectMethods for TabCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl TabCtrl {
     pub fn from(ptr: *mut c_void) -> TabCtrl { TabCtrl { ptr: ptr } }
@@ -385,15 +385,15 @@ impl TabCtrl {
 }
 
 /// Methods of the wxWidgets' [wxTabCtrl](http://docs.wxwidgets.org/3.0/classwx_tab_ctrl.html) class.
-pub trait TTabCtrl : TControl {
+pub trait TabCtrlMethods : ControlMethods {
 }
 
 /// Wraps the wxWidgets' [wxTabEvent](http://docs.wxwidgets.org/3.0/classwx_tab_event.html) class.
 pub struct TabEvent { ptr: *mut c_void }
-impl TTabEvent for TabEvent {}
-impl TCommandEvent for TabEvent {}
-impl TEvent for TabEvent {}
-impl TObject for TabEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl TabEventMethods for TabEvent {}
+impl CommandEventMethods for TabEvent {}
+impl EventMethods for TabEvent {}
+impl ObjectMethods for TabEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl TabEvent {
     pub fn from(ptr: *mut c_void) -> TabEvent { TabEvent { ptr: ptr } }
@@ -402,16 +402,16 @@ impl TabEvent {
 }
 
 /// Methods of the wxWidgets' [wxTabEvent](http://docs.wxwidgets.org/3.0/classwx_tab_event.html) class.
-pub trait TTabEvent : TCommandEvent {
+pub trait TabEventMethods : CommandEventMethods {
 }
 
 /// Wraps the wxWidgets' [wxThinSplitterWindow](http://docs.wxwidgets.org/3.0/classwx_thin_splitter_window.html) class.
 pub struct ThinSplitterWindow { ptr: *mut c_void }
-impl TThinSplitterWindow for ThinSplitterWindow {}
-impl TSplitterWindow for ThinSplitterWindow {}
-impl TWindow for ThinSplitterWindow {}
-impl TEvtHandler for ThinSplitterWindow {}
-impl TObject for ThinSplitterWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl ThinSplitterWindowMethods for ThinSplitterWindow {}
+impl SplitterWindowMethods for ThinSplitterWindow {}
+impl WindowMethods for ThinSplitterWindow {}
+impl EvtHandlerMethods for ThinSplitterWindow {}
+impl ObjectMethods for ThinSplitterWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl ThinSplitterWindow {
     pub fn from(ptr: *mut c_void) -> ThinSplitterWindow { ThinSplitterWindow { ptr: ptr } }
@@ -420,13 +420,13 @@ impl ThinSplitterWindow {
 }
 
 /// Methods of the wxWidgets' [wxThinSplitterWindow](http://docs.wxwidgets.org/3.0/classwx_thin_splitter_window.html) class.
-pub trait TThinSplitterWindow : TSplitterWindow {
+pub trait ThinSplitterWindowMethods : SplitterWindowMethods {
 }
 
 /// Wraps the wxWidgets' [wxTimerBase](http://docs.wxwidgets.org/3.0/classwx_timer_base.html) class.
 pub struct TimerBase { ptr: *mut c_void }
-impl TTimerBase for TimerBase {}
-impl TObject for TimerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl TimerBaseMethods for TimerBase {}
+impl ObjectMethods for TimerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl TimerBase {
     pub fn from(ptr: *mut c_void) -> TimerBase { TimerBase { ptr: ptr } }
@@ -435,13 +435,13 @@ impl TimerBase {
 }
 
 /// Methods of the wxWidgets' [wxTimerBase](http://docs.wxwidgets.org/3.0/classwx_timer_base.html) class.
-pub trait TTimerBase : TObject {
+pub trait TimerBaseMethods : ObjectMethods {
 }
 
 /// Wraps the wxWidgets' [wxToolLayoutItem](http://docs.wxwidgets.org/3.0/classwx_tool_layout_item.html) class.
 pub struct ToolLayoutItem { ptr: *mut c_void }
-impl TToolLayoutItem for ToolLayoutItem {}
-impl TObject for ToolLayoutItem { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl ToolLayoutItemMethods for ToolLayoutItem {}
+impl ObjectMethods for ToolLayoutItem { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl ToolLayoutItem {
     pub fn from(ptr: *mut c_void) -> ToolLayoutItem { ToolLayoutItem { ptr: ptr } }
@@ -450,17 +450,17 @@ impl ToolLayoutItem {
 }
 
 /// Methods of the wxWidgets' [wxToolLayoutItem](http://docs.wxwidgets.org/3.0/classwx_tool_layout_item.html) class.
-pub trait TToolLayoutItem : TObject {
+pub trait ToolLayoutItemMethods : ObjectMethods {
 }
 
 /// Wraps the wxWidgets' [wxToolWindow](http://docs.wxwidgets.org/3.0/classwx_tool_window.html) class.
 pub struct ToolWindow { ptr: *mut c_void }
-impl TToolWindow for ToolWindow {}
-impl TFrame for ToolWindow {}
-impl TTopLevelWindow for ToolWindow {}
-impl TWindow for ToolWindow {}
-impl TEvtHandler for ToolWindow {}
-impl TObject for ToolWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl ToolWindowMethods for ToolWindow {}
+impl FrameMethods for ToolWindow {}
+impl TopLevelWindowMethods for ToolWindow {}
+impl WindowMethods for ToolWindow {}
+impl EvtHandlerMethods for ToolWindow {}
+impl ObjectMethods for ToolWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl ToolWindow {
     pub fn from(ptr: *mut c_void) -> ToolWindow { ToolWindow { ptr: ptr } }
@@ -469,15 +469,15 @@ impl ToolWindow {
 }
 
 /// Methods of the wxWidgets' [wxToolWindow](http://docs.wxwidgets.org/3.0/classwx_tool_window.html) class.
-pub trait TToolWindow : TFrame {
+pub trait ToolWindowMethods : FrameMethods {
 }
 
 /// Wraps the wxWidgets' [wxTreeCompanionWindow](http://docs.wxwidgets.org/3.0/classwx_tree_companion_window.html) class.
 pub struct TreeCompanionWindow { ptr: *mut c_void }
-impl TTreeCompanionWindow for TreeCompanionWindow {}
-impl TWindow for TreeCompanionWindow {}
-impl TEvtHandler for TreeCompanionWindow {}
-impl TObject for TreeCompanionWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl TreeCompanionWindowMethods for TreeCompanionWindow {}
+impl WindowMethods for TreeCompanionWindow {}
+impl EvtHandlerMethods for TreeCompanionWindow {}
+impl ObjectMethods for TreeCompanionWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl TreeCompanionWindow {
     pub fn from(ptr: *mut c_void) -> TreeCompanionWindow { TreeCompanionWindow { ptr: ptr } }
@@ -486,13 +486,13 @@ impl TreeCompanionWindow {
 }
 
 /// Methods of the wxWidgets' [wxTreeCompanionWindow](http://docs.wxwidgets.org/3.0/classwx_tree_companion_window.html) class.
-pub trait TTreeCompanionWindow : TWindow {
+pub trait TreeCompanionWindowMethods : WindowMethods {
 }
 
 /// Wraps the wxWidgets' [wxTreeLayout](http://docs.wxwidgets.org/3.0/classwx_tree_layout.html) class.
 pub struct TreeLayout { ptr: *mut c_void }
-impl TTreeLayout for TreeLayout {}
-impl TObject for TreeLayout { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl TreeLayoutMethods for TreeLayout {}
+impl ObjectMethods for TreeLayout { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl TreeLayout {
     pub fn from(ptr: *mut c_void) -> TreeLayout { TreeLayout { ptr: ptr } }
@@ -501,14 +501,14 @@ impl TreeLayout {
 }
 
 /// Methods of the wxWidgets' [wxTreeLayout](http://docs.wxwidgets.org/3.0/classwx_tree_layout.html) class.
-pub trait TTreeLayout : TObject {
+pub trait TreeLayoutMethods : ObjectMethods {
 }
 
 /// Wraps the wxWidgets' [wxTreeLayoutStored](http://docs.wxwidgets.org/3.0/classwx_tree_layout_stored.html) class.
 pub struct TreeLayoutStored { ptr: *mut c_void }
-impl TTreeLayoutStored for TreeLayoutStored {}
-impl TTreeLayout for TreeLayoutStored {}
-impl TObject for TreeLayoutStored { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl TreeLayoutStoredMethods for TreeLayoutStored {}
+impl TreeLayoutMethods for TreeLayoutStored {}
+impl ObjectMethods for TreeLayoutStored { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl TreeLayoutStored {
     pub fn from(ptr: *mut c_void) -> TreeLayoutStored { TreeLayoutStored { ptr: ptr } }
@@ -517,17 +517,17 @@ impl TreeLayoutStored {
 }
 
 /// Methods of the wxWidgets' [wxTreeLayoutStored](http://docs.wxwidgets.org/3.0/classwx_tree_layout_stored.html) class.
-pub trait TTreeLayoutStored : TTreeLayout {
+pub trait TreeLayoutStoredMethods : TreeLayoutMethods {
 }
 
 /// Wraps the wxWidgets' [wxGauge95](http://docs.wxwidgets.org/3.0/classwx_gauge_95.html) class.
 pub struct Gauge95 { ptr: *mut c_void }
-impl TGauge95 for Gauge95 {}
-impl TGauge for Gauge95 {}
-impl TControl for Gauge95 {}
-impl TWindow for Gauge95 {}
-impl TEvtHandler for Gauge95 {}
-impl TObject for Gauge95 { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl Gauge95Methods for Gauge95 {}
+impl GaugeMethods for Gauge95 {}
+impl ControlMethods for Gauge95 {}
+impl WindowMethods for Gauge95 {}
+impl EvtHandlerMethods for Gauge95 {}
+impl ObjectMethods for Gauge95 { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl Gauge95 {
     pub fn from(ptr: *mut c_void) -> Gauge95 { Gauge95 { ptr: ptr } }
@@ -536,17 +536,17 @@ impl Gauge95 {
 }
 
 /// Methods of the wxWidgets' [wxGauge95](http://docs.wxwidgets.org/3.0/classwx_gauge_95.html) class.
-pub trait TGauge95 : TGauge {
+pub trait Gauge95Methods : GaugeMethods {
 }
 
 /// Wraps the wxWidgets' [wxGaugeMSW](http://docs.wxwidgets.org/3.0/classwx_gauge_msw.html) class.
 pub struct GaugeMSW { ptr: *mut c_void }
-impl TGaugeMSW for GaugeMSW {}
-impl TGauge for GaugeMSW {}
-impl TControl for GaugeMSW {}
-impl TWindow for GaugeMSW {}
-impl TEvtHandler for GaugeMSW {}
-impl TObject for GaugeMSW { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl GaugeMSWMethods for GaugeMSW {}
+impl GaugeMethods for GaugeMSW {}
+impl ControlMethods for GaugeMSW {}
+impl WindowMethods for GaugeMSW {}
+impl EvtHandlerMethods for GaugeMSW {}
+impl ObjectMethods for GaugeMSW { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl GaugeMSW {
     pub fn from(ptr: *mut c_void) -> GaugeMSW { GaugeMSW { ptr: ptr } }
@@ -555,17 +555,17 @@ impl GaugeMSW {
 }
 
 /// Methods of the wxWidgets' [wxGaugeMSW](http://docs.wxwidgets.org/3.0/classwx_gauge_msw.html) class.
-pub trait TGaugeMSW : TGauge {
+pub trait GaugeMSWMethods : GaugeMethods {
 }
 
 /// Wraps the wxWidgets' [wxSlider95](http://docs.wxwidgets.org/3.0/classwx_slider_95.html) class.
 pub struct Slider95 { ptr: *mut c_void }
-impl TSlider95 for Slider95 {}
-impl TSlider for Slider95 {}
-impl TControl for Slider95 {}
-impl TWindow for Slider95 {}
-impl TEvtHandler for Slider95 {}
-impl TObject for Slider95 { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl Slider95Methods for Slider95 {}
+impl SliderMethods for Slider95 {}
+impl ControlMethods for Slider95 {}
+impl WindowMethods for Slider95 {}
+impl EvtHandlerMethods for Slider95 {}
+impl ObjectMethods for Slider95 { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl Slider95 {
     pub fn from(ptr: *mut c_void) -> Slider95 { Slider95 { ptr: ptr } }
@@ -574,17 +574,17 @@ impl Slider95 {
 }
 
 /// Methods of the wxWidgets' [wxSlider95](http://docs.wxwidgets.org/3.0/classwx_slider_95.html) class.
-pub trait TSlider95 : TSlider {
+pub trait Slider95Methods : SliderMethods {
 }
 
 /// Wraps the wxWidgets' [wxSliderMSW](http://docs.wxwidgets.org/3.0/classwx_slider_msw.html) class.
 pub struct SliderMSW { ptr: *mut c_void }
-impl TSliderMSW for SliderMSW {}
-impl TSlider for SliderMSW {}
-impl TControl for SliderMSW {}
-impl TWindow for SliderMSW {}
-impl TEvtHandler for SliderMSW {}
-impl TObject for SliderMSW { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl SliderMSWMethods for SliderMSW {}
+impl SliderMethods for SliderMSW {}
+impl ControlMethods for SliderMSW {}
+impl WindowMethods for SliderMSW {}
+impl EvtHandlerMethods for SliderMSW {}
+impl ObjectMethods for SliderMSW { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl SliderMSW {
     pub fn from(ptr: *mut c_void) -> SliderMSW { SliderMSW { ptr: ptr } }
@@ -593,6 +593,6 @@ impl SliderMSW {
 }
 
 /// Methods of the wxWidgets' [wxSliderMSW](http://docs.wxwidgets.org/3.0/classwx_slider_msw.html) class.
-pub trait TSliderMSW : TSlider {
+pub trait SliderMSWMethods : SliderMethods {
 }
 

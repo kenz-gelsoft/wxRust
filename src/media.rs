@@ -5,16 +5,16 @@ use core::*;
 
 /// Wraps the wxWidgets' [wxMediaCtrl](http://docs.wxwidgets.org/3.0/classwx_media_ctrl.html) class.
 pub struct MediaCtrl { ptr: *mut c_void }
-impl TMediaCtrl for MediaCtrl {}
-impl TWindow for MediaCtrl {}
-impl TEvtHandler for MediaCtrl {}
-impl TObject for MediaCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl MediaCtrlMethods for MediaCtrl {}
+impl WindowMethods for MediaCtrl {}
+impl EvtHandlerMethods for MediaCtrl {}
+impl ObjectMethods for MediaCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl MediaCtrl {
     pub fn from(ptr: *mut c_void) -> MediaCtrl { MediaCtrl { ptr: ptr } }
     pub fn null() -> MediaCtrl { MediaCtrl::from(0 as *mut c_void) }
     
-    pub fn new<T: TWindow>(parent: &T, windowID: c_int, fileName: &str, x: c_int, y: c_int, w: c_int, h: c_int, style: c_long, szBackend: &str, name: &str) -> MediaCtrl {
+    pub fn new<T: WindowMethods>(parent: &T, windowID: c_int, fileName: &str, x: c_int, y: c_int, w: c_int, h: c_int, style: c_long, szBackend: &str, name: &str) -> MediaCtrl {
         let fileName = wxT(fileName);
         let szBackend = wxT(szBackend);
         let name = wxT(name);
@@ -23,7 +23,7 @@ impl MediaCtrl {
 }
 
 /// Methods of the wxWidgets' [wxMediaCtrl](http://docs.wxwidgets.org/3.0/classwx_media_ctrl.html) class.
-pub trait TMediaCtrl : TWindow {
+pub trait MediaCtrlMethods : WindowMethods {
     fn getPlaybackRate(&self) -> c_double {
         unsafe { wxMediaCtrl_GetPlaybackRate(self.ptr()) }
     }
@@ -77,11 +77,11 @@ pub trait TMediaCtrl : TWindow {
 
 /// Wraps the wxWidgets' [wxMediaEvent](http://docs.wxwidgets.org/3.0/classwx_media_event.html) class.
 pub struct MediaEvent { ptr: *mut c_void }
-impl TMediaEvent for MediaEvent {}
-impl TNotifyEvent for MediaEvent {}
-impl TCommandEvent for MediaEvent {}
-impl TEvent for MediaEvent {}
-impl TObject for MediaEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl MediaEventMethods for MediaEvent {}
+impl NotifyEventMethods for MediaEvent {}
+impl CommandEventMethods for MediaEvent {}
+impl EventMethods for MediaEvent {}
+impl ObjectMethods for MediaEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl MediaEvent {
     pub fn from(ptr: *mut c_void) -> MediaEvent { MediaEvent { ptr: ptr } }
@@ -90,6 +90,6 @@ impl MediaEvent {
 }
 
 /// Methods of the wxWidgets' [wxMediaEvent](http://docs.wxwidgets.org/3.0/classwx_media_event.html) class.
-pub trait TMediaEvent : TNotifyEvent {
+pub trait MediaEventMethods : NotifyEventMethods {
 }
 

@@ -4,11 +4,11 @@ use core::*;
 
 /// Wraps the wxWidgets' [wxFTP](http://docs.wxwidgets.org/3.0/classwx_ftp.html) class.
 pub struct FTP { ptr: *mut c_void }
-impl TFTP for FTP {}
-impl TProtocol for FTP {}
-impl TSocketClient for FTP {}
-impl TSocketBase for FTP {}
-impl TObject for FTP { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl FTPMethods for FTP {}
+impl ProtocolMethods for FTP {}
+impl SocketClientMethods for FTP {}
+impl SocketBaseMethods for FTP {}
+impl ObjectMethods for FTP { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl FTP {
     pub fn from(ptr: *mut c_void) -> FTP { FTP { ptr: ptr } }
@@ -17,16 +17,16 @@ impl FTP {
 }
 
 /// Methods of the wxWidgets' [wxFTP](http://docs.wxwidgets.org/3.0/classwx_ftp.html) class.
-pub trait TFTP : TProtocol {
+pub trait FTPMethods : ProtocolMethods {
 }
 
 /// Wraps the wxWidgets' [wxHTTP](http://docs.wxwidgets.org/3.0/classwx_http.html) class.
 pub struct HTTP { ptr: *mut c_void }
-impl THTTP for HTTP {}
-impl TProtocol for HTTP {}
-impl TSocketClient for HTTP {}
-impl TSocketBase for HTTP {}
-impl TObject for HTTP { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl HTTPMethods for HTTP {}
+impl ProtocolMethods for HTTP {}
+impl SocketClientMethods for HTTP {}
+impl SocketBaseMethods for HTTP {}
+impl ObjectMethods for HTTP { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl HTTP {
     pub fn from(ptr: *mut c_void) -> HTTP { HTTP { ptr: ptr } }
@@ -35,14 +35,14 @@ impl HTTP {
 }
 
 /// Methods of the wxWidgets' [wxHTTP](http://docs.wxwidgets.org/3.0/classwx_http.html) class.
-pub trait THTTP : TProtocol {
+pub trait HTTPMethods : ProtocolMethods {
 }
 
 /// Wraps the wxWidgets' [wxIPV4address](http://docs.wxwidgets.org/3.0/classwx_ipv4_address.html) class.
 pub struct IPV4address { ptr: *mut c_void }
-impl TIPV4address for IPV4address {}
-impl TSockAddress for IPV4address {}
-impl TObject for IPV4address { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl IPV4addressMethods for IPV4address {}
+impl SockAddressMethods for IPV4address {}
+impl ObjectMethods for IPV4address { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl IPV4address {
     pub fn from(ptr: *mut c_void) -> IPV4address { IPV4address { ptr: ptr } }
@@ -51,15 +51,15 @@ impl IPV4address {
 }
 
 /// Methods of the wxWidgets' [wxIPV4address](http://docs.wxwidgets.org/3.0/classwx_ipv4_address.html) class.
-pub trait TIPV4address : TSockAddress {
+pub trait IPV4addressMethods : SockAddressMethods {
 }
 
 /// Wraps the wxWidgets' [wxProtocol](http://docs.wxwidgets.org/3.0/classwx_protocol.html) class.
 pub struct Protocol { ptr: *mut c_void }
-impl TProtocol for Protocol {}
-impl TSocketClient for Protocol {}
-impl TSocketBase for Protocol {}
-impl TObject for Protocol { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl ProtocolMethods for Protocol {}
+impl SocketClientMethods for Protocol {}
+impl SocketBaseMethods for Protocol {}
+impl ObjectMethods for Protocol { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl Protocol {
     pub fn from(ptr: *mut c_void) -> Protocol { Protocol { ptr: ptr } }
@@ -68,13 +68,13 @@ impl Protocol {
 }
 
 /// Methods of the wxWidgets' [wxProtocol](http://docs.wxwidgets.org/3.0/classwx_protocol.html) class.
-pub trait TProtocol : TSocketClient {
+pub trait ProtocolMethods : SocketClientMethods {
 }
 
 /// Wraps the wxWidgets' [wxSockAddress](http://docs.wxwidgets.org/3.0/classwx_sock_address.html) class.
 pub struct SockAddress { ptr: *mut c_void }
-impl TSockAddress for SockAddress {}
-impl TObject for SockAddress { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl SockAddressMethods for SockAddress {}
+impl ObjectMethods for SockAddress { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl SockAddress {
     pub fn from(ptr: *mut c_void) -> SockAddress { SockAddress { ptr: ptr } }
@@ -83,13 +83,13 @@ impl SockAddress {
 }
 
 /// Methods of the wxWidgets' [wxSockAddress](http://docs.wxwidgets.org/3.0/classwx_sock_address.html) class.
-pub trait TSockAddress : TObject {
+pub trait SockAddressMethods : ObjectMethods {
 }
 
 /// Wraps the wxWidgets' [wxSocketBase](http://docs.wxwidgets.org/3.0/classwx_socket_base.html) class.
 pub struct SocketBase { ptr: *mut c_void }
-impl TSocketBase for SocketBase {}
-impl TObject for SocketBase { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl SocketBaseMethods for SocketBase {}
+impl ObjectMethods for SocketBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl SocketBase {
     pub fn from(ptr: *mut c_void) -> SocketBase { SocketBase { ptr: ptr } }
@@ -98,14 +98,14 @@ impl SocketBase {
 }
 
 /// Methods of the wxWidgets' [wxSocketBase](http://docs.wxwidgets.org/3.0/classwx_socket_base.html) class.
-pub trait TSocketBase : TObject {
+pub trait SocketBaseMethods : ObjectMethods {
 }
 
 /// Wraps the wxWidgets' [wxSocketClient](http://docs.wxwidgets.org/3.0/classwx_socket_client.html) class.
 pub struct SocketClient { ptr: *mut c_void }
-impl TSocketClient for SocketClient {}
-impl TSocketBase for SocketClient {}
-impl TObject for SocketClient { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl SocketClientMethods for SocketClient {}
+impl SocketBaseMethods for SocketClient {}
+impl ObjectMethods for SocketClient { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl SocketClient {
     pub fn from(ptr: *mut c_void) -> SocketClient { SocketClient { ptr: ptr } }
@@ -114,14 +114,14 @@ impl SocketClient {
 }
 
 /// Methods of the wxWidgets' [wxSocketClient](http://docs.wxwidgets.org/3.0/classwx_socket_client.html) class.
-pub trait TSocketClient : TSocketBase {
+pub trait SocketClientMethods : SocketBaseMethods {
 }
 
 /// Wraps the wxWidgets' [wxSocketEvent](http://docs.wxwidgets.org/3.0/classwx_socket_event.html) class.
 pub struct SocketEvent { ptr: *mut c_void }
-impl TSocketEvent for SocketEvent {}
-impl TEvent for SocketEvent {}
-impl TObject for SocketEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl SocketEventMethods for SocketEvent {}
+impl EventMethods for SocketEvent {}
+impl ObjectMethods for SocketEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl SocketEvent {
     pub fn from(ptr: *mut c_void) -> SocketEvent { SocketEvent { ptr: ptr } }
@@ -130,14 +130,14 @@ impl SocketEvent {
 }
 
 /// Methods of the wxWidgets' [wxSocketEvent](http://docs.wxwidgets.org/3.0/classwx_socket_event.html) class.
-pub trait TSocketEvent : TEvent {
+pub trait SocketEventMethods : EventMethods {
 }
 
 /// Wraps the wxWidgets' [wxSocketInputStream](http://docs.wxwidgets.org/3.0/classwx_socket_input_stream.html) class.
 pub struct SocketInputStream { ptr: *mut c_void }
-impl TSocketInputStream for SocketInputStream {}
-impl TInputStream for SocketInputStream {}
-impl TStreamBase for SocketInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl SocketInputStreamMethods for SocketInputStream {}
+impl InputStreamMethods for SocketInputStream {}
+impl StreamBaseMethods for SocketInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl SocketInputStream {
     pub fn from(ptr: *mut c_void) -> SocketInputStream { SocketInputStream { ptr: ptr } }
@@ -146,14 +146,14 @@ impl SocketInputStream {
 }
 
 /// Methods of the wxWidgets' [wxSocketInputStream](http://docs.wxwidgets.org/3.0/classwx_socket_input_stream.html) class.
-pub trait TSocketInputStream : TInputStream {
+pub trait SocketInputStreamMethods : InputStreamMethods {
 }
 
 /// Wraps the wxWidgets' [wxSocketOutputStream](http://docs.wxwidgets.org/3.0/classwx_socket_output_stream.html) class.
 pub struct SocketOutputStream { ptr: *mut c_void }
-impl TSocketOutputStream for SocketOutputStream {}
-impl TOutputStream for SocketOutputStream {}
-impl TStreamBase for SocketOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl SocketOutputStreamMethods for SocketOutputStream {}
+impl OutputStreamMethods for SocketOutputStream {}
+impl StreamBaseMethods for SocketOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl SocketOutputStream {
     pub fn from(ptr: *mut c_void) -> SocketOutputStream { SocketOutputStream { ptr: ptr } }
@@ -162,14 +162,14 @@ impl SocketOutputStream {
 }
 
 /// Methods of the wxWidgets' [wxSocketOutputStream](http://docs.wxwidgets.org/3.0/classwx_socket_output_stream.html) class.
-pub trait TSocketOutputStream : TOutputStream {
+pub trait SocketOutputStreamMethods : OutputStreamMethods {
 }
 
 /// Wraps the wxWidgets' [wxSocketServer](http://docs.wxwidgets.org/3.0/classwx_socket_server.html) class.
 pub struct SocketServer { ptr: *mut c_void }
-impl TSocketServer for SocketServer {}
-impl TSocketBase for SocketServer {}
-impl TObject for SocketServer { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl SocketServerMethods for SocketServer {}
+impl SocketBaseMethods for SocketServer {}
+impl ObjectMethods for SocketServer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl SocketServer {
     pub fn from(ptr: *mut c_void) -> SocketServer { SocketServer { ptr: ptr } }
@@ -178,13 +178,13 @@ impl SocketServer {
 }
 
 /// Methods of the wxWidgets' [wxSocketServer](http://docs.wxwidgets.org/3.0/classwx_socket_server.html) class.
-pub trait TSocketServer : TSocketBase {
+pub trait SocketServerMethods : SocketBaseMethods {
 }
 
 /// Wraps the wxWidgets' [wxURL](http://docs.wxwidgets.org/3.0/classwx_url.html) class.
 pub struct URL { ptr: *mut c_void }
-impl TURL for URL {}
-impl TObject for URL { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl URLMethods for URL {}
+impl ObjectMethods for URL { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl URL {
     pub fn from(ptr: *mut c_void) -> URL { URL { ptr: ptr } }
@@ -193,6 +193,6 @@ impl URL {
 }
 
 /// Methods of the wxWidgets' [wxURL](http://docs.wxwidgets.org/3.0/classwx_url.html) class.
-pub trait TURL : TObject {
+pub trait URLMethods : ObjectMethods {
 }
 

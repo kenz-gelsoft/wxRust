@@ -6,24 +6,24 @@ use advanced::*;
 
 /// Wraps the wxWidgets' [wxPropertyGrid](http://docs.wxwidgets.org/3.0/classwx_property_grid.html) class.
 pub struct PropertyGrid { ptr: *mut c_void }
-impl TPropertyGrid for PropertyGrid {}
-impl TControl for PropertyGrid {}
-impl TWindow for PropertyGrid {}
-impl TEvtHandler for PropertyGrid {}
-impl TObject for PropertyGrid { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl PropertyGridMethods for PropertyGrid {}
+impl ControlMethods for PropertyGrid {}
+impl WindowMethods for PropertyGrid {}
+impl EvtHandlerMethods for PropertyGrid {}
+impl ObjectMethods for PropertyGrid { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl PropertyGrid {
     pub fn from(ptr: *mut c_void) -> PropertyGrid { PropertyGrid { ptr: ptr } }
     pub fn null() -> PropertyGrid { PropertyGrid::from(0 as *mut c_void) }
     
-    pub fn new<T: TWindow>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> PropertyGrid {
+    pub fn new<T: WindowMethods>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> PropertyGrid {
         unsafe { PropertyGrid { ptr: wxPropertyGrid_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
     }
 }
 
 /// Methods of the wxWidgets' [wxPropertyGrid](http://docs.wxwidgets.org/3.0/classwx_property_grid.html) class.
-pub trait TPropertyGrid : TControl {
-    fn append<T: TPGProperty>(&self, prop: &T) -> PGProperty {
+pub trait PropertyGridMethods : ControlMethods {
+    fn append<T: PGPropertyMethods>(&self, prop: &T) -> PGProperty {
         unsafe { PGProperty { ptr: wxPropertyGrid_Append(self.ptr(), prop.ptr()) } }
     }
     fn disableProperty(&self, propName: &str) -> c_int {
@@ -34,11 +34,11 @@ pub trait TPropertyGrid : TControl {
 
 /// Wraps the wxWidgets' [wxPropertyGridEvent](http://docs.wxwidgets.org/3.0/classwx_property_grid_event.html) class.
 pub struct PropertyGridEvent { ptr: *mut c_void }
-impl TPropertyGridEvent for PropertyGridEvent {}
-impl TNotifyEvent for PropertyGridEvent {}
-impl TCommandEvent for PropertyGridEvent {}
-impl TEvent for PropertyGridEvent {}
-impl TObject for PropertyGridEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl PropertyGridEventMethods for PropertyGridEvent {}
+impl NotifyEventMethods for PropertyGridEvent {}
+impl CommandEventMethods for PropertyGridEvent {}
+impl EventMethods for PropertyGridEvent {}
+impl ObjectMethods for PropertyGridEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl PropertyGridEvent {
     pub fn from(ptr: *mut c_void) -> PropertyGridEvent { PropertyGridEvent { ptr: ptr } }
@@ -47,7 +47,7 @@ impl PropertyGridEvent {
 }
 
 /// Methods of the wxWidgets' [wxPropertyGridEvent](http://docs.wxwidgets.org/3.0/classwx_property_grid_event.html) class.
-pub trait TPropertyGridEvent : TNotifyEvent {
+pub trait PropertyGridEventMethods : NotifyEventMethods {
     fn hasProperty(&self) -> c_int {
         unsafe { wxPropertyGridEvent_HasProperty(self.ptr()) }
     }
@@ -58,8 +58,8 @@ pub trait TPropertyGridEvent : TNotifyEvent {
 
 /// Wraps the wxWidgets' [wxPGProperty](http://docs.wxwidgets.org/3.0/classwx_pgp_roperty.html) class.
 pub struct PGProperty { ptr: *mut c_void }
-impl TPGProperty for PGProperty {}
-impl TObject for PGProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl PGPropertyMethods for PGProperty {}
+impl ObjectMethods for PGProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl PGProperty {
     pub fn from(ptr: *mut c_void) -> PGProperty { PGProperty { ptr: ptr } }
@@ -68,7 +68,7 @@ impl PGProperty {
 }
 
 /// Methods of the wxWidgets' [wxPGProperty](http://docs.wxwidgets.org/3.0/classwx_pgp_roperty.html) class.
-pub trait TPGProperty : TObject {
+pub trait PGPropertyMethods : ObjectMethods {
     fn getLabel(&self) -> ~str {
         unsafe { WxString { ptr: wxPGProperty_GetLabel(self.ptr()) }.to_str() }
     }
@@ -89,9 +89,9 @@ pub trait TPGProperty : TObject {
 
 /// Wraps the wxWidgets' [wxStringProperty](http://docs.wxwidgets.org/3.0/classwx_string_property.html) class.
 pub struct StringProperty { ptr: *mut c_void }
-impl TStringProperty for StringProperty {}
-impl TPGProperty for StringProperty {}
-impl TObject for StringProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl StringPropertyMethods for StringProperty {}
+impl PGPropertyMethods for StringProperty {}
+impl ObjectMethods for StringProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl StringProperty {
     pub fn from(ptr: *mut c_void) -> StringProperty { StringProperty { ptr: ptr } }
@@ -106,14 +106,14 @@ impl StringProperty {
 }
 
 /// Methods of the wxWidgets' [wxStringProperty](http://docs.wxwidgets.org/3.0/classwx_string_property.html) class.
-pub trait TStringProperty : TPGProperty {
+pub trait StringPropertyMethods : PGPropertyMethods {
 }
 
 /// Wraps the wxWidgets' [wxIntProperty](http://docs.wxwidgets.org/3.0/classwx_int_property.html) class.
 pub struct IntProperty { ptr: *mut c_void }
-impl TIntProperty for IntProperty {}
-impl TPGProperty for IntProperty {}
-impl TObject for IntProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl IntPropertyMethods for IntProperty {}
+impl PGPropertyMethods for IntProperty {}
+impl ObjectMethods for IntProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl IntProperty {
     pub fn from(ptr: *mut c_void) -> IntProperty { IntProperty { ptr: ptr } }
@@ -127,14 +127,14 @@ impl IntProperty {
 }
 
 /// Methods of the wxWidgets' [wxIntProperty](http://docs.wxwidgets.org/3.0/classwx_int_property.html) class.
-pub trait TIntProperty : TPGProperty {
+pub trait IntPropertyMethods : PGPropertyMethods {
 }
 
 /// Wraps the wxWidgets' [wxBoolProperty](http://docs.wxwidgets.org/3.0/classwx_bool_property.html) class.
 pub struct BoolProperty { ptr: *mut c_void }
-impl TBoolProperty for BoolProperty {}
-impl TPGProperty for BoolProperty {}
-impl TObject for BoolProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl BoolPropertyMethods for BoolProperty {}
+impl PGPropertyMethods for BoolProperty {}
+impl ObjectMethods for BoolProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl BoolProperty {
     pub fn from(ptr: *mut c_void) -> BoolProperty { BoolProperty { ptr: ptr } }
@@ -148,14 +148,14 @@ impl BoolProperty {
 }
 
 /// Methods of the wxWidgets' [wxBoolProperty](http://docs.wxwidgets.org/3.0/classwx_bool_property.html) class.
-pub trait TBoolProperty : TPGProperty {
+pub trait BoolPropertyMethods : PGPropertyMethods {
 }
 
 /// Wraps the wxWidgets' [wxFloatProperty](http://docs.wxwidgets.org/3.0/classwx_float_property.html) class.
 pub struct FloatProperty { ptr: *mut c_void }
-impl TFloatProperty for FloatProperty {}
-impl TPGProperty for FloatProperty {}
-impl TObject for FloatProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl FloatPropertyMethods for FloatProperty {}
+impl PGPropertyMethods for FloatProperty {}
+impl ObjectMethods for FloatProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl FloatProperty {
     pub fn from(ptr: *mut c_void) -> FloatProperty { FloatProperty { ptr: ptr } }
@@ -169,20 +169,20 @@ impl FloatProperty {
 }
 
 /// Methods of the wxWidgets' [wxFloatProperty](http://docs.wxwidgets.org/3.0/classwx_float_property.html) class.
-pub trait TFloatProperty : TPGProperty {
+pub trait FloatPropertyMethods : PGPropertyMethods {
 }
 
 /// Wraps the wxWidgets' [wxDateProperty](http://docs.wxwidgets.org/3.0/classwx_date_property.html) class.
 pub struct DateProperty { ptr: *mut c_void }
-impl TDateProperty for DateProperty {}
-impl TPGProperty for DateProperty {}
-impl TObject for DateProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl DatePropertyMethods for DateProperty {}
+impl PGPropertyMethods for DateProperty {}
+impl ObjectMethods for DateProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl DateProperty {
     pub fn from(ptr: *mut c_void) -> DateProperty { DateProperty { ptr: ptr } }
     pub fn null() -> DateProperty { DateProperty::from(0 as *mut c_void) }
     
-    pub fn new<T: TDateTime>(label: &str, name: &str, value: &T) -> DateProperty {
+    pub fn new<T: DateTimeMethods>(label: &str, name: &str, value: &T) -> DateProperty {
         let label = wxT(label);
         let name = wxT(name);
         unsafe { DateProperty { ptr: wxDateProperty_Create(label.ptr(), name.ptr(), value.ptr()) } }
@@ -190,14 +190,14 @@ impl DateProperty {
 }
 
 /// Methods of the wxWidgets' [wxDateProperty](http://docs.wxwidgets.org/3.0/classwx_date_property.html) class.
-pub trait TDateProperty : TPGProperty {
+pub trait DatePropertyMethods : PGPropertyMethods {
 }
 
 /// Wraps the wxWidgets' [wxFileProperty](http://docs.wxwidgets.org/3.0/classwx_file_property.html) class.
 pub struct FileProperty { ptr: *mut c_void }
-impl TFileProperty for FileProperty {}
-impl TPGProperty for FileProperty {}
-impl TObject for FileProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl FilePropertyMethods for FileProperty {}
+impl PGPropertyMethods for FileProperty {}
+impl ObjectMethods for FileProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl FileProperty {
     pub fn from(ptr: *mut c_void) -> FileProperty { FileProperty { ptr: ptr } }
@@ -212,14 +212,14 @@ impl FileProperty {
 }
 
 /// Methods of the wxWidgets' [wxFileProperty](http://docs.wxwidgets.org/3.0/classwx_file_property.html) class.
-pub trait TFileProperty : TPGProperty {
+pub trait FilePropertyMethods : PGPropertyMethods {
 }
 
 /// Wraps the wxWidgets' [wxPropertyCategory](http://docs.wxwidgets.org/3.0/classwx_property_category.html) class.
 pub struct PropertyCategory { ptr: *mut c_void }
-impl TPropertyCategory for PropertyCategory {}
-impl TPGProperty for PropertyCategory {}
-impl TObject for PropertyCategory { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl PropertyCategoryMethods for PropertyCategory {}
+impl PGPropertyMethods for PropertyCategory {}
+impl ObjectMethods for PropertyCategory { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl PropertyCategory {
     pub fn from(ptr: *mut c_void) -> PropertyCategory { PropertyCategory { ptr: ptr } }
@@ -232,6 +232,6 @@ impl PropertyCategory {
 }
 
 /// Methods of the wxWidgets' [wxPropertyCategory](http://docs.wxwidgets.org/3.0/classwx_property_category.html) class.
-pub trait TPropertyCategory : TPGProperty {
+pub trait PropertyCategoryMethods : PGPropertyMethods {
 }
 

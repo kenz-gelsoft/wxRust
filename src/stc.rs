@@ -6,29 +6,29 @@ use advanced::*;
 
 /// Wraps the wxWidgets' [wxStyledTextCtrl](http://docs.wxwidgets.org/3.0/classwx_styled_text_ctrl.html) class.
 pub struct StyledTextCtrl { ptr: *mut c_void }
-impl TStyledTextCtrl for StyledTextCtrl {}
-impl TControl for StyledTextCtrl {}
-impl TWindow for StyledTextCtrl {}
-impl TEvtHandler for StyledTextCtrl {}
-impl TObject for StyledTextCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl StyledTextCtrlMethods for StyledTextCtrl {}
+impl ControlMethods for StyledTextCtrl {}
+impl WindowMethods for StyledTextCtrl {}
+impl EvtHandlerMethods for StyledTextCtrl {}
+impl ObjectMethods for StyledTextCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl StyledTextCtrl {
     pub fn from(ptr: *mut c_void) -> StyledTextCtrl { StyledTextCtrl { ptr: ptr } }
     pub fn null() -> StyledTextCtrl { StyledTextCtrl::from(0 as *mut c_void) }
     
-    pub fn new<T: TWindow>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, style: c_int) -> StyledTextCtrl {
+    pub fn new<T: WindowMethods>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, style: c_int) -> StyledTextCtrl {
         let _txt = wxT(_txt);
         unsafe { StyledTextCtrl { ptr: wxStyledTextCtrl_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, style) } }
     }
 }
 
 /// Methods of the wxWidgets' [wxStyledTextCtrl](http://docs.wxwidgets.org/3.0/classwx_styled_text_ctrl.html) class.
-pub trait TStyledTextCtrl : TControl {
+pub trait StyledTextCtrlMethods : ControlMethods {
     fn addText(&self, text: &str) {
         let text = wxT(text);
         unsafe { wxStyledTextCtrl_AddText(self.ptr(), text.ptr()) }
     }
-    fn addStyledText<T: TMemoryBuffer>(&self, data: &T) {
+    fn addStyledText<T: MemoryBufferMethods>(&self, data: &T) {
         unsafe { wxStyledTextCtrl_AddStyledText(self.ptr(), data.ptr()) }
     }
     fn insertText(&self, pos: c_int, text: &str) {
@@ -161,7 +161,7 @@ pub trait TStyledTextCtrl : TControl {
     fn markerPrevious(&self, lineStart: c_int, markerMask: c_int) -> c_int {
         unsafe { wxStyledTextCtrl_MarkerPrevious(self.ptr(), lineStart, markerMask) }
     }
-    fn markerDefineBitmap<T: TBitmap>(&self, markerNumber: c_int, bmp: &T) {
+    fn markerDefineBitmap<T: BitmapMethods>(&self, markerNumber: c_int, bmp: &T) {
         unsafe { wxStyledTextCtrl_MarkerDefineBitmap(self.ptr(), markerNumber, bmp.ptr()) }
     }
     fn setMarginType(&self, margin: c_int, marginType: c_int) {
@@ -375,7 +375,7 @@ pub trait TStyledTextCtrl : TControl {
     fn autoCompGetDropRestOfWord(&self) -> c_int {
         unsafe { wxStyledTextCtrl_AutoCompGetDropRestOfWord(self.ptr()) }
     }
-    fn registerImage<T: TBitmap>(&self, type_: c_int, bmp: &T) {
+    fn registerImage<T: BitmapMethods>(&self, type_: c_int, bmp: &T) {
         unsafe { wxStyledTextCtrl_RegisterImage(self.ptr(), type_, bmp.ptr()) }
     }
     fn clearRegisteredImages(&self) {
@@ -469,7 +469,7 @@ pub trait TStyledTextCtrl : TControl {
         let text = wxT(text);
         unsafe { wxStyledTextCtrl_FindText(self.ptr(), minPos, maxPos, text.ptr(), flags) }
     }
-    fn formatRange<T: TDC, U: TDC, V: TRect, W: TRect>(&self, doDraw: c_int, startPos: c_int, endPos: c_int, draw: &T, target: &U, renderRect: &V, pageRect: &W) -> c_int {
+    fn formatRange<T: DCMethods, U: DCMethods, V: RectMethods, W: RectMethods>(&self, doDraw: c_int, startPos: c_int, endPos: c_int, draw: &T, target: &U, renderRect: &V, pageRect: &W) -> c_int {
         unsafe { wxStyledTextCtrl_FormatRange(self.ptr(), doDraw, startPos, endPos, draw.ptr(), target.ptr(), renderRect.ptr(), pageRect.ptr()) }
     }
     fn getFirstVisibleLine(&self) -> c_int {
@@ -786,7 +786,7 @@ pub trait TStyledTextCtrl : TControl {
     fn setViewEOL(&self, visible: c_int) {
         unsafe { wxStyledTextCtrl_SetViewEOL(self.ptr(), visible) }
     }
-    fn setDocPointer<T: TSTCDoc>(&self, docPointer: &T) {
+    fn setDocPointer<T: STCDocMethods>(&self, docPointer: &T) {
         unsafe { wxStyledTextCtrl_SetDocPointer(self.ptr(), docPointer.ptr()) }
     }
     fn setModEventMask(&self, mask: c_int) {
@@ -833,10 +833,10 @@ pub trait TStyledTextCtrl : TControl {
     fn getZoom(&self) -> c_int {
         unsafe { wxStyledTextCtrl_GetZoom(self.ptr()) }
     }
-    fn addRefDocument<T: TSTCDoc>(&self, docPointer: &T) {
+    fn addRefDocument<T: STCDocMethods>(&self, docPointer: &T) {
         unsafe { wxStyledTextCtrl_AddRefDocument(self.ptr(), docPointer.ptr()) }
     }
-    fn releaseDocument<T: TSTCDoc>(&self, docPointer: &T) {
+    fn releaseDocument<T: STCDocMethods>(&self, docPointer: &T) {
         unsafe { wxStyledTextCtrl_ReleaseDocument(self.ptr(), docPointer.ptr()) }
     }
     fn getModEventMask(&self) -> c_int {
@@ -971,7 +971,7 @@ pub trait TStyledTextCtrl : TControl {
         let spec = wxT(spec);
         unsafe { wxStyledTextCtrl_StyleSetSpec(self.ptr(), styleNum, spec.ptr()) }
     }
-    fn styleSetFont<T: TFont>(&self, styleNum: c_int, font: &T) {
+    fn styleSetFont<T: FontMethods>(&self, styleNum: c_int, font: &T) {
         unsafe { wxStyledTextCtrl_StyleSetFont(self.ptr(), styleNum, font.ptr()) }
     }
     fn styleSetFontAttr(&self, styleNum: c_int, size: c_int, faceName: &str, bold: c_int, italic: c_int, underline: c_int) {
@@ -993,10 +993,10 @@ pub trait TStyledTextCtrl : TControl {
     fn scrollToColumn(&self, column: c_int) {
         unsafe { wxStyledTextCtrl_ScrollToColumn(self.ptr(), column) }
     }
-    fn setVScrollBar<T: TScrollBar>(&self, bar: &T) {
+    fn setVScrollBar<T: ScrollBarMethods>(&self, bar: &T) {
         unsafe { wxStyledTextCtrl_SetVScrollBar(self.ptr(), bar.ptr()) }
     }
-    fn setHScrollBar<T: TScrollBar>(&self, bar: &T) {
+    fn setHScrollBar<T: ScrollBarMethods>(&self, bar: &T) {
         unsafe { wxStyledTextCtrl_SetHScrollBar(self.ptr(), bar.ptr()) }
     }
     fn getLastKeydownProcessed(&self) -> c_int {
@@ -1053,7 +1053,7 @@ pub trait TStyledTextCtrl : TControl {
 
 /// Wraps the wxWidgets' [wxSTCDoc](http://docs.wxwidgets.org/3.0/classwx_stcd_oc.html) class.
 pub struct STCDoc { ptr: *mut c_void }
-impl TSTCDoc for STCDoc { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl STCDocMethods for STCDoc { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl STCDoc {
     pub fn from(ptr: *mut c_void) -> STCDoc { STCDoc { ptr: ptr } }
@@ -1062,17 +1062,17 @@ impl STCDoc {
 }
 
 /// Methods of the wxWidgets' [wxSTCDoc](http://docs.wxwidgets.org/3.0/classwx_stcd_oc.html) class.
-pub trait TSTCDoc {
+pub trait STCDocMethods {
     fn ptr(&self) -> *mut c_void;
     
 }
 
 /// Wraps the wxWidgets' [wxStyledTextEvent](http://docs.wxwidgets.org/3.0/classwx_styled_text_event.html) class.
 pub struct StyledTextEvent { ptr: *mut c_void }
-impl TStyledTextEvent for StyledTextEvent {}
-impl TCommandEvent for StyledTextEvent {}
-impl TEvent for StyledTextEvent {}
-impl TObject for StyledTextEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl StyledTextEventMethods for StyledTextEvent {}
+impl CommandEventMethods for StyledTextEvent {}
+impl EventMethods for StyledTextEvent {}
+impl ObjectMethods for StyledTextEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl StyledTextEvent {
     pub fn from(ptr: *mut c_void) -> StyledTextEvent { StyledTextEvent { ptr: ptr } }
@@ -1081,7 +1081,7 @@ impl StyledTextEvent {
 }
 
 /// Methods of the wxWidgets' [wxStyledTextEvent](http://docs.wxwidgets.org/3.0/classwx_styled_text_event.html) class.
-pub trait TStyledTextEvent : TCommandEvent {
+pub trait StyledTextEventMethods : CommandEventMethods {
     fn getPosition(&self) -> c_int {
         unsafe { wxStyledTextEvent_GetPosition(self.ptr()) }
     }

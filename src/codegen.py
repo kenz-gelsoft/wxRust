@@ -1098,7 +1098,7 @@ def struct_name(name):
     return name
 
 def trait_name(name):
-    return 'T' + struct_name(name)
+    return struct_name(name) + 'Methods'
 
 
 class Function(object):

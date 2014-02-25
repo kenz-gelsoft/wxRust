@@ -8,8 +8,8 @@ use stc::*;
 
 /// Wraps the wxWidgets' [wxXmlResource](http://docs.wxwidgets.org/3.0/classwx_xml_resource.html) class.
 pub struct XmlResource { ptr: *mut c_void }
-impl TXmlResource for XmlResource {}
-impl TObject for XmlResource { fn ptr(&self) -> *mut c_void { self.ptr } }
+impl XmlResourceMethods for XmlResource {}
+impl ObjectMethods for XmlResource { fn ptr(&self) -> *mut c_void { self.ptr } }
 
 impl XmlResource {
     pub fn from(ptr: *mut c_void) -> XmlResource { XmlResource { ptr: ptr } }
@@ -28,14 +28,14 @@ impl XmlResource {
 }
 
 /// Methods of the wxWidgets' [wxXmlResource](http://docs.wxwidgets.org/3.0/classwx_xml_resource.html) class.
-pub trait TXmlResource : TObject {
-    fn addHandler<T: TEvtHandler>(&self, handler: &T) {
+pub trait XmlResourceMethods : ObjectMethods {
+    fn addHandler<T: EvtHandlerMethods>(&self, handler: &T) {
         unsafe { wxXmlResource_AddHandler(self.ptr(), handler.ptr()) }
     }
     fn addSubclassFactory(&self, factory: *mut c_void) {
         unsafe { wxXmlResource_AddSubclassFactory(self.ptr(), factory) }
     }
-    fn attachUnknownControl<T: TControl, U: TWindow>(&self, control: &T, parent: &U) -> c_int {
+    fn attachUnknownControl<T: ControlMethods, U: WindowMethods>(&self, control: &T, parent: &U) -> c_int {
         unsafe { wxXmlResource_AttachUnknownControl(self.ptr(), control.ptr(), parent.ptr()) }
     }
     fn clearHandlers(&self) {
@@ -60,26 +60,26 @@ pub trait TXmlResource : TObject {
     fn initAllHandlers(&self) {
         unsafe { wxXmlResource_InitAllHandlers(self.ptr()) }
     }
-    fn insertHandler<T: TEvtHandler>(&self, handler: &T) {
+    fn insertHandler<T: EvtHandlerMethods>(&self, handler: &T) {
         unsafe { wxXmlResource_InsertHandler(self.ptr(), handler.ptr()) }
     }
     fn load(&self, filemask: &str) -> c_int {
         let filemask = wxT(filemask);
         unsafe { wxXmlResource_Load(self.ptr(), filemask.ptr()) }
     }
-    fn loadBitmap<T: TBitmap>(&self, name: &str, _ref: &T) {
+    fn loadBitmap<T: BitmapMethods>(&self, name: &str, _ref: &T) {
         let name = wxT(name);
         unsafe { wxXmlResource_LoadBitmap(self.ptr(), name.ptr(), _ref.ptr()) }
     }
-    fn loadDialog<T: TWindow>(&self, parent: &T, name: &str) -> Dialog {
+    fn loadDialog<T: WindowMethods>(&self, parent: &T, name: &str) -> Dialog {
         let name = wxT(name);
         unsafe { Dialog { ptr: wxXmlResource_LoadDialog(self.ptr(), parent.ptr(), name.ptr()) } }
     }
-    fn loadFrame<T: TWindow>(&self, parent: &T, name: &str) -> Frame {
+    fn loadFrame<T: WindowMethods>(&self, parent: &T, name: &str) -> Frame {
         let name = wxT(name);
         unsafe { Frame { ptr: wxXmlResource_LoadFrame(self.ptr(), parent.ptr(), name.ptr()) } }
     }
-    fn loadIcon<T: TIcon>(&self, name: &str, _ref: &T) {
+    fn loadIcon<T: IconMethods>(&self, name: &str, _ref: &T) {
         let name = wxT(name);
         unsafe { wxXmlResource_LoadIcon(self.ptr(), name.ptr(), _ref.ptr()) }
     }
@@ -87,15 +87,15 @@ pub trait TXmlResource : TObject {
         let name = wxT(name);
         unsafe { Menu { ptr: wxXmlResource_LoadMenu(self.ptr(), name.ptr()) } }
     }
-    fn loadMenuBar<T: TWindow>(&self, parent: &T, name: &str) -> MenuBar {
+    fn loadMenuBar<T: WindowMethods>(&self, parent: &T, name: &str) -> MenuBar {
         let name = wxT(name);
         unsafe { MenuBar { ptr: wxXmlResource_LoadMenuBar(self.ptr(), parent.ptr(), name.ptr()) } }
     }
-    fn loadPanel<T: TWindow>(&self, parent: &T, name: &str) -> Panel {
+    fn loadPanel<T: WindowMethods>(&self, parent: &T, name: &str) -> Panel {
         let name = wxT(name);
         unsafe { Panel { ptr: wxXmlResource_LoadPanel(self.ptr(), parent.ptr(), name.ptr()) } }
     }
-    fn loadToolBar<T: TWindow>(&self, parent: &T, name: &str) -> ToolBar {
+    fn loadToolBar<T: WindowMethods>(&self, parent: &T, name: &str) -> ToolBar {
         let name = wxT(name);
         unsafe { ToolBar { ptr: wxXmlResource_LoadToolBar(self.ptr(), parent.ptr(), name.ptr()) } }
     }
@@ -255,7 +255,7 @@ pub trait TXmlResource : TObject {
         let filemask = wxT(filemask);
         unsafe { wxXmlResource_Unload(self.ptr(), filemask.ptr()) }
     }
-    fn set(&self, res: &TXmlResource) -> XmlResource {
+    fn set(&self, res: &XmlResourceMethods) -> XmlResource {
         unsafe { XmlResource { ptr: wxXmlResource_Set(self.ptr(), res.ptr()) } }
     }
     fn setDomain(&self, domain: &str) {
