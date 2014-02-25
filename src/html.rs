@@ -450,20 +450,20 @@ pub trait HtmlWindowMethods : ScrolledWindowMethods {
 }
 
 /// The wxRust-specific derived class of [wxCommandEvent](http://docs.wxwidgets.org/3.0/classwx_command_event.html).
-pub struct CHtmlEvent { ptr: *mut c_void }
-impl CHtmlEventMethods for CHtmlEvent {}
-impl CommandEventMethods for CHtmlEvent {}
-impl EventMethods for CHtmlEvent {}
-impl ObjectMethods for CHtmlEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct RustHtmlEvent { ptr: *mut c_void }
+impl RustHtmlEventMethods for RustHtmlEvent {}
+impl CommandEventMethods for RustHtmlEvent {}
+impl EventMethods for RustHtmlEvent {}
+impl ObjectMethods for RustHtmlEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl CHtmlEvent {
-    pub fn from(ptr: *mut c_void) -> CHtmlEvent { CHtmlEvent { ptr: ptr } }
-    pub fn null() -> CHtmlEvent { CHtmlEvent::from(0 as *mut c_void) }
+impl RustHtmlEvent {
+    pub fn from(ptr: *mut c_void) -> RustHtmlEvent { RustHtmlEvent { ptr: ptr } }
+    pub fn null() -> RustHtmlEvent { RustHtmlEvent::from(0 as *mut c_void) }
     
 }
 
 /// Methods of the wxRust-specific derived class of [wxCommandEvent](http://docs.wxwidgets.org/3.0/classwx_command_event.html).
-pub trait CHtmlEventMethods : CommandEventMethods {
+pub trait RustHtmlEventMethods : CommandEventMethods {
     fn getMouseEvent(&self) -> MouseEvent {
         unsafe { MouseEvent { ptr: wxcHtmlEvent_GetMouseEvent(self.ptr()) } }
     }
@@ -485,26 +485,26 @@ pub trait CHtmlEventMethods : CommandEventMethods {
 }
 
 /// The wxRust-specific derived class of [wxHtmlWindow](http://docs.wxwidgets.org/3.0/classwx_html_window.html).
-pub struct CHtmlWindow { ptr: *mut c_void }
-impl CHtmlWindowMethods for CHtmlWindow {}
-impl HtmlWindowMethods for CHtmlWindow {}
-impl ScrolledWindowMethods for CHtmlWindow {}
-impl PanelMethods for CHtmlWindow {}
-impl WindowMethods for CHtmlWindow {}
-impl EvtHandlerMethods for CHtmlWindow {}
-impl ObjectMethods for CHtmlWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct RustHtmlWindow { ptr: *mut c_void }
+impl RustHtmlWindowMethods for RustHtmlWindow {}
+impl HtmlWindowMethods for RustHtmlWindow {}
+impl ScrolledWindowMethods for RustHtmlWindow {}
+impl PanelMethods for RustHtmlWindow {}
+impl WindowMethods for RustHtmlWindow {}
+impl EvtHandlerMethods for RustHtmlWindow {}
+impl ObjectMethods for RustHtmlWindow { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl CHtmlWindow {
-    pub fn from(ptr: *mut c_void) -> CHtmlWindow { CHtmlWindow { ptr: ptr } }
-    pub fn null() -> CHtmlWindow { CHtmlWindow::from(0 as *mut c_void) }
+impl RustHtmlWindow {
+    pub fn from(ptr: *mut c_void) -> RustHtmlWindow { RustHtmlWindow { ptr: ptr } }
+    pub fn null() -> RustHtmlWindow { RustHtmlWindow::from(0 as *mut c_void) }
     
-    pub fn new<T: WindowMethods>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> CHtmlWindow {
+    pub fn new<T: WindowMethods>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> RustHtmlWindow {
         let _txt = strToString(_txt);
-        unsafe { CHtmlWindow { ptr: wxcHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr()) } }
+        unsafe { RustHtmlWindow { ptr: wxcHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr()) } }
     }
 }
 
 /// Methods of the wxRust-specific derived class of [wxHtmlWindow](http://docs.wxwidgets.org/3.0/classwx_html_window.html).
-pub trait CHtmlWindowMethods : HtmlWindowMethods {
+pub trait RustHtmlWindowMethods : HtmlWindowMethods {
 }
 

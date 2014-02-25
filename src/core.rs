@@ -10411,47 +10411,47 @@ pub trait GraphicsRendererMethods : GraphicsObjectMethods {
 }
 
 /// The wxRust-specific derived class of [wxPrintout](http://docs.wxwidgets.org/3.0/classwx_printout.html).
-pub struct CPrintout { ptr: *mut c_void }
-impl CPrintoutMethods for CPrintout {}
-impl PrintoutMethods for CPrintout {}
-impl ObjectMethods for CPrintout { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct RustPrintout { ptr: *mut c_void }
+impl RustPrintoutMethods for RustPrintout {}
+impl PrintoutMethods for RustPrintout {}
+impl ObjectMethods for RustPrintout { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl CPrintout {
-    pub fn from(ptr: *mut c_void) -> CPrintout { CPrintout { ptr: ptr } }
-    pub fn null() -> CPrintout { CPrintout::from(0 as *mut c_void) }
+impl RustPrintout {
+    pub fn from(ptr: *mut c_void) -> RustPrintout { RustPrintout { ptr: ptr } }
+    pub fn null() -> RustPrintout { RustPrintout::from(0 as *mut c_void) }
     
-    pub fn new(title: &str) -> CPrintout {
+    pub fn new(title: &str) -> RustPrintout {
         let title = strToString(title);
-        unsafe { CPrintout { ptr: wxcPrintout_Create(title.ptr()) } }
+        unsafe { RustPrintout { ptr: wxcPrintout_Create(title.ptr()) } }
     }
 }
 
 /// Methods of the wxRust-specific derived class of [wxPrintout](http://docs.wxwidgets.org/3.0/classwx_printout.html).
-pub trait CPrintoutMethods : PrintoutMethods {
+pub trait RustPrintoutMethods : PrintoutMethods {
     fn setPageLimits(&self, startPage: c_int, endPage: c_int, fromPage: c_int, toPage: c_int) {
         unsafe { wxcPrintout_SetPageLimits(self.ptr(), startPage, endPage, fromPage, toPage) }
     }
-    fn getEvtHandler(&self) -> CPrintoutHandler {
-        unsafe { CPrintoutHandler { ptr: wxcPrintout_GetEvtHandler(self.ptr()) } }
+    fn getEvtHandler(&self) -> RustPrintoutHandler {
+        unsafe { RustPrintoutHandler { ptr: wxcPrintout_GetEvtHandler(self.ptr()) } }
     }
 }
 
 /// The wxRust-specific derived class of [wxEvent](http://docs.wxwidgets.org/3.0/classwx_event.html).
-pub struct CPrintEvent { ptr: *mut c_void }
-impl CPrintEventMethods for CPrintEvent {}
-impl EventMethods for CPrintEvent {}
-impl ObjectMethods for CPrintEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct RustPrintEvent { ptr: *mut c_void }
+impl RustPrintEventMethods for RustPrintEvent {}
+impl EventMethods for RustPrintEvent {}
+impl ObjectMethods for RustPrintEvent { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl CPrintEvent {
-    pub fn from(ptr: *mut c_void) -> CPrintEvent { CPrintEvent { ptr: ptr } }
-    pub fn null() -> CPrintEvent { CPrintEvent::from(0 as *mut c_void) }
+impl RustPrintEvent {
+    pub fn from(ptr: *mut c_void) -> RustPrintEvent { RustPrintEvent { ptr: ptr } }
+    pub fn null() -> RustPrintEvent { RustPrintEvent::from(0 as *mut c_void) }
     
 }
 
 /// Methods of the wxRust-specific derived class of [wxEvent](http://docs.wxwidgets.org/3.0/classwx_event.html).
-pub trait CPrintEventMethods : EventMethods {
-    fn getPrintout(&self) -> CPrintout {
-        unsafe { CPrintout { ptr: wxcPrintEvent_GetPrintout(self.ptr()) } }
+pub trait RustPrintEventMethods : EventMethods {
+    fn getPrintout(&self) -> RustPrintout {
+        unsafe { RustPrintout { ptr: wxcPrintEvent_GetPrintout(self.ptr()) } }
     }
     fn getPage(&self) -> c_int {
         unsafe { wxcPrintEvent_GetPage(self.ptr()) }
@@ -10471,38 +10471,38 @@ pub trait CPrintEventMethods : EventMethods {
 }
 
 /// The wxRust-specific derived class of [wxEvtHandler](http://docs.wxwidgets.org/3.0/classwx_evt_handler.html).
-pub struct CPrintoutHandler { ptr: *mut c_void }
-impl CPrintoutHandlerMethods for CPrintoutHandler {}
-impl EvtHandlerMethods for CPrintoutHandler {}
-impl ObjectMethods for CPrintoutHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct RustPrintoutHandler { ptr: *mut c_void }
+impl RustPrintoutHandlerMethods for RustPrintoutHandler {}
+impl EvtHandlerMethods for RustPrintoutHandler {}
+impl ObjectMethods for RustPrintoutHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl CPrintoutHandler {
-    pub fn from(ptr: *mut c_void) -> CPrintoutHandler { CPrintoutHandler { ptr: ptr } }
-    pub fn null() -> CPrintoutHandler { CPrintoutHandler::from(0 as *mut c_void) }
+impl RustPrintoutHandler {
+    pub fn from(ptr: *mut c_void) -> RustPrintoutHandler { RustPrintoutHandler { ptr: ptr } }
+    pub fn null() -> RustPrintoutHandler { RustPrintoutHandler::from(0 as *mut c_void) }
     
 }
 
 /// Methods of the wxRust-specific derived class of [wxEvtHandler](http://docs.wxwidgets.org/3.0/classwx_evt_handler.html).
-pub trait CPrintoutHandlerMethods : EvtHandlerMethods {
+pub trait RustPrintoutHandlerMethods : EvtHandlerMethods {
 }
 
 /// The wxRust-specific derived class of [wxTreeItemData](http://docs.wxwidgets.org/3.0/classwx_tree_item_data.html).
-pub struct CTreeItemData { ptr: *mut c_void }
-impl CTreeItemDataMethods for CTreeItemData {}
-impl TreeItemDataMethods for CTreeItemData {}
-impl ClientDataMethods for CTreeItemData { fn ptr(&self) -> *mut c_void { self.ptr } }
+pub struct RustTreeItemData { ptr: *mut c_void }
+impl RustTreeItemDataMethods for RustTreeItemData {}
+impl TreeItemDataMethods for RustTreeItemData {}
+impl ClientDataMethods for RustTreeItemData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
-impl CTreeItemData {
-    pub fn from(ptr: *mut c_void) -> CTreeItemData { CTreeItemData { ptr: ptr } }
-    pub fn null() -> CTreeItemData { CTreeItemData::from(0 as *mut c_void) }
+impl RustTreeItemData {
+    pub fn from(ptr: *mut c_void) -> RustTreeItemData { RustTreeItemData { ptr: ptr } }
+    pub fn null() -> RustTreeItemData { RustTreeItemData::from(0 as *mut c_void) }
     
-    pub fn new<T: ClosureMethods>(closure: &T) -> CTreeItemData {
-        unsafe { CTreeItemData { ptr: wxcTreeItemData_Create(closure.ptr()) } }
+    pub fn new<T: ClosureMethods>(closure: &T) -> RustTreeItemData {
+        unsafe { RustTreeItemData { ptr: wxcTreeItemData_Create(closure.ptr()) } }
     }
 }
 
 /// Methods of the wxRust-specific derived class of [wxTreeItemData](http://docs.wxwidgets.org/3.0/classwx_tree_item_data.html).
-pub trait CTreeItemDataMethods : TreeItemDataMethods {
+pub trait RustTreeItemDataMethods : TreeItemDataMethods {
     fn getClientClosure(&self) -> Closure {
         unsafe { Closure { ptr: wxcTreeItemData_GetClientClosure(self.ptr()) } }
     }

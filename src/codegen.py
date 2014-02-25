@@ -1087,10 +1087,8 @@ class Class(object):
 
 
 def struct_name(name):
-    if name.startswith('ELJ'):
-        return 'Rust' + name[len('ELJ'):]
-    if name.startswith('wxc'):
-        return 'C' + name[len('wxc'):]
+    if name.startswith('ELJ') or name.startswith('wxc'):
+        return 'Rust' + name[3:]
     if name.startswith('wx'):
         return name[len('wx'):]
     if name.startswith('cb'):
