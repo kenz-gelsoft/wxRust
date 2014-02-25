@@ -6,7 +6,7 @@ branches:
 
 env:
   global:
-    - secure: WFLCntGUsW3FIRRtv9kUlfFuqYnGItu2/cmkJfmn0sFeF0Lu4QRn1jmLdocP2ZUfgICwSzeBTBJ+SLvP2ukFOiYe0WeofJYs+fCIEz52eU3kpIzA0jFznoWqW8JbntWNDGTaD5K0wt1yCvoJJ4PIKVEYGOLAjsbrunSL+FYsbuI=
+    - secure: l/QiDLC5/4FiebGhIVjk3XrA6nUQV9xNZUb/a79UOOgUYWJhtg6TR8EOHQ+GvQcTUVn7QJIESIqOg9AcwcdoNY/iqgDiTIdnm+TlSnGD6gKGN4bswmEJqNUjxYFLt61cqfDuYSF7Iiwywm2Ux5iFt1Bbco9k8uMmqGets9zto84=
 
 before_install:
   - yes | sudo add-apt-repository ppa:hansjorg/rust
