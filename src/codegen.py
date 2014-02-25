@@ -657,21 +657,21 @@ extern {
     fn wxCharBuffer_Delete(wxcb: *mut c_void);
 }
 
-pub fn wxT(s: &str) -> WxString {
+pub fn strToString(s: &str) -> String {
     unsafe {
         s.to_c_str().with_ref(|c_str| {
-            WxString { ptr: wxString_CreateUTF8(c_str as *mut c_void) }
+            String { ptr: wxString_CreateUTF8(c_str as *mut c_void) }
         })
     }
 }
 
-pub struct WxString { ptr: *mut c_void }
-impl Drop for WxString {
+pub struct String { ptr: *mut c_void }
+impl Drop for String {
     fn drop(&mut self) {
         unsafe { wxString_Delete(self.ptr); }
     }
 }
-impl WxString {
+impl String {
     pub fn ptr(&self) -> *mut c_void { self.ptr }
     pub fn to_str(&self) -> ~str {
         unsafe {
@@ -696,6 +696,16 @@ impl WxString {
     
     def _print_class(self, clazz):
         struct_name = '%s' % clazz.struct_name
+        if clazz.name.startswith('wx') and not clazz.name.startswith('wxc'):
+            self.println("/// Wraps the wxWidgets' [%s](%s) class." % (clazz.name, clazz.link))
+            unprefixed = clazz.name[len('wx'):]
+            if self.__parser.class_for_name('ELJ' + unprefixed):
+                self.println("/// Rather use the wxRust-specific [Rust%s](struct.Rust%s.html) class." % (unprefixed, unprefixed))
+            if self.__parser.class_for_name('wxc' + unprefixed):
+                self.println("/// Rather use the wxRust-specific [C%s](struct.C%s.html) class." % (unprefixed, unprefixed))
+        if (clazz.name.startswith('ELJ') or clazz.name.startswith('wxc')) and clazz.has_base:
+            base = self.__parser.class_for_name(clazz.base)
+            self.println("/// The wxRust-specific derived class of [%s](%s)." % (base.name, base.link))
         self.println('pub struct %s { ptr: *mut c_void }' % struct_name)
         for trait in clazz.inheritance:
             body = ''
@@ -717,6 +727,11 @@ impl WxString {
         # instance methods go to trait's default impl
         base = clazz.has_base and ' : %s' % trait_name(clazz.base) or ''
         self.println()
+        if clazz.name.startswith('wx') and not clazz.name.startswith('wxc'):
+            self.println("/// Methods of the wxWidgets' [%s](%s) class." % (clazz.name, clazz.link))
+        if (clazz.name.startswith('ELJ') or clazz.name.startswith('wxc')) and clazz.has_base:
+            base2 = self.__parser.class_for_name(clazz.base)
+            self.println("/// Methods of the wxRust-specific derived class of [%s](%s)." % (base2.name, base2.link))
         self.println('pub trait %s%s {' % (clazz.trait_name, base))
         with self.indent():
             if clazz.name in self.__parser.root_classes:
@@ -1008,6 +1023,22 @@ class Class(object):
         return self.__node[0][1][0][0]
 
     @property
+    def link(self):
+        words = []
+        word = ''
+        case = self.name[0].islower()
+        for c in self.name:
+            if c.islower() == case or (len(word) == 1 and word.isupper()):
+                word += c
+            else:
+                words.append(word.lower())
+                word = c
+            case = c.islower()
+        if len(word):
+            words.append(word.lower())
+        return 'http://docs.wxwidgets.org/3.0/class%s.html' % '_'.join(words)
+
+    @property
     def struct_name(self):
         return struct_name(self.name)
 
@@ -1056,10 +1087,8 @@ class Class(object):
 
 
 def struct_name(name):
-    if name.startswith('ELJ'):
-        return 'Rust' + name[len('ELJ'):]
-    if name.startswith('wxc'):
-        return 'C' + name[len('wxc'):]
+    if name.startswith('ELJ') or name.startswith('wxc'):
+        return 'Rust' + name[3:]
     if name.startswith('wx'):
         return name[len('wx'):]
     if name.startswith('cb'):
@@ -1067,7 +1096,7 @@ def struct_name(name):
     return name
 
 def trait_name(name):
-    return 'T' + struct_name(name)
+    return struct_name(name) + 'Methods'
 
 
 class Function(object):
@@ -1112,7 +1141,7 @@ class Function(object):
         with gen.indent():
             body = '%s(%s)' % (self.name, self._calling_args)
             if self.__return_type.is_string:
-                body = 'WxString { ptr: %s }.to_str()' % (body)
+                body = 'String { ptr: %s }.to_str()' % (body)
             if self.__return_type.is_self or self.__return_type.is_class:
                 body = '%s { ptr: %s }' % (self.__return_type.struct_name, body)
             gen.println('%sunsafe { %s }' % (self._strings, body))
@@ -1123,7 +1152,7 @@ class Function(object):
         s = ''
         for a in self.__args:
             if a.type.is_string:
-                s += 'let %s = wxT(%s);\n' % (a.name, a.name)
+                s += 'let %s = strToString(%s);\n' % (a.name, a.name)
         return s
     
     def method_name(self, classname):
