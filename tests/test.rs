@@ -59,7 +59,7 @@ fn MyButton_clicked(fun: *mut c_void, data: *mut c_void, evt: *mut c_void) {
     msgDlg.showModal();
 }
 
-fn make_button<T: TWindow>(parent: &T) -> Button {
+fn make_button<T: WindowMethods>(parent: &T) -> Button {
     let button = Button::new(parent, ID_ANY, "Push me!", 10, 10, 50, 30, 0);
     let closure = Closure::new(MyButton_clicked as *mut c_void, parent.ptr());
     unsafe {
