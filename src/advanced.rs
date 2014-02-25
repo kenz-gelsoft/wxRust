@@ -3,6 +3,7 @@ use _unsafe::*;
 use base::*;
 use core::*;
 
+/// The wxRust-specific derived class of [wxGridTableBase](http://docs.wxwidgets.org/3.0/classwx_grid_table_base.html).
 pub struct RustGridTable { ptr: *mut c_void }
 impl TRustGridTable for RustGridTable {}
 impl TGridTableBase for RustGridTable {}
@@ -17,6 +18,7 @@ impl RustGridTable {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxGridTableBase](http://docs.wxwidgets.org/3.0/classwx_grid_table_base.html).
 pub trait TRustGridTable : TGridTableBase {
     fn getView(&self) -> View {
         unsafe { View { ptr: ELJGridTable_GetView(self.ptr()) } }
@@ -26,6 +28,7 @@ pub trait TRustGridTable : TGridTableBase {
     }
 }
 
+/// Wraps the wxWidgets' [wxCalculateLayoutEvent](http://docs.wxwidgets.org/3.0/classwx_calculate_layout_event.html) class.
 pub struct CalculateLayoutEvent { ptr: *mut c_void }
 impl TCalculateLayoutEvent for CalculateLayoutEvent {}
 impl TEvent for CalculateLayoutEvent {}
@@ -40,6 +43,7 @@ impl CalculateLayoutEvent {
     }
 }
 
+/// Methods of the wxWidgets' [wxCalculateLayoutEvent](http://docs.wxwidgets.org/3.0/classwx_calculate_layout_event.html) class.
 pub trait TCalculateLayoutEvent : TEvent {
     fn getFlags(&self) -> c_int {
         unsafe { wxCalculateLayoutEvent_GetFlags(self.ptr()) }
@@ -55,6 +59,7 @@ pub trait TCalculateLayoutEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxCalendarCtrl](http://docs.wxwidgets.org/3.0/classwx_calendar_ctrl.html) class.
 pub struct CalendarCtrl { ptr: *mut c_void }
 impl TCalendarCtrl for CalendarCtrl {}
 impl TControl for CalendarCtrl {}
@@ -71,6 +76,7 @@ impl CalendarCtrl {
     }
 }
 
+/// Methods of the wxWidgets' [wxCalendarCtrl](http://docs.wxwidgets.org/3.0/classwx_calendar_ctrl.html) class.
 pub trait TCalendarCtrl : TControl {
     fn enableHolidayDisplay(&self, display: c_int) {
         unsafe { wxCalendarCtrl_EnableHolidayDisplay(self.ptr(), display) }
@@ -128,6 +134,7 @@ pub trait TCalendarCtrl : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxCalendarDateAttr](http://docs.wxwidgets.org/3.0/classwx_calendar_date_attr.html) class.
 pub struct CalendarDateAttr { ptr: *mut c_void }
 impl TCalendarDateAttr for CalendarDateAttr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -143,6 +150,7 @@ impl CalendarDateAttr {
     }
 }
 
+/// Methods of the wxWidgets' [wxCalendarDateAttr](http://docs.wxwidgets.org/3.0/classwx_calendar_date_attr.html) class.
 pub trait TCalendarDateAttr {
     fn ptr(&self) -> *mut c_void;
     
@@ -202,6 +210,7 @@ pub trait TCalendarDateAttr {
     }
 }
 
+/// Wraps the wxWidgets' [wxCalendarEvent](http://docs.wxwidgets.org/3.0/classwx_calendar_event.html) class.
 pub struct CalendarEvent { ptr: *mut c_void }
 impl TCalendarEvent for CalendarEvent {}
 impl TCommandEvent for CalendarEvent {}
@@ -214,6 +223,7 @@ impl CalendarEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxCalendarEvent](http://docs.wxwidgets.org/3.0/classwx_calendar_event.html) class.
 pub trait TCalendarEvent : TCommandEvent {
     fn getDate(&self, _dte: *mut c_void) {
         unsafe { wxCalendarEvent_GetDate(self.ptr(), _dte) }
@@ -223,6 +233,7 @@ pub trait TCalendarEvent : TCommandEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxEditableListBox](http://docs.wxwidgets.org/3.0/classwx_editable_list_box.html) class.
 pub struct EditableListBox { ptr: *mut c_void }
 impl TEditableListBox for EditableListBox {}
 impl TPanel for EditableListBox {}
@@ -236,9 +247,11 @@ impl EditableListBox {
     
 }
 
+/// Methods of the wxWidgets' [wxEditableListBox](http://docs.wxwidgets.org/3.0/classwx_editable_list_box.html) class.
 pub trait TEditableListBox : TPanel {
 }
 
+/// Wraps the wxWidgets' [wxGrid](http://docs.wxwidgets.org/3.0/classwx_grid.html) class.
 pub struct Grid { ptr: *mut c_void }
 impl TGrid for Grid {}
 impl TScrolledWindow for Grid {}
@@ -256,6 +269,7 @@ impl Grid {
     }
 }
 
+/// Methods of the wxWidgets' [wxGrid](http://docs.wxwidgets.org/3.0/classwx_grid.html) class.
 pub trait TGrid : TScrolledWindow {
     fn appendCols(&self, numCols: c_int, updateLabels: c_int) -> c_int {
         unsafe { wxGrid_AppendCols(self.ptr(), numCols, updateLabels) }
@@ -778,6 +792,7 @@ pub trait TGrid : TScrolledWindow {
     }
 }
 
+/// Wraps the wxWidgets' [wxGridCellAttr](http://docs.wxwidgets.org/3.0/classwx_grid_cell_attr.html) class.
 pub struct GridCellAttr { ptr: *mut c_void }
 impl TGridCellAttr for GridCellAttr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -790,6 +805,7 @@ impl GridCellAttr {
     }
 }
 
+/// Methods of the wxWidgets' [wxGridCellAttr](http://docs.wxwidgets.org/3.0/classwx_grid_cell_attr.html) class.
 pub trait TGridCellAttr {
     fn ptr(&self) -> *mut c_void;
     
@@ -864,6 +880,7 @@ pub trait TGridCellAttr {
     }
 }
 
+/// Wraps the wxWidgets' [wxGridCellBoolEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_bool_editor.html) class.
 pub struct GridCellBoolEditor { ptr: *mut c_void }
 impl TGridCellBoolEditor for GridCellBoolEditor {}
 impl TGridCellEditor for GridCellBoolEditor {}
@@ -878,9 +895,11 @@ impl GridCellBoolEditor {
     }
 }
 
+/// Methods of the wxWidgets' [wxGridCellBoolEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_bool_editor.html) class.
 pub trait TGridCellBoolEditor : TGridCellEditor {
 }
 
+/// Wraps the wxWidgets' [wxGridCellBoolRenderer](http://docs.wxwidgets.org/3.0/classwx_grid_cell_bool_renderer.html) class.
 pub struct GridCellBoolRenderer { ptr: *mut c_void }
 impl TGridCellBoolRenderer for GridCellBoolRenderer {}
 impl TGridCellRenderer for GridCellBoolRenderer {}
@@ -892,9 +911,11 @@ impl GridCellBoolRenderer {
     
 }
 
+/// Methods of the wxWidgets' [wxGridCellBoolRenderer](http://docs.wxwidgets.org/3.0/classwx_grid_cell_bool_renderer.html) class.
 pub trait TGridCellBoolRenderer : TGridCellRenderer {
 }
 
+/// Wraps the wxWidgets' [wxGridCellChoiceEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_choice_editor.html) class.
 pub struct GridCellChoiceEditor { ptr: *mut c_void }
 impl TGridCellChoiceEditor for GridCellChoiceEditor {}
 impl TGridCellEditor for GridCellChoiceEditor {}
@@ -909,9 +930,11 @@ impl GridCellChoiceEditor {
     }
 }
 
+/// Methods of the wxWidgets' [wxGridCellChoiceEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_choice_editor.html) class.
 pub trait TGridCellChoiceEditor : TGridCellEditor {
 }
 
+/// Wraps the wxWidgets' [wxGridCellCoordsArray](http://docs.wxwidgets.org/3.0/classwx_grid_cell_coords_array.html) class.
 pub struct GridCellCoordsArray { ptr: *mut c_void }
 impl TGridCellCoordsArray for GridCellCoordsArray { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -924,6 +947,7 @@ impl GridCellCoordsArray {
     }
 }
 
+/// Methods of the wxWidgets' [wxGridCellCoordsArray](http://docs.wxwidgets.org/3.0/classwx_grid_cell_coords_array.html) class.
 pub trait TGridCellCoordsArray {
     fn ptr(&self) -> *mut c_void;
     
@@ -938,6 +962,7 @@ pub trait TGridCellCoordsArray {
     }
 }
 
+/// Wraps the wxWidgets' [wxGridCellEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_editor.html) class.
 pub struct GridCellEditor { ptr: *mut c_void }
 impl TGridCellEditor for GridCellEditor {}
 impl TGridCellWorker for GridCellEditor { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -948,6 +973,7 @@ impl GridCellEditor {
     
 }
 
+/// Methods of the wxWidgets' [wxGridCellEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_editor.html) class.
 pub trait TGridCellEditor : TGridCellWorker {
     fn beginEdit<T: TGrid>(&self, row: c_int, col: c_int, grid: &T) {
         unsafe { wxGridCellEditor_BeginEdit(self.ptr(), row, col, grid.ptr()) }
@@ -1002,6 +1028,7 @@ pub trait TGridCellEditor : TGridCellWorker {
     }
 }
 
+/// Wraps the wxWidgets' [wxGridCellFloatEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_float_editor.html) class.
 pub struct GridCellFloatEditor { ptr: *mut c_void }
 impl TGridCellFloatEditor for GridCellFloatEditor {}
 impl TGridCellTextEditor for GridCellFloatEditor {}
@@ -1017,9 +1044,11 @@ impl GridCellFloatEditor {
     }
 }
 
+/// Methods of the wxWidgets' [wxGridCellFloatEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_float_editor.html) class.
 pub trait TGridCellFloatEditor : TGridCellTextEditor {
 }
 
+/// Wraps the wxWidgets' [wxGridCellFloatRenderer](http://docs.wxwidgets.org/3.0/classwx_grid_cell_float_renderer.html) class.
 pub struct GridCellFloatRenderer { ptr: *mut c_void }
 impl TGridCellFloatRenderer for GridCellFloatRenderer {}
 impl TGridCellStringRenderer for GridCellFloatRenderer {}
@@ -1032,9 +1061,11 @@ impl GridCellFloatRenderer {
     
 }
 
+/// Methods of the wxWidgets' [wxGridCellFloatRenderer](http://docs.wxwidgets.org/3.0/classwx_grid_cell_float_renderer.html) class.
 pub trait TGridCellFloatRenderer : TGridCellStringRenderer {
 }
 
+/// Wraps the wxWidgets' [wxGridCellNumberEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_number_editor.html) class.
 pub struct GridCellNumberEditor { ptr: *mut c_void }
 impl TGridCellNumberEditor for GridCellNumberEditor {}
 impl TGridCellTextEditor for GridCellNumberEditor {}
@@ -1050,9 +1081,11 @@ impl GridCellNumberEditor {
     }
 }
 
+/// Methods of the wxWidgets' [wxGridCellNumberEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_number_editor.html) class.
 pub trait TGridCellNumberEditor : TGridCellTextEditor {
 }
 
+/// Wraps the wxWidgets' [wxGridCellNumberRenderer](http://docs.wxwidgets.org/3.0/classwx_grid_cell_number_renderer.html) class.
 pub struct GridCellNumberRenderer { ptr: *mut c_void }
 impl TGridCellNumberRenderer for GridCellNumberRenderer {}
 impl TGridCellStringRenderer for GridCellNumberRenderer {}
@@ -1068,9 +1101,11 @@ impl GridCellNumberRenderer {
     }
 }
 
+/// Methods of the wxWidgets' [wxGridCellNumberRenderer](http://docs.wxwidgets.org/3.0/classwx_grid_cell_number_renderer.html) class.
 pub trait TGridCellNumberRenderer : TGridCellStringRenderer {
 }
 
+/// Wraps the wxWidgets' [wxGridCellAutoWrapStringRenderer](http://docs.wxwidgets.org/3.0/classwx_grid_cell_auto_wrap_string_renderer.html) class.
 pub struct GridCellAutoWrapStringRenderer { ptr: *mut c_void }
 impl TGridCellAutoWrapStringRenderer for GridCellAutoWrapStringRenderer {}
 impl TGridCellStringRenderer for GridCellAutoWrapStringRenderer {}
@@ -1086,9 +1121,11 @@ impl GridCellAutoWrapStringRenderer {
     }
 }
 
+/// Methods of the wxWidgets' [wxGridCellAutoWrapStringRenderer](http://docs.wxwidgets.org/3.0/classwx_grid_cell_auto_wrap_string_renderer.html) class.
 pub trait TGridCellAutoWrapStringRenderer : TGridCellStringRenderer {
 }
 
+/// Wraps the wxWidgets' [wxGridCellRenderer](http://docs.wxwidgets.org/3.0/classwx_grid_cell_renderer.html) class.
 pub struct GridCellRenderer { ptr: *mut c_void }
 impl TGridCellRenderer for GridCellRenderer {}
 impl TGridCellWorker for GridCellRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1099,9 +1136,11 @@ impl GridCellRenderer {
     
 }
 
+/// Methods of the wxWidgets' [wxGridCellRenderer](http://docs.wxwidgets.org/3.0/classwx_grid_cell_renderer.html) class.
 pub trait TGridCellRenderer : TGridCellWorker {
 }
 
+/// Wraps the wxWidgets' [wxGridCellStringRenderer](http://docs.wxwidgets.org/3.0/classwx_grid_cell_string_renderer.html) class.
 pub struct GridCellStringRenderer { ptr: *mut c_void }
 impl TGridCellStringRenderer for GridCellStringRenderer {}
 impl TGridCellRenderer for GridCellStringRenderer {}
@@ -1113,9 +1152,11 @@ impl GridCellStringRenderer {
     
 }
 
+/// Methods of the wxWidgets' [wxGridCellStringRenderer](http://docs.wxwidgets.org/3.0/classwx_grid_cell_string_renderer.html) class.
 pub trait TGridCellStringRenderer : TGridCellRenderer {
 }
 
+/// Wraps the wxWidgets' [wxGridCellTextEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_text_editor.html) class.
 pub struct GridCellTextEditor { ptr: *mut c_void }
 impl TGridCellTextEditor for GridCellTextEditor {}
 impl TGridCellEditor for GridCellTextEditor {}
@@ -1130,9 +1171,11 @@ impl GridCellTextEditor {
     }
 }
 
+/// Methods of the wxWidgets' [wxGridCellTextEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_text_editor.html) class.
 pub trait TGridCellTextEditor : TGridCellEditor {
 }
 
+/// Wraps the wxWidgets' [wxGridCellWorker](http://docs.wxwidgets.org/3.0/classwx_grid_cell_worker.html) class.
 pub struct GridCellWorker { ptr: *mut c_void }
 impl TGridCellWorker for GridCellWorker { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1142,11 +1185,13 @@ impl GridCellWorker {
     
 }
 
+/// Methods of the wxWidgets' [wxGridCellWorker](http://docs.wxwidgets.org/3.0/classwx_grid_cell_worker.html) class.
 pub trait TGridCellWorker {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxGridEditorCreatedEvent](http://docs.wxwidgets.org/3.0/classwx_grid_editor_created_event.html) class.
 pub struct GridEditorCreatedEvent { ptr: *mut c_void }
 impl TGridEditorCreatedEvent for GridEditorCreatedEvent {}
 impl TCommandEvent for GridEditorCreatedEvent {}
@@ -1159,6 +1204,7 @@ impl GridEditorCreatedEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxGridEditorCreatedEvent](http://docs.wxwidgets.org/3.0/classwx_grid_editor_created_event.html) class.
 pub trait TGridEditorCreatedEvent : TCommandEvent {
     fn getCol(&self) -> c_int {
         unsafe { wxGridEditorCreatedEvent_GetCol(self.ptr()) }
@@ -1180,6 +1226,7 @@ pub trait TGridEditorCreatedEvent : TCommandEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxGridEvent](http://docs.wxwidgets.org/3.0/classwx_grid_event.html) class.
 pub struct GridEvent { ptr: *mut c_void }
 impl TGridEvent for GridEvent {}
 impl TNotifyEvent for GridEvent {}
@@ -1193,6 +1240,7 @@ impl GridEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxGridEvent](http://docs.wxwidgets.org/3.0/classwx_grid_event.html) class.
 pub trait TGridEvent : TNotifyEvent {
     fn altDown(&self) -> c_int {
         unsafe { wxGridEvent_AltDown(self.ptr()) }
@@ -1220,6 +1268,7 @@ pub trait TGridEvent : TNotifyEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxGridRangeSelectEvent](http://docs.wxwidgets.org/3.0/classwx_grid_range_select_event.html) class.
 pub struct GridRangeSelectEvent { ptr: *mut c_void }
 impl TGridRangeSelectEvent for GridRangeSelectEvent {}
 impl TNotifyEvent for GridRangeSelectEvent {}
@@ -1233,6 +1282,7 @@ impl GridRangeSelectEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxGridRangeSelectEvent](http://docs.wxwidgets.org/3.0/classwx_grid_range_select_event.html) class.
 pub trait TGridRangeSelectEvent : TNotifyEvent {
     fn getTopLeftCoords(&self, col: *mut c_void, row: *mut c_void) {
         unsafe { wxGridRangeSelectEvent_GetTopLeftCoords(self.ptr(), col, row) }
@@ -1269,6 +1319,7 @@ pub trait TGridRangeSelectEvent : TNotifyEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxGridSizeEvent](http://docs.wxwidgets.org/3.0/classwx_grid_size_event.html) class.
 pub struct GridSizeEvent { ptr: *mut c_void }
 impl TGridSizeEvent for GridSizeEvent {}
 impl TNotifyEvent for GridSizeEvent {}
@@ -1282,6 +1333,7 @@ impl GridSizeEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxGridSizeEvent](http://docs.wxwidgets.org/3.0/classwx_grid_size_event.html) class.
 pub trait TGridSizeEvent : TNotifyEvent {
     fn getRowOrCol(&self) -> c_int {
         unsafe { wxGridSizeEvent_GetRowOrCol(self.ptr()) }
@@ -1303,6 +1355,7 @@ pub trait TGridSizeEvent : TNotifyEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxGridTableBase](http://docs.wxwidgets.org/3.0/classwx_grid_table_base.html) class.
 pub struct GridTableBase { ptr: *mut c_void }
 impl TGridTableBase for GridTableBase {}
 impl TObject for GridTableBase { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1313,9 +1366,11 @@ impl GridTableBase {
     
 }
 
+/// Methods of the wxWidgets' [wxGridTableBase](http://docs.wxwidgets.org/3.0/classwx_grid_table_base.html) class.
 pub trait TGridTableBase : TObject {
 }
 
+/// Wraps the wxWidgets' [wxJoystick](http://docs.wxwidgets.org/3.0/classwx_joystick.html) class.
 pub struct Joystick { ptr: *mut c_void }
 impl TJoystick for Joystick {}
 impl TObject for Joystick { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1326,9 +1381,11 @@ impl Joystick {
     
 }
 
+/// Methods of the wxWidgets' [wxJoystick](http://docs.wxwidgets.org/3.0/classwx_joystick.html) class.
 pub trait TJoystick : TObject {
 }
 
+/// Wraps the wxWidgets' [wxLayoutAlgorithm](http://docs.wxwidgets.org/3.0/classwx_layout_algorithm.html) class.
 pub struct LayoutAlgorithm { ptr: *mut c_void }
 impl TLayoutAlgorithm for LayoutAlgorithm {}
 impl TObject for LayoutAlgorithm { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1342,6 +1399,7 @@ impl LayoutAlgorithm {
     }
 }
 
+/// Methods of the wxWidgets' [wxLayoutAlgorithm](http://docs.wxwidgets.org/3.0/classwx_layout_algorithm.html) class.
 pub trait TLayoutAlgorithm : TObject {
     fn layoutFrame<T: TFrame>(&self, frame: &T, mainWindow: *mut c_void) -> c_int {
         unsafe { wxLayoutAlgorithm_LayoutFrame(self.ptr(), frame.ptr(), mainWindow) }
@@ -1354,6 +1412,7 @@ pub trait TLayoutAlgorithm : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxQueryLayoutInfoEvent](http://docs.wxwidgets.org/3.0/classwx_query_layout_info_event.html) class.
 pub struct QueryLayoutInfoEvent { ptr: *mut c_void }
 impl TQueryLayoutInfoEvent for QueryLayoutInfoEvent {}
 impl TEvent for QueryLayoutInfoEvent {}
@@ -1368,6 +1427,7 @@ impl QueryLayoutInfoEvent {
     }
 }
 
+/// Methods of the wxWidgets' [wxQueryLayoutInfoEvent](http://docs.wxwidgets.org/3.0/classwx_query_layout_info_event.html) class.
 pub trait TQueryLayoutInfoEvent : TEvent {
     fn getAlignment(&self) -> c_int {
         unsafe { wxQueryLayoutInfoEvent_GetAlignment(self.ptr()) }
@@ -1401,6 +1461,7 @@ pub trait TQueryLayoutInfoEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxSashEvent](http://docs.wxwidgets.org/3.0/classwx_sash_event.html) class.
 pub struct SashEvent { ptr: *mut c_void }
 impl TSashEvent for SashEvent {}
 impl TEvent for SashEvent {}
@@ -1415,6 +1476,7 @@ impl SashEvent {
     }
 }
 
+/// Methods of the wxWidgets' [wxSashEvent](http://docs.wxwidgets.org/3.0/classwx_sash_event.html) class.
 pub trait TSashEvent : TEvent {
     fn getDragRect(&self) -> Rect {
         unsafe { Rect { ptr: wxSashEvent_GetDragRect(self.ptr()) } }
@@ -1436,6 +1498,7 @@ pub trait TSashEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxSashLayoutWindow](http://docs.wxwidgets.org/3.0/classwx_sash_layout_window.html) class.
 pub struct SashLayoutWindow { ptr: *mut c_void }
 impl TSashLayoutWindow for SashLayoutWindow {}
 impl TSashWindow for SashLayoutWindow {}
@@ -1452,6 +1515,7 @@ impl SashLayoutWindow {
     }
 }
 
+/// Methods of the wxWidgets' [wxSashLayoutWindow](http://docs.wxwidgets.org/3.0/classwx_sash_layout_window.html) class.
 pub trait TSashLayoutWindow : TSashWindow {
     fn getAlignment(&self) -> c_int {
         unsafe { wxSashLayoutWindow_GetAlignment(self.ptr()) }
@@ -1470,6 +1534,7 @@ pub trait TSashLayoutWindow : TSashWindow {
     }
 }
 
+/// Wraps the wxWidgets' [wxSashWindow](http://docs.wxwidgets.org/3.0/classwx_sash_window.html) class.
 pub struct SashWindow { ptr: *mut c_void }
 impl TSashWindow for SashWindow {}
 impl TWindow for SashWindow {}
@@ -1485,6 +1550,7 @@ impl SashWindow {
     }
 }
 
+/// Methods of the wxWidgets' [wxSashWindow](http://docs.wxwidgets.org/3.0/classwx_sash_window.html) class.
 pub trait TSashWindow : TWindow {
     fn getDefaultBorderSize(&self) -> c_int {
         unsafe { wxSashWindow_GetDefaultBorderSize(self.ptr()) }
@@ -1539,6 +1605,7 @@ pub trait TSashWindow : TWindow {
     }
 }
 
+/// Wraps the wxWidgets' [wxSplashScreen](http://docs.wxwidgets.org/3.0/classwx_splash_screen.html) class.
 pub struct SplashScreen { ptr: *mut c_void }
 impl TSplashScreen for SplashScreen {}
 impl TFrame for SplashScreen {}
@@ -1553,9 +1620,11 @@ impl SplashScreen {
     
 }
 
+/// Methods of the wxWidgets' [wxSplashScreen](http://docs.wxwidgets.org/3.0/classwx_splash_screen.html) class.
 pub trait TSplashScreen : TFrame {
 }
 
+/// Wraps the wxWidgets' [wxTaskBarIcon](http://docs.wxwidgets.org/3.0/classwx_task_bar_icon.html) class.
 pub struct TaskBarIcon { ptr: *mut c_void }
 impl TTaskBarIcon for TaskBarIcon {}
 impl TEvtHandler for TaskBarIcon {}
@@ -1570,6 +1639,7 @@ impl TaskBarIcon {
     }
 }
 
+/// Methods of the wxWidgets' [wxTaskBarIcon](http://docs.wxwidgets.org/3.0/classwx_task_bar_icon.html) class.
 pub trait TTaskBarIcon : TEvtHandler {
     fn isIconInstalled(&self) -> c_int {
         unsafe { wxTaskBarIcon_IsIconInstalled(self.ptr()) }
@@ -1589,6 +1659,7 @@ pub trait TTaskBarIcon : TEvtHandler {
     }
 }
 
+/// Wraps the wxWidgets' [wxTipProvider](http://docs.wxwidgets.org/3.0/classwx_tip_provider.html) class.
 pub struct TipProvider { ptr: *mut c_void }
 impl TTipProvider for TipProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1598,11 +1669,13 @@ impl TipProvider {
     
 }
 
+/// Methods of the wxWidgets' [wxTipProvider](http://docs.wxwidgets.org/3.0/classwx_tip_provider.html) class.
 pub trait TTipProvider {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxWizard](http://docs.wxwidgets.org/3.0/classwx_wizard.html) class.
 pub struct Wizard { ptr: *mut c_void }
 impl TWizard for Wizard {}
 impl TDialog for Wizard {}
@@ -1624,6 +1697,7 @@ impl Wizard {
     }
 }
 
+/// Methods of the wxWidgets' [wxWizard](http://docs.wxwidgets.org/3.0/classwx_wizard.html) class.
 pub trait TWizard : TDialog {
     fn getCurrentPage(&self) -> WizardPage {
         unsafe { WizardPage { ptr: wxWizard_GetCurrentPage(self.ptr()) } }
@@ -1639,6 +1713,7 @@ pub trait TWizard : TDialog {
     }
 }
 
+/// Wraps the wxWidgets' [wxWizardEvent](http://docs.wxwidgets.org/3.0/classwx_wizard_event.html) class.
 pub struct WizardEvent { ptr: *mut c_void }
 impl TWizardEvent for WizardEvent {}
 impl TNotifyEvent for WizardEvent {}
@@ -1652,12 +1727,14 @@ impl WizardEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxWizardEvent](http://docs.wxwidgets.org/3.0/classwx_wizard_event.html) class.
 pub trait TWizardEvent : TNotifyEvent {
     fn getDirection(&self) -> c_int {
         unsafe { wxWizardEvent_GetDirection(self.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxWizardPage](http://docs.wxwidgets.org/3.0/classwx_wizard_page.html) class.
 pub struct WizardPage { ptr: *mut c_void }
 impl TWizardPage for WizardPage {}
 impl TPanel for WizardPage {}
@@ -1671,9 +1748,11 @@ impl WizardPage {
     
 }
 
+/// Methods of the wxWidgets' [wxWizardPage](http://docs.wxwidgets.org/3.0/classwx_wizard_page.html) class.
 pub trait TWizardPage : TPanel {
 }
 
+/// Wraps the wxWidgets' [wxWizardPageSimple](http://docs.wxwidgets.org/3.0/classwx_wizard_page_simple.html) class.
 pub struct WizardPageSimple { ptr: *mut c_void }
 impl TWizardPageSimple for WizardPageSimple {}
 impl TWizardPage for WizardPageSimple {}
@@ -1691,6 +1770,7 @@ impl WizardPageSimple {
     }
 }
 
+/// Methods of the wxWidgets' [wxWizardPageSimple](http://docs.wxwidgets.org/3.0/classwx_wizard_page_simple.html) class.
 pub trait TWizardPageSimple : TWizardPage {
     fn getBitmap<T: TBitmap>(&self, _ref: &T) {
         unsafe { wxWizardPageSimple_GetBitmap(self.ptr(), _ref.ptr()) }
@@ -1709,6 +1789,7 @@ pub trait TWizardPageSimple : TWizardPage {
     }
 }
 
+/// Wraps the wxWidgets' [wxManagedPtr](http://docs.wxwidgets.org/3.0/classwx_managed_ptr.html) class.
 pub struct ManagedPtr { ptr: *mut c_void }
 impl TManagedPtr for ManagedPtr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1748,6 +1829,7 @@ impl ManagedPtr {
     }
 }
 
+/// Methods of the wxWidgets' [wxManagedPtr](http://docs.wxwidgets.org/3.0/classwx_managed_ptr.html) class.
 pub trait TManagedPtr {
     fn ptr(&self) -> *mut c_void;
     
@@ -1765,6 +1847,7 @@ pub trait TManagedPtr {
     }
 }
 
+/// Wraps the wxWidgets' [wxGridCellTextEnterEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_text_enter_editor.html) class.
 pub struct GridCellTextEnterEditor { ptr: *mut c_void }
 impl TGridCellTextEnterEditor for GridCellTextEnterEditor {}
 impl TGridCellTextEditor for GridCellTextEnterEditor {}
@@ -1780,6 +1863,7 @@ impl GridCellTextEnterEditor {
     }
 }
 
+/// Methods of the wxWidgets' [wxGridCellTextEnterEditor](http://docs.wxwidgets.org/3.0/classwx_grid_cell_text_enter_editor.html) class.
 pub trait TGridCellTextEnterEditor : TGridCellTextEditor {
 }
 

@@ -3,6 +3,7 @@ use _unsafe::*;
 use base::*;
 use core::*;
 
+/// Wraps the wxWidgets' [wxMediaCtrl](http://docs.wxwidgets.org/3.0/classwx_media_ctrl.html) class.
 pub struct MediaCtrl { ptr: *mut c_void }
 impl TMediaCtrl for MediaCtrl {}
 impl TWindow for MediaCtrl {}
@@ -21,6 +22,7 @@ impl MediaCtrl {
     }
 }
 
+/// Methods of the wxWidgets' [wxMediaCtrl](http://docs.wxwidgets.org/3.0/classwx_media_ctrl.html) class.
 pub trait TMediaCtrl : TWindow {
     fn getPlaybackRate(&self) -> c_double {
         unsafe { wxMediaCtrl_GetPlaybackRate(self.ptr()) }
@@ -73,6 +75,7 @@ pub trait TMediaCtrl : TWindow {
     }
 }
 
+/// Wraps the wxWidgets' [wxMediaEvent](http://docs.wxwidgets.org/3.0/classwx_media_event.html) class.
 pub struct MediaEvent { ptr: *mut c_void }
 impl TMediaEvent for MediaEvent {}
 impl TNotifyEvent for MediaEvent {}
@@ -86,6 +89,7 @@ impl MediaEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxMediaEvent](http://docs.wxwidgets.org/3.0/classwx_media_event.html) class.
 pub trait TMediaEvent : TNotifyEvent {
 }
 

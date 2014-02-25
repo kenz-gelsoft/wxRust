@@ -2,6 +2,7 @@ use std::libc::*;
 use _unsafe::*;
 use base::*;
 
+/// The wxRust-specific derived class of [wxApp](http://docs.wxwidgets.org/3.0/classwx_app.html).
 pub struct RustApp { ptr: *mut c_void }
 impl TRustApp for RustApp {}
 impl TApp for RustApp {}
@@ -155,9 +156,11 @@ impl RustApp {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxApp](http://docs.wxwidgets.org/3.0/classwx_app.html).
 pub trait TRustApp : TApp {
 }
 
+/// The wxRust-specific derived class of [wxArtProvider](http://docs.wxwidgets.org/3.0/classwx_art_provider.html).
 pub struct RustArtProv { ptr: *mut c_void }
 impl TRustArtProv for RustArtProv {}
 impl TArtProvider for RustArtProv {}
@@ -172,12 +175,14 @@ impl RustArtProv {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxArtProvider](http://docs.wxwidgets.org/3.0/classwx_art_provider.html).
 pub trait TRustArtProv : TArtProvider {
     fn release(&self) {
         unsafe { ELJArtProv_Release(self.ptr()) }
     }
 }
 
+/// The wxRust-specific derived class of [wxCommand](http://docs.wxwidgets.org/3.0/classwx_command.html).
 pub struct RustCommand { ptr: *mut c_void }
 impl TRustCommand for RustCommand {}
 impl TCommand for RustCommand {}
@@ -189,6 +194,7 @@ impl RustCommand {
     
 }
 
+/// Methods of the wxRust-specific derived class of [wxCommand](http://docs.wxwidgets.org/3.0/classwx_command.html).
 pub trait TRustCommand : TCommand {
 }
 
@@ -213,6 +219,7 @@ pub trait TRustDragDataObject {
     }
 }
 
+/// The wxRust-specific derived class of [wxDropTarget](http://docs.wxwidgets.org/3.0/classwx_drop_target.html).
 pub struct RustDropTarget { ptr: *mut c_void }
 impl TRustDropTarget for RustDropTarget {}
 impl TDropTarget for RustDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -226,6 +233,7 @@ impl RustDropTarget {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxDropTarget](http://docs.wxwidgets.org/3.0/classwx_drop_target.html).
 pub trait TRustDropTarget : TDropTarget {
     fn delete(&self) {
         unsafe { ELJDropTarget_Delete(self.ptr()) }
@@ -247,6 +255,7 @@ pub trait TRustDropTarget : TDropTarget {
     }
 }
 
+/// The wxRust-specific derived class of [wxFileDropTarget](http://docs.wxwidgets.org/3.0/classwx_file_drop_target.html).
 pub struct RustFileDropTarget { ptr: *mut c_void }
 impl TRustFileDropTarget for RustFileDropTarget {}
 impl TFileDropTarget for RustFileDropTarget {}
@@ -261,6 +270,7 @@ impl RustFileDropTarget {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxFileDropTarget](http://docs.wxwidgets.org/3.0/classwx_file_drop_target.html).
 pub trait TRustFileDropTarget : TFileDropTarget {
     fn delete(&self) {
         unsafe { ELJFileDropTarget_Delete(self.ptr()) }
@@ -282,6 +292,7 @@ pub trait TRustFileDropTarget : TFileDropTarget {
     }
 }
 
+/// The wxRust-specific derived class of [wxLog](http://docs.wxwidgets.org/3.0/classwx_log.html).
 pub struct RustLog { ptr: *mut c_void }
 impl TRustLog for RustLog {}
 impl TLog for RustLog { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -298,6 +309,7 @@ impl RustLog {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxLog](http://docs.wxwidgets.org/3.0/classwx_log.html).
 pub trait TRustLog : TLog {
     fn enableLogging(&self, doIt: c_int) -> c_int {
         unsafe { ELJLog_EnableLogging(self.ptr(), doIt) }
@@ -307,6 +319,7 @@ pub trait TRustLog : TLog {
     }
 }
 
+/// The wxRust-specific derived class of [wxPreviewControlBar](http://docs.wxwidgets.org/3.0/classwx_preview_control_bar.html).
 pub struct RustPreviewControlBar { ptr: *mut c_void }
 impl TRustPreviewControlBar for RustPreviewControlBar {}
 impl TPreviewControlBar for RustPreviewControlBar {}
@@ -324,9 +337,11 @@ impl RustPreviewControlBar {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxPreviewControlBar](http://docs.wxwidgets.org/3.0/classwx_preview_control_bar.html).
 pub trait TRustPreviewControlBar : TPreviewControlBar {
 }
 
+/// The wxRust-specific derived class of [wxPreviewFrame](http://docs.wxwidgets.org/3.0/classwx_preview_frame.html).
 pub struct RustPreviewFrame { ptr: *mut c_void }
 impl TRustPreviewFrame for RustPreviewFrame {}
 impl TPreviewFrame for RustPreviewFrame {}
@@ -345,6 +360,7 @@ impl RustPreviewFrame {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxPreviewFrame](http://docs.wxwidgets.org/3.0/classwx_preview_frame.html).
 pub trait TRustPreviewFrame : TPreviewFrame {
     fn getControlBar(&self) -> *mut c_void {
         unsafe { ELJPreviewFrame_GetControlBar(self.ptr()) }
@@ -366,6 +382,7 @@ pub trait TRustPreviewFrame : TPreviewFrame {
     }
 }
 
+/// The wxRust-specific derived class of [wxTextDropTarget](http://docs.wxwidgets.org/3.0/classwx_text_drop_target.html).
 pub struct RustTextDropTarget { ptr: *mut c_void }
 impl TRustTextDropTarget for RustTextDropTarget {}
 impl TTextDropTarget for RustTextDropTarget {}
@@ -380,6 +397,7 @@ impl RustTextDropTarget {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxTextDropTarget](http://docs.wxwidgets.org/3.0/classwx_text_drop_target.html).
 pub trait TRustTextDropTarget : TTextDropTarget {
     fn delete(&self) {
         unsafe { ELJTextDropTarget_Delete(self.ptr()) }
@@ -401,6 +419,7 @@ pub trait TRustTextDropTarget : TTextDropTarget {
     }
 }
 
+/// The wxRust-specific derived class of [wxTextValidator](http://docs.wxwidgets.org/3.0/classwx_text_validator.html).
 pub struct RustTextValidator { ptr: *mut c_void }
 impl TRustTextValidator for RustTextValidator {}
 impl TTextValidator for RustTextValidator {}
@@ -417,9 +436,11 @@ impl RustTextValidator {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxTextValidator](http://docs.wxwidgets.org/3.0/classwx_text_validator.html).
 pub trait TRustTextValidator : TTextValidator {
 }
 
+/// Wraps the wxWidgets' [wxAcceleratorEntry](http://docs.wxwidgets.org/3.0/classwx_accelerator_entry.html) class.
 pub struct AcceleratorEntry { ptr: *mut c_void }
 impl TAcceleratorEntry for AcceleratorEntry { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -432,6 +453,7 @@ impl AcceleratorEntry {
     }
 }
 
+/// Methods of the wxWidgets' [wxAcceleratorEntry](http://docs.wxwidgets.org/3.0/classwx_accelerator_entry.html) class.
 pub trait TAcceleratorEntry {
     fn ptr(&self) -> *mut c_void;
     
@@ -452,6 +474,7 @@ pub trait TAcceleratorEntry {
     }
 }
 
+/// Wraps the wxWidgets' [wxAcceleratorTable](http://docs.wxwidgets.org/3.0/classwx_accelerator_table.html) class.
 pub struct AcceleratorTable { ptr: *mut c_void }
 impl TAcceleratorTable for AcceleratorTable { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -464,6 +487,7 @@ impl AcceleratorTable {
     }
 }
 
+/// Methods of the wxWidgets' [wxAcceleratorTable](http://docs.wxwidgets.org/3.0/classwx_accelerator_table.html) class.
 pub trait TAcceleratorTable {
     fn ptr(&self) -> *mut c_void;
     
@@ -472,6 +496,7 @@ pub trait TAcceleratorTable {
     }
 }
 
+/// Wraps the wxWidgets' [wxActivateEvent](http://docs.wxwidgets.org/3.0/classwx_activate_event.html) class.
 pub struct ActivateEvent { ptr: *mut c_void }
 impl TActivateEvent for ActivateEvent {}
 impl TEvent for ActivateEvent {}
@@ -483,12 +508,15 @@ impl ActivateEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxActivateEvent](http://docs.wxwidgets.org/3.0/classwx_activate_event.html) class.
 pub trait TActivateEvent : TEvent {
     fn getActive(&self) -> c_int {
         unsafe { wxActivateEvent_GetActive(self.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxApp](http://docs.wxwidgets.org/3.0/classwx_app.html) class.
+/// Rather use the wxRust-specific [RustApp](struct.RustApp.html) class.
 pub struct App { ptr: *mut c_void }
 impl TApp for App {}
 impl TEvtHandler for App {}
@@ -500,9 +528,11 @@ impl App {
     
 }
 
+/// Methods of the wxWidgets' [wxApp](http://docs.wxwidgets.org/3.0/classwx_app.html) class.
 pub trait TApp : TEvtHandler {
 }
 
+/// Wraps the wxWidgets' [wxArtProvider](http://docs.wxwidgets.org/3.0/classwx_art_provider.html) class.
 pub struct ArtProvider { ptr: *mut c_void }
 impl TArtProvider for ArtProvider {}
 impl TObject for ArtProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -513,9 +543,11 @@ impl ArtProvider {
     
 }
 
+/// Methods of the wxWidgets' [wxArtProvider](http://docs.wxwidgets.org/3.0/classwx_art_provider.html) class.
 pub trait TArtProvider : TObject {
 }
 
+/// Wraps the wxWidgets' [wxAutoBufferedPaintDC](http://docs.wxwidgets.org/3.0/classwx_auto_buffered_paint_dc.html) class.
 pub struct AutoBufferedPaintDC { ptr: *mut c_void }
 impl TAutoBufferedPaintDC for AutoBufferedPaintDC {}
 impl TDC for AutoBufferedPaintDC {}
@@ -530,9 +562,11 @@ impl AutoBufferedPaintDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxAutoBufferedPaintDC](http://docs.wxwidgets.org/3.0/classwx_auto_buffered_paint_dc.html) class.
 pub trait TAutoBufferedPaintDC : TDC {
 }
 
+/// Wraps the wxWidgets' [wxAutomationObject](http://docs.wxwidgets.org/3.0/classwx_automation_object.html) class.
 pub struct AutomationObject { ptr: *mut c_void }
 impl TAutomationObject for AutomationObject {}
 impl TObject for AutomationObject { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -543,9 +577,11 @@ impl AutomationObject {
     
 }
 
+/// Methods of the wxWidgets' [wxAutomationObject](http://docs.wxwidgets.org/3.0/classwx_automation_object.html) class.
 pub trait TAutomationObject : TObject {
 }
 
+/// Wraps the wxWidgets' [wxBitmap](http://docs.wxwidgets.org/3.0/classwx_bitmap.html) class.
 pub struct Bitmap { ptr: *mut c_void }
 impl TBitmap for Bitmap {}
 impl TGDIObject for Bitmap {}
@@ -596,6 +632,7 @@ impl Bitmap {
     }
 }
 
+/// Methods of the wxWidgets' [wxBitmap](http://docs.wxwidgets.org/3.0/classwx_bitmap.html) class.
 pub trait TBitmap : TGDIObject {
     fn newFromXPM(&self) -> Bitmap {
         unsafe { Bitmap { ptr: wxBitmap_CreateFromXPM(self.ptr()) } }
@@ -646,6 +683,7 @@ pub trait TBitmap : TGDIObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxBitmapButton](http://docs.wxwidgets.org/3.0/classwx_bitmap_button.html) class.
 pub struct BitmapButton { ptr: *mut c_void }
 impl TBitmapButton for BitmapButton {}
 impl TButton for BitmapButton {}
@@ -663,6 +701,7 @@ impl BitmapButton {
     }
 }
 
+/// Methods of the wxWidgets' [wxBitmapButton](http://docs.wxwidgets.org/3.0/classwx_bitmap_button.html) class.
 pub trait TBitmapButton : TButton {
     fn getBitmapDisabled<T: TBitmap>(&self, _ref: &T) {
         unsafe { wxBitmapButton_GetBitmapDisabled(self.ptr(), _ref.ptr()) }
@@ -699,6 +738,7 @@ pub trait TBitmapButton : TButton {
     }
 }
 
+/// Wraps the wxWidgets' [wxBitmapToggleButton](http://docs.wxwidgets.org/3.0/classwx_bitmap_toggle_button.html) class.
 pub struct BitmapToggleButton { ptr: *mut c_void }
 impl TBitmapToggleButton for BitmapToggleButton {}
 impl TToggleButton for BitmapToggleButton {}
@@ -716,12 +756,14 @@ impl BitmapToggleButton {
     }
 }
 
+/// Methods of the wxWidgets' [wxBitmapToggleButton](http://docs.wxwidgets.org/3.0/classwx_bitmap_toggle_button.html) class.
 pub trait TBitmapToggleButton : TToggleButton {
     fn setBitmapLabel<T: TBitmap>(&self, _bmp: &T) {
         unsafe { wxBitmapToggleButton_SetBitmapLabel(self.ptr(), _bmp.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxBitmapDataObject](http://docs.wxwidgets.org/3.0/classwx_bitmap_data_object.html) class.
 pub struct BitmapDataObject { ptr: *mut c_void }
 impl TBitmapDataObject for BitmapDataObject {}
 impl TDataObjectSimple for BitmapDataObject {}
@@ -733,9 +775,11 @@ impl BitmapDataObject {
     
 }
 
+/// Methods of the wxWidgets' [wxBitmapDataObject](http://docs.wxwidgets.org/3.0/classwx_bitmap_data_object.html) class.
 pub trait TBitmapDataObject : TDataObjectSimple {
 }
 
+/// Wraps the wxWidgets' [wxBitmapHandler](http://docs.wxwidgets.org/3.0/classwx_bitmap_handler.html) class.
 pub struct BitmapHandler { ptr: *mut c_void }
 impl TBitmapHandler for BitmapHandler {}
 impl TObject for BitmapHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -746,9 +790,11 @@ impl BitmapHandler {
     
 }
 
+/// Methods of the wxWidgets' [wxBitmapHandler](http://docs.wxwidgets.org/3.0/classwx_bitmap_handler.html) class.
 pub trait TBitmapHandler : TObject {
 }
 
+/// Wraps the wxWidgets' [wxBoxSizer](http://docs.wxwidgets.org/3.0/classwx_box_sizer.html) class.
 pub struct BoxSizer { ptr: *mut c_void }
 impl TBoxSizer for BoxSizer {}
 impl TSizer for BoxSizer {}
@@ -763,12 +809,14 @@ impl BoxSizer {
     }
 }
 
+/// Methods of the wxWidgets' [wxBoxSizer](http://docs.wxwidgets.org/3.0/classwx_box_sizer.html) class.
 pub trait TBoxSizer : TSizer {
     fn getOrientation(&self) -> c_int {
         unsafe { wxBoxSizer_GetOrientation(self.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxBrush](http://docs.wxwidgets.org/3.0/classwx_brush.html) class.
 pub struct Brush { ptr: *mut c_void }
 impl TBrush for Brush {}
 impl TGDIObject for Brush {}
@@ -792,6 +840,7 @@ impl Brush {
     }
 }
 
+/// Methods of the wxWidgets' [wxBrush](http://docs.wxwidgets.org/3.0/classwx_brush.html) class.
 pub trait TBrush : TGDIObject {
     fn assign<T: TBrush>(&self, brush: &T) {
         unsafe { wxBrush_Assign(self.ptr(), brush.ptr()) }
@@ -828,6 +877,7 @@ pub trait TBrush : TGDIObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxBrushList](http://docs.wxwidgets.org/3.0/classwx_brush_list.html) class.
 pub struct BrushList { ptr: *mut c_void }
 impl TBrushList for BrushList {}
 impl TList for BrushList {}
@@ -839,9 +889,11 @@ impl BrushList {
     
 }
 
+/// Methods of the wxWidgets' [wxBrushList](http://docs.wxwidgets.org/3.0/classwx_brush_list.html) class.
 pub trait TBrushList : TList {
 }
 
+/// Wraps the wxWidgets' [wxBufferedDC](http://docs.wxwidgets.org/3.0/classwx_buffered_dc.html) class.
 pub struct BufferedDC { ptr: *mut c_void }
 impl TBufferedDC for BufferedDC {}
 impl TDC for BufferedDC {}
@@ -859,9 +911,11 @@ impl BufferedDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxBufferedDC](http://docs.wxwidgets.org/3.0/classwx_buffered_dc.html) class.
 pub trait TBufferedDC : TDC {
 }
 
+/// Wraps the wxWidgets' [wxBufferedPaintDC](http://docs.wxwidgets.org/3.0/classwx_buffered_paint_dc.html) class.
 pub struct BufferedPaintDC { ptr: *mut c_void }
 impl TBufferedPaintDC for BufferedPaintDC {}
 impl TDC for BufferedPaintDC {}
@@ -879,9 +933,11 @@ impl BufferedPaintDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxBufferedPaintDC](http://docs.wxwidgets.org/3.0/classwx_buffered_paint_dc.html) class.
 pub trait TBufferedPaintDC : TDC {
 }
 
+/// Wraps the wxWidgets' [wxBusyCursor](http://docs.wxwidgets.org/3.0/classwx_busy_cursor.html) class.
 pub struct BusyCursor { ptr: *mut c_void }
 impl TBusyCursor for BusyCursor { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -894,6 +950,7 @@ impl BusyCursor {
     }
 }
 
+/// Methods of the wxWidgets' [wxBusyCursor](http://docs.wxwidgets.org/3.0/classwx_busy_cursor.html) class.
 pub trait TBusyCursor {
     fn ptr(&self) -> *mut c_void;
     
@@ -905,6 +962,7 @@ pub trait TBusyCursor {
     }
 }
 
+/// Wraps the wxWidgets' [wxBusyInfo](http://docs.wxwidgets.org/3.0/classwx_busy_info.html) class.
 pub struct BusyInfo { ptr: *mut c_void }
 impl TBusyInfo for BusyInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -918,6 +976,7 @@ impl BusyInfo {
     }
 }
 
+/// Methods of the wxWidgets' [wxBusyInfo](http://docs.wxwidgets.org/3.0/classwx_busy_info.html) class.
 pub trait TBusyInfo {
     fn ptr(&self) -> *mut c_void;
     
@@ -926,6 +985,7 @@ pub trait TBusyInfo {
     }
 }
 
+/// Wraps the wxWidgets' [wxButton](http://docs.wxwidgets.org/3.0/classwx_button.html) class.
 pub struct Button { ptr: *mut c_void }
 impl TButton for Button {}
 impl TControl for Button {}
@@ -943,12 +1003,14 @@ impl Button {
     }
 }
 
+/// Methods of the wxWidgets' [wxButton](http://docs.wxwidgets.org/3.0/classwx_button.html) class.
 pub trait TButton : TControl {
     fn setDefault(&self) {
         unsafe { wxButton_SetDefault(self.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxCaret](http://docs.wxwidgets.org/3.0/classwx_caret.html) class.
 pub struct Caret { ptr: *mut c_void }
 impl TCaret for Caret { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -967,6 +1029,7 @@ impl Caret {
     }
 }
 
+/// Methods of the wxWidgets' [wxCaret](http://docs.wxwidgets.org/3.0/classwx_caret.html) class.
 pub trait TCaret {
     fn ptr(&self) -> *mut c_void;
     
@@ -999,6 +1062,7 @@ pub trait TCaret {
     }
 }
 
+/// Wraps the wxWidgets' [wxCheckBox](http://docs.wxwidgets.org/3.0/classwx_check_box.html) class.
 pub struct CheckBox { ptr: *mut c_void }
 impl TCheckBox for CheckBox {}
 impl TControl for CheckBox {}
@@ -1016,6 +1080,7 @@ impl CheckBox {
     }
 }
 
+/// Methods of the wxWidgets' [wxCheckBox](http://docs.wxwidgets.org/3.0/classwx_check_box.html) class.
 pub trait TCheckBox : TControl {
     fn getValue(&self) -> c_int {
         unsafe { wxCheckBox_GetValue(self.ptr()) }
@@ -1025,6 +1090,7 @@ pub trait TCheckBox : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxCheckListBox](http://docs.wxwidgets.org/3.0/classwx_check_list_box.html) class.
 pub struct CheckListBox { ptr: *mut c_void }
 impl TCheckListBox for CheckListBox {}
 impl TListBox for CheckListBox {}
@@ -1042,6 +1108,7 @@ impl CheckListBox {
     }
 }
 
+/// Methods of the wxWidgets' [wxCheckListBox](http://docs.wxwidgets.org/3.0/classwx_check_list_box.html) class.
 pub trait TCheckListBox : TListBox {
     fn check(&self, item: c_int, check: c_int) {
         unsafe { wxCheckListBox_Check(self.ptr(), item, check) }
@@ -1051,6 +1118,7 @@ pub trait TCheckListBox : TListBox {
     }
 }
 
+/// Wraps the wxWidgets' [wxChoice](http://docs.wxwidgets.org/3.0/classwx_choice.html) class.
 pub struct Choice { ptr: *mut c_void }
 impl TChoice for Choice {}
 impl TControl for Choice {}
@@ -1067,6 +1135,7 @@ impl Choice {
     }
 }
 
+/// Methods of the wxWidgets' [wxChoice](http://docs.wxwidgets.org/3.0/classwx_choice.html) class.
 pub trait TChoice : TControl {
     fn append(&self, item: &str) {
         let item = wxT(item);
@@ -1097,6 +1166,7 @@ pub trait TChoice : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxClientDC](http://docs.wxwidgets.org/3.0/classwx_client_dc.html) class.
 pub struct ClientDC { ptr: *mut c_void }
 impl TClientDC for ClientDC {}
 impl TWindowDC for ClientDC {}
@@ -1112,9 +1182,11 @@ impl ClientDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxClientDC](http://docs.wxwidgets.org/3.0/classwx_client_dc.html) class.
 pub trait TClientDC : TWindowDC {
 }
 
+/// Wraps the wxWidgets' [wxClipboard](http://docs.wxwidgets.org/3.0/classwx_clipboard.html) class.
 pub struct Clipboard { ptr: *mut c_void }
 impl TClipboard for Clipboard {}
 impl TObject for Clipboard { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1128,6 +1200,7 @@ impl Clipboard {
     }
 }
 
+/// Methods of the wxWidgets' [wxClipboard](http://docs.wxwidgets.org/3.0/classwx_clipboard.html) class.
 pub trait TClipboard : TObject {
     fn addData<T: TDataObject>(&self, data: &T) -> c_int {
         unsafe { wxClipboard_AddData(self.ptr(), data.ptr()) }
@@ -1161,6 +1234,7 @@ pub trait TClipboard : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxCloseEvent](http://docs.wxwidgets.org/3.0/classwx_close_event.html) class.
 pub struct CloseEvent { ptr: *mut c_void }
 impl TCloseEvent for CloseEvent {}
 impl TEvent for CloseEvent {}
@@ -1172,6 +1246,7 @@ impl CloseEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxCloseEvent](http://docs.wxwidgets.org/3.0/classwx_close_event.html) class.
 pub trait TCloseEvent : TEvent {
     fn canVeto(&self) -> c_int {
         unsafe { wxCloseEvent_CanVeto(self.ptr()) }
@@ -1193,6 +1268,7 @@ pub trait TCloseEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxColour](http://docs.wxwidgets.org/3.0/classwx_colour.html) class.
 pub struct Colour { ptr: *mut c_void }
 impl TColour for Colour {}
 impl TObject for Colour { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1225,6 +1301,7 @@ impl Colour {
     }
 }
 
+/// Methods of the wxWidgets' [wxColour](http://docs.wxwidgets.org/3.0/classwx_colour.html) class.
 pub trait TColour : TObject {
     fn alpha(&self) -> uint8_t {
         unsafe { wxColour_Alpha(self.ptr()) }
@@ -1265,6 +1342,7 @@ pub trait TColour : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxColourData](http://docs.wxwidgets.org/3.0/classwx_colour_data.html) class.
 pub struct ColourData { ptr: *mut c_void }
 impl TColourData for ColourData {}
 impl TObject for ColourData { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1278,6 +1356,7 @@ impl ColourData {
     }
 }
 
+/// Methods of the wxWidgets' [wxColourData](http://docs.wxwidgets.org/3.0/classwx_colour_data.html) class.
 pub trait TColourData : TObject {
     fn getChooseFull(&self) -> c_int {
         unsafe { wxColourData_GetChooseFull(self.ptr()) }
@@ -1299,6 +1378,7 @@ pub trait TColourData : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxColourDatabase](http://docs.wxwidgets.org/3.0/classwx_colour_database.html) class.
 pub struct ColourDatabase { ptr: *mut c_void }
 impl TColourDatabase for ColourDatabase {}
 impl TList for ColourDatabase {}
@@ -1310,9 +1390,11 @@ impl ColourDatabase {
     
 }
 
+/// Methods of the wxWidgets' [wxColourDatabase](http://docs.wxwidgets.org/3.0/classwx_colour_database.html) class.
 pub trait TColourDatabase : TList {
 }
 
+/// Wraps the wxWidgets' [wxColourDialog](http://docs.wxwidgets.org/3.0/classwx_colour_dialog.html) class.
 pub struct ColourDialog { ptr: *mut c_void }
 impl TColourDialog for ColourDialog {}
 impl TDialog for ColourDialog {}
@@ -1330,12 +1412,14 @@ impl ColourDialog {
     }
 }
 
+/// Methods of the wxWidgets' [wxColourDialog](http://docs.wxwidgets.org/3.0/classwx_colour_dialog.html) class.
 pub trait TColourDialog : TDialog {
     fn getColourData<T: TColourData>(&self, _ref: &T) {
         unsafe { wxColourDialog_GetColourData(self.ptr(), _ref.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxComboBox](http://docs.wxwidgets.org/3.0/classwx_combo_box.html) class.
 pub struct ComboBox { ptr: *mut c_void }
 impl TComboBox for ComboBox {}
 impl TChoice for ComboBox {}
@@ -1354,6 +1438,7 @@ impl ComboBox {
     }
 }
 
+/// Methods of the wxWidgets' [wxComboBox](http://docs.wxwidgets.org/3.0/classwx_combo_box.html) class.
 pub trait TComboBox : TChoice {
     fn appendData(&self, item: &str, d: *mut c_void) {
         let item = wxT(item);
@@ -1401,6 +1486,8 @@ pub trait TComboBox : TChoice {
     }
 }
 
+/// Wraps the wxWidgets' [wxCommand](http://docs.wxwidgets.org/3.0/classwx_command.html) class.
+/// Rather use the wxRust-specific [RustCommand](struct.RustCommand.html) class.
 pub struct Command { ptr: *mut c_void }
 impl TCommand for Command {}
 impl TObject for Command { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1411,9 +1498,11 @@ impl Command {
     
 }
 
+/// Methods of the wxWidgets' [wxCommand](http://docs.wxwidgets.org/3.0/classwx_command.html) class.
 pub trait TCommand : TObject {
 }
 
+/// Wraps the wxWidgets' [wxCommandEvent](http://docs.wxwidgets.org/3.0/classwx_command_event.html) class.
 pub struct CommandEvent { ptr: *mut c_void }
 impl TCommandEvent for CommandEvent {}
 impl TEvent for CommandEvent {}
@@ -1428,6 +1517,7 @@ impl CommandEvent {
     }
 }
 
+/// Methods of the wxWidgets' [wxCommandEvent](http://docs.wxwidgets.org/3.0/classwx_command_event.html) class.
 pub trait TCommandEvent : TEvent {
     fn getClientData(&self) -> ClientData {
         unsafe { ClientData { ptr: wxCommandEvent_GetClientData(self.ptr()) } }
@@ -1471,6 +1561,7 @@ pub trait TCommandEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxCommandProcessor](http://docs.wxwidgets.org/3.0/classwx_command_processor.html) class.
 pub struct CommandProcessor { ptr: *mut c_void }
 impl TCommandProcessor for CommandProcessor {}
 impl TObject for CommandProcessor { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1481,9 +1572,11 @@ impl CommandProcessor {
     
 }
 
+/// Methods of the wxWidgets' [wxCommandProcessor](http://docs.wxwidgets.org/3.0/classwx_command_processor.html) class.
 pub trait TCommandProcessor : TObject {
 }
 
+/// Wraps the wxWidgets' [wxContextHelp](http://docs.wxwidgets.org/3.0/classwx_context_help.html) class.
 pub struct ContextHelp { ptr: *mut c_void }
 impl TContextHelp for ContextHelp {}
 impl TObject for ContextHelp { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1497,6 +1590,7 @@ impl ContextHelp {
     }
 }
 
+/// Methods of the wxWidgets' [wxContextHelp](http://docs.wxwidgets.org/3.0/classwx_context_help.html) class.
 pub trait TContextHelp : TObject {
     fn beginContextHelp<T: TWindow>(&self, win: &T) -> c_int {
         unsafe { wxContextHelp_BeginContextHelp(self.ptr(), win.ptr()) }
@@ -1506,6 +1600,7 @@ pub trait TContextHelp : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxContextHelpButton](http://docs.wxwidgets.org/3.0/classwx_context_help_button.html) class.
 pub struct ContextHelpButton { ptr: *mut c_void }
 impl TContextHelpButton for ContextHelpButton {}
 impl TBitmapButton for ContextHelpButton {}
@@ -1524,9 +1619,11 @@ impl ContextHelpButton {
     }
 }
 
+/// Methods of the wxWidgets' [wxContextHelpButton](http://docs.wxwidgets.org/3.0/classwx_context_help_button.html) class.
 pub trait TContextHelpButton : TBitmapButton {
 }
 
+/// Wraps the wxWidgets' [wxControl](http://docs.wxwidgets.org/3.0/classwx_control.html) class.
 pub struct Control { ptr: *mut c_void }
 impl TControl for Control {}
 impl TWindow for Control {}
@@ -1539,12 +1636,14 @@ impl Control {
     
 }
 
+/// Methods of the wxWidgets' [wxControl](http://docs.wxwidgets.org/3.0/classwx_control.html) class.
 pub trait TControl : TWindow {
     fn command<T: TEvent>(&self, event: &T) {
         unsafe { wxControl_Command(self.ptr(), event.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxCursor](http://docs.wxwidgets.org/3.0/classwx_cursor.html) class.
 pub struct Cursor { ptr: *mut c_void }
 impl TCursor for Cursor {}
 impl TBitmap for Cursor {}
@@ -1557,9 +1656,11 @@ impl Cursor {
     
 }
 
+/// Methods of the wxWidgets' [wxCursor](http://docs.wxwidgets.org/3.0/classwx_cursor.html) class.
 pub trait TCursor : TBitmap {
 }
 
+/// Wraps the wxWidgets' [wxCustomDataObject](http://docs.wxwidgets.org/3.0/classwx_custom_data_object.html) class.
 pub struct CustomDataObject { ptr: *mut c_void }
 impl TCustomDataObject for CustomDataObject {}
 impl TDataObjectSimple for CustomDataObject {}
@@ -1571,9 +1672,11 @@ impl CustomDataObject {
     
 }
 
+/// Methods of the wxWidgets' [wxCustomDataObject](http://docs.wxwidgets.org/3.0/classwx_custom_data_object.html) class.
 pub trait TCustomDataObject : TDataObjectSimple {
 }
 
+/// Wraps the wxWidgets' [wxDC](http://docs.wxwidgets.org/3.0/classwx_dc.html) class.
 pub struct DC { ptr: *mut c_void }
 impl TDC for DC {}
 impl TObject for DC { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1584,6 +1687,7 @@ impl DC {
     
 }
 
+/// Methods of the wxWidgets' [wxDC](http://docs.wxwidgets.org/3.0/classwx_dc.html) class.
 pub trait TDC : TObject {
     fn blit<T: TDC>(&self, xdest: c_int, ydest: c_int, width: c_int, height: c_int, source: &T, xsrc: c_int, ysrc: c_int, rop: c_int, useMask: c_int) -> c_int {
         unsafe { wxDC_Blit(self.ptr(), xdest, ydest, width, height, source.ptr(), xsrc, ysrc, rop, useMask) }
@@ -1861,6 +1965,7 @@ pub trait TDC : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxDCClipper](http://docs.wxwidgets.org/3.0/classwx_dcc_lipper.html) class.
 pub struct DCClipper { ptr: *mut c_void }
 impl TDCClipper for DCClipper { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1870,11 +1975,13 @@ impl DCClipper {
     
 }
 
+/// Methods of the wxWidgets' [wxDCClipper](http://docs.wxwidgets.org/3.0/classwx_dcc_lipper.html) class.
 pub trait TDCClipper {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxDataFormat](http://docs.wxwidgets.org/3.0/classwx_data_format.html) class.
 pub struct DataFormat { ptr: *mut c_void }
 impl TDataFormat for DataFormat { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1891,6 +1998,7 @@ impl DataFormat {
     }
 }
 
+/// Methods of the wxWidgets' [wxDataFormat](http://docs.wxwidgets.org/3.0/classwx_data_format.html) class.
 pub trait TDataFormat {
     fn ptr(&self) -> *mut c_void;
     
@@ -1914,6 +2022,7 @@ pub trait TDataFormat {
     }
 }
 
+/// Wraps the wxWidgets' [wxDataObject](http://docs.wxwidgets.org/3.0/classwx_data_object.html) class.
 pub struct DataObject { ptr: *mut c_void }
 impl TDataObject for DataObject { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1923,11 +2032,13 @@ impl DataObject {
     
 }
 
+/// Methods of the wxWidgets' [wxDataObject](http://docs.wxwidgets.org/3.0/classwx_data_object.html) class.
 pub trait TDataObject {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxDataObjectComposite](http://docs.wxwidgets.org/3.0/classwx_data_object_composite.html) class.
 pub struct DataObjectComposite { ptr: *mut c_void }
 impl TDataObjectComposite for DataObjectComposite {}
 impl TDataObject for DataObjectComposite { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1941,6 +2052,7 @@ impl DataObjectComposite {
     }
 }
 
+/// Methods of the wxWidgets' [wxDataObjectComposite](http://docs.wxwidgets.org/3.0/classwx_data_object_composite.html) class.
 pub trait TDataObjectComposite : TDataObject {
     fn add(&self, _dat: *mut c_void, _preferred: c_int) {
         unsafe { wxDataObjectComposite_Add(self.ptr(), _dat, _preferred) }
@@ -1950,6 +2062,7 @@ pub trait TDataObjectComposite : TDataObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxDataObjectSimple](http://docs.wxwidgets.org/3.0/classwx_data_object_simple.html) class.
 pub struct DataObjectSimple { ptr: *mut c_void }
 impl TDataObjectSimple for DataObjectSimple {}
 impl TDataObject for DataObjectSimple { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1960,9 +2073,11 @@ impl DataObjectSimple {
     
 }
 
+/// Methods of the wxWidgets' [wxDataObjectSimple](http://docs.wxwidgets.org/3.0/classwx_data_object_simple.html) class.
 pub trait TDataObjectSimple : TDataObject {
 }
 
+/// Wraps the wxWidgets' [wxDialUpEvent](http://docs.wxwidgets.org/3.0/classwx_dial_up_event.html) class.
 pub struct DialUpEvent { ptr: *mut c_void }
 impl TDialUpEvent for DialUpEvent {}
 impl TEvent for DialUpEvent {}
@@ -1974,9 +2089,11 @@ impl DialUpEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxDialUpEvent](http://docs.wxwidgets.org/3.0/classwx_dial_up_event.html) class.
 pub trait TDialUpEvent : TEvent {
 }
 
+/// Wraps the wxWidgets' [wxDialUpManager](http://docs.wxwidgets.org/3.0/classwx_dial_up_manager.html) class.
 pub struct DialUpManager { ptr: *mut c_void }
 impl TDialUpManager for DialUpManager { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1986,11 +2103,13 @@ impl DialUpManager {
     
 }
 
+/// Methods of the wxWidgets' [wxDialUpManager](http://docs.wxwidgets.org/3.0/classwx_dial_up_manager.html) class.
 pub trait TDialUpManager {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxDialog](http://docs.wxwidgets.org/3.0/classwx_dialog.html) class.
 pub struct Dialog { ptr: *mut c_void }
 impl TDialog for Dialog {}
 impl TTopLevelWindow for Dialog {}
@@ -2008,6 +2127,7 @@ impl Dialog {
     }
 }
 
+/// Methods of the wxWidgets' [wxDialog](http://docs.wxwidgets.org/3.0/classwx_dialog.html) class.
 pub trait TDialog : TTopLevelWindow {
     fn endModal(&self, retCode: c_int) {
         unsafe { wxDialog_EndModal(self.ptr(), retCode) }
@@ -2026,6 +2146,7 @@ pub trait TDialog : TTopLevelWindow {
     }
 }
 
+/// Wraps the wxWidgets' [wxDirDialog](http://docs.wxwidgets.org/3.0/classwx_dir_dialog.html) class.
 pub struct DirDialog { ptr: *mut c_void }
 impl TDirDialog for DirDialog {}
 impl TDialog for DirDialog {}
@@ -2045,6 +2166,7 @@ impl DirDialog {
     }
 }
 
+/// Methods of the wxWidgets' [wxDirDialog](http://docs.wxwidgets.org/3.0/classwx_dir_dialog.html) class.
 pub trait TDirDialog : TDialog {
     fn getMessage(&self) -> ~str {
         unsafe { WxString { ptr: wxDirDialog_GetMessage(self.ptr()) }.to_str() }
@@ -2068,6 +2190,7 @@ pub trait TDirDialog : TDialog {
     }
 }
 
+/// Wraps the wxWidgets' [wxDocChildFrame](http://docs.wxwidgets.org/3.0/classwx_doc_child_frame.html) class.
 pub struct DocChildFrame { ptr: *mut c_void }
 impl TDocChildFrame for DocChildFrame {}
 impl TFrame for DocChildFrame {}
@@ -2082,9 +2205,11 @@ impl DocChildFrame {
     
 }
 
+/// Methods of the wxWidgets' [wxDocChildFrame](http://docs.wxwidgets.org/3.0/classwx_doc_child_frame.html) class.
 pub trait TDocChildFrame : TFrame {
 }
 
+/// Wraps the wxWidgets' [wxDocMDIChildFrame](http://docs.wxwidgets.org/3.0/classwx_doc_mdic_hild_frame.html) class.
 pub struct DocMDIChildFrame { ptr: *mut c_void }
 impl TDocMDIChildFrame for DocMDIChildFrame {}
 impl TMDIChildFrame for DocMDIChildFrame {}
@@ -2100,9 +2225,11 @@ impl DocMDIChildFrame {
     
 }
 
+/// Methods of the wxWidgets' [wxDocMDIChildFrame](http://docs.wxwidgets.org/3.0/classwx_doc_mdic_hild_frame.html) class.
 pub trait TDocMDIChildFrame : TMDIChildFrame {
 }
 
+/// Wraps the wxWidgets' [wxDocMDIParentFrame](http://docs.wxwidgets.org/3.0/classwx_doc_mdip_arent_frame.html) class.
 pub struct DocMDIParentFrame { ptr: *mut c_void }
 impl TDocMDIParentFrame for DocMDIParentFrame {}
 impl TMDIParentFrame for DocMDIParentFrame {}
@@ -2118,9 +2245,11 @@ impl DocMDIParentFrame {
     
 }
 
+/// Methods of the wxWidgets' [wxDocMDIParentFrame](http://docs.wxwidgets.org/3.0/classwx_doc_mdip_arent_frame.html) class.
 pub trait TDocMDIParentFrame : TMDIParentFrame {
 }
 
+/// Wraps the wxWidgets' [wxDocManager](http://docs.wxwidgets.org/3.0/classwx_doc_manager.html) class.
 pub struct DocManager { ptr: *mut c_void }
 impl TDocManager for DocManager {}
 impl TEvtHandler for DocManager {}
@@ -2132,9 +2261,11 @@ impl DocManager {
     
 }
 
+/// Methods of the wxWidgets' [wxDocManager](http://docs.wxwidgets.org/3.0/classwx_doc_manager.html) class.
 pub trait TDocManager : TEvtHandler {
 }
 
+/// Wraps the wxWidgets' [wxDocParentFrame](http://docs.wxwidgets.org/3.0/classwx_doc_parent_frame.html) class.
 pub struct DocParentFrame { ptr: *mut c_void }
 impl TDocParentFrame for DocParentFrame {}
 impl TFrame for DocParentFrame {}
@@ -2149,9 +2280,11 @@ impl DocParentFrame {
     
 }
 
+/// Methods of the wxWidgets' [wxDocParentFrame](http://docs.wxwidgets.org/3.0/classwx_doc_parent_frame.html) class.
 pub trait TDocParentFrame : TFrame {
 }
 
+/// Wraps the wxWidgets' [wxDocTemplate](http://docs.wxwidgets.org/3.0/classwx_doc_template.html) class.
 pub struct DocTemplate { ptr: *mut c_void }
 impl TDocTemplate for DocTemplate {}
 impl TObject for DocTemplate { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -2162,9 +2295,11 @@ impl DocTemplate {
     
 }
 
+/// Methods of the wxWidgets' [wxDocTemplate](http://docs.wxwidgets.org/3.0/classwx_doc_template.html) class.
 pub trait TDocTemplate : TObject {
 }
 
+/// Wraps the wxWidgets' [wxDocument](http://docs.wxwidgets.org/3.0/classwx_document.html) class.
 pub struct Document { ptr: *mut c_void }
 impl TDocument for Document {}
 impl TEvtHandler for Document {}
@@ -2176,9 +2311,11 @@ impl Document {
     
 }
 
+/// Methods of the wxWidgets' [wxDocument](http://docs.wxwidgets.org/3.0/classwx_document.html) class.
 pub trait TDocument : TEvtHandler {
 }
 
+/// Wraps the wxWidgets' [wxDragImage](http://docs.wxwidgets.org/3.0/classwx_drag_image.html) class.
 pub struct DragImage { ptr: *mut c_void }
 impl TDragImage for DragImage {}
 impl TObject for DragImage { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -2192,6 +2329,7 @@ impl DragImage {
     }
 }
 
+/// Methods of the wxWidgets' [wxDragImage](http://docs.wxwidgets.org/3.0/classwx_drag_image.html) class.
 pub trait TDragImage : TObject {
     fn beginDragFullScreen<T: TWindow, U: TRect>(&self, x_pos: c_int, y_pos: c_int, window: &T, fullScreen: c_int, rect: &U) -> c_int {
         unsafe { wxDragImage_BeginDragFullScreen(self.ptr(), x_pos, y_pos, window.ptr(), fullScreen, rect.ptr()) }
@@ -2213,6 +2351,7 @@ pub trait TDragImage : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxDrawControl](http://docs.wxwidgets.org/3.0/classwx_draw_control.html) class.
 pub struct DrawControl { ptr: *mut c_void }
 impl TDrawControl for DrawControl {}
 impl TControl for DrawControl {}
@@ -2229,9 +2368,11 @@ impl DrawControl {
     }
 }
 
+/// Methods of the wxWidgets' [wxDrawControl](http://docs.wxwidgets.org/3.0/classwx_draw_control.html) class.
 pub trait TDrawControl : TControl {
 }
 
+/// Wraps the wxWidgets' [wxDrawWindow](http://docs.wxwidgets.org/3.0/classwx_draw_window.html) class.
 pub struct DrawWindow { ptr: *mut c_void }
 impl TDrawWindow for DrawWindow {}
 impl TWindow for DrawWindow {}
@@ -2247,9 +2388,11 @@ impl DrawWindow {
     }
 }
 
+/// Methods of the wxWidgets' [wxDrawWindow](http://docs.wxwidgets.org/3.0/classwx_draw_window.html) class.
 pub trait TDrawWindow : TWindow {
 }
 
+/// Wraps the wxWidgets' [wxDropFilesEvent](http://docs.wxwidgets.org/3.0/classwx_drop_files_event.html) class.
 pub struct DropFilesEvent { ptr: *mut c_void }
 impl TDropFilesEvent for DropFilesEvent {}
 impl TEvent for DropFilesEvent {}
@@ -2261,9 +2404,11 @@ impl DropFilesEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxDropFilesEvent](http://docs.wxwidgets.org/3.0/classwx_drop_files_event.html) class.
 pub trait TDropFilesEvent : TEvent {
 }
 
+/// Wraps the wxWidgets' [wxDropSource](http://docs.wxwidgets.org/3.0/classwx_drop_source.html) class.
 pub struct DropSource { ptr: *mut c_void }
 impl TDropSource for DropSource { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -2273,11 +2418,14 @@ impl DropSource {
     
 }
 
+/// Methods of the wxWidgets' [wxDropSource](http://docs.wxwidgets.org/3.0/classwx_drop_source.html) class.
 pub trait TDropSource {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxDropTarget](http://docs.wxwidgets.org/3.0/classwx_drop_target.html) class.
+/// Rather use the wxRust-specific [RustDropTarget](struct.RustDropTarget.html) class.
 pub struct DropTarget { ptr: *mut c_void }
 impl TDropTarget for DropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -2287,6 +2435,7 @@ impl DropTarget {
     
 }
 
+/// Methods of the wxWidgets' [wxDropTarget](http://docs.wxwidgets.org/3.0/classwx_drop_target.html) class.
 pub trait TDropTarget {
     fn ptr(&self) -> *mut c_void;
     
@@ -2298,6 +2447,7 @@ pub trait TDropTarget {
     }
 }
 
+/// Wraps the wxWidgets' [wxEraseEvent](http://docs.wxwidgets.org/3.0/classwx_erase_event.html) class.
 pub struct EraseEvent { ptr: *mut c_void }
 impl TEraseEvent for EraseEvent {}
 impl TEvent for EraseEvent {}
@@ -2309,12 +2459,14 @@ impl EraseEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxEraseEvent](http://docs.wxwidgets.org/3.0/classwx_erase_event.html) class.
 pub trait TEraseEvent : TEvent {
     fn getDC(&self) -> DC {
         unsafe { DC { ptr: wxEraseEvent_GetDC(self.ptr()) } }
     }
 }
 
+/// Wraps the wxWidgets' [wxEvent](http://docs.wxwidgets.org/3.0/classwx_event.html) class.
 pub struct Event { ptr: *mut c_void }
 impl TEvent for Event {}
 impl TObject for Event { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -2328,6 +2480,7 @@ impl Event {
     }
 }
 
+/// Methods of the wxWidgets' [wxEvent](http://docs.wxwidgets.org/3.0/classwx_event.html) class.
 pub trait TEvent : TObject {
     fn copyObject(&self, object_dest: *mut c_void) {
         unsafe { wxEvent_CopyObject(self.ptr(), object_dest) }
@@ -2367,6 +2520,7 @@ pub trait TEvent : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxEvtHandler](http://docs.wxwidgets.org/3.0/classwx_evt_handler.html) class.
 pub struct EvtHandler { ptr: *mut c_void }
 impl TEvtHandler for EvtHandler {}
 impl TObject for EvtHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -2380,6 +2534,7 @@ impl EvtHandler {
     }
 }
 
+/// Methods of the wxWidgets' [wxEvtHandler](http://docs.wxwidgets.org/3.0/classwx_evt_handler.html) class.
 pub trait TEvtHandler : TObject {
     fn addPendingEvent<T: TEvent>(&self, event: &T) {
         unsafe { wxEvtHandler_AddPendingEvent(self.ptr(), event.ptr()) }
@@ -2419,6 +2574,7 @@ pub trait TEvtHandler : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxFileDataObject](http://docs.wxwidgets.org/3.0/classwx_file_data_object.html) class.
 pub struct FileDataObject { ptr: *mut c_void }
 impl TFileDataObject for FileDataObject {}
 impl TDataObjectSimple for FileDataObject {}
@@ -2430,9 +2586,11 @@ impl FileDataObject {
     
 }
 
+/// Methods of the wxWidgets' [wxFileDataObject](http://docs.wxwidgets.org/3.0/classwx_file_data_object.html) class.
 pub trait TFileDataObject : TDataObjectSimple {
 }
 
+/// Wraps the wxWidgets' [wxFileDialog](http://docs.wxwidgets.org/3.0/classwx_file_dialog.html) class.
 pub struct FileDialog { ptr: *mut c_void }
 impl TFileDialog for FileDialog {}
 impl TDialog for FileDialog {}
@@ -2454,6 +2612,7 @@ impl FileDialog {
     }
 }
 
+/// Methods of the wxWidgets' [wxFileDialog](http://docs.wxwidgets.org/3.0/classwx_file_dialog.html) class.
 pub trait TFileDialog : TDialog {
     fn getDirectory(&self) -> ~str {
         unsafe { WxString { ptr: wxFileDialog_GetDirectory(self.ptr()) }.to_str() }
@@ -2510,6 +2669,8 @@ pub trait TFileDialog : TDialog {
     }
 }
 
+/// Wraps the wxWidgets' [wxFileDropTarget](http://docs.wxwidgets.org/3.0/classwx_file_drop_target.html) class.
+/// Rather use the wxRust-specific [RustFileDropTarget](struct.RustFileDropTarget.html) class.
 pub struct FileDropTarget { ptr: *mut c_void }
 impl TFileDropTarget for FileDropTarget {}
 impl TDropTarget for FileDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -2520,9 +2681,11 @@ impl FileDropTarget {
     
 }
 
+/// Methods of the wxWidgets' [wxFileDropTarget](http://docs.wxwidgets.org/3.0/classwx_file_drop_target.html) class.
 pub trait TFileDropTarget : TDropTarget {
 }
 
+/// Wraps the wxWidgets' [wxFileHistory](http://docs.wxwidgets.org/3.0/classwx_file_history.html) class.
 pub struct FileHistory { ptr: *mut c_void }
 impl TFileHistory for FileHistory {}
 impl TObject for FileHistory { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -2536,6 +2699,7 @@ impl FileHistory {
     }
 }
 
+/// Methods of the wxWidgets' [wxFileHistory](http://docs.wxwidgets.org/3.0/classwx_file_history.html) class.
 pub trait TFileHistory : TObject {
     fn addFileToHistory(&self, file: &str) {
         let file = wxT(file);
@@ -2573,6 +2737,7 @@ pub trait TFileHistory : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxFileType](http://docs.wxwidgets.org/3.0/classwx_file_type.html) class.
 pub struct FileType { ptr: *mut c_void }
 impl TFileType for FileType { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -2582,6 +2747,7 @@ impl FileType {
     
 }
 
+/// Methods of the wxWidgets' [wxFileType](http://docs.wxwidgets.org/3.0/classwx_file_type.html) class.
 pub trait TFileType {
     fn ptr(&self) -> *mut c_void;
     
@@ -2614,6 +2780,7 @@ pub trait TFileType {
     }
 }
 
+/// Wraps the wxWidgets' [wxFindDialogEvent](http://docs.wxwidgets.org/3.0/classwx_find_dialog_event.html) class.
 pub struct FindDialogEvent { ptr: *mut c_void }
 impl TFindDialogEvent for FindDialogEvent {}
 impl TCommandEvent for FindDialogEvent {}
@@ -2626,6 +2793,7 @@ impl FindDialogEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxFindDialogEvent](http://docs.wxwidgets.org/3.0/classwx_find_dialog_event.html) class.
 pub trait TFindDialogEvent : TCommandEvent {
     fn getFindString(&self, _ref: *mut c_void) -> c_int {
         unsafe { wxFindDialogEvent_GetFindString(self.ptr(), _ref) }
@@ -2638,6 +2806,7 @@ pub trait TFindDialogEvent : TCommandEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxFindReplaceData](http://docs.wxwidgets.org/3.0/classwx_find_replace_data.html) class.
 pub struct FindReplaceData { ptr: *mut c_void }
 impl TFindReplaceData for FindReplaceData {}
 impl TObject for FindReplaceData { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -2654,6 +2823,7 @@ impl FindReplaceData {
     }
 }
 
+/// Methods of the wxWidgets' [wxFindReplaceData](http://docs.wxwidgets.org/3.0/classwx_find_replace_data.html) class.
 pub trait TFindReplaceData : TObject {
     fn getFindString(&self) -> ~str {
         unsafe { WxString { ptr: wxFindReplaceData_GetFindString(self.ptr()) }.to_str() }
@@ -2677,6 +2847,7 @@ pub trait TFindReplaceData : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxFindReplaceDialog](http://docs.wxwidgets.org/3.0/classwx_find_replace_dialog.html) class.
 pub struct FindReplaceDialog { ptr: *mut c_void }
 impl TFindReplaceDialog for FindReplaceDialog {}
 impl TDialog for FindReplaceDialog {}
@@ -2695,6 +2866,7 @@ impl FindReplaceDialog {
     }
 }
 
+/// Methods of the wxWidgets' [wxFindReplaceDialog](http://docs.wxwidgets.org/3.0/classwx_find_replace_dialog.html) class.
 pub trait TFindReplaceDialog : TDialog {
     fn getData(&self) -> FindReplaceData {
         unsafe { FindReplaceData { ptr: wxFindReplaceDialog_GetData(self.ptr()) } }
@@ -2704,6 +2876,7 @@ pub trait TFindReplaceDialog : TDialog {
     }
 }
 
+/// Wraps the wxWidgets' [wxFlexGridSizer](http://docs.wxwidgets.org/3.0/classwx_flex_grid_sizer.html) class.
 pub struct FlexGridSizer { ptr: *mut c_void }
 impl TFlexGridSizer for FlexGridSizer {}
 impl TGridSizer for FlexGridSizer {}
@@ -2719,6 +2892,7 @@ impl FlexGridSizer {
     }
 }
 
+/// Methods of the wxWidgets' [wxFlexGridSizer](http://docs.wxwidgets.org/3.0/classwx_flex_grid_sizer.html) class.
 pub trait TFlexGridSizer : TGridSizer {
     fn addGrowableCol(&self, idx: size_t) {
         unsafe { wxFlexGridSizer_AddGrowableCol(self.ptr(), idx) }
@@ -2734,6 +2908,7 @@ pub trait TFlexGridSizer : TGridSizer {
     }
 }
 
+/// Wraps the wxWidgets' [wxFocusEvent](http://docs.wxwidgets.org/3.0/classwx_focus_event.html) class.
 pub struct FocusEvent { ptr: *mut c_void }
 impl TFocusEvent for FocusEvent {}
 impl TEvent for FocusEvent {}
@@ -2745,9 +2920,11 @@ impl FocusEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxFocusEvent](http://docs.wxwidgets.org/3.0/classwx_focus_event.html) class.
 pub trait TFocusEvent : TEvent {
 }
 
+/// Wraps the wxWidgets' [wxFont](http://docs.wxwidgets.org/3.0/classwx_font.html) class.
 pub struct Font { ptr: *mut c_void }
 impl TFont for Font {}
 impl TGDIObject for Font {}
@@ -2769,6 +2946,7 @@ impl Font {
     }
 }
 
+/// Methods of the wxWidgets' [wxFont](http://docs.wxwidgets.org/3.0/classwx_font.html) class.
 pub trait TFont : TGDIObject {
     fn getDefaultEncoding(&self) -> c_int {
         unsafe { wxFont_GetDefaultEncoding(self.ptr()) }
@@ -2836,6 +3014,7 @@ pub trait TFont : TGDIObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxFontData](http://docs.wxwidgets.org/3.0/classwx_font_data.html) class.
 pub struct FontData { ptr: *mut c_void }
 impl TFontData for FontData {}
 impl TObject for FontData { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -2849,6 +3028,7 @@ impl FontData {
     }
 }
 
+/// Methods of the wxWidgets' [wxFontData](http://docs.wxwidgets.org/3.0/classwx_font_data.html) class.
 pub trait TFontData : TObject {
     fn enableEffects(&self, flag: c_int) {
         unsafe { wxFontData_EnableEffects(self.ptr(), flag) }
@@ -2897,6 +3077,7 @@ pub trait TFontData : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxFontDialog](http://docs.wxwidgets.org/3.0/classwx_font_dialog.html) class.
 pub struct FontDialog { ptr: *mut c_void }
 impl TFontDialog for FontDialog {}
 impl TDialog for FontDialog {}
@@ -2914,12 +3095,14 @@ impl FontDialog {
     }
 }
 
+/// Methods of the wxWidgets' [wxFontDialog](http://docs.wxwidgets.org/3.0/classwx_font_dialog.html) class.
 pub trait TFontDialog : TDialog {
     fn getFontData<T: TFontData>(&self, _ref: &T) {
         unsafe { wxFontDialog_GetFontData(self.ptr(), _ref.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxFontEnumerator](http://docs.wxwidgets.org/3.0/classwx_font_enumerator.html) class.
 pub struct FontEnumerator { ptr: *mut c_void }
 impl TFontEnumerator for FontEnumerator { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -2932,6 +3115,7 @@ impl FontEnumerator {
     }
 }
 
+/// Methods of the wxWidgets' [wxFontEnumerator](http://docs.wxwidgets.org/3.0/classwx_font_enumerator.html) class.
 pub trait TFontEnumerator {
     fn ptr(&self) -> *mut c_void;
     
@@ -2947,6 +3131,7 @@ pub trait TFontEnumerator {
     }
 }
 
+/// Wraps the wxWidgets' [wxFontList](http://docs.wxwidgets.org/3.0/classwx_font_list.html) class.
 pub struct FontList { ptr: *mut c_void }
 impl TFontList for FontList {}
 impl TList for FontList {}
@@ -2958,9 +3143,11 @@ impl FontList {
     
 }
 
+/// Methods of the wxWidgets' [wxFontList](http://docs.wxwidgets.org/3.0/classwx_font_list.html) class.
 pub trait TFontList : TList {
 }
 
+/// Wraps the wxWidgets' [wxFontMapper](http://docs.wxwidgets.org/3.0/classwx_font_mapper.html) class.
 pub struct FontMapper { ptr: *mut c_void }
 impl TFontMapper for FontMapper { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -2973,6 +3160,7 @@ impl FontMapper {
     }
 }
 
+/// Methods of the wxWidgets' [wxFontMapper](http://docs.wxwidgets.org/3.0/classwx_font_mapper.html) class.
 pub trait TFontMapper {
     fn ptr(&self) -> *mut c_void;
     
@@ -2986,6 +3174,7 @@ pub trait TFontMapper {
     }
 }
 
+/// Wraps the wxWidgets' [wxFrame](http://docs.wxwidgets.org/3.0/classwx_frame.html) class.
 pub struct Frame { ptr: *mut c_void }
 impl TFrame for Frame {}
 impl TTopLevelWindow for Frame {}
@@ -3003,6 +3192,7 @@ impl Frame {
     }
 }
 
+/// Methods of the wxWidgets' [wxFrame](http://docs.wxwidgets.org/3.0/classwx_frame.html) class.
 pub trait TFrame : TTopLevelWindow {
     fn newStatusBar(&self, number: c_int, style: c_int) -> StatusBar {
         unsafe { StatusBar { ptr: wxFrame_CreateStatusBar(self.ptr(), number, style) } }
@@ -3058,6 +3248,7 @@ pub trait TFrame : TTopLevelWindow {
     }
 }
 
+/// Wraps the wxWidgets' [wxGDIObject](http://docs.wxwidgets.org/3.0/classwx_gdio_bject.html) class.
 pub struct GDIObject { ptr: *mut c_void }
 impl TGDIObject for GDIObject {}
 impl TObject for GDIObject { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -3068,9 +3259,11 @@ impl GDIObject {
     
 }
 
+/// Methods of the wxWidgets' [wxGDIObject](http://docs.wxwidgets.org/3.0/classwx_gdio_bject.html) class.
 pub trait TGDIObject : TObject {
 }
 
+/// Wraps the wxWidgets' [wxGauge](http://docs.wxwidgets.org/3.0/classwx_gauge.html) class.
 pub struct Gauge { ptr: *mut c_void }
 impl TGauge for Gauge {}
 impl TControl for Gauge {}
@@ -3087,6 +3280,7 @@ impl Gauge {
     }
 }
 
+/// Methods of the wxWidgets' [wxGauge](http://docs.wxwidgets.org/3.0/classwx_gauge.html) class.
 pub trait TGauge : TControl {
     fn getBezelFace(&self) -> c_int {
         unsafe { wxGauge_GetBezelFace(self.ptr()) }
@@ -3114,6 +3308,7 @@ pub trait TGauge : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxGenericDirCtrl](http://docs.wxwidgets.org/3.0/classwx_generic_dir_ctrl.html) class.
 pub struct GenericDirCtrl { ptr: *mut c_void }
 impl TGenericDirCtrl for GenericDirCtrl {}
 impl TControl for GenericDirCtrl {}
@@ -3127,9 +3322,11 @@ impl GenericDirCtrl {
     
 }
 
+/// Methods of the wxWidgets' [wxGenericDirCtrl](http://docs.wxwidgets.org/3.0/classwx_generic_dir_ctrl.html) class.
 pub trait TGenericDirCtrl : TControl {
 }
 
+/// Wraps the wxWidgets' [wxGenericValidator](http://docs.wxwidgets.org/3.0/classwx_generic_validator.html) class.
 pub struct GenericValidator { ptr: *mut c_void }
 impl TGenericValidator for GenericValidator {}
 impl TValidator for GenericValidator {}
@@ -3142,9 +3339,11 @@ impl GenericValidator {
     
 }
 
+/// Methods of the wxWidgets' [wxGenericValidator](http://docs.wxwidgets.org/3.0/classwx_generic_validator.html) class.
 pub trait TGenericValidator : TValidator {
 }
 
+/// Wraps the wxWidgets' [wxGridSizer](http://docs.wxwidgets.org/3.0/classwx_grid_sizer.html) class.
 pub struct GridSizer { ptr: *mut c_void }
 impl TGridSizer for GridSizer {}
 impl TSizer for GridSizer {}
@@ -3159,6 +3358,7 @@ impl GridSizer {
     }
 }
 
+/// Methods of the wxWidgets' [wxGridSizer](http://docs.wxwidgets.org/3.0/classwx_grid_sizer.html) class.
 pub trait TGridSizer : TSizer {
     fn getCols(&self) -> c_int {
         unsafe { wxGridSizer_GetCols(self.ptr()) }
@@ -3186,6 +3386,7 @@ pub trait TGridSizer : TSizer {
     }
 }
 
+/// Wraps the wxWidgets' [wxHelpController](http://docs.wxwidgets.org/3.0/classwx_help_controller.html) class.
 pub struct HelpController { ptr: *mut c_void }
 impl THelpController for HelpController {}
 impl THelpControllerBase for HelpController {}
@@ -3197,9 +3398,11 @@ impl HelpController {
     
 }
 
+/// Methods of the wxWidgets' [wxHelpController](http://docs.wxwidgets.org/3.0/classwx_help_controller.html) class.
 pub trait THelpController : THelpControllerBase {
 }
 
+/// Wraps the wxWidgets' [wxHelpControllerBase](http://docs.wxwidgets.org/3.0/classwx_help_controller_base.html) class.
 pub struct HelpControllerBase { ptr: *mut c_void }
 impl THelpControllerBase for HelpControllerBase {}
 impl TObject for HelpControllerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -3210,9 +3413,11 @@ impl HelpControllerBase {
     
 }
 
+/// Methods of the wxWidgets' [wxHelpControllerBase](http://docs.wxwidgets.org/3.0/classwx_help_controller_base.html) class.
 pub trait THelpControllerBase : TObject {
 }
 
+/// Wraps the wxWidgets' [wxHelpControllerHelpProvider](http://docs.wxwidgets.org/3.0/classwx_help_controller_help_provider.html) class.
 pub struct HelpControllerHelpProvider { ptr: *mut c_void }
 impl THelpControllerHelpProvider for HelpControllerHelpProvider {}
 impl TSimpleHelpProvider for HelpControllerHelpProvider {}
@@ -3227,6 +3432,7 @@ impl HelpControllerHelpProvider {
     }
 }
 
+/// Methods of the wxWidgets' [wxHelpControllerHelpProvider](http://docs.wxwidgets.org/3.0/classwx_help_controller_help_provider.html) class.
 pub trait THelpControllerHelpProvider : TSimpleHelpProvider {
     fn getHelpController(&self) -> HelpControllerBase {
         unsafe { HelpControllerBase { ptr: wxHelpControllerHelpProvider_GetHelpController(self.ptr()) } }
@@ -3236,6 +3442,7 @@ pub trait THelpControllerHelpProvider : TSimpleHelpProvider {
     }
 }
 
+/// Wraps the wxWidgets' [wxHelpEvent](http://docs.wxwidgets.org/3.0/classwx_help_event.html) class.
 pub struct HelpEvent { ptr: *mut c_void }
 impl THelpEvent for HelpEvent {}
 impl TCommandEvent for HelpEvent {}
@@ -3248,6 +3455,7 @@ impl HelpEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxHelpEvent](http://docs.wxwidgets.org/3.0/classwx_help_event.html) class.
 pub trait THelpEvent : TCommandEvent {
     fn getLink(&self) -> ~str {
         unsafe { WxString { ptr: wxHelpEvent_GetLink(self.ptr()) }.to_str() }
@@ -3271,6 +3479,7 @@ pub trait THelpEvent : TCommandEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxHelpProvider](http://docs.wxwidgets.org/3.0/classwx_help_provider.html) class.
 pub struct HelpProvider { ptr: *mut c_void }
 impl THelpProvider for HelpProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -3283,6 +3492,7 @@ impl HelpProvider {
     }
 }
 
+/// Methods of the wxWidgets' [wxHelpProvider](http://docs.wxwidgets.org/3.0/classwx_help_provider.html) class.
 pub trait THelpProvider {
     fn ptr(&self) -> *mut c_void;
     
@@ -3311,6 +3521,7 @@ pub trait THelpProvider {
     }
 }
 
+/// Wraps the wxWidgets' [wxIcon](http://docs.wxwidgets.org/3.0/classwx_icon.html) class.
 pub struct Icon { ptr: *mut c_void }
 impl TIcon for Icon {}
 impl TBitmap for Icon {}
@@ -3330,6 +3541,7 @@ impl Icon {
     }
 }
 
+/// Methods of the wxWidgets' [wxIcon](http://docs.wxwidgets.org/3.0/classwx_icon.html) class.
 pub trait TIcon : TBitmap {
     fn assign(&self, other: *mut c_void) {
         unsafe { wxIcon_Assign(self.ptr(), other) }
@@ -3352,6 +3564,7 @@ pub trait TIcon : TBitmap {
     }
 }
 
+/// Wraps the wxWidgets' [wxIconBundle](http://docs.wxwidgets.org/3.0/classwx_icon_bundle.html) class.
 pub struct IconBundle { ptr: *mut c_void }
 impl TIconBundle for IconBundle { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -3371,6 +3584,7 @@ impl IconBundle {
     }
 }
 
+/// Methods of the wxWidgets' [wxIconBundle](http://docs.wxwidgets.org/3.0/classwx_icon_bundle.html) class.
 pub trait TIconBundle {
     fn ptr(&self) -> *mut c_void;
     
@@ -3392,6 +3606,7 @@ pub trait TIconBundle {
     }
 }
 
+/// Wraps the wxWidgets' [wxIconizeEvent](http://docs.wxwidgets.org/3.0/classwx_iconize_event.html) class.
 pub struct IconizeEvent { ptr: *mut c_void }
 impl TIconizeEvent for IconizeEvent {}
 impl TEvent for IconizeEvent {}
@@ -3403,9 +3618,11 @@ impl IconizeEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxIconizeEvent](http://docs.wxwidgets.org/3.0/classwx_iconize_event.html) class.
 pub trait TIconizeEvent : TEvent {
 }
 
+/// Wraps the wxWidgets' [wxIdleEvent](http://docs.wxwidgets.org/3.0/classwx_idle_event.html) class.
 pub struct IdleEvent { ptr: *mut c_void }
 impl TIdleEvent for IdleEvent {}
 impl TEvent for IdleEvent {}
@@ -3417,6 +3634,7 @@ impl IdleEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxIdleEvent](http://docs.wxwidgets.org/3.0/classwx_idle_event.html) class.
 pub trait TIdleEvent : TEvent {
     fn moreRequested(&self) -> c_int {
         unsafe { wxIdleEvent_MoreRequested(self.ptr()) }
@@ -3426,6 +3644,7 @@ pub trait TIdleEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxImage](http://docs.wxwidgets.org/3.0/classwx_image.html) class.
 pub struct Image { ptr: *mut c_void }
 impl TImage for Image {}
 impl TObject for Image { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -3465,6 +3684,7 @@ impl Image {
     }
 }
 
+/// Methods of the wxWidgets' [wxImage](http://docs.wxwidgets.org/3.0/classwx_image.html) class.
 pub trait TImage : TObject {
     fn convertToBitmap<T: TBitmap>(&self, bitmap: &T) {
         unsafe { wxImage_ConvertToBitmap(self.ptr(), bitmap.ptr()) }
@@ -3590,6 +3810,7 @@ pub trait TImage : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxImageHandler](http://docs.wxwidgets.org/3.0/classwx_image_handler.html) class.
 pub struct ImageHandler { ptr: *mut c_void }
 impl TImageHandler for ImageHandler {}
 impl TObject for ImageHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -3600,9 +3821,11 @@ impl ImageHandler {
     
 }
 
+/// Methods of the wxWidgets' [wxImageHandler](http://docs.wxwidgets.org/3.0/classwx_image_handler.html) class.
 pub trait TImageHandler : TObject {
 }
 
+/// Wraps the wxWidgets' [wxImageList](http://docs.wxwidgets.org/3.0/classwx_image_list.html) class.
 pub struct ImageList { ptr: *mut c_void }
 impl TImageList for ImageList {}
 impl TObject for ImageList { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -3616,6 +3839,7 @@ impl ImageList {
     }
 }
 
+/// Methods of the wxWidgets' [wxImageList](http://docs.wxwidgets.org/3.0/classwx_image_list.html) class.
 pub trait TImageList : TObject {
     fn addBitmap<T: TBitmap, U: TBitmap>(&self, bitmap: &T, mask: &U) -> c_int {
         unsafe { wxImageList_AddBitmap(self.ptr(), bitmap.ptr(), mask.ptr()) }
@@ -3649,6 +3873,7 @@ pub trait TImageList : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxIndividualLayoutConstraint](http://docs.wxwidgets.org/3.0/classwx_individual_layout_constraint.html) class.
 pub struct IndividualLayoutConstraint { ptr: *mut c_void }
 impl TIndividualLayoutConstraint for IndividualLayoutConstraint {}
 impl TObject for IndividualLayoutConstraint { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -3659,6 +3884,7 @@ impl IndividualLayoutConstraint {
     
 }
 
+/// Methods of the wxWidgets' [wxIndividualLayoutConstraint](http://docs.wxwidgets.org/3.0/classwx_individual_layout_constraint.html) class.
 pub trait TIndividualLayoutConstraint : TObject {
     fn above<T: TWindow>(&self, sibling: &T, marg: c_int) {
         unsafe { wxIndividualLayoutConstraint_Above(self.ptr(), sibling.ptr(), marg) }
@@ -3740,6 +3966,7 @@ pub trait TIndividualLayoutConstraint : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxInitDialogEvent](http://docs.wxwidgets.org/3.0/classwx_init_dialog_event.html) class.
 pub struct InitDialogEvent { ptr: *mut c_void }
 impl TInitDialogEvent for InitDialogEvent {}
 impl TEvent for InitDialogEvent {}
@@ -3751,9 +3978,11 @@ impl InitDialogEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxInitDialogEvent](http://docs.wxwidgets.org/3.0/classwx_init_dialog_event.html) class.
 pub trait TInitDialogEvent : TEvent {
 }
 
+/// Wraps the wxWidgets' [wxJoystickEvent](http://docs.wxwidgets.org/3.0/classwx_joystick_event.html) class.
 pub struct JoystickEvent { ptr: *mut c_void }
 impl TJoystickEvent for JoystickEvent {}
 impl TEvent for JoystickEvent {}
@@ -3765,6 +3994,7 @@ impl JoystickEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxJoystickEvent](http://docs.wxwidgets.org/3.0/classwx_joystick_event.html) class.
 pub trait TJoystickEvent : TEvent {
     fn buttonDown(&self, but: c_int) -> c_int {
         unsafe { wxJoystickEvent_ButtonDown(self.ptr(), but) }
@@ -3816,6 +4046,7 @@ pub trait TJoystickEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxKeyEvent](http://docs.wxwidgets.org/3.0/classwx_key_event.html) class.
 pub struct KeyEvent { ptr: *mut c_void }
 impl TKeyEvent for KeyEvent {}
 impl TEvent for KeyEvent {}
@@ -3827,6 +4058,7 @@ impl KeyEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxKeyEvent](http://docs.wxwidgets.org/3.0/classwx_key_event.html) class.
 pub trait TKeyEvent : TEvent {
     fn altDown(&self) -> c_int {
         unsafe { wxKeyEvent_AltDown(self.ptr()) }
@@ -3863,6 +4095,7 @@ pub trait TKeyEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxLayoutConstraints](http://docs.wxwidgets.org/3.0/classwx_layout_constraints.html) class.
 pub struct LayoutConstraints { ptr: *mut c_void }
 impl TLayoutConstraints for LayoutConstraints {}
 impl TObject for LayoutConstraints { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -3876,6 +4109,7 @@ impl LayoutConstraints {
     }
 }
 
+/// Methods of the wxWidgets' [wxLayoutConstraints](http://docs.wxwidgets.org/3.0/classwx_layout_constraints.html) class.
 pub trait TLayoutConstraints : TObject {
     fn bottom(&self) -> *mut c_void {
         unsafe { wxLayoutConstraints_bottom(self.ptr()) }
@@ -3903,6 +4137,7 @@ pub trait TLayoutConstraints : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxListBox](http://docs.wxwidgets.org/3.0/classwx_list_box.html) class.
 pub struct ListBox { ptr: *mut c_void }
 impl TListBox for ListBox {}
 impl TControl for ListBox {}
@@ -3919,6 +4154,7 @@ impl ListBox {
     }
 }
 
+/// Methods of the wxWidgets' [wxListBox](http://docs.wxwidgets.org/3.0/classwx_list_box.html) class.
 pub trait TListBox : TControl {
     fn append(&self, item: &str) {
         let item = wxT(item);
@@ -3969,6 +4205,7 @@ pub trait TListBox : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxListCtrl](http://docs.wxwidgets.org/3.0/classwx_list_ctrl.html) class.
 pub struct ListCtrl { ptr: *mut c_void }
 impl TListCtrl for ListCtrl {}
 impl TControl for ListCtrl {}
@@ -3985,6 +4222,7 @@ impl ListCtrl {
     }
 }
 
+/// Methods of the wxWidgets' [wxListCtrl](http://docs.wxwidgets.org/3.0/classwx_list_ctrl.html) class.
 pub trait TListCtrl : TControl {
     fn arrange(&self, flag: c_int) -> c_int {
         unsafe { wxListCtrl_Arrange(self.ptr(), flag) }
@@ -4174,6 +4412,7 @@ pub trait TListCtrl : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxListEvent](http://docs.wxwidgets.org/3.0/classwx_list_event.html) class.
 pub struct ListEvent { ptr: *mut c_void }
 impl TListEvent for ListEvent {}
 impl TNotifyEvent for ListEvent {}
@@ -4187,6 +4426,7 @@ impl ListEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxListEvent](http://docs.wxwidgets.org/3.0/classwx_list_event.html) class.
 pub trait TListEvent : TNotifyEvent {
     fn cancelled(&self) -> c_int {
         unsafe { wxListEvent_Cancelled(self.ptr()) }
@@ -4229,6 +4469,7 @@ pub trait TListEvent : TNotifyEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxListItem](http://docs.wxwidgets.org/3.0/classwx_list_item.html) class.
 pub struct ListItem { ptr: *mut c_void }
 impl TListItem for ListItem {}
 impl TObject for ListItem { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -4242,6 +4483,7 @@ impl ListItem {
     }
 }
 
+/// Methods of the wxWidgets' [wxListItem](http://docs.wxwidgets.org/3.0/classwx_list_item.html) class.
 pub trait TListItem : TObject {
     fn clear(&self) {
         unsafe { wxListItem_Clear(self.ptr()) }
@@ -4336,6 +4578,8 @@ pub trait TListItem : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxLog](http://docs.wxwidgets.org/3.0/classwx_log.html) class.
+/// Rather use the wxRust-specific [RustLog](struct.RustLog.html) class.
 pub struct Log { ptr: *mut c_void }
 impl TLog for Log { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -4348,6 +4592,7 @@ impl Log {
     }
 }
 
+/// Methods of the wxWidgets' [wxLog](http://docs.wxwidgets.org/3.0/classwx_log.html) class.
 pub trait TLog {
     fn ptr(&self) -> *mut c_void;
     
@@ -4409,6 +4654,7 @@ pub trait TLog {
     }
 }
 
+/// Wraps the wxWidgets' [wxLogChain](http://docs.wxwidgets.org/3.0/classwx_log_chain.html) class.
 pub struct LogChain { ptr: *mut c_void }
 impl TLogChain for LogChain {}
 impl TLog for LogChain { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -4422,6 +4668,7 @@ impl LogChain {
     }
 }
 
+/// Methods of the wxWidgets' [wxLogChain](http://docs.wxwidgets.org/3.0/classwx_log_chain.html) class.
 pub trait TLogChain : TLog {
     fn getOldLog(&self) -> Log {
         unsafe { Log { ptr: wxLogChain_GetOldLog(self.ptr()) } }
@@ -4437,6 +4684,7 @@ pub trait TLogChain : TLog {
     }
 }
 
+/// Wraps the wxWidgets' [wxLogGUI](http://docs.wxwidgets.org/3.0/classwx_log_gui.html) class.
 pub struct LogGUI { ptr: *mut c_void }
 impl TLogGUI for LogGUI {}
 impl TLog for LogGUI { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -4447,9 +4695,11 @@ impl LogGUI {
     
 }
 
+/// Methods of the wxWidgets' [wxLogGUI](http://docs.wxwidgets.org/3.0/classwx_log_gui.html) class.
 pub trait TLogGUI : TLog {
 }
 
+/// Wraps the wxWidgets' [wxLogNull](http://docs.wxwidgets.org/3.0/classwx_log_null.html) class.
 pub struct LogNull { ptr: *mut c_void }
 impl TLogNull for LogNull {}
 impl TLog for LogNull { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -4463,9 +4713,11 @@ impl LogNull {
     }
 }
 
+/// Methods of the wxWidgets' [wxLogNull](http://docs.wxwidgets.org/3.0/classwx_log_null.html) class.
 pub trait TLogNull : TLog {
 }
 
+/// Wraps the wxWidgets' [wxLogPassThrough](http://docs.wxwidgets.org/3.0/classwx_log_pass_through.html) class.
 pub struct LogPassThrough { ptr: *mut c_void }
 impl TLogPassThrough for LogPassThrough {}
 impl TLogChain for LogPassThrough {}
@@ -4477,9 +4729,11 @@ impl LogPassThrough {
     
 }
 
+/// Methods of the wxWidgets' [wxLogPassThrough](http://docs.wxwidgets.org/3.0/classwx_log_pass_through.html) class.
 pub trait TLogPassThrough : TLogChain {
 }
 
+/// Wraps the wxWidgets' [wxLogStderr](http://docs.wxwidgets.org/3.0/classwx_log_stderr.html) class.
 pub struct LogStderr { ptr: *mut c_void }
 impl TLogStderr for LogStderr {}
 impl TLog for LogStderr { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -4496,9 +4750,11 @@ impl LogStderr {
     }
 }
 
+/// Methods of the wxWidgets' [wxLogStderr](http://docs.wxwidgets.org/3.0/classwx_log_stderr.html) class.
 pub trait TLogStderr : TLog {
 }
 
+/// Wraps the wxWidgets' [wxLogStream](http://docs.wxwidgets.org/3.0/classwx_log_stream.html) class.
 pub struct LogStream { ptr: *mut c_void }
 impl TLogStream for LogStream {}
 impl TLog for LogStream { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -4509,9 +4765,11 @@ impl LogStream {
     
 }
 
+/// Methods of the wxWidgets' [wxLogStream](http://docs.wxwidgets.org/3.0/classwx_log_stream.html) class.
 pub trait TLogStream : TLog {
 }
 
+/// Wraps the wxWidgets' [wxLogTextCtrl](http://docs.wxwidgets.org/3.0/classwx_log_text_ctrl.html) class.
 pub struct LogTextCtrl { ptr: *mut c_void }
 impl TLogTextCtrl for LogTextCtrl {}
 impl TLog for LogTextCtrl { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -4525,9 +4783,11 @@ impl LogTextCtrl {
     }
 }
 
+/// Methods of the wxWidgets' [wxLogTextCtrl](http://docs.wxwidgets.org/3.0/classwx_log_text_ctrl.html) class.
 pub trait TLogTextCtrl : TLog {
 }
 
+/// Wraps the wxWidgets' [wxLogWindow](http://docs.wxwidgets.org/3.0/classwx_log_window.html) class.
 pub struct LogWindow { ptr: *mut c_void }
 impl TLogWindow for LogWindow {}
 impl TLogPassThrough for LogWindow {}
@@ -4543,12 +4803,14 @@ impl LogWindow {
     }
 }
 
+/// Methods of the wxWidgets' [wxLogWindow](http://docs.wxwidgets.org/3.0/classwx_log_window.html) class.
 pub trait TLogWindow : TLogPassThrough {
     fn getFrame(&self) -> Frame {
         unsafe { Frame { ptr: wxLogWindow_GetFrame(self.ptr()) } }
     }
 }
 
+/// Wraps the wxWidgets' [wxMDIChildFrame](http://docs.wxwidgets.org/3.0/classwx_mdic_hild_frame.html) class.
 pub struct MDIChildFrame { ptr: *mut c_void }
 impl TMDIChildFrame for MDIChildFrame {}
 impl TFrame for MDIChildFrame {}
@@ -4567,12 +4829,14 @@ impl MDIChildFrame {
     }
 }
 
+/// Methods of the wxWidgets' [wxMDIChildFrame](http://docs.wxwidgets.org/3.0/classwx_mdic_hild_frame.html) class.
 pub trait TMDIChildFrame : TFrame {
     fn activate(&self) {
         unsafe { wxMDIChildFrame_Activate(self.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxMDIClientWindow](http://docs.wxwidgets.org/3.0/classwx_mdic_lient_window.html) class.
 pub struct MDIClientWindow { ptr: *mut c_void }
 impl TMDIClientWindow for MDIClientWindow {}
 impl TWindow for MDIClientWindow {}
@@ -4585,9 +4849,11 @@ impl MDIClientWindow {
     
 }
 
+/// Methods of the wxWidgets' [wxMDIClientWindow](http://docs.wxwidgets.org/3.0/classwx_mdic_lient_window.html) class.
 pub trait TMDIClientWindow : TWindow {
 }
 
+/// Wraps the wxWidgets' [wxMDIParentFrame](http://docs.wxwidgets.org/3.0/classwx_mdip_arent_frame.html) class.
 pub struct MDIParentFrame { ptr: *mut c_void }
 impl TMDIParentFrame for MDIParentFrame {}
 impl TFrame for MDIParentFrame {}
@@ -4606,6 +4872,7 @@ impl MDIParentFrame {
     }
 }
 
+/// Methods of the wxWidgets' [wxMDIParentFrame](http://docs.wxwidgets.org/3.0/classwx_mdip_arent_frame.html) class.
 pub trait TMDIParentFrame : TFrame {
     fn activateNext(&self) {
         unsafe { wxMDIParentFrame_ActivateNext(self.ptr()) }
@@ -4639,6 +4906,7 @@ pub trait TMDIParentFrame : TFrame {
     }
 }
 
+/// Wraps the wxWidgets' [wxMask](http://docs.wxwidgets.org/3.0/classwx_mask.html) class.
 pub struct Mask { ptr: *mut c_void }
 impl TMask for Mask {}
 impl TObject for Mask { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -4655,9 +4923,11 @@ impl Mask {
     }
 }
 
+/// Methods of the wxWidgets' [wxMask](http://docs.wxwidgets.org/3.0/classwx_mask.html) class.
 pub trait TMask : TObject {
 }
 
+/// Wraps the wxWidgets' [wxMaximizeEvent](http://docs.wxwidgets.org/3.0/classwx_maximize_event.html) class.
 pub struct MaximizeEvent { ptr: *mut c_void }
 impl TMaximizeEvent for MaximizeEvent {}
 impl TEvent for MaximizeEvent {}
@@ -4669,9 +4939,11 @@ impl MaximizeEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxMaximizeEvent](http://docs.wxwidgets.org/3.0/classwx_maximize_event.html) class.
 pub trait TMaximizeEvent : TEvent {
 }
 
+/// Wraps the wxWidgets' [wxMemoryDC](http://docs.wxwidgets.org/3.0/classwx_memory_dc.html) class.
 pub struct MemoryDC { ptr: *mut c_void }
 impl TMemoryDC for MemoryDC {}
 impl TDC for MemoryDC {}
@@ -4692,12 +4964,14 @@ impl MemoryDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxMemoryDC](http://docs.wxwidgets.org/3.0/classwx_memory_dc.html) class.
 pub trait TMemoryDC : TDC {
     fn selectObject<T: TBitmap>(&self, bitmap: &T) {
         unsafe { wxMemoryDC_SelectObject(self.ptr(), bitmap.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxMenu](http://docs.wxwidgets.org/3.0/classwx_menu.html) class.
 pub struct Menu { ptr: *mut c_void }
 impl TMenu for Menu {}
 impl TEvtHandler for Menu {}
@@ -4713,6 +4987,7 @@ impl Menu {
     }
 }
 
+/// Methods of the wxWidgets' [wxMenu](http://docs.wxwidgets.org/3.0/classwx_menu.html) class.
 pub trait TMenu : TEvtHandler {
     fn append(&self, id: c_int, text: &str, help: &str, isCheckable: c_int) {
         let text = wxT(text);
@@ -4866,6 +5141,7 @@ pub trait TMenu : TEvtHandler {
     }
 }
 
+/// Wraps the wxWidgets' [wxMenuBar](http://docs.wxwidgets.org/3.0/classwx_menu_bar.html) class.
 pub struct MenuBar { ptr: *mut c_void }
 impl TMenuBar for MenuBar {}
 impl TEvtHandler for MenuBar {}
@@ -4880,6 +5156,7 @@ impl MenuBar {
     }
 }
 
+/// Methods of the wxWidgets' [wxMenuBar](http://docs.wxwidgets.org/3.0/classwx_menu_bar.html) class.
 pub trait TMenuBar : TEvtHandler {
     fn append<T: TMenu>(&self, menu: &T, title: &str) -> c_int {
         let title = wxT(title);
@@ -4965,6 +5242,7 @@ pub trait TMenuBar : TEvtHandler {
     }
 }
 
+/// Wraps the wxWidgets' [wxMenuEvent](http://docs.wxwidgets.org/3.0/classwx_menu_event.html) class.
 pub struct MenuEvent { ptr: *mut c_void }
 impl TMenuEvent for MenuEvent {}
 impl TEvent for MenuEvent {}
@@ -4976,12 +5254,14 @@ impl MenuEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxMenuEvent](http://docs.wxwidgets.org/3.0/classwx_menu_event.html) class.
 pub trait TMenuEvent : TEvent {
     fn getMenuId(&self) -> c_int {
         unsafe { wxMenuEvent_GetMenuId(self.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxMenuItem](http://docs.wxwidgets.org/3.0/classwx_menu_item.html) class.
 pub struct MenuItem { ptr: *mut c_void }
 impl TMenuItem for MenuItem {}
 impl TObject for MenuItem { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -5006,6 +5286,7 @@ impl MenuItem {
     }
 }
 
+/// Methods of the wxWidgets' [wxMenuItem](http://docs.wxwidgets.org/3.0/classwx_menu_item.html) class.
 pub trait TMenuItem : TObject {
     fn check(&self, check: c_int) {
         unsafe { wxMenuItem_Check(self.ptr(), check) }
@@ -5065,6 +5346,7 @@ pub trait TMenuItem : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxMessageDialog](http://docs.wxwidgets.org/3.0/classwx_message_dialog.html) class.
 pub struct MessageDialog { ptr: *mut c_void }
 impl TMessageDialog for MessageDialog {}
 impl TDialog for MessageDialog {}
@@ -5084,9 +5366,11 @@ impl MessageDialog {
     }
 }
 
+/// Methods of the wxWidgets' [wxMessageDialog](http://docs.wxwidgets.org/3.0/classwx_message_dialog.html) class.
 pub trait TMessageDialog : TDialog {
 }
 
+/// Wraps the wxWidgets' [wxMetafile](http://docs.wxwidgets.org/3.0/classwx_metafile.html) class.
 pub struct Metafile { ptr: *mut c_void }
 impl TMetafile for Metafile {}
 impl TObject for Metafile { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -5101,6 +5385,7 @@ impl Metafile {
     }
 }
 
+/// Methods of the wxWidgets' [wxMetafile](http://docs.wxwidgets.org/3.0/classwx_metafile.html) class.
 pub trait TMetafile : TObject {
     fn isOk(&self) -> c_int {
         unsafe { wxMetafile_IsOk(self.ptr()) }
@@ -5113,6 +5398,7 @@ pub trait TMetafile : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxMetafileDC](http://docs.wxwidgets.org/3.0/classwx_metafile_dc.html) class.
 pub struct MetafileDC { ptr: *mut c_void }
 impl TMetafileDC for MetafileDC {}
 impl TDC for MetafileDC {}
@@ -5128,12 +5414,14 @@ impl MetafileDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxMetafileDC](http://docs.wxwidgets.org/3.0/classwx_metafile_dc.html) class.
 pub trait TMetafileDC : TDC {
     fn close(&self) -> *mut c_void {
         unsafe { wxMetafileDC_Close(self.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxMimeTypesManager](http://docs.wxwidgets.org/3.0/classwx_mime_types_manager.html) class.
 pub struct MimeTypesManager { ptr: *mut c_void }
 impl TMimeTypesManager for MimeTypesManager { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -5146,6 +5434,7 @@ impl MimeTypesManager {
     }
 }
 
+/// Methods of the wxWidgets' [wxMimeTypesManager](http://docs.wxwidgets.org/3.0/classwx_mime_types_manager.html) class.
 pub trait TMimeTypesManager {
     fn ptr(&self) -> *mut c_void;
     
@@ -5170,6 +5459,7 @@ pub trait TMimeTypesManager {
     }
 }
 
+/// Wraps the wxWidgets' [wxMiniFrame](http://docs.wxwidgets.org/3.0/classwx_mini_frame.html) class.
 pub struct MiniFrame { ptr: *mut c_void }
 impl TMiniFrame for MiniFrame {}
 impl TFrame for MiniFrame {}
@@ -5188,9 +5478,11 @@ impl MiniFrame {
     }
 }
 
+/// Methods of the wxWidgets' [wxMiniFrame](http://docs.wxwidgets.org/3.0/classwx_mini_frame.html) class.
 pub trait TMiniFrame : TFrame {
 }
 
+/// Wraps the wxWidgets' [wxMirrorDC](http://docs.wxwidgets.org/3.0/classwx_mirror_dc.html) class.
 pub struct MirrorDC { ptr: *mut c_void }
 impl TMirrorDC for MirrorDC {}
 impl TDC for MirrorDC {}
@@ -5205,9 +5497,11 @@ impl MirrorDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxMirrorDC](http://docs.wxwidgets.org/3.0/classwx_mirror_dc.html) class.
 pub trait TMirrorDC : TDC {
 }
 
+/// Wraps the wxWidgets' [wxMouseCaptureChangedEvent](http://docs.wxwidgets.org/3.0/classwx_mouse_capture_changed_event.html) class.
 pub struct MouseCaptureChangedEvent { ptr: *mut c_void }
 impl TMouseCaptureChangedEvent for MouseCaptureChangedEvent {}
 impl TEvent for MouseCaptureChangedEvent {}
@@ -5219,9 +5513,11 @@ impl MouseCaptureChangedEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxMouseCaptureChangedEvent](http://docs.wxwidgets.org/3.0/classwx_mouse_capture_changed_event.html) class.
 pub trait TMouseCaptureChangedEvent : TEvent {
 }
 
+/// Wraps the wxWidgets' [wxMouseEvent](http://docs.wxwidgets.org/3.0/classwx_mouse_event.html) class.
 pub struct MouseEvent { ptr: *mut c_void }
 impl TMouseEvent for MouseEvent {}
 impl TEvent for MouseEvent {}
@@ -5233,6 +5529,7 @@ impl MouseEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxMouseEvent](http://docs.wxwidgets.org/3.0/classwx_mouse_event.html) class.
 pub trait TMouseEvent : TEvent {
     fn altDown(&self) -> c_int {
         unsafe { wxMouseEvent_AltDown(self.ptr()) }
@@ -5335,6 +5632,7 @@ pub trait TMouseEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxMoveEvent](http://docs.wxwidgets.org/3.0/classwx_move_event.html) class.
 pub struct MoveEvent { ptr: *mut c_void }
 impl TMoveEvent for MoveEvent {}
 impl TEvent for MoveEvent {}
@@ -5346,12 +5644,14 @@ impl MoveEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxMoveEvent](http://docs.wxwidgets.org/3.0/classwx_move_event.html) class.
 pub trait TMoveEvent : TEvent {
     fn getPosition(&self) -> Point {
         unsafe { Point { ptr: wxMoveEvent_GetPosition(self.ptr()) } }
     }
 }
 
+/// Wraps the wxWidgets' [wxNavigationKeyEvent](http://docs.wxwidgets.org/3.0/classwx_navigation_key_event.html) class.
 pub struct NavigationKeyEvent { ptr: *mut c_void }
 impl TNavigationKeyEvent for NavigationKeyEvent {}
 impl TEvent for NavigationKeyEvent {}
@@ -5363,6 +5663,7 @@ impl NavigationKeyEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxNavigationKeyEvent](http://docs.wxwidgets.org/3.0/classwx_navigation_key_event.html) class.
 pub trait TNavigationKeyEvent : TEvent {
     fn getCurrentFocus(&self) -> *mut c_void {
         unsafe { wxNavigationKeyEvent_GetCurrentFocus(self.ptr()) }
@@ -5387,6 +5688,7 @@ pub trait TNavigationKeyEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxNotebook](http://docs.wxwidgets.org/3.0/classwx_notebook.html) class.
 pub struct Notebook { ptr: *mut c_void }
 impl TNotebook for Notebook {}
 impl TControl for Notebook {}
@@ -5403,6 +5705,7 @@ impl Notebook {
     }
 }
 
+/// Methods of the wxWidgets' [wxNotebook](http://docs.wxwidgets.org/3.0/classwx_notebook.html) class.
 pub trait TNotebook : TControl {
     fn addPage<T: TWindow>(&self, pPage: &T, strText: &str, bSelect: c_int, imageId: c_int) -> c_int {
         let strText = wxT(strText);
@@ -5472,6 +5775,7 @@ pub trait TNotebook : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxNotebookEvent](http://docs.wxwidgets.org/3.0/classwx_notebook_event.html) class.
 pub struct NotebookEvent { ptr: *mut c_void }
 impl TNotebookEvent for NotebookEvent {}
 impl TNotifyEvent for NotebookEvent {}
@@ -5485,9 +5789,11 @@ impl NotebookEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxNotebookEvent](http://docs.wxwidgets.org/3.0/classwx_notebook_event.html) class.
 pub trait TNotebookEvent : TNotifyEvent {
 }
 
+/// Wraps the wxWidgets' [wxNotifyEvent](http://docs.wxwidgets.org/3.0/classwx_notify_event.html) class.
 pub struct NotifyEvent { ptr: *mut c_void }
 impl TNotifyEvent for NotifyEvent {}
 impl TCommandEvent for NotifyEvent {}
@@ -5500,6 +5806,7 @@ impl NotifyEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxNotifyEvent](http://docs.wxwidgets.org/3.0/classwx_notify_event.html) class.
 pub trait TNotifyEvent : TCommandEvent {
     fn allow(&self) {
         unsafe { wxNotifyEvent_Allow(self.ptr()) }
@@ -5512,6 +5819,7 @@ pub trait TNotifyEvent : TCommandEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxPageSetupDialog](http://docs.wxwidgets.org/3.0/classwx_page_setup_dialog.html) class.
 pub struct PageSetupDialog { ptr: *mut c_void }
 impl TPageSetupDialog for PageSetupDialog {}
 impl TDialog for PageSetupDialog {}
@@ -5529,12 +5837,14 @@ impl PageSetupDialog {
     }
 }
 
+/// Methods of the wxWidgets' [wxPageSetupDialog](http://docs.wxwidgets.org/3.0/classwx_page_setup_dialog.html) class.
 pub trait TPageSetupDialog : TDialog {
     fn getPageSetupData<T: TPageSetupDialogData>(&self, _ref: &T) {
         unsafe { wxPageSetupDialog_GetPageSetupData(self.ptr(), _ref.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxPageSetupDialogData](http://docs.wxwidgets.org/3.0/classwx_page_setup_dialog_data.html) class.
 pub struct PageSetupDialogData { ptr: *mut c_void }
 impl TPageSetupDialogData for PageSetupDialogData {}
 impl TObject for PageSetupDialogData { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -5551,6 +5861,7 @@ impl PageSetupDialogData {
     }
 }
 
+/// Methods of the wxWidgets' [wxPageSetupDialogData](http://docs.wxwidgets.org/3.0/classwx_page_setup_dialog_data.html) class.
 pub trait TPageSetupDialogData : TObject {
     fn assign<T: TPageSetupDialogData>(&self, data: &T) {
         unsafe { wxPageSetupDialogData_Assign(self.ptr(), data.ptr()) }
@@ -5653,6 +5964,7 @@ pub trait TPageSetupDialogData : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxPaintDC](http://docs.wxwidgets.org/3.0/classwx_paint_dc.html) class.
 pub struct PaintDC { ptr: *mut c_void }
 impl TPaintDC for PaintDC {}
 impl TWindowDC for PaintDC {}
@@ -5668,9 +5980,11 @@ impl PaintDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxPaintDC](http://docs.wxwidgets.org/3.0/classwx_paint_dc.html) class.
 pub trait TPaintDC : TWindowDC {
 }
 
+/// Wraps the wxWidgets' [wxPaintEvent](http://docs.wxwidgets.org/3.0/classwx_paint_event.html) class.
 pub struct PaintEvent { ptr: *mut c_void }
 impl TPaintEvent for PaintEvent {}
 impl TEvent for PaintEvent {}
@@ -5682,9 +5996,11 @@ impl PaintEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxPaintEvent](http://docs.wxwidgets.org/3.0/classwx_paint_event.html) class.
 pub trait TPaintEvent : TEvent {
 }
 
+/// Wraps the wxWidgets' [wxPalette](http://docs.wxwidgets.org/3.0/classwx_palette.html) class.
 pub struct Palette { ptr: *mut c_void }
 impl TPalette for Palette {}
 impl TGDIObject for Palette {}
@@ -5702,6 +6018,7 @@ impl Palette {
     }
 }
 
+/// Methods of the wxWidgets' [wxPalette](http://docs.wxwidgets.org/3.0/classwx_palette.html) class.
 pub trait TPalette : TGDIObject {
     fn assign<T: TPalette>(&self, palette: &T) {
         unsafe { wxPalette_Assign(self.ptr(), palette.ptr()) }
@@ -5720,6 +6037,7 @@ pub trait TPalette : TGDIObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxPaletteChangedEvent](http://docs.wxwidgets.org/3.0/classwx_palette_changed_event.html) class.
 pub struct PaletteChangedEvent { ptr: *mut c_void }
 impl TPaletteChangedEvent for PaletteChangedEvent {}
 impl TEvent for PaletteChangedEvent {}
@@ -5731,6 +6049,7 @@ impl PaletteChangedEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxPaletteChangedEvent](http://docs.wxwidgets.org/3.0/classwx_palette_changed_event.html) class.
 pub trait TPaletteChangedEvent : TEvent {
     fn getChangedWindow(&self) -> *mut c_void {
         unsafe { wxPaletteChangedEvent_GetChangedWindow(self.ptr()) }
@@ -5740,6 +6059,7 @@ pub trait TPaletteChangedEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxPanel](http://docs.wxwidgets.org/3.0/classwx_panel.html) class.
 pub struct Panel { ptr: *mut c_void }
 impl TPanel for Panel {}
 impl TWindow for Panel {}
@@ -5755,9 +6075,11 @@ impl Panel {
     }
 }
 
+/// Methods of the wxWidgets' [wxPanel](http://docs.wxwidgets.org/3.0/classwx_panel.html) class.
 pub trait TPanel : TWindow {
 }
 
+/// Wraps the wxWidgets' [wxPen](http://docs.wxwidgets.org/3.0/classwx_pen.html) class.
 pub struct Pen { ptr: *mut c_void }
 impl TPen for Pen {}
 impl TGDIObject for Pen {}
@@ -5781,6 +6103,7 @@ impl Pen {
     }
 }
 
+/// Methods of the wxWidgets' [wxPen](http://docs.wxwidgets.org/3.0/classwx_pen.html) class.
 pub trait TPen : TGDIObject {
     fn assign<T: TPen>(&self, pen: &T) {
         unsafe { wxPen_Assign(self.ptr(), pen.ptr()) }
@@ -5841,6 +6164,7 @@ pub trait TPen : TGDIObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxPenList](http://docs.wxwidgets.org/3.0/classwx_pen_list.html) class.
 pub struct PenList { ptr: *mut c_void }
 impl TPenList for PenList {}
 impl TList for PenList {}
@@ -5852,9 +6176,11 @@ impl PenList {
     
 }
 
+/// Methods of the wxWidgets' [wxPenList](http://docs.wxwidgets.org/3.0/classwx_pen_list.html) class.
 pub trait TPenList : TList {
 }
 
+/// Wraps the wxWidgets' [wxPoint](http://docs.wxwidgets.org/3.0/classwx_point.html) class.
 pub struct Point { ptr: *mut c_void }
 impl TPoint for Point { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -5867,6 +6193,7 @@ impl Point {
     }
 }
 
+/// Methods of the wxWidgets' [wxPoint](http://docs.wxwidgets.org/3.0/classwx_point.html) class.
 pub trait TPoint {
     fn ptr(&self) -> *mut c_void;
     
@@ -5884,6 +6211,7 @@ pub trait TPoint {
     }
 }
 
+/// Wraps the wxWidgets' [wxPopupTransientWindow](http://docs.wxwidgets.org/3.0/classwx_popup_transient_window.html) class.
 pub struct PopupTransientWindow { ptr: *mut c_void }
 impl TPopupTransientWindow for PopupTransientWindow {}
 impl TPopupWindow for PopupTransientWindow {}
@@ -5897,9 +6225,11 @@ impl PopupTransientWindow {
     
 }
 
+/// Methods of the wxWidgets' [wxPopupTransientWindow](http://docs.wxwidgets.org/3.0/classwx_popup_transient_window.html) class.
 pub trait TPopupTransientWindow : TPopupWindow {
 }
 
+/// Wraps the wxWidgets' [wxPopupWindow](http://docs.wxwidgets.org/3.0/classwx_popup_window.html) class.
 pub struct PopupWindow { ptr: *mut c_void }
 impl TPopupWindow for PopupWindow {}
 impl TWindow for PopupWindow {}
@@ -5912,9 +6242,11 @@ impl PopupWindow {
     
 }
 
+/// Methods of the wxWidgets' [wxPopupWindow](http://docs.wxwidgets.org/3.0/classwx_popup_window.html) class.
 pub trait TPopupWindow : TWindow {
 }
 
+/// Wraps the wxWidgets' [wxPostScriptDC](http://docs.wxwidgets.org/3.0/classwx_post_script_dc.html) class.
 pub struct PostScriptDC { ptr: *mut c_void }
 impl TPostScriptDC for PostScriptDC {}
 impl TDC for PostScriptDC {}
@@ -5929,6 +6261,7 @@ impl PostScriptDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxPostScriptDC](http://docs.wxwidgets.org/3.0/classwx_post_script_dc.html) class.
 pub trait TPostScriptDC : TDC {
     fn setResolution(&self, ppi: c_int) {
         unsafe { wxPostScriptDC_SetResolution(self.ptr(), ppi) }
@@ -5938,6 +6271,7 @@ pub trait TPostScriptDC : TDC {
     }
 }
 
+/// Wraps the wxWidgets' [wxPreviewCanvas](http://docs.wxwidgets.org/3.0/classwx_preview_canvas.html) class.
 pub struct PreviewCanvas { ptr: *mut c_void }
 impl TPreviewCanvas for PreviewCanvas {}
 impl TScrolledWindow for PreviewCanvas {}
@@ -5955,9 +6289,12 @@ impl PreviewCanvas {
     }
 }
 
+/// Methods of the wxWidgets' [wxPreviewCanvas](http://docs.wxwidgets.org/3.0/classwx_preview_canvas.html) class.
 pub trait TPreviewCanvas : TScrolledWindow {
 }
 
+/// Wraps the wxWidgets' [wxPreviewControlBar](http://docs.wxwidgets.org/3.0/classwx_preview_control_bar.html) class.
+/// Rather use the wxRust-specific [RustPreviewControlBar](struct.RustPreviewControlBar.html) class.
 pub struct PreviewControlBar { ptr: *mut c_void }
 impl TPreviewControlBar for PreviewControlBar {}
 impl TPanel for PreviewControlBar {}
@@ -5971,9 +6308,12 @@ impl PreviewControlBar {
     
 }
 
+/// Methods of the wxWidgets' [wxPreviewControlBar](http://docs.wxwidgets.org/3.0/classwx_preview_control_bar.html) class.
 pub trait TPreviewControlBar : TPanel {
 }
 
+/// Wraps the wxWidgets' [wxPreviewFrame](http://docs.wxwidgets.org/3.0/classwx_preview_frame.html) class.
+/// Rather use the wxRust-specific [RustPreviewFrame](struct.RustPreviewFrame.html) class.
 pub struct PreviewFrame { ptr: *mut c_void }
 impl TPreviewFrame for PreviewFrame {}
 impl TFrame for PreviewFrame {}
@@ -5993,12 +6333,14 @@ impl PreviewFrame {
     }
 }
 
+/// Methods of the wxWidgets' [wxPreviewFrame](http://docs.wxwidgets.org/3.0/classwx_preview_frame.html) class.
 pub trait TPreviewFrame : TFrame {
     fn initialize(&self) {
         unsafe { wxPreviewFrame_Initialize(self.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxPrintData](http://docs.wxwidgets.org/3.0/classwx_print_data.html) class.
 pub struct PrintData { ptr: *mut c_void }
 impl TPrintData for PrintData {}
 impl TObject for PrintData { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -6012,6 +6354,7 @@ impl PrintData {
     }
 }
 
+/// Methods of the wxWidgets' [wxPrintData](http://docs.wxwidgets.org/3.0/classwx_print_data.html) class.
 pub trait TPrintData : TObject {
     fn assign<T: TPrintData>(&self, data: &T) {
         unsafe { wxPrintData_Assign(self.ptr(), data.ptr()) }
@@ -6142,6 +6485,7 @@ pub trait TPrintData : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxPostScriptPrintNativeData](http://docs.wxwidgets.org/3.0/classwx_post_script_print_native_data.html) class.
 pub struct PostScriptPrintNativeData { ptr: *mut c_void }
 impl TPostScriptPrintNativeData for PostScriptPrintNativeData {}
 impl TObject for PostScriptPrintNativeData { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -6155,9 +6499,11 @@ impl PostScriptPrintNativeData {
     }
 }
 
+/// Methods of the wxWidgets' [wxPostScriptPrintNativeData](http://docs.wxwidgets.org/3.0/classwx_post_script_print_native_data.html) class.
 pub trait TPostScriptPrintNativeData : TObject {
 }
 
+/// Wraps the wxWidgets' [wxPrintDialog](http://docs.wxwidgets.org/3.0/classwx_print_dialog.html) class.
 pub struct PrintDialog { ptr: *mut c_void }
 impl TPrintDialog for PrintDialog {}
 impl TDialog for PrintDialog {}
@@ -6175,6 +6521,7 @@ impl PrintDialog {
     }
 }
 
+/// Methods of the wxWidgets' [wxPrintDialog](http://docs.wxwidgets.org/3.0/classwx_print_dialog.html) class.
 pub trait TPrintDialog : TDialog {
     fn getPrintDC(&self) -> DC {
         unsafe { DC { ptr: wxPrintDialog_GetPrintDC(self.ptr()) } }
@@ -6187,6 +6534,7 @@ pub trait TPrintDialog : TDialog {
     }
 }
 
+/// Wraps the wxWidgets' [wxPrintDialogData](http://docs.wxwidgets.org/3.0/classwx_print_dialog_data.html) class.
 pub struct PrintDialogData { ptr: *mut c_void }
 impl TPrintDialogData for PrintDialogData {}
 impl TObject for PrintDialogData { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -6203,6 +6551,7 @@ impl PrintDialogData {
     }
 }
 
+/// Methods of the wxWidgets' [wxPrintDialogData](http://docs.wxwidgets.org/3.0/classwx_print_dialog_data.html) class.
 pub trait TPrintDialogData : TObject {
     fn assign<T: TPrintDialogData>(&self, data: &T) {
         unsafe { wxPrintDialogData_Assign(self.ptr(), data.ptr()) }
@@ -6296,6 +6645,7 @@ pub trait TPrintDialogData : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxPrintPreview](http://docs.wxwidgets.org/3.0/classwx_print_preview.html) class.
 pub struct PrintPreview { ptr: *mut c_void }
 impl TPrintPreview for PrintPreview {}
 impl TObject for PrintPreview { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -6312,6 +6662,7 @@ impl PrintPreview {
     }
 }
 
+/// Methods of the wxWidgets' [wxPrintPreview](http://docs.wxwidgets.org/3.0/classwx_print_preview.html) class.
 pub trait TPrintPreview : TObject {
     fn determineScaling(&self) {
         unsafe { wxPrintPreview_DetermineScaling(self.ptr()) }
@@ -6378,6 +6729,7 @@ pub trait TPrintPreview : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxPrinter](http://docs.wxwidgets.org/3.0/classwx_printer.html) class.
 pub struct Printer { ptr: *mut c_void }
 impl TPrinter for Printer {}
 impl TObject for Printer { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -6391,6 +6743,7 @@ impl Printer {
     }
 }
 
+/// Methods of the wxWidgets' [wxPrinter](http://docs.wxwidgets.org/3.0/classwx_printer.html) class.
 pub trait TPrinter : TObject {
     fn newAbortWindow<T: TWindow, U: TPrintout>(&self, parent: &T, printout: &U) -> Window {
         unsafe { Window { ptr: wxPrinter_CreateAbortWindow(self.ptr(), parent.ptr(), printout.ptr()) } }
@@ -6419,6 +6772,7 @@ pub trait TPrinter : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxPrinterDC](http://docs.wxwidgets.org/3.0/classwx_printer_dc.html) class.
 pub struct PrinterDC { ptr: *mut c_void }
 impl TPrinterDC for PrinterDC {}
 impl TDC for PrinterDC {}
@@ -6433,12 +6787,15 @@ impl PrinterDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxPrinterDC](http://docs.wxwidgets.org/3.0/classwx_printer_dc.html) class.
 pub trait TPrinterDC : TDC {
     fn getPaperRect(&self) -> Rect {
         unsafe { Rect { ptr: wxPrinterDC_GetPaperRect(self.ptr()) } }
     }
 }
 
+/// Wraps the wxWidgets' [wxPrintout](http://docs.wxwidgets.org/3.0/classwx_printout.html) class.
+/// Rather use the wxRust-specific [CPrintout](struct.CPrintout.html) class.
 pub struct Printout { ptr: *mut c_void }
 impl TPrintout for Printout {}
 impl TObject for Printout { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -6449,6 +6806,7 @@ impl Printout {
     
 }
 
+/// Methods of the wxWidgets' [wxPrintout](http://docs.wxwidgets.org/3.0/classwx_printout.html) class.
 pub trait TPrintout : TObject {
     fn getDC(&self) -> DC {
         unsafe { DC { ptr: wxPrintout_GetDC(self.ptr()) } }
@@ -6488,6 +6846,7 @@ pub trait TPrintout : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxPrivateDropTarget](http://docs.wxwidgets.org/3.0/classwx_private_drop_target.html) class.
 pub struct PrivateDropTarget { ptr: *mut c_void }
 impl TPrivateDropTarget for PrivateDropTarget {}
 impl TDropTarget for PrivateDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -6498,9 +6857,11 @@ impl PrivateDropTarget {
     
 }
 
+/// Methods of the wxWidgets' [wxPrivateDropTarget](http://docs.wxwidgets.org/3.0/classwx_private_drop_target.html) class.
 pub trait TPrivateDropTarget : TDropTarget {
 }
 
+/// Wraps the wxWidgets' [wxProcess](http://docs.wxwidgets.org/3.0/classwx_process.html) class.
 pub struct Process { ptr: *mut c_void }
 impl TProcess for Process {}
 impl TEvtHandler for Process {}
@@ -6522,6 +6883,7 @@ impl Process {
     }
 }
 
+/// Methods of the wxWidgets' [wxProcess](http://docs.wxwidgets.org/3.0/classwx_process.html) class.
 pub trait TProcess : TEvtHandler {
     fn closeOutput(&self) {
         unsafe { wxProcess_CloseOutput(self.ptr()) }
@@ -6555,6 +6917,7 @@ pub trait TProcess : TEvtHandler {
     }
 }
 
+/// Wraps the wxWidgets' [wxProcessEvent](http://docs.wxwidgets.org/3.0/classwx_process_event.html) class.
 pub struct ProcessEvent { ptr: *mut c_void }
 impl TProcessEvent for ProcessEvent {}
 impl TEvent for ProcessEvent {}
@@ -6566,6 +6929,7 @@ impl ProcessEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxProcessEvent](http://docs.wxwidgets.org/3.0/classwx_process_event.html) class.
 pub trait TProcessEvent : TEvent {
     fn getExitCode(&self) -> c_int {
         unsafe { wxProcessEvent_GetExitCode(self.ptr()) }
@@ -6575,6 +6939,7 @@ pub trait TProcessEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxProgressDialog](http://docs.wxwidgets.org/3.0/classwx_progress_dialog.html) class.
 pub struct ProgressDialog { ptr: *mut c_void }
 impl TProgressDialog for ProgressDialog {}
 impl TFrame for ProgressDialog {}
@@ -6594,6 +6959,7 @@ impl ProgressDialog {
     }
 }
 
+/// Methods of the wxWidgets' [wxProgressDialog](http://docs.wxwidgets.org/3.0/classwx_progress_dialog.html) class.
 pub trait TProgressDialog : TFrame {
     fn update(&self, value: c_int) -> c_int {
         unsafe { wxProgressDialog_Update(self.ptr(), value) }
@@ -6607,6 +6973,7 @@ pub trait TProgressDialog : TFrame {
     }
 }
 
+/// Wraps the wxWidgets' [wxQuantize](http://docs.wxwidgets.org/3.0/classwx_quantize.html) class.
 pub struct Quantize { ptr: *mut c_void }
 impl TQuantize for Quantize {}
 impl TObject for Quantize { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -6617,9 +6984,11 @@ impl Quantize {
     
 }
 
+/// Methods of the wxWidgets' [wxQuantize](http://docs.wxwidgets.org/3.0/classwx_quantize.html) class.
 pub trait TQuantize : TObject {
 }
 
+/// Wraps the wxWidgets' [wxQueryNewPaletteEvent](http://docs.wxwidgets.org/3.0/classwx_query_new_palette_event.html) class.
 pub struct QueryNewPaletteEvent { ptr: *mut c_void }
 impl TQueryNewPaletteEvent for QueryNewPaletteEvent {}
 impl TEvent for QueryNewPaletteEvent {}
@@ -6631,6 +7000,7 @@ impl QueryNewPaletteEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxQueryNewPaletteEvent](http://docs.wxwidgets.org/3.0/classwx_query_new_palette_event.html) class.
 pub trait TQueryNewPaletteEvent : TEvent {
     fn getPaletteRealized(&self) -> c_int {
         unsafe { wxQueryNewPaletteEvent_GetPaletteRealized(self.ptr()) }
@@ -6640,6 +7010,7 @@ pub trait TQueryNewPaletteEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxRadioBox](http://docs.wxwidgets.org/3.0/classwx_radio_box.html) class.
 pub struct RadioBox { ptr: *mut c_void }
 impl TRadioBox for RadioBox {}
 impl TControl for RadioBox {}
@@ -6657,6 +7028,7 @@ impl RadioBox {
     }
 }
 
+/// Methods of the wxWidgets' [wxRadioBox](http://docs.wxwidgets.org/3.0/classwx_radio_box.html) class.
 pub trait TRadioBox : TControl {
     fn enableItem(&self, item: c_int, enable: c_int) {
         unsafe { wxRadioBox_EnableItem(self.ptr(), item, enable) }
@@ -6702,6 +7074,7 @@ pub trait TRadioBox : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxRadioButton](http://docs.wxwidgets.org/3.0/classwx_radio_button.html) class.
 pub struct RadioButton { ptr: *mut c_void }
 impl TRadioButton for RadioButton {}
 impl TControl for RadioButton {}
@@ -6719,6 +7092,7 @@ impl RadioButton {
     }
 }
 
+/// Methods of the wxWidgets' [wxRadioButton](http://docs.wxwidgets.org/3.0/classwx_radio_button.html) class.
 pub trait TRadioButton : TControl {
     fn getValue(&self) -> c_int {
         unsafe { wxRadioButton_GetValue(self.ptr()) }
@@ -6728,6 +7102,7 @@ pub trait TRadioButton : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxRealPoint](http://docs.wxwidgets.org/3.0/classwx_real_point.html) class.
 pub struct RealPoint { ptr: *mut c_void }
 impl TRealPoint for RealPoint { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -6737,11 +7112,13 @@ impl RealPoint {
     
 }
 
+/// Methods of the wxWidgets' [wxRealPoint](http://docs.wxwidgets.org/3.0/classwx_real_point.html) class.
 pub trait TRealPoint {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxRect](http://docs.wxwidgets.org/3.0/classwx_rect.html) class.
 pub struct Rect { ptr: *mut c_void }
 impl TRect for Rect { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -6751,11 +7128,13 @@ impl Rect {
     
 }
 
+/// Methods of the wxWidgets' [wxRect](http://docs.wxwidgets.org/3.0/classwx_rect.html) class.
 pub trait TRect {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxRegion](http://docs.wxwidgets.org/3.0/classwx_region.html) class.
 pub struct Region { ptr: *mut c_void }
 impl TRegion for Region {}
 impl TGDIObject for Region {}
@@ -6773,6 +7152,7 @@ impl Region {
     }
 }
 
+/// Methods of the wxWidgets' [wxRegion](http://docs.wxwidgets.org/3.0/classwx_region.html) class.
 pub trait TRegion : TGDIObject {
     fn assign<T: TRegion>(&self, region: &T) {
         unsafe { wxRegion_Assign(self.ptr(), region.ptr()) }
@@ -6818,6 +7198,7 @@ pub trait TRegion : TGDIObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxRegionIterator](http://docs.wxwidgets.org/3.0/classwx_region_iterator.html) class.
 pub struct RegionIterator { ptr: *mut c_void }
 impl TRegionIterator for RegionIterator {}
 impl TObject for RegionIterator { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -6834,6 +7215,7 @@ impl RegionIterator {
     }
 }
 
+/// Methods of the wxWidgets' [wxRegionIterator](http://docs.wxwidgets.org/3.0/classwx_region_iterator.html) class.
 pub trait TRegionIterator : TObject {
     fn getHeight(&self) -> c_int {
         unsafe { wxRegionIterator_GetHeight(self.ptr()) }
@@ -6861,6 +7243,7 @@ pub trait TRegionIterator : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxSVGFileDC](http://docs.wxwidgets.org/3.0/classwx_svgf_ile_dc.html) class.
 pub struct SVGFileDC { ptr: *mut c_void }
 impl TSVGFileDC for SVGFileDC {}
 impl TDC for SVGFileDC {}
@@ -6884,9 +7267,11 @@ impl SVGFileDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxSVGFileDC](http://docs.wxwidgets.org/3.0/classwx_svgf_ile_dc.html) class.
 pub trait TSVGFileDC : TDC {
 }
 
+/// Wraps the wxWidgets' [wxScreenDC](http://docs.wxwidgets.org/3.0/classwx_screen_dc.html) class.
 pub struct ScreenDC { ptr: *mut c_void }
 impl TScreenDC for ScreenDC {}
 impl TDC for ScreenDC {}
@@ -6901,6 +7286,7 @@ impl ScreenDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxScreenDC](http://docs.wxwidgets.org/3.0/classwx_screen_dc.html) class.
 pub trait TScreenDC : TDC {
     fn endDrawingOnTop(&self) -> c_int {
         unsafe { wxScreenDC_EndDrawingOnTop(self.ptr()) }
@@ -6913,6 +7299,7 @@ pub trait TScreenDC : TDC {
     }
 }
 
+/// Wraps the wxWidgets' [wxScrollBar](http://docs.wxwidgets.org/3.0/classwx_scroll_bar.html) class.
 pub struct ScrollBar { ptr: *mut c_void }
 impl TScrollBar for ScrollBar {}
 impl TControl for ScrollBar {}
@@ -6929,6 +7316,7 @@ impl ScrollBar {
     }
 }
 
+/// Methods of the wxWidgets' [wxScrollBar](http://docs.wxwidgets.org/3.0/classwx_scroll_bar.html) class.
 pub trait TScrollBar : TControl {
     fn getPageSize(&self) -> c_int {
         unsafe { wxScrollBar_GetPageSize(self.ptr()) }
@@ -6947,6 +7335,7 @@ pub trait TScrollBar : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxScrollEvent](http://docs.wxwidgets.org/3.0/classwx_scroll_event.html) class.
 pub struct ScrollEvent { ptr: *mut c_void }
 impl TScrollEvent for ScrollEvent {}
 impl TEvent for ScrollEvent {}
@@ -6958,6 +7347,7 @@ impl ScrollEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxScrollEvent](http://docs.wxwidgets.org/3.0/classwx_scroll_event.html) class.
 pub trait TScrollEvent : TEvent {
     fn getOrientation(&self) -> c_int {
         unsafe { wxScrollEvent_GetOrientation(self.ptr()) }
@@ -6967,6 +7357,7 @@ pub trait TScrollEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxScrollWinEvent](http://docs.wxwidgets.org/3.0/classwx_scroll_win_event.html) class.
 pub struct ScrollWinEvent { ptr: *mut c_void }
 impl TScrollWinEvent for ScrollWinEvent {}
 impl TEvent for ScrollWinEvent {}
@@ -6978,6 +7369,7 @@ impl ScrollWinEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxScrollWinEvent](http://docs.wxwidgets.org/3.0/classwx_scroll_win_event.html) class.
 pub trait TScrollWinEvent : TEvent {
     fn getOrientation(&self) -> c_int {
         unsafe { wxScrollWinEvent_GetOrientation(self.ptr()) }
@@ -6993,6 +7385,7 @@ pub trait TScrollWinEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxScrolledWindow](http://docs.wxwidgets.org/3.0/classwx_scrolled_window.html) class.
 pub struct ScrolledWindow { ptr: *mut c_void }
 impl TScrolledWindow for ScrolledWindow {}
 impl TPanel for ScrolledWindow {}
@@ -7009,6 +7402,7 @@ impl ScrolledWindow {
     }
 }
 
+/// Methods of the wxWidgets' [wxScrolledWindow](http://docs.wxwidgets.org/3.0/classwx_scrolled_window.html) class.
 pub trait TScrolledWindow : TPanel {
     fn adjustScrollbars(&self) {
         unsafe { wxScrolledWindow_AdjustScrollbars(self.ptr()) }
@@ -7069,6 +7463,7 @@ pub trait TScrolledWindow : TPanel {
     }
 }
 
+/// Wraps the wxWidgets' [wxSetCursorEvent](http://docs.wxwidgets.org/3.0/classwx_set_cursor_event.html) class.
 pub struct SetCursorEvent { ptr: *mut c_void }
 impl TSetCursorEvent for SetCursorEvent {}
 impl TEvent for SetCursorEvent {}
@@ -7080,6 +7475,7 @@ impl SetCursorEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxSetCursorEvent](http://docs.wxwidgets.org/3.0/classwx_set_cursor_event.html) class.
 pub trait TSetCursorEvent : TEvent {
     fn getCursor(&self) -> Cursor {
         unsafe { Cursor { ptr: wxSetCursorEvent_GetCursor(self.ptr()) } }
@@ -7098,6 +7494,7 @@ pub trait TSetCursorEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxShowEvent](http://docs.wxwidgets.org/3.0/classwx_show_event.html) class.
 pub struct ShowEvent { ptr: *mut c_void }
 impl TShowEvent for ShowEvent {}
 impl TEvent for ShowEvent {}
@@ -7109,6 +7506,7 @@ impl ShowEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxShowEvent](http://docs.wxwidgets.org/3.0/classwx_show_event.html) class.
 pub trait TShowEvent : TEvent {
     fn isShown(&self) -> c_int {
         unsafe { wxShowEvent_IsShown(self.ptr()) }
@@ -7118,6 +7516,7 @@ pub trait TShowEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxSimpleHelpProvider](http://docs.wxwidgets.org/3.0/classwx_simple_help_provider.html) class.
 pub struct SimpleHelpProvider { ptr: *mut c_void }
 impl TSimpleHelpProvider for SimpleHelpProvider {}
 impl THelpProvider for SimpleHelpProvider { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -7131,9 +7530,11 @@ impl SimpleHelpProvider {
     }
 }
 
+/// Methods of the wxWidgets' [wxSimpleHelpProvider](http://docs.wxwidgets.org/3.0/classwx_simple_help_provider.html) class.
 pub trait TSimpleHelpProvider : THelpProvider {
 }
 
+/// Wraps the wxWidgets' [wxSingleChoiceDialog](http://docs.wxwidgets.org/3.0/classwx_single_choice_dialog.html) class.
 pub struct SingleChoiceDialog { ptr: *mut c_void }
 impl TSingleChoiceDialog for SingleChoiceDialog {}
 impl TDialog for SingleChoiceDialog {}
@@ -7148,9 +7549,11 @@ impl SingleChoiceDialog {
     
 }
 
+/// Methods of the wxWidgets' [wxSingleChoiceDialog](http://docs.wxwidgets.org/3.0/classwx_single_choice_dialog.html) class.
 pub trait TSingleChoiceDialog : TDialog {
 }
 
+/// Wraps the wxWidgets' [wxSize](http://docs.wxwidgets.org/3.0/classwx_size.html) class.
 pub struct Size { ptr: *mut c_void }
 impl TSize for Size { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -7163,6 +7566,7 @@ impl Size {
     }
 }
 
+/// Methods of the wxWidgets' [wxSize](http://docs.wxwidgets.org/3.0/classwx_size.html) class.
 pub trait TSize {
     fn ptr(&self) -> *mut c_void;
     
@@ -7180,6 +7584,7 @@ pub trait TSize {
     }
 }
 
+/// Wraps the wxWidgets' [wxSizeEvent](http://docs.wxwidgets.org/3.0/classwx_size_event.html) class.
 pub struct SizeEvent { ptr: *mut c_void }
 impl TSizeEvent for SizeEvent {}
 impl TEvent for SizeEvent {}
@@ -7191,12 +7596,14 @@ impl SizeEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxSizeEvent](http://docs.wxwidgets.org/3.0/classwx_size_event.html) class.
 pub trait TSizeEvent : TEvent {
     fn getSize(&self) -> Size {
         unsafe { Size { ptr: wxSizeEvent_GetSize(self.ptr()) } }
     }
 }
 
+/// Wraps the wxWidgets' [wxSizer](http://docs.wxwidgets.org/3.0/classwx_sizer.html) class.
 pub struct Sizer { ptr: *mut c_void }
 impl TSizer for Sizer {}
 impl TObject for Sizer { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -7207,6 +7614,7 @@ impl Sizer {
     
 }
 
+/// Methods of the wxWidgets' [wxSizer](http://docs.wxwidgets.org/3.0/classwx_sizer.html) class.
 pub trait TSizer : TObject {
     fn add(&self, width: c_int, height: c_int, option: c_int, flag: c_int, border: c_int, userData: *mut c_void) {
         unsafe { wxSizer_Add(self.ptr(), width, height, option, flag, border, userData) }
@@ -7363,6 +7771,7 @@ pub trait TSizer : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxSizerItem](http://docs.wxwidgets.org/3.0/classwx_sizer_item.html) class.
 pub struct SizerItem { ptr: *mut c_void }
 impl TSizerItem for SizerItem {}
 impl TObject for SizerItem { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -7382,6 +7791,7 @@ impl SizerItem {
     }
 }
 
+/// Methods of the wxWidgets' [wxSizerItem](http://docs.wxwidgets.org/3.0/classwx_sizer_item.html) class.
 pub trait TSizerItem : TObject {
     fn calcMin(&self) -> Size {
         unsafe { Size { ptr: wxSizerItem_CalcMin(self.ptr()) } }
@@ -7475,6 +7885,7 @@ pub trait TSizerItem : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxSlider](http://docs.wxwidgets.org/3.0/classwx_slider.html) class.
 pub struct Slider { ptr: *mut c_void }
 impl TSlider for Slider {}
 impl TControl for Slider {}
@@ -7491,6 +7902,7 @@ impl Slider {
     }
 }
 
+/// Methods of the wxWidgets' [wxSlider](http://docs.wxwidgets.org/3.0/classwx_slider.html) class.
 pub trait TSlider : TControl {
     fn clearSel(&self) {
         unsafe { wxSlider_ClearSel(self.ptr()) }
@@ -7551,6 +7963,7 @@ pub trait TSlider : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxSpinButton](http://docs.wxwidgets.org/3.0/classwx_spin_button.html) class.
 pub struct SpinButton { ptr: *mut c_void }
 impl TSpinButton for SpinButton {}
 impl TControl for SpinButton {}
@@ -7567,6 +7980,7 @@ impl SpinButton {
     }
 }
 
+/// Methods of the wxWidgets' [wxSpinButton](http://docs.wxwidgets.org/3.0/classwx_spin_button.html) class.
 pub trait TSpinButton : TControl {
     fn getMax(&self) -> c_int {
         unsafe { wxSpinButton_GetMax(self.ptr()) }
@@ -7585,6 +7999,7 @@ pub trait TSpinButton : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxSpinCtrl](http://docs.wxwidgets.org/3.0/classwx_spin_ctrl.html) class.
 pub struct SpinCtrl { ptr: *mut c_void }
 impl TSpinCtrl for SpinCtrl {}
 impl TControl for SpinCtrl {}
@@ -7602,6 +8017,7 @@ impl SpinCtrl {
     }
 }
 
+/// Methods of the wxWidgets' [wxSpinCtrl](http://docs.wxwidgets.org/3.0/classwx_spin_ctrl.html) class.
 pub trait TSpinCtrl : TControl {
     fn getMax(&self) -> c_int {
         unsafe { wxSpinCtrl_GetMax(self.ptr()) }
@@ -7620,6 +8036,7 @@ pub trait TSpinCtrl : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxSpinEvent](http://docs.wxwidgets.org/3.0/classwx_spin_event.html) class.
 pub struct SpinEvent { ptr: *mut c_void }
 impl TSpinEvent for SpinEvent {}
 impl TNotifyEvent for SpinEvent {}
@@ -7633,6 +8050,7 @@ impl SpinEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxSpinEvent](http://docs.wxwidgets.org/3.0/classwx_spin_event.html) class.
 pub trait TSpinEvent : TNotifyEvent {
     fn getPosition(&self) -> c_int {
         unsafe { wxSpinEvent_GetPosition(self.ptr()) }
@@ -7642,6 +8060,7 @@ pub trait TSpinEvent : TNotifyEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxSplitterEvent](http://docs.wxwidgets.org/3.0/classwx_splitter_event.html) class.
 pub struct SplitterEvent { ptr: *mut c_void }
 impl TSplitterEvent for SplitterEvent {}
 impl TNotifyEvent for SplitterEvent {}
@@ -7655,9 +8074,11 @@ impl SplitterEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxSplitterEvent](http://docs.wxwidgets.org/3.0/classwx_splitter_event.html) class.
 pub trait TSplitterEvent : TNotifyEvent {
 }
 
+/// Wraps the wxWidgets' [wxSplitterWindow](http://docs.wxwidgets.org/3.0/classwx_splitter_window.html) class.
 pub struct SplitterWindow { ptr: *mut c_void }
 impl TSplitterWindow for SplitterWindow {}
 impl TWindow for SplitterWindow {}
@@ -7673,6 +8094,7 @@ impl SplitterWindow {
     }
 }
 
+/// Methods of the wxWidgets' [wxSplitterWindow](http://docs.wxwidgets.org/3.0/classwx_splitter_window.html) class.
 pub trait TSplitterWindow : TWindow {
     fn getBorderSize(&self) -> c_int {
         unsafe { wxSplitterWindow_GetBorderSize(self.ptr()) }
@@ -7736,6 +8158,7 @@ pub trait TSplitterWindow : TWindow {
     }
 }
 
+/// Wraps the wxWidgets' [wxStaticBitmap](http://docs.wxwidgets.org/3.0/classwx_static_bitmap.html) class.
 pub struct StaticBitmap { ptr: *mut c_void }
 impl TStaticBitmap for StaticBitmap {}
 impl TControl for StaticBitmap {}
@@ -7752,6 +8175,7 @@ impl StaticBitmap {
     }
 }
 
+/// Methods of the wxWidgets' [wxStaticBitmap](http://docs.wxwidgets.org/3.0/classwx_static_bitmap.html) class.
 pub trait TStaticBitmap : TControl {
     fn getBitmap<T: TBitmap>(&self, _ref: &T) {
         unsafe { wxStaticBitmap_GetBitmap(self.ptr(), _ref.ptr()) }
@@ -7767,6 +8191,7 @@ pub trait TStaticBitmap : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxStaticBox](http://docs.wxwidgets.org/3.0/classwx_static_box.html) class.
 pub struct StaticBox { ptr: *mut c_void }
 impl TStaticBox for StaticBox {}
 impl TControl for StaticBox {}
@@ -7784,9 +8209,11 @@ impl StaticBox {
     }
 }
 
+/// Methods of the wxWidgets' [wxStaticBox](http://docs.wxwidgets.org/3.0/classwx_static_box.html) class.
 pub trait TStaticBox : TControl {
 }
 
+/// Wraps the wxWidgets' [wxStaticBoxSizer](http://docs.wxwidgets.org/3.0/classwx_static_box_sizer.html) class.
 pub struct StaticBoxSizer { ptr: *mut c_void }
 impl TStaticBoxSizer for StaticBoxSizer {}
 impl TBoxSizer for StaticBoxSizer {}
@@ -7802,12 +8229,14 @@ impl StaticBoxSizer {
     }
 }
 
+/// Methods of the wxWidgets' [wxStaticBoxSizer](http://docs.wxwidgets.org/3.0/classwx_static_box_sizer.html) class.
 pub trait TStaticBoxSizer : TBoxSizer {
     fn getStaticBox(&self) -> StaticBox {
         unsafe { StaticBox { ptr: wxStaticBoxSizer_GetStaticBox(self.ptr()) } }
     }
 }
 
+/// Wraps the wxWidgets' [wxStaticLine](http://docs.wxwidgets.org/3.0/classwx_static_line.html) class.
 pub struct StaticLine { ptr: *mut c_void }
 impl TStaticLine for StaticLine {}
 impl TControl for StaticLine {}
@@ -7824,6 +8253,7 @@ impl StaticLine {
     }
 }
 
+/// Methods of the wxWidgets' [wxStaticLine](http://docs.wxwidgets.org/3.0/classwx_static_line.html) class.
 pub trait TStaticLine : TControl {
     fn getDefaultSize(&self) -> c_int {
         unsafe { wxStaticLine_GetDefaultSize(self.ptr()) }
@@ -7833,6 +8263,7 @@ pub trait TStaticLine : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxStaticText](http://docs.wxwidgets.org/3.0/classwx_static_text.html) class.
 pub struct StaticText { ptr: *mut c_void }
 impl TStaticText for StaticText {}
 impl TControl for StaticText {}
@@ -7850,9 +8281,11 @@ impl StaticText {
     }
 }
 
+/// Methods of the wxWidgets' [wxStaticText](http://docs.wxwidgets.org/3.0/classwx_static_text.html) class.
 pub trait TStaticText : TControl {
 }
 
+/// Wraps the wxWidgets' [wxStatusBar](http://docs.wxwidgets.org/3.0/classwx_status_bar.html) class.
 pub struct StatusBar { ptr: *mut c_void }
 impl TStatusBar for StatusBar {}
 impl TWindow for StatusBar {}
@@ -7868,6 +8301,7 @@ impl StatusBar {
     }
 }
 
+/// Methods of the wxWidgets' [wxStatusBar](http://docs.wxwidgets.org/3.0/classwx_status_bar.html) class.
 pub trait TStatusBar : TWindow {
     fn getBorderX(&self) -> c_int {
         unsafe { wxStatusBar_GetBorderX(self.ptr()) }
@@ -7896,6 +8330,7 @@ pub trait TStatusBar : TWindow {
     }
 }
 
+/// Wraps the wxWidgets' [wxSysColourChangedEvent](http://docs.wxwidgets.org/3.0/classwx_sys_colour_changed_event.html) class.
 pub struct SysColourChangedEvent { ptr: *mut c_void }
 impl TSysColourChangedEvent for SysColourChangedEvent {}
 impl TEvent for SysColourChangedEvent {}
@@ -7907,9 +8342,11 @@ impl SysColourChangedEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxSysColourChangedEvent](http://docs.wxwidgets.org/3.0/classwx_sys_colour_changed_event.html) class.
 pub trait TSysColourChangedEvent : TEvent {
 }
 
+/// Wraps the wxWidgets' [wxSystemSettings](http://docs.wxwidgets.org/3.0/classwx_system_settings.html) class.
 pub struct SystemSettings { ptr: *mut c_void }
 impl TSystemSettings for SystemSettings {}
 impl TObject for SystemSettings { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -7932,9 +8369,11 @@ impl SystemSettings {
     }
 }
 
+/// Methods of the wxWidgets' [wxSystemSettings](http://docs.wxwidgets.org/3.0/classwx_system_settings.html) class.
 pub trait TSystemSettings : TObject {
 }
 
+/// Wraps the wxWidgets' [wxTextAttr](http://docs.wxwidgets.org/3.0/classwx_text_attr.html) class.
 pub struct TextAttr { ptr: *mut c_void }
 impl TTextAttr for TextAttr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -7950,6 +8389,7 @@ impl TextAttr {
     }
 }
 
+/// Methods of the wxWidgets' [wxTextAttr](http://docs.wxwidgets.org/3.0/classwx_text_attr.html) class.
 pub trait TTextAttr {
     fn ptr(&self) -> *mut c_void;
     
@@ -7988,6 +8428,7 @@ pub trait TTextAttr {
     }
 }
 
+/// Wraps the wxWidgets' [wxTextCtrl](http://docs.wxwidgets.org/3.0/classwx_text_ctrl.html) class.
 pub struct TextCtrl { ptr: *mut c_void }
 impl TTextCtrl for TextCtrl {}
 impl TControl for TextCtrl {}
@@ -8005,6 +8446,7 @@ impl TextCtrl {
     }
 }
 
+/// Methods of the wxWidgets' [wxTextCtrl](http://docs.wxwidgets.org/3.0/classwx_text_ctrl.html) class.
 pub trait TTextCtrl : TControl {
     fn appendText(&self, text: &str) {
         let text = wxT(text);
@@ -8150,6 +8592,7 @@ pub trait TTextCtrl : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxTextDataObject](http://docs.wxwidgets.org/3.0/classwx_text_data_object.html) class.
 pub struct TextDataObject { ptr: *mut c_void }
 impl TTextDataObject for TextDataObject {}
 impl TDataObjectSimple for TextDataObject {}
@@ -8161,9 +8604,12 @@ impl TextDataObject {
     
 }
 
+/// Methods of the wxWidgets' [wxTextDataObject](http://docs.wxwidgets.org/3.0/classwx_text_data_object.html) class.
 pub trait TTextDataObject : TDataObjectSimple {
 }
 
+/// Wraps the wxWidgets' [wxTextDropTarget](http://docs.wxwidgets.org/3.0/classwx_text_drop_target.html) class.
+/// Rather use the wxRust-specific [RustTextDropTarget](struct.RustTextDropTarget.html) class.
 pub struct TextDropTarget { ptr: *mut c_void }
 impl TTextDropTarget for TextDropTarget {}
 impl TDropTarget for TextDropTarget { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -8174,9 +8620,11 @@ impl TextDropTarget {
     
 }
 
+/// Methods of the wxWidgets' [wxTextDropTarget](http://docs.wxwidgets.org/3.0/classwx_text_drop_target.html) class.
 pub trait TTextDropTarget : TDropTarget {
 }
 
+/// Wraps the wxWidgets' [wxTextEntryDialog](http://docs.wxwidgets.org/3.0/classwx_text_entry_dialog.html) class.
 pub struct TextEntryDialog { ptr: *mut c_void }
 impl TTextEntryDialog for TextEntryDialog {}
 impl TDialog for TextEntryDialog {}
@@ -8191,9 +8639,12 @@ impl TextEntryDialog {
     
 }
 
+/// Methods of the wxWidgets' [wxTextEntryDialog](http://docs.wxwidgets.org/3.0/classwx_text_entry_dialog.html) class.
 pub trait TTextEntryDialog : TDialog {
 }
 
+/// Wraps the wxWidgets' [wxTextValidator](http://docs.wxwidgets.org/3.0/classwx_text_validator.html) class.
+/// Rather use the wxRust-specific [RustTextValidator](struct.RustTextValidator.html) class.
 pub struct TextValidator { ptr: *mut c_void }
 impl TTextValidator for TextValidator {}
 impl TValidator for TextValidator {}
@@ -8209,6 +8660,7 @@ impl TextValidator {
     }
 }
 
+/// Methods of the wxWidgets' [wxTextValidator](http://docs.wxwidgets.org/3.0/classwx_text_validator.html) class.
 pub trait TTextValidator : TValidator {
     fn getExcludes(&self, _ref: *mut c_void) -> c_int {
         unsafe { wxTextValidator_GetExcludes(self.ptr(), _ref) }
@@ -8236,6 +8688,7 @@ pub trait TTextValidator : TValidator {
     }
 }
 
+/// Wraps the wxWidgets' [wxTimer](http://docs.wxwidgets.org/3.0/classwx_timer.html) class.
 pub struct Timer { ptr: *mut c_void }
 impl TTimer for Timer {}
 impl TObject for Timer { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -8249,6 +8702,7 @@ impl Timer {
     }
 }
 
+/// Methods of the wxWidgets' [wxTimer](http://docs.wxwidgets.org/3.0/classwx_timer.html) class.
 pub trait TTimer : TObject {
     fn getInterval(&self) -> c_int {
         unsafe { wxTimer_GetInterval(self.ptr()) }
@@ -8267,6 +8721,7 @@ pub trait TTimer : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxTimerEvent](http://docs.wxwidgets.org/3.0/classwx_timer_event.html) class.
 pub struct TimerEvent { ptr: *mut c_void }
 impl TTimerEvent for TimerEvent {}
 impl TEvent for TimerEvent {}
@@ -8278,12 +8733,14 @@ impl TimerEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxTimerEvent](http://docs.wxwidgets.org/3.0/classwx_timer_event.html) class.
 pub trait TTimerEvent : TEvent {
     fn getInterval(&self) -> c_int {
         unsafe { wxTimerEvent_GetInterval(self.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxTimerEx](http://docs.wxwidgets.org/3.0/classwx_timer_ex.html) class.
 pub struct TimerEx { ptr: *mut c_void }
 impl TTimerEx for TimerEx {}
 impl TTimer for TimerEx {}
@@ -8298,6 +8755,7 @@ impl TimerEx {
     }
 }
 
+/// Methods of the wxWidgets' [wxTimerEx](http://docs.wxwidgets.org/3.0/classwx_timer_ex.html) class.
 pub trait TTimerEx : TTimer {
     fn connect<T: TClosure>(&self, closure: &T) {
         unsafe { wxTimerEx_Connect(self.ptr(), closure.ptr()) }
@@ -8307,6 +8765,7 @@ pub trait TTimerEx : TTimer {
     }
 }
 
+/// Wraps the wxWidgets' [wxTimerRunner](http://docs.wxwidgets.org/3.0/classwx_timer_runner.html) class.
 pub struct TimerRunner { ptr: *mut c_void }
 impl TTimerRunner for TimerRunner { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -8316,11 +8775,13 @@ impl TimerRunner {
     
 }
 
+/// Methods of the wxWidgets' [wxTimerRunner](http://docs.wxwidgets.org/3.0/classwx_timer_runner.html) class.
 pub trait TTimerRunner {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxTipWindow](http://docs.wxwidgets.org/3.0/classwx_tip_window.html) class.
 pub struct TipWindow { ptr: *mut c_void }
 impl TTipWindow for TipWindow {}
 impl TPopupTransientWindow for TipWindow {}
@@ -8339,6 +8800,7 @@ impl TipWindow {
     }
 }
 
+/// Methods of the wxWidgets' [wxTipWindow](http://docs.wxwidgets.org/3.0/classwx_tip_window.html) class.
 pub trait TTipWindow : TPopupTransientWindow {
     fn setBoundingRect(&self, x: c_int, y: c_int, w: c_int, h: c_int) {
         unsafe { wxTipWindow_SetBoundingRect(self.ptr(), x, y, w, h) }
@@ -8348,6 +8810,7 @@ pub trait TTipWindow : TPopupTransientWindow {
     }
 }
 
+/// Wraps the wxWidgets' [wxToggleButton](http://docs.wxwidgets.org/3.0/classwx_toggle_button.html) class.
 pub struct ToggleButton { ptr: *mut c_void }
 impl TToggleButton for ToggleButton {}
 impl TControl for ToggleButton {}
@@ -8365,6 +8828,7 @@ impl ToggleButton {
     }
 }
 
+/// Methods of the wxWidgets' [wxToggleButton](http://docs.wxwidgets.org/3.0/classwx_toggle_button.html) class.
 pub trait TToggleButton : TControl {
     fn getValue(&self) -> c_int {
         unsafe { wxToggleButton_GetValue(self.ptr()) }
@@ -8374,6 +8838,7 @@ pub trait TToggleButton : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxToolBar](http://docs.wxwidgets.org/3.0/classwx_tool_bar.html) class.
 pub struct ToolBar { ptr: *mut c_void }
 impl TToolBar for ToolBar {}
 impl TToolBarBase for ToolBar {}
@@ -8391,6 +8856,7 @@ impl ToolBar {
     }
 }
 
+/// Methods of the wxWidgets' [wxToolBar](http://docs.wxwidgets.org/3.0/classwx_tool_bar.html) class.
 pub trait TToolBar : TToolBarBase {
     fn addControl<T: TControl>(&self, ctrl: &T) -> c_int {
         unsafe { wxToolBar_AddControl(self.ptr(), ctrl.ptr()) }
@@ -8495,6 +8961,7 @@ pub trait TToolBar : TToolBarBase {
     }
 }
 
+/// Wraps the wxWidgets' [wxToolBarBase](http://docs.wxwidgets.org/3.0/classwx_tool_bar_base.html) class.
 pub struct ToolBarBase { ptr: *mut c_void }
 impl TToolBarBase for ToolBarBase {}
 impl TControl for ToolBarBase {}
@@ -8508,9 +8975,11 @@ impl ToolBarBase {
     
 }
 
+/// Methods of the wxWidgets' [wxToolBarBase](http://docs.wxwidgets.org/3.0/classwx_tool_bar_base.html) class.
 pub trait TToolBarBase : TControl {
 }
 
+/// Wraps the wxWidgets' [wxToolTip](http://docs.wxwidgets.org/3.0/classwx_tool_tip.html) class.
 pub struct ToolTip { ptr: *mut c_void }
 impl TToolTip for ToolTip {}
 impl TObject for ToolTip { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -8521,9 +8990,11 @@ impl ToolTip {
     
 }
 
+/// Methods of the wxWidgets' [wxToolTip](http://docs.wxwidgets.org/3.0/classwx_tool_tip.html) class.
 pub trait TToolTip : TObject {
 }
 
+/// Wraps the wxWidgets' [wxTopLevelWindow](http://docs.wxwidgets.org/3.0/classwx_top_level_window.html) class.
 pub struct TopLevelWindow { ptr: *mut c_void }
 impl TTopLevelWindow for TopLevelWindow {}
 impl TWindow for TopLevelWindow {}
@@ -8536,6 +9007,7 @@ impl TopLevelWindow {
     
 }
 
+/// Methods of the wxWidgets' [wxTopLevelWindow](http://docs.wxwidgets.org/3.0/classwx_top_level_window.html) class.
 pub trait TTopLevelWindow : TWindow {
     fn enableCloseButton(&self, enable: c_int) -> c_int {
         unsafe { wxTopLevelWindow_EnableCloseButton(self.ptr(), enable) }
@@ -8594,6 +9066,7 @@ pub trait TTopLevelWindow : TWindow {
     }
 }
 
+/// Wraps the wxWidgets' [wxTreeCtrl](http://docs.wxwidgets.org/3.0/classwx_tree_ctrl.html) class.
 pub struct TreeCtrl { ptr: *mut c_void }
 impl TTreeCtrl for TreeCtrl {}
 impl TControl for TreeCtrl {}
@@ -8613,6 +9086,7 @@ impl TreeCtrl {
     }
 }
 
+/// Methods of the wxWidgets' [wxTreeCtrl](http://docs.wxwidgets.org/3.0/classwx_tree_ctrl.html) class.
 pub trait TTreeCtrl : TControl {
     fn addRoot<T: TTreeItemData, U: TTreeItemId>(&self, text: &str, image: c_int, selectedImage: c_int, data: &T, _item: &U) {
         let text = wxT(text);
@@ -8825,6 +9299,7 @@ pub trait TTreeCtrl : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxTreeEvent](http://docs.wxwidgets.org/3.0/classwx_tree_event.html) class.
 pub struct TreeEvent { ptr: *mut c_void }
 impl TTreeEvent for TreeEvent {}
 impl TNotifyEvent for TreeEvent {}
@@ -8838,6 +9313,7 @@ impl TreeEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxTreeEvent](http://docs.wxwidgets.org/3.0/classwx_tree_event.html) class.
 pub trait TTreeEvent : TNotifyEvent {
     fn getCode(&self) -> c_int {
         unsafe { wxTreeEvent_GetCode(self.ptr()) }
@@ -8862,6 +9338,8 @@ pub trait TTreeEvent : TNotifyEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxTreeItemData](http://docs.wxwidgets.org/3.0/classwx_tree_item_data.html) class.
+/// Rather use the wxRust-specific [CTreeItemData](struct.CTreeItemData.html) class.
 pub struct TreeItemData { ptr: *mut c_void }
 impl TTreeItemData for TreeItemData {}
 impl TClientData for TreeItemData { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -8872,9 +9350,11 @@ impl TreeItemData {
     
 }
 
+/// Methods of the wxWidgets' [wxTreeItemData](http://docs.wxwidgets.org/3.0/classwx_tree_item_data.html) class.
 pub trait TTreeItemData : TClientData {
 }
 
+/// Wraps the wxWidgets' [wxTreeItemId](http://docs.wxwidgets.org/3.0/classwx_tree_item_id.html) class.
 pub struct TreeItemId { ptr: *mut c_void }
 impl TTreeItemId for TreeItemId { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -8890,6 +9370,7 @@ impl TreeItemId {
     }
 }
 
+/// Methods of the wxWidgets' [wxTreeItemId](http://docs.wxwidgets.org/3.0/classwx_tree_item_id.html) class.
 pub trait TTreeItemId {
     fn ptr(&self) -> *mut c_void;
     
@@ -8907,6 +9388,7 @@ pub trait TTreeItemId {
     }
 }
 
+/// Wraps the wxWidgets' [wxUpdateUIEvent](http://docs.wxwidgets.org/3.0/classwx_update_uie_vent.html) class.
 pub struct UpdateUIEvent { ptr: *mut c_void }
 impl TUpdateUIEvent for UpdateUIEvent {}
 impl TEvent for UpdateUIEvent {}
@@ -8918,6 +9400,7 @@ impl UpdateUIEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxUpdateUIEvent](http://docs.wxwidgets.org/3.0/classwx_update_uie_vent.html) class.
 pub trait TUpdateUIEvent : TEvent {
     fn check(&self, check: c_int) {
         unsafe { wxUpdateUIEvent_Check(self.ptr(), check) }
@@ -8949,6 +9432,7 @@ pub trait TUpdateUIEvent : TEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxValidator](http://docs.wxwidgets.org/3.0/classwx_validator.html) class.
 pub struct Validator { ptr: *mut c_void }
 impl TValidator for Validator {}
 impl TEvtHandler for Validator {}
@@ -8966,6 +9450,7 @@ impl Validator {
     }
 }
 
+/// Methods of the wxWidgets' [wxValidator](http://docs.wxwidgets.org/3.0/classwx_validator.html) class.
 pub trait TValidator : TEvtHandler {
     fn getWindow(&self) -> Window {
         unsafe { Window { ptr: wxValidator_GetWindow(self.ptr()) } }
@@ -8984,6 +9469,7 @@ pub trait TValidator : TEvtHandler {
     }
 }
 
+/// Wraps the wxWidgets' [wxView](http://docs.wxwidgets.org/3.0/classwx_view.html) class.
 pub struct View { ptr: *mut c_void }
 impl TView for View {}
 impl TEvtHandler for View {}
@@ -8995,9 +9481,11 @@ impl View {
     
 }
 
+/// Methods of the wxWidgets' [wxView](http://docs.wxwidgets.org/3.0/classwx_view.html) class.
 pub trait TView : TEvtHandler {
 }
 
+/// Wraps the wxWidgets' [wxSound](http://docs.wxwidgets.org/3.0/classwx_sound.html) class.
 pub struct Sound { ptr: *mut c_void }
 impl TSound for Sound {}
 impl TEvtHandler for Sound {}
@@ -9013,6 +9501,7 @@ impl Sound {
     }
 }
 
+/// Methods of the wxWidgets' [wxSound](http://docs.wxwidgets.org/3.0/classwx_sound.html) class.
 pub trait TSound : TEvtHandler {
     fn isOk(&self) -> c_int {
         unsafe { wxSound_IsOk(self.ptr()) }
@@ -9025,6 +9514,7 @@ pub trait TSound : TEvtHandler {
     }
 }
 
+/// Wraps the wxWidgets' [wxWindow](http://docs.wxwidgets.org/3.0/classwx_window.html) class.
 pub struct Window { ptr: *mut c_void }
 impl TWindow for Window {}
 impl TEvtHandler for Window {}
@@ -9039,6 +9529,7 @@ impl Window {
     }
 }
 
+/// Methods of the wxWidgets' [wxWindow](http://docs.wxwidgets.org/3.0/classwx_window.html) class.
 pub trait TWindow : TEvtHandler {
     fn addChild<T: TWindow>(&self, child: &T) {
         unsafe { wxWindow_AddChild(self.ptr(), child.ptr()) }
@@ -9446,6 +9937,7 @@ pub trait TWindow : TEvtHandler {
     }
 }
 
+/// Wraps the wxWidgets' [wxWindowCreateEvent](http://docs.wxwidgets.org/3.0/classwx_window_create_event.html) class.
 pub struct WindowCreateEvent { ptr: *mut c_void }
 impl TWindowCreateEvent for WindowCreateEvent {}
 impl TCommandEvent for WindowCreateEvent {}
@@ -9458,12 +9950,14 @@ impl WindowCreateEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxWindowCreateEvent](http://docs.wxwidgets.org/3.0/classwx_window_create_event.html) class.
 pub trait TWindowCreateEvent : TCommandEvent {
     fn getWindow(&self) -> Window {
         unsafe { Window { ptr: wxWindowCreateEvent_GetWindow(self.ptr()) } }
     }
 }
 
+/// Wraps the wxWidgets' [wxWindowDC](http://docs.wxwidgets.org/3.0/classwx_window_dc.html) class.
 pub struct WindowDC { ptr: *mut c_void }
 impl TWindowDC for WindowDC {}
 impl TDC for WindowDC {}
@@ -9478,9 +9972,11 @@ impl WindowDC {
     }
 }
 
+/// Methods of the wxWidgets' [wxWindowDC](http://docs.wxwidgets.org/3.0/classwx_window_dc.html) class.
 pub trait TWindowDC : TDC {
 }
 
+/// Wraps the wxWidgets' [wxWindowDestroyEvent](http://docs.wxwidgets.org/3.0/classwx_window_destroy_event.html) class.
 pub struct WindowDestroyEvent { ptr: *mut c_void }
 impl TWindowDestroyEvent for WindowDestroyEvent {}
 impl TCommandEvent for WindowDestroyEvent {}
@@ -9493,12 +9989,14 @@ impl WindowDestroyEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxWindowDestroyEvent](http://docs.wxwidgets.org/3.0/classwx_window_destroy_event.html) class.
 pub trait TWindowDestroyEvent : TCommandEvent {
     fn getWindow(&self) -> Window {
         unsafe { Window { ptr: wxWindowDestroyEvent_GetWindow(self.ptr()) } }
     }
 }
 
+/// Wraps the wxWidgets' [wxWindowDisabler](http://docs.wxwidgets.org/3.0/classwx_window_disabler.html) class.
 pub struct WindowDisabler { ptr: *mut c_void }
 impl TWindowDisabler for WindowDisabler { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -9508,11 +10006,13 @@ impl WindowDisabler {
     
 }
 
+/// Methods of the wxWidgets' [wxWindowDisabler](http://docs.wxwidgets.org/3.0/classwx_window_disabler.html) class.
 pub trait TWindowDisabler {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxXmlResourceHandler](http://docs.wxwidgets.org/3.0/classwx_xml_resource_handler.html) class.
 pub struct XmlResourceHandler { ptr: *mut c_void }
 impl TXmlResourceHandler for XmlResourceHandler {}
 impl TObject for XmlResourceHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -9523,9 +10023,11 @@ impl XmlResourceHandler {
     
 }
 
+/// Methods of the wxWidgets' [wxXmlResourceHandler](http://docs.wxwidgets.org/3.0/classwx_xml_resource_handler.html) class.
 pub trait TXmlResourceHandler : TObject {
 }
 
+/// Wraps the wxWidgets' [wxGenericDragImage](http://docs.wxwidgets.org/3.0/classwx_generic_drag_image.html) class.
 pub struct GenericDragImage { ptr: *mut c_void }
 impl TGenericDragImage for GenericDragImage {}
 impl TDragImage for GenericDragImage {}
@@ -9540,6 +10042,7 @@ impl GenericDragImage {
     }
 }
 
+/// Methods of the wxWidgets' [wxGenericDragImage](http://docs.wxwidgets.org/3.0/classwx_generic_drag_image.html) class.
 pub trait TGenericDragImage : TDragImage {
     fn doDrawImage<T: TDC>(&self, dc: &T, x: c_int, y: c_int) -> c_int {
         unsafe { wxGenericDragImage_DoDrawImage(self.ptr(), dc.ptr(), x, y) }
@@ -9552,6 +10055,7 @@ pub trait TGenericDragImage : TDragImage {
     }
 }
 
+/// Wraps the wxWidgets' [wxGraphicsObject](http://docs.wxwidgets.org/3.0/classwx_graphics_object.html) class.
 pub struct GraphicsObject { ptr: *mut c_void }
 impl TGraphicsObject for GraphicsObject {}
 impl TObject for GraphicsObject { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -9565,12 +10069,14 @@ impl GraphicsObject {
     }
 }
 
+/// Methods of the wxWidgets' [wxGraphicsObject](http://docs.wxwidgets.org/3.0/classwx_graphics_object.html) class.
 pub trait TGraphicsObject : TObject {
     fn isNull(&self) -> c_int {
         unsafe { wxGraphicsObject_IsNull(self.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxGraphicsBrush](http://docs.wxwidgets.org/3.0/classwx_graphics_brush.html) class.
 pub struct GraphicsBrush { ptr: *mut c_void }
 impl TGraphicsBrush for GraphicsBrush {}
 impl TGraphicsObject for GraphicsBrush {}
@@ -9585,9 +10091,11 @@ impl GraphicsBrush {
     }
 }
 
+/// Methods of the wxWidgets' [wxGraphicsBrush](http://docs.wxwidgets.org/3.0/classwx_graphics_brush.html) class.
 pub trait TGraphicsBrush : TGraphicsObject {
 }
 
+/// Wraps the wxWidgets' [wxGraphicsContext](http://docs.wxwidgets.org/3.0/classwx_graphics_context.html) class.
 pub struct GraphicsContext { ptr: *mut c_void }
 impl TGraphicsContext for GraphicsContext {}
 impl TGraphicsObject for GraphicsContext {}
@@ -9611,6 +10119,7 @@ impl GraphicsContext {
     }
 }
 
+/// Methods of the wxWidgets' [wxGraphicsContext](http://docs.wxwidgets.org/3.0/classwx_graphics_context.html) class.
 pub trait TGraphicsContext : TGraphicsObject {
     fn clip<T: TRegion>(&self, region: &T) {
         unsafe { wxGraphicsContext_Clip(self.ptr(), region.ptr()) }
@@ -9704,6 +10213,7 @@ pub trait TGraphicsContext : TGraphicsObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxGraphicsFont](http://docs.wxwidgets.org/3.0/classwx_graphics_font.html) class.
 pub struct GraphicsFont { ptr: *mut c_void }
 impl TGraphicsFont for GraphicsFont {}
 impl TGraphicsObject for GraphicsFont {}
@@ -9718,9 +10228,11 @@ impl GraphicsFont {
     }
 }
 
+/// Methods of the wxWidgets' [wxGraphicsFont](http://docs.wxwidgets.org/3.0/classwx_graphics_font.html) class.
 pub trait TGraphicsFont : TGraphicsObject {
 }
 
+/// Wraps the wxWidgets' [wxGraphicsMatrix](http://docs.wxwidgets.org/3.0/classwx_graphics_matrix.html) class.
 pub struct GraphicsMatrix { ptr: *mut c_void }
 impl TGraphicsMatrix for GraphicsMatrix {}
 impl TGraphicsObject for GraphicsMatrix {}
@@ -9735,6 +10247,7 @@ impl GraphicsMatrix {
     }
 }
 
+/// Methods of the wxWidgets' [wxGraphicsMatrix](http://docs.wxwidgets.org/3.0/classwx_graphics_matrix.html) class.
 pub trait TGraphicsMatrix : TGraphicsObject {
     fn concat<T: TGraphicsMatrix>(&self, t: &T) {
         unsafe { wxGraphicsMatrix_Concat(self.ptr(), t.ptr()) }
@@ -9774,6 +10287,7 @@ pub trait TGraphicsMatrix : TGraphicsObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxGraphicsPath](http://docs.wxwidgets.org/3.0/classwx_graphics_path.html) class.
 pub struct GraphicsPath { ptr: *mut c_void }
 impl TGraphicsPath for GraphicsPath {}
 impl TGraphicsObject for GraphicsPath {}
@@ -9791,6 +10305,7 @@ impl GraphicsPath {
     }
 }
 
+/// Methods of the wxWidgets' [wxGraphicsPath](http://docs.wxwidgets.org/3.0/classwx_graphics_path.html) class.
 pub trait TGraphicsPath : TGraphicsObject {
     fn moveToPoint(&self, x: c_double, y: c_double) {
         unsafe { wxGraphicsPath_MoveToPoint(self.ptr(), x, y) }
@@ -9845,6 +10360,7 @@ pub trait TGraphicsPath : TGraphicsObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxGraphicsPen](http://docs.wxwidgets.org/3.0/classwx_graphics_pen.html) class.
 pub struct GraphicsPen { ptr: *mut c_void }
 impl TGraphicsPen for GraphicsPen {}
 impl TGraphicsObject for GraphicsPen {}
@@ -9859,9 +10375,11 @@ impl GraphicsPen {
     }
 }
 
+/// Methods of the wxWidgets' [wxGraphicsPen](http://docs.wxwidgets.org/3.0/classwx_graphics_pen.html) class.
 pub trait TGraphicsPen : TGraphicsObject {
 }
 
+/// Wraps the wxWidgets' [wxGraphicsRenderer](http://docs.wxwidgets.org/3.0/classwx_graphics_renderer.html) class.
 pub struct GraphicsRenderer { ptr: *mut c_void }
 impl TGraphicsRenderer for GraphicsRenderer {}
 impl TGraphicsObject for GraphicsRenderer {}
@@ -9885,12 +10403,14 @@ impl GraphicsRenderer {
     }
 }
 
+/// Methods of the wxWidgets' [wxGraphicsRenderer](http://docs.wxwidgets.org/3.0/classwx_graphics_renderer.html) class.
 pub trait TGraphicsRenderer : TGraphicsObject {
     fn getDefaultRenderer(&self) -> GraphicsRenderer {
         unsafe { GraphicsRenderer { ptr: wxGraphicsRenderer_GetDefaultRenderer(self.ptr()) } }
     }
 }
 
+/// The wxRust-specific derived class of [wxPrintout](http://docs.wxwidgets.org/3.0/classwx_printout.html).
 pub struct CPrintout { ptr: *mut c_void }
 impl TCPrintout for CPrintout {}
 impl TPrintout for CPrintout {}
@@ -9906,6 +10426,7 @@ impl CPrintout {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxPrintout](http://docs.wxwidgets.org/3.0/classwx_printout.html).
 pub trait TCPrintout : TPrintout {
     fn setPageLimits(&self, startPage: c_int, endPage: c_int, fromPage: c_int, toPage: c_int) {
         unsafe { wxcPrintout_SetPageLimits(self.ptr(), startPage, endPage, fromPage, toPage) }
@@ -9915,6 +10436,7 @@ pub trait TCPrintout : TPrintout {
     }
 }
 
+/// The wxRust-specific derived class of [wxEvent](http://docs.wxwidgets.org/3.0/classwx_event.html).
 pub struct CPrintEvent { ptr: *mut c_void }
 impl TCPrintEvent for CPrintEvent {}
 impl TEvent for CPrintEvent {}
@@ -9926,6 +10448,7 @@ impl CPrintEvent {
     
 }
 
+/// Methods of the wxRust-specific derived class of [wxEvent](http://docs.wxwidgets.org/3.0/classwx_event.html).
 pub trait TCPrintEvent : TEvent {
     fn getPrintout(&self) -> CPrintout {
         unsafe { CPrintout { ptr: wxcPrintEvent_GetPrintout(self.ptr()) } }
@@ -9947,6 +10470,7 @@ pub trait TCPrintEvent : TEvent {
     }
 }
 
+/// The wxRust-specific derived class of [wxEvtHandler](http://docs.wxwidgets.org/3.0/classwx_evt_handler.html).
 pub struct CPrintoutHandler { ptr: *mut c_void }
 impl TCPrintoutHandler for CPrintoutHandler {}
 impl TEvtHandler for CPrintoutHandler {}
@@ -9958,9 +10482,11 @@ impl CPrintoutHandler {
     
 }
 
+/// Methods of the wxRust-specific derived class of [wxEvtHandler](http://docs.wxwidgets.org/3.0/classwx_evt_handler.html).
 pub trait TCPrintoutHandler : TEvtHandler {
 }
 
+/// The wxRust-specific derived class of [wxTreeItemData](http://docs.wxwidgets.org/3.0/classwx_tree_item_data.html).
 pub struct CTreeItemData { ptr: *mut c_void }
 impl TCTreeItemData for CTreeItemData {}
 impl TTreeItemData for CTreeItemData {}
@@ -9975,6 +10501,7 @@ impl CTreeItemData {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxTreeItemData](http://docs.wxwidgets.org/3.0/classwx_tree_item_data.html).
 pub trait TCTreeItemData : TTreeItemData {
     fn getClientClosure(&self) -> Closure {
         unsafe { Closure { ptr: wxcTreeItemData_GetClientClosure(self.ptr()) } }
@@ -9984,6 +10511,7 @@ pub trait TCTreeItemData : TTreeItemData {
     }
 }
 
+/// Wraps the wxWidgets' [wxInputSink](http://docs.wxwidgets.org/3.0/classwx_input_sink.html) class.
 pub struct InputSink { ptr: *mut c_void }
 impl TInputSink for InputSink {}
 impl TThread for InputSink { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -9997,6 +10525,7 @@ impl InputSink {
     }
 }
 
+/// Methods of the wxWidgets' [wxInputSink](http://docs.wxwidgets.org/3.0/classwx_input_sink.html) class.
 pub trait TInputSink : TThread {
     fn getId(&self) -> c_int {
         unsafe { wxInputSink_GetId(self.ptr()) }
@@ -10006,6 +10535,7 @@ pub trait TInputSink : TThread {
     }
 }
 
+/// Wraps the wxWidgets' [wxInputSinkEvent](http://docs.wxwidgets.org/3.0/classwx_input_sink_event.html) class.
 pub struct InputSinkEvent { ptr: *mut c_void }
 impl TInputSinkEvent for InputSinkEvent {}
 impl TEvent for InputSinkEvent {}
@@ -10017,6 +10547,7 @@ impl InputSinkEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxInputSinkEvent](http://docs.wxwidgets.org/3.0/classwx_input_sink_event.html) class.
 pub trait TInputSinkEvent : TEvent {
     fn lastError(&self) -> c_int {
         unsafe { wxInputSinkEvent_LastError(self.ptr()) }

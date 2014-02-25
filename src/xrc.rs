@@ -6,6 +6,7 @@ use advanced::*;
 use html::*;
 use stc::*;
 
+/// Wraps the wxWidgets' [wxXmlResource](http://docs.wxwidgets.org/3.0/classwx_xml_resource.html) class.
 pub struct XmlResource { ptr: *mut c_void }
 impl TXmlResource for XmlResource {}
 impl TObject for XmlResource { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -26,6 +27,7 @@ impl XmlResource {
     }
 }
 
+/// Methods of the wxWidgets' [wxXmlResource](http://docs.wxwidgets.org/3.0/classwx_xml_resource.html) class.
 pub trait TXmlResource : TObject {
     fn addHandler<T: TEvtHandler>(&self, handler: &T) {
         unsafe { wxXmlResource_AddHandler(self.ptr(), handler.ptr()) }

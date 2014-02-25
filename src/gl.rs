@@ -4,6 +4,7 @@ use base::*;
 use core::*;
 use advanced::*;
 
+/// Wraps the wxWidgets' [wxGLCanvas](http://docs.wxwidgets.org/3.0/classwx_glc_anvas.html) class.
 pub struct GLCanvas { ptr: *mut c_void }
 impl TGLCanvas for GLCanvas {}
 impl TScrolledWindow for GLCanvas {}
@@ -29,6 +30,7 @@ impl GLCanvas {
     }
 }
 
+/// Methods of the wxWidgets' [wxGLCanvas](http://docs.wxwidgets.org/3.0/classwx_glc_anvas.html) class.
 pub trait TGLCanvas : TScrolledWindow {
     fn setColour<T: TColour>(&self, colour: &T) -> c_int {
         unsafe { wxGLCanvas_SetColour(self.ptr(), colour.ptr()) }
@@ -41,6 +43,7 @@ pub trait TGLCanvas : TScrolledWindow {
     }
 }
 
+/// Wraps the wxWidgets' [wxGLContext](http://docs.wxwidgets.org/3.0/classwx_glc_ontext.html) class.
 pub struct GLContext { ptr: *mut c_void }
 impl TGLContext for GLContext {}
 impl TObject for GLContext { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -57,6 +60,7 @@ impl GLContext {
     }
 }
 
+/// Methods of the wxWidgets' [wxGLContext](http://docs.wxwidgets.org/3.0/classwx_glc_ontext.html) class.
 pub trait TGLContext : TObject {
     fn setCurrent<T: TGLCanvas>(&self, win: &T) -> c_int {
         unsafe { wxGLContext_SetCurrent(self.ptr(), win.ptr()) }

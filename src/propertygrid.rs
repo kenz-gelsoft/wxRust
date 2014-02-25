@@ -4,6 +4,7 @@ use base::*;
 use core::*;
 use advanced::*;
 
+/// Wraps the wxWidgets' [wxPropertyGrid](http://docs.wxwidgets.org/3.0/classwx_property_grid.html) class.
 pub struct PropertyGrid { ptr: *mut c_void }
 impl TPropertyGrid for PropertyGrid {}
 impl TControl for PropertyGrid {}
@@ -20,6 +21,7 @@ impl PropertyGrid {
     }
 }
 
+/// Methods of the wxWidgets' [wxPropertyGrid](http://docs.wxwidgets.org/3.0/classwx_property_grid.html) class.
 pub trait TPropertyGrid : TControl {
     fn append<T: TPGProperty>(&self, prop: &T) -> PGProperty {
         unsafe { PGProperty { ptr: wxPropertyGrid_Append(self.ptr(), prop.ptr()) } }
@@ -30,6 +32,7 @@ pub trait TPropertyGrid : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxPropertyGridEvent](http://docs.wxwidgets.org/3.0/classwx_property_grid_event.html) class.
 pub struct PropertyGridEvent { ptr: *mut c_void }
 impl TPropertyGridEvent for PropertyGridEvent {}
 impl TNotifyEvent for PropertyGridEvent {}
@@ -43,6 +46,7 @@ impl PropertyGridEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxPropertyGridEvent](http://docs.wxwidgets.org/3.0/classwx_property_grid_event.html) class.
 pub trait TPropertyGridEvent : TNotifyEvent {
     fn hasProperty(&self) -> c_int {
         unsafe { wxPropertyGridEvent_HasProperty(self.ptr()) }
@@ -52,6 +56,7 @@ pub trait TPropertyGridEvent : TNotifyEvent {
     }
 }
 
+/// Wraps the wxWidgets' [wxPGProperty](http://docs.wxwidgets.org/3.0/classwx_pgp_roperty.html) class.
 pub struct PGProperty { ptr: *mut c_void }
 impl TPGProperty for PGProperty {}
 impl TObject for PGProperty { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -62,6 +67,7 @@ impl PGProperty {
     
 }
 
+/// Methods of the wxWidgets' [wxPGProperty](http://docs.wxwidgets.org/3.0/classwx_pgp_roperty.html) class.
 pub trait TPGProperty : TObject {
     fn getLabel(&self) -> ~str {
         unsafe { WxString { ptr: wxPGProperty_GetLabel(self.ptr()) }.to_str() }
@@ -81,6 +87,7 @@ pub trait TPGProperty : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxStringProperty](http://docs.wxwidgets.org/3.0/classwx_string_property.html) class.
 pub struct StringProperty { ptr: *mut c_void }
 impl TStringProperty for StringProperty {}
 impl TPGProperty for StringProperty {}
@@ -98,9 +105,11 @@ impl StringProperty {
     }
 }
 
+/// Methods of the wxWidgets' [wxStringProperty](http://docs.wxwidgets.org/3.0/classwx_string_property.html) class.
 pub trait TStringProperty : TPGProperty {
 }
 
+/// Wraps the wxWidgets' [wxIntProperty](http://docs.wxwidgets.org/3.0/classwx_int_property.html) class.
 pub struct IntProperty { ptr: *mut c_void }
 impl TIntProperty for IntProperty {}
 impl TPGProperty for IntProperty {}
@@ -117,9 +126,11 @@ impl IntProperty {
     }
 }
 
+/// Methods of the wxWidgets' [wxIntProperty](http://docs.wxwidgets.org/3.0/classwx_int_property.html) class.
 pub trait TIntProperty : TPGProperty {
 }
 
+/// Wraps the wxWidgets' [wxBoolProperty](http://docs.wxwidgets.org/3.0/classwx_bool_property.html) class.
 pub struct BoolProperty { ptr: *mut c_void }
 impl TBoolProperty for BoolProperty {}
 impl TPGProperty for BoolProperty {}
@@ -136,9 +147,11 @@ impl BoolProperty {
     }
 }
 
+/// Methods of the wxWidgets' [wxBoolProperty](http://docs.wxwidgets.org/3.0/classwx_bool_property.html) class.
 pub trait TBoolProperty : TPGProperty {
 }
 
+/// Wraps the wxWidgets' [wxFloatProperty](http://docs.wxwidgets.org/3.0/classwx_float_property.html) class.
 pub struct FloatProperty { ptr: *mut c_void }
 impl TFloatProperty for FloatProperty {}
 impl TPGProperty for FloatProperty {}
@@ -155,9 +168,11 @@ impl FloatProperty {
     }
 }
 
+/// Methods of the wxWidgets' [wxFloatProperty](http://docs.wxwidgets.org/3.0/classwx_float_property.html) class.
 pub trait TFloatProperty : TPGProperty {
 }
 
+/// Wraps the wxWidgets' [wxDateProperty](http://docs.wxwidgets.org/3.0/classwx_date_property.html) class.
 pub struct DateProperty { ptr: *mut c_void }
 impl TDateProperty for DateProperty {}
 impl TPGProperty for DateProperty {}
@@ -174,9 +189,11 @@ impl DateProperty {
     }
 }
 
+/// Methods of the wxWidgets' [wxDateProperty](http://docs.wxwidgets.org/3.0/classwx_date_property.html) class.
 pub trait TDateProperty : TPGProperty {
 }
 
+/// Wraps the wxWidgets' [wxFileProperty](http://docs.wxwidgets.org/3.0/classwx_file_property.html) class.
 pub struct FileProperty { ptr: *mut c_void }
 impl TFileProperty for FileProperty {}
 impl TPGProperty for FileProperty {}
@@ -194,9 +211,11 @@ impl FileProperty {
     }
 }
 
+/// Methods of the wxWidgets' [wxFileProperty](http://docs.wxwidgets.org/3.0/classwx_file_property.html) class.
 pub trait TFileProperty : TPGProperty {
 }
 
+/// Wraps the wxWidgets' [wxPropertyCategory](http://docs.wxwidgets.org/3.0/classwx_property_category.html) class.
 pub struct PropertyCategory { ptr: *mut c_void }
 impl TPropertyCategory for PropertyCategory {}
 impl TPGProperty for PropertyCategory {}
@@ -212,6 +231,7 @@ impl PropertyCategory {
     }
 }
 
+/// Methods of the wxWidgets' [wxPropertyCategory](http://docs.wxwidgets.org/3.0/classwx_property_category.html) class.
 pub trait TPropertyCategory : TPGProperty {
 }
 

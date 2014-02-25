@@ -4,6 +4,7 @@ use base::*;
 use core::*;
 use advanced::*;
 
+/// Wraps the wxWidgets' [wxStyledTextCtrl](http://docs.wxwidgets.org/3.0/classwx_styled_text_ctrl.html) class.
 pub struct StyledTextCtrl { ptr: *mut c_void }
 impl TStyledTextCtrl for StyledTextCtrl {}
 impl TControl for StyledTextCtrl {}
@@ -21,6 +22,7 @@ impl StyledTextCtrl {
     }
 }
 
+/// Methods of the wxWidgets' [wxStyledTextCtrl](http://docs.wxwidgets.org/3.0/classwx_styled_text_ctrl.html) class.
 pub trait TStyledTextCtrl : TControl {
     fn addText(&self, text: &str) {
         let text = wxT(text);
@@ -1049,6 +1051,7 @@ pub trait TStyledTextCtrl : TControl {
     }
 }
 
+/// Wraps the wxWidgets' [wxSTCDoc](http://docs.wxwidgets.org/3.0/classwx_stcd_oc.html) class.
 pub struct STCDoc { ptr: *mut c_void }
 impl TSTCDoc for STCDoc { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1058,11 +1061,13 @@ impl STCDoc {
     
 }
 
+/// Methods of the wxWidgets' [wxSTCDoc](http://docs.wxwidgets.org/3.0/classwx_stcd_oc.html) class.
 pub trait TSTCDoc {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxStyledTextEvent](http://docs.wxwidgets.org/3.0/classwx_styled_text_event.html) class.
 pub struct StyledTextEvent { ptr: *mut c_void }
 impl TStyledTextEvent for StyledTextEvent {}
 impl TCommandEvent for StyledTextEvent {}
@@ -1075,6 +1080,7 @@ impl StyledTextEvent {
     
 }
 
+/// Methods of the wxWidgets' [wxStyledTextEvent](http://docs.wxwidgets.org/3.0/classwx_styled_text_event.html) class.
 pub trait TStyledTextEvent : TCommandEvent {
     fn getPosition(&self) -> c_int {
         unsafe { wxStyledTextEvent_GetPosition(self.ptr()) }

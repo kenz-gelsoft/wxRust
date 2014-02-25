@@ -3,6 +3,7 @@ use _unsafe::*;
 use base::*;
 use core::*;
 
+/// Wraps the wxWidgets' [wxHtmlCell](http://docs.wxwidgets.org/3.0/classwx_html_cell.html) class.
 pub struct HtmlCell { ptr: *mut c_void }
 impl THtmlCell for HtmlCell {}
 impl TObject for HtmlCell { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -13,9 +14,11 @@ impl HtmlCell {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlCell](http://docs.wxwidgets.org/3.0/classwx_html_cell.html) class.
 pub trait THtmlCell : TObject {
 }
 
+/// Wraps the wxWidgets' [wxHtmlColourCell](http://docs.wxwidgets.org/3.0/classwx_html_colour_cell.html) class.
 pub struct HtmlColourCell { ptr: *mut c_void }
 impl THtmlColourCell for HtmlColourCell {}
 impl THtmlCell for HtmlColourCell {}
@@ -27,9 +30,11 @@ impl HtmlColourCell {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlColourCell](http://docs.wxwidgets.org/3.0/classwx_html_colour_cell.html) class.
 pub trait THtmlColourCell : THtmlCell {
 }
 
+/// Wraps the wxWidgets' [wxHtmlContainerCell](http://docs.wxwidgets.org/3.0/classwx_html_container_cell.html) class.
 pub struct HtmlContainerCell { ptr: *mut c_void }
 impl THtmlContainerCell for HtmlContainerCell {}
 impl THtmlCell for HtmlContainerCell {}
@@ -41,9 +46,11 @@ impl HtmlContainerCell {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlContainerCell](http://docs.wxwidgets.org/3.0/classwx_html_container_cell.html) class.
 pub trait THtmlContainerCell : THtmlCell {
 }
 
+/// Wraps the wxWidgets' [wxHtmlDCRenderer](http://docs.wxwidgets.org/3.0/classwx_html_dcr_enderer.html) class.
 pub struct HtmlDCRenderer { ptr: *mut c_void }
 impl THtmlDCRenderer for HtmlDCRenderer {}
 impl TObject for HtmlDCRenderer { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -54,9 +61,11 @@ impl HtmlDCRenderer {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlDCRenderer](http://docs.wxwidgets.org/3.0/classwx_html_dcr_enderer.html) class.
 pub trait THtmlDCRenderer : TObject {
 }
 
+/// Wraps the wxWidgets' [wxHtmlEasyPrinting](http://docs.wxwidgets.org/3.0/classwx_html_easy_printing.html) class.
 pub struct HtmlEasyPrinting { ptr: *mut c_void }
 impl THtmlEasyPrinting for HtmlEasyPrinting {}
 impl TObject for HtmlEasyPrinting { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -67,9 +76,11 @@ impl HtmlEasyPrinting {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlEasyPrinting](http://docs.wxwidgets.org/3.0/classwx_html_easy_printing.html) class.
 pub trait THtmlEasyPrinting : TObject {
 }
 
+/// Wraps the wxWidgets' [wxHtmlFilter](http://docs.wxwidgets.org/3.0/classwx_html_filter.html) class.
 pub struct HtmlFilter { ptr: *mut c_void }
 impl THtmlFilter for HtmlFilter {}
 impl TObject for HtmlFilter { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -80,9 +91,11 @@ impl HtmlFilter {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlFilter](http://docs.wxwidgets.org/3.0/classwx_html_filter.html) class.
 pub trait THtmlFilter : TObject {
 }
 
+/// Wraps the wxWidgets' [wxHtmlHelpController](http://docs.wxwidgets.org/3.0/classwx_html_help_controller.html) class.
 pub struct HtmlHelpController { ptr: *mut c_void }
 impl THtmlHelpController for HtmlHelpController {}
 impl THelpControllerBase for HtmlHelpController {}
@@ -97,6 +110,7 @@ impl HtmlHelpController {
     }
 }
 
+/// Methods of the wxWidgets' [wxHtmlHelpController](http://docs.wxwidgets.org/3.0/classwx_html_help_controller.html) class.
 pub trait THtmlHelpController : THelpControllerBase {
     fn addBook(&self, book: *mut c_void, show_wait_msg: c_int) -> c_int {
         unsafe { wxHtmlHelpController_AddBook(self.ptr(), book, show_wait_msg) }
@@ -172,6 +186,7 @@ pub trait THtmlHelpController : THelpControllerBase {
     }
 }
 
+/// Wraps the wxWidgets' [wxHtmlHelpData](http://docs.wxwidgets.org/3.0/classwx_html_help_data.html) class.
 pub struct HtmlHelpData { ptr: *mut c_void }
 impl THtmlHelpData for HtmlHelpData {}
 impl TObject for HtmlHelpData { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -182,9 +197,11 @@ impl HtmlHelpData {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlHelpData](http://docs.wxwidgets.org/3.0/classwx_html_help_data.html) class.
 pub trait THtmlHelpData : TObject {
 }
 
+/// Wraps the wxWidgets' [wxHtmlHelpFrame](http://docs.wxwidgets.org/3.0/classwx_html_help_frame.html) class.
 pub struct HtmlHelpFrame { ptr: *mut c_void }
 impl THtmlHelpFrame for HtmlHelpFrame {}
 impl TFrame for HtmlHelpFrame {}
@@ -199,9 +216,11 @@ impl HtmlHelpFrame {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlHelpFrame](http://docs.wxwidgets.org/3.0/classwx_html_help_frame.html) class.
 pub trait THtmlHelpFrame : TFrame {
 }
 
+/// Wraps the wxWidgets' [wxHtmlLinkInfo](http://docs.wxwidgets.org/3.0/classwx_html_link_info.html) class.
 pub struct HtmlLinkInfo { ptr: *mut c_void }
 impl THtmlLinkInfo for HtmlLinkInfo {}
 impl TObject for HtmlLinkInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -212,9 +231,11 @@ impl HtmlLinkInfo {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlLinkInfo](http://docs.wxwidgets.org/3.0/classwx_html_link_info.html) class.
 pub trait THtmlLinkInfo : TObject {
 }
 
+/// Wraps the wxWidgets' [wxHtmlParser](http://docs.wxwidgets.org/3.0/classwx_html_parser.html) class.
 pub struct HtmlParser { ptr: *mut c_void }
 impl THtmlParser for HtmlParser {}
 impl TObject for HtmlParser { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -225,9 +246,11 @@ impl HtmlParser {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlParser](http://docs.wxwidgets.org/3.0/classwx_html_parser.html) class.
 pub trait THtmlParser : TObject {
 }
 
+/// Wraps the wxWidgets' [wxHtmlPrintout](http://docs.wxwidgets.org/3.0/classwx_html_printout.html) class.
 pub struct HtmlPrintout { ptr: *mut c_void }
 impl THtmlPrintout for HtmlPrintout {}
 impl TPrintout for HtmlPrintout {}
@@ -239,9 +262,11 @@ impl HtmlPrintout {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlPrintout](http://docs.wxwidgets.org/3.0/classwx_html_printout.html) class.
 pub trait THtmlPrintout : TPrintout {
 }
 
+/// Wraps the wxWidgets' [wxHtmlTag](http://docs.wxwidgets.org/3.0/classwx_html_tag.html) class.
 pub struct HtmlTag { ptr: *mut c_void }
 impl THtmlTag for HtmlTag {}
 impl TObject for HtmlTag { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -252,9 +277,11 @@ impl HtmlTag {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlTag](http://docs.wxwidgets.org/3.0/classwx_html_tag.html) class.
 pub trait THtmlTag : TObject {
 }
 
+/// Wraps the wxWidgets' [wxHtmlTagHandler](http://docs.wxwidgets.org/3.0/classwx_html_tag_handler.html) class.
 pub struct HtmlTagHandler { ptr: *mut c_void }
 impl THtmlTagHandler for HtmlTagHandler {}
 impl TObject for HtmlTagHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -265,9 +292,11 @@ impl HtmlTagHandler {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlTagHandler](http://docs.wxwidgets.org/3.0/classwx_html_tag_handler.html) class.
 pub trait THtmlTagHandler : TObject {
 }
 
+/// Wraps the wxWidgets' [wxHtmlTagsModule](http://docs.wxwidgets.org/3.0/classwx_html_tags_module.html) class.
 pub struct HtmlTagsModule { ptr: *mut c_void }
 impl THtmlTagsModule for HtmlTagsModule {}
 impl TModule for HtmlTagsModule {}
@@ -279,9 +308,11 @@ impl HtmlTagsModule {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlTagsModule](http://docs.wxwidgets.org/3.0/classwx_html_tags_module.html) class.
 pub trait THtmlTagsModule : TModule {
 }
 
+/// Wraps the wxWidgets' [wxHtmlWidgetCell](http://docs.wxwidgets.org/3.0/classwx_html_widget_cell.html) class.
 pub struct HtmlWidgetCell { ptr: *mut c_void }
 impl THtmlWidgetCell for HtmlWidgetCell {}
 impl THtmlCell for HtmlWidgetCell {}
@@ -293,9 +324,11 @@ impl HtmlWidgetCell {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlWidgetCell](http://docs.wxwidgets.org/3.0/classwx_html_widget_cell.html) class.
 pub trait THtmlWidgetCell : THtmlCell {
 }
 
+/// Wraps the wxWidgets' [wxHtmlWinParser](http://docs.wxwidgets.org/3.0/classwx_html_win_parser.html) class.
 pub struct HtmlWinParser { ptr: *mut c_void }
 impl THtmlWinParser for HtmlWinParser {}
 impl THtmlParser for HtmlWinParser {}
@@ -307,9 +340,11 @@ impl HtmlWinParser {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlWinParser](http://docs.wxwidgets.org/3.0/classwx_html_win_parser.html) class.
 pub trait THtmlWinParser : THtmlParser {
 }
 
+/// Wraps the wxWidgets' [wxHtmlWinTagHandler](http://docs.wxwidgets.org/3.0/classwx_html_win_tag_handler.html) class.
 pub struct HtmlWinTagHandler { ptr: *mut c_void }
 impl THtmlWinTagHandler for HtmlWinTagHandler {}
 impl THtmlTagHandler for HtmlWinTagHandler {}
@@ -321,9 +356,12 @@ impl HtmlWinTagHandler {
     
 }
 
+/// Methods of the wxWidgets' [wxHtmlWinTagHandler](http://docs.wxwidgets.org/3.0/classwx_html_win_tag_handler.html) class.
 pub trait THtmlWinTagHandler : THtmlTagHandler {
 }
 
+/// Wraps the wxWidgets' [wxHtmlWindow](http://docs.wxwidgets.org/3.0/classwx_html_window.html) class.
+/// Rather use the wxRust-specific [CHtmlWindow](struct.CHtmlWindow.html) class.
 pub struct HtmlWindow { ptr: *mut c_void }
 impl THtmlWindow for HtmlWindow {}
 impl TScrolledWindow for HtmlWindow {}
@@ -342,6 +380,7 @@ impl HtmlWindow {
     }
 }
 
+/// Methods of the wxWidgets' [wxHtmlWindow](http://docs.wxwidgets.org/3.0/classwx_html_window.html) class.
 pub trait THtmlWindow : TScrolledWindow {
     fn appendToPage(&self, source: &str) -> c_int {
         let source = wxT(source);
@@ -410,6 +449,7 @@ pub trait THtmlWindow : TScrolledWindow {
     }
 }
 
+/// The wxRust-specific derived class of [wxCommandEvent](http://docs.wxwidgets.org/3.0/classwx_command_event.html).
 pub struct CHtmlEvent { ptr: *mut c_void }
 impl TCHtmlEvent for CHtmlEvent {}
 impl TCommandEvent for CHtmlEvent {}
@@ -422,6 +462,7 @@ impl CHtmlEvent {
     
 }
 
+/// Methods of the wxRust-specific derived class of [wxCommandEvent](http://docs.wxwidgets.org/3.0/classwx_command_event.html).
 pub trait TCHtmlEvent : TCommandEvent {
     fn getMouseEvent(&self) -> MouseEvent {
         unsafe { MouseEvent { ptr: wxcHtmlEvent_GetMouseEvent(self.ptr()) } }
@@ -443,6 +484,7 @@ pub trait TCHtmlEvent : TCommandEvent {
     }
 }
 
+/// The wxRust-specific derived class of [wxHtmlWindow](http://docs.wxwidgets.org/3.0/classwx_html_window.html).
 pub struct CHtmlWindow { ptr: *mut c_void }
 impl TCHtmlWindow for CHtmlWindow {}
 impl THtmlWindow for CHtmlWindow {}
@@ -462,6 +504,7 @@ impl CHtmlWindow {
     }
 }
 
+/// Methods of the wxRust-specific derived class of [wxHtmlWindow](http://docs.wxwidgets.org/3.0/classwx_html_window.html).
 pub trait TCHtmlWindow : THtmlWindow {
 }
 

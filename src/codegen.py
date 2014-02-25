@@ -696,6 +696,16 @@ impl WxString {
     
     def _print_class(self, clazz):
         struct_name = '%s' % clazz.struct_name
+        if clazz.name.startswith('wx') and not clazz.name.startswith('wxc'):
+            self.println("/// Wraps the wxWidgets' [%s](%s) class." % (clazz.name, clazz.link))
+            unprefixed = clazz.name[len('wx'):]
+            if self.__parser.class_for_name('ELJ' + unprefixed):
+                self.println("/// Rather use the wxRust-specific [Rust%s](struct.Rust%s.html) class." % (unprefixed, unprefixed))
+            if self.__parser.class_for_name('wxc' + unprefixed):
+                self.println("/// Rather use the wxRust-specific [C%s](struct.C%s.html) class." % (unprefixed, unprefixed))
+        if (clazz.name.startswith('ELJ') or clazz.name.startswith('wxc')) and clazz.has_base:
+            base = self.__parser.class_for_name(clazz.base)
+            self.println("/// The wxRust-specific derived class of [%s](%s)." % (base.name, base.link))
         self.println('pub struct %s { ptr: *mut c_void }' % struct_name)
         for trait in clazz.inheritance:
             body = ''
@@ -717,6 +727,11 @@ impl WxString {
         # instance methods go to trait's default impl
         base = clazz.has_base and ' : %s' % trait_name(clazz.base) or ''
         self.println()
+        if clazz.name.startswith('wx') and not clazz.name.startswith('wxc'):
+            self.println("/// Methods of the wxWidgets' [%s](%s) class." % (clazz.name, clazz.link))
+        if (clazz.name.startswith('ELJ') or clazz.name.startswith('wxc')) and clazz.has_base:
+            base2 = self.__parser.class_for_name(clazz.base)
+            self.println("/// Methods of the wxRust-specific derived class of [%s](%s)." % (base2.name, base2.link))
         self.println('pub trait %s%s {' % (clazz.trait_name, base))
         with self.indent():
             if clazz.name in self.__parser.root_classes:
@@ -1006,6 +1021,22 @@ class Class(object):
     @property
     def name(self):
         return self.__node[0][1][0][0]
+
+    @property
+    def link(self):
+        words = []
+        word = ''
+        case = self.name[0].islower()
+        for c in self.name:
+            if c.islower() == case or (len(word) == 1 and word.isupper()):
+                word += c
+            else:
+                words.append(word.lower())
+                word = c
+            case = c.islower()
+        if len(word):
+            words.append(word.lower())
+        return 'http://docs.wxwidgets.org/3.0/class%s.html' % '_'.join(words)
 
     @property
     def struct_name(self):

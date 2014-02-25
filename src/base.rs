@@ -36,6 +36,7 @@ impl WxString {
     }
 }
 
+/// The wxRust-specific derived class of [wxClient](http://docs.wxwidgets.org/3.0/classwx_client.html).
 pub struct RustClient { ptr: *mut c_void }
 impl TRustClient for RustClient {}
 impl TClient for RustClient {}
@@ -48,9 +49,11 @@ impl RustClient {
     
 }
 
+/// Methods of the wxRust-specific derived class of [wxClient](http://docs.wxwidgets.org/3.0/classwx_client.html).
 pub trait TRustClient : TClient {
 }
 
+/// The wxRust-specific derived class of [wxConnection](http://docs.wxwidgets.org/3.0/classwx_connection.html).
 pub struct RustConnection { ptr: *mut c_void }
 impl TRustConnection for RustConnection {}
 impl TConnection for RustConnection {}
@@ -63,9 +66,11 @@ impl RustConnection {
     
 }
 
+/// Methods of the wxRust-specific derived class of [wxConnection](http://docs.wxwidgets.org/3.0/classwx_connection.html).
 pub trait TRustConnection : TConnection {
 }
 
+/// The wxRust-specific derived class of [wxLocale](http://docs.wxwidgets.org/3.0/classwx_locale.html).
 pub struct RustLocale { ptr: *mut c_void }
 impl TRustLocale for RustLocale {}
 impl TLocale for RustLocale { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -76,9 +81,11 @@ impl RustLocale {
     
 }
 
+/// Methods of the wxRust-specific derived class of [wxLocale](http://docs.wxwidgets.org/3.0/classwx_locale.html).
 pub trait TRustLocale : TLocale {
 }
 
+/// The wxRust-specific derived class of [wxServer](http://docs.wxwidgets.org/3.0/classwx_server.html).
 pub struct RustServer { ptr: *mut c_void }
 impl TRustServer for RustServer {}
 impl TServer for RustServer {}
@@ -91,9 +98,11 @@ impl RustServer {
     
 }
 
+/// Methods of the wxRust-specific derived class of [wxServer](http://docs.wxwidgets.org/3.0/classwx_server.html).
 pub trait TRustServer : TServer {
 }
 
+/// Wraps the wxWidgets' [wxArray](http://docs.wxwidgets.org/3.0/classwx_array.html) class.
 pub struct Array { ptr: *mut c_void }
 impl TArray for Array { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -103,11 +112,13 @@ impl Array {
     
 }
 
+/// Methods of the wxWidgets' [wxArray](http://docs.wxwidgets.org/3.0/classwx_array.html) class.
 pub trait TArray {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxArrayString](http://docs.wxwidgets.org/3.0/classwx_array_string.html) class.
 pub struct ArrayString { ptr: *mut c_void }
 impl TArrayString for ArrayString {}
 impl TArray for ArrayString { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -118,9 +129,11 @@ impl ArrayString {
     
 }
 
+/// Methods of the wxWidgets' [wxArrayString](http://docs.wxwidgets.org/3.0/classwx_array_string.html) class.
 pub trait TArrayString : TArray {
 }
 
+/// Wraps the wxWidgets' [wxBufferedInputStream](http://docs.wxwidgets.org/3.0/classwx_buffered_input_stream.html) class.
 pub struct BufferedInputStream { ptr: *mut c_void }
 impl TBufferedInputStream for BufferedInputStream {}
 impl TFilterInputStream for BufferedInputStream {}
@@ -133,9 +146,11 @@ impl BufferedInputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxBufferedInputStream](http://docs.wxwidgets.org/3.0/classwx_buffered_input_stream.html) class.
 pub trait TBufferedInputStream : TFilterInputStream {
 }
 
+/// Wraps the wxWidgets' [wxBufferedOutputStream](http://docs.wxwidgets.org/3.0/classwx_buffered_output_stream.html) class.
 pub struct BufferedOutputStream { ptr: *mut c_void }
 impl TBufferedOutputStream for BufferedOutputStream {}
 impl TFilterOutputStream for BufferedOutputStream {}
@@ -148,9 +163,11 @@ impl BufferedOutputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxBufferedOutputStream](http://docs.wxwidgets.org/3.0/classwx_buffered_output_stream.html) class.
 pub trait TBufferedOutputStream : TFilterOutputStream {
 }
 
+/// Wraps the wxWidgets' [wxCSConv](http://docs.wxwidgets.org/3.0/classwx_csc_onv.html) class.
 pub struct CSConv { ptr: *mut c_void }
 impl TCSConv for CSConv {}
 impl TMBConv for CSConv { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -161,9 +178,11 @@ impl CSConv {
     
 }
 
+/// Methods of the wxWidgets' [wxCSConv](http://docs.wxwidgets.org/3.0/classwx_csc_onv.html) class.
 pub trait TCSConv : TMBConv {
 }
 
+/// Wraps the wxWidgets' [wxClassInfo](http://docs.wxwidgets.org/3.0/classwx_class_info.html) class.
 pub struct ClassInfo { ptr: *mut c_void }
 impl TClassInfo for ClassInfo { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -177,6 +196,7 @@ impl ClassInfo {
     }
 }
 
+/// Methods of the wxWidgets' [wxClassInfo](http://docs.wxwidgets.org/3.0/classwx_class_info.html) class.
 pub trait TClassInfo {
     fn ptr(&self) -> *mut c_void;
     
@@ -207,6 +227,8 @@ pub trait TClassInfo {
     }
 }
 
+/// Wraps the wxWidgets' [wxClient](http://docs.wxwidgets.org/3.0/classwx_client.html) class.
+/// Rather use the wxRust-specific [RustClient](struct.RustClient.html) class.
 pub struct Client { ptr: *mut c_void }
 impl TClient for Client {}
 impl TClientBase for Client {}
@@ -218,9 +240,11 @@ impl Client {
     
 }
 
+/// Methods of the wxWidgets' [wxClient](http://docs.wxwidgets.org/3.0/classwx_client.html) class.
 pub trait TClient : TClientBase {
 }
 
+/// Wraps the wxWidgets' [wxClientBase](http://docs.wxwidgets.org/3.0/classwx_client_base.html) class.
 pub struct ClientBase { ptr: *mut c_void }
 impl TClientBase for ClientBase {}
 impl TObject for ClientBase { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -231,9 +255,11 @@ impl ClientBase {
     
 }
 
+/// Methods of the wxWidgets' [wxClientBase](http://docs.wxwidgets.org/3.0/classwx_client_base.html) class.
 pub trait TClientBase : TObject {
 }
 
+/// Wraps the wxWidgets' [wxClientData](http://docs.wxwidgets.org/3.0/classwx_client_data.html) class.
 pub struct ClientData { ptr: *mut c_void }
 impl TClientData for ClientData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -243,11 +269,13 @@ impl ClientData {
     
 }
 
+/// Methods of the wxWidgets' [wxClientData](http://docs.wxwidgets.org/3.0/classwx_client_data.html) class.
 pub trait TClientData {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxClientDataContainer](http://docs.wxwidgets.org/3.0/classwx_client_data_container.html) class.
 pub struct ClientDataContainer { ptr: *mut c_void }
 impl TClientDataContainer for ClientDataContainer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -257,11 +285,13 @@ impl ClientDataContainer {
     
 }
 
+/// Methods of the wxWidgets' [wxClientDataContainer](http://docs.wxwidgets.org/3.0/classwx_client_data_container.html) class.
 pub trait TClientDataContainer {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxClosure](http://docs.wxwidgets.org/3.0/classwx_closure.html) class.
 pub struct Closure { ptr: *mut c_void }
 impl TClosure for Closure {}
 impl TObject for Closure { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -275,12 +305,14 @@ impl Closure {
     }
 }
 
+/// Methods of the wxWidgets' [wxClosure](http://docs.wxwidgets.org/3.0/classwx_closure.html) class.
 pub trait TClosure : TObject {
     fn getData(&self) -> *mut c_void {
         unsafe { wxClosure_GetData(self.ptr()) }
     }
 }
 
+/// Wraps the wxWidgets' [wxCommandLineParser](http://docs.wxwidgets.org/3.0/classwx_command_line_parser.html) class.
 pub struct CommandLineParser { ptr: *mut c_void }
 impl TCommandLineParser for CommandLineParser { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -290,11 +322,13 @@ impl CommandLineParser {
     
 }
 
+/// Methods of the wxWidgets' [wxCommandLineParser](http://docs.wxwidgets.org/3.0/classwx_command_line_parser.html) class.
 pub trait TCommandLineParser {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxCondition](http://docs.wxwidgets.org/3.0/classwx_condition.html) class.
 pub struct Condition { ptr: *mut c_void }
 impl TCondition for Condition { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -304,11 +338,13 @@ impl Condition {
     
 }
 
+/// Methods of the wxWidgets' [wxCondition](http://docs.wxwidgets.org/3.0/classwx_condition.html) class.
 pub trait TCondition {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxConfigBase](http://docs.wxwidgets.org/3.0/classwx_config_base.html) class.
 pub struct ConfigBase { ptr: *mut c_void }
 impl TConfigBase for ConfigBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -327,6 +363,7 @@ impl ConfigBase {
     }
 }
 
+/// Methods of the wxWidgets' [wxConfigBase](http://docs.wxwidgets.org/3.0/classwx_config_base.html) class.
 pub trait TConfigBase {
     fn ptr(&self) -> *mut c_void;
     
@@ -474,6 +511,8 @@ pub trait TConfigBase {
     }
 }
 
+/// Wraps the wxWidgets' [wxConnection](http://docs.wxwidgets.org/3.0/classwx_connection.html) class.
+/// Rather use the wxRust-specific [RustConnection](struct.RustConnection.html) class.
 pub struct Connection { ptr: *mut c_void }
 impl TConnection for Connection {}
 impl TConnectionBase for Connection {}
@@ -485,9 +524,11 @@ impl Connection {
     
 }
 
+/// Methods of the wxWidgets' [wxConnection](http://docs.wxwidgets.org/3.0/classwx_connection.html) class.
 pub trait TConnection : TConnectionBase {
 }
 
+/// Wraps the wxWidgets' [wxConnectionBase](http://docs.wxwidgets.org/3.0/classwx_connection_base.html) class.
 pub struct ConnectionBase { ptr: *mut c_void }
 impl TConnectionBase for ConnectionBase {}
 impl TObject for ConnectionBase { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -498,9 +539,11 @@ impl ConnectionBase {
     
 }
 
+/// Methods of the wxWidgets' [wxConnectionBase](http://docs.wxwidgets.org/3.0/classwx_connection_base.html) class.
 pub trait TConnectionBase : TObject {
 }
 
+/// Wraps the wxWidgets' [wxCountingOutputStream](http://docs.wxwidgets.org/3.0/classwx_counting_output_stream.html) class.
 pub struct CountingOutputStream { ptr: *mut c_void }
 impl TCountingOutputStream for CountingOutputStream {}
 impl TOutputStream for CountingOutputStream {}
@@ -512,9 +555,11 @@ impl CountingOutputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxCountingOutputStream](http://docs.wxwidgets.org/3.0/classwx_counting_output_stream.html) class.
 pub trait TCountingOutputStream : TOutputStream {
 }
 
+/// Wraps the wxWidgets' [wxCriticalSection](http://docs.wxwidgets.org/3.0/classwx_critical_section.html) class.
 pub struct CriticalSection { ptr: *mut c_void }
 impl TCriticalSection for CriticalSection { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -524,11 +569,13 @@ impl CriticalSection {
     
 }
 
+/// Methods of the wxWidgets' [wxCriticalSection](http://docs.wxwidgets.org/3.0/classwx_critical_section.html) class.
 pub trait TCriticalSection {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxCriticalSectionLocker](http://docs.wxwidgets.org/3.0/classwx_critical_section_locker.html) class.
 pub struct CriticalSectionLocker { ptr: *mut c_void }
 impl TCriticalSectionLocker for CriticalSectionLocker { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -538,11 +585,13 @@ impl CriticalSectionLocker {
     
 }
 
+/// Methods of the wxWidgets' [wxCriticalSectionLocker](http://docs.wxwidgets.org/3.0/classwx_critical_section_locker.html) class.
 pub trait TCriticalSectionLocker {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxDDEClient](http://docs.wxwidgets.org/3.0/classwx_ddec_lient.html) class.
 pub struct DDEClient { ptr: *mut c_void }
 impl TDDEClient for DDEClient {}
 impl TClientBase for DDEClient {}
@@ -554,9 +603,11 @@ impl DDEClient {
     
 }
 
+/// Methods of the wxWidgets' [wxDDEClient](http://docs.wxwidgets.org/3.0/classwx_ddec_lient.html) class.
 pub trait TDDEClient : TClientBase {
 }
 
+/// Wraps the wxWidgets' [wxDDEConnection](http://docs.wxwidgets.org/3.0/classwx_ddec_onnection.html) class.
 pub struct DDEConnection { ptr: *mut c_void }
 impl TDDEConnection for DDEConnection {}
 impl TConnectionBase for DDEConnection {}
@@ -568,9 +619,11 @@ impl DDEConnection {
     
 }
 
+/// Methods of the wxWidgets' [wxDDEConnection](http://docs.wxwidgets.org/3.0/classwx_ddec_onnection.html) class.
 pub trait TDDEConnection : TConnectionBase {
 }
 
+/// Wraps the wxWidgets' [wxDDEServer](http://docs.wxwidgets.org/3.0/classwx_ddes_erver.html) class.
 pub struct DDEServer { ptr: *mut c_void }
 impl TDDEServer for DDEServer {}
 impl TServerBase for DDEServer {}
@@ -582,9 +635,11 @@ impl DDEServer {
     
 }
 
+/// Methods of the wxWidgets' [wxDDEServer](http://docs.wxwidgets.org/3.0/classwx_ddes_erver.html) class.
 pub trait TDDEServer : TServerBase {
 }
 
+/// Wraps the wxWidgets' [wxDataInputStream](http://docs.wxwidgets.org/3.0/classwx_data_input_stream.html) class.
 pub struct DataInputStream { ptr: *mut c_void }
 impl TDataInputStream for DataInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -594,11 +649,13 @@ impl DataInputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxDataInputStream](http://docs.wxwidgets.org/3.0/classwx_data_input_stream.html) class.
 pub trait TDataInputStream {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxDataOutputStream](http://docs.wxwidgets.org/3.0/classwx_data_output_stream.html) class.
 pub struct DataOutputStream { ptr: *mut c_void }
 impl TDataOutputStream for DataOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -608,11 +665,13 @@ impl DataOutputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxDataOutputStream](http://docs.wxwidgets.org/3.0/classwx_data_output_stream.html) class.
 pub trait TDataOutputStream {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxDateTime](http://docs.wxwidgets.org/3.0/classwx_date_time.html) class.
 pub struct DateTime { ptr: *mut c_void }
 impl TDateTime for DateTime { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -682,6 +741,7 @@ impl DateTime {
     }
 }
 
+/// Methods of the wxWidgets' [wxDateTime](http://docs.wxwidgets.org/3.0/classwx_date_time.html) class.
 pub trait TDateTime {
     fn ptr(&self) -> *mut c_void;
     
@@ -900,6 +960,7 @@ pub trait TDateTime {
     }
 }
 
+/// Wraps the wxWidgets' [wxDebugContext](http://docs.wxwidgets.org/3.0/classwx_debug_context.html) class.
 pub struct DebugContext { ptr: *mut c_void }
 impl TDebugContext for DebugContext { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -909,11 +970,13 @@ impl DebugContext {
     
 }
 
+/// Methods of the wxWidgets' [wxDebugContext](http://docs.wxwidgets.org/3.0/classwx_debug_context.html) class.
 pub trait TDebugContext {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxDirTraverser](http://docs.wxwidgets.org/3.0/classwx_dir_traverser.html) class.
 pub struct DirTraverser { ptr: *mut c_void }
 impl TDirTraverser for DirTraverser { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -923,11 +986,13 @@ impl DirTraverser {
     
 }
 
+/// Methods of the wxWidgets' [wxDirTraverser](http://docs.wxwidgets.org/3.0/classwx_dir_traverser.html) class.
 pub trait TDirTraverser {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxDllLoader](http://docs.wxwidgets.org/3.0/classwx_dll_loader.html) class.
 pub struct DllLoader { ptr: *mut c_void }
 impl TDllLoader for DllLoader { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -937,11 +1002,13 @@ impl DllLoader {
     
 }
 
+/// Methods of the wxWidgets' [wxDllLoader](http://docs.wxwidgets.org/3.0/classwx_dll_loader.html) class.
 pub trait TDllLoader {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxDynamicLibrary](http://docs.wxwidgets.org/3.0/classwx_dynamic_library.html) class.
 pub struct DynamicLibrary { ptr: *mut c_void }
 impl TDynamicLibrary for DynamicLibrary { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -951,11 +1018,13 @@ impl DynamicLibrary {
     
 }
 
+/// Methods of the wxWidgets' [wxDynamicLibrary](http://docs.wxwidgets.org/3.0/classwx_dynamic_library.html) class.
 pub trait TDynamicLibrary {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxEncodingConverter](http://docs.wxwidgets.org/3.0/classwx_encoding_converter.html) class.
 pub struct EncodingConverter { ptr: *mut c_void }
 impl TEncodingConverter for EncodingConverter {}
 impl TObject for EncodingConverter { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -969,6 +1038,7 @@ impl EncodingConverter {
     }
 }
 
+/// Methods of the wxWidgets' [wxEncodingConverter](http://docs.wxwidgets.org/3.0/classwx_encoding_converter.html) class.
 pub trait TEncodingConverter : TObject {
     fn convert(&self, input: *mut c_void, output: *mut c_void) {
         unsafe { wxEncodingConverter_Convert(self.ptr(), input, output) }
@@ -984,6 +1054,7 @@ pub trait TEncodingConverter : TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxFFile](http://docs.wxwidgets.org/3.0/classwx_ff_ile.html) class.
 pub struct FFile { ptr: *mut c_void }
 impl TFFile for FFile { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -993,11 +1064,13 @@ impl FFile {
     
 }
 
+/// Methods of the wxWidgets' [wxFFile](http://docs.wxwidgets.org/3.0/classwx_ff_ile.html) class.
 pub trait TFFile {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxFFileInputStream](http://docs.wxwidgets.org/3.0/classwx_ff_ile_input_stream.html) class.
 pub struct FFileInputStream { ptr: *mut c_void }
 impl TFFileInputStream for FFileInputStream {}
 impl TInputStream for FFileInputStream {}
@@ -1009,9 +1082,11 @@ impl FFileInputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxFFileInputStream](http://docs.wxwidgets.org/3.0/classwx_ff_ile_input_stream.html) class.
 pub trait TFFileInputStream : TInputStream {
 }
 
+/// Wraps the wxWidgets' [wxFFileOutputStream](http://docs.wxwidgets.org/3.0/classwx_ff_ile_output_stream.html) class.
 pub struct FFileOutputStream { ptr: *mut c_void }
 impl TFFileOutputStream for FFileOutputStream {}
 impl TOutputStream for FFileOutputStream {}
@@ -1023,9 +1098,11 @@ impl FFileOutputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxFFileOutputStream](http://docs.wxwidgets.org/3.0/classwx_ff_ile_output_stream.html) class.
 pub trait TFFileOutputStream : TOutputStream {
 }
 
+/// Wraps the wxWidgets' [wxFSFile](http://docs.wxwidgets.org/3.0/classwx_fsf_ile.html) class.
 pub struct FSFile { ptr: *mut c_void }
 impl TFSFile for FSFile {}
 impl TObject for FSFile { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1036,9 +1113,11 @@ impl FSFile {
     
 }
 
+/// Methods of the wxWidgets' [wxFSFile](http://docs.wxwidgets.org/3.0/classwx_fsf_ile.html) class.
 pub trait TFSFile : TObject {
 }
 
+/// Wraps the wxWidgets' [wxFileInputStream](http://docs.wxwidgets.org/3.0/classwx_file_input_stream.html) class.
 pub struct FileInputStream { ptr: *mut c_void }
 impl TFileInputStream for FileInputStream {}
 impl TInputStream for FileInputStream {}
@@ -1050,9 +1129,11 @@ impl FileInputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxFileInputStream](http://docs.wxwidgets.org/3.0/classwx_file_input_stream.html) class.
 pub trait TFileInputStream : TInputStream {
 }
 
+/// Wraps the wxWidgets' [wxFileName](http://docs.wxwidgets.org/3.0/classwx_file_name.html) class.
 pub struct FileName { ptr: *mut c_void }
 impl TFileName for FileName { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1062,11 +1143,13 @@ impl FileName {
     
 }
 
+/// Methods of the wxWidgets' [wxFileName](http://docs.wxwidgets.org/3.0/classwx_file_name.html) class.
 pub trait TFileName {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxFileOutputStream](http://docs.wxwidgets.org/3.0/classwx_file_output_stream.html) class.
 pub struct FileOutputStream { ptr: *mut c_void }
 impl TFileOutputStream for FileOutputStream {}
 impl TOutputStream for FileOutputStream {}
@@ -1078,9 +1161,11 @@ impl FileOutputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxFileOutputStream](http://docs.wxwidgets.org/3.0/classwx_file_output_stream.html) class.
 pub trait TFileOutputStream : TOutputStream {
 }
 
+/// Wraps the wxWidgets' [wxFileSystem](http://docs.wxwidgets.org/3.0/classwx_file_system.html) class.
 pub struct FileSystem { ptr: *mut c_void }
 impl TFileSystem for FileSystem {}
 impl TObject for FileSystem { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1091,9 +1176,11 @@ impl FileSystem {
     
 }
 
+/// Methods of the wxWidgets' [wxFileSystem](http://docs.wxwidgets.org/3.0/classwx_file_system.html) class.
 pub trait TFileSystem : TObject {
 }
 
+/// Wraps the wxWidgets' [wxFileSystemHandler](http://docs.wxwidgets.org/3.0/classwx_file_system_handler.html) class.
 pub struct FileSystemHandler { ptr: *mut c_void }
 impl TFileSystemHandler for FileSystemHandler {}
 impl TObject for FileSystemHandler { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1104,9 +1191,11 @@ impl FileSystemHandler {
     
 }
 
+/// Methods of the wxWidgets' [wxFileSystemHandler](http://docs.wxwidgets.org/3.0/classwx_file_system_handler.html) class.
 pub trait TFileSystemHandler : TObject {
 }
 
+/// Wraps the wxWidgets' [wxFilterInputStream](http://docs.wxwidgets.org/3.0/classwx_filter_input_stream.html) class.
 pub struct FilterInputStream { ptr: *mut c_void }
 impl TFilterInputStream for FilterInputStream {}
 impl TInputStream for FilterInputStream {}
@@ -1118,9 +1207,11 @@ impl FilterInputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxFilterInputStream](http://docs.wxwidgets.org/3.0/classwx_filter_input_stream.html) class.
 pub trait TFilterInputStream : TInputStream {
 }
 
+/// Wraps the wxWidgets' [wxFilterOutputStream](http://docs.wxwidgets.org/3.0/classwx_filter_output_stream.html) class.
 pub struct FilterOutputStream { ptr: *mut c_void }
 impl TFilterOutputStream for FilterOutputStream {}
 impl TOutputStream for FilterOutputStream {}
@@ -1132,9 +1223,11 @@ impl FilterOutputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxFilterOutputStream](http://docs.wxwidgets.org/3.0/classwx_filter_output_stream.html) class.
 pub trait TFilterOutputStream : TOutputStream {
 }
 
+/// Wraps the wxWidgets' [wxInputStream](http://docs.wxwidgets.org/3.0/classwx_input_stream.html) class.
 pub struct InputStream { ptr: *mut c_void }
 impl TInputStream for InputStream {}
 impl TStreamBase for InputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1145,6 +1238,7 @@ impl InputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxInputStream](http://docs.wxwidgets.org/3.0/classwx_input_stream.html) class.
 pub trait TInputStream : TStreamBase {
     fn eof(&self) -> c_int {
         unsafe { wxInputStream_Eof(self.ptr()) }
@@ -1178,6 +1272,7 @@ pub trait TInputStream : TStreamBase {
     }
 }
 
+/// Wraps the wxWidgets' [wxList](http://docs.wxwidgets.org/3.0/classwx_list.html) class.
 pub struct List { ptr: *mut c_void }
 impl TList for List {}
 impl TObject for List { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1188,9 +1283,12 @@ impl List {
     
 }
 
+/// Methods of the wxWidgets' [wxList](http://docs.wxwidgets.org/3.0/classwx_list.html) class.
 pub trait TList : TObject {
 }
 
+/// Wraps the wxWidgets' [wxLocale](http://docs.wxwidgets.org/3.0/classwx_locale.html) class.
+/// Rather use the wxRust-specific [RustLocale](struct.RustLocale.html) class.
 pub struct Locale { ptr: *mut c_void }
 impl TLocale for Locale { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1203,6 +1301,7 @@ impl Locale {
     }
 }
 
+/// Methods of the wxWidgets' [wxLocale](http://docs.wxwidgets.org/3.0/classwx_locale.html) class.
 pub trait TLocale {
     fn ptr(&self) -> *mut c_void;
     
@@ -1232,6 +1331,7 @@ pub trait TLocale {
     }
 }
 
+/// Wraps the wxWidgets' [wxLongLong](http://docs.wxwidgets.org/3.0/classwx_long_long.html) class.
 pub struct LongLong { ptr: *mut c_void }
 impl TLongLong for LongLong { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1241,11 +1341,13 @@ impl LongLong {
     
 }
 
+/// Methods of the wxWidgets' [wxLongLong](http://docs.wxwidgets.org/3.0/classwx_long_long.html) class.
 pub trait TLongLong {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxMBConv](http://docs.wxwidgets.org/3.0/classwx_mbc_onv.html) class.
 pub struct MBConv { ptr: *mut c_void }
 impl TMBConv for MBConv { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1255,11 +1357,13 @@ impl MBConv {
     
 }
 
+/// Methods of the wxWidgets' [wxMBConv](http://docs.wxwidgets.org/3.0/classwx_mbc_onv.html) class.
 pub trait TMBConv {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxMBConvUTF7](http://docs.wxwidgets.org/3.0/classwx_mbc_onv_utf7.html) class.
 pub struct MBConvUTF7 { ptr: *mut c_void }
 impl TMBConvUTF7 for MBConvUTF7 {}
 impl TMBConv for MBConvUTF7 { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1270,9 +1374,11 @@ impl MBConvUTF7 {
     
 }
 
+/// Methods of the wxWidgets' [wxMBConvUTF7](http://docs.wxwidgets.org/3.0/classwx_mbc_onv_utf7.html) class.
 pub trait TMBConvUTF7 : TMBConv {
 }
 
+/// Wraps the wxWidgets' [wxMBConvUTF8](http://docs.wxwidgets.org/3.0/classwx_mbc_onv_utf8.html) class.
 pub struct MBConvUTF8 { ptr: *mut c_void }
 impl TMBConvUTF8 for MBConvUTF8 {}
 impl TMBConv for MBConvUTF8 { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1283,9 +1389,11 @@ impl MBConvUTF8 {
     
 }
 
+/// Methods of the wxWidgets' [wxMBConvUTF8](http://docs.wxwidgets.org/3.0/classwx_mbc_onv_utf8.html) class.
 pub trait TMBConvUTF8 : TMBConv {
 }
 
+/// Wraps the wxWidgets' [wxMemoryFSHandler](http://docs.wxwidgets.org/3.0/classwx_memory_fsh_andler.html) class.
 pub struct MemoryFSHandler { ptr: *mut c_void }
 impl TMemoryFSHandler for MemoryFSHandler {}
 impl TFileSystemHandler for MemoryFSHandler {}
@@ -1297,9 +1405,11 @@ impl MemoryFSHandler {
     
 }
 
+/// Methods of the wxWidgets' [wxMemoryFSHandler](http://docs.wxwidgets.org/3.0/classwx_memory_fsh_andler.html) class.
 pub trait TMemoryFSHandler : TFileSystemHandler {
 }
 
+/// Wraps the wxWidgets' [wxMemoryInputStream](http://docs.wxwidgets.org/3.0/classwx_memory_input_stream.html) class.
 pub struct MemoryInputStream { ptr: *mut c_void }
 impl TMemoryInputStream for MemoryInputStream {}
 impl TInputStream for MemoryInputStream {}
@@ -1311,9 +1421,11 @@ impl MemoryInputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxMemoryInputStream](http://docs.wxwidgets.org/3.0/classwx_memory_input_stream.html) class.
 pub trait TMemoryInputStream : TInputStream {
 }
 
+/// Wraps the wxWidgets' [wxMemoryOutputStream](http://docs.wxwidgets.org/3.0/classwx_memory_output_stream.html) class.
 pub struct MemoryOutputStream { ptr: *mut c_void }
 impl TMemoryOutputStream for MemoryOutputStream {}
 impl TOutputStream for MemoryOutputStream {}
@@ -1325,9 +1437,11 @@ impl MemoryOutputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxMemoryOutputStream](http://docs.wxwidgets.org/3.0/classwx_memory_output_stream.html) class.
 pub trait TMemoryOutputStream : TOutputStream {
 }
 
+/// Wraps the wxWidgets' [wxModule](http://docs.wxwidgets.org/3.0/classwx_module.html) class.
 pub struct Module { ptr: *mut c_void }
 impl TModule for Module {}
 impl TObject for Module { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1338,9 +1452,11 @@ impl Module {
     
 }
 
+/// Methods of the wxWidgets' [wxModule](http://docs.wxwidgets.org/3.0/classwx_module.html) class.
 pub trait TModule : TObject {
 }
 
+/// Wraps the wxWidgets' [wxMutex](http://docs.wxwidgets.org/3.0/classwx_mutex.html) class.
 pub struct Mutex { ptr: *mut c_void }
 impl TMutex for Mutex { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1350,11 +1466,13 @@ impl Mutex {
     
 }
 
+/// Methods of the wxWidgets' [wxMutex](http://docs.wxwidgets.org/3.0/classwx_mutex.html) class.
 pub trait TMutex {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxMutexLocker](http://docs.wxwidgets.org/3.0/classwx_mutex_locker.html) class.
 pub struct MutexLocker { ptr: *mut c_void }
 impl TMutexLocker for MutexLocker { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1364,11 +1482,13 @@ impl MutexLocker {
     
 }
 
+/// Methods of the wxWidgets' [wxMutexLocker](http://docs.wxwidgets.org/3.0/classwx_mutex_locker.html) class.
 pub trait TMutexLocker {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxNodeBase](http://docs.wxwidgets.org/3.0/classwx_node_base.html) class.
 pub struct NodeBase { ptr: *mut c_void }
 impl TNodeBase for NodeBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1378,11 +1498,13 @@ impl NodeBase {
     
 }
 
+/// Methods of the wxWidgets' [wxNodeBase](http://docs.wxwidgets.org/3.0/classwx_node_base.html) class.
 pub trait TNodeBase {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxObject](http://docs.wxwidgets.org/3.0/classwx_object.html) class.
 pub struct Object { ptr: *mut c_void }
 impl TObject for Object { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1392,6 +1514,7 @@ impl Object {
     
 }
 
+/// Methods of the wxWidgets' [wxObject](http://docs.wxwidgets.org/3.0/classwx_object.html) class.
 pub trait TObject {
     fn ptr(&self) -> *mut c_void;
     
@@ -1418,6 +1541,7 @@ pub trait TObject {
     }
 }
 
+/// Wraps the wxWidgets' [wxObjectRefData](http://docs.wxwidgets.org/3.0/classwx_object_ref_data.html) class.
 pub struct ObjectRefData { ptr: *mut c_void }
 impl TObjectRefData for ObjectRefData { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1427,11 +1551,13 @@ impl ObjectRefData {
     
 }
 
+/// Methods of the wxWidgets' [wxObjectRefData](http://docs.wxwidgets.org/3.0/classwx_object_ref_data.html) class.
 pub trait TObjectRefData {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxOutputStream](http://docs.wxwidgets.org/3.0/classwx_output_stream.html) class.
 pub struct OutputStream { ptr: *mut c_void }
 impl TOutputStream for OutputStream {}
 impl TStreamBase for OutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1442,6 +1568,7 @@ impl OutputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxOutputStream](http://docs.wxwidgets.org/3.0/classwx_output_stream.html) class.
 pub trait TOutputStream : TStreamBase {
     fn lastWrite(&self) -> c_int {
         unsafe { wxOutputStream_LastWrite(self.ptr()) }
@@ -1463,6 +1590,7 @@ pub trait TOutputStream : TStreamBase {
     }
 }
 
+/// Wraps the wxWidgets' [wxPathList](http://docs.wxwidgets.org/3.0/classwx_path_list.html) class.
 pub struct PathList { ptr: *mut c_void }
 impl TPathList for PathList {}
 impl TList for PathList {}
@@ -1474,9 +1602,11 @@ impl PathList {
     
 }
 
+/// Methods of the wxWidgets' [wxPathList](http://docs.wxwidgets.org/3.0/classwx_path_list.html) class.
 pub trait TPathList : TList {
 }
 
+/// Wraps the wxWidgets' [wxRegEx](http://docs.wxwidgets.org/3.0/classwx_reg_ex.html) class.
 pub struct RegEx { ptr: *mut c_void }
 impl TRegEx for RegEx { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1486,11 +1616,13 @@ impl RegEx {
     
 }
 
+/// Methods of the wxWidgets' [wxRegEx](http://docs.wxwidgets.org/3.0/classwx_reg_ex.html) class.
 pub trait TRegEx {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxScopedArray](http://docs.wxwidgets.org/3.0/classwx_scoped_array.html) class.
 pub struct ScopedArray { ptr: *mut c_void }
 impl TScopedArray for ScopedArray { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1500,11 +1632,13 @@ impl ScopedArray {
     
 }
 
+/// Methods of the wxWidgets' [wxScopedArray](http://docs.wxwidgets.org/3.0/classwx_scoped_array.html) class.
 pub trait TScopedArray {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxScopedPtr](http://docs.wxwidgets.org/3.0/classwx_scoped_ptr.html) class.
 pub struct ScopedPtr { ptr: *mut c_void }
 impl TScopedPtr for ScopedPtr { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1514,11 +1648,13 @@ impl ScopedPtr {
     
 }
 
+/// Methods of the wxWidgets' [wxScopedPtr](http://docs.wxwidgets.org/3.0/classwx_scoped_ptr.html) class.
 pub trait TScopedPtr {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxSemaphore](http://docs.wxwidgets.org/3.0/classwx_semaphore.html) class.
 pub struct Semaphore { ptr: *mut c_void }
 impl TSemaphore for Semaphore { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1528,11 +1664,14 @@ impl Semaphore {
     
 }
 
+/// Methods of the wxWidgets' [wxSemaphore](http://docs.wxwidgets.org/3.0/classwx_semaphore.html) class.
 pub trait TSemaphore {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxServer](http://docs.wxwidgets.org/3.0/classwx_server.html) class.
+/// Rather use the wxRust-specific [RustServer](struct.RustServer.html) class.
 pub struct Server { ptr: *mut c_void }
 impl TServer for Server {}
 impl TServerBase for Server {}
@@ -1544,9 +1683,11 @@ impl Server {
     
 }
 
+/// Methods of the wxWidgets' [wxServer](http://docs.wxwidgets.org/3.0/classwx_server.html) class.
 pub trait TServer : TServerBase {
 }
 
+/// Wraps the wxWidgets' [wxServerBase](http://docs.wxwidgets.org/3.0/classwx_server_base.html) class.
 pub struct ServerBase { ptr: *mut c_void }
 impl TServerBase for ServerBase {}
 impl TObject for ServerBase { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1557,9 +1698,11 @@ impl ServerBase {
     
 }
 
+/// Methods of the wxWidgets' [wxServerBase](http://docs.wxwidgets.org/3.0/classwx_server_base.html) class.
 pub trait TServerBase : TObject {
 }
 
+/// Wraps the wxWidgets' [wxSingleInstanceChecker](http://docs.wxwidgets.org/3.0/classwx_single_instance_checker.html) class.
 pub struct SingleInstanceChecker { ptr: *mut c_void }
 impl TSingleInstanceChecker for SingleInstanceChecker { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1577,6 +1720,7 @@ impl SingleInstanceChecker {
     }
 }
 
+/// Methods of the wxWidgets' [wxSingleInstanceChecker](http://docs.wxwidgets.org/3.0/classwx_single_instance_checker.html) class.
 pub trait TSingleInstanceChecker {
     fn ptr(&self) -> *mut c_void;
     
@@ -1588,6 +1732,7 @@ pub trait TSingleInstanceChecker {
     }
 }
 
+/// Wraps the wxWidgets' [wxStopWatch](http://docs.wxwidgets.org/3.0/classwx_stop_watch.html) class.
 pub struct StopWatch { ptr: *mut c_void }
 impl TStopWatch for StopWatch { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1600,6 +1745,7 @@ impl StopWatch {
     }
 }
 
+/// Methods of the wxWidgets' [wxStopWatch](http://docs.wxwidgets.org/3.0/classwx_stop_watch.html) class.
 pub trait TStopWatch {
     fn ptr(&self) -> *mut c_void;
     
@@ -1620,6 +1766,7 @@ pub trait TStopWatch {
     }
 }
 
+/// Wraps the wxWidgets' [wxStreamBase](http://docs.wxwidgets.org/3.0/classwx_stream_base.html) class.
 pub struct StreamBase { ptr: *mut c_void }
 impl TStreamBase for StreamBase { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1629,6 +1776,7 @@ impl StreamBase {
     
 }
 
+/// Methods of the wxWidgets' [wxStreamBase](http://docs.wxwidgets.org/3.0/classwx_stream_base.html) class.
 pub trait TStreamBase {
     fn ptr(&self) -> *mut c_void;
     
@@ -1646,6 +1794,7 @@ pub trait TStreamBase {
     }
 }
 
+/// Wraps the wxWidgets' [wxStreamBuffer](http://docs.wxwidgets.org/3.0/classwx_stream_buffer.html) class.
 pub struct StreamBuffer { ptr: *mut c_void }
 impl TStreamBuffer for StreamBuffer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1655,11 +1804,13 @@ impl StreamBuffer {
     
 }
 
+/// Methods of the wxWidgets' [wxStreamBuffer](http://docs.wxwidgets.org/3.0/classwx_stream_buffer.html) class.
 pub trait TStreamBuffer {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxStringBuffer](http://docs.wxwidgets.org/3.0/classwx_string_buffer.html) class.
 pub struct StringBuffer { ptr: *mut c_void }
 impl TStringBuffer for StringBuffer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1669,11 +1820,13 @@ impl StringBuffer {
     
 }
 
+/// Methods of the wxWidgets' [wxStringBuffer](http://docs.wxwidgets.org/3.0/classwx_string_buffer.html) class.
 pub trait TStringBuffer {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxStringClientData](http://docs.wxwidgets.org/3.0/classwx_string_client_data.html) class.
 pub struct StringClientData { ptr: *mut c_void }
 impl TStringClientData for StringClientData {}
 impl TClientData for StringClientData { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1684,9 +1837,11 @@ impl StringClientData {
     
 }
 
+/// Methods of the wxWidgets' [wxStringClientData](http://docs.wxwidgets.org/3.0/classwx_string_client_data.html) class.
 pub trait TStringClientData : TClientData {
 }
 
+/// Wraps the wxWidgets' [wxStringList](http://docs.wxwidgets.org/3.0/classwx_string_list.html) class.
 pub struct StringList { ptr: *mut c_void }
 impl TStringList for StringList {}
 impl TList for StringList {}
@@ -1698,9 +1853,11 @@ impl StringList {
     
 }
 
+/// Methods of the wxWidgets' [wxStringList](http://docs.wxwidgets.org/3.0/classwx_string_list.html) class.
 pub trait TStringList : TList {
 }
 
+/// Wraps the wxWidgets' [wxStringTokenizer](http://docs.wxwidgets.org/3.0/classwx_string_tokenizer.html) class.
 pub struct StringTokenizer { ptr: *mut c_void }
 impl TStringTokenizer for StringTokenizer {}
 impl TObject for StringTokenizer { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1711,9 +1868,11 @@ impl StringTokenizer {
     
 }
 
+/// Methods of the wxWidgets' [wxStringTokenizer](http://docs.wxwidgets.org/3.0/classwx_string_tokenizer.html) class.
 pub trait TStringTokenizer : TObject {
 }
 
+/// Wraps the wxWidgets' [wxSystemOptions](http://docs.wxwidgets.org/3.0/classwx_system_options.html) class.
 pub struct SystemOptions { ptr: *mut c_void }
 impl TSystemOptions for SystemOptions {}
 impl TObject for SystemOptions { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1724,9 +1883,11 @@ impl SystemOptions {
     
 }
 
+/// Methods of the wxWidgets' [wxSystemOptions](http://docs.wxwidgets.org/3.0/classwx_system_options.html) class.
 pub trait TSystemOptions : TObject {
 }
 
+/// Wraps the wxWidgets' [wxTempFile](http://docs.wxwidgets.org/3.0/classwx_temp_file.html) class.
 pub struct TempFile { ptr: *mut c_void }
 impl TTempFile for TempFile { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1736,11 +1897,13 @@ impl TempFile {
     
 }
 
+/// Methods of the wxWidgets' [wxTempFile](http://docs.wxwidgets.org/3.0/classwx_temp_file.html) class.
 pub trait TTempFile {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxTextFile](http://docs.wxwidgets.org/3.0/classwx_text_file.html) class.
 pub struct TextFile { ptr: *mut c_void }
 impl TTextFile for TextFile { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1750,11 +1913,13 @@ impl TextFile {
     
 }
 
+/// Methods of the wxWidgets' [wxTextFile](http://docs.wxwidgets.org/3.0/classwx_text_file.html) class.
 pub trait TTextFile {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxTextInputStream](http://docs.wxwidgets.org/3.0/classwx_text_input_stream.html) class.
 pub struct TextInputStream { ptr: *mut c_void }
 impl TTextInputStream for TextInputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1768,6 +1933,7 @@ impl TextInputStream {
     }
 }
 
+/// Methods of the wxWidgets' [wxTextInputStream](http://docs.wxwidgets.org/3.0/classwx_text_input_stream.html) class.
 pub trait TTextInputStream {
     fn ptr(&self) -> *mut c_void;
     
@@ -1779,6 +1945,7 @@ pub trait TTextInputStream {
     }
 }
 
+/// Wraps the wxWidgets' [wxTextOutputStream](http://docs.wxwidgets.org/3.0/classwx_text_output_stream.html) class.
 pub struct TextOutputStream { ptr: *mut c_void }
 impl TTextOutputStream for TextOutputStream { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1791,6 +1958,7 @@ impl TextOutputStream {
     }
 }
 
+/// Methods of the wxWidgets' [wxTextOutputStream](http://docs.wxwidgets.org/3.0/classwx_text_output_stream.html) class.
 pub trait TTextOutputStream {
     fn ptr(&self) -> *mut c_void;
     
@@ -1803,6 +1971,7 @@ pub trait TTextOutputStream {
     }
 }
 
+/// Wraps the wxWidgets' [wxThread](http://docs.wxwidgets.org/3.0/classwx_thread.html) class.
 pub struct Thread { ptr: *mut c_void }
 impl TThread for Thread { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1812,11 +1981,13 @@ impl Thread {
     
 }
 
+/// Methods of the wxWidgets' [wxThread](http://docs.wxwidgets.org/3.0/classwx_thread.html) class.
 pub trait TThread {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxTime](http://docs.wxwidgets.org/3.0/classwx_time.html) class.
 pub struct Time { ptr: *mut c_void }
 impl TTime for Time {}
 impl TObject for Time { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1827,9 +1998,11 @@ impl Time {
     
 }
 
+/// Methods of the wxWidgets' [wxTime](http://docs.wxwidgets.org/3.0/classwx_time.html) class.
 pub trait TTime : TObject {
 }
 
+/// Wraps the wxWidgets' [wxTimeSpan](http://docs.wxwidgets.org/3.0/classwx_time_span.html) class.
 pub struct TimeSpan { ptr: *mut c_void }
 impl TTimeSpan for TimeSpan { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1839,11 +2012,13 @@ impl TimeSpan {
     
 }
 
+/// Methods of the wxWidgets' [wxTimeSpan](http://docs.wxwidgets.org/3.0/classwx_time_span.html) class.
 pub trait TTimeSpan {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxVariant](http://docs.wxwidgets.org/3.0/classwx_variant.html) class.
 pub struct Variant { ptr: *mut c_void }
 impl TVariant for Variant {}
 impl TObject for Variant { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1854,9 +2029,11 @@ impl Variant {
     
 }
 
+/// Methods of the wxWidgets' [wxVariant](http://docs.wxwidgets.org/3.0/classwx_variant.html) class.
 pub trait TVariant : TObject {
 }
 
+/// Wraps the wxWidgets' [wxVariantData](http://docs.wxwidgets.org/3.0/classwx_variant_data.html) class.
 pub struct VariantData { ptr: *mut c_void }
 impl TVariantData for VariantData {}
 impl TObject for VariantData { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1867,9 +2044,11 @@ impl VariantData {
     
 }
 
+/// Methods of the wxWidgets' [wxVariantData](http://docs.wxwidgets.org/3.0/classwx_variant_data.html) class.
 pub trait TVariantData : TObject {
 }
 
+/// Wraps the wxWidgets' [wxZipInputStream](http://docs.wxwidgets.org/3.0/classwx_zip_input_stream.html) class.
 pub struct ZipInputStream { ptr: *mut c_void }
 impl TZipInputStream for ZipInputStream {}
 impl TInputStream for ZipInputStream {}
@@ -1881,9 +2060,11 @@ impl ZipInputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxZipInputStream](http://docs.wxwidgets.org/3.0/classwx_zip_input_stream.html) class.
 pub trait TZipInputStream : TInputStream {
 }
 
+/// Wraps the wxWidgets' [wxZlibInputStream](http://docs.wxwidgets.org/3.0/classwx_zlib_input_stream.html) class.
 pub struct ZlibInputStream { ptr: *mut c_void }
 impl TZlibInputStream for ZlibInputStream {}
 impl TFilterInputStream for ZlibInputStream {}
@@ -1896,9 +2077,11 @@ impl ZlibInputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxZlibInputStream](http://docs.wxwidgets.org/3.0/classwx_zlib_input_stream.html) class.
 pub trait TZlibInputStream : TFilterInputStream {
 }
 
+/// Wraps the wxWidgets' [wxZlibOutputStream](http://docs.wxwidgets.org/3.0/classwx_zlib_output_stream.html) class.
 pub struct ZlibOutputStream { ptr: *mut c_void }
 impl TZlibOutputStream for ZlibOutputStream {}
 impl TFilterOutputStream for ZlibOutputStream {}
@@ -1911,9 +2094,11 @@ impl ZlibOutputStream {
     
 }
 
+/// Methods of the wxWidgets' [wxZlibOutputStream](http://docs.wxwidgets.org/3.0/classwx_zlib_output_stream.html) class.
 pub trait TZlibOutputStream : TFilterOutputStream {
 }
 
+/// Wraps the wxWidgets' [wxMemoryBuffer](http://docs.wxwidgets.org/3.0/classwx_memory_buffer.html) class.
 pub struct MemoryBuffer { ptr: *mut c_void }
 impl TMemoryBuffer for MemoryBuffer { fn ptr(&self) -> *mut c_void { self.ptr } }
 
@@ -1923,11 +2108,13 @@ impl MemoryBuffer {
     
 }
 
+/// Methods of the wxWidgets' [wxMemoryBuffer](http://docs.wxwidgets.org/3.0/classwx_memory_buffer.html) class.
 pub trait TMemoryBuffer {
     fn ptr(&self) -> *mut c_void;
     
 }
 
+/// Wraps the wxWidgets' [wxFileConfig](http://docs.wxwidgets.org/3.0/classwx_file_config.html) class.
 pub struct FileConfig { ptr: *mut c_void }
 impl TFileConfig for FileConfig {}
 impl TConfigBase for FileConfig { fn ptr(&self) -> *mut c_void { self.ptr } }
@@ -1941,6 +2128,7 @@ impl FileConfig {
     }
 }
 
+/// Methods of the wxWidgets' [wxFileConfig](http://docs.wxwidgets.org/3.0/classwx_file_config.html) class.
 pub trait TFileConfig : TConfigBase {
 }
 
