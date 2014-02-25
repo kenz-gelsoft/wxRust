@@ -27,7 +27,7 @@ pub trait PropertyGridMethods : ControlMethods {
         unsafe { PGProperty { ptr: wxPropertyGrid_Append(self.ptr(), prop.ptr()) } }
     }
     fn disableProperty(&self, propName: &str) -> c_int {
-        let propName = wxT(propName);
+        let propName = strToString(propName);
         unsafe { wxPropertyGrid_DisableProperty(self.ptr(), propName.ptr()) }
     }
 }
@@ -70,19 +70,19 @@ impl PGProperty {
 /// Methods of the wxWidgets' [wxPGProperty](http://docs.wxwidgets.org/3.0/classwx_pgp_roperty.html) class.
 pub trait PGPropertyMethods : ObjectMethods {
     fn getLabel(&self) -> ~str {
-        unsafe { WxString { ptr: wxPGProperty_GetLabel(self.ptr()) }.to_str() }
+        unsafe { String { ptr: wxPGProperty_GetLabel(self.ptr()) }.to_str() }
     }
     fn getName(&self) -> ~str {
-        unsafe { WxString { ptr: wxPGProperty_GetName(self.ptr()) }.to_str() }
+        unsafe { String { ptr: wxPGProperty_GetName(self.ptr()) }.to_str() }
     }
     fn getValueAsString(&self) -> ~str {
-        unsafe { WxString { ptr: wxPGProperty_GetValueAsString(self.ptr()) }.to_str() }
+        unsafe { String { ptr: wxPGProperty_GetValueAsString(self.ptr()) }.to_str() }
     }
     fn getValueType(&self) -> ~str {
-        unsafe { WxString { ptr: wxPGProperty_GetValueType(self.ptr()) }.to_str() }
+        unsafe { String { ptr: wxPGProperty_GetValueType(self.ptr()) }.to_str() }
     }
     fn setHelpString(&self, helpString: &str) {
-        let helpString = wxT(helpString);
+        let helpString = strToString(helpString);
         unsafe { wxPGProperty_SetHelpString(self.ptr(), helpString.ptr()) }
     }
 }
@@ -98,9 +98,9 @@ impl StringProperty {
     pub fn null() -> StringProperty { StringProperty::from(0 as *mut c_void) }
     
     pub fn new(label: &str, name: &str, value: &str) -> StringProperty {
-        let label = wxT(label);
-        let name = wxT(name);
-        let value = wxT(value);
+        let label = strToString(label);
+        let name = strToString(name);
+        let value = strToString(value);
         unsafe { StringProperty { ptr: wxStringProperty_Create(label.ptr(), name.ptr(), value.ptr()) } }
     }
 }
@@ -120,8 +120,8 @@ impl IntProperty {
     pub fn null() -> IntProperty { IntProperty::from(0 as *mut c_void) }
     
     pub fn new(label: &str, name: &str, value: c_int) -> IntProperty {
-        let label = wxT(label);
-        let name = wxT(name);
+        let label = strToString(label);
+        let name = strToString(name);
         unsafe { IntProperty { ptr: wxIntProperty_Create(label.ptr(), name.ptr(), value) } }
     }
 }
@@ -141,8 +141,8 @@ impl BoolProperty {
     pub fn null() -> BoolProperty { BoolProperty::from(0 as *mut c_void) }
     
     pub fn new(label: &str, name: &str, value: c_int) -> BoolProperty {
-        let label = wxT(label);
-        let name = wxT(name);
+        let label = strToString(label);
+        let name = strToString(name);
         unsafe { BoolProperty { ptr: wxBoolProperty_Create(label.ptr(), name.ptr(), value) } }
     }
 }
@@ -162,8 +162,8 @@ impl FloatProperty {
     pub fn null() -> FloatProperty { FloatProperty::from(0 as *mut c_void) }
     
     pub fn new(label: &str, name: &str, value: c_float) -> FloatProperty {
-        let label = wxT(label);
-        let name = wxT(name);
+        let label = strToString(label);
+        let name = strToString(name);
         unsafe { FloatProperty { ptr: wxFloatProperty_Create(label.ptr(), name.ptr(), value) } }
     }
 }
@@ -183,8 +183,8 @@ impl DateProperty {
     pub fn null() -> DateProperty { DateProperty::from(0 as *mut c_void) }
     
     pub fn new<T: DateTimeMethods>(label: &str, name: &str, value: &T) -> DateProperty {
-        let label = wxT(label);
-        let name = wxT(name);
+        let label = strToString(label);
+        let name = strToString(name);
         unsafe { DateProperty { ptr: wxDateProperty_Create(label.ptr(), name.ptr(), value.ptr()) } }
     }
 }
@@ -204,9 +204,9 @@ impl FileProperty {
     pub fn null() -> FileProperty { FileProperty::from(0 as *mut c_void) }
     
     pub fn new(label: &str, name: &str, value: &str) -> FileProperty {
-        let label = wxT(label);
-        let name = wxT(name);
-        let value = wxT(value);
+        let label = strToString(label);
+        let name = strToString(name);
+        let value = strToString(value);
         unsafe { FileProperty { ptr: wxFileProperty_Create(label.ptr(), name.ptr(), value.ptr()) } }
     }
 }
@@ -226,7 +226,7 @@ impl PropertyCategory {
     pub fn null() -> PropertyCategory { PropertyCategory::from(0 as *mut c_void) }
     
     pub fn new(label: &str) -> PropertyCategory {
-        let label = wxT(label);
+        let label = strToString(label);
         unsafe { PropertyCategory { ptr: wxPropertyCategory_Create(label.ptr()) } }
     }
 }

@@ -368,7 +368,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_DrawRowLabels(self.ptr(), dc.ptr()) }
     }
     fn drawTextRectangle<T: DCMethods>(&self, dc: &T, txt: &str, x: c_int, y: c_int, w: c_int, h: c_int, horizontalAlignment: c_int, verticalAlignment: c_int) {
-        let txt = wxT(txt);
+        let txt = strToString(txt);
         unsafe { wxGrid_DrawTextRectangle(self.ptr(), dc.ptr(), txt.ptr(), x, y, w, h, horizontalAlignment, verticalAlignment) }
     }
     fn enableCellEditControl(&self, enable: c_int) {
@@ -417,7 +417,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_GetCellTextColour(self.ptr(), row, col, colour.ptr()) }
     }
     fn getCellValue(&self, row: c_int, col: c_int) -> ~str {
-        unsafe { WxString { ptr: wxGrid_GetCellValue(self.ptr(), row, col) }.to_str() }
+        unsafe { String { ptr: wxGrid_GetCellValue(self.ptr(), row, col) }.to_str() }
     }
     fn getColLabelAlignment(&self, horiz: *mut c_int, vert: *mut c_int) {
         unsafe { wxGrid_GetColLabelAlignment(self.ptr(), horiz, vert) }
@@ -426,7 +426,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_GetColLabelSize(self.ptr()) }
     }
     fn getColLabelValue(&self, col: c_int) -> ~str {
-        unsafe { WxString { ptr: wxGrid_GetColLabelValue(self.ptr(), col) }.to_str() }
+        unsafe { String { ptr: wxGrid_GetColLabelValue(self.ptr(), col) }.to_str() }
     }
     fn getColSize(&self, col: c_int) -> c_int {
         unsafe { wxGrid_GetColSize(self.ptr(), col) }
@@ -456,7 +456,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { GridCellEditor { ptr: wxGrid_GetDefaultEditorForCell(self.ptr(), row, col) } }
     }
     fn getDefaultEditorForType(&self, typeName: &str) -> GridCellEditor {
-        let typeName = wxT(typeName);
+        let typeName = strToString(typeName);
         unsafe { GridCellEditor { ptr: wxGrid_GetDefaultEditorForType(self.ptr(), typeName.ptr()) } }
     }
     fn getDefaultRenderer(&self) -> GridCellRenderer {
@@ -466,7 +466,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { GridCellRenderer { ptr: wxGrid_GetDefaultRendererForCell(self.ptr(), row, col) } }
     }
     fn getDefaultRendererForType(&self, typeName: &str) -> GridCellRenderer {
-        let typeName = wxT(typeName);
+        let typeName = strToString(typeName);
         unsafe { GridCellRenderer { ptr: wxGrid_GetDefaultRendererForType(self.ptr(), typeName.ptr()) } }
     }
     fn getDefaultRowLabelSize(&self) -> c_int {
@@ -506,7 +506,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_GetRowLabelSize(self.ptr()) }
     }
     fn getRowLabelValue(&self, row: c_int) -> ~str {
-        unsafe { WxString { ptr: wxGrid_GetRowLabelValue(self.ptr(), row) }.to_str() }
+        unsafe { String { ptr: wxGrid_GetRowLabelValue(self.ptr(), row) }.to_str() }
     }
     fn getRowSize(&self, row: c_int) -> c_int {
         unsafe { wxGrid_GetRowSize(self.ptr(), row) }
@@ -596,7 +596,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_ProcessTableMessage(self.ptr(), evt.ptr()) }
     }
     fn registerDataType<T: GridCellRendererMethods, U: GridCellEditorMethods>(&self, typeName: &str, renderer: &T, editor: &U) {
-        let typeName = wxT(typeName);
+        let typeName = strToString(typeName);
         unsafe { wxGrid_RegisterDataType(self.ptr(), typeName.ptr(), renderer.ptr(), editor.ptr()) }
     }
     fn saveEditControlValue(&self) {
@@ -636,7 +636,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_SetCellTextColour(self.ptr(), row, col, colour.ptr()) }
     }
     fn setCellValue(&self, row: c_int, col: c_int, s: &str) {
-        let s = wxT(s);
+        let s = strToString(s);
         unsafe { wxGrid_SetCellValue(self.ptr(), row, col, s.ptr()) }
     }
     fn setColAttr<T: GridCellAttrMethods>(&self, col: c_int, attr: &T) {
@@ -646,7 +646,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_SetColFormatBool(self.ptr(), col) }
     }
     fn setColFormatCustom(&self, col: c_int, typeName: &str) {
-        let typeName = wxT(typeName);
+        let typeName = strToString(typeName);
         unsafe { wxGrid_SetColFormatCustom(self.ptr(), col, typeName.ptr()) }
     }
     fn setColFormatFloat(&self, col: c_int, width: c_int, precision: c_int) {
@@ -662,7 +662,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_SetColLabelSize(self.ptr(), height) }
     }
     fn setColLabelValue(&self, col: c_int, label: &str) {
-        let label = wxT(label);
+        let label = strToString(label);
         unsafe { wxGrid_SetColLabelValue(self.ptr(), col, label.ptr()) }
     }
     fn setColMinimalWidth(&self, col: c_int, width: c_int) {
@@ -726,7 +726,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_SetRowLabelSize(self.ptr(), width) }
     }
     fn setRowLabelValue(&self, row: c_int, label: &str) {
-        let label = wxT(label);
+        let label = strToString(label);
         unsafe { wxGrid_SetRowLabelValue(self.ptr(), row, label.ptr()) }
     }
     fn setRowMinimalHeight(&self, row: c_int, width: c_int) {
@@ -751,7 +751,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_ShowCellEditControl(self.ptr()) }
     }
     fn stringToLines(&self, value: &str, lines: *mut c_void) -> c_int {
-        let value = wxT(value);
+        let value = strToString(value);
         unsafe { wxGrid_StringToLines(self.ptr(), value.ptr(), lines) }
     }
     fn xToCol(&self, x: c_int) -> c_int {
@@ -985,8 +985,8 @@ pub trait GridCellEditorMethods : GridCellWorkerMethods {
         unsafe { wxGridCellEditor_Destroy(self.ptr()) }
     }
     fn endEdit<T: GridMethods>(&self, row: c_int, col: c_int, grid: &T, oldStr: &str, newStr: &str) -> c_int {
-        let oldStr = wxT(oldStr);
-        let newStr = wxT(newStr);
+        let oldStr = strToString(oldStr);
+        let newStr = strToString(newStr);
         unsafe { wxGridCellEditor_EndEdit(self.ptr(), row, col, grid.ptr(), oldStr.ptr(), newStr.ptr()) }
     }
     fn getControl(&self) -> Control {
@@ -1011,7 +1011,7 @@ pub trait GridCellEditorMethods : GridCellWorkerMethods {
         unsafe { wxGridCellEditor_SetControl(self.ptr(), control.ptr()) }
     }
     fn setParameters(&self, params: &str) {
-        let params = wxT(params);
+        let params = strToString(params);
         unsafe { wxGridCellEditor_SetParameters(self.ptr(), params.ptr()) }
     }
     fn setSize(&self, x: c_int, y: c_int, w: c_int, h: c_int) {
@@ -1654,7 +1654,7 @@ pub trait TaskBarIconMethods : EvtHandlerMethods {
         unsafe { wxTaskBarIcon_RemoveIcon(self.ptr()) }
     }
     fn setIcon<T: IconMethods>(&self, icon: &T, text: &str) -> c_int {
-        let text = wxT(text);
+        let text = strToString(text);
         unsafe { wxTaskBarIcon_SetIcon(self.ptr(), icon.ptr(), text.ptr()) }
     }
 }
@@ -1692,7 +1692,7 @@ impl Wizard {
         unsafe { wxWizard_Chain(f.ptr(), s.ptr()) }
     }
     pub fn new<T: WindowMethods, U: BitmapMethods>(_prt: &T, _id: c_int, _txt: &str, _bmp: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int) -> Wizard {
-        let _txt = wxT(_txt);
+        let _txt = strToString(_txt);
         unsafe { Wizard { ptr: wxWizard_Create(_prt.ptr(), _id, _txt.ptr(), _bmp.ptr(), _lft, _top, _wdt, _hgt) } }
     }
 }

@@ -131,7 +131,7 @@ pub trait HtmlHelpControllerMethods : HelpControllerBaseMethods {
         unsafe { wxHtmlHelpController_DisplayNumber(self.ptr(), id) }
     }
     fn displaySection(&self, section: &str) -> c_int {
-        let section = wxT(section);
+        let section = strToString(section);
         unsafe { wxHtmlHelpController_DisplaySection(self.ptr(), section.ptr()) }
     }
     fn displaySectionNumber(&self, sectionNo: c_int) -> c_int {
@@ -144,44 +144,44 @@ pub trait HtmlHelpControllerMethods : HelpControllerBaseMethods {
         unsafe { wxHtmlHelpController_GetFrameParameters(self.ptr(), title, width, height, pos_x, pos_y, newFrameEachTime) }
     }
     fn initialize(&self, file: &str) -> c_int {
-        let file = wxT(file);
+        let file = strToString(file);
         unsafe { wxHtmlHelpController_Initialize(self.ptr(), file.ptr()) }
     }
     fn keywordSearch(&self, keyword: &str) -> c_int {
-        let keyword = wxT(keyword);
+        let keyword = strToString(keyword);
         unsafe { wxHtmlHelpController_KeywordSearch(self.ptr(), keyword.ptr()) }
     }
     fn loadFile(&self, file: &str) -> c_int {
-        let file = wxT(file);
+        let file = strToString(file);
         unsafe { wxHtmlHelpController_LoadFile(self.ptr(), file.ptr()) }
     }
     fn quit(&self) -> c_int {
         unsafe { wxHtmlHelpController_Quit(self.ptr()) }
     }
     fn readCustomization<T: ConfigBaseMethods>(&self, cfg: &T, path: &str) {
-        let path = wxT(path);
+        let path = strToString(path);
         unsafe { wxHtmlHelpController_ReadCustomization(self.ptr(), cfg.ptr(), path.ptr()) }
     }
     fn setFrameParameters(&self, title: *mut c_void, width: c_int, height: c_int, pos_x: c_int, pos_y: c_int, newFrameEachTime: c_int) {
         unsafe { wxHtmlHelpController_SetFrameParameters(self.ptr(), title, width, height, pos_x, pos_y, newFrameEachTime) }
     }
     fn setTempDir(&self, path: &str) {
-        let path = wxT(path);
+        let path = strToString(path);
         unsafe { wxHtmlHelpController_SetTempDir(self.ptr(), path.ptr()) }
     }
     fn setTitleFormat(&self, format: *mut c_void) {
         unsafe { wxHtmlHelpController_SetTitleFormat(self.ptr(), format) }
     }
     fn setViewer(&self, viewer: &str, flags: c_int) {
-        let viewer = wxT(viewer);
+        let viewer = strToString(viewer);
         unsafe { wxHtmlHelpController_SetViewer(self.ptr(), viewer.ptr(), flags) }
     }
     fn useConfig<T: ConfigBaseMethods>(&self, config: &T, rootpath: &str) {
-        let rootpath = wxT(rootpath);
+        let rootpath = strToString(rootpath);
         unsafe { wxHtmlHelpController_UseConfig(self.ptr(), config.ptr(), rootpath.ptr()) }
     }
     fn writeCustomization<T: ConfigBaseMethods>(&self, cfg: &T, path: &str) {
-        let path = wxT(path);
+        let path = strToString(path);
         unsafe { wxHtmlHelpController_WriteCustomization(self.ptr(), cfg.ptr(), path.ptr()) }
     }
 }
@@ -375,7 +375,7 @@ impl HtmlWindow {
     pub fn null() -> HtmlWindow { HtmlWindow::from(0 as *mut c_void) }
     
     pub fn new<T: WindowMethods>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> HtmlWindow {
-        let _txt = wxT(_txt);
+        let _txt = strToString(_txt);
         unsafe { HtmlWindow { ptr: wxHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr()) } }
     }
 }
@@ -383,20 +383,20 @@ impl HtmlWindow {
 /// Methods of the wxWidgets' [wxHtmlWindow](http://docs.wxwidgets.org/3.0/classwx_html_window.html) class.
 pub trait HtmlWindowMethods : ScrolledWindowMethods {
     fn appendToPage(&self, source: &str) -> c_int {
-        let source = wxT(source);
+        let source = strToString(source);
         unsafe { wxHtmlWindow_AppendToPage(self.ptr(), source.ptr()) }
     }
     fn getInternalRepresentation(&self) -> HtmlContainerCell {
         unsafe { HtmlContainerCell { ptr: wxHtmlWindow_GetInternalRepresentation(self.ptr()) } }
     }
     fn getOpenedAnchor(&self) -> ~str {
-        unsafe { WxString { ptr: wxHtmlWindow_GetOpenedAnchor(self.ptr()) }.to_str() }
+        unsafe { String { ptr: wxHtmlWindow_GetOpenedAnchor(self.ptr()) }.to_str() }
     }
     fn getOpenedPage(&self) -> ~str {
-        unsafe { WxString { ptr: wxHtmlWindow_GetOpenedPage(self.ptr()) }.to_str() }
+        unsafe { String { ptr: wxHtmlWindow_GetOpenedPage(self.ptr()) }.to_str() }
     }
     fn getOpenedPageTitle(&self) -> ~str {
-        unsafe { WxString { ptr: wxHtmlWindow_GetOpenedPageTitle(self.ptr()) }.to_str() }
+        unsafe { String { ptr: wxHtmlWindow_GetOpenedPageTitle(self.ptr()) }.to_str() }
     }
     fn getRelatedFrame(&self) -> Frame {
         unsafe { Frame { ptr: wxHtmlWindow_GetRelatedFrame(self.ptr()) } }
@@ -417,34 +417,34 @@ pub trait HtmlWindowMethods : ScrolledWindowMethods {
         unsafe { wxHtmlWindow_HistoryForward(self.ptr()) }
     }
     fn loadPage(&self, location: &str) -> c_int {
-        let location = wxT(location);
+        let location = strToString(location);
         unsafe { wxHtmlWindow_LoadPage(self.ptr(), location.ptr()) }
     }
     fn readCustomization<T: ConfigBaseMethods>(&self, cfg: &T, path: &str) {
-        let path = wxT(path);
+        let path = strToString(path);
         unsafe { wxHtmlWindow_ReadCustomization(self.ptr(), cfg.ptr(), path.ptr()) }
     }
     fn setBorders(&self, b: c_int) {
         unsafe { wxHtmlWindow_SetBorders(self.ptr(), b) }
     }
     fn setFonts(&self, normal_face: &str, fixed_face: &str, sizes: *mut c_int) {
-        let normal_face = wxT(normal_face);
-        let fixed_face = wxT(fixed_face);
+        let normal_face = strToString(normal_face);
+        let fixed_face = strToString(fixed_face);
         unsafe { wxHtmlWindow_SetFonts(self.ptr(), normal_face.ptr(), fixed_face.ptr(), sizes) }
     }
     fn setPage(&self, source: &str) {
-        let source = wxT(source);
+        let source = strToString(source);
         unsafe { wxHtmlWindow_SetPage(self.ptr(), source.ptr()) }
     }
     fn setRelatedFrame<T: FrameMethods>(&self, frame: &T, format: &str) {
-        let format = wxT(format);
+        let format = strToString(format);
         unsafe { wxHtmlWindow_SetRelatedFrame(self.ptr(), frame.ptr(), format.ptr()) }
     }
     fn setRelatedStatusBar(&self, bar: c_int) {
         unsafe { wxHtmlWindow_SetRelatedStatusBar(self.ptr(), bar) }
     }
     fn writeCustomization<T: ConfigBaseMethods>(&self, cfg: &T, path: &str) {
-        let path = wxT(path);
+        let path = strToString(path);
         unsafe { wxHtmlWindow_WriteCustomization(self.ptr(), cfg.ptr(), path.ptr()) }
     }
 }
@@ -471,13 +471,13 @@ pub trait CHtmlEventMethods : CommandEventMethods {
         unsafe { HtmlCell { ptr: wxcHtmlEvent_GetHtmlCell(self.ptr()) } }
     }
     fn getHtmlCellId(&self) -> ~str {
-        unsafe { WxString { ptr: wxcHtmlEvent_GetHtmlCellId(self.ptr()) }.to_str() }
+        unsafe { String { ptr: wxcHtmlEvent_GetHtmlCellId(self.ptr()) }.to_str() }
     }
     fn getHref(&self) -> ~str {
-        unsafe { WxString { ptr: wxcHtmlEvent_GetHref(self.ptr()) }.to_str() }
+        unsafe { String { ptr: wxcHtmlEvent_GetHref(self.ptr()) }.to_str() }
     }
     fn getTarget(&self) -> ~str {
-        unsafe { WxString { ptr: wxcHtmlEvent_GetTarget(self.ptr()) }.to_str() }
+        unsafe { String { ptr: wxcHtmlEvent_GetTarget(self.ptr()) }.to_str() }
     }
     fn getLogicalPosition(&self) -> Point {
         unsafe { Point { ptr: wxcHtmlEvent_GetLogicalPosition(self.ptr()) } }
@@ -499,7 +499,7 @@ impl CHtmlWindow {
     pub fn null() -> CHtmlWindow { CHtmlWindow::from(0 as *mut c_void) }
     
     pub fn new<T: WindowMethods>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> CHtmlWindow {
-        let _txt = wxT(_txt);
+        let _txt = strToString(_txt);
         unsafe { CHtmlWindow { ptr: wxcHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr()) } }
     }
 }

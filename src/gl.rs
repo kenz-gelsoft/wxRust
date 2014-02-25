@@ -18,14 +18,14 @@ impl GLCanvas {
     pub fn null() -> GLCanvas { GLCanvas::from(0 as *mut c_void) }
     
     pub fn new<T: WindowMethods, U: PaletteMethods>(parent: &T, windowID: c_int, attributes: *mut c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int, title: &str, palette: &U) -> GLCanvas {
-        let title = wxT(title);
+        let title = strToString(title);
         unsafe { GLCanvas { ptr: wxGLCanvas_Create(parent.ptr(), windowID, attributes, x, y, w, h, style, title.ptr(), palette.ptr()) } }
     }
     pub fn isDisplaySupported(attributes: *mut c_int) -> c_int {
         unsafe { wxGLCanvas_IsDisplaySupported(attributes) }
     }
     pub fn isExtensionSupported(extension: &str) -> c_int {
-        let extension = wxT(extension);
+        let extension = strToString(extension);
         unsafe { wxGLCanvas_IsExtensionSupported(extension.ptr()) }
     }
 }

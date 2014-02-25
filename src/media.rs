@@ -15,9 +15,9 @@ impl MediaCtrl {
     pub fn null() -> MediaCtrl { MediaCtrl::from(0 as *mut c_void) }
     
     pub fn new<T: WindowMethods>(parent: &T, windowID: c_int, fileName: &str, x: c_int, y: c_int, w: c_int, h: c_int, style: c_long, szBackend: &str, name: &str) -> MediaCtrl {
-        let fileName = wxT(fileName);
-        let szBackend = wxT(szBackend);
-        let name = wxT(name);
+        let fileName = strToString(fileName);
+        let szBackend = strToString(szBackend);
+        let name = strToString(name);
         unsafe { MediaCtrl { ptr: wxMediaCtrl_Create(parent.ptr(), windowID, fileName.ptr(), x, y, w, h, style, szBackend.ptr(), name.ptr()) } }
     }
 }
@@ -37,16 +37,16 @@ pub trait MediaCtrlMethods : WindowMethods {
         unsafe { wxMediaCtrl_Length(self.ptr()) }
     }
     fn load(&self, fileName: &str) -> c_int {
-        let fileName = wxT(fileName);
+        let fileName = strToString(fileName);
         unsafe { wxMediaCtrl_Load(self.ptr(), fileName.ptr()) }
     }
     fn loadURI(&self, uri: &str) -> c_int {
-        let uri = wxT(uri);
+        let uri = strToString(uri);
         unsafe { wxMediaCtrl_LoadURI(self.ptr(), uri.ptr()) }
     }
     fn loadURIWithProxy(&self, uri: &str, proxy: &str) -> c_int {
-        let uri = wxT(uri);
-        let proxy = wxT(proxy);
+        let uri = strToString(uri);
+        let proxy = strToString(proxy);
         unsafe { wxMediaCtrl_LoadURIWithProxy(self.ptr(), uri.ptr(), proxy.ptr()) }
     }
     fn pause(&self) -> c_int {
