@@ -1,3 +1,5 @@
+language: objective-c
+
 branches:
   only:
     - master
@@ -6,15 +8,11 @@ branches:
     - rust-mac
 
 before_install:
-  - yes | sudo add-apt-repository ppa:hansjorg/rust
-  - yes | sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
-  - yes | sudo apt-add-repository 'deb http://repos.codelite.org/wx2.9/ubuntu/ precise universe'
-  - sudo apt-get update
+  - brew update
 install:
-  - sudo apt-get install rust-0.9 libclang-3.3-dev libwxgtk2.9-0-unofficial libwxgtk2.9-dev
+  - brew install rust wxmac
 script:
-  - export LD_LIBRARY_PATH=/usr/lib/llvm-3.3/lib
   - mkdir -p build
   - cd build
-  - cmake -DRUSTCFLAGS="-L;/usr/lib/llvm-3.3/lib" ..
+  - cmake ..
   - make
