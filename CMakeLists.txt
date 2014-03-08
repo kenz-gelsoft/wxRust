@@ -13,13 +13,13 @@ if(APPLE)
     )
     set(LIBCLANG_PATH ${OSX_SDK}/Toolchains/XcodeDefault.xctoolchain/usr/lib)
     set(BINDGEN_LIBPATH DYLD_FALLBACK_LIBRARY_PATH=${LIBCLANG_PATH})
-    set(RUSTCFLAGS ${RUSTCFLAGS} -L ${LIBCLANG_PATH})
 else(APPLE)
     set(PATCH_UNSAFE_RS)
-    set(BINDGEN_LIBPATH)
+    file(GLOB LIBCLANG_PATH "/usr/lib/llvm*/lib")
+    set(BINDGEN_LIBPATH LD_LIBRARY_PATH=${LIBCLANG_PATH})
 endif(APPLE)
 
-set(RUSTCFLAGS ${RUSTCFLAGS} -L wxc)
+set(RUSTCFLAGS ${RUSTCFLAGS} -L ${LIBCLANG_PATH} -L wxc)
 set(GENSRC wxHaskell/wxc/src/include)
 set(GENSRCS
     ${GENSRC}/wxc.h
