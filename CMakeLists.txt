@@ -25,13 +25,28 @@ set(GENSRCS
     ${GENSRC}/wxc.h
 )
 
-add_rust_crate(bindgen
+add_rust_crate_nonall(bindgen
     rust-bindgen/bindgen.rs
     rust-bindgen/clang.rs
     rust-bindgen/clangll.rs
     rust-bindgen/gen.rs
     rust-bindgen/main.rs
     rust-bindgen/types.rs
+    bindgen_patched
+)
+
+add_custom_command(
+    OUTPUT bindgen_patched
+    COMMAND patch -p1 < ../rust-bindgen.patch
+    COMMAND touch bindgen_patched
+    DEPENDS ${CMAKE_SOURCE_DIR}/rust-bindgen.patch
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
+)
+
+add_custom_target(bindgen_unpatched ALL
+    COMMAND patch -p1 -R < ../rust-bindgen.patch
+    DEPENDS bindgen.dummy
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
 )
 
 add_custom_command(
@@ -45,7 +60,7 @@ add_custom_command(
         ${GENSRCS}
         > src/_unsafe.rs
     COMMAND ${PATCH_UNSAFE_RS}
-    DEPENDS bindgen.dummy ${GENSRCS}
+    DEPENDS bindgen_unpatched ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
