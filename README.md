@@ -3,6 +3,7 @@
 master: [![master build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=master)](https://travis-ci.org/kenz-gelsoft/wxRust)
 / rust-0.9: [![rust 0.9 build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=rust-0.9)](https://travis-ci.org/kenz-gelsoft/wxRust)
 / rust-0.8: [![rust 0.8 build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=rust-0.8)](https://travis-ci.org/kenz-gelsoft/wxRust)
+/ mac(0.9): [![Mac(0.9) build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=rust-mac)](https://travis-ci.org/kenz-gelsoft/wxRust)
 
 This is a [Rust](http://www.rust-lang.org/) binding for the [wxWidgets cross platform toolkit](http://www.wxwidgets.org/).
 
@@ -41,10 +42,10 @@ Use following Rust compiler version for your wxRust branch. We're using Servo ma
 <tr><td>rust-0.8  </td><td><a href="https://github.com/mozilla/rust/releases/tag/0.8">0.8</a>          </td></tr>
 </table>
 
-Install the wxWidgets 2.9.5 (or later) and CMake as below
+Install the wxWidgets 3.0 (2.9.5 or later is required) and CMake as below
 (in the case of [Homebrew](http://brew.sh/)):
 
-    brew install wxmac --devel
+    brew install wxmac
     brew install cmake
 
 With some tweak you may be able to compile wxRust with a bit older versions (2.9.0 < x < 2.9.4) of wxWidgets.
@@ -65,11 +66,6 @@ And generate Makefiles and make:
     cd build
     cmake ..
     make
-
-If you use wxmac installed by [MacPorts](http://www.macports.org/),
-add "-DUSE_MACPORTS=ON" option to above cmake command line:
-
-    cmake -DUSE_MACPORTS=ON ..
 
 ### Compile and Run the Test program
 
