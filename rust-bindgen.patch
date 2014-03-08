@@ -1,0 +1,24 @@
+diff --git a/clang.rs b/clang.rs
+index 11bf5b7..1684166 100644
+--- a/clang.rs
++++ b/clang.rs
+@@ -171,17 +171,11 @@ impl Type {
+     }
+ 
+     pub fn size(&self) -> uint {
+-        unsafe {
+-            let val = clang_Type_getSizeOf(self.x);
+-            if val < 0 { 0 } else { val as uint }
+-        }
++        0
+     }
+ 
+     pub fn align(&self) -> uint {
+-        unsafe {
+-            let val = clang_Type_getAlignOf(self.x);
+-            if val < 0 { 0 } else { val as uint }
+-        }
++        0
+     }
+ 
+     // pointer
