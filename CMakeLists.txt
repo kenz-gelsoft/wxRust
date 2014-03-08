@@ -2,14 +2,21 @@ cmake_minimum_required(VERSION 2.8)
 
 include(rust.cmake)
 
-option(USE_MACPORTS "Use wxMac installed by MacPorts" OFF)
-
 add_subdirectory(wxc)
 
 if(APPLE)
     set(PATCH_UNSAFE_RS patch -p0 < src/_unsafe.rs.patch)
+    execute_process(
+        COMMAND xcode-select -p
+        OUTPUT_VARIABLE OSX_SDK
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    set(LIBCLANG_PATH ${OSX_SDK}/Toolchains/XcodeDefault.xctoolchain/usr/lib)
+    set(BINDGEN_LIBPATH DYLD_FALLBACK_LIBRARY_PATH=${LIBCLANG_PATH})
+    set(RUSTCFLAGS ${RUSTCFLAGS} -L ${LIBCLANG_PATH})
 else(APPLE)
     set(PATCH_UNSAFE_RS)
+    set(BINDGEN_LIBPATH)
 endif(APPLE)
 
 set(RUSTCFLAGS ${RUSTCFLAGS} -L wxc)
@@ -29,7 +36,7 @@ add_rust_crate(bindgen
 
 add_custom_command(
     OUTPUT  ${CMAKE_SOURCE_DIR}/src/_unsafe.rs
-    COMMAND ${CMAKE_BINARY_DIR}/bindgen
+    COMMAND ${BINDGEN_LIBPATH} ${CMAKE_BINARY_DIR}/bindgen
         -allow-bitfields
         -x c++
         `wx-config --cppflags`
