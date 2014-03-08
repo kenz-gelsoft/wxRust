@@ -7,7 +7,7 @@ add_subdirectory(wxc)
 if(APPLE)
     set(PATCH_UNSAFE_RS patch -p0 < src/_unsafe.rs.patch)
     execute_process(
-        COMMAND xcode-select -p
+        COMMAND xcode-select --print-path
         OUTPUT_VARIABLE OSX_SDK
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
