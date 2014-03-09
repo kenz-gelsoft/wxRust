@@ -8,16 +8,8 @@ If your distribution is missing, please add it.
 
 You will need to install the following packages first:
 
-* wxgtk2.9
+* wxgtk2.9 or later
 * webkitgtk2
-* python2
-
-### Modify CMakeLists.txt:
-
-codegen.py uses python 2 rather than arch's default python 3:
-
-    -    COMMAND python codegen.py ${GENSRCS} > native.rs
-    +    COMMAND python2 codegen.py ${GENSRCS} > native.rs
 
 ### Build the library
 

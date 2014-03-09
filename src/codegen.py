@@ -5,6 +5,9 @@ import re
 import sys
 
 
+PY3 = sys.version_info[0] == 3
+
+
 modules = {
     'base': {
         'depends': ['_unsafe'],
@@ -628,6 +631,13 @@ def main():
     print('\nDone.', file=sys.stderr)
 
 
+def progress():
+    if PY3:
+        print('.', file=sys.stderr, end='', flush=True)
+    else:
+        print('.', file=sys.stderr, end='')
+
+
 class WrapperGenerator(object):
     def __init__(self, parser):
         self.__parser = parser
@@ -635,10 +645,10 @@ class WrapperGenerator(object):
         self.__file = sys.stdout
 
     def generate(self):
-        print('\nGenerating code', file=sys.stderr, end='')
+        print('\nGenerating code ', file=sys.stderr, end='')
         classes = list(self.__parser.classes)
         
-        for name, module in modules.iteritems():
+        for name, module in PY3 and modules.items() or modules.iteritems():
             with open('src/%s.rs' % name, 'w') as f:
                 self.__file = f
                 self.println('use std::libc::*;')
@@ -687,7 +697,7 @@ impl String {
                 for clazz in classes:
                     if clazz.name not in module['classes']:
                         continue
-                    print('.', file=sys.stderr, end='')
+                    progress()
                     self._print_class(clazz)
                     tmpClasses.remove(clazz)
                 classes = tmpClasses
@@ -772,20 +782,20 @@ class Parser(object):
     def parse_files(self, files):
         print('Parsing files', file=sys.stderr, end='')
         for file in files:
-            print('.', file=sys.stderr, end='')
+            progress()
             for line in Preprocessor().preprocess(file):
                 self._parse_line(line.strip())
-        print('\nConstructing class information', file=sys.stderr, end='')
+        print('\nConstructing class information ', file=sys.stderr, end='')
         for clazz in self.__classes:
-            print('.', file=sys.stderr, end='')
+            progress()
             self.__root_classes.add(clazz.inheritance[-1])
             for f in self.__functions:
                 if f.name in missing_functions:
                     continue
                 clazz.add_if_member(f)
-        print('\nRemoving duplicated methods', file=sys.stderr, end='')
+        print('\nRemoving duplicated methods ', file=sys.stderr, end='')
         for clazz in self.__classes:
-            print('.', file=sys.stderr, end='')
+            progress()
             clazz.remove_methods_in_base()
     
     @property
@@ -1000,7 +1010,8 @@ class Preprocessor(object):
     def _call_cpp(self, file):
         cppflags = Popen(['wx-config', '--cppflags'], stdout=PIPE).communicate()[0].split()
         cmdline = ['cpp', '-DWXC_TYPES_H'] + cppflags + ['-I/Users/kenz/src/wxRust/wxHaskell/wxc/src/include', file]
-        return Popen(cmdline, stdout=PIPE).communicate()[0]
+        result = Popen(cmdline, stdout=PIPE).communicate()[0]
+        return PY3 and result.decode('unicode_escape') or result
 
     @staticmethod
     def _normalize(text):
@@ -1253,7 +1264,7 @@ class Type(object):
 
     @property
     def _is_complex(self):
-        return not isinstance(self.__node, basestring)
+        return not isinstance(self.__node, PY3 and str or basestring)
     
     @property
     def is_self(self):
