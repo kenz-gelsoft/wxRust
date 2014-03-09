@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>wx::advanced::LayoutAlgorithmMethods - Rust</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Oswald:700|Inconsolata:400'
+          rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../wx/main.css">
+
+    
+</head>
+<body>
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    <section class="sidebar">
+        
+
+        <p class='location'><a href='../index.html'>wx</a>&#8203;::<a href='index.html'>advanced</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.CalculateLayoutEvent.html'>CalculateLayoutEvent</a><br/><a class='struct ' href='struct.CalendarCtrl.html'>CalendarCtrl</a><br/><a class='struct ' href='struct.CalendarDateAttr.html'>CalendarDateAttr</a><br/><a class='struct ' href='struct.CalendarEvent.html'>CalendarEvent</a><br/><a class='struct ' href='struct.EditableListBox.html'>EditableListBox</a><br/><a class='struct ' href='struct.Grid.html'>Grid</a><br/><a class='struct ' href='struct.GridCellAttr.html'>GridCellAttr</a><br/><a class='struct ' href='struct.GridCellAutoWrapStringRenderer.html'>GridCellAutoWrapStringRenderer</a><br/><a class='struct ' href='struct.GridCellBoolEditor.html'>GridCellBoolEditor</a><br/><a class='struct ' href='struct.GridCellBoolRenderer.html'>GridCellBoolRenderer</a><br/><a class='struct ' href='struct.GridCellChoiceEditor.html'>GridCellChoiceEditor</a><br/><a class='struct ' href='struct.GridCellCoordsArray.html'>GridCellCoordsArray</a><br/><a class='struct ' href='struct.GridCellEditor.html'>GridCellEditor</a><br/><a class='struct ' href='struct.GridCellFloatEditor.html'>GridCellFloatEditor</a><br/><a class='struct ' href='struct.GridCellFloatRenderer.html'>GridCellFloatRenderer</a><br/><a class='struct ' href='struct.GridCellNumberEditor.html'>GridCellNumberEditor</a><br/><a class='struct ' href='struct.GridCellNumberRenderer.html'>GridCellNumberRenderer</a><br/><a class='struct ' href='struct.GridCellRenderer.html'>GridCellRenderer</a><br/><a class='struct ' href='struct.GridCellStringRenderer.html'>GridCellStringRenderer</a><br/><a class='struct ' href='struct.GridCellTextEditor.html'>GridCellTextEditor</a><br/><a class='struct ' href='struct.GridCellTextEnterEditor.html'>GridCellTextEnterEditor</a><br/><a class='struct ' href='struct.GridCellWorker.html'>GridCellWorker</a><br/><a class='struct ' href='struct.GridEditorCreatedEvent.html'>GridEditorCreatedEvent</a><br/><a class='struct ' href='struct.GridEvent.html'>GridEvent</a><br/><a class='struct ' href='struct.GridRangeSelectEvent.html'>GridRangeSelectEvent</a><br/><a class='struct ' href='struct.GridSizeEvent.html'>GridSizeEvent</a><br/><a class='struct ' href='struct.GridTableBase.html'>GridTableBase</a><br/><a class='struct ' href='struct.Joystick.html'>Joystick</a><br/><a class='struct ' href='struct.LayoutAlgorithm.html'>LayoutAlgorithm</a><br/><a class='struct ' href='struct.ManagedPtr.html'>ManagedPtr</a><br/><a class='struct ' href='struct.QueryLayoutInfoEvent.html'>QueryLayoutInfoEvent</a><br/><a class='struct ' href='struct.RustGridTable.html'>RustGridTable</a><br/><a class='struct ' href='struct.SashEvent.html'>SashEvent</a><br/><a class='struct ' href='struct.SashLayoutWindow.html'>SashLayoutWindow</a><br/><a class='struct ' href='struct.SashWindow.html'>SashWindow</a><br/><a class='struct ' href='struct.SplashScreen.html'>SplashScreen</a><br/><a class='struct ' href='struct.TaskBarIcon.html'>TaskBarIcon</a><br/><a class='struct ' href='struct.TipProvider.html'>TipProvider</a><br/><a class='struct ' href='struct.Wizard.html'>Wizard</a><br/><a class='struct ' href='struct.WizardEvent.html'>WizardEvent</a><br/><a class='struct ' href='struct.WizardPage.html'>WizardPage</a><br/><a class='struct ' href='struct.WizardPageSimple.html'>WizardPageSimple</a><br/></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.CalculateLayoutEventMethods.html'>CalculateLayoutEventMethods</a><br/><a class='trait ' href='trait.CalendarCtrlMethods.html'>CalendarCtrlMethods</a><br/><a class='trait ' href='trait.CalendarDateAttrMethods.html'>CalendarDateAttrMethods</a><br/><a class='trait ' href='trait.CalendarEventMethods.html'>CalendarEventMethods</a><br/><a class='trait ' href='trait.EditableListBoxMethods.html'>EditableListBoxMethods</a><br/><a class='trait ' href='trait.GridCellAttrMethods.html'>GridCellAttrMethods</a><br/><a class='trait ' href='trait.GridCellAutoWrapStringRendererMethods.html'>GridCellAutoWrapStringRendererMethods</a><br/><a class='trait ' href='trait.GridCellBoolEditorMethods.html'>GridCellBoolEditorMethods</a><br/><a class='trait ' href='trait.GridCellBoolRendererMethods.html'>GridCellBoolRendererMethods</a><br/><a class='trait ' href='trait.GridCellChoiceEditorMethods.html'>GridCellChoiceEditorMethods</a><br/><a class='trait ' href='trait.GridCellCoordsArrayMethods.html'>GridCellCoordsArrayMethods</a><br/><a class='trait ' href='trait.GridCellEditorMethods.html'>GridCellEditorMethods</a><br/><a class='trait ' href='trait.GridCellFloatEditorMethods.html'>GridCellFloatEditorMethods</a><br/><a class='trait ' href='trait.GridCellFloatRendererMethods.html'>GridCellFloatRendererMethods</a><br/><a class='trait ' href='trait.GridCellNumberEditorMethods.html'>GridCellNumberEditorMethods</a><br/><a class='trait ' href='trait.GridCellNumberRendererMethods.html'>GridCellNumberRendererMethods</a><br/><a class='trait ' href='trait.GridCellRendererMethods.html'>GridCellRendererMethods</a><br/><a class='trait ' href='trait.GridCellStringRendererMethods.html'>GridCellStringRendererMethods</a><br/><a class='trait ' href='trait.GridCellTextEditorMethods.html'>GridCellTextEditorMethods</a><br/><a class='trait ' href='trait.GridCellTextEnterEditorMethods.html'>GridCellTextEnterEditorMethods</a><br/><a class='trait ' href='trait.GridCellWorkerMethods.html'>GridCellWorkerMethods</a><br/><a class='trait ' href='trait.GridEditorCreatedEventMethods.html'>GridEditorCreatedEventMethods</a><br/><a class='trait ' href='trait.GridEventMethods.html'>GridEventMethods</a><br/><a class='trait ' href='trait.GridMethods.html'>GridMethods</a><br/><a class='trait ' href='trait.GridRangeSelectEventMethods.html'>GridRangeSelectEventMethods</a><br/><a class='trait ' href='trait.GridSizeEventMethods.html'>GridSizeEventMethods</a><br/><a class='trait ' href='trait.GridTableBaseMethods.html'>GridTableBaseMethods</a><br/><a class='trait ' href='trait.JoystickMethods.html'>JoystickMethods</a><br/><a class='trait current' href='trait.LayoutAlgorithmMethods.html'>LayoutAlgorithmMethods</a><br/><a class='trait ' href='trait.ManagedPtrMethods.html'>ManagedPtrMethods</a><br/><a class='trait ' href='trait.QueryLayoutInfoEventMethods.html'>QueryLayoutInfoEventMethods</a><br/><a class='trait ' href='trait.RustGridTableMethods.html'>RustGridTableMethods</a><br/><a class='trait ' href='trait.SashEventMethods.html'>SashEventMethods</a><br/><a class='trait ' href='trait.SashLayoutWindowMethods.html'>SashLayoutWindowMethods</a><br/><a class='trait ' href='trait.SashWindowMethods.html'>SashWindowMethods</a><br/><a class='trait ' href='trait.SplashScreenMethods.html'>SplashScreenMethods</a><br/><a class='trait ' href='trait.TaskBarIconMethods.html'>TaskBarIconMethods</a><br/><a class='trait ' href='trait.TipProviderMethods.html'>TipProviderMethods</a><br/><a class='trait ' href='trait.WizardEventMethods.html'>WizardEventMethods</a><br/><a class='trait ' href='trait.WizardMethods.html'>WizardMethods</a><br/><a class='trait ' href='trait.WizardPageMethods.html'>WizardPageMethods</a><br/><a class='trait ' href='trait.WizardPageSimpleMethods.html'>WizardPageSimpleMethods</a><br/></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait"><a class='source'
+                       href='../../src/wx/Users/kenz/src/wxRust/src/advanced.rs.html#1403-1413'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>advanced</a>::<a class='trait' href=''>LayoutAlgorithmMethods</a></h1><pre class='trait'>pub trait LayoutAlgorithmMethods: <a class='trait' href='../../wx/base/trait.ObjectMethods.html' title='wx::base::ObjectMethods'>ObjectMethods</a> {
+    fn <a href='#method.layoutFrame'
+                                    class='fnname'>layoutFrame</a>&lt;T: <a class='trait' href='../../wx/core/trait.FrameMethods.html' title='wx::core::FrameMethods'>FrameMethods</a>&gt;(&amp;self, frame: &amp;T, mainWindow: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.layoutMDIFrame'
+                                    class='fnname'>layoutMDIFrame</a>&lt;T: <a class='trait' href='../../wx/core/trait.FrameMethods.html' title='wx::core::FrameMethods'>FrameMethods</a>&gt;(&amp;self, frame: &amp;T, x: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, y: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, w: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, h: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, use_: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.layoutWindow'
+                                    class='fnname'>layoutWindow</a>&lt;T: <a class='trait' href='../../wx/core/trait.FrameMethods.html' title='wx::core::FrameMethods'>FrameMethods</a>&gt;(&amp;self, frame: &amp;T, mainWindow: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+}</pre><div class='docblock'><p>Methods of the wxWidgets&#39; <a href="http://docs.wxwidgets.org/3.0/classwx_layout_algorithm.html">wxLayoutAlgorithm</a> class.</p>
+</div>
+            <h2 id='provided-methods'>Provided Methods</h2>
+            <div class='methods'>
+        <h3 id='method.layoutFrame' class='method'><code>fn <span class='fnname'>layoutFrame</span>&lt;T: <a class='trait' href='../../wx/core/trait.FrameMethods.html' title='wx::core::FrameMethods'>FrameMethods</a>&gt;(&amp;self, frame: &amp;T, mainWindow: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.layoutMDIFrame' class='method'><code>fn <span class='fnname'>layoutMDIFrame</span>&lt;T: <a class='trait' href='../../wx/core/trait.FrameMethods.html' title='wx::core::FrameMethods'>FrameMethods</a>&gt;(&amp;self, frame: &amp;T, x: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, y: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, w: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, h: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, use_: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.layoutWindow' class='method'><code>fn <span class='fnname'>layoutWindow</span>&lt;T: <a class='trait' href='../../wx/core/trait.FrameMethods.html' title='wx::core::FrameMethods'>FrameMethods</a>&gt;(&amp;self, frame: &amp;T, mainWindow: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3></div>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/advanced/struct.LayoutAlgorithm.html' title='wx::advanced::LayoutAlgorithm'>LayoutAlgorithm</a></code></li></ul></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <script>
+        var rootPath = "../../";
+    </script>
+    <script src="../../wx/jquery.js"></script>
+    <script src="../../wx/search-index.js"></script>
+    <script src="../../wx/main.js"></script>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&uarr;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&darr;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>wx::xrc::XmlResource - Rust</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Oswald:700|Inconsolata:400'
+          rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../wx/main.css">
+
+    
+</head>
+<body>
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    <section class="sidebar">
+        
+
+        <p class='location'><a href='../index.html'>wx</a>&#8203;::<a href='index.html'>xrc</a></p><div class='block struct'><h2>Structs</h2><a class='struct current' href='struct.XmlResource.html'>XmlResource</a><br/></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.XmlResourceMethods.html'>XmlResourceMethods</a><br/></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct"><a class='source'
+                       href='../../src/wx/Users/kenz/src/wxRust/src/xrc.rs.html#10'>[src]</a><h1 class='fqn'>Struct <a href='../index.html'>wx</a>::<a href='index.html'>xrc</a>::<a class='struct' href=''>XmlResource</a></h1><pre class='struct'>pub struct XmlResource {
+    ptr: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>,
+}</pre><div class='docblock'><p>Wraps the wxWidgets&#39; <a href="http://docs.wxwidgets.org/3.0/classwx_xml_resource.html">wxXmlResource</a> class.</p>
+</div><h2 class='fields'>Fields</h2>
+<table><tr><td id='structfield.ptr'><code>ptr</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../wx/xrc/struct.XmlResource.html' title='wx::xrc::XmlResource'>XmlResource</a></code></h3><div class='methods'><h4 id='method.from' class='method'><code>fn <span class='fnname'>from</span>(ptr: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; <a class='struct' href='../../wx/xrc/struct.XmlResource.html' title='wx::xrc::XmlResource'>XmlResource</a></code></h4>
+<h4 id='method.null' class='method'><code>fn <span class='fnname'>null</span>() -&gt; <a class='struct' href='../../wx/xrc/struct.XmlResource.html' title='wx::xrc::XmlResource'>XmlResource</a></code></h4>
+<h4 id='method.new' class='method'><code>fn <span class='fnname'>new</span>(flags: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='struct' href='../../wx/xrc/struct.XmlResource.html' title='wx::xrc::XmlResource'>XmlResource</a></code></h4>
+<h4 id='method.newFromFile' class='method'><code>fn <span class='fnname'>newFromFile</span>(filemask: &amp;str, flags: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='struct' href='../../wx/xrc/struct.XmlResource.html' title='wx::xrc::XmlResource'>XmlResource</a></code></h4>
+<h4 id='method.get' class='method'><code>fn <span class='fnname'>get</span>() -&gt; <a class='struct' href='../../wx/xrc/struct.XmlResource.html' title='wx::xrc::XmlResource'>XmlResource</a></code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../wx/xrc/trait.XmlResourceMethods.html' title='wx::xrc::XmlResourceMethods'>XmlResourceMethods</a> for <a class='struct' href='../../wx/xrc/struct.XmlResource.html' title='wx::xrc::XmlResource'>XmlResource</a></code></h3><div class='methods'><h4 id='method.addHandler' class='method'><code>fn <span class='fnname'>addHandler</span>&lt;T: <a class='trait' href='../../wx/core/trait.EvtHandlerMethods.html' title='wx::core::EvtHandlerMethods'>EvtHandlerMethods</a>&gt;(&amp;self, handler: &amp;T)</code></h4>
+<h4 id='method.addSubclassFactory' class='method'><code>fn <span class='fnname'>addSubclassFactory</span>(&amp;self, factory: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h4>
+<h4 id='method.attachUnknownControl' class='method'><code>fn <span class='fnname'>attachUnknownControl</span>&lt;T: <a class='trait' href='../../wx/core/trait.ControlMethods.html' title='wx::core::ControlMethods'>ControlMethods</a>, U: <a class='trait' href='../../wx/core/trait.WindowMethods.html' title='wx::core::WindowMethods'>WindowMethods</a>&gt;(&amp;self, control: &amp;T, parent: &amp;U) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.clearHandlers' class='method'><code>fn <span class='fnname'>clearHandlers</span>(&amp;self)</code></h4>
+<h4 id='method.compareVersion' class='method'><code>fn <span class='fnname'>compareVersion</span>(&amp;self, major: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, minor: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, release: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, revision: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.getDomain' class='method'><code>fn <span class='fnname'>getDomain</span>(&amp;self) -&gt; ~str</code></h4>
+<h4 id='method.getFlags' class='method'><code>fn <span class='fnname'>getFlags</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.getVersion' class='method'><code>fn <span class='fnname'>getVersion</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_long.html' title='std::libc::types::os::arch::c95::c_long'>c_long</a></code></h4>
+<h4 id='method.getXRCID' class='method'><code>fn <span class='fnname'>getXRCID</span>(&amp;self, str_id: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.initAllHandlers' class='method'><code>fn <span class='fnname'>initAllHandlers</span>(&amp;self)</code></h4>
+<h4 id='method.insertHandler' class='method'><code>fn <span class='fnname'>insertHandler</span>&lt;T: <a class='trait' href='../../wx/core/trait.EvtHandlerMethods.html' title='wx::core::EvtHandlerMethods'>EvtHandlerMethods</a>&gt;(&amp;self, handler: &amp;T)</code></h4>
+<h4 id='method.load' class='method'><code>fn <span class='fnname'>load</span>(&amp;self, filemask: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.loadBitmap' class='method'><code>fn <span class='fnname'>loadBitmap</span>&lt;T: <a class='trait' href='../../wx/core/trait.BitmapMethods.html' title='wx::core::BitmapMethods'>BitmapMethods</a>&gt;(&amp;self, name: &amp;str, _ref: &amp;T)</code></h4>
+<h4 id='method.loadDialog' class='method'><code>fn <span class='fnname'>loadDialog</span>&lt;T: <a class='trait' href='../../wx/core/trait.WindowMethods.html' title='wx::core::WindowMethods'>WindowMethods</a>&gt;(&amp;self, parent: &amp;T, name: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.Dialog.html' title='wx::core::Dialog'>Dialog</a></code></h4>
+<h4 id='method.loadFrame' class='method'><code>fn <span class='fnname'>loadFrame</span>&lt;T: <a class='trait' href='../../wx/core/trait.WindowMethods.html' title='wx::core::WindowMethods'>WindowMethods</a>&gt;(&amp;self, parent: &amp;T, name: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.Frame.html' title='wx::core::Frame'>Frame</a></code></h4>
+<h4 id='method.loadIcon' class='method'><code>fn <span class='fnname'>loadIcon</span>&lt;T: <a class='trait' href='../../wx/core/trait.IconMethods.html' title='wx::core::IconMethods'>IconMethods</a>&gt;(&amp;self, name: &amp;str, _ref: &amp;T)</code></h4>
+<h4 id='method.loadMenu' class='method'><code>fn <span class='fnname'>loadMenu</span>(&amp;self, name: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.Menu.html' title='wx::core::Menu'>Menu</a></code></h4>
+<h4 id='method.loadMenuBar' class='method'><code>fn <span class='fnname'>loadMenuBar</span>&lt;T: <a class='trait' href='../../wx/core/trait.WindowMethods.html' title='wx::core::WindowMethods'>WindowMethods</a>&gt;(&amp;self, parent: &amp;T, name: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.MenuBar.html' title='wx::core::MenuBar'>MenuBar</a></code></h4>
+<h4 id='method.loadPanel' class='method'><code>fn <span class='fnname'>loadPanel</span>&lt;T: <a class='trait' href='../../wx/core/trait.WindowMethods.html' title='wx::core::WindowMethods'>WindowMethods</a>&gt;(&amp;self, parent: &amp;T, name: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.Panel.html' title='wx::core::Panel'>Panel</a></code></h4>
+<h4 id='method.loadToolBar' class='method'><code>fn <span class='fnname'>loadToolBar</span>&lt;T: <a class='trait' href='../../wx/core/trait.WindowMethods.html' title='wx::core::WindowMethods'>WindowMethods</a>&gt;(&amp;self, parent: &amp;T, name: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.ToolBar.html' title='wx::core::ToolBar'>ToolBar</a></code></h4>
+<h4 id='method.getSizer' class='method'><code>fn <span class='fnname'>getSizer</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.Sizer.html' title='wx::core::Sizer'>Sizer</a></code></h4>
+<h4 id='method.getBoxSizer' class='method'><code>fn <span class='fnname'>getBoxSizer</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.BoxSizer.html' title='wx::core::BoxSizer'>BoxSizer</a></code></h4>
+<h4 id='method.getStaticBoxSizer' class='method'><code>fn <span class='fnname'>getStaticBoxSizer</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.StaticBoxSizer.html' title='wx::core::StaticBoxSizer'>StaticBoxSizer</a></code></h4>
+<h4 id='method.getGridSizer' class='method'><code>fn <span class='fnname'>getGridSizer</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.GridSizer.html' title='wx::core::GridSizer'>GridSizer</a></code></h4>
+<h4 id='method.getFlexGridSizer' class='method'><code>fn <span class='fnname'>getFlexGridSizer</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.FlexGridSizer.html' title='wx::core::FlexGridSizer'>FlexGridSizer</a></code></h4>
+<h4 id='method.getBitmapButton' class='method'><code>fn <span class='fnname'>getBitmapButton</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.BitmapButton.html' title='wx::core::BitmapButton'>BitmapButton</a></code></h4>
+<h4 id='method.getButton' class='method'><code>fn <span class='fnname'>getButton</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.Button.html' title='wx::core::Button'>Button</a></code></h4>
+<h4 id='method.getCalendarCtrl' class='method'><code>fn <span class='fnname'>getCalendarCtrl</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/advanced/struct.CalendarCtrl.html' title='wx::advanced::CalendarCtrl'>CalendarCtrl</a></code></h4>
+<h4 id='method.getCheckBox' class='method'><code>fn <span class='fnname'>getCheckBox</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.CheckBox.html' title='wx::core::CheckBox'>CheckBox</a></code></h4>
+<h4 id='method.getCheckListBox' class='method'><code>fn <span class='fnname'>getCheckListBox</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.CheckListBox.html' title='wx::core::CheckListBox'>CheckListBox</a></code></h4>
+<h4 id='method.getChoice' class='method'><code>fn <span class='fnname'>getChoice</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.Choice.html' title='wx::core::Choice'>Choice</a></code></h4>
+<h4 id='method.getComboBox' class='method'><code>fn <span class='fnname'>getComboBox</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.ComboBox.html' title='wx::core::ComboBox'>ComboBox</a></code></h4>
+<h4 id='method.getGauge' class='method'><code>fn <span class='fnname'>getGauge</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.Gauge.html' title='wx::core::Gauge'>Gauge</a></code></h4>
+<h4 id='method.getGrid' class='method'><code>fn <span class='fnname'>getGrid</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/advanced/struct.Grid.html' title='wx::advanced::Grid'>Grid</a></code></h4>
+<h4 id='method.getHtmlWindow' class='method'><code>fn <span class='fnname'>getHtmlWindow</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/html/struct.HtmlWindow.html' title='wx::html::HtmlWindow'>HtmlWindow</a></code></h4>
+<h4 id='method.getListBox' class='method'><code>fn <span class='fnname'>getListBox</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.ListBox.html' title='wx::core::ListBox'>ListBox</a></code></h4>
+<h4 id='method.getListCtrl' class='method'><code>fn <span class='fnname'>getListCtrl</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.ListCtrl.html' title='wx::core::ListCtrl'>ListCtrl</a></code></h4>
+<h4 id='method.getMDIChildFrame' class='method'><code>fn <span class='fnname'>getMDIChildFrame</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.MDIChildFrame.html' title='wx::core::MDIChildFrame'>MDIChildFrame</a></code></h4>
+<h4 id='method.getMDIParentFrame' class='method'><code>fn <span class='fnname'>getMDIParentFrame</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.MDIParentFrame.html' title='wx::core::MDIParentFrame'>MDIParentFrame</a></code></h4>
+<h4 id='method.getMenu' class='method'><code>fn <span class='fnname'>getMenu</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.Menu.html' title='wx::core::Menu'>Menu</a></code></h4>
+<h4 id='method.getMenuBar' class='method'><code>fn <span class='fnname'>getMenuBar</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.MenuBar.html' title='wx::core::MenuBar'>MenuBar</a></code></h4>
+<h4 id='method.getMenuItem' class='method'><code>fn <span class='fnname'>getMenuItem</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.MenuItem.html' title='wx::core::MenuItem'>MenuItem</a></code></h4>
+<h4 id='method.getNotebook' class='method'><code>fn <span class='fnname'>getNotebook</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.Notebook.html' title='wx::core::Notebook'>Notebook</a></code></h4>
+<h4 id='method.getPanel' class='method'><code>fn <span class='fnname'>getPanel</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.Panel.html' title='wx::core::Panel'>Panel</a></code></h4>
+<h4 id='method.getRadioButton' class='method'><code>fn <span class='fnname'>getRadioButton</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.RadioButton.html' title='wx::core::RadioButton'>RadioButton</a></code></h4>
+<h4 id='method.getRadioBox' class='method'><code>fn <span class='fnname'>getRadioBox</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.RadioBox.html' title='wx::core::RadioBox'>RadioBox</a></code></h4>
+<h4 id='method.getScrollBar' class='method'><code>fn <span class='fnname'>getScrollBar</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.ScrollBar.html' title='wx::core::ScrollBar'>ScrollBar</a></code></h4>
+<h4 id='method.getScrolledWindow' class='method'><code>fn <span class='fnname'>getScrolledWindow</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.ScrolledWindow.html' title='wx::core::ScrolledWindow'>ScrolledWindow</a></code></h4>
+<h4 id='method.getSlider' class='method'><code>fn <span class='fnname'>getSlider</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.Slider.html' title='wx::core::Slider'>Slider</a></code></h4>
+<h4 id='method.getSpinButton' class='method'><code>fn <span class='fnname'>getSpinButton</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.SpinButton.html' title='wx::core::SpinButton'>SpinButton</a></code></h4>
+<h4 id='method.getSpinCtrl' class='method'><code>fn <span class='fnname'>getSpinCtrl</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.SpinCtrl.html' title='wx::core::SpinCtrl'>SpinCtrl</a></code></h4>
+<h4 id='method.getSplitterWindow' class='method'><code>fn <span class='fnname'>getSplitterWindow</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.SplitterWindow.html' title='wx::core::SplitterWindow'>SplitterWindow</a></code></h4>
+<h4 id='method.getStaticBitmap' class='method'><code>fn <span class='fnname'>getStaticBitmap</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.StaticBitmap.html' title='wx::core::StaticBitmap'>StaticBitmap</a></code></h4>
+<h4 id='method.getStaticBox' class='method'><code>fn <span class='fnname'>getStaticBox</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.StaticBox.html' title='wx::core::StaticBox'>StaticBox</a></code></h4>
+<h4 id='method.getStaticLine' class='method'><code>fn <span class='fnname'>getStaticLine</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.StaticLine.html' title='wx::core::StaticLine'>StaticLine</a></code></h4>
+<h4 id='method.getStaticText' class='method'><code>fn <span class='fnname'>getStaticText</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.StaticText.html' title='wx::core::StaticText'>StaticText</a></code></h4>
+<h4 id='method.getTextCtrl' class='method'><code>fn <span class='fnname'>getTextCtrl</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.TextCtrl.html' title='wx::core::TextCtrl'>TextCtrl</a></code></h4>
+<h4 id='method.getTreeCtrl' class='method'><code>fn <span class='fnname'>getTreeCtrl</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/core/struct.TreeCtrl.html' title='wx::core::TreeCtrl'>TreeCtrl</a></code></h4>
+<h4 id='method.unload' class='method'><code>fn <span class='fnname'>unload</span>(&amp;self, filemask: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.set' class='method'><code>fn <span class='fnname'>set</span>(&amp;self, res: &amp;<a class='trait' href='../../wx/xrc/trait.XmlResourceMethods.html' title='wx::xrc::XmlResourceMethods'>XmlResourceMethods</a>) -&gt; <a class='struct' href='../../wx/xrc/struct.XmlResource.html' title='wx::xrc::XmlResource'>XmlResource</a></code></h4>
+<h4 id='method.setDomain' class='method'><code>fn <span class='fnname'>setDomain</span>(&amp;self, domain: &amp;str)</code></h4>
+<h4 id='method.setFlags' class='method'><code>fn <span class='fnname'>setFlags</span>(&amp;self, flags: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h4>
+<h4 id='method.getStyledTextCtrl' class='method'><code>fn <span class='fnname'>getStyledTextCtrl</span>(&amp;self, str_id: &amp;str) -&gt; <a class='struct' href='../../wx/stc/struct.StyledTextCtrl.html' title='wx::stc::StyledTextCtrl'>StyledTextCtrl</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='../../wx/base/trait.ObjectMethods.html' title='wx::base::ObjectMethods'>ObjectMethods</a> for <a class='struct' href='../../wx/xrc/struct.XmlResource.html' title='wx::xrc::XmlResource'>XmlResource</a></code></h3><div class='methods'><h4 id='method.ptr' class='method'><code>fn <span class='fnname'>ptr</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h4>
+<h4 id='method.safeDelete' class='method'><code>fn <span class='fnname'>safeDelete</span>(&amp;self)</code></h4>
+<h4 id='method.getClientClosure' class='method'><code>fn <span class='fnname'>getClientClosure</span>(&amp;self) -&gt; <a class='struct' href='../../wx/base/struct.Closure.html' title='wx::base::Closure'>Closure</a></code></h4>
+<h4 id='method.setClientClosure' class='method'><code>fn <span class='fnname'>setClientClosure</span>&lt;T: <a class='trait' href='../../wx/base/trait.ClosureMethods.html' title='wx::base::ClosureMethods'>ClosureMethods</a>&gt;(&amp;self, closure: &amp;T)</code></h4>
+<h4 id='method.delete' class='method'><code>fn <span class='fnname'>delete</span>(&amp;self)</code></h4>
+<h4 id='method.getClassInfo' class='method'><code>fn <span class='fnname'>getClassInfo</span>(&amp;self) -&gt; <a class='struct' href='../../wx/base/struct.ClassInfo.html' title='wx::base::ClassInfo'>ClassInfo</a></code></h4>
+<h4 id='method.isKindOf' class='method'><code>fn <span class='fnname'>isKindOf</span>&lt;T: <a class='trait' href='../../wx/base/trait.ClassInfoMethods.html' title='wx::base::ClassInfoMethods'>ClassInfoMethods</a>&gt;(&amp;self, classInfo: &amp;T) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.isScrolledWindow' class='method'><code>fn <span class='fnname'>isScrolledWindow</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <script>
+        var rootPath = "../../";
+    </script>
+    <script src="../../wx/jquery.js"></script>
+    <script src="../../wx/search-index.js"></script>
+    <script src="../../wx/main.js"></script>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&uarr;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&darr;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+</body>
+</html>

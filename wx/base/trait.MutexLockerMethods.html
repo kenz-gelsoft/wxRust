@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>wx::base::MutexLockerMethods - Rust</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Oswald:700|Inconsolata:400'
+          rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../wx/main.css">
+
+    
+</head>
+<body>
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    <section class="sidebar">
+        
+
+        <p class='location'><a href='../index.html'>wx</a>&#8203;::<a href='index.html'>base</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Array.html'>Array</a><br/><a class='struct ' href='struct.ArrayString.html'>ArrayString</a><br/><a class='struct ' href='struct.BufferedInputStream.html'>BufferedInputStream</a><br/><a class='struct ' href='struct.BufferedOutputStream.html'>BufferedOutputStream</a><br/><a class='struct ' href='struct.CSConv.html'>CSConv</a><br/><a class='struct ' href='struct.ClassInfo.html'>ClassInfo</a><br/><a class='struct ' href='struct.Client.html'>Client</a><br/><a class='struct ' href='struct.ClientBase.html'>ClientBase</a><br/><a class='struct ' href='struct.ClientData.html'>ClientData</a><br/><a class='struct ' href='struct.ClientDataContainer.html'>ClientDataContainer</a><br/><a class='struct ' href='struct.Closure.html'>Closure</a><br/><a class='struct ' href='struct.CommandLineParser.html'>CommandLineParser</a><br/><a class='struct ' href='struct.Condition.html'>Condition</a><br/><a class='struct ' href='struct.ConfigBase.html'>ConfigBase</a><br/><a class='struct ' href='struct.Connection.html'>Connection</a><br/><a class='struct ' href='struct.ConnectionBase.html'>ConnectionBase</a><br/><a class='struct ' href='struct.CountingOutputStream.html'>CountingOutputStream</a><br/><a class='struct ' href='struct.CriticalSection.html'>CriticalSection</a><br/><a class='struct ' href='struct.CriticalSectionLocker.html'>CriticalSectionLocker</a><br/><a class='struct ' href='struct.DDEClient.html'>DDEClient</a><br/><a class='struct ' href='struct.DDEConnection.html'>DDEConnection</a><br/><a class='struct ' href='struct.DDEServer.html'>DDEServer</a><br/><a class='struct ' href='struct.DataInputStream.html'>DataInputStream</a><br/><a class='struct ' href='struct.DataOutputStream.html'>DataOutputStream</a><br/><a class='struct ' href='struct.DateTime.html'>DateTime</a><br/><a class='struct ' href='struct.DebugContext.html'>DebugContext</a><br/><a class='struct ' href='struct.DirTraverser.html'>DirTraverser</a><br/><a class='struct ' href='struct.DllLoader.html'>DllLoader</a><br/><a class='struct ' href='struct.DynamicLibrary.html'>DynamicLibrary</a><br/><a class='struct ' href='struct.EncodingConverter.html'>EncodingConverter</a><br/><a class='struct ' href='struct.FFile.html'>FFile</a><br/><a class='struct ' href='struct.FFileInputStream.html'>FFileInputStream</a><br/><a class='struct ' href='struct.FFileOutputStream.html'>FFileOutputStream</a><br/><a class='struct ' href='struct.FSFile.html'>FSFile</a><br/><a class='struct ' href='struct.FileConfig.html'>FileConfig</a><br/><a class='struct ' href='struct.FileInputStream.html'>FileInputStream</a><br/><a class='struct ' href='struct.FileName.html'>FileName</a><br/><a class='struct ' href='struct.FileOutputStream.html'>FileOutputStream</a><br/><a class='struct ' href='struct.FileSystem.html'>FileSystem</a><br/><a class='struct ' href='struct.FileSystemHandler.html'>FileSystemHandler</a><br/><a class='struct ' href='struct.FilterInputStream.html'>FilterInputStream</a><br/><a class='struct ' href='struct.FilterOutputStream.html'>FilterOutputStream</a><br/><a class='struct ' href='struct.InputStream.html'>InputStream</a><br/><a class='struct ' href='struct.List.html'>List</a><br/><a class='struct ' href='struct.Locale.html'>Locale</a><br/><a class='struct ' href='struct.LongLong.html'>LongLong</a><br/><a class='struct ' href='struct.MBConv.html'>MBConv</a><br/><a class='struct ' href='struct.MBConvUTF7.html'>MBConvUTF7</a><br/><a class='struct ' href='struct.MBConvUTF8.html'>MBConvUTF8</a><br/><a class='struct ' href='struct.MemoryBuffer.html'>MemoryBuffer</a><br/><a class='struct ' href='struct.MemoryFSHandler.html'>MemoryFSHandler</a><br/><a class='struct ' href='struct.MemoryInputStream.html'>MemoryInputStream</a><br/><a class='struct ' href='struct.MemoryOutputStream.html'>MemoryOutputStream</a><br/><a class='struct ' href='struct.Module.html'>Module</a><br/><a class='struct ' href='struct.Mutex.html'>Mutex</a><br/><a class='struct ' href='struct.MutexLocker.html'>MutexLocker</a><br/><a class='struct ' href='struct.NodeBase.html'>NodeBase</a><br/><a class='struct ' href='struct.Object.html'>Object</a><br/><a class='struct ' href='struct.ObjectRefData.html'>ObjectRefData</a><br/><a class='struct ' href='struct.OutputStream.html'>OutputStream</a><br/><a class='struct ' href='struct.PathList.html'>PathList</a><br/><a class='struct ' href='struct.RegEx.html'>RegEx</a><br/><a class='struct ' href='struct.RustClient.html'>RustClient</a><br/><a class='struct ' href='struct.RustConnection.html'>RustConnection</a><br/><a class='struct ' href='struct.RustLocale.html'>RustLocale</a><br/><a class='struct ' href='struct.RustServer.html'>RustServer</a><br/><a class='struct ' href='struct.ScopedArray.html'>ScopedArray</a><br/><a class='struct ' href='struct.ScopedPtr.html'>ScopedPtr</a><br/><a class='struct ' href='struct.Semaphore.html'>Semaphore</a><br/><a class='struct ' href='struct.Server.html'>Server</a><br/><a class='struct ' href='struct.ServerBase.html'>ServerBase</a><br/><a class='struct ' href='struct.SingleInstanceChecker.html'>SingleInstanceChecker</a><br/><a class='struct ' href='struct.StopWatch.html'>StopWatch</a><br/><a class='struct ' href='struct.StreamBase.html'>StreamBase</a><br/><a class='struct ' href='struct.StreamBuffer.html'>StreamBuffer</a><br/><a class='struct ' href='struct.String.html'>String</a><br/><a class='struct ' href='struct.StringBuffer.html'>StringBuffer</a><br/><a class='struct ' href='struct.StringClientData.html'>StringClientData</a><br/><a class='struct ' href='struct.StringList.html'>StringList</a><br/><a class='struct ' href='struct.StringTokenizer.html'>StringTokenizer</a><br/><a class='struct ' href='struct.SystemOptions.html'>SystemOptions</a><br/><a class='struct ' href='struct.TempFile.html'>TempFile</a><br/><a class='struct ' href='struct.TextFile.html'>TextFile</a><br/><a class='struct ' href='struct.TextInputStream.html'>TextInputStream</a><br/><a class='struct ' href='struct.TextOutputStream.html'>TextOutputStream</a><br/><a class='struct ' href='struct.Thread.html'>Thread</a><br/><a class='struct ' href='struct.Time.html'>Time</a><br/><a class='struct ' href='struct.TimeSpan.html'>TimeSpan</a><br/><a class='struct ' href='struct.Variant.html'>Variant</a><br/><a class='struct ' href='struct.VariantData.html'>VariantData</a><br/><a class='struct ' href='struct.ZipInputStream.html'>ZipInputStream</a><br/><a class='struct ' href='struct.ZlibInputStream.html'>ZlibInputStream</a><br/><a class='struct ' href='struct.ZlibOutputStream.html'>ZlibOutputStream</a><br/></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.ArrayMethods.html'>ArrayMethods</a><br/><a class='trait ' href='trait.ArrayStringMethods.html'>ArrayStringMethods</a><br/><a class='trait ' href='trait.BufferedInputStreamMethods.html'>BufferedInputStreamMethods</a><br/><a class='trait ' href='trait.BufferedOutputStreamMethods.html'>BufferedOutputStreamMethods</a><br/><a class='trait ' href='trait.CSConvMethods.html'>CSConvMethods</a><br/><a class='trait ' href='trait.ClassInfoMethods.html'>ClassInfoMethods</a><br/><a class='trait ' href='trait.ClientBaseMethods.html'>ClientBaseMethods</a><br/><a class='trait ' href='trait.ClientDataContainerMethods.html'>ClientDataContainerMethods</a><br/><a class='trait ' href='trait.ClientDataMethods.html'>ClientDataMethods</a><br/><a class='trait ' href='trait.ClientMethods.html'>ClientMethods</a><br/><a class='trait ' href='trait.ClosureMethods.html'>ClosureMethods</a><br/><a class='trait ' href='trait.CommandLineParserMethods.html'>CommandLineParserMethods</a><br/><a class='trait ' href='trait.ConditionMethods.html'>ConditionMethods</a><br/><a class='trait ' href='trait.ConfigBaseMethods.html'>ConfigBaseMethods</a><br/><a class='trait ' href='trait.ConnectionBaseMethods.html'>ConnectionBaseMethods</a><br/><a class='trait ' href='trait.ConnectionMethods.html'>ConnectionMethods</a><br/><a class='trait ' href='trait.CountingOutputStreamMethods.html'>CountingOutputStreamMethods</a><br/><a class='trait ' href='trait.CriticalSectionLockerMethods.html'>CriticalSectionLockerMethods</a><br/><a class='trait ' href='trait.CriticalSectionMethods.html'>CriticalSectionMethods</a><br/><a class='trait ' href='trait.DDEClientMethods.html'>DDEClientMethods</a><br/><a class='trait ' href='trait.DDEConnectionMethods.html'>DDEConnectionMethods</a><br/><a class='trait ' href='trait.DDEServerMethods.html'>DDEServerMethods</a><br/><a class='trait ' href='trait.DataInputStreamMethods.html'>DataInputStreamMethods</a><br/><a class='trait ' href='trait.DataOutputStreamMethods.html'>DataOutputStreamMethods</a><br/><a class='trait ' href='trait.DateTimeMethods.html'>DateTimeMethods</a><br/><a class='trait ' href='trait.DebugContextMethods.html'>DebugContextMethods</a><br/><a class='trait ' href='trait.DirTraverserMethods.html'>DirTraverserMethods</a><br/><a class='trait ' href='trait.DllLoaderMethods.html'>DllLoaderMethods</a><br/><a class='trait ' href='trait.DynamicLibraryMethods.html'>DynamicLibraryMethods</a><br/><a class='trait ' href='trait.EncodingConverterMethods.html'>EncodingConverterMethods</a><br/><a class='trait ' href='trait.FFileInputStreamMethods.html'>FFileInputStreamMethods</a><br/><a class='trait ' href='trait.FFileMethods.html'>FFileMethods</a><br/><a class='trait ' href='trait.FFileOutputStreamMethods.html'>FFileOutputStreamMethods</a><br/><a class='trait ' href='trait.FSFileMethods.html'>FSFileMethods</a><br/><a class='trait ' href='trait.FileConfigMethods.html'>FileConfigMethods</a><br/><a class='trait ' href='trait.FileInputStreamMethods.html'>FileInputStreamMethods</a><br/><a class='trait ' href='trait.FileNameMethods.html'>FileNameMethods</a><br/><a class='trait ' href='trait.FileOutputStreamMethods.html'>FileOutputStreamMethods</a><br/><a class='trait ' href='trait.FileSystemHandlerMethods.html'>FileSystemHandlerMethods</a><br/><a class='trait ' href='trait.FileSystemMethods.html'>FileSystemMethods</a><br/><a class='trait ' href='trait.FilterInputStreamMethods.html'>FilterInputStreamMethods</a><br/><a class='trait ' href='trait.FilterOutputStreamMethods.html'>FilterOutputStreamMethods</a><br/><a class='trait ' href='trait.InputStreamMethods.html'>InputStreamMethods</a><br/><a class='trait ' href='trait.ListMethods.html'>ListMethods</a><br/><a class='trait ' href='trait.LocaleMethods.html'>LocaleMethods</a><br/><a class='trait ' href='trait.LongLongMethods.html'>LongLongMethods</a><br/><a class='trait ' href='trait.MBConvMethods.html'>MBConvMethods</a><br/><a class='trait ' href='trait.MBConvUTF7Methods.html'>MBConvUTF7Methods</a><br/><a class='trait ' href='trait.MBConvUTF8Methods.html'>MBConvUTF8Methods</a><br/><a class='trait ' href='trait.MemoryBufferMethods.html'>MemoryBufferMethods</a><br/><a class='trait ' href='trait.MemoryFSHandlerMethods.html'>MemoryFSHandlerMethods</a><br/><a class='trait ' href='trait.MemoryInputStreamMethods.html'>MemoryInputStreamMethods</a><br/><a class='trait ' href='trait.MemoryOutputStreamMethods.html'>MemoryOutputStreamMethods</a><br/><a class='trait ' href='trait.ModuleMethods.html'>ModuleMethods</a><br/><a class='trait current' href='trait.MutexLockerMethods.html'>MutexLockerMethods</a><br/><a class='trait ' href='trait.MutexMethods.html'>MutexMethods</a><br/><a class='trait ' href='trait.NodeBaseMethods.html'>NodeBaseMethods</a><br/><a class='trait ' href='trait.ObjectMethods.html'>ObjectMethods</a><br/><a class='trait ' href='trait.ObjectRefDataMethods.html'>ObjectRefDataMethods</a><br/><a class='trait ' href='trait.OutputStreamMethods.html'>OutputStreamMethods</a><br/><a class='trait ' href='trait.PathListMethods.html'>PathListMethods</a><br/><a class='trait ' href='trait.RegExMethods.html'>RegExMethods</a><br/><a class='trait ' href='trait.RustClientMethods.html'>RustClientMethods</a><br/><a class='trait ' href='trait.RustConnectionMethods.html'>RustConnectionMethods</a><br/><a class='trait ' href='trait.RustLocaleMethods.html'>RustLocaleMethods</a><br/><a class='trait ' href='trait.RustServerMethods.html'>RustServerMethods</a><br/><a class='trait ' href='trait.ScopedArrayMethods.html'>ScopedArrayMethods</a><br/><a class='trait ' href='trait.ScopedPtrMethods.html'>ScopedPtrMethods</a><br/><a class='trait ' href='trait.SemaphoreMethods.html'>SemaphoreMethods</a><br/><a class='trait ' href='trait.ServerBaseMethods.html'>ServerBaseMethods</a><br/><a class='trait ' href='trait.ServerMethods.html'>ServerMethods</a><br/><a class='trait ' href='trait.SingleInstanceCheckerMethods.html'>SingleInstanceCheckerMethods</a><br/><a class='trait ' href='trait.StopWatchMethods.html'>StopWatchMethods</a><br/><a class='trait ' href='trait.StreamBaseMethods.html'>StreamBaseMethods</a><br/><a class='trait ' href='trait.StreamBufferMethods.html'>StreamBufferMethods</a><br/><a class='trait ' href='trait.StringBufferMethods.html'>StringBufferMethods</a><br/><a class='trait ' href='trait.StringClientDataMethods.html'>StringClientDataMethods</a><br/><a class='trait ' href='trait.StringListMethods.html'>StringListMethods</a><br/><a class='trait ' href='trait.StringTokenizerMethods.html'>StringTokenizerMethods</a><br/><a class='trait ' href='trait.SystemOptionsMethods.html'>SystemOptionsMethods</a><br/><a class='trait ' href='trait.TempFileMethods.html'>TempFileMethods</a><br/><a class='trait ' href='trait.TextFileMethods.html'>TextFileMethods</a><br/><a class='trait ' href='trait.TextInputStreamMethods.html'>TextInputStreamMethods</a><br/><a class='trait ' href='trait.TextOutputStreamMethods.html'>TextOutputStreamMethods</a><br/><a class='trait ' href='trait.ThreadMethods.html'>ThreadMethods</a><br/><a class='trait ' href='trait.TimeMethods.html'>TimeMethods</a><br/><a class='trait ' href='trait.TimeSpanMethods.html'>TimeSpanMethods</a><br/><a class='trait ' href='trait.VariantDataMethods.html'>VariantDataMethods</a><br/><a class='trait ' href='trait.VariantMethods.html'>VariantMethods</a><br/><a class='trait ' href='trait.ZipInputStreamMethods.html'>ZipInputStreamMethods</a><br/><a class='trait ' href='trait.ZlibInputStreamMethods.html'>ZlibInputStreamMethods</a><br/><a class='trait ' href='trait.ZlibOutputStreamMethods.html'>ZlibOutputStreamMethods</a><br/></div><div class='block fn'><h2>Functions</h2><a class='fn ' href='fn.strToString.html'>strToString</a><br/></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait"><a class='source'
+                       href='../../src/wx/Users/kenz/src/wxRust/src/base.rs.html#1486-1489'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>base</a>::<a class='trait' href=''>MutexLockerMethods</a></h1><pre class='trait'>pub trait MutexLockerMethods {
+    fn <a href='#tymethod.ptr'
+                                    class='fnname'>ptr</a>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>;
+}</pre><div class='docblock'><p>Methods of the wxWidgets&#39; <a href="http://docs.wxwidgets.org/3.0/classwx_mutex_locker.html">wxMutexLocker</a> class.</p>
+</div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.ptr' class='method'><code>fn <span class='fnname'>ptr</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h3></div>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/base/struct.MutexLocker.html' title='wx::base::MutexLocker'>MutexLocker</a></code></li></ul></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <script>
+        var rootPath = "../../";
+    </script>
+    <script src="../../wx/jquery.js"></script>
+    <script src="../../wx/search-index.js"></script>
+    <script src="../../wx/main.js"></script>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&uarr;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&darr;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>xrc.rs.html -- source</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Oswald:700|Inconsolata:400'
+          rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../../../../../../wx/main.css">
+
+    
+</head>
+<body>
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    <section class="sidebar">
+        
+
+        
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content source"><pre class='line-numbers'><span id='1'>  1</span>
+<span id='2'>  2</span>
+<span id='3'>  3</span>
+<span id='4'>  4</span>
+<span id='5'>  5</span>
+<span id='6'>  6</span>
+<span id='7'>  7</span>
+<span id='8'>  8</span>
+<span id='9'>  9</span>
+<span id='10'> 10</span>
+<span id='11'> 11</span>
+<span id='12'> 12</span>
+<span id='13'> 13</span>
+<span id='14'> 14</span>
+<span id='15'> 15</span>
+<span id='16'> 16</span>
+<span id='17'> 17</span>
+<span id='18'> 18</span>
+<span id='19'> 19</span>
+<span id='20'> 20</span>
+<span id='21'> 21</span>
+<span id='22'> 22</span>
+<span id='23'> 23</span>
+<span id='24'> 24</span>
+<span id='25'> 25</span>
+<span id='26'> 26</span>
+<span id='27'> 27</span>
+<span id='28'> 28</span>
+<span id='29'> 29</span>
+<span id='30'> 30</span>
+<span id='31'> 31</span>
+<span id='32'> 32</span>
+<span id='33'> 33</span>
+<span id='34'> 34</span>
+<span id='35'> 35</span>
+<span id='36'> 36</span>
+<span id='37'> 37</span>
+<span id='38'> 38</span>
+<span id='39'> 39</span>
+<span id='40'> 40</span>
+<span id='41'> 41</span>
+<span id='42'> 42</span>
+<span id='43'> 43</span>
+<span id='44'> 44</span>
+<span id='45'> 45</span>
+<span id='46'> 46</span>
+<span id='47'> 47</span>
+<span id='48'> 48</span>
+<span id='49'> 49</span>
+<span id='50'> 50</span>
+<span id='51'> 51</span>
+<span id='52'> 52</span>
+<span id='53'> 53</span>
+<span id='54'> 54</span>
+<span id='55'> 55</span>
+<span id='56'> 56</span>
+<span id='57'> 57</span>
+<span id='58'> 58</span>
+<span id='59'> 59</span>
+<span id='60'> 60</span>
+<span id='61'> 61</span>
+<span id='62'> 62</span>
+<span id='63'> 63</span>
+<span id='64'> 64</span>
+<span id='65'> 65</span>
+<span id='66'> 66</span>
+<span id='67'> 67</span>
+<span id='68'> 68</span>
+<span id='69'> 69</span>
+<span id='70'> 70</span>
+<span id='71'> 71</span>
+<span id='72'> 72</span>
+<span id='73'> 73</span>
+<span id='74'> 74</span>
+<span id='75'> 75</span>
+<span id='76'> 76</span>
+<span id='77'> 77</span>
+<span id='78'> 78</span>
+<span id='79'> 79</span>
+<span id='80'> 80</span>
+<span id='81'> 81</span>
+<span id='82'> 82</span>
+<span id='83'> 83</span>
+<span id='84'> 84</span>
+<span id='85'> 85</span>
+<span id='86'> 86</span>
+<span id='87'> 87</span>
+<span id='88'> 88</span>
+<span id='89'> 89</span>
+<span id='90'> 90</span>
+<span id='91'> 91</span>
+<span id='92'> 92</span>
+<span id='93'> 93</span>
+<span id='94'> 94</span>
+<span id='95'> 95</span>
+<span id='96'> 96</span>
+<span id='97'> 97</span>
+<span id='98'> 98</span>
+<span id='99'> 99</span>
+<span id='100'>100</span>
+<span id='101'>101</span>
+<span id='102'>102</span>
+<span id='103'>103</span>
+<span id='104'>104</span>
+<span id='105'>105</span>
+<span id='106'>106</span>
+<span id='107'>107</span>
+<span id='108'>108</span>
+<span id='109'>109</span>
+<span id='110'>110</span>
+<span id='111'>111</span>
+<span id='112'>112</span>
+<span id='113'>113</span>
+<span id='114'>114</span>
+<span id='115'>115</span>
+<span id='116'>116</span>
+<span id='117'>117</span>
+<span id='118'>118</span>
+<span id='119'>119</span>
+<span id='120'>120</span>
+<span id='121'>121</span>
+<span id='122'>122</span>
+<span id='123'>123</span>
+<span id='124'>124</span>
+<span id='125'>125</span>
+<span id='126'>126</span>
+<span id='127'>127</span>
+<span id='128'>128</span>
+<span id='129'>129</span>
+<span id='130'>130</span>
+<span id='131'>131</span>
+<span id='132'>132</span>
+<span id='133'>133</span>
+<span id='134'>134</span>
+<span id='135'>135</span>
+<span id='136'>136</span>
+<span id='137'>137</span>
+<span id='138'>138</span>
+<span id='139'>139</span>
+<span id='140'>140</span>
+<span id='141'>141</span>
+<span id='142'>142</span>
+<span id='143'>143</span>
+<span id='144'>144</span>
+<span id='145'>145</span>
+<span id='146'>146</span>
+<span id='147'>147</span>
+<span id='148'>148</span>
+<span id='149'>149</span>
+<span id='150'>150</span>
+<span id='151'>151</span>
+<span id='152'>152</span>
+<span id='153'>153</span>
+<span id='154'>154</span>
+<span id='155'>155</span>
+<span id='156'>156</span>
+<span id='157'>157</span>
+<span id='158'>158</span>
+<span id='159'>159</span>
+<span id='160'>160</span>
+<span id='161'>161</span>
+<span id='162'>162</span>
+<span id='163'>163</span>
+<span id='164'>164</span>
+<span id='165'>165</span>
+<span id='166'>166</span>
+<span id='167'>167</span>
+<span id='168'>168</span>
+<span id='169'>169</span>
+<span id='170'>170</span>
+<span id='171'>171</span>
+<span id='172'>172</span>
+<span id='173'>173</span>
+<span id='174'>174</span>
+<span id='175'>175</span>
+<span id='176'>176</span>
+<span id='177'>177</span>
+<span id='178'>178</span>
+<span id='179'>179</span>
+<span id='180'>180</span>
+<span id='181'>181</span>
+<span id='182'>182</span>
+<span id='183'>183</span>
+<span id='184'>184</span>
+<span id='185'>185</span>
+<span id='186'>186</span>
+<span id='187'>187</span>
+<span id='188'>188</span>
+<span id='189'>189</span>
+<span id='190'>190</span>
+<span id='191'>191</span>
+<span id='192'>192</span>
+<span id='193'>193</span>
+<span id='194'>194</span>
+<span id='195'>195</span>
+<span id='196'>196</span>
+<span id='197'>197</span>
+<span id='198'>198</span>
+<span id='199'>199</span>
+<span id='200'>200</span>
+<span id='201'>201</span>
+<span id='202'>202</span>
+<span id='203'>203</span>
+<span id='204'>204</span>
+<span id='205'>205</span>
+<span id='206'>206</span>
+<span id='207'>207</span>
+<span id='208'>208</span>
+<span id='209'>209</span>
+<span id='210'>210</span>
+<span id='211'>211</span>
+<span id='212'>212</span>
+<span id='213'>213</span>
+<span id='214'>214</span>
+<span id='215'>215</span>
+<span id='216'>216</span>
+<span id='217'>217</span>
+<span id='218'>218</span>
+<span id='219'>219</span>
+<span id='220'>220</span>
+<span id='221'>221</span>
+<span id='222'>222</span>
+<span id='223'>223</span>
+<span id='224'>224</span>
+<span id='225'>225</span>
+<span id='226'>226</span>
+<span id='227'>227</span>
+<span id='228'>228</span>
+<span id='229'>229</span>
+<span id='230'>230</span>
+<span id='231'>231</span>
+<span id='232'>232</span>
+<span id='233'>233</span>
+<span id='234'>234</span>
+<span id='235'>235</span>
+<span id='236'>236</span>
+<span id='237'>237</span>
+<span id='238'>238</span>
+<span id='239'>239</span>
+<span id='240'>240</span>
+<span id='241'>241</span>
+<span id='242'>242</span>
+<span id='243'>243</span>
+<span id='244'>244</span>
+<span id='245'>245</span>
+<span id='246'>246</span>
+<span id='247'>247</span>
+<span id='248'>248</span>
+<span id='249'>249</span>
+<span id='250'>250</span>
+<span id='251'>251</span>
+<span id='252'>252</span>
+<span id='253'>253</span>
+<span id='254'>254</span>
+<span id='255'>255</span>
+<span id='256'>256</span>
+<span id='257'>257</span>
+<span id='258'>258</span>
+<span id='259'>259</span>
+<span id='260'>260</span>
+<span id='261'>261</span>
+<span id='262'>262</span>
+<span id='263'>263</span>
+<span id='264'>264</span>
+<span id='265'>265</span>
+<span id='266'>266</span>
+<span id='267'>267</span>
+<span id='268'>268</span>
+<span id='269'>269</span>
+<span id='270'>270</span>
+<span id='271'>271</span>
+<span id='272'>272</span>
+<span id='273'>273</span>
+</pre><pre class='rust'>use std::libc::*;
+use _unsafe::*;
+use base::*;
+use core::*;
+use advanced::*;
+use html::*;
+use stc::*;
+
+/// Wraps the wxWidgets&#39; [wxXmlResource](http://docs.wxwidgets.org/3.0/classwx_xml_resource.html) class.
+pub struct XmlResource { ptr: *mut c_void }
+impl XmlResourceMethods for XmlResource {}
+impl ObjectMethods for XmlResource { fn ptr(&amp;self) -&gt; *mut c_void { self.ptr } }
+
+impl XmlResource {
+    pub fn from(ptr: *mut c_void) -&gt; XmlResource { XmlResource { ptr: ptr } }
+    pub fn null() -&gt; XmlResource { XmlResource::from(0 as *mut c_void) }
+    
+    pub fn new(flags: c_int) -&gt; XmlResource {
+        unsafe { XmlResource { ptr: wxXmlResource_Create(flags) } }
+    }
+    pub fn newFromFile(filemask: &amp;str, flags: c_int) -&gt; XmlResource {
+        let filemask = strToString(filemask);
+        unsafe { XmlResource { ptr: wxXmlResource_CreateFromFile(filemask.ptr(), flags) } }
+    }
+    pub fn get() -&gt; XmlResource {
+        unsafe { XmlResource { ptr: wxXmlResource_Get() } }
+    }
+}
+
+/// Methods of the wxWidgets&#39; [wxXmlResource](http://docs.wxwidgets.org/3.0/classwx_xml_resource.html) class.
+pub trait XmlResourceMethods : ObjectMethods {
+    fn addHandler&lt;T: EvtHandlerMethods&gt;(&amp;self, handler: &amp;T) {
+        unsafe { wxXmlResource_AddHandler(self.ptr(), handler.ptr()) }
+    }
+    fn addSubclassFactory(&amp;self, factory: *mut c_void) {
+        unsafe { wxXmlResource_AddSubclassFactory(self.ptr(), factory) }
+    }
+    fn attachUnknownControl&lt;T: ControlMethods, U: WindowMethods&gt;(&amp;self, control: &amp;T, parent: &amp;U) -&gt; c_int {
+        unsafe { wxXmlResource_AttachUnknownControl(self.ptr(), control.ptr(), parent.ptr()) }
+    }
+    fn clearHandlers(&amp;self) {
+        unsafe { wxXmlResource_ClearHandlers(self.ptr()) }
+    }
+    fn compareVersion(&amp;self, major: c_int, minor: c_int, release: c_int, revision: c_int) -&gt; c_int {
+        unsafe { wxXmlResource_CompareVersion(self.ptr(), major, minor, release, revision) }
+    }
+    fn getDomain(&amp;self) -&gt; ~str {
+        unsafe { String { ptr: wxXmlResource_GetDomain(self.ptr()) }.to_str() }
+    }
+    fn getFlags(&amp;self) -&gt; c_int {
+        unsafe { wxXmlResource_GetFlags(self.ptr()) }
+    }
+    fn getVersion(&amp;self) -&gt; c_long {
+        unsafe { wxXmlResource_GetVersion(self.ptr()) }
+    }
+    fn getXRCID(&amp;self, str_id: &amp;str) -&gt; c_int {
+        let str_id = strToString(str_id);
+        unsafe { wxXmlResource_GetXRCID(self.ptr(), str_id.ptr()) }
+    }
+    fn initAllHandlers(&amp;self) {
+        unsafe { wxXmlResource_InitAllHandlers(self.ptr()) }
+    }
+    fn insertHandler&lt;T: EvtHandlerMethods&gt;(&amp;self, handler: &amp;T) {
+        unsafe { wxXmlResource_InsertHandler(self.ptr(), handler.ptr()) }
+    }
+    fn load(&amp;self, filemask: &amp;str) -&gt; c_int {
+        let filemask = strToString(filemask);
+        unsafe { wxXmlResource_Load(self.ptr(), filemask.ptr()) }
+    }
+    fn loadBitmap&lt;T: BitmapMethods&gt;(&amp;self, name: &amp;str, _ref: &amp;T) {
+        let name = strToString(name);
+        unsafe { wxXmlResource_LoadBitmap(self.ptr(), name.ptr(), _ref.ptr()) }
+    }
+    fn loadDialog&lt;T: WindowMethods&gt;(&amp;self, parent: &amp;T, name: &amp;str) -&gt; Dialog {
+        let name = strToString(name);
+        unsafe { Dialog { ptr: wxXmlResource_LoadDialog(self.ptr(), parent.ptr(), name.ptr()) } }
+    }
+    fn loadFrame&lt;T: WindowMethods&gt;(&amp;self, parent: &amp;T, name: &amp;str) -&gt; Frame {
+        let name = strToString(name);
+        unsafe { Frame { ptr: wxXmlResource_LoadFrame(self.ptr(), parent.ptr(), name.ptr()) } }
+    }
+    fn loadIcon&lt;T: IconMethods&gt;(&amp;self, name: &amp;str, _ref: &amp;T) {
+        let name = strToString(name);
+        unsafe { wxXmlResource_LoadIcon(self.ptr(), name.ptr(), _ref.ptr()) }
+    }
+    fn loadMenu(&amp;self, name: &amp;str) -&gt; Menu {
+        let name = strToString(name);
+        unsafe { Menu { ptr: wxXmlResource_LoadMenu(self.ptr(), name.ptr()) } }
+    }
+    fn loadMenuBar&lt;T: WindowMethods&gt;(&amp;self, parent: &amp;T, name: &amp;str) -&gt; MenuBar {
+        let name = strToString(name);
+        unsafe { MenuBar { ptr: wxXmlResource_LoadMenuBar(self.ptr(), parent.ptr(), name.ptr()) } }
+    }
+    fn loadPanel&lt;T: WindowMethods&gt;(&amp;self, parent: &amp;T, name: &amp;str) -&gt; Panel {
+        let name = strToString(name);
+        unsafe { Panel { ptr: wxXmlResource_LoadPanel(self.ptr(), parent.ptr(), name.ptr()) } }
+    }
+    fn loadToolBar&lt;T: WindowMethods&gt;(&amp;self, parent: &amp;T, name: &amp;str) -&gt; ToolBar {
+        let name = strToString(name);
+        unsafe { ToolBar { ptr: wxXmlResource_LoadToolBar(self.ptr(), parent.ptr(), name.ptr()) } }
+    }
+    fn getSizer(&amp;self, str_id: &amp;str) -&gt; Sizer {
+        let str_id = strToString(str_id);
+        unsafe { Sizer { ptr: wxXmlResource_GetSizer(self.ptr(), str_id.ptr()) } }
+    }
+    fn getBoxSizer(&amp;self, str_id: &amp;str) -&gt; BoxSizer {
+        let str_id = strToString(str_id);
+        unsafe { BoxSizer { ptr: wxXmlResource_GetBoxSizer(self.ptr(), str_id.ptr()) } }
+    }
+    fn getStaticBoxSizer(&amp;self, str_id: &amp;str) -&gt; StaticBoxSizer {
+        let str_id = strToString(str_id);
+        unsafe { StaticBoxSizer { ptr: wxXmlResource_GetStaticBoxSizer(self.ptr(), str_id.ptr()) } }
+    }
+    fn getGridSizer(&amp;self, str_id: &amp;str) -&gt; GridSizer {
+        let str_id = strToString(str_id);
+        unsafe { GridSizer { ptr: wxXmlResource_GetGridSizer(self.ptr(), str_id.ptr()) } }
+    }
+    fn getFlexGridSizer(&amp;self, str_id: &amp;str) -&gt; FlexGridSizer {
+        let str_id = strToString(str_id);
+        unsafe { FlexGridSizer { ptr: wxXmlResource_GetFlexGridSizer(self.ptr(), str_id.ptr()) } }
+    }
+    fn getBitmapButton(&amp;self, str_id: &amp;str) -&gt; BitmapButton {
+        let str_id = strToString(str_id);
+        unsafe { BitmapButton { ptr: wxXmlResource_GetBitmapButton(self.ptr(), str_id.ptr()) } }
+    }
+    fn getButton(&amp;self, str_id: &amp;str) -&gt; Button {
+        let str_id = strToString(str_id);
+        unsafe { Button { ptr: wxXmlResource_GetButton(self.ptr(), str_id.ptr()) } }
+    }
+    fn getCalendarCtrl(&amp;self, str_id: &amp;str) -&gt; CalendarCtrl {
+        let str_id = strToString(str_id);
+        unsafe { CalendarCtrl { ptr: wxXmlResource_GetCalendarCtrl(self.ptr(), str_id.ptr()) } }
+    }
+    fn getCheckBox(&amp;self, str_id: &amp;str) -&gt; CheckBox {
+        let str_id = strToString(str_id);
+        unsafe { CheckBox { ptr: wxXmlResource_GetCheckBox(self.ptr(), str_id.ptr()) } }
+    }
+    fn getCheckListBox(&amp;self, str_id: &amp;str) -&gt; CheckListBox {
+        let str_id = strToString(str_id);
+        unsafe { CheckListBox { ptr: wxXmlResource_GetCheckListBox(self.ptr(), str_id.ptr()) } }
+    }
+    fn getChoice(&amp;self, str_id: &amp;str) -&gt; Choice {
+        let str_id = strToString(str_id);
+        unsafe { Choice { ptr: wxXmlResource_GetChoice(self.ptr(), str_id.ptr()) } }
+    }
+    fn getComboBox(&amp;self, str_id: &amp;str) -&gt; ComboBox {
+        let str_id = strToString(str_id);
+        unsafe { ComboBox { ptr: wxXmlResource_GetComboBox(self.ptr(), str_id.ptr()) } }
+    }
+    fn getGauge(&amp;self, str_id: &amp;str) -&gt; Gauge {
+        let str_id = strToString(str_id);
+        unsafe { Gauge { ptr: wxXmlResource_GetGauge(self.ptr(), str_id.ptr()) } }
+    }
+    fn getGrid(&amp;self, str_id: &amp;str) -&gt; Grid {
+        let str_id = strToString(str_id);
+        unsafe { Grid { ptr: wxXmlResource_GetGrid(self.ptr(), str_id.ptr()) } }
+    }
+    fn getHtmlWindow(&amp;self, str_id: &amp;str) -&gt; HtmlWindow {
+        let str_id = strToString(str_id);
+        unsafe { HtmlWindow { ptr: wxXmlResource_GetHtmlWindow(self.ptr(), str_id.ptr()) } }
+    }
+    fn getListBox(&amp;self, str_id: &amp;str) -&gt; ListBox {
+        let str_id = strToString(str_id);
+        unsafe { ListBox { ptr: wxXmlResource_GetListBox(self.ptr(), str_id.ptr()) } }
+    }
+    fn getListCtrl(&amp;self, str_id: &amp;str) -&gt; ListCtrl {
+        let str_id = strToString(str_id);
+        unsafe { ListCtrl { ptr: wxXmlResource_GetListCtrl(self.ptr(), str_id.ptr()) } }
+    }
+    fn getMDIChildFrame(&amp;self, str_id: &amp;str) -&gt; MDIChildFrame {
+        let str_id = strToString(str_id);
+        unsafe { MDIChildFrame { ptr: wxXmlResource_GetMDIChildFrame(self.ptr(), str_id.ptr()) } }
+    }
+    fn getMDIParentFrame(&amp;self, str_id: &amp;str) -&gt; MDIParentFrame {
+        let str_id = strToString(str_id);
+        unsafe { MDIParentFrame { ptr: wxXmlResource_GetMDIParentFrame(self.ptr(), str_id.ptr()) } }
+    }
+    fn getMenu(&amp;self, str_id: &amp;str) -&gt; Menu {
+        let str_id = strToString(str_id);
+        unsafe { Menu { ptr: wxXmlResource_GetMenu(self.ptr(), str_id.ptr()) } }
+    }
+    fn getMenuBar(&amp;self, str_id: &amp;str) -&gt; MenuBar {
+        let str_id = strToString(str_id);
+        unsafe { MenuBar { ptr: wxXmlResource_GetMenuBar(self.ptr(), str_id.ptr()) } }
+    }
+    fn getMenuItem(&amp;self, str_id: &amp;str) -&gt; MenuItem {
+        let str_id = strToString(str_id);
+        unsafe { MenuItem { ptr: wxXmlResource_GetMenuItem(self.ptr(), str_id.ptr()) } }
+    }
+    fn getNotebook(&amp;self, str_id: &amp;str) -&gt; Notebook {
+        let str_id = strToString(str_id);
+        unsafe { Notebook { ptr: wxXmlResource_GetNotebook(self.ptr(), str_id.ptr()) } }
+    }
+    fn getPanel(&amp;self, str_id: &amp;str) -&gt; Panel {
+        let str_id = strToString(str_id);
+        unsafe { Panel { ptr: wxXmlResource_GetPanel(self.ptr(), str_id.ptr()) } }
+    }
+    fn getRadioButton(&amp;self, str_id: &amp;str) -&gt; RadioButton {
+        let str_id = strToString(str_id);
+        unsafe { RadioButton { ptr: wxXmlResource_GetRadioButton(self.ptr(), str_id.ptr()) } }
+    }
+    fn getRadioBox(&amp;self, str_id: &amp;str) -&gt; RadioBox {
+        let str_id = strToString(str_id);
+        unsafe { RadioBox { ptr: wxXmlResource_GetRadioBox(self.ptr(), str_id.ptr()) } }
+    }
+    fn getScrollBar(&amp;self, str_id: &amp;str) -&gt; ScrollBar {
+        let str_id = strToString(str_id);
+        unsafe { ScrollBar { ptr: wxXmlResource_GetScrollBar(self.ptr(), str_id.ptr()) } }
+    }
+    fn getScrolledWindow(&amp;self, str_id: &amp;str) -&gt; ScrolledWindow {
+        let str_id = strToString(str_id);
+        unsafe { ScrolledWindow { ptr: wxXmlResource_GetScrolledWindow(self.ptr(), str_id.ptr()) } }
+    }
+    fn getSlider(&amp;self, str_id: &amp;str) -&gt; Slider {
+        let str_id = strToString(str_id);
+        unsafe { Slider { ptr: wxXmlResource_GetSlider(self.ptr(), str_id.ptr()) } }
+    }
+    fn getSpinButton(&amp;self, str_id: &amp;str) -&gt; SpinButton {
+        let str_id = strToString(str_id);
+        unsafe { SpinButton { ptr: wxXmlResource_GetSpinButton(self.ptr(), str_id.ptr()) } }
+    }
+    fn getSpinCtrl(&amp;self, str_id: &amp;str) -&gt; SpinCtrl {
+        let str_id = strToString(str_id);
+        unsafe { SpinCtrl { ptr: wxXmlResource_GetSpinCtrl(self.ptr(), str_id.ptr()) } }
+    }
+    fn getSplitterWindow(&amp;self, str_id: &amp;str) -&gt; SplitterWindow {
+        let str_id = strToString(str_id);
+        unsafe { SplitterWindow { ptr: wxXmlResource_GetSplitterWindow(self.ptr(), str_id.ptr()) } }
+    }
+    fn getStaticBitmap(&amp;self, str_id: &amp;str) -&gt; StaticBitmap {
+        let str_id = strToString(str_id);
+        unsafe { StaticBitmap { ptr: wxXmlResource_GetStaticBitmap(self.ptr(), str_id.ptr()) } }
+    }
+    fn getStaticBox(&amp;self, str_id: &amp;str) -&gt; StaticBox {
+        let str_id = strToString(str_id);
+        unsafe { StaticBox { ptr: wxXmlResource_GetStaticBox(self.ptr(), str_id.ptr()) } }
+    }
+    fn getStaticLine(&amp;self, str_id: &amp;str) -&gt; StaticLine {
+        let str_id = strToString(str_id);
+        unsafe { StaticLine { ptr: wxXmlResource_GetStaticLine(self.ptr(), str_id.ptr()) } }
+    }
+    fn getStaticText(&amp;self, str_id: &amp;str) -&gt; StaticText {
+        let str_id = strToString(str_id);
+        unsafe { StaticText { ptr: wxXmlResource_GetStaticText(self.ptr(), str_id.ptr()) } }
+    }
+    fn getTextCtrl(&amp;self, str_id: &amp;str) -&gt; TextCtrl {
+        let str_id = strToString(str_id);
+        unsafe { TextCtrl { ptr: wxXmlResource_GetTextCtrl(self.ptr(), str_id.ptr()) } }
+    }
+    fn getTreeCtrl(&amp;self, str_id: &amp;str) -&gt; TreeCtrl {
+        let str_id = strToString(str_id);
+        unsafe { TreeCtrl { ptr: wxXmlResource_GetTreeCtrl(self.ptr(), str_id.ptr()) } }
+    }
+    fn unload(&amp;self, filemask: &amp;str) -&gt; c_int {
+        let filemask = strToString(filemask);
+        unsafe { wxXmlResource_Unload(self.ptr(), filemask.ptr()) }
+    }
+    fn set(&amp;self, res: &amp;XmlResourceMethods) -&gt; XmlResource {
+        unsafe { XmlResource { ptr: wxXmlResource_Set(self.ptr(), res.ptr()) } }
+    }
+    fn setDomain(&amp;self, domain: &amp;str) {
+        let domain = strToString(domain);
+        unsafe { wxXmlResource_SetDomain(self.ptr(), domain.ptr()) }
+    }
+    fn setFlags(&amp;self, flags: c_int) {
+        unsafe { wxXmlResource_SetFlags(self.ptr(), flags) }
+    }
+    fn getStyledTextCtrl(&amp;self, str_id: &amp;str) -&gt; StyledTextCtrl {
+        let str_id = strToString(str_id);
+        unsafe { StyledTextCtrl { ptr: wxXmlResource_GetStyledTextCtrl(self.ptr(), str_id.ptr()) } }
+    }
+}
+
+</pre></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <script>
+        var rootPath = "../../../../../../../";
+    </script>
+    <script src="../../../../../../../wx/jquery.js"></script>
+    <script src="../../../../../../../wx/search-index.js"></script>
+    <script src="../../../../../../../wx/main.js"></script>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&uarr;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&darr;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+</body>
+</html>

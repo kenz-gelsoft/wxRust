@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>wx::net::SocketInputStream - Rust</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Oswald:700|Inconsolata:400'
+          rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../wx/main.css">
+
+    
+</head>
+<body>
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    <section class="sidebar">
+        
+
+        <p class='location'><a href='../index.html'>wx</a>&#8203;::<a href='index.html'>net</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.FTP.html'>FTP</a><br/><a class='struct ' href='struct.HTTP.html'>HTTP</a><br/><a class='struct ' href='struct.IPV4address.html'>IPV4address</a><br/><a class='struct ' href='struct.Protocol.html'>Protocol</a><br/><a class='struct ' href='struct.SockAddress.html'>SockAddress</a><br/><a class='struct ' href='struct.SocketBase.html'>SocketBase</a><br/><a class='struct ' href='struct.SocketClient.html'>SocketClient</a><br/><a class='struct ' href='struct.SocketEvent.html'>SocketEvent</a><br/><a class='struct current' href='struct.SocketInputStream.html'>SocketInputStream</a><br/><a class='struct ' href='struct.SocketOutputStream.html'>SocketOutputStream</a><br/><a class='struct ' href='struct.SocketServer.html'>SocketServer</a><br/><a class='struct ' href='struct.URL.html'>URL</a><br/></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.FTPMethods.html'>FTPMethods</a><br/><a class='trait ' href='trait.HTTPMethods.html'>HTTPMethods</a><br/><a class='trait ' href='trait.IPV4addressMethods.html'>IPV4addressMethods</a><br/><a class='trait ' href='trait.ProtocolMethods.html'>ProtocolMethods</a><br/><a class='trait ' href='trait.SockAddressMethods.html'>SockAddressMethods</a><br/><a class='trait ' href='trait.SocketBaseMethods.html'>SocketBaseMethods</a><br/><a class='trait ' href='trait.SocketClientMethods.html'>SocketClientMethods</a><br/><a class='trait ' href='trait.SocketEventMethods.html'>SocketEventMethods</a><br/><a class='trait ' href='trait.SocketInputStreamMethods.html'>SocketInputStreamMethods</a><br/><a class='trait ' href='trait.SocketOutputStreamMethods.html'>SocketOutputStreamMethods</a><br/><a class='trait ' href='trait.SocketServerMethods.html'>SocketServerMethods</a><br/><a class='trait ' href='trait.URLMethods.html'>URLMethods</a><br/></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct"><a class='source'
+                       href='../../src/wx/Users/kenz/src/wxRust/src/net.rs.html#137'>[src]</a><h1 class='fqn'>Struct <a href='../index.html'>wx</a>::<a href='index.html'>net</a>::<a class='struct' href=''>SocketInputStream</a></h1><pre class='struct'>pub struct SocketInputStream {
+    ptr: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>,
+}</pre><div class='docblock'><p>Wraps the wxWidgets&#39; <a href="http://docs.wxwidgets.org/3.0/classwx_socket_input_stream.html">wxSocketInputStream</a> class.</p>
+</div><h2 class='fields'>Fields</h2>
+<table><tr><td id='structfield.ptr'><code>ptr</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../wx/net/struct.SocketInputStream.html' title='wx::net::SocketInputStream'>SocketInputStream</a></code></h3><div class='methods'><h4 id='method.from' class='method'><code>fn <span class='fnname'>from</span>(ptr: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; <a class='struct' href='../../wx/net/struct.SocketInputStream.html' title='wx::net::SocketInputStream'>SocketInputStream</a></code></h4>
+<h4 id='method.null' class='method'><code>fn <span class='fnname'>null</span>() -&gt; <a class='struct' href='../../wx/net/struct.SocketInputStream.html' title='wx::net::SocketInputStream'>SocketInputStream</a></code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../wx/net/trait.SocketInputStreamMethods.html' title='wx::net::SocketInputStreamMethods'>SocketInputStreamMethods</a> for <a class='struct' href='../../wx/net/struct.SocketInputStream.html' title='wx::net::SocketInputStream'>SocketInputStream</a></code></h3><div class='methods'></div><h3 class='impl'><code>impl <a class='trait' href='../../wx/base/trait.InputStreamMethods.html' title='wx::base::InputStreamMethods'>InputStreamMethods</a> for <a class='struct' href='../../wx/net/struct.SocketInputStream.html' title='wx::net::SocketInputStream'>SocketInputStream</a></code></h3><div class='methods'><h4 id='method.eof' class='method'><code>fn <span class='fnname'>eof</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.getC' class='method'><code>fn <span class='fnname'>getC</span>(&amp;self) -&gt; <a class='typedef' href='../../wx/_unsafe/typedef.int8_t.html' title='wx::_unsafe::int8_t'>int8_t</a></code></h4>
+<h4 id='method.lastRead' class='method'><code>fn <span class='fnname'>lastRead</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.peek' class='method'><code>fn <span class='fnname'>peek</span>(&amp;self) -&gt; <a class='typedef' href='../../wx/_unsafe/typedef.int8_t.html' title='wx::_unsafe::int8_t'>int8_t</a></code></h4>
+<h4 id='method.read' class='method'><code>fn <span class='fnname'>read</span>(&amp;self, buffer: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, size: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h4>
+<h4 id='method.seekI' class='method'><code>fn <span class='fnname'>seekI</span>(&amp;self, pos: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, mode: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.tell' class='method'><code>fn <span class='fnname'>tell</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.ungetBuffer' class='method'><code>fn <span class='fnname'>ungetBuffer</span>(&amp;self, buffer: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, size: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.ungetch' class='method'><code>fn <span class='fnname'>ungetch</span>(&amp;self, c: <a class='typedef' href='../../wx/_unsafe/typedef.int8_t.html' title='wx::_unsafe::int8_t'>int8_t</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.canRead' class='method'><code>fn <span class='fnname'>canRead</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='../../wx/base/trait.StreamBaseMethods.html' title='wx::base::StreamBaseMethods'>StreamBaseMethods</a> for <a class='struct' href='../../wx/net/struct.SocketInputStream.html' title='wx::net::SocketInputStream'>SocketInputStream</a></code></h3><div class='methods'><h4 id='method.ptr' class='method'><code>fn <span class='fnname'>ptr</span>(&amp;self) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h4>
+<h4 id='method.getLastError' class='method'><code>fn <span class='fnname'>getLastError</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.getSize' class='method'><code>fn <span class='fnname'>getSize</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.isOk' class='method'><code>fn <span class='fnname'>isOk</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h4>
+<h4 id='method.delete' class='method'><code>fn <span class='fnname'>delete</span>(&amp;self)</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <script>
+        var rootPath = "../../";
+    </script>
+    <script src="../../wx/jquery.js"></script>
+    <script src="../../wx/search-index.js"></script>
+    <script src="../../wx/main.js"></script>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&uarr;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&darr;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+</body>
+</html>

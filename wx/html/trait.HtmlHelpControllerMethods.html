@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>wx::html::HtmlHelpControllerMethods - Rust</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Oswald:700|Inconsolata:400'
+          rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../wx/main.css">
+
+    
+</head>
+<body>
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    <section class="sidebar">
+        
+
+        <p class='location'><a href='../index.html'>wx</a>&#8203;::<a href='index.html'>html</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.HtmlCell.html'>HtmlCell</a><br/><a class='struct ' href='struct.HtmlColourCell.html'>HtmlColourCell</a><br/><a class='struct ' href='struct.HtmlContainerCell.html'>HtmlContainerCell</a><br/><a class='struct ' href='struct.HtmlDCRenderer.html'>HtmlDCRenderer</a><br/><a class='struct ' href='struct.HtmlEasyPrinting.html'>HtmlEasyPrinting</a><br/><a class='struct ' href='struct.HtmlFilter.html'>HtmlFilter</a><br/><a class='struct ' href='struct.HtmlHelpController.html'>HtmlHelpController</a><br/><a class='struct ' href='struct.HtmlHelpData.html'>HtmlHelpData</a><br/><a class='struct ' href='struct.HtmlHelpFrame.html'>HtmlHelpFrame</a><br/><a class='struct ' href='struct.HtmlLinkInfo.html'>HtmlLinkInfo</a><br/><a class='struct ' href='struct.HtmlParser.html'>HtmlParser</a><br/><a class='struct ' href='struct.HtmlPrintout.html'>HtmlPrintout</a><br/><a class='struct ' href='struct.HtmlTag.html'>HtmlTag</a><br/><a class='struct ' href='struct.HtmlTagHandler.html'>HtmlTagHandler</a><br/><a class='struct ' href='struct.HtmlTagsModule.html'>HtmlTagsModule</a><br/><a class='struct ' href='struct.HtmlWidgetCell.html'>HtmlWidgetCell</a><br/><a class='struct ' href='struct.HtmlWinParser.html'>HtmlWinParser</a><br/><a class='struct ' href='struct.HtmlWinTagHandler.html'>HtmlWinTagHandler</a><br/><a class='struct ' href='struct.HtmlWindow.html'>HtmlWindow</a><br/><a class='struct ' href='struct.RustHtmlEvent.html'>RustHtmlEvent</a><br/><a class='struct ' href='struct.RustHtmlWindow.html'>RustHtmlWindow</a><br/></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.HtmlCellMethods.html'>HtmlCellMethods</a><br/><a class='trait ' href='trait.HtmlColourCellMethods.html'>HtmlColourCellMethods</a><br/><a class='trait ' href='trait.HtmlContainerCellMethods.html'>HtmlContainerCellMethods</a><br/><a class='trait ' href='trait.HtmlDCRendererMethods.html'>HtmlDCRendererMethods</a><br/><a class='trait ' href='trait.HtmlEasyPrintingMethods.html'>HtmlEasyPrintingMethods</a><br/><a class='trait ' href='trait.HtmlFilterMethods.html'>HtmlFilterMethods</a><br/><a class='trait current' href='trait.HtmlHelpControllerMethods.html'>HtmlHelpControllerMethods</a><br/><a class='trait ' href='trait.HtmlHelpDataMethods.html'>HtmlHelpDataMethods</a><br/><a class='trait ' href='trait.HtmlHelpFrameMethods.html'>HtmlHelpFrameMethods</a><br/><a class='trait ' href='trait.HtmlLinkInfoMethods.html'>HtmlLinkInfoMethods</a><br/><a class='trait ' href='trait.HtmlParserMethods.html'>HtmlParserMethods</a><br/><a class='trait ' href='trait.HtmlPrintoutMethods.html'>HtmlPrintoutMethods</a><br/><a class='trait ' href='trait.HtmlTagHandlerMethods.html'>HtmlTagHandlerMethods</a><br/><a class='trait ' href='trait.HtmlTagMethods.html'>HtmlTagMethods</a><br/><a class='trait ' href='trait.HtmlTagsModuleMethods.html'>HtmlTagsModuleMethods</a><br/><a class='trait ' href='trait.HtmlWidgetCellMethods.html'>HtmlWidgetCellMethods</a><br/><a class='trait ' href='trait.HtmlWinParserMethods.html'>HtmlWinParserMethods</a><br/><a class='trait ' href='trait.HtmlWinTagHandlerMethods.html'>HtmlWinTagHandlerMethods</a><br/><a class='trait ' href='trait.HtmlWindowMethods.html'>HtmlWindowMethods</a><br/><a class='trait ' href='trait.RustHtmlEventMethods.html'>RustHtmlEventMethods</a><br/><a class='trait ' href='trait.RustHtmlWindowMethods.html'>RustHtmlWindowMethods</a><br/></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <button class="do-search">Search</button>
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search" />
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait"><a class='source'
+                       href='../../src/wx/Users/kenz/src/wxRust/src/html.rs.html#114-187'>[src]</a><h1 class='fqn'>Trait <a href='../index.html'>wx</a>::<a href='index.html'>html</a>::<a class='trait' href=''>HtmlHelpControllerMethods</a></h1><pre class='trait'>pub trait HtmlHelpControllerMethods: <a class='trait' href='../../wx/core/trait.HelpControllerBaseMethods.html' title='wx::core::HelpControllerBaseMethods'>HelpControllerBaseMethods</a> {
+    fn <a href='#method.addBook'
+                                    class='fnname'>addBook</a>(&amp;self, book: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, show_wait_msg: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.display'
+                                    class='fnname'>display</a>(&amp;self, x: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.displayBlock'
+                                    class='fnname'>displayBlock</a>(&amp;self, blockNo: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.displayContents'
+                                    class='fnname'>displayContents</a>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.displayIndex'
+                                    class='fnname'>displayIndex</a>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.displayNumber'
+                                    class='fnname'>displayNumber</a>(&amp;self, id: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.displaySection'
+                                    class='fnname'>displaySection</a>(&amp;self, section: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.displaySectionNumber'
+                                    class='fnname'>displaySectionNumber</a>(&amp;self, sectionNo: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.getFrame'
+                                    class='fnname'>getFrame</a>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.Frame.html' title='wx::core::Frame'>Frame</a> { ... }
+    fn <a href='#method.getFrameParameters'
+                                    class='fnname'>getFrameParameters</a>(&amp;self, title: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, width: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, height: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, pos_x: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, pos_y: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, newFrameEachTime: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a> { ... }
+    fn <a href='#method.initialize'
+                                    class='fnname'>initialize</a>(&amp;self, file: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.keywordSearch'
+                                    class='fnname'>keywordSearch</a>(&amp;self, keyword: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.loadFile'
+                                    class='fnname'>loadFile</a>(&amp;self, file: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.quit'
+                                    class='fnname'>quit</a>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a> { ... }
+    fn <a href='#method.readCustomization'
+                                    class='fnname'>readCustomization</a>&lt;T: <a class='trait' href='../../wx/base/trait.ConfigBaseMethods.html' title='wx::base::ConfigBaseMethods'>ConfigBaseMethods</a>&gt;(&amp;self, cfg: &amp;T, path: &amp;str) { ... }
+    fn <a href='#method.setFrameParameters'
+                                    class='fnname'>setFrameParameters</a>(&amp;self, title: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, width: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, height: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, pos_x: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, pos_y: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, newFrameEachTime: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) { ... }
+    fn <a href='#method.setTempDir'
+                                    class='fnname'>setTempDir</a>(&amp;self, path: &amp;str) { ... }
+    fn <a href='#method.setTitleFormat'
+                                    class='fnname'>setTitleFormat</a>(&amp;self, format: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) { ... }
+    fn <a href='#method.setViewer'
+                                    class='fnname'>setViewer</a>(&amp;self, viewer: &amp;str, flags: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) { ... }
+    fn <a href='#method.useConfig'
+                                    class='fnname'>useConfig</a>&lt;T: <a class='trait' href='../../wx/base/trait.ConfigBaseMethods.html' title='wx::base::ConfigBaseMethods'>ConfigBaseMethods</a>&gt;(&amp;self, config: &amp;T, rootpath: &amp;str) { ... }
+    fn <a href='#method.writeCustomization'
+                                    class='fnname'>writeCustomization</a>&lt;T: <a class='trait' href='../../wx/base/trait.ConfigBaseMethods.html' title='wx::base::ConfigBaseMethods'>ConfigBaseMethods</a>&gt;(&amp;self, cfg: &amp;T, path: &amp;str) { ... }
+}</pre><div class='docblock'><p>Methods of the wxWidgets&#39; <a href="http://docs.wxwidgets.org/3.0/classwx_html_help_controller.html">wxHtmlHelpController</a> class.</p>
+</div>
+            <h2 id='provided-methods'>Provided Methods</h2>
+            <div class='methods'>
+        <h3 id='method.addBook' class='method'><code>fn <span class='fnname'>addBook</span>(&amp;self, book: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, show_wait_msg: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.display' class='method'><code>fn <span class='fnname'>display</span>(&amp;self, x: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.displayBlock' class='method'><code>fn <span class='fnname'>displayBlock</span>(&amp;self, blockNo: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.displayContents' class='method'><code>fn <span class='fnname'>displayContents</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.displayIndex' class='method'><code>fn <span class='fnname'>displayIndex</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.displayNumber' class='method'><code>fn <span class='fnname'>displayNumber</span>(&amp;self, id: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.displaySection' class='method'><code>fn <span class='fnname'>displaySection</span>(&amp;self, section: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.displaySectionNumber' class='method'><code>fn <span class='fnname'>displaySectionNumber</span>(&amp;self, sectionNo: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.getFrame' class='method'><code>fn <span class='fnname'>getFrame</span>(&amp;self) -&gt; <a class='struct' href='../../wx/core/struct.Frame.html' title='wx::core::Frame'>Frame</a></code></h3><h3 id='method.getFrameParameters' class='method'><code>fn <span class='fnname'>getFrameParameters</span>(&amp;self, title: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, width: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, height: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, pos_x: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, pos_y: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, newFrameEachTime: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>) -&gt; *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a></code></h3><h3 id='method.initialize' class='method'><code>fn <span class='fnname'>initialize</span>(&amp;self, file: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.keywordSearch' class='method'><code>fn <span class='fnname'>keywordSearch</span>(&amp;self, keyword: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.loadFile' class='method'><code>fn <span class='fnname'>loadFile</span>(&amp;self, file: &amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.quit' class='method'><code>fn <span class='fnname'>quit</span>(&amp;self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a></code></h3><h3 id='method.readCustomization' class='method'><code>fn <span class='fnname'>readCustomization</span>&lt;T: <a class='trait' href='../../wx/base/trait.ConfigBaseMethods.html' title='wx::base::ConfigBaseMethods'>ConfigBaseMethods</a>&gt;(&amp;self, cfg: &amp;T, path: &amp;str)</code></h3><h3 id='method.setFrameParameters' class='method'><code>fn <span class='fnname'>setFrameParameters</span>(&amp;self, title: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>, width: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, height: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, pos_x: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, pos_y: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>, newFrameEachTime: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.setTempDir' class='method'><code>fn <span class='fnname'>setTempDir</span>(&amp;self, path: &amp;str)</code></h3><h3 id='method.setTitleFormat' class='method'><code>fn <span class='fnname'>setTitleFormat</span>(&amp;self, format: *mut <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/common/c95/enum.c_void.html' title='std::libc::types::common::c95::c_void'>c_void</a>)</code></h3><h3 id='method.setViewer' class='method'><code>fn <span class='fnname'>setViewer</span>(&amp;self, viewer: &amp;str, flags: <a class='enum' href='http://static.rust-lang.org/doc/master/std/libc/types/os/arch/c95/enum.c_int.html' title='std::libc::types::os::arch::c95::c_int'>c_int</a>)</code></h3><h3 id='method.useConfig' class='method'><code>fn <span class='fnname'>useConfig</span>&lt;T: <a class='trait' href='../../wx/base/trait.ConfigBaseMethods.html' title='wx::base::ConfigBaseMethods'>ConfigBaseMethods</a>&gt;(&amp;self, config: &amp;T, rootpath: &amp;str)</code></h3><h3 id='method.writeCustomization' class='method'><code>fn <span class='fnname'>writeCustomization</span>&lt;T: <a class='trait' href='../../wx/base/trait.ConfigBaseMethods.html' title='wx::base::ConfigBaseMethods'>ConfigBaseMethods</a>&gt;(&amp;self, cfg: &amp;T, path: &amp;str)</code></h3></div>
+                    <h2 id='implementors'>Implementors</h2>
+                    <ul class='item-list'>
+                <li><code><a class='struct' href='../../wx/html/struct.HtmlHelpController.html' title='wx::html::HtmlHelpController'>HtmlHelpController</a></code></li></ul></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <script>
+        var rootPath = "../../";
+    </script>
+    <script src="../../wx/jquery.js"></script>
+    <script src="../../wx/search-index.js"></script>
+    <script src="../../wx/main.js"></script>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&uarr;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&darr;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+</body>
+</html>
