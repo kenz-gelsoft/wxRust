@@ -8,10 +8,10 @@ branches:
 before_install:
   - yes | sudo add-apt-repository ppa:hansjorg/rust
   - yes | sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
-  - yes | sudo apt-add-repository 'deb http://repos.codelite.org/wx2.9/ubuntu/ precise universe'
+  - yes | sudo apt-add-repository 'deb http://repos.codelite.org/wx3.0/ubuntu/ precise universe'
   - sudo apt-get update
 install:
-  - sudo apt-get install rust-0.9 libclang-3.3-dev libwxgtk2.9-0-unofficial libwxgtk2.9-dev
+  - sudo apt-get install rust-0.9 libclang-3.3-dev libwxgtk3.0-0-unofficial libwxgtk3.0-dev
 script:
   - mkdir -p build
   - cd build
