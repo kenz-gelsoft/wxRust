@@ -86,7 +86,7 @@ add_custom_target(doc
 )
 
 add_rust_crate(test
-    tests/main.rs
+    tests/test.rs
     tests/macros.rs
     wxrust.dummy
 )
