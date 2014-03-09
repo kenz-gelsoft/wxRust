@@ -73,7 +73,7 @@ add_custom_command(
 )
 
 add_rust_crate(wxrust
-    src/wx.rc
+    src/lib.rs
     src/defs.rs
     src/_unsafe.rs
     src/generated.dummy
@@ -81,12 +81,12 @@ add_rust_crate(wxrust
 )
 
 add_custom_target(doc
-    COMMAND rustdoc -o doc ${CMAKE_SOURCE_DIR}/src/wx.rc
+    COMMAND rustdoc -o doc ${CMAKE_SOURCE_DIR}/src/lib.rs
     DEPENDS src/generated.dummy
 )
 
 add_rust_crate(test
-    tests/test.rs
+    tests/main.rs
     tests/macros.rs
     wxrust.dummy
 )
