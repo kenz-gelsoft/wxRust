@@ -1,12 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/RustCMake/cmake")
-find_package(rustc)
-find_package(rustdoc)
-include(Rust)
-
-set(RUSTC_FLAGS "-L${CMAKE_BINARY_DIR}/lib")
-set(RUSTDOC_FLAGS "-L${CMAKE_BINARY_DIR}/lib")
+include(rust.cmake)
 
 add_subdirectory(wxc)
 
@@ -25,32 +19,33 @@ else(APPLE)
     set(BINDGEN_LIBPATH LD_LIBRARY_PATH=${LIBCLANG_PATH})
 endif(APPLE)
 
-set(RUSTC_FLAGS ${RUSTC_FLAGS} -L ${LIBCLANG_PATH} -L wxc)
+set(RUSTCFLAGS ${RUSTCFLAGS} -L ${LIBCLANG_PATH} -L wxc)
 set(GENSRC wxHaskell/wxc/src/include)
 set(GENSRCS
     ${GENSRC}/wxc.h
 )
 
-rust_crate(rust-bindgen/bindgen.rs
-    TARGET_NAME bindgen
-    DEPENDS
-        rust-bindgen/clang.rs
-        rust-bindgen/clangll.rs
-        rust-bindgen/gen.rs
-        rust-bindgen/main.rs
-        rust-bindgen/types.rs
-        bindgen_patched
+add_rust_crate_nonall(bindgen
+    rust-bindgen/bindgen.rs
+    rust-bindgen/clang.rs
+    rust-bindgen/clangll.rs
+    rust-bindgen/gen.rs
+    rust-bindgen/main.rs
+    rust-bindgen/types.rs
+    bindgen_patched
 )
 
-add_custom_target(bindgen_patched
+add_custom_command(
+    OUTPUT bindgen_patched
     COMMAND patch -p1 < ../rust-bindgen.patch
+    COMMAND touch bindgen_patched
     DEPENDS ${CMAKE_SOURCE_DIR}/rust-bindgen.patch
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
 )
 
-add_custom_target(bindgen_unpatched
+add_custom_target(bindgen_unpatched ALL
     COMMAND patch -p1 -R < ../rust-bindgen.patch
-    DEPENDS ${bindgen_FULL_TARGET}
+    DEPENDS bindgen.dummy
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
 )
 
@@ -77,14 +72,12 @@ add_custom_command(
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
-rust_crate(src/lib.rs
-    TARGET_NAME wxrust
-    DESTINATION lib
-    DEPENDS
-        src/defs.rs
-        src/_unsafe.rs
-        src/generated.dummy
-        wxc
+add_rust_crate(wxrust
+    src/lib.rs
+    src/defs.rs
+    src/_unsafe.rs
+    src/generated.dummy
+    wxc
 )
 
 add_custom_target(doc
@@ -92,11 +85,10 @@ add_custom_target(doc
     DEPENDS src/generated.dummy
 )
 
-rust_crate(tests/test.rs
-    TARGET_NAME test
-    DEPENDS
-        tests/macros.rs
-        ${wxrust_FULL_TARGET}
+add_rust_crate(test
+    tests/test.rs
+    tests/macros.rs
+    wxrust.dummy
 )
 
 # Make Mac OS X App Bundle
@@ -107,7 +99,7 @@ if(APPLE)
         COMMAND cp test  Test.app/Contents/MacOS/
         COMMAND cp ${CMAKE_SOURCE_DIR}/tests/Info.plist Test.app/Contents/
         COMMAND touch Test.app.dummy
-        DEPENDS tests/Info.plist ${test_FULL_TARGET}
+        DEPENDS tests/Info.plist test.dummy
     )
     add_custom_target(Test.app ALL DEPENDS Test.app.dummy)
 endif(APPLE)
