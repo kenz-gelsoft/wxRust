@@ -24,4 +24,4 @@ script:
   - make doc
 
 after_script:
-  - curl http://www.rust-ci.org/artifacts/put?t=$RUSTCI_TOKEN | sh >& /dev/nul
+  - curl http://www.rust-ci.org/artifacts/put?t=$RUSTCI_TOKEN | sh >& /dev/null
