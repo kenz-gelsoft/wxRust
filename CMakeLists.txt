@@ -80,8 +80,9 @@ add_rust_crate(wxrust
     wxc
 )
 
-add_custom_target(doc
-    COMMAND rustdoc -o doc ${CMAKE_SOURCE_DIR}/src/lib.rs
+rust_doc(src/lib.rs
+    TARGET_NAME doc
+    DESTINATION doc
     DEPENDS src/generated.dummy
 )
 
