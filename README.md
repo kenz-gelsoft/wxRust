@@ -1,9 +1,9 @@
 # wxRust
 
-master: [![master build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=master)](https://travis-ci.org/kenz-gelsoft/wxRust)
-/ rust-0.9: [![rust 0.9 build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=rust-0.9)](https://travis-ci.org/kenz-gelsoft/wxRust)
-/ rust-0.8: [![rust 0.8 build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=rust-0.8)](https://travis-ci.org/kenz-gelsoft/wxRust)
-/ mac(0.9): [![Mac(0.9) build status](https://travis-ci.org/kenz-gelsoft/wxRust.png?branch=rust-mac)](https://travis-ci.org/kenz-gelsoft/wxRust)
+master: [![master build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=master)](https://travis-ci.org/kenz-gelsoft/wxRust)
+/ rust-0.9: [![rust 0.9 build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-0.9)](https://travis-ci.org/kenz-gelsoft/wxRust)
+/ rust-0.8: [![rust 0.8 build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-0.8)](https://travis-ci.org/kenz-gelsoft/wxRust)
+/ mac(0.9): [![Mac(0.9) build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-mac)](https://travis-ci.org/kenz-gelsoft/wxRust)
 
 This is a [Rust](http://www.rust-lang.org/) binding for the [wxWidgets cross platform toolkit](http://www.wxwidgets.org/).
 
@@ -18,7 +18,7 @@ The wxRust library is heavily based on the [wxHaskell](http://www.haskell.org/ha
 The [wxc](https://github.com/wxHaskell/wxHaskell/tree/master/wxc) is a C language binding for the C++ wxWidgets toolkit.
 
 We utilize the [rust-bindgen](https://github.com/crabtw/rust-bindgen)
-[![rust-bindgen build status](https://api.travis-ci.org/crabtw/rust-bindgen.png?branch=master)](https://travis-ci.org/crabtw/rust-bindgen) 
+[![rust-bindgen build status](https://api.travis-ci.org/crabtw/rust-bindgen.svg?branch=master)](https://travis-ci.org/crabtw/rust-bindgen) 
 automatic rust binding generator for its [_unsafe](http://www.rust-ci.org/kenz-gelsoft/wxRust/doc/src/wx/home/travis/build/kenz-gelsoft/wxRust/src/_unsafe.rs.html) low-level binding.
 
 And we generate an OOP-style high-level binding (other modules than _unsafe)
