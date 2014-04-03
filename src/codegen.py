@@ -670,7 +670,7 @@ extern {
 pub fn strToString(s: &str) -> String {
     unsafe {
         s.to_c_str().with_ref(|c_str| {
-            String { ptr: wxString_CreateUTF8(c_str as *mut c_void) }
+            String::from(wxString_CreateUTF8(c_str as *mut c_void))
         })
     }
 }
@@ -683,6 +683,7 @@ impl Drop for String {
 }
 impl String {
     pub fn ptr(&self) -> *mut c_void { self.ptr }
+    pub fn from(ptr: *mut c_void) -> String { String { ptr: ptr } }
     pub fn to_str(&self) -> ~str {
         unsafe {
             let charBuffer = wxString_GetUtf8(self.ptr);
@@ -1152,9 +1153,9 @@ class Function(object):
         with gen.indent():
             body = '%s(%s)' % (self.name, self._calling_args)
             if self.__return_type.is_string:
-                body = 'String { ptr: %s }.to_str()' % (body)
+                body = 'String::from(%s).to_str()' % (body)
             if self.__return_type.is_self or self.__return_type.is_class:
-                body = '%s { ptr: %s }' % (self.__return_type.struct_name, body)
+                body = '%s::from(%s)' % (self.__return_type.struct_name, body)
             gen.println('%sunsafe { %s }' % (self._strings, body))
         gen.println('}')
 

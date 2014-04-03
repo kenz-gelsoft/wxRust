@@ -106,7 +106,7 @@ impl HtmlHelpController {
     pub fn null() -> HtmlHelpController { HtmlHelpController::from(0 as *mut c_void) }
     
     pub fn new(_style: c_int) -> HtmlHelpController {
-        unsafe { HtmlHelpController { ptr: wxHtmlHelpController_Create(_style) } }
+        unsafe { HtmlHelpController::from(wxHtmlHelpController_Create(_style)) }
     }
 }
 
@@ -138,7 +138,7 @@ pub trait HtmlHelpControllerMethods : HelpControllerBaseMethods {
         unsafe { wxHtmlHelpController_DisplaySectionNumber(self.ptr(), sectionNo) }
     }
     fn getFrame(&self) -> Frame {
-        unsafe { Frame { ptr: wxHtmlHelpController_GetFrame(self.ptr()) } }
+        unsafe { Frame::from(wxHtmlHelpController_GetFrame(self.ptr())) }
     }
     fn getFrameParameters(&self, title: *mut c_void, width: *mut c_int, height: *mut c_int, pos_x: *mut c_int, pos_y: *mut c_int, newFrameEachTime: *mut c_int) -> *mut c_void {
         unsafe { wxHtmlHelpController_GetFrameParameters(self.ptr(), title, width, height, pos_x, pos_y, newFrameEachTime) }
@@ -376,7 +376,7 @@ impl HtmlWindow {
     
     pub fn new<T: WindowMethods>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> HtmlWindow {
         let _txt = strToString(_txt);
-        unsafe { HtmlWindow { ptr: wxHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr()) } }
+        unsafe { HtmlWindow::from(wxHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr())) }
     }
 }
 
@@ -387,19 +387,19 @@ pub trait HtmlWindowMethods : ScrolledWindowMethods {
         unsafe { wxHtmlWindow_AppendToPage(self.ptr(), source.ptr()) }
     }
     fn getInternalRepresentation(&self) -> HtmlContainerCell {
-        unsafe { HtmlContainerCell { ptr: wxHtmlWindow_GetInternalRepresentation(self.ptr()) } }
+        unsafe { HtmlContainerCell::from(wxHtmlWindow_GetInternalRepresentation(self.ptr())) }
     }
     fn getOpenedAnchor(&self) -> ~str {
-        unsafe { String { ptr: wxHtmlWindow_GetOpenedAnchor(self.ptr()) }.to_str() }
+        unsafe { String::from(wxHtmlWindow_GetOpenedAnchor(self.ptr())).to_str() }
     }
     fn getOpenedPage(&self) -> ~str {
-        unsafe { String { ptr: wxHtmlWindow_GetOpenedPage(self.ptr()) }.to_str() }
+        unsafe { String::from(wxHtmlWindow_GetOpenedPage(self.ptr())).to_str() }
     }
     fn getOpenedPageTitle(&self) -> ~str {
-        unsafe { String { ptr: wxHtmlWindow_GetOpenedPageTitle(self.ptr()) }.to_str() }
+        unsafe { String::from(wxHtmlWindow_GetOpenedPageTitle(self.ptr())).to_str() }
     }
     fn getRelatedFrame(&self) -> Frame {
-        unsafe { Frame { ptr: wxHtmlWindow_GetRelatedFrame(self.ptr()) } }
+        unsafe { Frame::from(wxHtmlWindow_GetRelatedFrame(self.ptr())) }
     }
     fn historyBack(&self) -> c_int {
         unsafe { wxHtmlWindow_HistoryBack(self.ptr()) }
@@ -465,22 +465,22 @@ impl RustHtmlEvent {
 /// Methods of the wxRust-specific derived class of [wxCommandEvent](http://docs.wxwidgets.org/3.0/classwx_command_event.html).
 pub trait RustHtmlEventMethods : CommandEventMethods {
     fn getMouseEvent(&self) -> MouseEvent {
-        unsafe { MouseEvent { ptr: wxcHtmlEvent_GetMouseEvent(self.ptr()) } }
+        unsafe { MouseEvent::from(wxcHtmlEvent_GetMouseEvent(self.ptr())) }
     }
     fn getHtmlCell(&self) -> HtmlCell {
-        unsafe { HtmlCell { ptr: wxcHtmlEvent_GetHtmlCell(self.ptr()) } }
+        unsafe { HtmlCell::from(wxcHtmlEvent_GetHtmlCell(self.ptr())) }
     }
     fn getHtmlCellId(&self) -> ~str {
-        unsafe { String { ptr: wxcHtmlEvent_GetHtmlCellId(self.ptr()) }.to_str() }
+        unsafe { String::from(wxcHtmlEvent_GetHtmlCellId(self.ptr())).to_str() }
     }
     fn getHref(&self) -> ~str {
-        unsafe { String { ptr: wxcHtmlEvent_GetHref(self.ptr()) }.to_str() }
+        unsafe { String::from(wxcHtmlEvent_GetHref(self.ptr())).to_str() }
     }
     fn getTarget(&self) -> ~str {
-        unsafe { String { ptr: wxcHtmlEvent_GetTarget(self.ptr()) }.to_str() }
+        unsafe { String::from(wxcHtmlEvent_GetTarget(self.ptr())).to_str() }
     }
     fn getLogicalPosition(&self) -> Point {
-        unsafe { Point { ptr: wxcHtmlEvent_GetLogicalPosition(self.ptr()) } }
+        unsafe { Point::from(wxcHtmlEvent_GetLogicalPosition(self.ptr())) }
     }
 }
 
@@ -500,7 +500,7 @@ impl RustHtmlWindow {
     
     pub fn new<T: WindowMethods>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int, _txt: &str) -> RustHtmlWindow {
         let _txt = strToString(_txt);
-        unsafe { RustHtmlWindow { ptr: wxcHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr()) } }
+        unsafe { RustHtmlWindow::from(wxcHtmlWindow_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl, _txt.ptr())) }
     }
 }
 
