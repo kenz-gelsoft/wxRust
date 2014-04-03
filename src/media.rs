@@ -18,7 +18,7 @@ impl MediaCtrl {
         let fileName = strToString(fileName);
         let szBackend = strToString(szBackend);
         let name = strToString(name);
-        unsafe { MediaCtrl { ptr: wxMediaCtrl_Create(parent.ptr(), windowID, fileName.ptr(), x, y, w, h, style, szBackend.ptr(), name.ptr()) } }
+        unsafe { MediaCtrl::from(wxMediaCtrl_Create(parent.ptr(), windowID, fileName.ptr(), x, y, w, h, style, szBackend.ptr(), name.ptr())) }
     }
 }
 

@@ -13,7 +13,7 @@ extern {
 pub fn strToString(s: &str) -> String {
     unsafe {
         s.to_c_str().with_ref(|c_str| {
-            String { ptr: wxString_CreateUTF8(c_str as *mut c_void) }
+            String::from(wxString_CreateUTF8(c_str as *mut c_void))
         })
     }
 }
@@ -26,6 +26,7 @@ impl Drop for String {
 }
 impl String {
     pub fn ptr(&self) -> *mut c_void { self.ptr }
+    pub fn from(ptr: *mut c_void) -> String { String { ptr: ptr } }
     pub fn to_str(&self) -> ~str {
         unsafe {
             let charBuffer = wxString_GetUtf8(self.ptr);
@@ -192,7 +193,7 @@ impl ClassInfo {
     
     pub fn findClass(_txt: &str) -> ClassInfo {
         let _txt = strToString(_txt);
-        unsafe { ClassInfo { ptr: wxClassInfo_FindClass(_txt.ptr()) } }
+        unsafe { ClassInfo::from(wxClassInfo_FindClass(_txt.ptr())) }
     }
 }
 
@@ -211,13 +212,13 @@ pub trait ClassInfoMethods {
         unsafe { wxClassInfo_IsKindOf(self.ptr(), _name.ptr()) }
     }
     fn getBaseClassName1(&self) -> ~str {
-        unsafe { String { ptr: wxClassInfo_GetBaseClassName1(self.ptr()) }.to_str() }
+        unsafe { String::from(wxClassInfo_GetBaseClassName1(self.ptr())).to_str() }
     }
     fn getBaseClassName2(&self) -> ~str {
-        unsafe { String { ptr: wxClassInfo_GetBaseClassName2(self.ptr()) }.to_str() }
+        unsafe { String::from(wxClassInfo_GetBaseClassName2(self.ptr())).to_str() }
     }
     fn getClassNameEx(&self) -> ~str {
-        unsafe { String { ptr: wxClassInfo_GetClassNameEx(self.ptr()) }.to_str() }
+        unsafe { String::from(wxClassInfo_GetClassNameEx(self.ptr())).to_str() }
     }
     fn getSize(&self) -> c_int {
         unsafe { wxClassInfo_GetSize(self.ptr()) }
@@ -301,7 +302,7 @@ impl Closure {
     pub fn null() -> Closure { Closure::from(0 as *mut c_void) }
     
     pub fn new(_fun_CEvent: *mut c_void, _data: *mut c_void) -> Closure {
-        unsafe { Closure { ptr: wxClosure_Create(_fun_CEvent, _data) } }
+        unsafe { Closure::from(wxClosure_Create(_fun_CEvent, _data)) }
     }
 }
 
@@ -353,10 +354,10 @@ impl ConfigBase {
     pub fn null() -> ConfigBase { ConfigBase::from(0 as *mut c_void) }
     
     pub fn new() -> ConfigBase {
-        unsafe { ConfigBase { ptr: wxConfigBase_Create() } }
+        unsafe { ConfigBase::from(wxConfigBase_Create()) }
     }
     pub fn get() -> ConfigBase {
-        unsafe { ConfigBase { ptr: wxConfigBase_Get() } }
+        unsafe { ConfigBase::from(wxConfigBase_Get()) }
     }
     pub fn set<T: ConfigBaseMethods>(self_: &T) {
         unsafe { wxConfigBase_Set(self_.ptr()) }
@@ -387,29 +388,29 @@ pub trait ConfigBaseMethods {
     }
     fn expandEnvVars(&self, str: &str) -> ~str {
         let str = strToString(str);
-        unsafe { String { ptr: wxConfigBase_ExpandEnvVars(self.ptr(), str.ptr()) }.to_str() }
+        unsafe { String::from(wxConfigBase_ExpandEnvVars(self.ptr(), str.ptr())).to_str() }
     }
     fn flush(&self, bCurrentOnly: c_int) -> c_int {
         unsafe { wxConfigBase_Flush(self.ptr(), bCurrentOnly) }
     }
     fn getAppName(&self) -> ~str {
-        unsafe { String { ptr: wxConfigBase_GetAppName(self.ptr()) }.to_str() }
+        unsafe { String::from(wxConfigBase_GetAppName(self.ptr())).to_str() }
     }
     fn getEntryType(&self, name: &str) -> c_int {
         let name = strToString(name);
         unsafe { wxConfigBase_GetEntryType(self.ptr(), name.ptr()) }
     }
     fn getFirstEntry(&self, lIndex: *mut c_void) -> ~str {
-        unsafe { String { ptr: wxConfigBase_GetFirstEntry(self.ptr(), lIndex) }.to_str() }
+        unsafe { String::from(wxConfigBase_GetFirstEntry(self.ptr(), lIndex)).to_str() }
     }
     fn getFirstGroup(&self, lIndex: *mut c_void) -> ~str {
-        unsafe { String { ptr: wxConfigBase_GetFirstGroup(self.ptr(), lIndex) }.to_str() }
+        unsafe { String::from(wxConfigBase_GetFirstGroup(self.ptr(), lIndex)).to_str() }
     }
     fn getNextEntry(&self, lIndex: *mut c_void) -> ~str {
-        unsafe { String { ptr: wxConfigBase_GetNextEntry(self.ptr(), lIndex) }.to_str() }
+        unsafe { String::from(wxConfigBase_GetNextEntry(self.ptr(), lIndex)).to_str() }
     }
     fn getNextGroup(&self, lIndex: *mut c_void) -> ~str {
-        unsafe { String { ptr: wxConfigBase_GetNextGroup(self.ptr(), lIndex) }.to_str() }
+        unsafe { String::from(wxConfigBase_GetNextGroup(self.ptr(), lIndex)).to_str() }
     }
     fn getNumberOfEntries(&self, bRecursive: c_int) -> c_int {
         unsafe { wxConfigBase_GetNumberOfEntries(self.ptr(), bRecursive) }
@@ -418,13 +419,13 @@ pub trait ConfigBaseMethods {
         unsafe { wxConfigBase_GetNumberOfGroups(self.ptr(), bRecursive) }
     }
     fn getPath(&self) -> ~str {
-        unsafe { String { ptr: wxConfigBase_GetPath(self.ptr()) }.to_str() }
+        unsafe { String::from(wxConfigBase_GetPath(self.ptr())).to_str() }
     }
     fn getStyle(&self) -> c_int {
         unsafe { wxConfigBase_GetStyle(self.ptr()) }
     }
     fn getVendorName(&self) -> ~str {
-        unsafe { String { ptr: wxConfigBase_GetVendorName(self.ptr()) }.to_str() }
+        unsafe { String::from(wxConfigBase_GetVendorName(self.ptr())).to_str() }
     }
     fn hasEntry(&self, strName: &str) -> c_int {
         let strName = strToString(strName);
@@ -455,7 +456,7 @@ pub trait ConfigBaseMethods {
     fn readString(&self, key: &str, defVal: &str) -> ~str {
         let key = strToString(key);
         let defVal = strToString(defVal);
-        unsafe { String { ptr: wxConfigBase_ReadString(self.ptr(), key.ptr(), defVal.ptr()) }.to_str() }
+        unsafe { String::from(wxConfigBase_ReadString(self.ptr(), key.ptr(), defVal.ptr())).to_str() }
     }
     fn renameEntry(&self, oldName: &str, newName: &str) -> c_int {
         let oldName = strToString(oldName);
@@ -683,10 +684,10 @@ impl DateTime {
         unsafe { wxDateTime_ConvertYearToBC(year) }
     }
     pub fn new() -> DateTime {
-        unsafe { DateTime { ptr: wxDateTime_Create() } }
+        unsafe { DateTime::from(wxDateTime_Create()) }
     }
     pub fn getAmString() -> ~str {
-        unsafe { String { ptr: wxDateTime_GetAmString() }.to_str() }
+        unsafe { String::from(wxDateTime_GetAmString()).to_str() }
     }
     pub fn getBeginDST<T: DateTimeMethods>(year: c_int, country: c_int, dt: &T) {
         unsafe { wxDateTime_GetBeginDST(year, country, dt.ptr()) }
@@ -707,7 +708,7 @@ impl DateTime {
         unsafe { wxDateTime_GetEndDST(year, country, dt.ptr()) }
     }
     pub fn getMonthName(month: c_int, flags: c_int) -> ~str {
-        unsafe { String { ptr: wxDateTime_GetMonthName(month, flags) }.to_str() }
+        unsafe { String::from(wxDateTime_GetMonthName(month, flags)).to_str() }
     }
     pub fn getNumberOfDays(year: c_int, cal: c_int) -> c_int {
         unsafe { wxDateTime_GetNumberOfDays(year, cal) }
@@ -716,13 +717,13 @@ impl DateTime {
         unsafe { wxDateTime_GetNumberOfDaysMonth(month, year, cal) }
     }
     pub fn getPmString() -> ~str {
-        unsafe { String { ptr: wxDateTime_GetPmString() }.to_str() }
+        unsafe { String::from(wxDateTime_GetPmString()).to_str() }
     }
     pub fn getTimeNow() -> c_int {
         unsafe { wxDateTime_GetTimeNow() }
     }
     pub fn getWeekDayName(weekday: c_int, flags: c_int) -> ~str {
-        unsafe { String { ptr: wxDateTime_GetWeekDayName(weekday, flags) }.to_str() }
+        unsafe { String::from(wxDateTime_GetWeekDayName(weekday, flags)).to_str() }
     }
     pub fn isDSTApplicable(year: c_int, country: c_int) -> c_int {
         unsafe { wxDateTime_IsDSTApplicable(year, country) }
@@ -758,19 +759,19 @@ pub trait DateTimeMethods {
         unsafe { wxDateTime_AddTimeValues(self.ptr(), _hrs, _min, _sec, _mls) }
     }
     fn format(&self, format: *mut c_void, tz: c_int) -> ~str {
-        unsafe { String { ptr: wxDateTime_Format(self.ptr(), format, tz) }.to_str() }
+        unsafe { String::from(wxDateTime_Format(self.ptr(), format, tz)).to_str() }
     }
     fn formatDate(&self) -> ~str {
-        unsafe { String { ptr: wxDateTime_FormatDate(self.ptr()) }.to_str() }
+        unsafe { String::from(wxDateTime_FormatDate(self.ptr())).to_str() }
     }
     fn formatISODate(&self) -> ~str {
-        unsafe { String { ptr: wxDateTime_FormatISODate(self.ptr()) }.to_str() }
+        unsafe { String::from(wxDateTime_FormatISODate(self.ptr())).to_str() }
     }
     fn formatISOTime(&self) -> ~str {
-        unsafe { String { ptr: wxDateTime_FormatISOTime(self.ptr()) }.to_str() }
+        unsafe { String::from(wxDateTime_FormatISOTime(self.ptr())).to_str() }
     }
     fn formatTime(&self) -> ~str {
-        unsafe { String { ptr: wxDateTime_FormatTime(self.ptr()) }.to_str() }
+        unsafe { String::from(wxDateTime_FormatTime(self.ptr())).to_str() }
     }
     fn getDay(&self, tz: c_int) -> c_int {
         unsafe { wxDateTime_GetDay(self.ptr(), tz) }
@@ -1034,7 +1035,7 @@ impl EncodingConverter {
     pub fn null() -> EncodingConverter { EncodingConverter::from(0 as *mut c_void) }
     
     pub fn new() -> EncodingConverter {
-        unsafe { EncodingConverter { ptr: wxEncodingConverter_Create() } }
+        unsafe { EncodingConverter::from(wxEncodingConverter_Create()) }
     }
 }
 
@@ -1297,7 +1298,7 @@ impl Locale {
     pub fn null() -> Locale { Locale::from(0 as *mut c_void) }
     
     pub fn new(_name: c_int, _flags: c_int) -> Locale {
-        unsafe { Locale { ptr: wxLocale_Create(_name, _flags) } }
+        unsafe { Locale::from(wxLocale_Create(_name, _flags)) }
     }
 }
 
@@ -1315,10 +1316,10 @@ pub trait LocaleMethods {
         unsafe { wxLocale_Delete(self.ptr()) }
     }
     fn getLocale(&self) -> Locale {
-        unsafe { Locale { ptr: wxLocale_GetLocale(self.ptr()) } }
+        unsafe { Locale::from(wxLocale_GetLocale(self.ptr())) }
     }
     fn getName(&self) -> ~str {
-        unsafe { String { ptr: wxLocale_GetName(self.ptr()) }.to_str() }
+        unsafe { String::from(wxLocale_GetName(self.ptr())).to_str() }
     }
     fn getString(&self, szOrigString: *mut c_void, szDomain: *mut c_void) -> *mut int8_t {
         unsafe { wxLocale_GetString(self.ptr(), szOrigString, szDomain) }
@@ -1522,7 +1523,7 @@ pub trait ObjectMethods {
         unsafe { wxObject_SafeDelete(self.ptr()) }
     }
     fn getClientClosure(&self) -> Closure {
-        unsafe { Closure { ptr: wxObject_GetClientClosure(self.ptr()) } }
+        unsafe { Closure::from(wxObject_GetClientClosure(self.ptr())) }
     }
     fn setClientClosure<T: ClosureMethods>(&self, closure: &T) {
         unsafe { wxObject_SetClientClosure(self.ptr(), closure.ptr()) }
@@ -1531,7 +1532,7 @@ pub trait ObjectMethods {
         unsafe { wxObject_Delete(self.ptr()) }
     }
     fn getClassInfo(&self) -> ClassInfo {
-        unsafe { ClassInfo { ptr: wxObject_GetClassInfo(self.ptr()) } }
+        unsafe { ClassInfo::from(wxObject_GetClassInfo(self.ptr())) }
     }
     fn isKindOf<T: ClassInfoMethods>(&self, classInfo: &T) -> c_int {
         unsafe { wxObject_IsKindOf(self.ptr(), classInfo.ptr()) }
@@ -1716,7 +1717,7 @@ impl SingleInstanceChecker {
         unsafe { wxSingleInstanceChecker_Create(_obj, name.ptr(), path.ptr()) }
     }
     pub fn newDefault() -> SingleInstanceChecker {
-        unsafe { SingleInstanceChecker { ptr: wxSingleInstanceChecker_CreateDefault() } }
+        unsafe { SingleInstanceChecker::from(wxSingleInstanceChecker_CreateDefault()) }
     }
 }
 
@@ -1741,7 +1742,7 @@ impl StopWatch {
     pub fn null() -> StopWatch { StopWatch::from(0 as *mut c_void) }
     
     pub fn new() -> StopWatch {
-        unsafe { StopWatch { ptr: wxStopWatch_Create() } }
+        unsafe { StopWatch::from(wxStopWatch_Create()) }
     }
 }
 
@@ -1929,7 +1930,7 @@ impl TextInputStream {
     
     pub fn new<T: InputStreamMethods>(inputStream: &T, sep: &str) -> TextInputStream {
         let sep = strToString(sep);
-        unsafe { TextInputStream { ptr: wxTextInputStream_Create(inputStream.ptr(), sep.ptr()) } }
+        unsafe { TextInputStream::from(wxTextInputStream_Create(inputStream.ptr(), sep.ptr())) }
     }
 }
 
@@ -1941,7 +1942,7 @@ pub trait TextInputStreamMethods {
         unsafe { wxTextInputStream_Delete(self.ptr()) }
     }
     fn readLine(&self) -> ~str {
-        unsafe { String { ptr: wxTextInputStream_ReadLine(self.ptr()) }.to_str() }
+        unsafe { String::from(wxTextInputStream_ReadLine(self.ptr())).to_str() }
     }
 }
 
@@ -1954,7 +1955,7 @@ impl TextOutputStream {
     pub fn null() -> TextOutputStream { TextOutputStream::from(0 as *mut c_void) }
     
     pub fn new<T: OutputStreamMethods>(outputStream: &T, mode: c_int) -> TextOutputStream {
-        unsafe { TextOutputStream { ptr: wxTextOutputStream_Create(outputStream.ptr(), mode) } }
+        unsafe { TextOutputStream::from(wxTextOutputStream_Create(outputStream.ptr(), mode)) }
     }
 }
 
@@ -2124,7 +2125,7 @@ impl FileConfig {
     pub fn null() -> FileConfig { FileConfig::from(0 as *mut c_void) }
     
     pub fn new<T: InputStreamMethods>(inp: &T) -> FileConfig {
-        unsafe { FileConfig { ptr: wxFileConfig_Create(inp.ptr()) } }
+        unsafe { FileConfig::from(wxFileConfig_Create(inp.ptr())) }
     }
 }
 
