@@ -675,7 +675,7 @@ pub fn strToString(s: &str) -> String {
     }
 }
 
-pub struct String { ptr: *mut c_void }
+pub struct String { pub ptr: *mut c_void }
 impl Drop for String {
     fn drop(&mut self) {
         unsafe { wxString_Delete(self.ptr); }
@@ -716,7 +716,7 @@ impl String {
         if (clazz.name.startswith('ELJ') or clazz.name.startswith('wxc')) and clazz.has_base:
             base = self.__parser.class_for_name(clazz.base)
             self.println("/// The wxRust-specific derived class of [%s](%s)." % (base.name, base.link))
-        self.println('pub struct %s { ptr: *mut c_void }' % struct_name)
+        self.println('pub struct %s { pub ptr: *mut c_void }' % struct_name)
         for trait in clazz.inheritance:
             body = ''
             if trait in self.__parser.root_classes:
