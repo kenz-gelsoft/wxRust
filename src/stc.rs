@@ -18,7 +18,7 @@ impl StyledTextCtrl {
     
     pub fn new<T: WindowMethods>(_prt: &T, _id: c_int, _txt: &str, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, style: c_int) -> StyledTextCtrl {
         let _txt = strToString(_txt);
-        unsafe { StyledTextCtrl { ptr: wxStyledTextCtrl_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, style) } }
+        unsafe { StyledTextCtrl::from(wxStyledTextCtrl_Create(_prt.ptr(), _id, _txt.ptr(), _lft, _top, _wdt, _hgt, style)) }
     }
 }
 
@@ -1014,40 +1014,40 @@ pub trait StyledTextCtrlMethods : ControlMethods {
         unsafe { wxStyledTextCtrl_LoadFile(self.ptr(), filename.ptr()) }
     }
     fn indicatorGetForeground(&self, indic: c_int) -> Colour {
-        unsafe { Colour { ptr: wxStyledTextCtrl_IndicatorGetForeground(self.ptr(), indic) } }
+        unsafe { Colour::from(wxStyledTextCtrl_IndicatorGetForeground(self.ptr(), indic)) }
     }
     fn getCaretLineBackground(&self) -> Colour {
-        unsafe { Colour { ptr: wxStyledTextCtrl_GetCaretLineBackground(self.ptr()) } }
+        unsafe { Colour::from(wxStyledTextCtrl_GetCaretLineBackground(self.ptr())) }
     }
     fn setCaretLineBackground(&self, back_r: uint8_t, back_g: uint8_t, back_b: uint8_t) {
         unsafe { wxStyledTextCtrl_SetCaretLineBackground(self.ptr(), back_r, back_g, back_b) }
     }
     fn getCaretForeground(&self) -> Colour {
-        unsafe { Colour { ptr: wxStyledTextCtrl_GetCaretForeground(self.ptr()) } }
+        unsafe { Colour::from(wxStyledTextCtrl_GetCaretForeground(self.ptr())) }
     }
     fn getLine(&self, line: c_int) -> ~str {
-        unsafe { String { ptr: wxStyledTextCtrl_GetLine(self.ptr(), line) }.to_str() }
+        unsafe { String::from(wxStyledTextCtrl_GetLine(self.ptr(), line)).to_str() }
     }
     fn getText(&self) -> ~str {
-        unsafe { String { ptr: wxStyledTextCtrl_GetText(self.ptr()) }.to_str() }
+        unsafe { String::from(wxStyledTextCtrl_GetText(self.ptr())).to_str() }
     }
     fn getTextRange(&self, startPos: c_int, endPos: c_int) -> ~str {
-        unsafe { String { ptr: wxStyledTextCtrl_GetTextRange(self.ptr(), startPos, endPos) }.to_str() }
+        unsafe { String::from(wxStyledTextCtrl_GetTextRange(self.ptr(), startPos, endPos)).to_str() }
     }
     fn getSelectedText(&self) -> ~str {
-        unsafe { String { ptr: wxStyledTextCtrl_GetSelectedText(self.ptr()) }.to_str() }
+        unsafe { String::from(wxStyledTextCtrl_GetSelectedText(self.ptr())).to_str() }
     }
     fn newDocument(&self) -> STCDoc {
-        unsafe { STCDoc { ptr: wxStyledTextCtrl_CreateDocument(self.ptr()) } }
+        unsafe { STCDoc::from(wxStyledTextCtrl_CreateDocument(self.ptr())) }
     }
     fn getEdgeColour(&self) -> Colour {
-        unsafe { Colour { ptr: wxStyledTextCtrl_GetEdgeColour(self.ptr()) } }
+        unsafe { Colour::from(wxStyledTextCtrl_GetEdgeColour(self.ptr())) }
     }
     fn getDocPointer(&self) -> STCDoc {
-        unsafe { STCDoc { ptr: wxStyledTextCtrl_GetDocPointer(self.ptr()) } }
+        unsafe { STCDoc::from(wxStyledTextCtrl_GetDocPointer(self.ptr())) }
     }
     fn pointFromPosition(&self) -> Point {
-        unsafe { Point { ptr: wxStyledTextCtrl_PointFromPosition(self.ptr()) } }
+        unsafe { Point::from(wxStyledTextCtrl_PointFromPosition(self.ptr())) }
     }
 }
 
@@ -1131,7 +1131,7 @@ pub trait StyledTextEventMethods : CommandEventMethods {
         unsafe { wxStyledTextEvent_GetY(self.ptr()) }
     }
     fn getDragText(&self) -> ~str {
-        unsafe { String { ptr: wxStyledTextEvent_GetDragText(self.ptr()) }.to_str() }
+        unsafe { String::from(wxStyledTextEvent_GetDragText(self.ptr())).to_str() }
     }
     fn getDragAllowMove(&self) -> c_int {
         unsafe { wxStyledTextEvent_GetDragAllowMove(self.ptr()) }
@@ -1149,10 +1149,10 @@ pub trait StyledTextEventMethods : CommandEventMethods {
         unsafe { wxStyledTextEvent_GetAlt(self.ptr()) }
     }
     fn getText(&self) -> ~str {
-        unsafe { String { ptr: wxStyledTextEvent_GetText(self.ptr()) }.to_str() }
+        unsafe { String::from(wxStyledTextEvent_GetText(self.ptr())).to_str() }
     }
     fn clone(&self) -> StyledTextEvent {
-        unsafe { StyledTextEvent { ptr: wxStyledTextEvent_Clone(self.ptr()) } }
+        unsafe { StyledTextEvent::from(wxStyledTextEvent_Clone(self.ptr())) }
     }
     fn setPosition(&self, pos: c_int) {
         unsafe { wxStyledTextEvent_SetPosition(self.ptr(), pos) }

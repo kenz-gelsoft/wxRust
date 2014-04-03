@@ -19,7 +19,7 @@ impl GLCanvas {
     
     pub fn new<T: WindowMethods, U: PaletteMethods>(parent: &T, windowID: c_int, attributes: *mut c_int, x: c_int, y: c_int, w: c_int, h: c_int, style: c_int, title: &str, palette: &U) -> GLCanvas {
         let title = strToString(title);
-        unsafe { GLCanvas { ptr: wxGLCanvas_Create(parent.ptr(), windowID, attributes, x, y, w, h, style, title.ptr(), palette.ptr()) } }
+        unsafe { GLCanvas::from(wxGLCanvas_Create(parent.ptr(), windowID, attributes, x, y, w, h, style, title.ptr(), palette.ptr())) }
     }
     pub fn isDisplaySupported(attributes: *mut c_int) -> c_int {
         unsafe { wxGLCanvas_IsDisplaySupported(attributes) }
@@ -53,10 +53,10 @@ impl GLContext {
     pub fn null() -> GLContext { GLContext::from(0 as *mut c_void) }
     
     pub fn new<T: GLCanvasMethods, U: GLContextMethods>(win: &T, other: &U) -> GLContext {
-        unsafe { GLContext { ptr: wxGLContext_Create(win.ptr(), other.ptr()) } }
+        unsafe { GLContext::from(wxGLContext_Create(win.ptr(), other.ptr())) }
     }
     pub fn newFromNull<T: GLCanvasMethods>(win: &T) -> GLContext {
-        unsafe { GLContext { ptr: wxGLContext_CreateFromNull(win.ptr()) } }
+        unsafe { GLContext::from(wxGLContext_CreateFromNull(win.ptr())) }
     }
 }
 

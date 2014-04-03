@@ -14,14 +14,14 @@ impl RustGridTable {
     pub fn null() -> RustGridTable { RustGridTable::from(0 as *mut c_void) }
     
     pub fn new(_obj: *mut c_void, _EifGetNumberRows: *mut c_void, _EifGetNumberCols: *mut c_void, _EifGetValue: *mut c_void, _EifSetValue: *mut c_void, _EifIsEmptyCell: *mut c_void, _EifClear: *mut c_void, _EifInsertRows: *mut c_void, _EifAppendRows: *mut c_void, _EifDeleteRows: *mut c_void, _EifInsertCols: *mut c_void, _EifAppendCols: *mut c_void, _EifDeleteCols: *mut c_void, _EifSetRowLabelValue: *mut c_void, _EifSetColLabelValue: *mut c_void, _EifGetRowLabelValue: *mut c_void, _EifGetColLabelValue: *mut c_void) -> RustGridTable {
-        unsafe { RustGridTable { ptr: ELJGridTable_Create(_obj, _EifGetNumberRows, _EifGetNumberCols, _EifGetValue, _EifSetValue, _EifIsEmptyCell, _EifClear, _EifInsertRows, _EifAppendRows, _EifDeleteRows, _EifInsertCols, _EifAppendCols, _EifDeleteCols, _EifSetRowLabelValue, _EifSetColLabelValue, _EifGetRowLabelValue, _EifGetColLabelValue) } }
+        unsafe { RustGridTable::from(ELJGridTable_Create(_obj, _EifGetNumberRows, _EifGetNumberCols, _EifGetValue, _EifSetValue, _EifIsEmptyCell, _EifClear, _EifInsertRows, _EifAppendRows, _EifDeleteRows, _EifInsertCols, _EifAppendCols, _EifDeleteCols, _EifSetRowLabelValue, _EifSetColLabelValue, _EifGetRowLabelValue, _EifGetColLabelValue)) }
     }
 }
 
 /// Methods of the wxRust-specific derived class of [wxGridTableBase](http://docs.wxwidgets.org/3.0/classwx_grid_table_base.html).
 pub trait RustGridTableMethods : GridTableBaseMethods {
     fn getView(&self) -> View {
-        unsafe { View { ptr: ELJGridTable_GetView(self.ptr()) } }
+        unsafe { View::from(ELJGridTable_GetView(self.ptr())) }
     }
     fn sendTableMessage(&self, id: c_int, val1: c_int, val2: c_int) -> *mut c_void {
         unsafe { ELJGridTable_SendTableMessage(self.ptr(), id, val1, val2) }
@@ -39,7 +39,7 @@ impl CalculateLayoutEvent {
     pub fn null() -> CalculateLayoutEvent { CalculateLayoutEvent::from(0 as *mut c_void) }
     
     pub fn new(id: c_int) -> CalculateLayoutEvent {
-        unsafe { CalculateLayoutEvent { ptr: wxCalculateLayoutEvent_Create(id) } }
+        unsafe { CalculateLayoutEvent::from(wxCalculateLayoutEvent_Create(id)) }
     }
 }
 
@@ -49,7 +49,7 @@ pub trait CalculateLayoutEventMethods : EventMethods {
         unsafe { wxCalculateLayoutEvent_GetFlags(self.ptr()) }
     }
     fn getRect(&self) -> Rect {
-        unsafe { Rect { ptr: wxCalculateLayoutEvent_GetRect(self.ptr()) } }
+        unsafe { Rect::from(wxCalculateLayoutEvent_GetRect(self.ptr())) }
     }
     fn setFlags(&self, flags: c_int) {
         unsafe { wxCalculateLayoutEvent_SetFlags(self.ptr(), flags) }
@@ -72,7 +72,7 @@ impl CalendarCtrl {
     pub fn null() -> CalendarCtrl { CalendarCtrl::from(0 as *mut c_void) }
     
     pub fn new<T: WindowMethods, U: DateTimeMethods>(_prt: &T, _id: c_int, _dat: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> CalendarCtrl {
-        unsafe { CalendarCtrl { ptr: wxCalendarCtrl_Create(_prt.ptr(), _id, _dat.ptr(), _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { CalendarCtrl::from(wxCalendarCtrl_Create(_prt.ptr(), _id, _dat.ptr(), _lft, _top, _wdt, _hgt, _stl)) }
     }
 }
 
@@ -143,10 +143,10 @@ impl CalendarDateAttr {
     pub fn null() -> CalendarDateAttr { CalendarDateAttr::from(0 as *mut c_void) }
     
     pub fn new(_ctxt: *mut c_void, _cbck: *mut c_void, _cbrd: *mut c_void, _fnt: *mut c_void, _brd: c_int) -> CalendarDateAttr {
-        unsafe { CalendarDateAttr { ptr: wxCalendarDateAttr_Create(_ctxt, _cbck, _cbrd, _fnt, _brd) } }
+        unsafe { CalendarDateAttr::from(wxCalendarDateAttr_Create(_ctxt, _cbck, _cbrd, _fnt, _brd)) }
     }
     pub fn newDefault() -> CalendarDateAttr {
-        unsafe { CalendarDateAttr { ptr: wxCalendarDateAttr_CreateDefault() } }
+        unsafe { CalendarDateAttr::from(wxCalendarDateAttr_CreateDefault()) }
     }
 }
 
@@ -265,7 +265,7 @@ impl Grid {
     pub fn null() -> Grid { Grid::from(0 as *mut c_void) }
     
     pub fn new<T: WindowMethods>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> Grid {
-        unsafe { Grid { ptr: wxGrid_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { Grid::from(wxGrid_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl)) }
     }
 }
 
@@ -296,7 +296,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_BeginBatch(self.ptr()) }
     }
     fn blockToDeviceRect(&self, top: c_int, left: c_int, bottom: c_int, right: c_int) -> Rect {
-        unsafe { Rect { ptr: wxGrid_BlockToDeviceRect(self.ptr(), top, left, bottom, right) } }
+        unsafe { Rect::from(wxGrid_BlockToDeviceRect(self.ptr(), top, left, bottom, right)) }
     }
     fn canDragColSize(&self) -> c_int {
         unsafe { wxGrid_CanDragColSize(self.ptr()) }
@@ -311,7 +311,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_CanEnableCellControl(self.ptr()) }
     }
     fn cellToRect(&self, row: c_int, col: c_int) -> Rect {
-        unsafe { Rect { ptr: wxGrid_CellToRect(self.ptr(), row, col) } }
+        unsafe { Rect::from(wxGrid_CellToRect(self.ptr(), row, col)) }
     }
     fn clearGrid(&self) {
         unsafe { wxGrid_ClearGrid(self.ptr()) }
@@ -402,7 +402,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_GetCellBackgroundColour(self.ptr(), row, col, colour.ptr()) }
     }
     fn getCellEditor(&self, row: c_int, col: c_int) -> GridCellEditor {
-        unsafe { GridCellEditor { ptr: wxGrid_GetCellEditor(self.ptr(), row, col) } }
+        unsafe { GridCellEditor::from(wxGrid_GetCellEditor(self.ptr(), row, col)) }
     }
     fn getCellFont<T: FontMethods>(&self, row: c_int, col: c_int, font: &T) {
         unsafe { wxGrid_GetCellFont(self.ptr(), row, col, font.ptr()) }
@@ -411,13 +411,13 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_GetCellHighlightColour(self.ptr(), _ref.ptr()) }
     }
     fn getCellRenderer(&self, row: c_int, col: c_int) -> GridCellRenderer {
-        unsafe { GridCellRenderer { ptr: wxGrid_GetCellRenderer(self.ptr(), row, col) } }
+        unsafe { GridCellRenderer::from(wxGrid_GetCellRenderer(self.ptr(), row, col)) }
     }
     fn getCellTextColour<T: ColourMethods>(&self, row: c_int, col: c_int, colour: &T) {
         unsafe { wxGrid_GetCellTextColour(self.ptr(), row, col, colour.ptr()) }
     }
     fn getCellValue(&self, row: c_int, col: c_int) -> ~str {
-        unsafe { String { ptr: wxGrid_GetCellValue(self.ptr(), row, col) }.to_str() }
+        unsafe { String::from(wxGrid_GetCellValue(self.ptr(), row, col)).to_str() }
     }
     fn getColLabelAlignment(&self, horiz: *mut c_int, vert: *mut c_int) {
         unsafe { wxGrid_GetColLabelAlignment(self.ptr(), horiz, vert) }
@@ -426,7 +426,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_GetColLabelSize(self.ptr()) }
     }
     fn getColLabelValue(&self, col: c_int) -> ~str {
-        unsafe { String { ptr: wxGrid_GetColLabelValue(self.ptr(), col) }.to_str() }
+        unsafe { String::from(wxGrid_GetColLabelValue(self.ptr(), col)).to_str() }
     }
     fn getColSize(&self, col: c_int) -> c_int {
         unsafe { wxGrid_GetColSize(self.ptr(), col) }
@@ -450,24 +450,24 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_GetDefaultColSize(self.ptr()) }
     }
     fn getDefaultEditor(&self) -> GridCellEditor {
-        unsafe { GridCellEditor { ptr: wxGrid_GetDefaultEditor(self.ptr()) } }
+        unsafe { GridCellEditor::from(wxGrid_GetDefaultEditor(self.ptr())) }
     }
     fn getDefaultEditorForCell(&self, row: c_int, col: c_int) -> GridCellEditor {
-        unsafe { GridCellEditor { ptr: wxGrid_GetDefaultEditorForCell(self.ptr(), row, col) } }
+        unsafe { GridCellEditor::from(wxGrid_GetDefaultEditorForCell(self.ptr(), row, col)) }
     }
     fn getDefaultEditorForType(&self, typeName: &str) -> GridCellEditor {
         let typeName = strToString(typeName);
-        unsafe { GridCellEditor { ptr: wxGrid_GetDefaultEditorForType(self.ptr(), typeName.ptr()) } }
+        unsafe { GridCellEditor::from(wxGrid_GetDefaultEditorForType(self.ptr(), typeName.ptr())) }
     }
     fn getDefaultRenderer(&self) -> GridCellRenderer {
-        unsafe { GridCellRenderer { ptr: wxGrid_GetDefaultRenderer(self.ptr()) } }
+        unsafe { GridCellRenderer::from(wxGrid_GetDefaultRenderer(self.ptr())) }
     }
     fn getDefaultRendererForCell(&self, row: c_int, col: c_int) -> GridCellRenderer {
-        unsafe { GridCellRenderer { ptr: wxGrid_GetDefaultRendererForCell(self.ptr(), row, col) } }
+        unsafe { GridCellRenderer::from(wxGrid_GetDefaultRendererForCell(self.ptr(), row, col)) }
     }
     fn getDefaultRendererForType(&self, typeName: &str) -> GridCellRenderer {
         let typeName = strToString(typeName);
-        unsafe { GridCellRenderer { ptr: wxGrid_GetDefaultRendererForType(self.ptr(), typeName.ptr()) } }
+        unsafe { GridCellRenderer::from(wxGrid_GetDefaultRendererForType(self.ptr(), typeName.ptr())) }
     }
     fn getDefaultRowLabelSize(&self) -> c_int {
         unsafe { wxGrid_GetDefaultRowLabelSize(self.ptr()) }
@@ -506,7 +506,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_GetRowLabelSize(self.ptr()) }
     }
     fn getRowLabelValue(&self, row: c_int) -> ~str {
-        unsafe { String { ptr: wxGrid_GetRowLabelValue(self.ptr(), row) }.to_str() }
+        unsafe { String::from(wxGrid_GetRowLabelValue(self.ptr(), row)).to_str() }
     }
     fn getRowSize(&self, row: c_int) -> c_int {
         unsafe { wxGrid_GetRowSize(self.ptr(), row) }
@@ -518,7 +518,7 @@ pub trait GridMethods : ScrolledWindowMethods {
         unsafe { wxGrid_GetSelectionForeground(self.ptr(), _ref.ptr()) }
     }
     fn getTable(&self) -> GridTableBase {
-        unsafe { GridTableBase { ptr: wxGrid_GetTable(self.ptr()) } }
+        unsafe { GridTableBase::from(wxGrid_GetTable(self.ptr())) }
     }
     fn getTextBoxSize<T: DCMethods>(&self, dc: &T, count: c_int, lines: *mut *mut c_char, _w: *mut c_void, _h: *mut c_void) {
         unsafe { wxGrid_GetTextBoxSize(self.ptr(), dc.ptr(), count, lines, _w, _h) }
@@ -801,7 +801,7 @@ impl GridCellAttr {
     pub fn null() -> GridCellAttr { GridCellAttr::from(0 as *mut c_void) }
     
     pub fn ctor() -> GridCellAttr {
-        unsafe { GridCellAttr { ptr: wxGridCellAttr_Ctor() } }
+        unsafe { GridCellAttr::from(wxGridCellAttr_Ctor()) }
     }
 }
 
@@ -819,13 +819,13 @@ pub trait GridCellAttrMethods {
         unsafe { wxGridCellAttr_GetBackgroundColour(self.ptr(), _ref.ptr()) }
     }
     fn getEditor<T: GridMethods>(&self, grid: &T, row: c_int, col: c_int) -> GridCellEditor {
-        unsafe { GridCellEditor { ptr: wxGridCellAttr_GetEditor(self.ptr(), grid.ptr(), row, col) } }
+        unsafe { GridCellEditor::from(wxGridCellAttr_GetEditor(self.ptr(), grid.ptr(), row, col)) }
     }
     fn getFont<T: FontMethods>(&self, _ref: &T) {
         unsafe { wxGridCellAttr_GetFont(self.ptr(), _ref.ptr()) }
     }
     fn getRenderer<T: GridMethods>(&self, grid: &T, row: c_int, col: c_int) -> GridCellRenderer {
-        unsafe { GridCellRenderer { ptr: wxGridCellAttr_GetRenderer(self.ptr(), grid.ptr(), row, col) } }
+        unsafe { GridCellRenderer::from(wxGridCellAttr_GetRenderer(self.ptr(), grid.ptr(), row, col)) }
     }
     fn getTextColour<T: ColourMethods>(&self, _ref: &T) {
         unsafe { wxGridCellAttr_GetTextColour(self.ptr(), _ref.ptr()) }
@@ -891,7 +891,7 @@ impl GridCellBoolEditor {
     pub fn null() -> GridCellBoolEditor { GridCellBoolEditor::from(0 as *mut c_void) }
     
     pub fn ctor() -> GridCellBoolEditor {
-        unsafe { GridCellBoolEditor { ptr: wxGridCellBoolEditor_Ctor() } }
+        unsafe { GridCellBoolEditor::from(wxGridCellBoolEditor_Ctor()) }
     }
 }
 
@@ -926,7 +926,7 @@ impl GridCellChoiceEditor {
     pub fn null() -> GridCellChoiceEditor { GridCellChoiceEditor::from(0 as *mut c_void) }
     
     pub fn ctor(count: c_int, choices: *mut *mut c_char, allowOthers: c_int) -> GridCellChoiceEditor {
-        unsafe { GridCellChoiceEditor { ptr: wxGridCellChoiceEditor_Ctor(count, choices, allowOthers) } }
+        unsafe { GridCellChoiceEditor::from(wxGridCellChoiceEditor_Ctor(count, choices, allowOthers)) }
     }
 }
 
@@ -943,7 +943,7 @@ impl GridCellCoordsArray {
     pub fn null() -> GridCellCoordsArray { GridCellCoordsArray::from(0 as *mut c_void) }
     
     pub fn new() -> GridCellCoordsArray {
-        unsafe { GridCellCoordsArray { ptr: wxGridCellCoordsArray_Create() } }
+        unsafe { GridCellCoordsArray::from(wxGridCellCoordsArray_Create()) }
     }
 }
 
@@ -990,7 +990,7 @@ pub trait GridCellEditorMethods : GridCellWorkerMethods {
         unsafe { wxGridCellEditor_EndEdit(self.ptr(), row, col, grid.ptr(), oldStr.ptr(), newStr.ptr()) }
     }
     fn getControl(&self) -> Control {
-        unsafe { Control { ptr: wxGridCellEditor_GetControl(self.ptr()) } }
+        unsafe { Control::from(wxGridCellEditor_GetControl(self.ptr())) }
     }
     fn handleReturn<T: EventMethods>(&self, event: &T) {
         unsafe { wxGridCellEditor_HandleReturn(self.ptr(), event.ptr()) }
@@ -1040,7 +1040,7 @@ impl GridCellFloatEditor {
     pub fn null() -> GridCellFloatEditor { GridCellFloatEditor::from(0 as *mut c_void) }
     
     pub fn ctor(width: c_int, precision: c_int) -> GridCellFloatEditor {
-        unsafe { GridCellFloatEditor { ptr: wxGridCellFloatEditor_Ctor(width, precision) } }
+        unsafe { GridCellFloatEditor::from(wxGridCellFloatEditor_Ctor(width, precision)) }
     }
 }
 
@@ -1077,7 +1077,7 @@ impl GridCellNumberEditor {
     pub fn null() -> GridCellNumberEditor { GridCellNumberEditor::from(0 as *mut c_void) }
     
     pub fn ctor(min: c_int, max: c_int) -> GridCellNumberEditor {
-        unsafe { GridCellNumberEditor { ptr: wxGridCellNumberEditor_Ctor(min, max) } }
+        unsafe { GridCellNumberEditor::from(wxGridCellNumberEditor_Ctor(min, max)) }
     }
 }
 
@@ -1097,7 +1097,7 @@ impl GridCellNumberRenderer {
     pub fn null() -> GridCellNumberRenderer { GridCellNumberRenderer::from(0 as *mut c_void) }
     
     pub fn ctor() -> GridCellNumberRenderer {
-        unsafe { GridCellNumberRenderer { ptr: wxGridCellNumberRenderer_Ctor() } }
+        unsafe { GridCellNumberRenderer::from(wxGridCellNumberRenderer_Ctor()) }
     }
 }
 
@@ -1117,7 +1117,7 @@ impl GridCellAutoWrapStringRenderer {
     pub fn null() -> GridCellAutoWrapStringRenderer { GridCellAutoWrapStringRenderer::from(0 as *mut c_void) }
     
     pub fn ctor() -> GridCellAutoWrapStringRenderer {
-        unsafe { GridCellAutoWrapStringRenderer { ptr: wxGridCellAutoWrapStringRenderer_Ctor() } }
+        unsafe { GridCellAutoWrapStringRenderer::from(wxGridCellAutoWrapStringRenderer_Ctor()) }
     }
 }
 
@@ -1167,7 +1167,7 @@ impl GridCellTextEditor {
     pub fn null() -> GridCellTextEditor { GridCellTextEditor::from(0 as *mut c_void) }
     
     pub fn ctor() -> GridCellTextEditor {
-        unsafe { GridCellTextEditor { ptr: wxGridCellTextEditor_Ctor() } }
+        unsafe { GridCellTextEditor::from(wxGridCellTextEditor_Ctor()) }
     }
 }
 
@@ -1210,7 +1210,7 @@ pub trait GridEditorCreatedEventMethods : CommandEventMethods {
         unsafe { wxGridEditorCreatedEvent_GetCol(self.ptr()) }
     }
     fn getControl(&self) -> Control {
-        unsafe { Control { ptr: wxGridEditorCreatedEvent_GetControl(self.ptr()) } }
+        unsafe { Control::from(wxGridEditorCreatedEvent_GetControl(self.ptr())) }
     }
     fn getRow(&self) -> c_int {
         unsafe { wxGridEditorCreatedEvent_GetRow(self.ptr()) }
@@ -1252,7 +1252,7 @@ pub trait GridEventMethods : NotifyEventMethods {
         unsafe { wxGridEvent_GetCol(self.ptr()) }
     }
     fn getPosition(&self) -> Point {
-        unsafe { Point { ptr: wxGridEvent_GetPosition(self.ptr()) } }
+        unsafe { Point::from(wxGridEvent_GetPosition(self.ptr())) }
     }
     fn getRow(&self) -> c_int {
         unsafe { wxGridEvent_GetRow(self.ptr()) }
@@ -1339,7 +1339,7 @@ pub trait GridSizeEventMethods : NotifyEventMethods {
         unsafe { wxGridSizeEvent_GetRowOrCol(self.ptr()) }
     }
     fn getPosition(&self) -> Point {
-        unsafe { Point { ptr: wxGridSizeEvent_GetPosition(self.ptr()) } }
+        unsafe { Point::from(wxGridSizeEvent_GetPosition(self.ptr())) }
     }
     fn controlDown(&self) -> c_int {
         unsafe { wxGridSizeEvent_ControlDown(self.ptr()) }
@@ -1395,7 +1395,7 @@ impl LayoutAlgorithm {
     pub fn null() -> LayoutAlgorithm { LayoutAlgorithm::from(0 as *mut c_void) }
     
     pub fn new() -> LayoutAlgorithm {
-        unsafe { LayoutAlgorithm { ptr: wxLayoutAlgorithm_Create() } }
+        unsafe { LayoutAlgorithm::from(wxLayoutAlgorithm_Create()) }
     }
 }
 
@@ -1423,7 +1423,7 @@ impl QueryLayoutInfoEvent {
     pub fn null() -> QueryLayoutInfoEvent { QueryLayoutInfoEvent::from(0 as *mut c_void) }
     
     pub fn new(id: c_int) -> QueryLayoutInfoEvent {
-        unsafe { QueryLayoutInfoEvent { ptr: wxQueryLayoutInfoEvent_Create(id) } }
+        unsafe { QueryLayoutInfoEvent::from(wxQueryLayoutInfoEvent_Create(id)) }
     }
 }
 
@@ -1442,7 +1442,7 @@ pub trait QueryLayoutInfoEventMethods : EventMethods {
         unsafe { wxQueryLayoutInfoEvent_GetRequestedLength(self.ptr()) }
     }
     fn getSize(&self) -> Size {
-        unsafe { Size { ptr: wxQueryLayoutInfoEvent_GetSize(self.ptr()) } }
+        unsafe { Size::from(wxQueryLayoutInfoEvent_GetSize(self.ptr())) }
     }
     fn setAlignment(&self, align: c_int) {
         unsafe { wxQueryLayoutInfoEvent_SetAlignment(self.ptr(), align) }
@@ -1472,14 +1472,14 @@ impl SashEvent {
     pub fn null() -> SashEvent { SashEvent::from(0 as *mut c_void) }
     
     pub fn new(id: c_int, edge: c_int) -> SashEvent {
-        unsafe { SashEvent { ptr: wxSashEvent_Create(id, edge) } }
+        unsafe { SashEvent::from(wxSashEvent_Create(id, edge)) }
     }
 }
 
 /// Methods of the wxWidgets' [wxSashEvent](http://docs.wxwidgets.org/3.0/classwx_sash_event.html) class.
 pub trait SashEventMethods : EventMethods {
     fn getDragRect(&self) -> Rect {
-        unsafe { Rect { ptr: wxSashEvent_GetDragRect(self.ptr()) } }
+        unsafe { Rect::from(wxSashEvent_GetDragRect(self.ptr())) }
     }
     fn getDragStatus(&self) -> c_int {
         unsafe { wxSashEvent_GetDragStatus(self.ptr()) }
@@ -1511,7 +1511,7 @@ impl SashLayoutWindow {
     pub fn null() -> SashLayoutWindow { SashLayoutWindow::from(0 as *mut c_void) }
     
     pub fn new<T: WindowMethods>(_par: &T, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> SashLayoutWindow {
-        unsafe { SashLayoutWindow { ptr: wxSashLayoutWindow_Create(_par.ptr(), _id, _x, _y, _w, _h, _stl) } }
+        unsafe { SashLayoutWindow::from(wxSashLayoutWindow_Create(_par.ptr(), _id, _x, _y, _w, _h, _stl)) }
     }
 }
 
@@ -1546,7 +1546,7 @@ impl SashWindow {
     pub fn null() -> SashWindow { SashWindow::from(0 as *mut c_void) }
     
     pub fn new<T: WindowMethods>(_par: &T, _id: c_int, _x: c_int, _y: c_int, _w: c_int, _h: c_int, _stl: c_int) -> SashWindow {
-        unsafe { SashWindow { ptr: wxSashWindow_Create(_par.ptr(), _id, _x, _y, _w, _h, _stl) } }
+        unsafe { SashWindow::from(wxSashWindow_Create(_par.ptr(), _id, _x, _y, _w, _h, _stl)) }
     }
 }
 
@@ -1635,7 +1635,7 @@ impl TaskBarIcon {
     pub fn null() -> TaskBarIcon { TaskBarIcon::from(0 as *mut c_void) }
     
     pub fn new() -> TaskBarIcon {
-        unsafe { TaskBarIcon { ptr: wxTaskBarIcon_Create() } }
+        unsafe { TaskBarIcon::from(wxTaskBarIcon_Create()) }
     }
 }
 
@@ -1693,17 +1693,17 @@ impl Wizard {
     }
     pub fn new<T: WindowMethods, U: BitmapMethods>(_prt: &T, _id: c_int, _txt: &str, _bmp: &U, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int) -> Wizard {
         let _txt = strToString(_txt);
-        unsafe { Wizard { ptr: wxWizard_Create(_prt.ptr(), _id, _txt.ptr(), _bmp.ptr(), _lft, _top, _wdt, _hgt) } }
+        unsafe { Wizard::from(wxWizard_Create(_prt.ptr(), _id, _txt.ptr(), _bmp.ptr(), _lft, _top, _wdt, _hgt)) }
     }
 }
 
 /// Methods of the wxWidgets' [wxWizard](http://docs.wxwidgets.org/3.0/classwx_wizard.html) class.
 pub trait WizardMethods : DialogMethods {
     fn getCurrentPage(&self) -> WizardPage {
-        unsafe { WizardPage { ptr: wxWizard_GetCurrentPage(self.ptr()) } }
+        unsafe { WizardPage::from(wxWizard_GetCurrentPage(self.ptr())) }
     }
     fn getPageSize(&self) -> Size {
-        unsafe { Size { ptr: wxWizard_GetPageSize(self.ptr()) } }
+        unsafe { Size::from(wxWizard_GetPageSize(self.ptr())) }
     }
     fn runWizard<T: WizardPageMethods>(&self, firstPage: &T) -> c_int {
         unsafe { wxWizard_RunWizard(self.ptr(), firstPage.ptr()) }
@@ -1766,7 +1766,7 @@ impl WizardPageSimple {
     pub fn null() -> WizardPageSimple { WizardPageSimple::from(0 as *mut c_void) }
     
     pub fn new<T: WizardMethods>(_prt: &T) -> WizardPageSimple {
-        unsafe { WizardPageSimple { ptr: wxWizardPageSimple_Create(_prt.ptr()) } }
+        unsafe { WizardPageSimple::from(wxWizardPageSimple_Create(_prt.ptr())) }
     }
 }
 
@@ -1776,10 +1776,10 @@ pub trait WizardPageSimpleMethods : WizardPageMethods {
         unsafe { wxWizardPageSimple_GetBitmap(self.ptr(), _ref.ptr()) }
     }
     fn getNext(&self) -> WizardPageSimple {
-        unsafe { WizardPageSimple { ptr: wxWizardPageSimple_GetNext(self.ptr()) } }
+        unsafe { WizardPageSimple::from(wxWizardPageSimple_GetNext(self.ptr())) }
     }
     fn getPrev(&self) -> WizardPageSimple {
-        unsafe { WizardPageSimple { ptr: wxWizardPageSimple_GetPrev(self.ptr()) } }
+        unsafe { WizardPageSimple::from(wxWizardPageSimple_GetPrev(self.ptr())) }
     }
     fn setNext<T: WizardPageSimpleMethods>(&self, next: &T) {
         unsafe { wxWizardPageSimple_SetNext(self.ptr(), next.ptr()) }
@@ -1798,34 +1798,34 @@ impl ManagedPtr {
     pub fn null() -> ManagedPtr { ManagedPtr::from(0 as *mut c_void) }
     
     pub fn newFromObject<T: ObjectMethods>(obj: &T) -> ManagedPtr {
-        unsafe { ManagedPtr { ptr: wxManagedPtr_CreateFromObject(obj.ptr()) } }
+        unsafe { ManagedPtr::from(wxManagedPtr_CreateFromObject(obj.ptr())) }
     }
     pub fn newFromDateTime<T: DateTimeMethods>(obj: &T) -> ManagedPtr {
-        unsafe { ManagedPtr { ptr: wxManagedPtr_CreateFromDateTime(obj.ptr()) } }
+        unsafe { ManagedPtr::from(wxManagedPtr_CreateFromDateTime(obj.ptr())) }
     }
     pub fn newFromGridCellCoordsArray<T: GridCellCoordsArrayMethods>(obj: &T) -> ManagedPtr {
-        unsafe { ManagedPtr { ptr: wxManagedPtr_CreateFromGridCellCoordsArray(obj.ptr()) } }
+        unsafe { ManagedPtr::from(wxManagedPtr_CreateFromGridCellCoordsArray(obj.ptr())) }
     }
     pub fn newFromBitmap<T: BitmapMethods>(obj: &T) -> ManagedPtr {
-        unsafe { ManagedPtr { ptr: wxManagedPtr_CreateFromBitmap(obj.ptr()) } }
+        unsafe { ManagedPtr::from(wxManagedPtr_CreateFromBitmap(obj.ptr())) }
     }
     pub fn newFromIcon<T: IconMethods>(obj: &T) -> ManagedPtr {
-        unsafe { ManagedPtr { ptr: wxManagedPtr_CreateFromIcon(obj.ptr()) } }
+        unsafe { ManagedPtr::from(wxManagedPtr_CreateFromIcon(obj.ptr())) }
     }
     pub fn newFromBrush<T: BrushMethods>(obj: &T) -> ManagedPtr {
-        unsafe { ManagedPtr { ptr: wxManagedPtr_CreateFromBrush(obj.ptr()) } }
+        unsafe { ManagedPtr::from(wxManagedPtr_CreateFromBrush(obj.ptr())) }
     }
     pub fn newFromColour<T: ColourMethods>(obj: &T) -> ManagedPtr {
-        unsafe { ManagedPtr { ptr: wxManagedPtr_CreateFromColour(obj.ptr()) } }
+        unsafe { ManagedPtr::from(wxManagedPtr_CreateFromColour(obj.ptr())) }
     }
     pub fn newFromCursor<T: CursorMethods>(obj: &T) -> ManagedPtr {
-        unsafe { ManagedPtr { ptr: wxManagedPtr_CreateFromCursor(obj.ptr()) } }
+        unsafe { ManagedPtr::from(wxManagedPtr_CreateFromCursor(obj.ptr())) }
     }
     pub fn newFromFont<T: FontMethods>(obj: &T) -> ManagedPtr {
-        unsafe { ManagedPtr { ptr: wxManagedPtr_CreateFromFont(obj.ptr()) } }
+        unsafe { ManagedPtr::from(wxManagedPtr_CreateFromFont(obj.ptr())) }
     }
     pub fn newFromPen<T: PenMethods>(obj: &T) -> ManagedPtr {
-        unsafe { ManagedPtr { ptr: wxManagedPtr_CreateFromPen(obj.ptr()) } }
+        unsafe { ManagedPtr::from(wxManagedPtr_CreateFromPen(obj.ptr())) }
     }
 }
 
@@ -1859,7 +1859,7 @@ impl GridCellTextEnterEditor {
     pub fn null() -> GridCellTextEnterEditor { GridCellTextEnterEditor::from(0 as *mut c_void) }
     
     pub fn ctor() -> GridCellTextEnterEditor {
-        unsafe { GridCellTextEnterEditor { ptr: wxGridCellTextEnterEditor_Ctor() } }
+        unsafe { GridCellTextEnterEditor::from(wxGridCellTextEnterEditor_Ctor()) }
     }
 }
 
