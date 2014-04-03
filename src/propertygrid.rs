@@ -17,14 +17,14 @@ impl PropertyGrid {
     pub fn null() -> PropertyGrid { PropertyGrid::from(0 as *mut c_void) }
     
     pub fn new<T: WindowMethods>(_prt: &T, _id: c_int, _lft: c_int, _top: c_int, _wdt: c_int, _hgt: c_int, _stl: c_int) -> PropertyGrid {
-        unsafe { PropertyGrid { ptr: wxPropertyGrid_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl) } }
+        unsafe { PropertyGrid::from(wxPropertyGrid_Create(_prt.ptr(), _id, _lft, _top, _wdt, _hgt, _stl)) }
     }
 }
 
 /// Methods of the wxWidgets' [wxPropertyGrid](http://docs.wxwidgets.org/3.0/classwx_property_grid.html) class.
 pub trait PropertyGridMethods : ControlMethods {
     fn append<T: PGPropertyMethods>(&self, prop: &T) -> PGProperty {
-        unsafe { PGProperty { ptr: wxPropertyGrid_Append(self.ptr(), prop.ptr()) } }
+        unsafe { PGProperty::from(wxPropertyGrid_Append(self.ptr(), prop.ptr())) }
     }
     fn disableProperty(&self, propName: &str) -> c_int {
         let propName = strToString(propName);
@@ -52,7 +52,7 @@ pub trait PropertyGridEventMethods : NotifyEventMethods {
         unsafe { wxPropertyGridEvent_HasProperty(self.ptr()) }
     }
     fn getProperty(&self) -> PGProperty {
-        unsafe { PGProperty { ptr: wxPropertyGridEvent_GetProperty(self.ptr()) } }
+        unsafe { PGProperty::from(wxPropertyGridEvent_GetProperty(self.ptr())) }
     }
 }
 
@@ -70,16 +70,16 @@ impl PGProperty {
 /// Methods of the wxWidgets' [wxPGProperty](http://docs.wxwidgets.org/3.0/classwx_pgp_roperty.html) class.
 pub trait PGPropertyMethods : ObjectMethods {
     fn getLabel(&self) -> ~str {
-        unsafe { String { ptr: wxPGProperty_GetLabel(self.ptr()) }.to_str() }
+        unsafe { String::from(wxPGProperty_GetLabel(self.ptr())).to_str() }
     }
     fn getName(&self) -> ~str {
-        unsafe { String { ptr: wxPGProperty_GetName(self.ptr()) }.to_str() }
+        unsafe { String::from(wxPGProperty_GetName(self.ptr())).to_str() }
     }
     fn getValueAsString(&self) -> ~str {
-        unsafe { String { ptr: wxPGProperty_GetValueAsString(self.ptr()) }.to_str() }
+        unsafe { String::from(wxPGProperty_GetValueAsString(self.ptr())).to_str() }
     }
     fn getValueType(&self) -> ~str {
-        unsafe { String { ptr: wxPGProperty_GetValueType(self.ptr()) }.to_str() }
+        unsafe { String::from(wxPGProperty_GetValueType(self.ptr())).to_str() }
     }
     fn setHelpString(&self, helpString: &str) {
         let helpString = strToString(helpString);
@@ -101,7 +101,7 @@ impl StringProperty {
         let label = strToString(label);
         let name = strToString(name);
         let value = strToString(value);
-        unsafe { StringProperty { ptr: wxStringProperty_Create(label.ptr(), name.ptr(), value.ptr()) } }
+        unsafe { StringProperty::from(wxStringProperty_Create(label.ptr(), name.ptr(), value.ptr())) }
     }
 }
 
@@ -122,7 +122,7 @@ impl IntProperty {
     pub fn new(label: &str, name: &str, value: c_int) -> IntProperty {
         let label = strToString(label);
         let name = strToString(name);
-        unsafe { IntProperty { ptr: wxIntProperty_Create(label.ptr(), name.ptr(), value) } }
+        unsafe { IntProperty::from(wxIntProperty_Create(label.ptr(), name.ptr(), value)) }
     }
 }
 
@@ -143,7 +143,7 @@ impl BoolProperty {
     pub fn new(label: &str, name: &str, value: c_int) -> BoolProperty {
         let label = strToString(label);
         let name = strToString(name);
-        unsafe { BoolProperty { ptr: wxBoolProperty_Create(label.ptr(), name.ptr(), value) } }
+        unsafe { BoolProperty::from(wxBoolProperty_Create(label.ptr(), name.ptr(), value)) }
     }
 }
 
@@ -164,7 +164,7 @@ impl FloatProperty {
     pub fn new(label: &str, name: &str, value: c_float) -> FloatProperty {
         let label = strToString(label);
         let name = strToString(name);
-        unsafe { FloatProperty { ptr: wxFloatProperty_Create(label.ptr(), name.ptr(), value) } }
+        unsafe { FloatProperty::from(wxFloatProperty_Create(label.ptr(), name.ptr(), value)) }
     }
 }
 
@@ -185,7 +185,7 @@ impl DateProperty {
     pub fn new<T: DateTimeMethods>(label: &str, name: &str, value: &T) -> DateProperty {
         let label = strToString(label);
         let name = strToString(name);
-        unsafe { DateProperty { ptr: wxDateProperty_Create(label.ptr(), name.ptr(), value.ptr()) } }
+        unsafe { DateProperty::from(wxDateProperty_Create(label.ptr(), name.ptr(), value.ptr())) }
     }
 }
 
@@ -207,7 +207,7 @@ impl FileProperty {
         let label = strToString(label);
         let name = strToString(name);
         let value = strToString(value);
-        unsafe { FileProperty { ptr: wxFileProperty_Create(label.ptr(), name.ptr(), value.ptr()) } }
+        unsafe { FileProperty::from(wxFileProperty_Create(label.ptr(), name.ptr(), value.ptr())) }
     }
 }
 
@@ -227,7 +227,7 @@ impl PropertyCategory {
     
     pub fn new(label: &str) -> PropertyCategory {
         let label = strToString(label);
-        unsafe { PropertyCategory { ptr: wxPropertyCategory_Create(label.ptr()) } }
+        unsafe { PropertyCategory::from(wxPropertyCategory_Create(label.ptr())) }
     }
 }
 
