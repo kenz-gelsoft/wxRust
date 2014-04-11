@@ -94,7 +94,7 @@ rust_doc(src/lib.rs
 )
 
 rust_crate(tests/test.rs
-    TARGET_NAME test
+    TARGET_NAME test_cmd
     DEPENDS
         tests/macros.rs
         ${wxrust_FULL_TARGET}
@@ -103,12 +103,14 @@ rust_crate(tests/test.rs
 # Make Mac OS X App Bundle
 if(APPLE)
     add_custom_command(
-        OUTPUT Test.app.dummy
+        OUTPUT Test.app
         COMMAND mkdir -p Test.app/Contents/MacOS
         COMMAND cp test  Test.app/Contents/MacOS/
         COMMAND cp ${CMAKE_SOURCE_DIR}/tests/Info.plist Test.app/Contents/
-        COMMAND touch Test.app.dummy
-        DEPENDS tests/Info.plist ${test_FULL_TARGET}
+        COMMAND touch Test.app
+        DEPENDS tests/Info.plist ${test_cmd_FULL_TARGET}
     )
-    add_custom_target(Test.app ALL DEPENDS Test.app.dummy)
+    add_custom_target(test ALL DEPENDS Test.app)
+else(APPLE)
+    add_custom_target(test ALL DEPENDS ${test_cmd_FULL_TARGET})
 endif(APPLE)
