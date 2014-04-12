@@ -16,7 +16,7 @@ before_install:
   - yes | sudo apt-add-repository 'deb http://repos.codelite.org/wx3.0/ubuntu/ precise universe'
   - sudo apt-get update
 install:
-  - sudo apt-get install rust-nightly libclang-3.3-dev libwxgtk3.0-0-unofficial libwxgtk3.0-dev
+  - sudo apt-get install rust-0.10 libclang-3.3-dev libwxgtk3.0-0-unofficial libwxgtk3.0-dev
 script:
   - mkdir -p build
   - cd build
