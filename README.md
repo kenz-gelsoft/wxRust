@@ -1,6 +1,7 @@
 # wxRust
 
 master: [![master build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=master)](https://travis-ci.org/kenz-gelsoft/wxRust)
+/ rust-0.10: [![rust 0.10 build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-0.10)](https://travis-ci.org/kenz-gelsoft/wxRust)
 / rust-0.9: [![rust 0.9 build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-0.9)](https://travis-ci.org/kenz-gelsoft/wxRust)
 / rust-0.8: [![rust 0.8 build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-0.8)](https://travis-ci.org/kenz-gelsoft/wxRust)
 / mac(0.9): [![Mac(0.9) build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-mac)](https://travis-ci.org/kenz-gelsoft/wxRust)
@@ -37,6 +38,7 @@ Use following Rust compiler version for your wxRust branch. We're using Servo ma
 <table>
 <tr><td><strong>wxRust branch</strong></td><td><strong>Supported Rust compiler version</strong>        </td></tr>
 <tr><td>master    </td><td><a href="https://github.com/mozilla/rust">master</a>                        </td></tr>
+<tr><td>rust-0.10 </td><td><a href="https://github.com/mozilla/rust/releases/tag/0.10">0.10</a>        </td></tr>
 <tr><td>rust-0.9  </td><td><a href="https://github.com/mozilla/rust/releases/tag/0.9">0.9</a>          </td></tr>
 <tr><td>rust-servo</td><td><a href="https://github.com/mozilla/servo/">Servo master</a> bundled version</td></tr>
 <tr><td>rust-0.8  </td><td><a href="https://github.com/mozilla/rust/releases/tag/0.8">0.8</a>          </td></tr>
