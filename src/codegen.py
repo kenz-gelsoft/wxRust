@@ -651,7 +651,7 @@ class WrapperGenerator(object):
         for name, module in PY3 and modules.items() or modules.iteritems():
             with open('src/%s.rs' % name, 'w') as f:
                 self.__file = f
-                self.println('use std::libc::*;')
+                self.println('use libc::*;')
                 if name == 'base':
                     self.println('use std::str;')
                 for m in module['depends']:
