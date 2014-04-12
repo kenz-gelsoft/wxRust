@@ -1,8 +1,8 @@
 diff --git a/clang.rs b/clang.rs
-index 11bf5b7..1684166 100644
+index 4db8a1e..a7bae32 100644
 --- a/clang.rs
 +++ b/clang.rs
-@@ -171,17 +171,11 @@ impl Type {
+@@ -173,17 +173,11 @@ impl Type {
      }
  
      pub fn size(&self) -> uint {
