@@ -36,18 +36,6 @@ pub type __uint64_t = c_ulonglong;
 pub type __darwin_intptr_t = c_long;
 pub type __darwin_natural_t = c_uint;
 pub type __darwin_ct_rune_t = c_int;
-pub struct __mbstate_t {
-    data: [u8, ..0u],
-}
-impl __mbstate_t {
-    pub fn __mbstate8(&mut self) -> *mut [c_schar, ..128u] {
-        unsafe { ::std::cast::transmute(self) }
-    }
-    pub fn _mbstateL(&mut self) -> *mut c_longlong {
-        unsafe { ::std::cast::transmute(self) }
-    }
-}
-pub type __darwin_mbstate_t = __mbstate_t;
 pub type __darwin_ptrdiff_t = c_long;
 pub type __darwin_size_t = c_ulong;
 pub type __darwin_wchar_t = c_int;
@@ -58,7 +46,7 @@ pub type __darwin_socklen_t = __uint32_t;
 pub type __darwin_ssize_t = c_long;
 pub type __darwin_time_t = c_long;
 pub struct Struct___darwin_pthread_handler_rec {
-    __routine: ::std::option::Option<extern "C" fn(arg1: *mut c_void)>,
+    __routine: extern "C" fn(arg1: *mut c_void),
     __arg: *mut c_void,
     __next: *mut Struct___darwin_pthread_handler_rec,
 }
