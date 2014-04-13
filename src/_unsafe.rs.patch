@@ -1,21 +1,7 @@
---- src/_unsafe.rs.orig	2013-11-13 01:20:22.000000000 +0900
-+++ src/_unsafe.rs	2013-11-13 01:21:35.000000000 +0900
-@@ -40,21 +40,8 @@
- pub type __darwin_intptr_t = c_long;
- pub type __darwin_natural_t = c_uint;
- pub type __darwin_ct_rune_t = c_int;
--pub struct __mbstate_t {
--    data: [c_uchar, ..128u],
--}
--impl __mbstate_t {
--    pub fn __mbstate8(&mut self) -> *mut [c_schar, ..128u] {
--        unsafe { std::cast::transmute(std::ptr::to_mut_unsafe_ptr(self)) }
--    }
--    pub fn _mbstateL(&mut self) -> *mut c_longlong {
--        unsafe { std::cast::transmute(std::ptr::to_mut_unsafe_ptr(self)) }
--    }
--}
--pub type __darwin_mbstate_t = __mbstate_t;
+--- src/_unsafe.rs.orig	2014-04-13 22:04:45.000000000 +0900
++++ src/_unsafe.rs	2014-04-13 22:04:48.000000000 +0900
+@@ -50,7 +50,6 @@
+ pub type __darwin_mbstate_t = __mbstate_t;
  pub type __darwin_ptrdiff_t = c_long;
  pub type __darwin_size_t = c_ulong;
 -pub type __darwin_va_list = __builtin_va_list;
