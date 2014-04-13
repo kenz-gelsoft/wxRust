@@ -1,5 +1,5 @@
---- _unsafe.rs.orig	2014-04-12 12:00:33.000000000 +0900
-+++ _unsafe.rs	2014-04-12 16:09:30.000000000 +0900
+--- src/_unsafe.rs.orig	2014-04-13 10:37:55.000000000 +0900
++++ src/_unsafe.rs	2014-04-13 10:38:11.000000000 +0900
 @@ -50,7 +50,6 @@
  pub type __darwin_mbstate_t = __mbstate_t;
  pub type __darwin_ptrdiff_t = c_long;
