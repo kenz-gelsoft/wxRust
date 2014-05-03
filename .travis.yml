@@ -10,7 +10,7 @@ branches:
 before_install:
   - brew update
 install:
-  - brew install rust wxmac
+  - brew install cmake rust wxmac
 script:
   - mkdir -p build
   - cd build
