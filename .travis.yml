@@ -1,7 +1,6 @@
 branches:
   only:
     - master
-    - rust-0.8
     - rust-0.9
     - rust-0.10
     - rust-mac
