@@ -3,7 +3,6 @@
 master: [![master build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=master)](https://travis-ci.org/kenz-gelsoft/wxRust)
 / rust-0.10: [![rust 0.10 build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-0.10)](https://travis-ci.org/kenz-gelsoft/wxRust)
 / rust-0.9: [![rust 0.9 build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-0.9)](https://travis-ci.org/kenz-gelsoft/wxRust)
-/ rust-0.8: [![rust 0.8 build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-0.8)](https://travis-ci.org/kenz-gelsoft/wxRust)
 / mac(0.10): [![Mac(0.10) build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=rust-mac)](https://travis-ci.org/kenz-gelsoft/wxRust)
 
 This is a [Rust](http://www.rust-lang.org/) binding for the [wxWidgets cross platform toolkit](http://www.wxwidgets.org/).
@@ -41,7 +40,6 @@ Use following Rust compiler version for your wxRust branch. We're using Servo ma
 <tr><td>rust-0.10 </td><td><a href="https://github.com/mozilla/rust/releases/tag/0.10">0.10</a>        </td></tr>
 <tr><td>rust-0.9  </td><td><a href="https://github.com/mozilla/rust/releases/tag/0.9">0.9</a>          </td></tr>
 <tr><td>rust-servo</td><td><a href="https://github.com/mozilla/servo/">Servo master</a> bundled version</td></tr>
-<tr><td>rust-0.8  </td><td><a href="https://github.com/mozilla/rust/releases/tag/0.8">0.8</a>          </td></tr>
 </table>
 
 Install the wxWidgets 3.0 (2.9.5 or later is required) and CMake as below
