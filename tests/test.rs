@@ -5,6 +5,7 @@
 
 #[link_args="-lwxc"];
 
+extern crate libc;
 extern crate native;
 extern crate wx;
 
