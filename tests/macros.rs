@@ -5,7 +5,7 @@ pub macro_rules! wxApp(
         fn start(argc: int, argv: **u8) -> int {
             #[start];
 
-            use std::libc::c_void;
+            use libc::c_void;
 
             use wx::base::Closure;
             use wx::core::RustApp;
