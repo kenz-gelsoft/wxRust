@@ -4,6 +4,8 @@
 #![feature(globs)]
 #![feature(managed_boxes)]
 
+#![allow(non_camel_case_types)]
+
 pub mod _unavailable;
 pub mod _unsafe;
 pub mod advanced;
