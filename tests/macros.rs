@@ -1,9 +1,9 @@
-#[macro_escape];
+#![macro_escape]
 
 pub macro_rules! wxApp(
     ($f: ident) => (
+        #[start]
         fn start(argc: int, argv: **u8) -> int {
-            #[start];
 
             use libc::c_void;
 
