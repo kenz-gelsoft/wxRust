@@ -1,4 +1,4 @@
-use std::libc::*;
+use libc::*;
 use base::*;
 use core::*;
 
