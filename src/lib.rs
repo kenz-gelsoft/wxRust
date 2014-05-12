@@ -1,8 +1,8 @@
-#[crate_id="wx#0.1"];
-#[crate_type="lib"];
+#![crate_id="wx#0.1"]
+#![crate_type="lib"]
 
-#[feature(globs)];
-#[feature(managed_boxes)];
+#![feature(globs)]
+#![feature(managed_boxes)]
 
 pub mod _unavailable;
 pub mod _unsafe;

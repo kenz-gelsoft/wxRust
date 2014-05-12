@@ -1,9 +1,9 @@
-#[crate_id = "test#0.1"];
+#![crate_id = "test#0.1"]
 
-#[feature(globs)];
-#[feature(macro_rules)];
+#![feature(globs)]
+#![feature(macro_rules)]
 
-#[link_args="-lwxc"];
+#![link_args="-lwxc"]
 
 extern crate native;
 extern crate wx;
