@@ -5,11 +5,10 @@
 
 #[link_args="-lwxc"];
 
-extern crate libc;
 extern crate native;
 extern crate wx;
 
-use libc::c_void;
+use std::libc::c_void;
 
 use wx::_unsafe::*;
 use wx::defs::*;

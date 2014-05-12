@@ -4,8 +4,6 @@
 #[feature(globs)];
 #[feature(managed_boxes)];
 
-extern crate libc;
-
 pub mod _unavailable;
 pub mod _unsafe;
 pub mod advanced;

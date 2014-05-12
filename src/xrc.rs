@@ -1,4 +1,4 @@
-use libc::*;
+use std::libc::*;
 use _unsafe::*;
 use base::*;
 use core::*;
