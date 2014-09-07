@@ -38,21 +38,22 @@ set(GENSRCS
 )
 
 add_custom_command(
-    OUTPUT bindgen
+    OUTPUT ${CMAKE_SOURCE_DIR}/rust-bindgen/bindgen
     COMMAND LIBCLANG_PATH=${LIBCLANG_PATH} cargo build --verbose
     DEPENDS
-        rust-bindgen/src/clang.rs
-        rust-bindgen/src/clangll.rs
-        rust-bindgen/src/gen.rs
-        rust-bindgen/src/lib.rs
-        rust-bindgen/src/macro.rs
-        rust-bindgen/src/parser.rs
-        rust-bindgen/src/types.rs
+        src/clang.rs
+        src/clangll.rs
+        src/gen.rs
+        src/lib.rs
+        src/macro.rs
+        src/parser.rs
+        src/types.rs
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
 )
 
 add_custom_command(
     OUTPUT  ${CMAKE_SOURCE_DIR}/src/_unsafe.rs
-    COMMAND ${BINDGEN_LIBPATH} ${CMAKE_BINARY_DIR}/bindgen
+    COMMAND ${BINDGEN_LIBPATH} ${CMAKE_SOURCE_DIR}/rust-bindgen/bindgen
         -allow-bitfields
         -x c++
         `wx-config --cppflags`
@@ -61,7 +62,7 @@ add_custom_command(
         ${GENSRCS}
         > src/_unsafe.rs
     COMMAND ${PATCH_UNSAFE_RS}
-    DEPENDS bindgen ${GENSRCS}
+    DEPENDS ${CMAKE_SOURCE_DIR}/rust-bindgen/bindgen ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
