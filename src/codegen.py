@@ -667,24 +667,24 @@ extern {
     fn wxCharBuffer_Delete(wxcb: *mut c_void);
 }
 
-pub fn strToString(s: &str) -> String {
+pub fn strToString(s: &str) -> wxString {
     unsafe {
         s.to_c_str().with_ref(|c_str| {
-            String::from(wxString_CreateUTF8(c_str as *mut c_void))
+            wxString::from(wxString_CreateUTF8(c_str as *mut c_void))
         })
     }
 }
 
-pub struct String { ptr: *mut c_void }
-impl Drop for String {
+pub struct wxString { ptr: *mut c_void }
+impl Drop for wxString {
     fn drop(&mut self) {
         unsafe { wxString_Delete(self.ptr); }
     }
 }
-impl String {
+impl wxString {
     pub fn ptr(&self) -> *mut c_void { self.ptr }
-    pub fn from(ptr: *mut c_void) -> String { String { ptr: ptr } }
-    pub fn to_str(&self) -> ~str {
+    pub fn from(ptr: *mut c_void) -> wxString { wxString { ptr: ptr } }
+    pub fn to_str(&self) -> String {
         unsafe {
             let charBuffer = wxString_GetUtf8(self.ptr);
             let utf8 = wxCharBuffer_DataUtf8(charBuffer);
@@ -1153,7 +1153,7 @@ class Function(object):
         with gen.indent():
             body = '%s(%s)' % (self.name, self._calling_args)
             if self.__return_type.is_string:
-                body = 'String::from(%s).to_str()' % (body)
+                body = 'wxString::from(%s).to_str()' % (body)
             if self.__return_type.is_self or self.__return_type.is_class:
                 body = '%s::from(%s)' % (self.__return_type.struct_name, body)
             gen.println('%sunsafe { %s }' % (self._strings, body))
@@ -1189,7 +1189,7 @@ class Function(object):
         if self.__return_type.is_void:
             return ''
         if self.__return_type.is_string:
-            return ' -> ~str'
+            return ' -> String'
         if self.__return_type.is_class:
             return ' -> %s' % self.__return_type.struct_name
         return ' -> %s' % self.__return_type
@@ -1250,7 +1250,7 @@ class Arg(object):
 
 # Function style type macros
 def TArrayObjectOutVoid(args):
-    return '*mut c_void'#'~[%s]' % args # it would be **c_void ?
+    return '*mut c_void'#'Box<[%s]>' % args # it would be **c_void ?
 
 
 class Type(object):

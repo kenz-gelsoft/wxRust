@@ -1025,17 +1025,17 @@ pub trait StyledTextCtrlMethods : ControlMethods {
     fn getCaretForeground(&self) -> Colour {
         unsafe { Colour::from(wxStyledTextCtrl_GetCaretForeground(self.ptr())) }
     }
-    fn getLine(&self, line: c_int) -> ~str {
-        unsafe { String::from(wxStyledTextCtrl_GetLine(self.ptr(), line)).to_str() }
+    fn getLine(&self, line: c_int) -> String {
+        unsafe { wxString::from(wxStyledTextCtrl_GetLine(self.ptr(), line)).to_str() }
     }
-    fn getText(&self) -> ~str {
-        unsafe { String::from(wxStyledTextCtrl_GetText(self.ptr())).to_str() }
+    fn getText(&self) -> String {
+        unsafe { wxString::from(wxStyledTextCtrl_GetText(self.ptr())).to_str() }
     }
-    fn getTextRange(&self, startPos: c_int, endPos: c_int) -> ~str {
-        unsafe { String::from(wxStyledTextCtrl_GetTextRange(self.ptr(), startPos, endPos)).to_str() }
+    fn getTextRange(&self, startPos: c_int, endPos: c_int) -> String {
+        unsafe { wxString::from(wxStyledTextCtrl_GetTextRange(self.ptr(), startPos, endPos)).to_str() }
     }
-    fn getSelectedText(&self) -> ~str {
-        unsafe { String::from(wxStyledTextCtrl_GetSelectedText(self.ptr())).to_str() }
+    fn getSelectedText(&self) -> String {
+        unsafe { wxString::from(wxStyledTextCtrl_GetSelectedText(self.ptr())).to_str() }
     }
     fn newDocument(&self) -> STCDoc {
         unsafe { STCDoc::from(wxStyledTextCtrl_CreateDocument(self.ptr())) }
@@ -1130,8 +1130,8 @@ pub trait StyledTextEventMethods : CommandEventMethods {
     fn getY(&self) -> c_int {
         unsafe { wxStyledTextEvent_GetY(self.ptr()) }
     }
-    fn getDragText(&self) -> ~str {
-        unsafe { String::from(wxStyledTextEvent_GetDragText(self.ptr())).to_str() }
+    fn getDragText(&self) -> String {
+        unsafe { wxString::from(wxStyledTextEvent_GetDragText(self.ptr())).to_str() }
     }
     fn getDragAllowMove(&self) -> c_int {
         unsafe { wxStyledTextEvent_GetDragAllowMove(self.ptr()) }
@@ -1148,8 +1148,8 @@ pub trait StyledTextEventMethods : CommandEventMethods {
     fn getAlt(&self) -> c_int {
         unsafe { wxStyledTextEvent_GetAlt(self.ptr()) }
     }
-    fn getText(&self) -> ~str {
-        unsafe { String::from(wxStyledTextEvent_GetText(self.ptr())).to_str() }
+    fn getText(&self) -> String {
+        unsafe { wxString::from(wxStyledTextEvent_GetText(self.ptr())).to_str() }
     }
     fn clone(&self) -> StyledTextEvent {
         unsafe { StyledTextEvent::from(wxStyledTextEvent_Clone(self.ptr())) }

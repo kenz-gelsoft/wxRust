@@ -389,14 +389,14 @@ pub trait HtmlWindowMethods : ScrolledWindowMethods {
     fn getInternalRepresentation(&self) -> HtmlContainerCell {
         unsafe { HtmlContainerCell::from(wxHtmlWindow_GetInternalRepresentation(self.ptr())) }
     }
-    fn getOpenedAnchor(&self) -> ~str {
-        unsafe { String::from(wxHtmlWindow_GetOpenedAnchor(self.ptr())).to_str() }
+    fn getOpenedAnchor(&self) -> String {
+        unsafe { wxString::from(wxHtmlWindow_GetOpenedAnchor(self.ptr())).to_str() }
     }
-    fn getOpenedPage(&self) -> ~str {
-        unsafe { String::from(wxHtmlWindow_GetOpenedPage(self.ptr())).to_str() }
+    fn getOpenedPage(&self) -> String {
+        unsafe { wxString::from(wxHtmlWindow_GetOpenedPage(self.ptr())).to_str() }
     }
-    fn getOpenedPageTitle(&self) -> ~str {
-        unsafe { String::from(wxHtmlWindow_GetOpenedPageTitle(self.ptr())).to_str() }
+    fn getOpenedPageTitle(&self) -> String {
+        unsafe { wxString::from(wxHtmlWindow_GetOpenedPageTitle(self.ptr())).to_str() }
     }
     fn getRelatedFrame(&self) -> Frame {
         unsafe { Frame::from(wxHtmlWindow_GetRelatedFrame(self.ptr())) }
@@ -470,14 +470,14 @@ pub trait RustHtmlEventMethods : CommandEventMethods {
     fn getHtmlCell(&self) -> HtmlCell {
         unsafe { HtmlCell::from(wxcHtmlEvent_GetHtmlCell(self.ptr())) }
     }
-    fn getHtmlCellId(&self) -> ~str {
-        unsafe { String::from(wxcHtmlEvent_GetHtmlCellId(self.ptr())).to_str() }
+    fn getHtmlCellId(&self) -> String {
+        unsafe { wxString::from(wxcHtmlEvent_GetHtmlCellId(self.ptr())).to_str() }
     }
-    fn getHref(&self) -> ~str {
-        unsafe { String::from(wxcHtmlEvent_GetHref(self.ptr())).to_str() }
+    fn getHref(&self) -> String {
+        unsafe { wxString::from(wxcHtmlEvent_GetHref(self.ptr())).to_str() }
     }
-    fn getTarget(&self) -> ~str {
-        unsafe { String::from(wxcHtmlEvent_GetTarget(self.ptr())).to_str() }
+    fn getTarget(&self) -> String {
+        unsafe { wxString::from(wxcHtmlEvent_GetTarget(self.ptr())).to_str() }
     }
     fn getLogicalPosition(&self) -> Point {
         unsafe { Point::from(wxcHtmlEvent_GetLogicalPosition(self.ptr())) }

@@ -44,8 +44,8 @@ pub trait XmlResourceMethods : ObjectMethods {
     fn compareVersion(&self, major: c_int, minor: c_int, release: c_int, revision: c_int) -> c_int {
         unsafe { wxXmlResource_CompareVersion(self.ptr(), major, minor, release, revision) }
     }
-    fn getDomain(&self) -> ~str {
-        unsafe { String::from(wxXmlResource_GetDomain(self.ptr())).to_str() }
+    fn getDomain(&self) -> String {
+        unsafe { wxString::from(wxXmlResource_GetDomain(self.ptr())).to_str() }
     }
     fn getFlags(&self) -> c_int {
         unsafe { wxXmlResource_GetFlags(self.ptr()) }

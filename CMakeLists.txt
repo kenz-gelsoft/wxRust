@@ -27,33 +27,31 @@ else(APPLE)
     set(BINDGEN_LIBPATH LD_LIBRARY_PATH=${LIBCLANG_PATH})
 endif(APPLE)
 
-set(RUSTC_FLAGS ${RUSTC_FLAGS} -L ${LIBCLANG_PATH} -L wxc)
+set(RUSTC_FLAGS ${RUSTC_FLAGS}
+    -L ${LIBCLANG_PATH}
+    -L wxc
+    -L .
+)
 set(GENSRC wxHaskell/wxc/src/include)
 set(GENSRCS
     ${GENSRC}/wxc.h
 )
 
-rust_crate(rust-bindgen/bindgen.rs
-    TARGET_NAME bindgen
+rust_crate(rust-bindgen/lib.rs
+    TARGET_NAME libbindgen
     DEPENDS
         rust-bindgen/clang.rs
         rust-bindgen/clangll.rs
         rust-bindgen/gen.rs
-        rust-bindgen/main.rs
+        rust-bindgen/lib.rs
+        rust-bindgen/macro.rs
+        rust-bindgen/parser.rs
         rust-bindgen/types.rs
-        bindgen_patched
 )
-
-add_custom_target(bindgen_patched
-    COMMAND patch -p1 < ../rust-bindgen.patch
-    DEPENDS ${CMAKE_SOURCE_DIR}/rust-bindgen.patch
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
-)
-
-add_custom_target(bindgen_unpatched
-    COMMAND patch -p1 -R < ../rust-bindgen.patch
-    DEPENDS ${bindgen_FULL_TARGET}
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
+rust_crate(rust-bindgen/bindgen.rs
+    TARGET_NAME bindgen
+    DEPENDS
+        ${libbindgen_FULL_TARGET}
 )
 
 add_custom_command(
@@ -67,7 +65,7 @@ add_custom_command(
         ${GENSRCS}
         > src/_unsafe.rs
     COMMAND ${PATCH_UNSAFE_RS}
-    DEPENDS bindgen_unpatched ${GENSRCS}
+    DEPENDS ${bindgen_FULL_TARGET} ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 

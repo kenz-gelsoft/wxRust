@@ -55,17 +55,17 @@ impl RustApp {
     pub fn getApp() -> App {
         unsafe { App::from(ELJApp_GetApp()) }
     }
-    pub fn getAppName() -> ~str {
-        unsafe { String::from(ELJApp_GetAppName()).to_str() }
+    pub fn getAppName() -> String {
+        unsafe { wxString::from(ELJApp_GetAppName()).to_str() }
     }
-    pub fn getClassName() -> ~str {
-        unsafe { String::from(ELJApp_GetClassName()).to_str() }
+    pub fn getClassName() -> String {
+        unsafe { wxString::from(ELJApp_GetClassName()).to_str() }
     }
     pub fn getExitOnFrameDelete() -> c_int {
         unsafe { ELJApp_GetExitOnFrameDelete() }
     }
-    pub fn getOsDescription() -> ~str {
-        unsafe { String::from(ELJApp_GetOsDescription()).to_str() }
+    pub fn getOsDescription() -> String {
+        unsafe { wxString::from(ELJApp_GetOsDescription()).to_str() }
     }
     pub fn getOsVersion(_maj: *mut c_void, _min: *mut c_void) -> c_int {
         unsafe { ELJApp_GetOsVersion(_maj, _min) }
@@ -76,17 +76,17 @@ impl RustApp {
     pub fn getUseBestVisual() -> c_int {
         unsafe { ELJApp_GetUseBestVisual() }
     }
-    pub fn getUserHome(_usr: *mut c_void) -> ~str {
-        unsafe { String::from(ELJApp_GetUserHome(_usr)).to_str() }
+    pub fn getUserHome(_usr: *mut c_void) -> String {
+        unsafe { wxString::from(ELJApp_GetUserHome(_usr)).to_str() }
     }
-    pub fn getUserId() -> ~str {
-        unsafe { String::from(ELJApp_GetUserId()).to_str() }
+    pub fn getUserId() -> String {
+        unsafe { wxString::from(ELJApp_GetUserId()).to_str() }
     }
-    pub fn getUserName() -> ~str {
-        unsafe { String::from(ELJApp_GetUserName()).to_str() }
+    pub fn getUserName() -> String {
+        unsafe { wxString::from(ELJApp_GetUserName()).to_str() }
     }
-    pub fn getVendorName() -> ~str {
-        unsafe { String::from(ELJApp_GetVendorName()).to_str() }
+    pub fn getVendorName() -> String {
+        unsafe { wxString::from(ELJApp_GetVendorName()).to_str() }
     }
     pub fn initAllImageHandlers() {
         unsafe { ELJApp_InitAllImageHandlers() }
@@ -1154,8 +1154,8 @@ pub trait ChoiceMethods : ControlMethods {
     fn getSelection(&self) -> c_int {
         unsafe { wxChoice_GetSelection(self.ptr()) }
     }
-    fn getString(&self, n: c_int) -> ~str {
-        unsafe { String::from(wxChoice_GetString(self.ptr(), n)).to_str() }
+    fn getString(&self, n: c_int) -> String {
+        unsafe { wxString::from(wxChoice_GetString(self.ptr(), n)).to_str() }
     }
     fn setSelection(&self, n: c_int) {
         unsafe { wxChoice_SetSelection(self.ptr(), n) }
@@ -1456,11 +1456,11 @@ pub trait ComboBoxMethods : ChoiceMethods {
     fn getLastPosition(&self) -> c_int {
         unsafe { wxComboBox_GetLastPosition(self.ptr()) }
     }
-    fn getStringSelection(&self) -> ~str {
-        unsafe { String::from(wxComboBox_GetStringSelection(self.ptr())).to_str() }
+    fn getStringSelection(&self) -> String {
+        unsafe { wxString::from(wxComboBox_GetStringSelection(self.ptr())).to_str() }
     }
-    fn getValue(&self) -> ~str {
-        unsafe { String::from(wxComboBox_GetValue(self.ptr())).to_str() }
+    fn getValue(&self) -> String {
+        unsafe { wxString::from(wxComboBox_GetValue(self.ptr())).to_str() }
     }
     fn paste(&self) {
         unsafe { wxComboBox_Paste(self.ptr()) }
@@ -1534,8 +1534,8 @@ pub trait CommandEventMethods : EventMethods {
     fn getSelection(&self) -> c_int {
         unsafe { wxCommandEvent_GetSelection(self.ptr()) }
     }
-    fn getString(&self) -> ~str {
-        unsafe { String::from(wxCommandEvent_GetString(self.ptr())).to_str() }
+    fn getString(&self) -> String {
+        unsafe { wxString::from(wxCommandEvent_GetString(self.ptr())).to_str() }
     }
     fn isChecked(&self) -> c_int {
         unsafe { wxCommandEvent_IsChecked(self.ptr()) }
@@ -2005,8 +2005,8 @@ pub trait DataFormatMethods {
     fn delete(&self) {
         unsafe { wxDataFormat_Delete(self.ptr()) }
     }
-    fn getId(&self) -> ~str {
-        unsafe { String::from(wxDataFormat_GetId(self.ptr())).to_str() }
+    fn getId(&self) -> String {
+        unsafe { wxString::from(wxDataFormat_GetId(self.ptr())).to_str() }
     }
     fn getType(&self) -> c_int {
         unsafe { wxDataFormat_GetType(self.ptr()) }
@@ -2168,11 +2168,11 @@ impl DirDialog {
 
 /// Methods of the wxWidgets' [wxDirDialog](http://docs.wxwidgets.org/3.0/classwx_dir_dialog.html) class.
 pub trait DirDialogMethods : DialogMethods {
-    fn getMessage(&self) -> ~str {
-        unsafe { String::from(wxDirDialog_GetMessage(self.ptr())).to_str() }
+    fn getMessage(&self) -> String {
+        unsafe { wxString::from(wxDirDialog_GetMessage(self.ptr())).to_str() }
     }
-    fn getPath(&self) -> ~str {
-        unsafe { String::from(wxDirDialog_GetPath(self.ptr())).to_str() }
+    fn getPath(&self) -> String {
+        unsafe { wxString::from(wxDirDialog_GetPath(self.ptr())).to_str() }
     }
     fn getStyle(&self) -> c_int {
         unsafe { wxDirDialog_GetStyle(self.ptr()) }
@@ -2614,11 +2614,11 @@ impl FileDialog {
 
 /// Methods of the wxWidgets' [wxFileDialog](http://docs.wxwidgets.org/3.0/classwx_file_dialog.html) class.
 pub trait FileDialogMethods : DialogMethods {
-    fn getDirectory(&self) -> ~str {
-        unsafe { String::from(wxFileDialog_GetDirectory(self.ptr())).to_str() }
+    fn getDirectory(&self) -> String {
+        unsafe { wxString::from(wxFileDialog_GetDirectory(self.ptr())).to_str() }
     }
-    fn getFilename(&self) -> ~str {
-        unsafe { String::from(wxFileDialog_GetFilename(self.ptr())).to_str() }
+    fn getFilename(&self) -> String {
+        unsafe { wxString::from(wxFileDialog_GetFilename(self.ptr())).to_str() }
     }
     fn getFilenames(&self, paths: *mut c_void) -> c_int {
         unsafe { wxFileDialog_GetFilenames(self.ptr(), paths) }
@@ -2626,11 +2626,11 @@ pub trait FileDialogMethods : DialogMethods {
     fn getFilterIndex(&self) -> c_int {
         unsafe { wxFileDialog_GetFilterIndex(self.ptr()) }
     }
-    fn getMessage(&self) -> ~str {
-        unsafe { String::from(wxFileDialog_GetMessage(self.ptr())).to_str() }
+    fn getMessage(&self) -> String {
+        unsafe { wxString::from(wxFileDialog_GetMessage(self.ptr())).to_str() }
     }
-    fn getPath(&self) -> ~str {
-        unsafe { String::from(wxFileDialog_GetPath(self.ptr())).to_str() }
+    fn getPath(&self) -> String {
+        unsafe { wxString::from(wxFileDialog_GetPath(self.ptr())).to_str() }
     }
     fn getPaths(&self, paths: *mut c_void) -> c_int {
         unsafe { wxFileDialog_GetPaths(self.ptr(), paths) }
@@ -2638,8 +2638,8 @@ pub trait FileDialogMethods : DialogMethods {
     fn getStyle(&self) -> c_int {
         unsafe { wxFileDialog_GetStyle(self.ptr()) }
     }
-    fn getWildcard(&self) -> ~str {
-        unsafe { String::from(wxFileDialog_GetWildcard(self.ptr())).to_str() }
+    fn getWildcard(&self) -> String {
+        unsafe { wxString::from(wxFileDialog_GetWildcard(self.ptr())).to_str() }
     }
     fn setDirectory(&self, dir: &str) {
         let dir = strToString(dir);
@@ -2711,8 +2711,8 @@ pub trait FileHistoryMethods : ObjectMethods {
     fn getCount(&self) -> c_int {
         unsafe { wxFileHistory_GetCount(self.ptr()) }
     }
-    fn getHistoryFile(&self, i: c_int) -> ~str {
-        unsafe { String::from(wxFileHistory_GetHistoryFile(self.ptr(), i)).to_str() }
+    fn getHistoryFile(&self, i: c_int) -> String {
+        unsafe { wxString::from(wxFileHistory_GetHistoryFile(self.ptr(), i)).to_str() }
     }
     fn getMaxFiles(&self) -> c_int {
         unsafe { wxFileHistory_GetMaxFiles(self.ptr()) }
@@ -2754,11 +2754,11 @@ pub trait FileTypeMethods {
     fn delete(&self) {
         unsafe { wxFileType_Delete(self.ptr()) }
     }
-    fn expandCommand(&self, _cmd: *mut c_void, _params: *mut c_void) -> ~str {
-        unsafe { String::from(wxFileType_ExpandCommand(self.ptr(), _cmd, _params)).to_str() }
+    fn expandCommand(&self, _cmd: *mut c_void, _params: *mut c_void) -> String {
+        unsafe { wxString::from(wxFileType_ExpandCommand(self.ptr(), _cmd, _params)).to_str() }
     }
-    fn getDescription(&self) -> ~str {
-        unsafe { String::from(wxFileType_GetDescription(self.ptr())).to_str() }
+    fn getDescription(&self) -> String {
+        unsafe { wxString::from(wxFileType_GetDescription(self.ptr())).to_str() }
     }
     fn getExtensions<T: ListMethods>(&self, _lst: &T) -> c_int {
         unsafe { wxFileType_GetExtensions(self.ptr(), _lst.ptr()) }
@@ -2766,8 +2766,8 @@ pub trait FileTypeMethods {
     fn getIcon<T: IconMethods>(&self, icon: &T) -> c_int {
         unsafe { wxFileType_GetIcon(self.ptr(), icon.ptr()) }
     }
-    fn getMimeType(&self) -> ~str {
-        unsafe { String::from(wxFileType_GetMimeType(self.ptr())).to_str() }
+    fn getMimeType(&self) -> String {
+        unsafe { wxString::from(wxFileType_GetMimeType(self.ptr())).to_str() }
     }
     fn getMimeTypes<T: ListMethods>(&self, _lst: &T) -> c_int {
         unsafe { wxFileType_GetMimeTypes(self.ptr(), _lst.ptr()) }
@@ -2825,14 +2825,14 @@ impl FindReplaceData {
 
 /// Methods of the wxWidgets' [wxFindReplaceData](http://docs.wxwidgets.org/3.0/classwx_find_replace_data.html) class.
 pub trait FindReplaceDataMethods : ObjectMethods {
-    fn getFindString(&self) -> ~str {
-        unsafe { String::from(wxFindReplaceData_GetFindString(self.ptr())).to_str() }
+    fn getFindString(&self) -> String {
+        unsafe { wxString::from(wxFindReplaceData_GetFindString(self.ptr())).to_str() }
     }
     fn getFlags(&self) -> c_int {
         unsafe { wxFindReplaceData_GetFlags(self.ptr()) }
     }
-    fn getReplaceString(&self) -> ~str {
-        unsafe { String::from(wxFindReplaceData_GetReplaceString(self.ptr())).to_str() }
+    fn getReplaceString(&self) -> String {
+        unsafe { wxString::from(wxFindReplaceData_GetReplaceString(self.ptr())).to_str() }
     }
     fn setFindString(&self, str: &str) {
         let str = strToString(str);
@@ -2954,14 +2954,14 @@ pub trait FontMethods : GDIObjectMethods {
     fn getEncoding(&self) -> c_int {
         unsafe { wxFont_GetEncoding(self.ptr()) }
     }
-    fn getFaceName(&self) -> ~str {
-        unsafe { String::from(wxFont_GetFaceName(self.ptr())).to_str() }
+    fn getFaceName(&self) -> String {
+        unsafe { wxString::from(wxFont_GetFaceName(self.ptr())).to_str() }
     }
     fn getFamily(&self) -> c_int {
         unsafe { wxFont_GetFamily(self.ptr()) }
     }
-    fn getFamilyString(&self) -> ~str {
-        unsafe { String::from(wxFont_GetFamilyString(self.ptr())).to_str() }
+    fn getFamilyString(&self) -> String {
+        unsafe { wxString::from(wxFont_GetFamilyString(self.ptr())).to_str() }
     }
     fn getPointSize(&self) -> c_int {
         unsafe { wxFont_GetPointSize(self.ptr()) }
@@ -2969,8 +2969,8 @@ pub trait FontMethods : GDIObjectMethods {
     fn getStyle(&self) -> c_int {
         unsafe { wxFont_GetStyle(self.ptr()) }
     }
-    fn getStyleString(&self) -> ~str {
-        unsafe { String::from(wxFont_GetStyleString(self.ptr())).to_str() }
+    fn getStyleString(&self) -> String {
+        unsafe { wxString::from(wxFont_GetStyleString(self.ptr())).to_str() }
     }
     fn getUnderlined(&self) -> c_int {
         unsafe { wxFont_GetUnderlined(self.ptr()) }
@@ -2978,8 +2978,8 @@ pub trait FontMethods : GDIObjectMethods {
     fn getWeight(&self) -> c_int {
         unsafe { wxFont_GetWeight(self.ptr()) }
     }
-    fn getWeightString(&self) -> ~str {
-        unsafe { String::from(wxFont_GetWeightString(self.ptr())).to_str() }
+    fn getWeightString(&self) -> String {
+        unsafe { wxString::from(wxFont_GetWeightString(self.ptr())).to_str() }
     }
     fn isOk(&self) -> c_int {
         unsafe { wxFont_IsOk(self.ptr()) }
@@ -3457,14 +3457,14 @@ impl HelpEvent {
 
 /// Methods of the wxWidgets' [wxHelpEvent](http://docs.wxwidgets.org/3.0/classwx_help_event.html) class.
 pub trait HelpEventMethods : CommandEventMethods {
-    fn getLink(&self) -> ~str {
-        unsafe { String::from(wxHelpEvent_GetLink(self.ptr())).to_str() }
+    fn getLink(&self) -> String {
+        unsafe { wxString::from(wxHelpEvent_GetLink(self.ptr())).to_str() }
     }
     fn getPosition(&self) -> Point {
         unsafe { Point::from(wxHelpEvent_GetPosition(self.ptr())) }
     }
-    fn getTarget(&self) -> ~str {
-        unsafe { String::from(wxHelpEvent_GetTarget(self.ptr())).to_str() }
+    fn getTarget(&self) -> String {
+        unsafe { wxString::from(wxHelpEvent_GetTarget(self.ptr())).to_str() }
     }
     fn setLink(&self, link: &str) {
         let link = strToString(link);
@@ -3507,8 +3507,8 @@ pub trait HelpProviderMethods {
     fn delete(&self) {
         unsafe { wxHelpProvider_Delete(self.ptr()) }
     }
-    fn getHelp<T: WindowMethods>(&self, window: &T) -> ~str {
-        unsafe { String::from(wxHelpProvider_GetHelp(self.ptr(), window.ptr())).to_str() }
+    fn getHelp<T: WindowMethods>(&self, window: &T) -> String {
+        unsafe { wxString::from(wxHelpProvider_GetHelp(self.ptr(), window.ptr())).to_str() }
     }
     fn removeHelp<T: WindowMethods>(&self, window: &T) {
         unsafe { wxHelpProvider_RemoveHelp(self.ptr(), window.ptr()) }
@@ -3734,9 +3734,9 @@ pub trait ImageMethods : ObjectMethods {
     fn hasMask(&self) -> c_int {
         unsafe { wxImage_HasMask(self.ptr()) }
     }
-    fn getOption(&self, name: &str) -> ~str {
+    fn getOption(&self, name: &str) -> String {
         let name = strToString(name);
-        unsafe { String::from(wxImage_GetOption(self.ptr(), name.ptr())).to_str() }
+        unsafe { wxString::from(wxImage_GetOption(self.ptr(), name.ptr())).to_str() }
     }
     fn getOptionInt(&self, name: &str) -> c_int {
         let name = strToString(name);
@@ -4180,8 +4180,8 @@ pub trait ListBoxMethods : ControlMethods {
     fn getSelections(&self, aSelections: *mut c_int, allocated: c_int) -> c_int {
         unsafe { wxListBox_GetSelections(self.ptr(), aSelections, allocated) }
     }
-    fn getString(&self, n: c_int) -> ~str {
-        unsafe { String::from(wxListBox_GetString(self.ptr(), n)).to_str() }
+    fn getString(&self, n: c_int) -> String {
+        unsafe { wxString::from(wxListBox_GetString(self.ptr(), n)).to_str() }
     }
     fn insertItems(&self, items: *mut c_void, pos: c_int, count: c_int) {
         unsafe { wxListBox_InsertItems(self.ptr(), items, pos, count) }
@@ -4303,8 +4303,8 @@ pub trait ListCtrlMethods : ControlMethods {
     fn getItemState(&self, item: c_int, stateMask: c_int) -> c_int {
         unsafe { wxListCtrl_GetItemState(self.ptr(), item, stateMask) }
     }
-    fn getItemText(&self, item: c_int) -> ~str {
-        unsafe { String::from(wxListCtrl_GetItemText(self.ptr(), item)).to_str() }
+    fn getItemText(&self, item: c_int) -> String {
+        unsafe { wxString::from(wxListCtrl_GetItemText(self.ptr(), item)).to_str() }
     }
     fn getNextItem(&self, item: c_int, geometry: c_int, state: c_int) -> c_int {
         unsafe { wxListCtrl_GetNextItem(self.ptr(), item, geometry, state) }
@@ -4449,8 +4449,8 @@ pub trait ListEventMethods : NotifyEventMethods {
     fn getItem<T: ListItemMethods>(&self, _ref: &T) {
         unsafe { wxListEvent_GetItem(self.ptr(), _ref.ptr()) }
     }
-    fn getLabel(&self) -> ~str {
-        unsafe { String::from(wxListEvent_GetLabel(self.ptr())).to_str() }
+    fn getLabel(&self) -> String {
+        unsafe { wxString::from(wxListEvent_GetLabel(self.ptr())).to_str() }
     }
     fn getMask(&self) -> c_int {
         unsafe { wxListEvent_GetMask(self.ptr()) }
@@ -4458,8 +4458,8 @@ pub trait ListEventMethods : NotifyEventMethods {
     fn getPoint(&self) -> Point {
         unsafe { Point::from(wxListEvent_GetPoint(self.ptr())) }
     }
-    fn getText(&self) -> ~str {
-        unsafe { String::from(wxListEvent_GetText(self.ptr())).to_str() }
+    fn getText(&self) -> String {
+        unsafe { wxString::from(wxListEvent_GetText(self.ptr())).to_str() }
     }
     fn getCacheFrom(&self) -> c_int {
         unsafe { wxListEvent_GetCacheFrom(self.ptr()) }
@@ -4521,8 +4521,8 @@ pub trait ListItemMethods : ObjectMethods {
     fn getState(&self) -> c_int {
         unsafe { wxListItem_GetState(self.ptr()) }
     }
-    fn getText(&self) -> ~str {
-        unsafe { String::from(wxListItem_GetText(self.ptr())).to_str() }
+    fn getText(&self) -> String {
+        unsafe { wxString::from(wxListItem_GetText(self.ptr())).to_str() }
     }
     fn getTextColour<T: ColourMethods>(&self, _ref: &T) {
         unsafe { wxListItem_GetTextColour(self.ptr(), _ref.ptr()) }
@@ -5039,14 +5039,14 @@ pub trait MenuMethods : EvtHandlerMethods {
     fn getClientData(&self) -> ClientData {
         unsafe { ClientData::from(wxMenu_GetClientData(self.ptr())) }
     }
-    fn getHelpString(&self, id: c_int) -> ~str {
-        unsafe { String::from(wxMenu_GetHelpString(self.ptr(), id)).to_str() }
+    fn getHelpString(&self, id: c_int) -> String {
+        unsafe { wxString::from(wxMenu_GetHelpString(self.ptr(), id)).to_str() }
     }
     fn getInvokingWindow(&self) -> Window {
         unsafe { Window::from(wxMenu_GetInvokingWindow(self.ptr())) }
     }
-    fn getLabel(&self, id: c_int) -> ~str {
-        unsafe { String::from(wxMenu_GetLabel(self.ptr(), id)).to_str() }
+    fn getLabel(&self, id: c_int) -> String {
+        unsafe { wxString::from(wxMenu_GetLabel(self.ptr(), id)).to_str() }
     }
     fn getMenuItemCount(&self) -> size_t {
         unsafe { wxMenu_GetMenuItemCount(self.ptr()) }
@@ -5060,8 +5060,8 @@ pub trait MenuMethods : EvtHandlerMethods {
     fn getStyle(&self) -> c_int {
         unsafe { wxMenu_GetStyle(self.ptr()) }
     }
-    fn getTitle(&self) -> ~str {
-        unsafe { String::from(wxMenu_GetTitle(self.ptr())).to_str() }
+    fn getTitle(&self) -> String {
+        unsafe { wxString::from(wxMenu_GetTitle(self.ptr())).to_str() }
     }
     fn insert(&self, pos: size_t, id: c_int, text: &str, help: &str, isCheckable: c_int) {
         let text = strToString(text);
@@ -5189,14 +5189,14 @@ pub trait MenuBarMethods : EvtHandlerMethods {
         let itemString = strToString(itemString);
         unsafe { wxMenuBar_FindMenuItem(self.ptr(), menuString.ptr(), itemString.ptr()) }
     }
-    fn getHelpString(&self, id: c_int) -> ~str {
-        unsafe { String::from(wxMenuBar_GetHelpString(self.ptr(), id)).to_str() }
+    fn getHelpString(&self, id: c_int) -> String {
+        unsafe { wxString::from(wxMenuBar_GetHelpString(self.ptr(), id)).to_str() }
     }
-    fn getLabel(&self, id: c_int) -> ~str {
-        unsafe { String::from(wxMenuBar_GetLabel(self.ptr(), id)).to_str() }
+    fn getLabel(&self, id: c_int) -> String {
+        unsafe { wxString::from(wxMenuBar_GetLabel(self.ptr(), id)).to_str() }
     }
-    fn getLabelTop(&self, pos: c_int) -> ~str {
-        unsafe { String::from(wxMenuBar_GetLabelTop(self.ptr(), pos)).to_str() }
+    fn getLabelTop(&self, pos: c_int) -> String {
+        unsafe { wxString::from(wxMenuBar_GetLabelTop(self.ptr(), pos)).to_str() }
     }
     fn getMenu(&self, pos: c_int) -> Menu {
         unsafe { Menu::from(wxMenuBar_GetMenu(self.ptr(), pos)) }
@@ -5273,8 +5273,8 @@ impl MenuItem {
     pub fn new() -> MenuItem {
         unsafe { MenuItem::from(wxMenuItem_Create()) }
     }
-    pub fn getLabelFromText(text: *mut c_void) -> ~str {
-        unsafe { String::from(wxMenuItem_GetLabelFromText(text)).to_str() }
+    pub fn getLabelFromText(text: *mut c_void) -> String {
+        unsafe { wxString::from(wxMenuItem_GetLabelFromText(text)).to_str() }
     }
     pub fn newSeparator() -> MenuItem {
         unsafe { MenuItem::from(wxMenuItem_CreateSeparator()) }
@@ -5294,14 +5294,14 @@ pub trait MenuItemMethods : ObjectMethods {
     fn enable(&self, enable: c_int) {
         unsafe { wxMenuItem_Enable(self.ptr(), enable) }
     }
-    fn getHelp(&self) -> ~str {
-        unsafe { String::from(wxMenuItem_GetHelp(self.ptr())).to_str() }
+    fn getHelp(&self) -> String {
+        unsafe { wxString::from(wxMenuItem_GetHelp(self.ptr())).to_str() }
     }
     fn getId(&self) -> c_int {
         unsafe { wxMenuItem_GetId(self.ptr()) }
     }
-    fn getLabel(&self) -> ~str {
-        unsafe { String::from(wxMenuItem_GetLabel(self.ptr())).to_str() }
+    fn getLabel(&self) -> String {
+        unsafe { wxString::from(wxMenuItem_GetLabel(self.ptr())).to_str() }
     }
     fn getMenu(&self) -> Menu {
         unsafe { Menu::from(wxMenuItem_GetMenu(self.ptr())) }
@@ -5309,8 +5309,8 @@ pub trait MenuItemMethods : ObjectMethods {
     fn getSubMenu(&self) -> Menu {
         unsafe { Menu::from(wxMenuItem_GetSubMenu(self.ptr())) }
     }
-    fn getText(&self) -> ~str {
-        unsafe { String::from(wxMenuItem_GetText(self.ptr())).to_str() }
+    fn getText(&self) -> String {
+        unsafe { wxString::from(wxMenuItem_GetText(self.ptr())).to_str() }
     }
     fn isCheckable(&self) -> c_int {
         unsafe { wxMenuItem_IsCheckable(self.ptr()) }
@@ -5732,8 +5732,8 @@ pub trait NotebookMethods : ControlMethods {
     fn getPageImage(&self, nPage: c_int) -> c_int {
         unsafe { wxNotebook_GetPageImage(self.ptr(), nPage) }
     }
-    fn getPageText(&self, nPage: c_int) -> ~str {
-        unsafe { String::from(wxNotebook_GetPageText(self.ptr(), nPage)).to_str() }
+    fn getPageText(&self, nPage: c_int) -> String {
+        unsafe { wxString::from(wxNotebook_GetPageText(self.ptr(), nPage)).to_str() }
     }
     fn getRowCount(&self) -> c_int {
         unsafe { wxNotebook_GetRowCount(self.ptr()) }
@@ -6368,11 +6368,11 @@ pub trait PrintDataMethods : ObjectMethods {
     fn getDuplex(&self) -> c_int {
         unsafe { wxPrintData_GetDuplex(self.ptr()) }
     }
-    fn getFilename(&self) -> ~str {
-        unsafe { String::from(wxPrintData_GetFilename(self.ptr())).to_str() }
+    fn getFilename(&self) -> String {
+        unsafe { wxString::from(wxPrintData_GetFilename(self.ptr())).to_str() }
     }
-    fn getFontMetricPath(&self) -> ~str {
-        unsafe { String::from(wxPrintData_GetFontMetricPath(self.ptr())).to_str() }
+    fn getFontMetricPath(&self) -> String {
+        unsafe { wxString::from(wxPrintData_GetFontMetricPath(self.ptr())).to_str() }
     }
     fn getNoCopies(&self) -> c_int {
         unsafe { wxPrintData_GetNoCopies(self.ptr()) }
@@ -6386,20 +6386,20 @@ pub trait PrintDataMethods : ObjectMethods {
     fn getPaperSize(&self) -> Size {
         unsafe { Size::from(wxPrintData_GetPaperSize(self.ptr())) }
     }
-    fn getPreviewCommand(&self) -> ~str {
-        unsafe { String::from(wxPrintData_GetPreviewCommand(self.ptr())).to_str() }
+    fn getPreviewCommand(&self) -> String {
+        unsafe { wxString::from(wxPrintData_GetPreviewCommand(self.ptr())).to_str() }
     }
     fn getPrintMode(&self) -> c_int {
         unsafe { wxPrintData_GetPrintMode(self.ptr()) }
     }
-    fn getPrinterCommand(&self) -> ~str {
-        unsafe { String::from(wxPrintData_GetPrinterCommand(self.ptr())).to_str() }
+    fn getPrinterCommand(&self) -> String {
+        unsafe { wxString::from(wxPrintData_GetPrinterCommand(self.ptr())).to_str() }
     }
-    fn getPrinterName(&self) -> ~str {
-        unsafe { String::from(wxPrintData_GetPrinterName(self.ptr())).to_str() }
+    fn getPrinterName(&self) -> String {
+        unsafe { wxString::from(wxPrintData_GetPrinterName(self.ptr())).to_str() }
     }
-    fn getPrinterOptions(&self) -> ~str {
-        unsafe { String::from(wxPrintData_GetPrinterOptions(self.ptr())).to_str() }
+    fn getPrinterOptions(&self) -> String {
+        unsafe { wxString::from(wxPrintData_GetPrinterOptions(self.ptr())).to_str() }
     }
     fn getPrinterScaleX(&self) -> c_double {
         unsafe { wxPrintData_GetPrinterScaleX(self.ptr()) }
@@ -6823,8 +6823,8 @@ pub trait PrintoutMethods : ObjectMethods {
     fn getPageSizePixels(&self, _w: *mut c_void, _h: *mut c_void) {
         unsafe { wxPrintout_GetPageSizePixels(self.ptr(), _w, _h) }
     }
-    fn getTitle(&self) -> ~str {
-        unsafe { String::from(wxPrintout_GetTitle(self.ptr())).to_str() }
+    fn getTitle(&self) -> String {
+        unsafe { wxString::from(wxPrintout_GetTitle(self.ptr())).to_str() }
     }
     fn isPreview(&self) -> c_int {
         unsafe { wxPrintout_IsPreview(self.ptr()) }
@@ -7037,8 +7037,8 @@ pub trait RadioBoxMethods : ControlMethods {
         let s = strToString(s);
         unsafe { wxRadioBox_FindString(self.ptr(), s.ptr()) }
     }
-    fn getItemLabel(&self, item: c_int) -> ~str {
-        unsafe { String::from(wxRadioBox_GetItemLabel(self.ptr(), item)).to_str() }
+    fn getItemLabel(&self, item: c_int) -> String {
+        unsafe { wxString::from(wxRadioBox_GetItemLabel(self.ptr(), item)).to_str() }
     }
     fn getNumberOfRowsOrCols(&self) -> c_int {
         unsafe { wxRadioBox_GetNumberOfRowsOrCols(self.ptr()) }
@@ -7046,8 +7046,8 @@ pub trait RadioBoxMethods : ControlMethods {
     fn getSelection(&self) -> c_int {
         unsafe { wxRadioBox_GetSelection(self.ptr()) }
     }
-    fn getStringSelection(&self) -> ~str {
-        unsafe { String::from(wxRadioBox_GetStringSelection(self.ptr())).to_str() }
+    fn getStringSelection(&self) -> String {
+        unsafe { wxString::from(wxRadioBox_GetStringSelection(self.ptr())).to_str() }
     }
     fn number(&self) -> c_int {
         unsafe { wxRadioBox_Number(self.ptr()) }
@@ -8312,8 +8312,8 @@ pub trait StatusBarMethods : WindowMethods {
     fn getFieldsCount(&self) -> c_int {
         unsafe { wxStatusBar_GetFieldsCount(self.ptr()) }
     }
-    fn getStatusText(&self, number: c_int) -> ~str {
-        unsafe { String::from(wxStatusBar_GetStatusText(self.ptr(), number)).to_str() }
+    fn getStatusText(&self, number: c_int) -> String {
+        unsafe { wxString::from(wxStatusBar_GetStatusText(self.ptr(), number)).to_str() }
     }
     fn setFieldsCount(&self, number: c_int, widths: *mut c_int) {
         unsafe { wxStatusBar_SetFieldsCount(self.ptr(), number, widths) }
@@ -8492,8 +8492,8 @@ pub trait TextCtrlMethods : ControlMethods {
     fn getLineLength(&self, lineNo: c_long) -> c_int {
         unsafe { wxTextCtrl_GetLineLength(self.ptr(), lineNo) }
     }
-    fn getLineText(&self, lineNo: c_long) -> ~str {
-        unsafe { String::from(wxTextCtrl_GetLineText(self.ptr(), lineNo)).to_str() }
+    fn getLineText(&self, lineNo: c_long) -> String {
+        unsafe { wxString::from(wxTextCtrl_GetLineText(self.ptr(), lineNo)).to_str() }
     }
     fn getNumberOfLines(&self) -> c_int {
         unsafe { wxTextCtrl_GetNumberOfLines(self.ptr()) }
@@ -8501,8 +8501,8 @@ pub trait TextCtrlMethods : ControlMethods {
     fn getSelection(&self, from: *mut c_void, to: *mut c_void) {
         unsafe { wxTextCtrl_GetSelection(self.ptr(), from, to) }
     }
-    fn getValue(&self) -> ~str {
-        unsafe { String::from(wxTextCtrl_GetValue(self.ptr())).to_str() }
+    fn getValue(&self) -> String {
+        unsafe { wxString::from(wxTextCtrl_GetValue(self.ptr())).to_str() }
     }
     fn isEditable(&self) -> c_int {
         unsafe { wxTextCtrl_IsEditable(self.ptr()) }
@@ -8569,11 +8569,11 @@ pub trait TextCtrlMethods : ControlMethods {
     fn getDefaultStyle(&self) -> TextAttr {
         unsafe { TextAttr::from(wxTextCtrl_GetDefaultStyle(self.ptr())) }
     }
-    fn getRange(&self, from: c_long, to: c_long) -> ~str {
-        unsafe { String::from(wxTextCtrl_GetRange(self.ptr(), from, to)).to_str() }
+    fn getRange(&self, from: c_long, to: c_long) -> String {
+        unsafe { wxString::from(wxTextCtrl_GetRange(self.ptr(), from, to)).to_str() }
     }
-    fn getStringSelection(&self) -> ~str {
-        unsafe { String::from(wxTextCtrl_GetStringSelection(self.ptr())).to_str() }
+    fn getStringSelection(&self) -> String {
+        unsafe { wxString::from(wxTextCtrl_GetStringSelection(self.ptr())).to_str() }
     }
     fn isMultiLine(&self) -> c_int {
         unsafe { wxTextCtrl_IsMultiLine(self.ptr()) }
@@ -8895,14 +8895,14 @@ pub trait ToolBarMethods : ToolBarBaseMethods {
     fn getToolEnabled(&self, id: c_int) -> c_int {
         unsafe { wxToolBar_GetToolEnabled(self.ptr(), id) }
     }
-    fn getToolLongHelp(&self, id: c_int) -> ~str {
-        unsafe { String::from(wxToolBar_GetToolLongHelp(self.ptr(), id)).to_str() }
+    fn getToolLongHelp(&self, id: c_int) -> String {
+        unsafe { wxString::from(wxToolBar_GetToolLongHelp(self.ptr(), id)).to_str() }
     }
     fn getToolPacking(&self) -> c_int {
         unsafe { wxToolBar_GetToolPacking(self.ptr()) }
     }
-    fn getToolShortHelp(&self, id: c_int) -> ~str {
-        unsafe { String::from(wxToolBar_GetToolShortHelp(self.ptr(), id)).to_str() }
+    fn getToolShortHelp(&self, id: c_int) -> String {
+        unsafe { wxString::from(wxToolBar_GetToolShortHelp(self.ptr(), id)).to_str() }
     }
     fn getToolSize(&self) -> Size {
         unsafe { Size::from(wxToolBar_GetToolSize(self.ptr())) }
@@ -9021,8 +9021,8 @@ pub trait TopLevelWindowMethods : WindowMethods {
     fn getIcon(&self) -> Icon {
         unsafe { Icon::from(wxTopLevelWindow_GetIcon(self.ptr())) }
     }
-    fn getTitle(&self) -> ~str {
-        unsafe { String::from(wxTopLevelWindow_GetTitle(self.ptr())).to_str() }
+    fn getTitle(&self) -> String {
+        unsafe { wxString::from(wxTopLevelWindow_GetTitle(self.ptr())).to_str() }
     }
     fn iconize(&self, iconize: c_int) -> c_int {
         unsafe { wxTopLevelWindow_Iconize(self.ptr(), iconize) }
@@ -9150,8 +9150,8 @@ pub trait TreeCtrlMethods : ControlMethods {
     fn getItemImage<T: TreeItemIdMethods>(&self, item: &T, which: c_int) -> c_int {
         unsafe { wxTreeCtrl_GetItemImage(self.ptr(), item.ptr(), which) }
     }
-    fn getItemText<T: TreeItemIdMethods>(&self, item: &T) -> ~str {
-        unsafe { String::from(wxTreeCtrl_GetItemText(self.ptr(), item.ptr())).to_str() }
+    fn getItemText<T: TreeItemIdMethods>(&self, item: &T) -> String {
+        unsafe { wxString::from(wxTreeCtrl_GetItemText(self.ptr(), item.ptr())).to_str() }
     }
     fn getLastChild<T: TreeItemIdMethods, U: TreeItemIdMethods>(&self, item: &T, _item: &U) {
         unsafe { wxTreeCtrl_GetLastChild(self.ptr(), item.ptr(), _item.ptr()) }
@@ -9321,8 +9321,8 @@ pub trait TreeEventMethods : NotifyEventMethods {
     fn getItem<T: TreeItemIdMethods>(&self, _ref: &T) {
         unsafe { wxTreeEvent_GetItem(self.ptr(), _ref.ptr()) }
     }
-    fn getLabel(&self) -> ~str {
-        unsafe { String::from(wxTreeEvent_GetLabel(self.ptr())).to_str() }
+    fn getLabel(&self) -> String {
+        unsafe { wxString::from(wxTreeEvent_GetLabel(self.ptr())).to_str() }
     }
     fn getOldItem<T: TreeItemIdMethods>(&self, _ref: &T) {
         unsafe { wxTreeEvent_GetOldItem(self.ptr(), _ref.ptr()) }
@@ -9423,8 +9423,8 @@ pub trait UpdateUIEventMethods : EventMethods {
     fn getSetText(&self) -> c_int {
         unsafe { wxUpdateUIEvent_GetSetText(self.ptr()) }
     }
-    fn getText(&self) -> ~str {
-        unsafe { String::from(wxUpdateUIEvent_GetText(self.ptr())).to_str() }
+    fn getText(&self) -> String {
+        unsafe { wxString::from(wxUpdateUIEvent_GetText(self.ptr())).to_str() }
     }
     fn setText(&self, text: &str) {
         let text = strToString(text);
@@ -9655,8 +9655,8 @@ pub trait WindowMethods : EvtHandlerMethods {
     fn getId(&self) -> c_int {
         unsafe { wxWindow_GetId(self.ptr()) }
     }
-    fn getLabel(&self) -> ~str {
-        unsafe { String::from(wxWindow_GetLabel(self.ptr())).to_str() }
+    fn getLabel(&self) -> String {
+        unsafe { wxString::from(wxWindow_GetLabel(self.ptr())).to_str() }
     }
     fn getLabelEmpty(&self) -> c_int {
         unsafe { wxWindow_GetLabelEmpty(self.ptr()) }
@@ -9673,8 +9673,8 @@ pub trait WindowMethods : EvtHandlerMethods {
     fn getMinWidth(&self) -> c_int {
         unsafe { wxWindow_GetMinWidth(self.ptr()) }
     }
-    fn getName(&self) -> ~str {
-        unsafe { String::from(wxWindow_GetName(self.ptr())).to_str() }
+    fn getName(&self) -> String {
+        unsafe { wxString::from(wxWindow_GetName(self.ptr())).to_str() }
     }
     fn getParent(&self) -> Window {
         unsafe { Window::from(wxWindow_GetParent(self.ptr())) }
@@ -9710,8 +9710,8 @@ pub trait WindowMethods : EvtHandlerMethods {
         let string = strToString(string);
         unsafe { wxWindow_GetTextExtent(self.ptr(), string.ptr(), x, y, descent, externalLeading, theFont.ptr()) }
     }
-    fn getToolTip(&self) -> ~str {
-        unsafe { String::from(wxWindow_GetToolTip(self.ptr())).to_str() }
+    fn getToolTip(&self) -> String {
+        unsafe { wxString::from(wxWindow_GetToolTip(self.ptr())).to_str() }
     }
     fn getUpdateRegion(&self) -> Region {
         unsafe { Region::from(wxWindow_GetUpdateRegion(self.ptr())) }

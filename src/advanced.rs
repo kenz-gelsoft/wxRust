@@ -416,8 +416,8 @@ pub trait GridMethods : ScrolledWindowMethods {
     fn getCellTextColour<T: ColourMethods>(&self, row: c_int, col: c_int, colour: &T) {
         unsafe { wxGrid_GetCellTextColour(self.ptr(), row, col, colour.ptr()) }
     }
-    fn getCellValue(&self, row: c_int, col: c_int) -> ~str {
-        unsafe { String::from(wxGrid_GetCellValue(self.ptr(), row, col)).to_str() }
+    fn getCellValue(&self, row: c_int, col: c_int) -> String {
+        unsafe { wxString::from(wxGrid_GetCellValue(self.ptr(), row, col)).to_str() }
     }
     fn getColLabelAlignment(&self, horiz: *mut c_int, vert: *mut c_int) {
         unsafe { wxGrid_GetColLabelAlignment(self.ptr(), horiz, vert) }
@@ -425,8 +425,8 @@ pub trait GridMethods : ScrolledWindowMethods {
     fn getColLabelSize(&self) -> c_int {
         unsafe { wxGrid_GetColLabelSize(self.ptr()) }
     }
-    fn getColLabelValue(&self, col: c_int) -> ~str {
-        unsafe { String::from(wxGrid_GetColLabelValue(self.ptr(), col)).to_str() }
+    fn getColLabelValue(&self, col: c_int) -> String {
+        unsafe { wxString::from(wxGrid_GetColLabelValue(self.ptr(), col)).to_str() }
     }
     fn getColSize(&self, col: c_int) -> c_int {
         unsafe { wxGrid_GetColSize(self.ptr(), col) }
@@ -505,8 +505,8 @@ pub trait GridMethods : ScrolledWindowMethods {
     fn getRowLabelSize(&self) -> c_int {
         unsafe { wxGrid_GetRowLabelSize(self.ptr()) }
     }
-    fn getRowLabelValue(&self, row: c_int) -> ~str {
-        unsafe { String::from(wxGrid_GetRowLabelValue(self.ptr(), row)).to_str() }
+    fn getRowLabelValue(&self, row: c_int) -> String {
+        unsafe { wxString::from(wxGrid_GetRowLabelValue(self.ptr(), row)).to_str() }
     }
     fn getRowSize(&self, row: c_int) -> c_int {
         unsafe { wxGrid_GetRowSize(self.ptr(), row) }

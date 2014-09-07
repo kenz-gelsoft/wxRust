@@ -69,17 +69,17 @@ impl PGProperty {
 
 /// Methods of the wxWidgets' [wxPGProperty](http://docs.wxwidgets.org/3.0/classwx_pgp_roperty.html) class.
 pub trait PGPropertyMethods : ObjectMethods {
-    fn getLabel(&self) -> ~str {
-        unsafe { String::from(wxPGProperty_GetLabel(self.ptr())).to_str() }
+    fn getLabel(&self) -> String {
+        unsafe { wxString::from(wxPGProperty_GetLabel(self.ptr())).to_str() }
     }
-    fn getName(&self) -> ~str {
-        unsafe { String::from(wxPGProperty_GetName(self.ptr())).to_str() }
+    fn getName(&self) -> String {
+        unsafe { wxString::from(wxPGProperty_GetName(self.ptr())).to_str() }
     }
-    fn getValueAsString(&self) -> ~str {
-        unsafe { String::from(wxPGProperty_GetValueAsString(self.ptr())).to_str() }
+    fn getValueAsString(&self) -> String {
+        unsafe { wxString::from(wxPGProperty_GetValueAsString(self.ptr())).to_str() }
     }
-    fn getValueType(&self) -> ~str {
-        unsafe { String::from(wxPGProperty_GetValueType(self.ptr())).to_str() }
+    fn getValueType(&self) -> String {
+        unsafe { wxString::from(wxPGProperty_GetValueType(self.ptr())).to_str() }
     }
     fn setHelpString(&self, helpString: &str) {
         let helpString = strToString(helpString);
