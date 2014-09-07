@@ -37,21 +37,17 @@ set(GENSRCS
     ${GENSRC}/wxc.h
 )
 
-rust_crate(rust-bindgen/lib.rs
-    TARGET_NAME libbindgen
+add_custom_command(
+    OUTPUT bindgen
+    COMMAND LIBCLANG_PATH=${LIBCLANG_PATH} cargo build --verbose
     DEPENDS
-        rust-bindgen/clang.rs
-        rust-bindgen/clangll.rs
-        rust-bindgen/gen.rs
-        rust-bindgen/lib.rs
-        rust-bindgen/macro.rs
-        rust-bindgen/parser.rs
-        rust-bindgen/types.rs
-)
-rust_crate(rust-bindgen/bindgen.rs
-    TARGET_NAME bindgen
-    DEPENDS
-        ${libbindgen_FULL_TARGET}
+        rust-bindgen/src/clang.rs
+        rust-bindgen/src/clangll.rs
+        rust-bindgen/src/gen.rs
+        rust-bindgen/src/lib.rs
+        rust-bindgen/src/macro.rs
+        rust-bindgen/src/parser.rs
+        rust-bindgen/src/types.rs
 )
 
 add_custom_command(
@@ -65,7 +61,7 @@ add_custom_command(
         ${GENSRCS}
         > src/_unsafe.rs
     COMMAND ${PATCH_UNSAFE_RS}
-    DEPENDS ${bindgen_FULL_TARGET} ${GENSRCS}
+    DEPENDS bindgen ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
