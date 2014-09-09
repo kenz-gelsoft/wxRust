@@ -663,7 +663,7 @@ class WrapperGenerator(object):
 extern {
     fn wxString_CreateUTF8(buffer: *mut c_void) -> *mut c_void;
     fn wxString_GetUtf8(wxs: *mut c_void) -> *mut c_void;
-    fn wxCharBuffer_DataUtf8(wxcb: *mut c_void) -> *c_char;
+    fn wxCharBuffer_DataUtf8(wxcb: *mut c_void) -> *mut c_char;
     fn wxCharBuffer_Delete(wxcb: *mut c_void);
 }
 
