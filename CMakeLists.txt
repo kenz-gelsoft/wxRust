@@ -41,13 +41,13 @@ add_custom_command(
     OUTPUT ${CMAKE_SOURCE_DIR}/rust-bindgen/bindgen
     COMMAND LIBCLANG_PATH=${LIBCLANG_PATH} cargo build --verbose
     DEPENDS
-        src/clang.rs
-        src/clangll.rs
-        src/gen.rs
-        src/lib.rs
-        src/macro.rs
-        src/parser.rs
-        src/types.rs
+        rust-bindgen/src/clang.rs
+        rust-bindgen/src/clangll.rs
+        rust-bindgen/src/gen.rs
+        rust-bindgen/src/lib.rs
+        rust-bindgen/src/macro.rs
+        rust-bindgen/src/parser.rs
+        rust-bindgen/src/types.rs
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
 )
 
