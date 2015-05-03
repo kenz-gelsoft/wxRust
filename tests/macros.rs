@@ -1,22 +1,20 @@
-#![macro_escape]
+#![macro_use]
 
-pub macro_rules! wxApp(
+macro_rules! wxApp(
     ($f: ident) => (
         #[start]
-        fn start(argc: int, argv: **u8) -> int {
-
+        fn start(argc: isize, argv: *const *const u8) -> isize {
             use libc::c_void;
 
-            use wx::base::Closure;
-            use wx::core::RustApp;
+            use lib::base::Closure;
+            use lib::core::RustApp;
 
-            static nullptr: *mut c_void = 0 as *mut c_void;
+            const NULLPTR: *mut c_void = 0 as *mut c_void;
 
-            native::start(argc, argv, proc() {
-                let closure = Closure::new($f as *mut c_void, nullptr);
-                let args: Vec<*i32> = Vec::new();
-                RustApp::initializeC(&closure, args.len() as i32, args.as_ptr() as *mut *mut i8);
-            })
+            let closure = Closure::new($f as *mut c_void, NULLPTR);
+            let args: Vec<*mut i32> = Vec::new();
+            RustApp::initializeC(&closure, args.len() as i32, args.as_ptr() as *mut *mut i8);
+            0
         }
     )
-)
+);

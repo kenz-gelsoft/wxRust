@@ -1,25 +1,25 @@
 #![crate_id = "test#0.1"]
 
-#![feature(globs)]
-#![feature(macro_rules)]
+#![feature(convert)]
+#![feature(libc)]
+#![feature(start)]
 
 #![link_args="-lwxc"]
 
 extern crate libc;
-extern crate native;
-extern crate wx;
+extern crate lib;
 
 use libc::c_void;
 
-use wx::_unsafe::*;
-use wx::defs::*;
-use wx::base::*;
-use wx::core::*;
+use lib::_unsafe::*;
+use lib::defs::*;
+use lib::base::*;
+use lib::core::*;
 
 mod macros;
 
 
-wxApp!(wx_main)
+wxApp!(wx_main);
 
 extern "C"
 fn wx_main() {
