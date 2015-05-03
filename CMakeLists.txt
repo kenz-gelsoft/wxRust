@@ -14,17 +14,29 @@ if(APPLE)
     set(PATCH_UNSAFE_RS patch -p0 < src/_unsafe.rs.patch)
     execute_process(
         COMMAND xcode-select --print-path
+        OUTPUT_VARIABLE XCODE_PATH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    execute_process(
+        COMMAND xcrun --show-sdk-path
         OUTPUT_VARIABLE OSX_SDK
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-    set(LIBCLANG_PATH ${OSX_SDK}/Toolchains/XcodeDefault.xctoolchain/usr/lib)
-    set(BINDGEN_LIBPATH DYLD_FALLBACK_LIBRARY_PATH=${LIBCLANG_PATH})
+    execute_process(
+        COMMAND rustc --print sysroot
+        OUTPUT_VARIABLE RUSTC_SYSROOT
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    set(LIBCLANG_PATH ${XCODE_PATH}/Toolchains/XcodeDefault.xctoolchain/usr/lib)
+    set(BINDGEN_LIBPATH DYLD_FALLBACK_LIBRARY_PATH=${LIBCLANG_PATH}:${RUSTC_SYSROOT}/lib/rustlib/x86_64-apple-darwin/lib)
+    set(BINDGEN_INCLUDEPATH -I${OSX_SDK}/usr/include)
 else(APPLE)
     set(PATCH_UNSAFE_RS)
     file(GLOB LIBCLANG_PATH1 "/usr/lib/llvm*/lib")
     file(GLOB LIBCLANG_PATH2 "/usr/lib64/llvm")
     set(LIBCLANG_PATH ${LIBCLANG_PATH1}${LIBCLANG_PATH2})
     set(BINDGEN_LIBPATH LD_LIBRARY_PATH=${LIBCLANG_PATH})
+    set(BINDGEN_INCLUDEPATH)
 endif(APPLE)
 
 set(RUSTC_FLAGS ${RUSTC_FLAGS}
@@ -38,14 +50,13 @@ set(GENSRCS
 )
 
 add_custom_command(
-    OUTPUT ${CMAKE_SOURCE_DIR}/rust-bindgen/bindgen
+    OUTPUT ${CMAKE_SOURCE_DIR}/rust-bindgen/target/debug/bindgen
     COMMAND LIBCLANG_PATH=${LIBCLANG_PATH} cargo build --verbose
     DEPENDS
         rust-bindgen/src/clang.rs
         rust-bindgen/src/clangll.rs
         rust-bindgen/src/gen.rs
         rust-bindgen/src/lib.rs
-        rust-bindgen/src/macro.rs
         rust-bindgen/src/parser.rs
         rust-bindgen/src/types.rs
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/rust-bindgen
@@ -53,16 +64,18 @@ add_custom_command(
 
 add_custom_command(
     OUTPUT  ${CMAKE_SOURCE_DIR}/src/_unsafe.rs
-    COMMAND ${BINDGEN_LIBPATH} ${CMAKE_SOURCE_DIR}/rust-bindgen/bindgen
-        -allow-bitfields
+    COMMAND ${BINDGEN_LIBPATH} ${CMAKE_SOURCE_DIR}/rust-bindgen/target/debug/bindgen
+        -allow-unknown-types
         -x c++
         `wx-config --cppflags`
+        ${BINDGEN_INCLUDEPATH}
         --include stdint.h
         --include time.h
         ${GENSRCS}
-        > src/_unsafe.rs
+        > src/_unsafe.rs.tmp
+    COMMAND mv src/_unsafe.rs.tmp src/_unsafe.rs
     COMMAND ${PATCH_UNSAFE_RS}
-    DEPENDS ${CMAKE_SOURCE_DIR}/rust-bindgen/bindgen ${GENSRCS}
+    DEPENDS ${CMAKE_SOURCE_DIR}/rust-bindgen/target/debug/bindgen ${GENSRCS}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
