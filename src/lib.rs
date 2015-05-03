@@ -1,11 +1,10 @@
 #![crate_id="wx#0.1"]
 #![crate_type="lib"]
 
-#![feature(globs)]
-#![feature(managed_boxes)]
+#![feature(libc)]
 
 #![allow(non_camel_case_types)]
-#![allow(non_snake_case_functions)]
+#![allow(non_snake_case)]
 
 extern crate libc;
 
