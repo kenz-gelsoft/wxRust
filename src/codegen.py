@@ -653,6 +653,7 @@ class WrapperGenerator(object):
                 self.__file = f
                 self.println('use libc::*;')
                 if name == 'base':
+                    self.println('use std::ffi::{CStr,CString};')
                     self.println('use std::str;')
                 for m in module['depends']:
                     self.println('use %s::*;' % m)
@@ -669,9 +670,8 @@ extern {
 
 pub fn strToString(s: &str) -> wxString {
     unsafe {
-        s.to_c_str().with_ref(|c_str| {
-            wxString::from(wxString_CreateUTF8(c_str as *mut c_void))
-        })
+        let cs = CString::new(s).unwrap();
+        wxString::from(wxString_CreateUTF8(cs.as_ptr() as *mut c_void))
     }
 }
 
@@ -689,7 +689,8 @@ impl wxString {
             let charBuffer = wxString_GetUtf8(self.ptr);
             let utf8 = wxCharBuffer_DataUtf8(charBuffer);
             wxCharBuffer_Delete(charBuffer);
-            str::raw::from_c_str(utf8)
+            let slice = CStr::from_ptr(utf8);
+            str::from_utf8(slice.to_bytes()).unwrap().to_string()
         }
     }
 }
@@ -1170,7 +1171,7 @@ class Function(object):
     def method_name(self, classname):
         _name = self.name[len(classname)+1:]
         _name = _name[0].lower() + _name[1:]
-        if _name in ['break', 'yield']:
+        if _name in ['break', 'move', 'yield']:
             _name += '_'
         if _name.startswith('create'):
             return 'new' + _name[len('create'):]

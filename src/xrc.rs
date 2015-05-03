@@ -255,7 +255,7 @@ pub trait XmlResourceMethods : ObjectMethods {
         let filemask = strToString(filemask);
         unsafe { wxXmlResource_Unload(self.ptr(), filemask.ptr()) }
     }
-    fn set(&self, res: &XmlResourceMethods) -> XmlResource {
+    fn set<T: XmlResourceMethods>(&self, res: &T) -> XmlResource {
         unsafe { XmlResource::from(wxXmlResource_Set(self.ptr(), res.ptr())) }
     }
     fn setDomain(&self, domain: &str) {

@@ -1,0 +1,50 @@
+diff --git a/wxc/src/include/wxc_glue.h b/wxc/src/include/wxc_glue.h
+index ff3f8d7..e7ce92c 100644
+--- a/wxc/src/include/wxc_glue.h
++++ b/wxc/src/include/wxc_glue.h
+@@ -2,9 +2,9 @@
+ #define WXC_GLUE_H
+ 
+ /* $Id: wxc_glue.h,v 1.23 2005/02/25 11:14:58 dleijen Exp $ */
+-
+-/* wx/version.h must be included for preprocessing by wxdirect */
+-#include "wx/version.h"
++
++/* wx/version.h must be included for preprocessing by wxdirect */
++#include "wx/version.h"
+ 
+ /* Null */
+ TClass(wxAcceleratorTable) Null_AcceleratorTable(  );
+@@ -2552,12 +2552,12 @@ TClass(wxControl) wxGridCellEditor_GetControl( TSelf(wxGridCellEditor) _obj );
+ void       wxGridCellEditor_HandleReturn( TSelf(wxGridCellEditor) _obj, TClass(wxEvent) event );
+ TBool      wxGridCellEditor_IsAcceptedKey( TSelf(wxGridCellEditor) _obj, TClass(wxEvent) event );
+ TBool      wxGridCellEditor_IsCreated( TSelf(wxGridCellEditor) _obj );
+-
++
+ #if (wxVERSION_NUMBER >= 2905)
+ void       wxGridCellEditor_PaintBackground( TSelf(wxGridCellEditor) _obj, TClass(wxDC) dc, TRect(x,y,w,h), TClass(wxGridCellAttr) attr );
+ #else
+ void       wxGridCellEditor_PaintBackground( TSelf(wxGridCellEditor) _obj, TRect(x,y,w,h), TClass(wxGridCellAttr) attr );
+-#endif
++#endif
+ 
+ void       wxGridCellEditor_Reset( TSelf(wxGridCellEditor) _obj );
+ void       wxGridCellEditor_SetControl( TSelf(wxGridCellEditor) _obj, TClass(wxControl) control );
+@@ -2793,7 +2793,7 @@ TClass(wxIcon) wxIcon_FromXPM( TSelf(wxIcon) data );
+ int        wxIcon_GetDepth( TSelf(wxIcon) _obj );
+ int        wxIcon_GetHeight( TSelf(wxIcon) _obj );
+ int        wxIcon_GetWidth( TSelf(wxIcon) _obj );
+-TBool      wxIcon_IsEqual( TSelf(wxIcon) _obj, TSelf(wxIcon) other );
++TBool      wxIcon_IsEqual( TSelf(wxIcon) _obj, TClass(wxIcon) other );
+ int        wxIcon_Load( TSelf(wxIcon) _obj, TClass(wxString) name, long type, TSize(width,height) );
+ TBool      wxIcon_IsOk( TSelf(wxIcon) _obj );
+ void       wxIcon_SetDepth( TSelf(wxIcon) _obj, int depth );
+@@ -5150,7 +5150,7 @@ TClass(wxStaticText) wxXmlResource_GetStaticText( TSelf(wxWindow) _obj, TClass(w
+ TClass(wxTextCtrl) wxXmlResource_GetTextCtrl( TSelf(wxWindow) _obj, TClass(wxString) str_id );
+ TClass(wxTreeCtrl) wxXmlResource_GetTreeCtrl( TSelf(wxWindow) _obj, TClass(wxString) str_id );
+ TBool      wxXmlResource_Unload( TSelf(wxXmlResource) _obj, TClass(wxString) filemask );
+-TClass(wxXmlResource) wxXmlResource_Set( TSelf(wxXmlResource) _obj, TSelf(wxXmlResource) res );
++TClass(wxXmlResource) wxXmlResource_Set( TSelf(wxXmlResource) _obj, TClass(wxXmlResource) res );
+ void       wxXmlResource_SetDomain( TSelf(wxXmlResource) _obj, TClass(wxString) domain );
+ void       wxXmlResource_SetFlags( TSelf(wxXmlResource) _obj, int flags );
+ 

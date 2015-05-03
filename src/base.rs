@@ -1,4 +1,5 @@
 use libc::*;
+use std::ffi::{CStr,CString};
 use std::str;
 use _unsafe::*;
 
@@ -6,15 +7,14 @@ use _unsafe::*;
 extern {
     fn wxString_CreateUTF8(buffer: *mut c_void) -> *mut c_void;
     fn wxString_GetUtf8(wxs: *mut c_void) -> *mut c_void;
-    fn wxCharBuffer_DataUtf8(wxcb: *mut c_void) -> *c_char;
+    fn wxCharBuffer_DataUtf8(wxcb: *mut c_void) -> *mut c_char;
     fn wxCharBuffer_Delete(wxcb: *mut c_void);
 }
 
 pub fn strToString(s: &str) -> wxString {
     unsafe {
-        s.to_c_str().with_ref(|c_str| {
-            wxString::from(wxString_CreateUTF8(c_str as *mut c_void))
-        })
+        let cs = CString::new(s).unwrap();
+        wxString::from(wxString_CreateUTF8(cs.as_ptr() as *mut c_void))
     }
 }
 
@@ -32,7 +32,8 @@ impl wxString {
             let charBuffer = wxString_GetUtf8(self.ptr);
             let utf8 = wxCharBuffer_DataUtf8(charBuffer);
             wxCharBuffer_Delete(charBuffer);
-            str::raw::from_c_str(utf8)
+            let slice = CStr::from_ptr(utf8);
+            str::from_utf8(slice.to_bytes()).unwrap().to_string()
         }
     }
 }

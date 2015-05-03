@@ -3,15 +3,22 @@ cmake_minimum_required(VERSION 2.8)
 find_package(wxWidgets REQUIRED all)
 include(${wxWidgets_USE_FILE})
 
-set(WXCROOT ../wxHaskell/wxc/src/)
-set(WXCSRC ${WXCROOT}cpp/)
+set(WXCROOT ${PROJECT_SOURCE_DIR}/wxHaskell/wxc/src/)
+set(WXCINCLUDE ${WXCROOT}include/)
+set(WXCSRC     ${WXCROOT}cpp/)
 
 include_directories(
-    ${WXCROOT}include
+    ${WXCINCLUDE}
 )
 
 add_definitions(
     -DwxcREFUSE_MEDIACTRL
+)
+
+add_custom_target(patch_wxc_glue_h
+    patch -N -p1 < ${PROJECT_SOURCE_DIR}/wxc/wxc_glue_h.patch || /usr/bin/true
+    DEPENDS        ${PROJECT_SOURCE_DIR}/wxc/wxc_glue_h.patch
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/wxHaskell
 )
 
 add_library(wxc SHARED
@@ -123,6 +130,14 @@ add_library(wxc SHARED
     ${WXCSRC}textstream.cpp
     ${WXCSRC}treectrl.cpp
     ${WXCSRC}wrapper.cpp
+)
+
+set_target_properties(wxc PROPERTIES
+    MACOSX_RPATH true
+)
+
+add_dependencies(wxc
+    patch_wxc_glue_h
 )
 
 target_link_libraries(wxc

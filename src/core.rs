@@ -1051,7 +1051,7 @@ pub trait CaretMethods {
     fn isVisible(&self) -> c_int {
         unsafe { wxCaret_IsVisible(self.ptr()) }
     }
-    fn move(&self, x: c_int, y: c_int) {
+    fn move_(&self, x: c_int, y: c_int) {
         unsafe { wxCaret_Move(self.ptr(), x, y) }
     }
     fn setSize(&self, width: c_int, height: c_int) {
@@ -2343,7 +2343,7 @@ pub trait DragImageMethods : ObjectMethods {
     fn hide(&self) -> c_int {
         unsafe { wxDragImage_Hide(self.ptr()) }
     }
-    fn move(&self, x: c_int, y: c_int) -> c_int {
+    fn move_(&self, x: c_int, y: c_int) -> c_int {
         unsafe { wxDragImage_Move(self.ptr(), x, y) }
     }
     fn show(&self) -> c_int {
@@ -3555,7 +3555,7 @@ pub trait IconMethods : BitmapMethods {
     fn fromXPM(&self) -> Icon {
         unsafe { Icon::from(wxIcon_FromXPM(self.ptr())) }
     }
-    fn isEqual(&self, other: &IconMethods) -> c_int {
+    fn isEqual<T: IconMethods>(&self, other: &T) -> c_int {
         unsafe { wxIcon_IsEqual(self.ptr(), other.ptr()) }
     }
     fn load(&self, name: &str, type_: c_long, width: c_int, height: c_int) -> c_int {
@@ -9764,7 +9764,7 @@ pub trait WindowMethods : EvtHandlerMethods {
     fn makeModal(&self, modal: c_int) {
         unsafe { wxWindow_MakeModal(self.ptr(), modal) }
     }
-    fn move(&self, x: c_int, y: c_int) {
+    fn move_(&self, x: c_int, y: c_int) {
         unsafe { wxWindow_Move(self.ptr(), x, y) }
     }
     fn moveConstraint(&self, x: c_int, y: c_int) {
