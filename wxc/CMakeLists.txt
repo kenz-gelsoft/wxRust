@@ -132,10 +132,6 @@ add_library(wxc SHARED
     ${WXCSRC}wrapper.cpp
 )
 
-set_target_properties(wxc PROPERTIES
-    MACOSX_RPATH true
-)
-
 add_dependencies(wxc
     patch_wxc_glue_h
 )
