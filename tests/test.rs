@@ -1,20 +1,17 @@
-#![crate_id = "test#0.1"]
+#![crate_name = "test"]
 
-#![feature(convert)]
 #![feature(libc)]
 #![feature(start)]
 
-#![link_args="-lwxc"]
-
 extern crate libc;
-extern crate lib;
+extern crate wx;
 
 use libc::c_void;
 
-use lib::_unsafe::*;
-use lib::defs::*;
-use lib::base::*;
-use lib::core::*;
+use wx::_unsafe::*;
+use wx::defs::*;
+use wx::base::*;
+use wx::core::*;
 
 mod macros;
 

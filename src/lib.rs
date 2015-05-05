@@ -1,4 +1,4 @@
-#![crate_id="wx#0.1"]
+#![crate_name="wx"]
 #![crate_type="lib"]
 
 #![feature(libc)]

@@ -6,8 +6,8 @@ macro_rules! wxApp(
         fn start(argc: isize, argv: *const *const u8) -> isize {
             use libc::c_void;
 
-            use lib::base::Closure;
-            use lib::core::RustApp;
+            use wx::base::Closure;
+            use wx::core::RustApp;
 
             const NULLPTR: *mut c_void = 0 as *mut c_void;
 
