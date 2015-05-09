@@ -3,6 +3,11 @@ use std::process::Command;
 extern crate gcc;
 
 fn main() {
+	build_libwxc();
+	build_bindgen();
+}
+
+fn build_libwxc() {
 	let files = vec![
 		"apppath.cpp", 
 		"dragimage.cpp", 
@@ -129,4 +134,14 @@ fn main() {
 	config
 		.include("wxHaskell/wxc/src/include")
 		.compile("libwxc.a")
+}
+
+fn build_bindgen() {
+	Command::new("cargo")
+		.current_dir("rust-bindgen/")
+		.arg("build")
+		.status()
+		.unwrap_or_else(|e| {
+		    panic!("failed to build bindgen: {}", e)
+		});
 }
