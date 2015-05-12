@@ -1,3 +1,7 @@
+use std::env;
+use std::fs::File;
+use std::io::Write;
+use std::path::Path;
 use std::process::Command;
 
 extern crate gcc;
@@ -5,6 +9,7 @@ extern crate gcc;
 fn main() {
 	build_libwxc();
 	build_bindgen();
+	generate_unsafe_rs();
 }
 
 fn build_libwxc() {
@@ -119,13 +124,8 @@ fn build_libwxc() {
 		"wrapper.cpp", 
 	];
 
-	let output = Command::new("wx-config")
-		.arg("--cxxflags")
-		.output()
-		.unwrap();
-	let flags = String::from_utf8_lossy(&output.stdout);
 	let mut config = gcc::Config::new();
-	for flag in flags.split_whitespace() {
+	for flag in wx_config("--cxxflags").split_whitespace() {
 		config.flag(flag);
 	}
 	for file in files {
@@ -136,6 +136,15 @@ fn build_libwxc() {
 		.compile("libwxc.a")
 }
 
+fn wx_config(config: &str) -> String {
+	let output = Command::new("wx-config")
+		.arg(config)
+		.output()
+		.unwrap();
+	let flags = String::from_utf8_lossy(&output.stdout);
+	flags.to_string()
+}
+
 fn build_bindgen() {
 	Command::new("cargo")
 		.current_dir("rust-bindgen/")
@@ -144,4 +153,29 @@ fn build_bindgen() {
 		.unwrap_or_else(|e| {
 		    panic!("failed to build bindgen: {}", e)
 		});
+}
+
+fn generate_unsafe_rs() {
+	let mut command = Command::new("rust-bindgen/target/debug/bindgen");
+	command
+		.args(&[
+			"-allow-unknown-types",
+			"-x", "c++",
+		]);
+	for flag in wx_config("--cppflags").split_whitespace() {
+		command.arg(flag);
+	}
+	let output = command
+		.args(&[
+			"--include", "stdint.h",
+			"--include", "time.h",
+			"wxHaskell/wxc/src/include/wxc.h"
+		])
+		.output()
+		.unwrap();
+	let root_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
+	let unsafe_rs = Path::new(&root_dir).join("_unsafe.rs");
+	let mut file = File::create(&unsafe_rs).unwrap();
+	
+	file.write_all(&output.stdout).unwrap();
 }
