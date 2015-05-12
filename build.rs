@@ -10,6 +10,7 @@ fn main() {
 	build_libwxc();
 	build_bindgen();
 	generate_unsafe_rs();
+	generate_other_rs();
 }
 
 fn build_libwxc() {
@@ -178,4 +179,11 @@ fn generate_unsafe_rs() {
 	let mut file = File::create(&unsafe_rs).unwrap();
 	
 	file.write_all(&output.stdout).unwrap();
+}
+
+fn generate_other_rs() {
+	Command::new("python")
+		.args(&["src/codegen.py", "wxHaskell/wxc/src/include/wxc.h"])
+		.status()
+		.unwrap();
 }
