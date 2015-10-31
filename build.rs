@@ -242,6 +242,14 @@ fn generate_unsafe_rs() {
 		bindings.clang_arg(*flag);
 	}
 
+    match bindgen::get_include_dir() {
+        Some(path) => {
+            bindings.clang_arg("-I");
+            bindings.clang_arg(path);
+        }
+        None => (),
+    }
+
     bindings.match_pat("wxc");
 
     let binding = bindings.generate().unwrap();
