@@ -1,7 +1,4 @@
-#![crate_name = "test"]
-
-#![feature(libc)]
-#![feature(start)]
+//#![crate_name = "test"]
 
 extern crate libc;
 extern crate wx;
@@ -15,6 +12,22 @@ use wx::core::*;
 
 mod macros;
 
+
+
+#[test]
+fn hello_test() {
+    const NULLPTR: *mut c_void = 0 as *mut c_void;
+
+    let closure = Closure::new(wx_main_not_show as *mut c_void, NULLPTR);
+    let args: Vec<*mut i32> = Vec::new();
+    RustApp::initializeC(&closure, args.len() as i32, args.as_ptr() as *mut *mut i8);
+}
+
+extern "C"
+fn wx_main_not_show() {
+    let frame = make_frame();
+    frame.destroy();
+}
 
 wxApp!(wx_main);
 

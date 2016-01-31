@@ -1,8 +1,6 @@
 #![crate_name="wx"]
 #![crate_type="lib"]
 
-#![feature(libc)]
-
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 

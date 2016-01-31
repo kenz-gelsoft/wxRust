@@ -26,7 +26,7 @@ pub const DEFAULT_FRAME_STYLE: c_int =
 
 // manually converted from defs.h
 
-pub const VSCROLL: c_int = 0x80000000;
+pub const VSCROLL: c_int = -2147483648; //0x80000000;
 pub const HSCROLL: c_int = 0x40000000;
 pub const CAPTION: c_int = 0x20000000;
 
@@ -148,7 +148,7 @@ pub const CLOSE: c_int = 0x00000040;
 pub const OK_DEFAULT: c_int = 0x00000000;
 pub const YES_DEFAULT: c_int = 0x00000000;
 pub const NO_DEFAULT: c_int = 0x00000080;
-pub const CANCEL_DEFAULT: c_int = 0x80000000;
+pub const CANCEL_DEFAULT: c_int = -2147483648; //0x80000000;
 
 pub const ICON_EXCLAMATION: c_int = 0x00000100;
 pub const ICON_HAND: c_int = 0x00000200;
@@ -175,7 +175,10 @@ pub const ICON_MASK: c_int =
 pub const P_ALL: c_int = 0;
 pub const P_PID: c_int = 1;
 pub const P_PGID: c_int = 2;
+
+#[allow(non_upper_case_globals)]
 pub const DefaultCoord: c_int = -1;
+
 pub const CENTRE: c_int = 1;
 pub const CENTER: c_int = 1;
 pub const HORIZONTAL: c_int = 4;
