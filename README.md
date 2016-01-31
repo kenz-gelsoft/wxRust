@@ -24,8 +24,6 @@ by [codegen.py code generator](https://github.com/kenz-gelsoft/wxRust/blob/maste
 
 ## Build
 
-For Linux build instructions, see [INSTALL.linux.md](INSTALL.linux.md)
-
 ### Build Prerequisite
 
 Use following Rust compiler version for your wxRust branch. We're using Servo master's one for main development.
