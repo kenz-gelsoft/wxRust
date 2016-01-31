@@ -24,8 +24,6 @@ by [codegen.py code generator](https://github.com/kenz-gelsoft/wxRust/blob/maste
 
 ## Build
 
-We use [CMake](http://www.cmake.org/) for cross platform build, but Windows platform is not yet tested.
-
 For Linux build instructions, see [INSTALL.linux.md](INSTALL.linux.md)
 
 ### Build Prerequisite
@@ -37,11 +35,10 @@ Use following Rust compiler version for your wxRust branch. We're using Servo ma
 <tr><td>master    </td><td><a href="https://github.com/mozilla/rust">master</a>                        </td></tr>
 </table>
 
-Install the wxWidgets 3.0 (2.9.5 or later is required) and CMake as below
+Install the wxWidgets 3.0 (2.9.5 or later is required) as below
 (in the case of [Homebrew](http://brew.sh/)):
 
     brew install wxmac
-    brew install cmake
 
 With some tweak you may be able to compile wxRust with a bit older versions (2.9.0 < x < 2.9.4) of wxWidgets.
 See issue #21 comments for details.
@@ -55,28 +52,28 @@ Checkout git submodules:
     git submodule init # for the first time.
     git submodule update
 
-And generate Makefiles and make:
+And build:
 
-    mkdir build
-    cd build
-    cmake ..
-    make
+    cargo build
+
+If you get following error on Mac:
+
+       Compiling wx v0.1.0 (file:///path/to/wxRust)
+    failed to run custom build command for `wx v0.1.0 (file:///path/to/wxRust)`
+    Process didn't exit successfully: `/path/to/wxRust/target/debug/build/wx-a555275d7670a125/build-script-build` (signal: 5)
+    --- stderr
+    dyld: Library not loaded: @rpath/libclang.dylib
+      Referenced from: /path/to/wxRust/target/debug/build/wx-a555275d7670a125/build-script-build
+      Reason: image not found
+
+Re-run `cargo build` after setting `LD_LIBRARY_PATH` as below:
+
+    export LD_LIBRARY_PATH=`xcode-select -p`/Toolchains/XcodeDefault.xctoolchain/usr/lib
 
 ### Compile and Run the Test program
 
-At the CMake binary directory:
+Use cargo:
 
-    make test && ./test
+    cargo test
 
-On Mac, Run as below:
-
-    make Test.app
-    open ./Test.app # or open in Finder
-
-### Generate Documentation
-
-At the CMake binary directory:
-
-    make doc
-
-Generates [a rustdoc documentation](http://www.rust-ci.org/kenz-gelsoft/wxRust/doc/wx/) under doc directory.
+Currently, this command runs test headless.
