@@ -1,4 +1,4 @@
-use libc::*;
+use std::os::raw::*;
 use base::*;
 
 /// Wraps the wxWidgets' [wxDatabase](http://docs.wxwidgets.org/3.0/classwx_database.html) class.
