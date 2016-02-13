@@ -3,7 +3,7 @@
 extern crate libc;
 extern crate wx;
 
-use libc::c_void;
+use std::os::raw::c_void;
 
 use wx::_unsafe::*;
 use wx::defs::*;
