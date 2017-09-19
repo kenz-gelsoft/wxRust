@@ -17,7 +17,7 @@ The [wxc](https://github.com/wxHaskell/wxHaskell/tree/master/wxc) is a C languag
 
 We utilize the [rust-bindgen](https://github.com/crabtw/rust-bindgen)
 [![rust-bindgen build status](https://api.travis-ci.org/crabtw/rust-bindgen.svg?branch=master)](https://travis-ci.org/crabtw/rust-bindgen) 
-automatic rust binding generator for its [_unsafe](http://kenz-gelsoft.github.io/wxRust/wx/_unsafe/) low-level binding.
+automatic rust binding generator for its [_unsafe](http://kenz-gelsoft.github.io/wxRust/src/wx/Users/kenz/src/wxRust/src/_unsafe.rs.html) low-level binding.
 
 And we generate an OOP-style high-level binding (other modules than _unsafe)
 by [codegen.py code generator](https://github.com/kenz-gelsoft/wxRust/blob/master/src/codegen.py).
