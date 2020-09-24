@@ -3,7 +3,7 @@
 	url = https://github.com/wxHaskell/wxHaskell.git
 [submodule "rust-bindgen"]
 	path = rust-bindgen
-	url = https://github.com/crabtw/rust-bindgen.git
+	url = https://github.com/rust-lang/rust-bindgen.git
 [submodule "RustCMake"]
 	path = RustCMake
 	url = https://github.com/SiegeLord/RustCMake.git
