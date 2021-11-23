@@ -1,4 +1,4 @@
-use libc::*;
+use std::os::raw::*;
 use _unsafe::*;
 use base::*;
 use core::*;
@@ -1797,6 +1797,9 @@ impl ManagedPtr {
     pub fn from(ptr: *mut c_void) -> ManagedPtr { ManagedPtr { ptr: ptr } }
     pub fn null() -> ManagedPtr { ManagedPtr::from(0 as *mut c_void) }
     
+    pub fn getDeleteFunction() -> *mut c_void {
+        unsafe { wxManagedPtr_GetDeleteFunction() }
+    }
     pub fn newFromObject<T: ObjectMethods>(obj: &T) -> ManagedPtr {
         unsafe { ManagedPtr::from(wxManagedPtr_CreateFromObject(obj.ptr())) }
     }

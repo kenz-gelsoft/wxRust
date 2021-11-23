@@ -651,10 +651,16 @@ class WrapperGenerator(object):
         for name, module in PY3 and modules.items() or modules.iteritems():
             with open('src/%s.rs' % name, 'w') as f:
                 self.__file = f
-                self.println('use libc::*;')
+                self.println('use std::os::raw::*;')
+                need_libc = ["base","core","stc"]
+                if name in need_libc:
+                    self.println('use libc;')
                 if name == 'base':
+                    self.println('use libc::time_t;')
                     self.println('use std::ffi::{CStr,CString};')
                     self.println('use std::str;')
+                if name == 'core':
+                    self.println('use libc::size_t;')
                 for m in module['depends']:
                     self.println('use %s::*;' % m)
                 self.println()
@@ -959,9 +965,9 @@ def TByteStringLazy(args):
             ['int', args[1]]]
 TByteStringLazy = TByteString
 def TColorRGB(args):
-    return [['uint8_t', args[0]],
-            ['uint8_t', args[1]],
-            ['uint8_t', args[2]]];
+    return [['libc::uint8_t', args[0]],
+            ['libc::uint8_t', args[1]],
+            ['libc::uint8_t', args[2]]];
 def TPoint(args, T='int'):
     return [[T, args[0]],
             [T, args[1]]];
@@ -1337,16 +1343,16 @@ type_mapping = {
     'TByteStringLazyOut':  '*mut c_char',
     'TByteStringLen':      'c_int',
     'TByteStringOut':      '*mut c_char',
-    'TChar':               'int8_t',
+    'TChar':               'libc::int8_t',
     'TClosureFun':         '*mut c_void',#'*c_void',
     'TInt64':              'i64',
-    'TIntPtr':             'intptr_t',
-    'TString':             '*mut int8_t',
+    'TIntPtr':             'libc::intptr_t',
+    'TString':             '*mut libc::int8_t',
     'TStringLen':          'c_int',
     'TStringOut':          '*wchar_t',#'**wchar_t',
     'TStringVoid':         '*mut c_void',
-    'TUInt':               'uint32_t',
-    'TUInt8':              'uint8_t',
+    'TUInt':               'libc::uint32_t',
+    'TUInt8':              'libc::uint8_t',
     'char':                'c_char',
     'double':              'c_double',
     'float':               'c_float',

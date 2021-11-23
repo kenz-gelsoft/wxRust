@@ -1,4 +1,6 @@
-use libc::*;
+use std::os::raw::*;
+use libc;
+use libc::size_t;
 use _unsafe::*;
 use base::*;
 
@@ -863,7 +865,7 @@ pub trait BrushMethods : GDIObjectMethods {
     fn setColour<T: ColourMethods>(&self, col: &T) {
         unsafe { wxBrush_SetColour(self.ptr(), col.ptr()) }
     }
-    fn setColourSingle(&self, r: int8_t, g: int8_t, b: int8_t) {
+    fn setColourSingle(&self, r: libc::int8_t, g: libc::int8_t, b: libc::int8_t) {
         unsafe { wxBrush_SetColourSingle(self.ptr(), r, g, b) }
     }
     fn setStipple<T: BitmapMethods>(&self, stipple: &T) {
@@ -1287,7 +1289,7 @@ impl Colour {
     pub fn newFromStock(id: c_int) -> Colour {
         unsafe { Colour::from(wxColour_CreateFromStock(id)) }
     }
-    pub fn newRGB(_red: uint8_t, _green: uint8_t, _blue: uint8_t, _alpha: uint8_t) -> Colour {
+    pub fn newRGB(_red: libc::uint8_t, _green: libc::uint8_t, _blue: libc::uint8_t, _alpha: libc::uint8_t) -> Colour {
         unsafe { Colour::from(wxColour_CreateRGB(_red, _green, _blue, _alpha)) }
     }
     pub fn validName(_name: *mut c_void) -> c_int {
@@ -1296,35 +1298,35 @@ impl Colour {
     pub fn newFromInt(rgb: c_int) -> Colour {
         unsafe { Colour::from(wxColour_CreateFromInt(rgb)) }
     }
-    pub fn newFromUnsignedInt(rgba: uint32_t) -> Colour {
+    pub fn newFromUnsignedInt(rgba: libc::uint32_t) -> Colour {
         unsafe { Colour::from(wxColour_CreateFromUnsignedInt(rgba)) }
     }
 }
 
 /// Methods of the wxWidgets' [wxColour](http://docs.wxwidgets.org/3.0/classwx_colour.html) class.
 pub trait ColourMethods : ObjectMethods {
-    fn alpha(&self) -> uint8_t {
+    fn alpha(&self) -> libc::uint8_t {
         unsafe { wxColour_Alpha(self.ptr()) }
     }
     fn assign(&self, other: *mut c_void) {
         unsafe { wxColour_Assign(self.ptr(), other) }
     }
-    fn blue(&self) -> uint8_t {
+    fn blue(&self) -> libc::uint8_t {
         unsafe { wxColour_Blue(self.ptr()) }
     }
     fn copy(&self, _other: *mut c_void) {
         unsafe { wxColour_Copy(self.ptr(), _other) }
     }
-    fn green(&self) -> uint8_t {
+    fn green(&self) -> libc::uint8_t {
         unsafe { wxColour_Green(self.ptr()) }
     }
     fn isOk(&self) -> c_int {
         unsafe { wxColour_IsOk(self.ptr()) }
     }
-    fn red(&self) -> uint8_t {
+    fn red(&self) -> libc::uint8_t {
         unsafe { wxColour_Red(self.ptr()) }
     }
-    fn set(&self, _red: uint8_t, _green: uint8_t, _blue: uint8_t, _alpha: uint8_t) {
+    fn set(&self, _red: libc::uint8_t, _green: libc::uint8_t, _blue: libc::uint8_t, _alpha: libc::uint8_t) {
         unsafe { wxColour_Set(self.ptr(), _red, _green, _blue, _alpha) }
     }
     fn setByName(&self, _name: &str) {
@@ -1337,7 +1339,7 @@ pub trait ColourMethods : ObjectMethods {
     fn getInt(&self) -> c_int {
         unsafe { wxColour_GetInt(self.ptr()) }
     }
-    fn getUnsignedInt(&self) -> uint32_t {
+    fn getUnsignedInt(&self) -> libc::uint32_t {
         unsafe { wxColour_GetUnsignedInt(self.ptr()) }
     }
 }
@@ -3701,28 +3703,28 @@ pub trait ImageMethods : ObjectMethods {
     fn destroy(&self) {
         unsafe { wxImage_Destroy(self.ptr()) }
     }
-    fn getBlue(&self, x: c_int, y: c_int) -> int8_t {
+    fn getBlue(&self, x: c_int, y: c_int) -> libc::int8_t {
         unsafe { wxImage_GetBlue(self.ptr(), x, y) }
     }
     fn getData(&self) -> *mut c_void {
         unsafe { wxImage_GetData(self.ptr()) }
     }
-    fn getGreen(&self, x: c_int, y: c_int) -> int8_t {
+    fn getGreen(&self, x: c_int, y: c_int) -> libc::int8_t {
         unsafe { wxImage_GetGreen(self.ptr(), x, y) }
     }
     fn getHeight(&self) -> c_int {
         unsafe { wxImage_GetHeight(self.ptr()) }
     }
-    fn getMaskBlue(&self) -> int8_t {
+    fn getMaskBlue(&self) -> libc::int8_t {
         unsafe { wxImage_GetMaskBlue(self.ptr()) }
     }
-    fn getMaskGreen(&self) -> int8_t {
+    fn getMaskGreen(&self) -> libc::int8_t {
         unsafe { wxImage_GetMaskGreen(self.ptr()) }
     }
-    fn getMaskRed(&self) -> int8_t {
+    fn getMaskRed(&self) -> libc::int8_t {
         unsafe { wxImage_GetMaskRed(self.ptr()) }
     }
-    fn getRed(&self, x: c_int, y: c_int) -> int8_t {
+    fn getRed(&self, x: c_int, y: c_int) -> libc::int8_t {
         unsafe { wxImage_GetRed(self.ptr(), x, y) }
     }
     fn getSubImage<T: ImageMethods>(&self, x: c_int, y: c_int, w: c_int, h: c_int, image: &T) {
@@ -3765,7 +3767,7 @@ pub trait ImageMethods : ObjectMethods {
     fn paste<T: ImageMethods>(&self, image: &T, x: c_int, y: c_int) {
         unsafe { wxImage_Paste(self.ptr(), image.ptr(), x, y) }
     }
-    fn replace(&self, r1: uint8_t, g1: uint8_t, b1: uint8_t, r2: uint8_t, g2: uint8_t, b2: uint8_t) {
+    fn replace(&self, r1: libc::uint8_t, g1: libc::uint8_t, b1: libc::uint8_t, r2: libc::uint8_t, g2: libc::uint8_t, b2: libc::uint8_t) {
         unsafe { wxImage_Replace(self.ptr(), r1, g1, b1, r2, g2, b2) }
     }
     fn rescale(&self, width: c_int, height: c_int) {
@@ -3793,7 +3795,7 @@ pub trait ImageMethods : ObjectMethods {
     fn setMask(&self, mask: c_int) {
         unsafe { wxImage_SetMask(self.ptr(), mask) }
     }
-    fn setMaskColour(&self, r: uint8_t, g: uint8_t, b: uint8_t) {
+    fn setMaskColour(&self, r: libc::uint8_t, g: libc::uint8_t, b: libc::uint8_t) {
         unsafe { wxImage_SetMaskColour(self.ptr(), r, g, b) }
     }
     fn setOption(&self, name: &str, value: &str) {
@@ -3805,7 +3807,7 @@ pub trait ImageMethods : ObjectMethods {
         let name = strToString(name);
         unsafe { wxImage_SetOptionInt(self.ptr(), name.ptr(), value) }
     }
-    fn setRGB(&self, x: c_int, y: c_int, r: uint8_t, g: uint8_t, b: uint8_t) {
+    fn setRGB(&self, x: c_int, y: c_int, r: libc::uint8_t, g: libc::uint8_t, b: libc::uint8_t) {
         unsafe { wxImage_SetRGB(self.ptr(), x, y, r, g, b) }
     }
 }
@@ -4798,7 +4800,7 @@ impl LogWindow {
     pub fn from(ptr: *mut c_void) -> LogWindow { LogWindow { ptr: ptr } }
     pub fn null() -> LogWindow { LogWindow::from(0 as *mut c_void) }
     
-    pub fn new<T: WindowMethods>(parent: &T, title: *mut int8_t, showit: c_int, passthrough: c_int) -> LogWindow {
+    pub fn new<T: WindowMethods>(parent: &T, title: *mut libc::int8_t, showit: c_int, passthrough: c_int) -> LogWindow {
         unsafe { LogWindow::from(wxLogWindow_Create(parent.ptr(), title, showit, passthrough)) }
     }
 }
@@ -6023,7 +6025,7 @@ pub trait PaletteMethods : GDIObjectMethods {
     fn assign<T: PaletteMethods>(&self, palette: &T) {
         unsafe { wxPalette_Assign(self.ptr(), palette.ptr()) }
     }
-    fn getPixel(&self, red: uint8_t, green: uint8_t, blue: uint8_t) -> c_int {
+    fn getPixel(&self, red: libc::uint8_t, green: libc::uint8_t, blue: libc::uint8_t) -> c_int {
         unsafe { wxPalette_GetPixel(self.ptr(), red, green, blue) }
     }
     fn getRGB(&self, pixel: c_int, red: *mut c_void, green: *mut c_void, blue: *mut c_void) -> c_int {
@@ -6141,7 +6143,7 @@ pub trait PenMethods : GDIObjectMethods {
     fn setColour<T: ColourMethods>(&self, col: &T) {
         unsafe { wxPen_SetColour(self.ptr(), col.ptr()) }
     }
-    fn setColourSingle(&self, r: int8_t, g: int8_t, b: int8_t) {
+    fn setColourSingle(&self, r: libc::int8_t, g: libc::int8_t, b: libc::int8_t) {
         unsafe { wxPen_SetColourSingle(self.ptr(), r, g, b) }
     }
     fn setDashes(&self, nb_dashes: c_int, dash: *mut c_void) {
@@ -9365,7 +9367,7 @@ impl TreeItemId {
     pub fn new() -> TreeItemId {
         unsafe { TreeItemId::from(wxTreeItemId_Create()) }
     }
-    pub fn newFromValue(value: intptr_t) -> TreeItemId {
+    pub fn newFromValue(value: libc::intptr_t) -> TreeItemId {
         unsafe { TreeItemId::from(wxTreeItemId_CreateFromValue(value)) }
     }
 }
@@ -9383,7 +9385,7 @@ pub trait TreeItemIdMethods {
     fn clone(&self) -> TreeItemId {
         unsafe { TreeItemId::from(wxTreeItemId_Clone(self.ptr())) }
     }
-    fn getValue(&self) -> intptr_t {
+    fn getValue(&self) -> libc::intptr_t {
         unsafe { wxTreeItemId_GetValue(self.ptr()) }
     }
 }

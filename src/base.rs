@@ -1,4 +1,6 @@
-use libc::*;
+use std::os::raw::*;
+use libc;
+use libc::time_t;
 use std::ffi::{CStr,CString};
 use std::str;
 use _unsafe::*;
@@ -1245,13 +1247,13 @@ pub trait InputStreamMethods : StreamBaseMethods {
     fn eof(&self) -> c_int {
         unsafe { wxInputStream_Eof(self.ptr()) }
     }
-    fn getC(&self) -> int8_t {
+    fn getC(&self) -> libc::int8_t {
         unsafe { wxInputStream_GetC(self.ptr()) }
     }
     fn lastRead(&self) -> c_int {
         unsafe { wxInputStream_LastRead(self.ptr()) }
     }
-    fn peek(&self) -> int8_t {
+    fn peek(&self) -> libc::int8_t {
         unsafe { wxInputStream_Peek(self.ptr()) }
     }
     fn read(&self, buffer: *mut c_void, size: c_int) {
@@ -1266,7 +1268,7 @@ pub trait InputStreamMethods : StreamBaseMethods {
     fn ungetBuffer(&self, buffer: *mut c_void, size: c_int) -> c_int {
         unsafe { wxInputStream_UngetBuffer(self.ptr(), buffer, size) }
     }
-    fn ungetch(&self, c: int8_t) -> c_int {
+    fn ungetch(&self, c: libc::int8_t) -> c_int {
         unsafe { wxInputStream_Ungetch(self.ptr(), c) }
     }
     fn canRead(&self) -> c_int {
@@ -1322,7 +1324,7 @@ pub trait LocaleMethods {
     fn getName(&self) -> String {
         unsafe { wxString::from(wxLocale_GetName(self.ptr())).to_str() }
     }
-    fn getString(&self, szOrigString: *mut c_void, szDomain: *mut c_void) -> *mut int8_t {
+    fn getString(&self, szOrigString: *mut c_void, szDomain: *mut c_void) -> *mut libc::int8_t {
         unsafe { wxLocale_GetString(self.ptr(), szOrigString, szDomain) }
     }
     fn isLoaded(&self, szDomain: *mut c_void) -> c_int {
@@ -1575,7 +1577,7 @@ pub trait OutputStreamMethods : StreamBaseMethods {
     fn lastWrite(&self) -> c_int {
         unsafe { wxOutputStream_LastWrite(self.ptr()) }
     }
-    fn putC(&self, c: int8_t) {
+    fn putC(&self, c: libc::int8_t) {
         unsafe { wxOutputStream_PutC(self.ptr(), c) }
     }
     fn seek(&self, pos: c_int, mode: c_int) -> c_int {

@@ -3,7 +3,7 @@
 macro_rules! wxApp(
     ($f: ident) => (
         fn main() {
-            use libc::c_void;
+            use std::os::raw::c_void;
 
             use wx::base::Closure;
             use wx::core::RustApp;
