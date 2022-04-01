@@ -1,3 +1,9 @@
+**This repo has been abandoned years ago.** [As I (original author) commented here](https://github.com/kenz-gelsoft/wxRust/issues/46#issuecomment-844211608), I'm trying this again with now stable and mature language and solid ecosystem [in the another repo.](https://github.com/kenz-gelsoft/wxRust2)
+
+April 1st, 2022.
+
+---
+
 # wxRust
 
 master: [![master build status](https://travis-ci.org/kenz-gelsoft/wxRust.svg?branch=master)](https://travis-ci.org/kenz-gelsoft/wxRust)
